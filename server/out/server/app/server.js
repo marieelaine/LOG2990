@@ -16,6 +16,9 @@ const app_1 = require("./app");
 const http = require("http");
 const types_1 = require("./types");
 const inversify_1 = require("inversify");
+const express = require("express");
+const mongoose_1 = require("mongoose");
+// import * as bodyParser from "body-parser"
 let Server = class Server {
     constructor(application) {
         this.application = application;
@@ -30,6 +33,7 @@ let Server = class Server {
         this.server.on("listening", () => this.onListening());
     }
     normalizePort(val) {
+        // tslint:disable-next-line:no-shadowed-variable
         const port = (typeof val === "string") ? parseInt(val, this.baseDix) : val;
         if (isNaN(port)) {
             return val;
@@ -75,4 +79,24 @@ Server = __decorate([
     __metadata("design:paramtypes", [app_1.Application])
 ], Server);
 exports.Server = Server;
+// Create a new express application instance
+const app = express();
+const router = express.Router();
+// Create var of Mongoose type
+const mongoose = new mongoose_1.Mongoose();
+// Connect to mongoDB database
+const mongoURL = "mongodb://adminlog2990:admin1@ds233212.mlab.com:33212/log";
+mongoose.connect(mongoURL);
+// Routing
+// tslint:disable-next-line:typedef
+router.get("/", (request, response) => {
+    // tslint:disable-next-line:no-magic-numbers
+    response.status(200).send({ message: "Hello World!" });
+});
+// Set app to use express backend router
+app.use(router);
+// Configure port
+const port = 8080;
+// Listen to port
+app.listen(port);
 //# sourceMappingURL=server.js.map
