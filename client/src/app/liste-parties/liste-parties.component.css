@@ -1,0 +1,19 @@
+.soloGames
+{
+    width: 40%;
+    background-color: burlywood;
+}
+
+.gameNames
+{
+    padding-top:5%;
+    text-align: center;
+}
+
+.gameImage
+{
+    border:5px;
+    width:50%;
+    padding-left:5%;
+    padding-bottom:5%
+}
