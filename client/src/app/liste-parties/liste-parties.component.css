@@ -1,19 +1,47 @@
 .soloGames
 {
+    border-style:solid;
+    border-width:5px;
     width: 40%;
+    height: 100%;
     background-color: burlywood;
 }
 
 .gameNames
 {
-    padding-top:5%;
+    padding-top:2%;
     text-align: center;
 }
 
 .gameImage
 {
-    border:5px;
-    width:50%;
+    width:40%;
     padding-left:5%;
     padding-bottom:5%
+}
+
+.topThree
+{
+    padding-right:5%;
+    padding-bottom:5%;
+    float:right;
+    width:40%;
+    line-height: 2px;
+}
+
+.topThreeHeader
+{
+    text-align: center;
+}
+
+.soloLine
+{
+    float:left;
+    padding-left:15%;
+}
+
+.oneVsOneLine
+{
+    float:right;
+    padding-right:15%;    
 }
