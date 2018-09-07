@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-vue-initiale',
-  templateUrl: './vue-initiale.component.html',
-  styleUrls: ['./vue-initiale.component.css']
+  selector: "app-vue-initiale",
+  templateUrl: "./vue-initiale.component.html",
+  styleUrls: ["./vue-initiale.component.css"]
 })
 export class VueInitialeComponent implements OnInit {
 
-  constructor() { }
+  public constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }
