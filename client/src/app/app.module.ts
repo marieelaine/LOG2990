@@ -5,11 +5,13 @@ import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { HttpClientModule } from "@angular/common/http";
 import { HeaderComponent } from './common/header/header.component';
+import { VueInitialeComponent } from './vue-initiale/vue-initiale.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    VueInitialeComponent
   ],
   imports: [
     BrowserModule,
