@@ -1,0 +1,6 @@
+#Directories and files to ignore
+
+#dependencies
+/node_modules
+
+package-lock.json
