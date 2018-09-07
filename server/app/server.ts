@@ -4,6 +4,10 @@ import Types from "./types";
 import { injectable, inject } from "inversify";
 import { AddressInfo } from "net";
 
+import * as express from "express";
+import {Mongoose} from "mongoose";
+// import * as bodyParser from "body-parser"
+
 @injectable()
 export class Server {
 
@@ -15,7 +19,6 @@ export class Server {
 
     public init(): void {
         this.application.app.set("port", this.appPort);
-
         this.server = http.createServer(this.application.app);
 
         this.server.listen(this.appPort);
@@ -24,6 +27,7 @@ export class Server {
     }
 
     private normalizePort(val: number | string): number | string | boolean {
+        // tslint:disable-next-line:no-shadowed-variable
         const port: number = (typeof val === "string") ? parseInt(val, this.baseDix) : val;
         if (isNaN(port)) {
             return val;
@@ -61,3 +65,28 @@ export class Server {
         console.log(`Listening on ${bind}`);
     }
 }
+
+// Create a new express application instance
+const app: express.Application = express();
+const router: express.Router = express.Router();
+
+// Create var of Mongoose type
+const mongoose: Mongoose = new Mongoose();
+
+// Connect to mongoDB database
+const mongoURL: string = "mongodb://adminlog2990:admin1@ds233212.mlab.com:33212/log";
+mongoose.connect(mongoURL);
+
+// Routing
+// tslint:disable-next-line:typedef
+router.get("/", (request, response) => {
+    // tslint:disable-next-line:no-magic-numbers
+    response.status(200).send({message: "Hello World!"});
+});
+// Set app to use express backend router
+app.use(router);
+
+// Configure port
+const port: number = 8080;
+// Listen to port
+app.listen(port);
