@@ -4,16 +4,30 @@ import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { HttpClientModule } from "@angular/common/http";
-import { HeaderComponent } from './common/header/header.component';
-import { VueInitialeComponent } from './vue-initiale/vue-initiale.component';
+import { RouterModule, Routes } from "@angular/router";
+
+import { HeaderComponent } from "./common/header/header.component";
+import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
+import { AdminComponent } from "./admin/admin.component";
+
+const appRoutes: Routes = [
+  { path: "", component: VueInitialeComponent },
+  { path: "header", component: HeaderComponent },
+  { path: "admin", component: AdminComponent }
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    VueInitialeComponent
+    VueInitialeComponent,
+    AdminComponent
   ],
   imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only
+    ),
     BrowserModule,
     HttpClientModule
   ],
