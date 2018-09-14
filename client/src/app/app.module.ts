@@ -11,6 +11,11 @@ import { HeaderComponent } from "./common/header/header.component";
 import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
 import { AdminComponent } from "./admin/admin.component";
 
+import { ModalModule } from 'ngx-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbdModalConfig } from './modal-config';
+
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
   { path: "header", component: HeaderComponent },
@@ -26,7 +31,7 @@ const appRoutes: Routes = [
     VueInitialeComponent,
     AdminComponent,
     AppComponent,
-    ListePartiesComponent
+    ListePartiesComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -34,9 +39,16 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     ),
     BrowserModule,
-    HttpClientModule
+    ModalModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule.forRoot(),
   ],
   providers: [BasicService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    // NgbModalBackdrop
+  ],
 })
 export class AppModule { }
