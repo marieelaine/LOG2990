@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { User } from "../login-form/user";
 declare var particlesJS: any;
 
@@ -9,13 +10,16 @@ declare var particlesJS: any;
 })
 export class LoginFormComponent implements OnInit {
 
-  public constructor() { }
+  public constructor(private router: Router) { }
   
   model = new User("");
 
   submitted = false;
 
-  onSubmit() { this.submitted = true; }
+  onSubmit() {
+    this.submitted = true;
+    this.router.navigateByUrl("/liste-parties");
+ }
 
   // TODO: Remove this when we"re done
   get diagnostic() { return JSON.stringify(this.model); }
