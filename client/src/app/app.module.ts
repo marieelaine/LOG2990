@@ -5,6 +5,7 @@ import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule, Routes } from "@angular/router";
+import { ListePartiesComponent } from './liste-parties/liste-parties.component';
 
 import { HeaderComponent } from "./common/header/header.component";
 import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
@@ -22,6 +23,8 @@ const appRoutes: Routes = [
     HeaderComponent,
     VueInitialeComponent,
     AdminComponent
+    AppComponent,
+    ListePartiesComponent
   ],
   imports: [
     RouterModule.forRoot(
