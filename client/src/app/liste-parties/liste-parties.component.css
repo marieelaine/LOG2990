@@ -77,40 +77,31 @@
     line-height: 35px;
 }
 
-.number1
+.topThreeButtons
 {
     border-radius:50%;
-    background-color: darkgreen;
-    border: 1px solid black;
+    border:1px solid black;
     font-size:22px;
     float:left;
     font-weight: bold;
     color:white;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.number1
+{
+    background-color: darkgreen;
 }
 
 .number2
 {
-    border-radius:50%;
     background-color: darkgoldenrod;
-    border:1px solid black;
-    font-size:22px;
-    float:left;
-    font-weight: bold;
-    color:white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 .number3
 {
-    border-radius:50%;
     background-color: crimson;
-    border:1px solid black;
-    font-size:22px;
-    float:left;
-    font-weight: bold;
-    color:white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+
 }
 
 .playGameButtons
@@ -118,9 +109,8 @@
     padding-top:5%;
 }
 
-.playButton
+.newGameButtons
 {
-    margin-left:20%; 
     border-radius: 15%; 
     font-size:22px; 
     background-color: cornflowerblue; 
@@ -130,17 +120,16 @@
     font-style:italic;
 }
 
+.playButton
+{
+    margin-left:20%; 
+   
+}
+
 .play1v1Button
 {
     float:right;
     margin-right:10%;
-    border-radius: 15%; 
-    font-size:22px;
-    background-color: cornflowerblue;  
-    font-weight: bold;
-    color: gold;
-    text-shadow: -2px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-    font-style:italic;
 }
 
 .topThreeSolo
