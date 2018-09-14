@@ -1,0 +1,48 @@
+.modal-body
+{
+    margin:5%;
+    background-color: burlywood;
+    border: 2px solid black;
+    border-radius: 20px;
+}
+
+.gameName
+{
+    text-align: center;
+}
+
+#gameNameInput
+{
+    display:block;
+    margin: 0 auto;
+    width: 50%;
+    text-align: center;
+    height: 35px;
+    margin-bottom: 20px;
+}
+
+#fileLoader
+{
+    display:none;
+}
+
+.imageButtons
+{
+    color: white;
+    /* border: 1px solid black; */
+    font-weight: bold;
+    background-color: cornflowerblue; 
+}
+
+.premiereImage
+{
+    width: 40%;
+    float: left;
+    margin-left: 3%;
+}
+
+.deuxiemeImage
+{
+    width: 40%;
+    float: right;
+}

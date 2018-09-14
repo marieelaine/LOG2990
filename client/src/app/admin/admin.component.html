@@ -13,6 +13,17 @@
       </button>
     </div>
     <div class="modal-body">
+      <div class='gameName'>
+        <input class="form-control" id="gameNameInput" type='text' placeholder="Nom de la partie">
+      </div>
+      <div class='premiereImage'>
+          <label for="image1" class="btn btn btn-outline-primary mb-2 mr-2 imageButtons">Première image</label>
+          <input id='image1' type="file" accept="image/*" #file style="visibility:hidden;">
+      </div>
+      <div class='deuxiemeImage'>
+          <label for="image1" class="btn btn btn-outline-primary mb-2 mr-2 imageButtons">Deuxième image</label>
+          <input id='image1' type="file" accept="image/*" #file style="visibility:hidden;">
+      </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Ajouter</button>

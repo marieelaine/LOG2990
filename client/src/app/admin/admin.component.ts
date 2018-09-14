@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
-
 @Component({
   selector: "app-admin",
   templateUrl: "./admin.component.html",
@@ -18,6 +17,7 @@ export class AdminComponent implements OnInit {
   openModal(content) {
     this.modalService.open(content);
   }
+  
   // tslint:disable-next-line:typedef
   public ngOnInit()
   {
