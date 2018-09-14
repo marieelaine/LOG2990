@@ -14,7 +14,9 @@ import { AdminComponent } from "./admin/admin.component";
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
   { path: "header", component: HeaderComponent },
-  { path: "admin", component: AdminComponent }
+  { path: "admin", component: AdminComponent },
+  { path: "liste-parties", component: ListePartiesComponent },
+
 ];
 
 @NgModule({
@@ -22,7 +24,7 @@ const appRoutes: Routes = [
     AppComponent,
     HeaderComponent,
     VueInitialeComponent,
-    AdminComponent
+    AdminComponent,
     AppComponent,
     ListePartiesComponent
   ],
