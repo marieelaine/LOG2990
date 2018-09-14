@@ -1,0 +1,25 @@
+<div class="container">
+  <div [hidden]="submitted">
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <div id="login-box">
+        <div class="logo">
+          <img src="" class="img img-responsive img-circle center-block"/>
+          <h1 class="logo-caption"><span class="tweak"> 7 </span>différences</h1>
+        </div><!-- /.logo -->
+        <div class="controls">
+          <input type="text" name="username" placeholder="Username" class="form-control" required [(ngModel)]="model.username" #name="ngModel">
+            <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+              Username is required
+            </div>
+          <button type="submit" class="btn btn-default btn-block btn-custom" (click)="newUser(); loginForm.reset()" [disabled]="!loginForm.form.valid">Login</button>
+        </div><!-- /.controls -->
+      </div><!-- /#login-box -->
+    </form>
+  </div>
+
+  <div [hidden]="!submitted">
+    <app-liste-parties></app-liste-parties>
+  </div>
+
+</div><!-- /.container -->
+<div id="particles-js"></div>

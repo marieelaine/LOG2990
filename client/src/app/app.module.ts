@@ -1,15 +1,17 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 
 import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule, Routes } from "@angular/router";
-import { ListePartiesComponent } from './liste-parties/liste-parties.component';
+import { ListePartiesComponent } from "./liste-parties/liste-parties.component";
 
 import { HeaderComponent } from "./common/header/header.component";
 import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
 import { AdminComponent } from "./admin/admin.component";
+import { LoginFormComponent } from "./vue-initiale/login-form/login-form.component";
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
@@ -26,7 +28,8 @@ const appRoutes: Routes = [
     VueInitialeComponent,
     AdminComponent,
     AppComponent,
-    ListePartiesComponent
+    ListePartiesComponent,
+    LoginFormComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -34,6 +37,7 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     ),
     BrowserModule,
+    FormsModule,
     HttpClientModule
   ],
   providers: [BasicService],
