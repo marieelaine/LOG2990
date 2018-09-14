@@ -38,11 +38,13 @@
 {
     width: 40%;
     float: left;
-    margin-left: 3%;
+    /* margin-left: 3%; */
+    text-align: center;
 }
 
 .deuxiemeImage
 {
     width: 40%;
     float: right;
+    text-align: center;
 }
