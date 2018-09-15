@@ -1,39 +1,17 @@
 <div class="container">
-    <form #loginForm="ngForm" (ngSubmit)="onSubmit()" #loginForm="ngForm">
-      <div [hidden]="loginForm.submitted">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate #formDir="ngForm">
         <div id="login-box">
           <div class="logo">
             <img src="" class="img img-responsive img-circle center-block"/>
             <h1 class="logo-caption"><span class="tweak"> 7 </span>différences</h1>
           </div><!-- /.logo -->
-          <div class="controls form-group">
-            <input type="text" name="username" placeholder="Username" class="form-control" required minlength="2" 
-            required maxlength="12" required pattern="^[A-Za-z\d]+$" [(ngModel)]="model.username" #name="ngModel">
-              <div *ngIf="name.invalid && (name.dirty || name.touched)"
-              class="alert alert-danger">
-
-                <div *ngIf="name.errors.required">
-                  Le nom d'utilisateur est requis.
-                </div>
-                <div *ngIf="name.errors.minlength">
-                  Le nom d'utilisateur doit être d'au moins 2 caractères.
-                </div>
-                <div *ngIf="name.errors.maxlength">
-                  Le nom d'utilisateur doit être au plus de 12 caractères.
-                </div>
-                <div *ngIf="name.errors.pattern">
-                  Le nom d'utilisateur doit être composé de caractères alpha-numériques.
-                </div>
-              </div>
-            <button type="submit" class="btn btn-default btn-block btn-custom" [disabled]="!loginForm.form.valid">Login</button>
+          <div class="controls form-group" formGroupName="personalData" novalidate>
+            <input formControlName="username" placeholder="Username" class="form-control" required>
+            <button type="submit" class="btn btn-default btn-block btn-custom" [disabled]="!loginForm.valid">Login</button>
+            {{loginForm.status}}
           </div><!-- /.controls -->
         </div><!-- /#login-box -->
-      </div>
     </form>
-
-  <div [hidden]="!submitted">
-    <app-liste-parties></app-liste-parties>
-  </div>
 
 </div><!-- /.container -->
 <div id="particles-js"></div>

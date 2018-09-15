@@ -1,5 +1,7 @@
 export class User {
-    public constructor(
-        public username: string
-      ) {  }
-}
+    public personalData: PersonalData;
+  }
+
+export class PersonalData {
+    public username: string = "";
+  }
