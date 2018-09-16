@@ -34,7 +34,7 @@
     background-color: cornflowerblue; 
 }
 
-.premiereImage
+.firstImage
 {
     width: 40%;
     float: left;
@@ -42,9 +42,22 @@
     text-align: center;
 }
 
-.deuxiemeImage
+.secondImage
 {
     width: 40%;
     float: right;
     text-align: center;
+}
+
+#image1
+{
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+.imageFrame
+{
+    border: 1px solid grey;
+    height:100px;
 }

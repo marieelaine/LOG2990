@@ -24,6 +24,8 @@
     "angular-material": "^1.1.10",
     "core-js": "^2.5.4",
     "modal": "^1.2.0",
+    "mongodb": "^3.1.6",
+    "mongoose": "^5.2.15",
     "ng2-bootstrap": "^1.6.3",
     "ngx-bootstrap": "^3.0.1",
     "rxjs": "^6.0.0",

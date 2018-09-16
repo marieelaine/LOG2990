@@ -18,15 +18,17 @@
       <div class='gameName'>
         <input class="form-control" id="gameNameInput" type='text' placeholder="Nom de la partie">
       </div>
-      <div class='premiereImage'>
+      <div class='firstImage'>
           <label for="image1" class="btn btn btn-outline-primary mb-2 mr-2 imageButtons">Première image</label>
-          <input id='image1' type="file" accept="image/*" #file style="visibility:hidden;">
-          <i class="fas fa-expand"></i>    
+          <input id='image1' type="file" accept="image/*" #file style="visibility:hidden;" (change)='onFileSelected($event)'>
+          <div class='imageFrame' id='firstImageFrame'>            
+          </div>
         </div>
-      <div class='deuxiemeImage'>
+      <div class='secondImage'>
           <label for="image1" class="btn btn btn-outline-primary mb-2 mr-2 imageButtons">Deuxième image</label>
           <input id='image1' type="file" accept="image/*" #file style="visibility:hidden;">
-          <i class="fas fa-expand"></i>      
+          <div class='imageFrame' id='secondImageFrame'>            
+          </div>
         </div>
     </div>
     <div class="modal-footer">
