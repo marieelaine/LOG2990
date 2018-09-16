@@ -14,7 +14,6 @@ import { AdminComponent } from "./admin/admin.component";
 import { ModalModule } from 'ngx-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-// import { NgbdModalConfig } from './modal-config';
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
