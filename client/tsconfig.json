@@ -12,7 +12,7 @@
     "strictNullChecks": true,
     "noImplicitAny": false,
     "noImplicitThis": true,
-    "noUnusedLocals": false,
+    "noUnusedLocals": true,
     "noImplicitReturns": true,
     "target": "es5",
     "typeRoots": [

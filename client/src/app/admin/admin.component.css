@@ -17,7 +17,7 @@
     margin: 0 auto;
     width: 50%;
     text-align: center;
-    height: 30px;
+    height: 35px;
     margin-bottom: 20px;
 }
 
@@ -29,17 +29,17 @@
 .imageButtons
 {
     color: white;
+    /* border: 1px solid black; */
     font-weight: bold;
     background-color: cornflowerblue; 
-    width:100%;
 }
 
 .firstImage
 {
     width: 40%;
     float: left;
+    /* margin-left: 3%; */
     text-align: center;
-    margin-left:3%;
 }
 
 .secondImage
@@ -47,46 +47,17 @@
     width: 40%;
     float: right;
     text-align: center;
-    margin-right:3%;
 }
 
-#uploadImage1
+#image1
 {
     position:absolute;
-    top:70px;
-    left:20px;
-}
-
-#uploadImage2
-{
-    position:absolute;
-    top:70px;
-    left:140px;
+    top:0;
+    left:0;
 }
 
 .imageFrame
 {
-    margin-top:6%;
-    border: 2px solid black;
+    border: 1px solid grey;
     height:100px;
-}
-
-#maskHeigth
-{
-    position: relative;
-    top:-2px;
-    left:8px;
-    width:90%;
-    height:101px;
-    background-color: burlywood;
-}
-
-#maskWidth
-{
-    position: relative;
-    bottom:94px;
-    right:5px;
-    width:170px;
-    height:85%;
-    background-color: burlywood;
 }
