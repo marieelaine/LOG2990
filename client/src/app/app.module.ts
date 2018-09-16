@@ -14,6 +14,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {MatToolbarModule} from '@angular/material/toolbar';
 
+import { ModalModule } from 'ngx-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
   { path: "header", component: HeaderComponent },
@@ -29,7 +33,7 @@ const appRoutes: Routes = [
     VueInitialeComponent,
     AdminComponent,
     AppComponent,
-    ListePartiesComponent
+    ListePartiesComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -40,8 +44,15 @@ const appRoutes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule,
     MatToolbarModule
+    ModalModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule.forRoot(),
   ],
   providers: [BasicService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    // NgbModalBackdrop
+  ],
 })
 export class AppModule { }
