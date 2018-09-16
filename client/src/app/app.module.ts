@@ -17,12 +17,14 @@ import {MatToolbarModule} from '@angular/material';
 import { ModalModule } from 'ngx-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PartieSoloComponent } from './partie-solo/partie-solo.component';
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
   { path: "header", component: HeaderComponent },
   { path: "admin", component: AdminComponent },
   { path: "liste-parties", component: ListePartiesComponent },
+  { path: "partie-solo", component: PartieSoloComponent }
 
 ];
 
@@ -34,6 +36,7 @@ const appRoutes: Routes = [
     AdminComponent,
     AppComponent,
     ListePartiesComponent,
+    PartieSoloComponent,
   ],
   imports: [
     RouterModule.forRoot(
