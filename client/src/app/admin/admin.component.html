@@ -6,6 +6,7 @@
   <h1>
     Admin page
   </h1>
+  <mat-divider></mat-divider>
 
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
@@ -19,15 +20,19 @@
         <input class="form-control" id="gameNameInput" type='text' placeholder="Nom de la partie">
       </div>
       <div class='firstImage'>
-          <label for="image1" class="btn btn btn-outline-primary mb-2 mr-2 imageButtons">Première image</label>
-          <input id='image1' type="file" accept="image/*" #file style="visibility:hidden;" (change)='onFileSelected($event)'>
-          <div class='imageFrame' id='firstImageFrame'>            
+          <label for="uploadImage1" class="btn btn btn-outline-primary mb-2 mr-2 imageButtons">Première image</label>
+          <input id='uploadImage1' type="file" accept="image/*" #file style="visibility:hidden;" (change)='onFileSelected($event)'>
+          <div class='imageFrame' id='firstImageFrame'> 
+              <div id='maskHeigth'></div>                      
+              <div id='maskWidth'></div>                      
           </div>
         </div>
       <div class='secondImage'>
-          <label for="image1" class="btn btn btn-outline-primary mb-2 mr-2 imageButtons">Deuxième image</label>
-          <input id='image1' type="file" accept="image/*" #file style="visibility:hidden;">
-          <div class='imageFrame' id='secondImageFrame'>            
+          <label for="uploadImage2" class="btn btn btn-outline-primary mb-2 mr-2 imageButtons">Deuxième image</label>
+          <input id='uploadImage2' type="file" accept="image/*" #file style="visibility:hidden;">
+          <div class='imageFrame' id='secondImageFrame'> 
+            <div id='maskHeigth'></div>           
+            <div id='maskWidth'></div>           
           </div>
         </div>
     </div>
@@ -36,7 +41,7 @@
     </div>
   </ng-template>
 
-  <button class="btn btn-outline-primary mb-2 mr-2" (click)="openModal(content)">Ajouter une partie</button>
+  <button class="btn btn-outline-primary mb-2 mr-2" (click)="onOpenModal(content)">Ajouter une partie</button>
 
 </div>
 

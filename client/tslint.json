@@ -33,7 +33,7 @@
       140
     ],
     "member-access": [
-      true,
+      false,
       "check-accessor",
       "check-constructor",
       "check-parameter-property"
@@ -52,7 +52,7 @@
     "no-arg": true,
     "no-bitwise": true,
     "no-console": [
-      true,
+      false,
       "debug",
       "info",
       "time",
@@ -88,7 +88,7 @@
     ],
     "prefer-const": true,
     "quotemark": [
-      true,
+      false,
       "double",
       "avoid-escape"
     ],
@@ -200,8 +200,6 @@
     "switch-default": true,
     "typedef": [
       true,
-      "call-signature",
-      "parameter",
       "member-variable-declaration",
       "property-declaration",
       "variable-declaration"
