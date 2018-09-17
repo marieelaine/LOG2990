@@ -12,7 +12,7 @@ import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
 import { AdminComponent } from "./admin/admin.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {MatToolbarModule} from '@angular/material';
+import { MatToolbarModule, MatCardModule, MatBadgeModule, MatButtonModule} from '@angular/material';
 
 import { ModalModule } from 'ngx-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -44,6 +44,9 @@ const appRoutes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule,
     MatToolbarModule,
+    MatCardModule,
+    MatBadgeModule,
+    MatButtonModule,
     ModalModule,
     FormsModule,
     ReactiveFormsModule,

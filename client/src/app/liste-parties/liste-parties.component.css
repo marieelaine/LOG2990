@@ -1,20 +1,22 @@
-.soloGames
+mat-card
 {
-    border-style:solid;
-    border-width:5px;
+    margin-left:2%;
+    border: solid 2px grey;
     width: 40%;
-    height: 100%;
-    background-color: burlywood;
+    height: 330px;
+    background-color: rgb(216, 178, 81); 
+    float:left;
+    border-radius:20px;
 }
 
-.gameName
+mat-card-header
 {
-    text-align: center;
+    justify-content: center;
+    margin-bottom:2%;
 }
 
 .gameNameHeader
 {
-    margin:2%;
     font-weight: bold;
     color:white;
     text-shadow: -2px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
@@ -23,125 +25,96 @@
 
 .image
 {
+    padding-top:5%;
     width:50%;
+    height:80%;
     float:left;
 }
 
 .gameImage
 {
+    border-radius:20px;
     width:100%;
-    margin-left:5%;
+    margin-left:1px;
     height:90%;
-    box-shadow: 5px 5px grey;
-    border: 1px solid grey;
 }
 
 .topThree
 {
-    padding-left:5%;
-    padding-bottom:3%;
     float: right;
     width:50%;
-    line-height: 1px;
+}
+
+.topThreeHeaderDiv
+{
+    padding-left:25%;
 }
 
 .topThreeHeader
 {
+    width:100%;
     text-align: center;
-    padding-left:15%;
     font-size:30px;
-    margin:5%;
     color:white;
     text-shadow: -2px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
-.soloLine
+.topThreeNumbersColumn
 {
     float:left;
-    padding-left:25%;
-    color:white;
-    text-shadow: -2px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    margin-top:15%;
+    margin-left:12%;
+    line-height: 34px;
+    width: 10%;
+    display: block; 
 }
 
-.oneVsOneLine
+.soloColumn
 {
-    float:right;
-    padding-right:15%; 
-    color:white;
-    text-shadow: -2px 0 black, 0 1px black, 1px 0 black, 0 -1px black; 
-}
-
-.topThreeNumbers
-{
-    padding-top:15%;
-    line-height: 35px;
-}
-
-.topThreeButtons
-{
-    border-radius:50%;
-    border:1px solid black;
-    font-size:22px;
+    line-height: 10px;
     float:left;
-    font-weight: bold;
+    width:30%;
+}
+
+.soloHeader
+{
+    text-align: center;
     color:white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-}
-
-.number1
-{
-    background-color: darkgreen;
-}
-
-.number2
-{
-    background-color: darkgoldenrod;
-}
-
-.number3
-{
-    background-color: crimson;
-
-}
-
-.playGameButtons
-{
-    padding-top:5%;
-}
-
-.newGameButtons
-{
-    border-radius: 15%; 
-    font-size:22px; 
-    background-color: cornflowerblue; 
-    font-weight: bold;
-    color: gold;
     text-shadow: -2px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-    font-style:italic;
-}
-
-.playButton
-{
-    margin-left:20%; 
-   
-}
-
-.play1v1Button
-{
-    float:right;
-    margin-right:10%;
 }
 
 .topThreeSolo
 {
-    margin:0; 
-    float:left;
-    padding-left:23%;
+    text-align: center;
 }
 
-.topThree1v1
+.oneVsOneColumn
 {
-    margin:0; 
+    line-height: 10px;
     float:right;
-    padding-right:20%;
+    width:30%;
+}
+
+.oneVsOneHeader
+{
+    text-align: center;
+    color:white;
+    text-shadow: -2px 0 black, 0 1px black, 1px 0 black, 0 -1px black; 
+}
+
+.topThreeOneVsOne
+{
+    text-align: center;
+}
+
+.newGameButtons
+{
+    font-size:18px; 
+    background-color: cornflowerblue; 
+    font-weight: bold;
+    color: rgb(247, 210, 4);
+    text-shadow: -1px 0 black, 0 2px black, 1px 0 black, 0 -1px black; 
+    font-style:italic;
+    border:solid 1px rgb(132, 57, 252);
+    border-radius:10px;
 }
