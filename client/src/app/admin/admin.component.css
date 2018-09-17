@@ -104,3 +104,10 @@ mat-form-field
     border-radius:5px;
     margin-right:2%;
 }
+
+#errorMessage
+{
+    margin:5%;
+    font-size:14px;
+    color:red;
+}

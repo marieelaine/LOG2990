@@ -22,6 +22,7 @@
             </div>
         </div>
     </mat-card>
-    <button mat-button class='dialogButtons mat-elevation-z6' [mat-dialog-close]="data.name">Ajouter</button>
+    <button mat-button (click)='onAddClick()' class='dialogButtons mat-elevation-z6'>Ajouter</button>
     <button mat-button (click)="onNoClick()" class='dialogButtons mat-elevation-z6'>Annuler</button>
+    <p id='errorMessage'> {{ errorMessage }} </p>
 </div>

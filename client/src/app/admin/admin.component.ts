@@ -13,6 +13,7 @@ export interface DialogData {
 
 export class AdminComponent implements OnInit {
 
+  gameName: string;
   selectedFile: File;
   // MongoClient = require('mongodb').MongoClient;
 
@@ -20,9 +21,11 @@ export class AdminComponent implements OnInit {
   }
 
   openDialog(): void {
+    this.gameName = "";
     this.dialog.open(AdminDialog, {
-      height: '431px',
-      width: '600px'
+      height: '433px',
+      width: '600px',
+      data: {name: this.gameName}
     });
   }
 
@@ -42,11 +45,24 @@ export class AdminComponent implements OnInit {
 })
 export class AdminDialog {
 
+  errorMessage: string;
+
   constructor(
     public dialogRef: MatDialogRef<AdminDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+      this.errorMessage = "";
+    }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  onAddClick(): void {
+    if (this.data.gameName === "" || this.data.gameName === undefined) {
+      // Regarder s'il y a bien deux images
+      this.errorMessage = "*Le jeu doit avoir un nom et deux images";
+    } else {
+      this.dialogRef.close();
+    }
   }
 }
