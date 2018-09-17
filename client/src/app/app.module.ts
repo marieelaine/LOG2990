@@ -23,7 +23,6 @@ import { MatToolbarModule,
       } from '@angular/material';
 
 import { ModalModule } from 'ngx-bootstrap';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const appRoutes: Routes = [
