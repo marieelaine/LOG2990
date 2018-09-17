@@ -13,15 +13,15 @@ import { Observable } from "rxjs";
 export class UniqueUserValidator implements AsyncValidator {
   public constructor(private userService: UserService) {}
 
-  public validate(
-    ctrl: AbstractControl
-  ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-    return this.userService.isUserTaken(ctrl.value).pipe(
-      map((isTaken) => (isTaken ? { uniqueAlterEgo: true } : null)),
-      catchError(() => null)
-    );
-  }
-}
+//   public validate(
+//     ctrl: AbstractControl
+//   ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
+//     return this.userService.isUserTaken(ctrl.value).pipe(
+//       map((isTaken) => (isTaken ? { uniqueAlterEgo: true } : null)),
+//       catchError(() => null)
+//     );
+//   }
+// }
 
 @Directive({
   selector: "[appUniqueAlterEgo]",
