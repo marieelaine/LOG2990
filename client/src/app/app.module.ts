@@ -1,4 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from "@angular/core";
 
 import { AppComponent } from "./app.component";
@@ -9,7 +10,7 @@ import { ListePartiesComponent } from './liste-parties/liste-parties.component';
 
 import { HeaderComponent } from "./common/header/header.component";
 import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
-import { AdminComponent } from "./admin/admin.component";
+import { AdminComponent, AdminDialog } from "./admin/admin.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatToolbarModule, MatCardModule, MatBadgeModule, MatButtonModule} from '@angular/material';
@@ -17,6 +18,7 @@ import { MatToolbarModule, MatCardModule, MatBadgeModule, MatButtonModule} from 
 import { ModalModule } from 'ngx-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogModule, MatFormFieldModule, MatDividerModule, MatCardModule, MatButtonModule } from '@angular/material';
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
@@ -34,6 +36,7 @@ const appRoutes: Routes = [
     AdminComponent,
     AppComponent,
     ListePartiesComponent,
+    AdminDialog
   ],
   imports: [
     RouterModule.forRoot(
@@ -51,11 +54,17 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     NgbModule.forRoot(),
+    MatDialogModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatDividerModule,
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [BasicService],
   bootstrap: [AppComponent],
   entryComponents: [
-    // NgbModalBackdrop
+    AdminDialog
   ],
 })
 export class AppModule { }

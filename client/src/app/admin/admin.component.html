@@ -3,40 +3,6 @@
     Admin page
   </h1>
   <hr>
-  <ng-template #content let-c="close" let-d="dismiss">
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Ajouter une partie</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class='gameName'>
-        <input class="form-control" id="gameNameInput" type='text' placeholder="Nom de la partie">
-      </div>
-      <div class='firstImage'>
-          <label for="uploadImage1" class="btn btn btn-outline-primary mb-2 mr-2 imageButtons">Première image</label>
-          <input id='uploadImage1' type="file" accept="image/*" #file style="visibility:hidden;" (change)='onFileSelected($event)'>
-          <div class='imageFrame' id='firstImageFrame'> 
-              <div id='maskHeigth'></div>                      
-              <div id='maskWidth'></div>                      
-          </div>
-        </div>
-      <div class='secondImage'>
-          <label for="uploadImage2" class="btn btn btn-outline-primary mb-2 mr-2 imageButtons">Deuxième image</label>
-          <input id='uploadImage2' type="file" accept="image/*" #file style="visibility:hidden;">
-          <div class='imageFrame' id='secondImageFrame'> 
-            <div id='maskHeigth'></div>           
-            <div id='maskWidth'></div>           
-          </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Ajouter</button>
-    </div>
-  </ng-template>
-
-  <button class="btn btn-outline-primary mb-2 mr-2" (click)="onOpenModal(content)">Ajouter une partie</button>
-
+      <button mat-raised-button (click)="openDialog()">Ajouter une partie</button>
 </div>
 
