@@ -11,7 +11,7 @@ import { ListePartiesComponent } from "./liste-parties/liste-parties.component";
 
 import { HeaderComponent } from "./common/header/header.component";
 import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
-import { AdminComponent, AdminDialog } from "./admin/admin.component";
+import { AdminComponent, DialogSimple, DialogMultiple } from "./admin/admin.component";
 import { LoginFormComponent } from "./vue-initiale/login-form/login-form.component";
 
 import { MatToolbarModule,
@@ -20,6 +20,7 @@ import { MatToolbarModule,
         MatButtonModule,
         MatDialogModule,
         MatDividerModule,
+        MatMenuModule,
       } from '@angular/material';
 
 import { ModalModule } from 'ngx-bootstrap';
@@ -42,8 +43,8 @@ const appRoutes: Routes = [
     AppComponent,
     ListePartiesComponent,
     LoginFormComponent,
-    ListePartiesComponent,
-    AdminDialog
+    DialogSimple,
+    DialogMultiple
   ],
   imports: [
     RouterModule.forRoot(
@@ -63,12 +64,14 @@ const appRoutes: Routes = [
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatMenuModule
   ],
   providers: [BasicService],
   bootstrap: [AppComponent],
   entryComponents: [
-    AdminDialog
+    DialogSimple,
+    DialogMultiple
   ],
 })
 export class AppModule { }

@@ -5,8 +5,9 @@ mat-card
     width: 40%;
     height: 330px;
     background-color: rgb(216, 178, 81); 
-    float:left;
     border-radius:20px;
+    display: flex;
+    flex-direction: column;
 }
 
 mat-card-header

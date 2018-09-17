@@ -41,3 +41,52 @@
         </div>
     </mat-card-content>
 </mat-card>
+<hr>
+
+<mat-card     
+[class.mat-elevation-z6]="!isElevatedActive"
+[class.mat-elevation-z10]="isElevatedActive"
+(mouseenter)="isElevatedActive = !isElevatedActive"
+(mouseleave)="isElevatedActive = !isElevatedActive">
+    <mat-card-header>
+        <h2 class='gameNameHeader'> Nissan Patrol </h2>
+    </mat-card-header>
+
+    <mat-card-content style="display:flex;">
+        <div class=image>
+            <img mat-card-image src='assets/NissanPatrol.jpg' class='gameImage mat-elevation-z6'
+            [class.mat-elevation-z6]="!isElevatedActive"
+            [class.mat-elevation-z10]="isElevatedActive">
+        </div>
+
+        <div class='topThree'>
+            <div class='topThreeHeaderDiv'>
+                <h2 class='topThreeHeader'> Top 3 </h2>
+            </div>
+            <div class='topThreeNumbersColumn'>
+                <span matBadge="1" matBadgeOverlap="true"></span> <br>
+                <span matBadge="2" matBadgeOverlap="true"></span> <br>
+                <span matBadge="3" matBadgeOverlap="true"></span> <br>
+            </div>
+            <div class='soloColumn'>
+                <h2 class='soloHeader'> Solo </h2>
+                <p class="topThreeSolo">-</p> <br>
+                <p class="topThreeSolo">-</p> <br>
+                <p class="topThreeSolo">-</p> 
+                <button mat-button class="newGameButtons mat-elevation-z6">Jouer</button>
+            </div>
+
+            <div class='oneVsOneColumn'>
+                <h2 class='oneVsOneHeader'> 1v1 </h2>
+                <p class="topThreeOneVsOne">-</p> <br>
+                <p class="topThreeOneVsOne">-</p> <br>
+                <p class="topThreeOneVsOne">-</p> 
+                <button mat-button class="newGameButtons mat-elevation-z6">Créer</button>
+            </div>    
+        </div>
+    </mat-card-content>
+</mat-card>
+<hr>
+
+
+
