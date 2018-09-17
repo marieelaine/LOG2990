@@ -1,16 +1,18 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from "@angular/core";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
 import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule, Routes } from "@angular/router";
-import { ListePartiesComponent } from './liste-parties/liste-parties.component';
+import { ListePartiesComponent } from "./liste-parties/liste-parties.component";
 
 import { HeaderComponent } from "./common/header/header.component";
 import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
 import { AdminComponent, AdminDialog } from "./admin/admin.component";
+import { LoginFormComponent } from "./vue-initiale/login-form/login-form.component";
 
 import { MatToolbarModule,
         MatCardModule,
@@ -40,6 +42,8 @@ const appRoutes: Routes = [
     AdminComponent,
     AppComponent,
     ListePartiesComponent,
+    LoginFormComponent,
+    ListePartiesComponent,
     AdminDialog
   ],
   imports: [
@@ -48,11 +52,11 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     ),
     BrowserModule,
+    ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     ModalModule,
-    FormsModule,
-    ReactiveFormsModule,
     NgbModule.forRoot(),
     BrowserAnimationsModule,
     MatDialogModule,
