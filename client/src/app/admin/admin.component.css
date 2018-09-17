@@ -111,3 +111,29 @@ mat-form-field
     font-size:14px;
     color:red;
 }
+
+.adminPageContainer
+{
+    margin-left:5%;    
+    margin-right:5%;    
+}
+
+.adminToolbar
+{
+    border-radius:20px;
+    margin-bottom:2%;
+    padding-left:3%;
+    padding-right:3%;
+}
+
+.stickyToolbar
+{
+    position:sticky; 
+    top: 2%;
+    z-index: 1000;
+}
+
+.toolbarButtons
+{
+    margin-right:2%;
+}

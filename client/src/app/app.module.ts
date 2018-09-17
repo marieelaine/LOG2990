@@ -18,6 +18,7 @@ import { MatToolbarModule,
         MatButtonModule,
         MatDialogModule,
         MatDividerModule,
+        MatMenuModule,
       } from '@angular/material';
 
 import { ModalModule } from 'ngx-bootstrap';
@@ -60,7 +61,8 @@ const appRoutes: Routes = [
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatMenuModule
   ],
   providers: [BasicService],
   bootstrap: [AppComponent],
