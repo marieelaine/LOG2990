@@ -10,7 +10,7 @@ import { ListePartiesComponent } from './liste-parties/liste-parties.component';
 
 import { HeaderComponent } from "./common/header/header.component";
 import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
-import { AdminComponent, AdminDialog } from "./admin/admin.component";
+import { AdminComponent, DialogSimple, DialogMultiple } from "./admin/admin.component";
 
 import { MatToolbarModule,
         MatCardModule,
@@ -41,7 +41,8 @@ const appRoutes: Routes = [
     AdminComponent,
     AppComponent,
     ListePartiesComponent,
-    AdminDialog
+    DialogSimple,
+    DialogMultiple
   ],
   imports: [
     RouterModule.forRoot(
@@ -67,7 +68,8 @@ const appRoutes: Routes = [
   providers: [BasicService],
   bootstrap: [AppComponent],
   entryComponents: [
-    AdminDialog
+    DialogSimple,
+    DialogMultiple
   ],
 })
 export class AppModule { }

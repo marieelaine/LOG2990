@@ -144,7 +144,7 @@
     ],
     "max-classes-per-file": [
       true,
-      2
+      3
     ],
     "no-unsafe-finally": true,
     "no-unused-variable": true,

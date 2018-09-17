@@ -2,7 +2,8 @@ import { Component, OnInit, Inject } from "@angular/core";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 export interface DialogData {
-  gameName: string;
+  simpleGameName: string;
+  multipleGameName: string;
 }
 
 @Component({
@@ -20,9 +21,18 @@ export class AdminComponent implements OnInit {
   constructor(public dialog: MatDialog) {
   }
 
-  openDialog(): void {
+  openDialogSimple(): void {
     this.gameName = "";
-    this.dialog.open(AdminDialog, {
+    this.dialog.open(DialogSimple, {
+      height: '433px',
+      width: '600px',
+      data: {name: this.gameName}
+    });
+  }
+
+  openDialogMultiple(): void {
+    this.gameName = "";
+    this.dialog.open(DialogMultiple, {
       height: '433px',
       width: '600px',
       data: {name: this.gameName}
@@ -40,15 +50,15 @@ export class AdminComponent implements OnInit {
 
 @Component({
   selector: 'app-admin',
-  templateUrl: 'admin-dialog.component.html',
+  templateUrl: 'dialog-simple.component.html',
   styleUrls: ["./admin.component.css"]
 })
-export class AdminDialog {
+export class DialogSimple {
 
   errorMessage: string;
 
   constructor(
-    public dialogRef: MatDialogRef<AdminDialog>,
+    public dialogRef: MatDialogRef<DialogSimple>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
       this.errorMessage = "";
     }
@@ -57,10 +67,39 @@ export class AdminDialog {
     this.dialogRef.close();
   }
 
-  onAddClick(): void {
-    if (this.data.gameName === "" || this.data.gameName === undefined) {
+  onAddSimpleGameClick(): void {
+    if (this.data.simpleGameName === "" || this.data.simpleGameName === undefined) {
       // Regarder s'il y a bien deux images
       this.errorMessage = "*Le jeu doit avoir un nom et deux images";
+    } else {
+      this.dialogRef.close();
+    }
+  }
+}
+
+@Component({
+  selector: 'app-admin',
+  templateUrl: 'dialog-multiple.component.html',
+  styleUrls: ["./admin.component.css"]
+})
+export class DialogMultiple {
+
+  errorMessage: string;
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogMultiple>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+      this.errorMessage = "";
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  onAddMultipleGameClick(): void {
+    if (this.data.multipleGameName === "" || this.data.multipleGameName === undefined) {
+      // Regarder s'il y a bien deux images
+      this.errorMessage = "*Message d'erreur...";
     } else {
       this.dialogRef.close();
     }
