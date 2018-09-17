@@ -11,14 +11,18 @@ import { ListePartiesComponent } from './liste-parties/liste-parties.component';
 import { HeaderComponent } from "./common/header/header.component";
 import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
 import { AdminComponent, AdminDialog } from "./admin/admin.component";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MatToolbarModule, MatCardModule, MatBadgeModule, MatButtonModule} from '@angular/material';
+import { MatToolbarModule,
+        MatCardModule,
+        MatBadgeModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatDividerModule,
+      } from '@angular/material';
 
 import { ModalModule } from 'ngx-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MatDialogModule, MatFormFieldModule, MatDividerModule, MatCardModule, MatButtonModule } from '@angular/material';
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
@@ -46,20 +50,17 @@ const appRoutes: Routes = [
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatBadgeModule,
-    MatButtonModule,
     ModalModule,
     FormsModule,
     ReactiveFormsModule,
     NgbModule.forRoot(),
-    MatDialogModule,
     BrowserAnimationsModule,
-    MatFormFieldModule,
+    MatDialogModule,
     MatDividerModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatToolbarModule,
+    MatBadgeModule
   ],
   providers: [BasicService],
   bootstrap: [AppComponent],
