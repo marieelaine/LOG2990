@@ -100,7 +100,6 @@ mat-form-field
     margin-top:3%;
     margin-bottom:3%;
     float:right;
-    /* border:solid 1px grey; */
     border-radius:5px;
     margin-right:2%;
 }
@@ -115,7 +114,7 @@ mat-form-field
 .adminPageContainer
 {
     margin-left:2%;    
-    margin-right:2%;    
+    margin-right:2%; 
 }
 
 .adminToolbar
@@ -127,8 +126,10 @@ mat-form-field
 
 .stickyToolbar
 {
-    position:sticky; 
-    top: 2%;
+    position:sticky;
+    position: -webkit-sticky;
+    display:flex; 
+    top:2%;
     z-index: 1000; 
 }
 

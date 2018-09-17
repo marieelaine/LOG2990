@@ -9,9 +9,9 @@ import { catchError, map } from "rxjs/operators";
 import { UserService } from "./user.service";
 import { Observable } from "rxjs";
 
-@Injectable({ providedIn: "root" })
-export class UniqueUserValidator implements AsyncValidator {
-  public constructor(private userService: UserService) {}
+// @Injectable({ providedIn: "root" })
+// export class UniqueUserValidator implements AsyncValidator {
+//   public constructor(private userService: UserService) {}
 
 //   public validate(
 //     ctrl: AbstractControl
@@ -23,20 +23,20 @@ export class UniqueUserValidator implements AsyncValidator {
 //   }
 // }
 
-@Directive({
-  selector: "[appUniqueAlterEgo]",
-  providers: [
-    {
-      provide: NG_ASYNC_VALIDATORS,
-      useExisting: forwardRef(() => UniqueUserValidator),
-      multi: true
-    }
-  ]
-})
-export class UniqueUserValidatorDirective {
-  public constructor(private validator: UniqueUserValidator) {}
+// @Directive({
+//   selector: "[appUniqueAlterEgo]",
+//   providers: [
+//     {
+//       provide: NG_ASYNC_VALIDATORS,
+//       useExisting: forwardRef(() => UniqueUserValidator),
+//       multi: true
+//     }
+//   ]
+// })
+// export class UniqueUserValidatorDirective {
+//   public constructor(private validator: UniqueUserValidator) {}
 
-  public validate(control: AbstractControl): void {
-    this.validator.validate(control);
-  }
-}
+//   public validate(control: AbstractControl): void {
+//     this.validator.validate(control);
+//   }
+// }
