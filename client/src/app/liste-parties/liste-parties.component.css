@@ -1,13 +1,33 @@
+.simpleGamesCardContainer
+{
+    margin-left:5%;
+    margin-top:2%;
+    width: 40%;
+    height:100%;
+    justify-content: center;
+    display:block;
+    float:left;
+}
+
+.simpleAndMultipleGamesHeader
+{
+    text-align: center;
+    font-style: italic;
+}
+
+hr
+{
+    width:95%;
+}
+
 mat-card
 {
-    margin-left:2%;
     border: solid 2px grey;
-    width: 40%;
     height: 330px;
+    width: 100%;
     background-color: rgb(216, 178, 81); 
     border-radius:20px;
-    display: flex;
-    flex-direction: column;
+    margin-bottom:2%;
 }
 
 mat-card-header
@@ -118,4 +138,13 @@ mat-card-header
     font-style:italic;
     border:solid 1px rgb(132, 57, 252);
     border-radius:10px;
+}
+
+.multipleGamesCardContainer
+{
+    float:right;
+    margin-right:5%;
+    margin-top:2%;
+    width:40%;
+    height:100%;
 }
