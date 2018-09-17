@@ -114,14 +114,13 @@ mat-form-field
 
 .adminPageContainer
 {
-    margin-left:5%;    
-    margin-right:5%;    
+    margin-left:2%;    
+    margin-right:2%;    
 }
 
 .adminToolbar
 {
     border-radius:20px;
-    margin-bottom:2%;
     padding-left:3%;
     padding-right:3%;
 }
