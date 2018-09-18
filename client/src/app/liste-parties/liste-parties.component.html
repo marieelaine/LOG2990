@@ -1,137 +1,64 @@
-<div style='height: 100%; width:100%'>
-<div class='simpleGamesCardContainer'>
-    <h2 class='simpleAndMultipleGamesHeader'>Parties en mode point de vue simple</h2>
-    <mat-card     
-    [class.mat-elevation-z6]="!isElevatedActive"
-    [class.mat-elevation-z10]="isElevatedActive"
-    (mouseenter)="isElevatedActive = !isElevatedActive"
-    (mouseleave)="isElevatedActive = !isElevatedActive">
-        <mat-card-header>
-            <h2 class='gameNameHeader'> Nissan Patrol </h2>
-        </mat-card-header>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>    
 
-        <mat-card-content style="display:flex;">
-            <div class=image>
-                <img mat-card-image src='assets/NissanPatrol.jpg' class='gameImage mat-elevation-z6'
-                [class.mat-elevation-z6]="!isElevatedActive"
-                [class.mat-elevation-z10]="isElevatedActive">
-            </div>
-
-            <div class='topThree'>
-                <div class='topThreeHeaderDiv'>
-                    <h2 class='topThreeHeader'> Top 3 </h2>
+<div class="gameListContainer container-fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2 class='simpleAndMultipleGamesHeader'>Parties en mode point de vue simple</h2>
+            <hr>
+            <mat-card class='container-fluid'     
+            [class.mat-elevation-z6]="!isElevatedActive"
+            [class.mat-elevation-z10]="isElevatedActive"
+            (mouseenter)="isElevatedActive = !isElevatedActive"
+            (mouseleave)="isElevatedActive = !isElevatedActive">
+                <mat-card-header>
+                    <h2 class='gameNameHeader'> Nissan Patrol </h2>
+                </mat-card-header>
+                <div class='row' style="height:22%;">
+                    <div class='col-sm-6'>
+                        <img src='assets/NissanPatrol.jpg' class='gameImage img-responsive mat-elevation-z6'
+                        [class.mat-elevation-z6]="!isElevatedActive"
+                        [class.mat-elevation-z10]="isElevatedActive">
+                    </div>                    
+                    <div class='col-sm-6' style='line-height:2vw; display: inline;'>
+                        <div class='row'>
+                            <div class='col-sm-2'></div>
+                            <div class='col-sm-8' style='margin-left:1%'>
+                                <h2 class='topThreeHeaders'>Top 3</h2>
+                            </div>
+                            <div class='col-sm-2'></div>
+                        </div>
+                        <div class='col-sm-1 text-center topThreeNumbersColumn'>
+                            <span matBadge="1" matBadgeOverlap="true"></span> <br>
+                            <span matBadge="2" matBadgeOverlap="true"></span> <br>
+                            <span matBadge="3" matBadgeOverlap="true"></span> <br>
+                        </div>
+                        <div class='col-sm-4 text-center' style="line-height:2vw">
+                            <h2 class='topThreeHeaders'> Solo </h2>
+                            <p>-</p> 
+                            <p>-</p> 
+                            <p>-</p> 
+                            <button class="mat-elevation-z6 newGameButtons btn btn-primary btn-block" style="display:block">Jouer</button>
+                        </div>
+                        <div class='col-sm-2' style='height:100%;'></div>
+                        <div class='col-sm-4 text-center' style="line-height:2vw">
+                            <h2 class='topThreeHeaders'> 1v1 </h2> 
+                            <p>-</p> 
+                            <p>-</p> 
+                            <p>-</p> 
+                            <button class=" mat-elevation-z6 newGameButtons btn btn-primary btn-block">Créer</button>
+                        </div>
+                    </div>
                 </div>
-                <div class='topThreeNumbersColumn'>
-                    <span matBadge="1" matBadgeOverlap="true"></span> <br>
-                    <span matBadge="2" matBadgeOverlap="true"></span> <br>
-                    <span matBadge="3" matBadgeOverlap="true"></span> <br>
-                </div>
-                <div class='soloColumn'>
-                    <h2 class='soloHeader'> Solo </h2>
-                    <p class="topThreeSolo">-</p> <br>
-                    <p class="topThreeSolo">-</p> <br>
-                    <p class="topThreeSolo">-</p> 
-                    <button mat-button class="newGameButtons mat-elevation-z6">Jouer</button>
-                </div>
-
-                <div class='oneVsOneColumn'>
-                    <h2 class='oneVsOneHeader'> 1v1 </h2>
-                    <p class="topThreeOneVsOne">-</p> <br>
-                    <p class="topThreeOneVsOne">-</p> <br>
-                    <p class="topThreeOneVsOne">-</p> 
-                    <button mat-button class="newGameButtons mat-elevation-z6">Créer</button>
-                </div>    
-            </div>
-        </mat-card-content>
-    </mat-card>
-    <mat-card     
-    [class.mat-elevation-z6]="!isElevatedActive"
-    [class.mat-elevation-z10]="isElevatedActive"
-    (mouseenter)="isElevatedActive = !isElevatedActive"
-    (mouseleave)="isElevatedActive = !isElevatedActive">
-        <mat-card-header>
-            <h2 class='gameNameHeader'> Nissan Patrol </h2>
-        </mat-card-header>
-
-        <mat-card-content style="display:flex;">
-            <div class=image>
-                <img mat-card-image src='assets/NissanPatrol.jpg' class='gameImage mat-elevation-z6'
-                [class.mat-elevation-z6]="!isElevatedActive"
-                [class.mat-elevation-z10]="isElevatedActive">
-            </div>
-
-            <div class='topThree'>
-                <div class='topThreeHeaderDiv'>
-                    <h2 class='topThreeHeader'> Top 3 </h2>
-                </div>
-                <div class='topThreeNumbersColumn'>
-                    <span matBadge="1" matBadgeOverlap="true"></span> <br>
-                    <span matBadge="2" matBadgeOverlap="true"></span> <br>
-                    <span matBadge="3" matBadgeOverlap="true"></span> <br>
-                </div>
-                <div class='soloColumn'>
-                    <h2 class='soloHeader'> Solo </h2>
-                    <p class="topThreeSolo">-</p> <br>
-                    <p class="topThreeSolo">-</p> <br>
-                    <p class="topThreeSolo">-</p> 
-                    <button mat-button class="newGameButtons mat-elevation-z6">Jouer</button>
-                </div>
-
-                <div class='oneVsOneColumn'>
-                    <h2 class='oneVsOneHeader'> 1v1 </h2>
-                    <p class="topThreeOneVsOne">-</p> <br>
-                    <p class="topThreeOneVsOne">-</p> <br>
-                    <p class="topThreeOneVsOne">-</p> 
-                    <button mat-button class="newGameButtons mat-elevation-z6">Créer</button>
-                </div>    
-            </div>
-        </mat-card-content>
-    </mat-card>
-</div>
-<div class='multipleGamesCardContainer'>
-    <h2 class='simpleAndMultipleGamesHeader'>Parties en mode points de vue multiples</h2>
-    <mat-card     
-    [class.mat-elevation-z6]="!isElevatedActive"
-    [class.mat-elevation-z10]="isElevatedActive"
-    (mouseenter)="isElevatedActive = !isElevatedActive"
-    (mouseleave)="isElevatedActive = !isElevatedActive">
-        <mat-card-header>
-            <h2 class='gameNameHeader'> Nissan Patrol </h2>
-        </mat-card-header>
-
-        <mat-card-content style="display:flex;">
-            <div class=image>
-                <img mat-card-image src='assets/NissanPatrol.jpg' class='gameImage mat-elevation-z6'
-                [class.mat-elevation-z6]="!isElevatedActive"
-                [class.mat-elevation-z10]="isElevatedActive">
-            </div>
-
-            <div class='topThree'>
-                <div class='topThreeHeaderDiv'>
-                    <h2 class='topThreeHeader'> Top 3 </h2>
-                </div>
-                <div class='topThreeNumbersColumn'>
-                    <span matBadge="1" matBadgeOverlap="true"></span> <br>
-                    <span matBadge="2" matBadgeOverlap="true"></span> <br>
-                    <span matBadge="3" matBadgeOverlap="true"></span> <br>
-                </div>
-                <div class='soloColumn'>
-                    <h2 class='soloHeader'> Solo </h2>
-                    <p class="topThreeSolo">-</p> <br>
-                    <p class="topThreeSolo">-</p> <br>
-                    <p class="topThreeSolo">-</p> 
-                    <button mat-button class="newGameButtons mat-elevation-z6">Jouer</button>
-                </div>
-
-                <div class='oneVsOneColumn'>
-                    <h2 class='oneVsOneHeader'> 1v1 </h2>
-                    <p class="topThreeOneVsOne">-</p> <br>
-                    <p class="topThreeOneVsOne">-</p> <br>
-                    <p class="topThreeOneVsOne">-</p> 
-                    <button mat-button class="newGameButtons mat-elevation-z6">Créer</button>
-                </div>    
-            </div>
-        </mat-card-content>
-    </mat-card>
-</div>
+            </mat-card>
+        </div>     
+        <div class="col-sm-6">
+            <h2 class='simpleAndMultipleGamesHeader'>Parties en mode point de vue simple</h2>
+            <hr>
+    </div> 
 </div>
