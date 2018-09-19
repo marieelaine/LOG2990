@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"version":3,"file":"sample.spec.js","sourceRoot":"/home/xelluto/git/log2990/server/app/","sources":["server/app/routes/sample.spec.ts"],"names":[],"mappings":";;AAAA,+BAA8B;AAE9B,EAAE,CAAC,2BAA2B,EAAE,CAAC,IAAc,EAAE,EAAE;IAC/C,aAAM,CAAC,EAAE,CAAC,IAAI,CAAC,CAAC;IAChB,IAAI,EAAE,CAAC;AACX,CAAC,CAAC,CAAC"}
+=======
+{"version":3,"file":"sample.spec.js","sourceRoot":"C:/Users/BERNARD/Desktop/LOG2990/server/app/","sources":["server/app/routes/sample.spec.ts"],"names":[],"mappings":";;AAAA,+BAA8B;AAE9B,EAAE,CAAC,2BAA2B,EAAE,CAAC,IAAc,EAAE,EAAE;IAC/C,aAAM,CAAC,EAAE,CAAC,IAAI,CAAC,CAAC;IAChB,IAAI,EAAE,CAAC;AACX,CAAC,CAAC,CAAC"}
+>>>>>>> master
