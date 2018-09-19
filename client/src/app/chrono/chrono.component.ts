@@ -38,6 +38,20 @@ export class ChronoComponent implements OnInit {
       clearInterval(this.interval);
   }
 
+  getTime(): number {
+
+      return (60 * this.minutes + this.secondes) ;
+  }
+
+  reset(){
+      this.minutes = 0;
+      this.minutesString = "00";
+      this.secondes = 0;
+      this.secondsString = "00";
+      this.running = false;
+      clearInterval(this.interval);
+  }
+
   constructor() { }
 
   ngOnInit() {

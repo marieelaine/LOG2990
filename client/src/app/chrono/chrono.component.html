@@ -1,4 +1,6 @@
-
-<div><button (click)="startTimer()">Start</button></div>
-<div><button (click)="stopTimer()">Stop</button></div>
+<div>
+    <span><button (click)="startTimer()">Start</button></span>
+    <span><button (click)="stopTimer()">Stop</button></span>
+    <span><button (click)="reset()">Reset</button></span>
+</div>
 <div>{{minutesString}}:{{secondsString}}</div>
