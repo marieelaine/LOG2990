@@ -14,6 +14,8 @@ import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
 import { AdminComponent, DialogSimple, DialogMultiple } from "./admin/admin.component";
 import { LoginFormComponent } from "./vue-initiale/login-form/login-form.component";
 
+
+
 import { MatToolbarModule,
         MatCardModule,
         MatBadgeModule,
@@ -25,12 +27,14 @@ import { MatToolbarModule,
 
 import { ModalModule } from 'ngx-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ChronoComponent } from './chrono/chrono.component';
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
   { path: "header", component: HeaderComponent },
   { path: "admin", component: AdminComponent },
   { path: "liste-parties", component: ListePartiesComponent },
+  { path: "chrono", component: ChronoComponent },
 
 ];
 
@@ -44,7 +48,8 @@ const appRoutes: Routes = [
     ListePartiesComponent,
     LoginFormComponent,
     DialogSimple,
-    DialogMultiple
+    DialogMultiple,
+    ChronoComponent
   ],
   imports: [
     RouterModule.forRoot(
