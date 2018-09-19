@@ -53,7 +53,7 @@ const appRoutes: Routes = [
     LoginFormComponent,
     DialogSimple,
     DialogMultiple,
-    ChronoComponent
+    ChronoComponent,
     PartieSoloComponent,
   ],
   imports: [
