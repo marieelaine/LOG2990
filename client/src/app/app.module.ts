@@ -29,6 +29,7 @@ import { ModalModule } from 'ngx-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChronoComponent } from './chrono/chrono.component';
 import { PartieSoloComponent } from './partie-solo/partie-solo.component';
+import { PartieSimpleComponent } from './liste-parties/partie-simple/partie-simple.component';
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
@@ -55,6 +56,7 @@ const appRoutes: Routes = [
     DialogMultiple,
     ChronoComponent,
     PartieSoloComponent,
+    PartieSimpleComponent,
   ],
   imports: [
     RouterModule.forRoot(
