@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
-import { User, PersonalData} from "../login-form/user";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { User} from "../login-form/user";
+import { HttpClient } from "@angular/common/http";
 declare var particlesJS: any;
 
 @Component({
@@ -9,12 +10,15 @@ declare var particlesJS: any;
   templateUrl: "./login-form.component.html",
   styleUrls: ["./login-form.component.css"]
 })
+
 export class LoginFormComponent implements OnInit {
+
+  public BASE_URL: string = "http://localhost:3000/";
   public loginForm: FormGroup;
   public submitted: boolean = false;
   public userList: Array<User>;
 
-  public constructor(private router: Router) {
+  public constructor(private router: Router, private http: HttpClient) {
     this.loginForm = this.createFormGroup();
   }
 
@@ -29,9 +33,6 @@ export class LoginFormComponent implements OnInit {
     return new FormGroup({
       personalData: new FormGroup({
         username: new FormControl("", [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(12),
           Validators.pattern("^[A-Za-z\d]+$")
         ])
       })
@@ -43,8 +44,9 @@ export class LoginFormComponent implements OnInit {
     particlesJS.load("particles-js", "assets/particles.json", null);
   }
 
-  public get username(): any {
-    return this.loginForm.get("username");
-  }
-
+  // public checkUsername(): Boolean {
+  //   return this.http.get<string>(this.BASE_URL).pipe(
+  //       catchError(this.handleError<Boolean>("checkUsername"))
+  //   );
+  // }
 }
