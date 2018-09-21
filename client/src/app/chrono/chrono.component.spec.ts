@@ -22,4 +22,14 @@ describe('ChronoComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it ("should return value 0", () => {
+    expect(component.getTime()).toBe(0);
+  });
+
+  it ("should return value 0", () => {
+    component.startTimer()
+    setTimeout(expect(component.getTime()).toBe(0), 5000);
+    
+  });
 });
