@@ -34,6 +34,15 @@ let BaseDeDonnees = class BaseDeDonnees {
             yield this.mongoose.connect(this.mongoURL);
         });
     }
+    obtenirUsername(username) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let name;
+            yield this.model.findById(username)
+                .then((res) => { name = res.toObject(); })
+                .catch(() => { });
+        });
+    }
+    ;
 };
 BaseDeDonnees = __decorate([
     inversify_1.injectable(),

@@ -17,7 +17,6 @@ const http = require("http");
 const types_1 = require("./types");
 const inversify_1 = require("inversify");
 const express = require("express");
-const mongoose_1 = require("mongoose");
 // import * as bodyParser from "body-parser"
 let Server = class Server {
     constructor(application) {
@@ -82,11 +81,6 @@ exports.Server = Server;
 // Create a new express application instance
 const app = express();
 const router = express.Router();
-// Create var of Mongoose type
-const mongoose = new mongoose_1.Mongoose();
-// Connect to mongoDB database
-const mongoURL = "mongodb://admin:admin1@ds239692.mlab.com:39692/log2990-05";
-mongoose.connect(mongoURL);
 // Routing
 // tslint:disable-next-line:typedef
 router.get("/", (request, response) => {

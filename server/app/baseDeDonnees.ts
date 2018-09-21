@@ -1,5 +1,6 @@
 import { injectable } from "inversify";
 import {Mongoose, Model, Document, Schema} from "mongoose";
+import {PersonalData} from "../../client/src/app/vue-initiale/login-form/user";
 
 @injectable()
 export class BaseDeDonnees {
@@ -20,5 +21,14 @@ export class BaseDeDonnees {
 
     private async seConnecter(): Promise<void> {
         await this.mongoose.connect(this.mongoURL);
+    }
+
+    private async obtenirUsername(username: String): Promise<void> {
+        let name: PersonalData;
+
+        await this.model.findById(username)
+            .then((res: Document) => { name = res.toObject(); })
+            .catch(() => {});
+            });
     }
 }

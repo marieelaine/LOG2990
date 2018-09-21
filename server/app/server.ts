@@ -70,13 +70,6 @@ export class Server {
 const app: express.Application = express();
 const router: express.Router = express.Router();
 
-// Create var of Mongoose type
-const mongoose: Mongoose = new Mongoose();
-
-// Connect to mongoDB database
-const mongoURL: string = "mongodb://admin:admin1@ds239692.mlab.com:39692/log2990-05";
-mongoose.connect(mongoURL);
-
 // Routing
 // tslint:disable-next-line:typedef
 router.get("/", (request, response) => {
