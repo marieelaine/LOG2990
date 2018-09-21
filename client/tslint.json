@@ -33,7 +33,7 @@
       140
     ],
     "member-access": [
-      true,
+      false,
       "check-accessor",
       "check-constructor",
       "check-parameter-property"
@@ -52,7 +52,7 @@
     "no-arg": true,
     "no-bitwise": true,
     "no-console": [
-      true,
+      false,
       "debug",
       "info",
       "time",
@@ -77,7 +77,7 @@
     "no-unnecessary-initializer": true,
     "no-unused-expression": true,
     "no-use-before-declare": true,
-    "no-var-keyword": true,
+    "no-var-keyword": false,
     "object-literal-sort-keys": false,
     "one-line": [
       true,
@@ -88,7 +88,7 @@
     ],
     "prefer-const": true,
     "quotemark": [
-      true,
+      false,
       "double",
       "avoid-escape"
     ],
@@ -134,7 +134,7 @@
     "no-output-rename": true,
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
-    "component-class-suffix": true,
+    "component-class-suffix": false,
     "directive-class-suffix": true,
     "no-sparse-arrays": true,
     "no-irregular-whitespace": true,
@@ -144,7 +144,7 @@
     ],
     "max-classes-per-file": [
       true,
-      2
+      3
     ],
     "no-unsafe-finally": true,
     "no-unused-variable": true,
@@ -199,9 +199,7 @@
     ],
     "switch-default": true,
     "typedef": [
-      true,
-      "call-signature",
-      "parameter",
+      false,
       "member-variable-declaration",
       "property-declaration",
       "variable-declaration"

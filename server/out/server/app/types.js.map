@@ -1,1 +1,5 @@
-{"version":3,"file":"types.js","sourceRoot":"C:/Users/charl/git/log2990/server/app/","sources":["server/app/types.ts"],"names":[],"mappings":";;AAAA,kBAAgB;IACR,MAAM,EAAE,MAAM,CAAC,QAAQ,CAAC;IACxB,WAAW,EAAE,MAAM,CAAC,aAAa,CAAC;IAClC,MAAM,EAAE,MAAM,CAAC,QAAQ,CAAC;IACxB,KAAK,EAAE,MAAM,CAAC,OAAO,CAAC;CAC7B,CAAC"}
+<<<<<<< HEAD
+{"version":3,"file":"types.js","sourceRoot":"/home/xelluto/git/log2990/server/app/","sources":["server/app/types.ts"],"names":[],"mappings":";;AAAA,kBAAgB;IACR,MAAM,EAAE,MAAM,CAAC,QAAQ,CAAC;IACxB,WAAW,EAAE,MAAM,CAAC,aAAa,CAAC;IAClC,MAAM,EAAE,MAAM,CAAC,QAAQ,CAAC;IACxB,KAAK,EAAE,MAAM,CAAC,OAAO,CAAC;CAC7B,CAAC"}
+=======
+{"version":3,"file":"types.js","sourceRoot":"C:/Users/BERNARD/Desktop/LOG2990/server/app/","sources":["server/app/types.ts"],"names":[],"mappings":";;AAAA,kBAAgB;IACR,MAAM,EAAE,MAAM,CAAC,QAAQ,CAAC;IACxB,WAAW,EAAE,MAAM,CAAC,aAAa,CAAC;IAClC,MAAM,EAAE,MAAM,CAAC,QAAQ,CAAC;IACxB,KAAK,EAAE,MAAM,CAAC,OAAO,CAAC;CAC7B,CAAC"}
+>>>>>>> master

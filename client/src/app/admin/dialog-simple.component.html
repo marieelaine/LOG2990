@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Ajouter une partie en point de vue simple</h1>
+<mat-divider></mat-divider>
+<div mat-dialog-content>
+    <mat-card class='addGameCard'>
+        <div class='gameName'>
+            <input matInput [(ngModel)]="data.simpleGameName" type='text' placeholder="Nom de la partie" class="gameNameInput">
+        </div>
+        <div class='firstImage'>
+            <label for="uploadImage1" class="btn btn btn-outline-primary mb-2 mr-2 imageButtons">Première image</label>
+            <input id='uploadImage1' type="file" accept="image/*" #file style="visibility:hidden;" (change)='onFileSelected($event)'>
+            <div class='imageFrame' id='firstImageFrame'> 
+                <div id='maskHeigth'></div>                      
+                <div id='maskWidth'></div>                      
+            </div>
+        </div>
+        <div class='secondImage'>
+            <label for="uploadImage2" class="btn btn btn-outline-primary mb-2 mr-2 imageButtons">Deuxième image</label>
+            <input id='uploadImage2' type="file" accept="image/*" #file style="visibility:hidden;">
+            <div class='imageFrame' id='secondImageFrame'> 
+                <div id='maskHeigth'></div>           
+                <div id='maskWidth'></div>           
+            </div>
+        </div>
+    </mat-card>
+    <button mat-button (click)='onAddSimpleGameClick()' class='dialogButtons mat-elevation-z6'>Ajouter</button>
+    <button mat-button (click)="onNoClick()" class='dialogButtons mat-elevation-z6'>Annuler</button>
+    <p id='errorMessage'> {{ errorMessage }} </p>
+</div>
