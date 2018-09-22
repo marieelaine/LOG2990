@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PartieSimpleComponent } from './partie-simple/partie-simple.component';
 
 @Component({
   selector: 'app-liste-parties',
@@ -7,11 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListePartiesComponent implements OnInit {
 
-  isElevatedActive = false;
+  partieSimpleDiv: HTMLElement;
+  listeParties: PartieSimpleComponent[] = [
+    { title: 'Nissan Patrol', imagePath: 'assets/NissanPatrol.jpg', times: [], isElevatedActive: false },
+    { title: 'Jeep Patrol', imagePath: 'assets/NissanPatrol.jpg', times: [], isElevatedActive: false }
+];
 
   constructor() { }
 
   ngOnInit() {
   }
-
 }
