@@ -6,7 +6,7 @@ import { Route } from "./routes/index";
 
 @injectable()
 export class Routes {
-
+    public readonly mainRoute: string = "/";
     public constructor(@inject(Types.Index) private index: Route.Index) {}
 
     public get routes(): Router {
