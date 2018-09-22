@@ -12,20 +12,9 @@
             formControlName="username" 
             placeholder="Username" 
             class="form-control" 
-            required minlength="3" 
+            required minlength="2" 
             maxlength="12"
-            unique
-            [ngClass]="{'is-invalid': (loginForm.get('username').touched || 
-                                            loginForm.get('username').dirty) &&
-                                            !loginForm.get('username').valid }">
-            <span class="invalid-feedback">
-              <span *ngIf="loginForm.get('username').errors?.required">
-                Veuillez entre votre nom d'utilisateur.
-              </span>
-              <span *ngIf="loginForm.get('username').errors?.minlength">
-                Votre nom doit être d'au moins 3 caractères.
-              </span>
-            </span>
+            unique>
           <button 
             type="submit" 
             class="btn btn-default btn-block btn-custom" 
