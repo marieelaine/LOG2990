@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PartieSimpleComponent } from './partie-simple/partie-simple.component';
 
 @Component({
   selector: 'app-liste-parties',
@@ -9,12 +8,17 @@ import { PartieSimpleComponent } from './partie-simple/partie-simple.component';
 export class ListePartiesComponent implements OnInit {
 
   partieSimpleDiv: HTMLElement;
-  listeParties: PartieSimpleComponent[] = [
+  listePartiesSimples: PartieSimple[] = [
     { title: 'Nissan Patrol', imagePath: 'assets/NissanPatrol.jpg', times: [], isElevatedActive: false,
       titleWithoutFirstLetter: this.getTitleWithoutFirstLetter('Nissan Patrol') },
     { title: 'Jerry', imagePath: 'assets/Jerry.png', times: [], isElevatedActive: false,
       titleWithoutFirstLetter: this.getTitleWithoutFirstLetter('Jerry') }
-];
+  ];
+
+  listePartiesMultiples: PartieMultiple[] = [
+    { title: 'Mona Lisa', imagePath: 'assets/monaLisa.jpg', times: [], isElevatedActive: false,
+      titleWithoutFirstLetter: this.getTitleWithoutFirstLetter('Mona Lisa') },
+  ];
 
   getTitleWithoutFirstLetter(title: string): String {
   return title.substr(1, title.length - 1);
@@ -23,5 +27,29 @@ export class ListePartiesComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+}
+
+export class PartieSimple {
+
+  title: String;
+  imagePath: String;
+  times: number[];
+  isElevatedActive = false;
+  titleWithoutFirstLetter: String;
+
+  constructor() {
+  }
+}
+
+export class PartieMultiple {
+
+  title: String;
+  imagePath: String;
+  times: number[];
+  isElevatedActive = false;
+  titleWithoutFirstLetter: String;
+
+  constructor() {
   }
 }

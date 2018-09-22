@@ -23,7 +23,6 @@ import { MatToolbarModule,
 import { ListePartiesComponent } from "./liste-parties/liste-parties.component";
 import { ChronoComponent } from './chrono/chrono.component';
 import { PartieSoloComponent } from './partie-solo/partie-solo.component';
-import { PartieSimpleComponent } from './liste-parties/partie-simple/partie-simple.component';
 import { HeaderComponent } from "./common/header/header.component";
 import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
 import { AdminComponent, DialogSimple, DialogMultiple } from "./admin/admin.component";
@@ -54,7 +53,6 @@ const appRoutes: Routes = [
     DialogMultiple,
     ChronoComponent,
     PartieSoloComponent,
-    PartieSimpleComponent,
   ],
   imports: [
     RouterModule.forRoot(
