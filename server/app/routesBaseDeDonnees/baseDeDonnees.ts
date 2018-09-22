@@ -1,7 +1,8 @@
 import { injectable } from "inversify";
 import "reflect-metadata";
-import { Request, Response } from "express";
-import {Mongoose, Model, Document, Schema} from "mongoose";
+import { Request, Response} from "express";
+import { Mongoose, Model, Document, Schema } from "mongoose";
+import uniqueValidator = require("mongoose-unique-validator");
 import {User} from "../../../client/src/app/vue-initiale/login-form/user";
 
 export module RouteBaseDeDonnees {
@@ -16,8 +17,13 @@ export module RouteBaseDeDonnees {
         public constructor() {
             this.mongoose = new Mongoose();
             this.schema = new Schema({
-                username: String
+                username: {
+                    type: String,
+                    required: true,
+                    unique: true
+                }
             });
+            this.schema.plugin(uniqueValidator);
             this.modelUser = this.mongoose.model("users", this.schema);
             this.seConnecter();
         }
@@ -26,12 +32,18 @@ export module RouteBaseDeDonnees {
             await this.mongoose.connect(this.mongoURL);
         }
 
-        private async ajouterUser(usagerJson: {}): Promise<void> {
+        private async ajouterUser(usagerJson: {}, res: Response): Promise<Response> {
             const usager: Document = new this.modelUser(usagerJson);
-            await this.modelUser.create(usager);
+            try {
+                await usager.save();
+
+                return res.status(201).json(usager);
+              } catch (err) {
+                return res.status(501).json(err);
+            }
         }
 
-        private async obtenirUsername(identifiant: String): Promise<User> {
+        private async obtenirUserId(identifiant: String): Promise<User> {
             let usager: User = new User();
 
             await this.modelUser.findById(identifiant)
@@ -43,11 +55,12 @@ export module RouteBaseDeDonnees {
         }
 
         public async requeteAjouterUser(req: Request, res: Response): Promise<void> {
-            res.send(await this.ajouterUser(req.body));
+            res.send(await this.ajouterUser(req.body, res));
         }
 
-        public async requeteUser(req: Request, res: Response): Promise<void> {
-            res.send(await this.obtenirUsername(req.params.id));
+        public async requeteUserId(req: Request, res: Response): Promise<void> {
+            res.send(await this.obtenirUserId(req.params.id));
         }
+
     }
 }

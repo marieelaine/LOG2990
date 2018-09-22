@@ -1,7 +1,7 @@
 import { injectable, inject } from "inversify";
-import { Router, Request, Response, NextFunction } from "express";
+import { Router, Request, Response } from "express";
 
-import { ServiceWeb } from "./serviceweb";
+import { ServiceWeb } from "./serviceWeb";
 import Types from "./types";
 import { RouteBaseDeDonnees } from "./routesBaseDeDonnees/baseDeDonnees";
 
@@ -18,7 +18,7 @@ export class RoutesBaseDeDonnees extends ServiceWeb {
         const router: Router = Router();
 
         router.get("/:id", async (req: Request, res: Response) => {
-            await this.baseDeDonnees.requeteUser(req, res);
+            await this.baseDeDonnees.requeteUserId(req, res);
         });
 
         router.post("/ajouter", async (req: Request, res: Response) => {

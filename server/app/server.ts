@@ -5,7 +5,6 @@ import { injectable, inject } from "inversify";
 import { AddressInfo } from "net";
 
 import * as express from "express";
-import {Mongoose} from "mongoose";
 // import * as bodyParser from "body-parser"
 
 @injectable()
