@@ -19,6 +19,7 @@ const index_1 = require("./routes/index");
 let Routes = class Routes {
     constructor(index) {
         this.index = index;
+        this.mainRoute = "/";
     }
     get routes() {
         const router = express_1.Router();

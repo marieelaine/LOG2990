@@ -6,7 +6,10 @@ import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import Types from "./types";
 import { injectable, inject } from "inversify";
+
+import { ServiceWeb } from "./serviceWeb";
 import { Routes } from "./routes";
+import { RoutesBaseDeDonnees } from "./routesBaseDeDonnees";
 
 @injectable()
 export class Application {
@@ -14,7 +17,8 @@ export class Application {
     private readonly internalError: number = 500;
     public app: express.Application;
 
-    public constructor(@inject(Types.Routes) private api: Routes) {
+    public constructor(@inject(Types.Routes) private index: Routes,
+                       @inject(Types.RoutesBaseDeDonnees) private baseDonnees: RoutesBaseDeDonnees) {
         this.app = express();
 
         this.config();
@@ -33,13 +37,14 @@ export class Application {
     }
 
     public routes(): void {
-        const router: express.Router = express.Router();
-
-        router.use(this.api.routes);
-
-        this.app.use(router);
+        this.ajouterService(this.index);
+        this.ajouterService(this.baseDonnees);
 
         this.errorHandeling();
+    }
+
+    private ajouterService(service: ServiceWeb): void {
+        this.app.use(service.mainRoute, service.routes);
     }
 
     private errorHandeling(): void {

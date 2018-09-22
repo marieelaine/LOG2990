@@ -2,19 +2,12 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
-
+import { ModalModule } from 'ngx-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule, Routes } from "@angular/router";
-import { ListePartiesComponent } from "./liste-parties/liste-parties.component";
-
-import { HeaderComponent } from "./common/header/header.component";
-import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
-import { AdminComponent, DialogSimple, DialogMultiple } from "./admin/admin.component";
-import { LoginFormComponent } from "./vue-initiale/login-form/login-form.component";
-
-
 
 import { MatToolbarModule,
         MatCardModule,
@@ -23,12 +16,18 @@ import { MatToolbarModule,
         MatDialogModule,
         MatDividerModule,
         MatMenuModule,
+        MatFormFieldModule,
+        MatInputModule,
       } from '@angular/material';
 
-import { ModalModule } from 'ngx-bootstrap';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ListePartiesComponent } from "./liste-parties/liste-parties.component";
 import { ChronoComponent } from './chrono/chrono.component';
 import { PartieSoloComponent } from './partie-solo/partie-solo.component';
+import { PartieSimpleComponent } from './liste-parties/partie-simple/partie-simple.component';
+import { HeaderComponent } from "./common/header/header.component";
+import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
+import { AdminComponent, DialogSimple, DialogMultiple } from "./admin/admin.component";
+import { LoginFormComponent } from "./vue-initiale/login-form/login-form.component";
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
@@ -55,6 +54,7 @@ const appRoutes: Routes = [
     DialogMultiple,
     ChronoComponent,
     PartieSoloComponent,
+    PartieSimpleComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -75,7 +75,9 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatToolbarModule,
     MatBadgeModule,
-    MatMenuModule
+    MatMenuModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [BasicService],
   bootstrap: [AppComponent],

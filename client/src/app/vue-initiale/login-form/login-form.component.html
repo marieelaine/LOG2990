@@ -1,17 +1,39 @@
 <div class="container">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate #formDir="ngForm">
-        <div id="login-box">
-          <div class="logo">
-            <img src="" class="img img-responsive img-circle center-block"/>
-            <h1 class="logo-caption"><span class="tweak"> 7 </span>différences</h1>
-          </div><!-- /.logo -->
-          <div class="controls form-group" formGroupName="personalData" novalidate>
-            <input formControlName="username" placeholder="Username" class="form-control" required>
-            <button type="submit" class="btn btn-default btn-block btn-custom" [disabled]="!loginForm.valid">Login</button>
-            {{loginForm.status}}
-          </div><!-- /.controls -->
-        </div><!-- /#login-box -->
-    </form>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate #formDir="ngForm">
+      <div id="login-box">
+        <div class="logo">
+          <img src="" class="img img-responsive img-circle center-block"/>
+          <h1 class="logo-caption"><span class="tweak"> 7 </span>différences</h1>
+        </div><!-- /.logo -->
+        <div 
+          class="controls form-group"
+          novalidate>
+          <input 
+            formControlName="username" 
+            placeholder="Username" 
+            class="form-control" 
+            required minlength="3" 
+            maxlength="12"
+            unique
+            [ngClass]="{'is-invalid': (loginForm.get('username').touched || 
+                                            loginForm.get('username').dirty) &&
+                                            !loginForm.get('username').valid }">
+            <span class="invalid-feedback">
+              <span *ngIf="loginForm.get('username').errors?.required">
+                Veuillez entre votre nom d'utilisateur.
+              </span>
+              <span *ngIf="loginForm.get('username').errors?.minlength">
+                Votre nom doit être d'au moins 3 caractères.
+              </span>
+            </span>
+          <button 
+            type="submit" 
+            class="btn btn-default btn-block btn-custom" 
+            [disabled]="!loginForm.valid">Login
+          </button>
+        </div><!-- /.controls -->
+      </div><!-- /#login-box -->
+  </form>
 
 </div><!-- /.container -->
 <div id="particles-js"></div>

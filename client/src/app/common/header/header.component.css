@@ -1,8 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Poiret+One');
+
 mat-toolbar{
     margin-bottom: 20px;
+    background: rgba(48, 46, 45, 1);
+    font-family: 'Poiret One', cursive;
 }
 
-.HeaderTitle{
-    font-style:italic; 
-    cursor:pointer;
+#login-box .logo .logo-caption {
+	font-family: 'Poiret One', cursive;
+	color: white;
+	text-align: center;
+    margin-bottom: 0px;
+    cursor: pointer;
+    font-size:150%;
+    margin-left:10%;
+}
+#login-box .logo .tweak {
+    color: #ff5252;
+    cursor: pointer;
 }

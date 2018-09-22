@@ -17,7 +17,6 @@ const http = require("http");
 const types_1 = require("./types");
 const inversify_1 = require("inversify");
 const express = require("express");
-const mongoose_1 = require("mongoose");
 // import * as bodyParser from "body-parser"
 let Server = class Server {
     constructor(application) {
