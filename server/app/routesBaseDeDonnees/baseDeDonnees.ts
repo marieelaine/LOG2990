@@ -1,9 +1,8 @@
 import { injectable } from "inversify";
 import "reflect-metadata";
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import {Mongoose, Model, Document, Schema} from "mongoose";
 import {User} from "../../../client/src/app/vue-initiale/login-form/user";
-import { Message } from "../../../common/communication/message";
 
 export module RouteBaseDeDonnees {
     @injectable()
@@ -41,14 +40,6 @@ export module RouteBaseDeDonnees {
 
             return usager;
 
-        }
-
-        public helloWorld(req: Request, res: Response, next: NextFunction): void {
-            const message: Message = {
-                title: "jeremy",
-                body: "World"
-            };
-            res.send(JSON.stringify(message));
         }
 
         public async requeteAjouterUser(req: Request, res: Response): Promise<void> {

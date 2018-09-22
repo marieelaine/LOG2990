@@ -19,17 +19,14 @@ export class LoginFormComponent implements OnInit {
 
   public BASE_URL: string = "http://localhost:3000/";
   public loginForm: FormGroup;
-  public submitted: boolean = false;
-  public userList: Array<User>;
 
   public constructor(private router: Router, private http: HttpClient) {
     this.loginForm = this.createFormGroup();
   }
 
   public onSubmit(): void {
-    this.submitted = true;
     const result: User = Object.assign({}, this.loginForm.value);
-    result.username = Object.assign({}, result.username);
+    this.creerNouveauUser(result);
     this.router.navigateByUrl("/liste-parties");
  }
 

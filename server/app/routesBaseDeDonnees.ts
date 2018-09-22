@@ -17,8 +17,6 @@ export class RoutesBaseDeDonnees extends ServiceWeb {
     public get routes(): Router {
         const router: Router = Router();
 
-        router.get("/", (req: Request, res: Response, next: NextFunction) => this.baseDeDonnees.helloWorld(req, res, next));
-
         router.get("/:id", async (req: Request, res: Response) => {
             await this.baseDeDonnees.requeteUser(req, res);
         });
