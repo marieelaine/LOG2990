@@ -2,8 +2,12 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { User} from "../login-form/user";
+import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 declare var particlesJS: any;
+
+export const USER_URL: string = "http://localhost:3000/users/";
+const URL_AJOUTER_PISTE: string = USER_URL + "ajouter/";
 
 @Component({
   selector: "app-login-form",
@@ -25,17 +29,15 @@ export class LoginFormComponent implements OnInit {
   public onSubmit(): void {
     this.submitted = true;
     const result: User = Object.assign({}, this.loginForm.value);
-    result.personalData = Object.assign({}, result.personalData);
+    result.username = Object.assign({}, result.username);
     this.router.navigateByUrl("/liste-parties");
  }
 
   public createFormGroup(): FormGroup {
     return new FormGroup({
-      personalData: new FormGroup({
         username: new FormControl("", [
           Validators.pattern("^[A-Za-z\d]+$")
         ])
-      })
     });
   }
 
@@ -44,9 +46,12 @@ export class LoginFormComponent implements OnInit {
     particlesJS.load("particles-js", "assets/particles.json", null);
   }
 
-  // public checkUsername(): Boolean {
-  //   return this.http.get<string>(this.BASE_URL).pipe(
-  //       catchError(this.handleError<Boolean>("checkUsername"))
-  //   );
-  // }
+  public obtenirUser(identifiant: string): Observable<User> {
+    return this.http.get<User>(USER_URL + identifiant);
+  }
+
+  public async creerNouveauUser(user: User): Promise<Object> {
+    return this.http.post(URL_AJOUTER_PISTE, user).toPromise();
+  }
+
 }
