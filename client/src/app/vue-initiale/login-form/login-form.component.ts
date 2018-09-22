@@ -1,40 +1,40 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
-import { User, PersonalData} from "../login-form/user";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { User} from "../login-form/user";
+import { Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 declare var particlesJS: any;
+
+export const USER_URL: string = "http://localhost:3000/users/";
+const URL_AJOUTER_PISTE: string = USER_URL + "ajouter/";
 
 @Component({
   selector: "app-login-form",
   templateUrl: "./login-form.component.html",
   styleUrls: ["./login-form.component.css"]
 })
-export class LoginFormComponent implements OnInit {
-  public loginForm: FormGroup;
-  public submitted: boolean = false;
-  public userList: Array<User>;
 
-  public constructor(private router: Router) {
+export class LoginFormComponent implements OnInit {
+
+  public BASE_URL: string = "http://localhost:3000/";
+  public loginForm: FormGroup;
+
+  public constructor(private router: Router, private http: HttpClient) {
     this.loginForm = this.createFormGroup();
   }
 
   public onSubmit(): void {
-    this.submitted = true;
     const result: User = Object.assign({}, this.loginForm.value);
-    result.personalData = Object.assign({}, result.personalData);
+    this.creerNouveauUser(result);
     this.router.navigateByUrl("/liste-parties");
  }
 
   public createFormGroup(): FormGroup {
     return new FormGroup({
-      personalData: new FormGroup({
         username: new FormControl("", [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(12),
           Validators.pattern("^[A-Za-z\d]+$")
         ])
-      })
     });
   }
 
@@ -43,8 +43,12 @@ export class LoginFormComponent implements OnInit {
     particlesJS.load("particles-js", "assets/particles.json", null);
   }
 
-  public get username(): any {
-    return this.loginForm.get("username");
+  public obtenirUser(identifiant: string): Observable<User> {
+    return this.http.get<User>(USER_URL + identifiant);
+  }
+
+  public async creerNouveauUser(user: User): Promise<Object> {
+    return this.http.post(URL_AJOUTER_PISTE, user).toPromise();
   }
 
 }
