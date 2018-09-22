@@ -3,10 +3,12 @@
 <div mat-dialog-content>
     <mat-card class='addGameCard'>
         <div class='gameName'>
-            <input matInput [(ngModel)]="data.simpleGameName" type='text' placeholder="Nom de la partie" class="gameNameInput">
+            <mat-form-field class='formField'>
+                <input matInput [(ngModel)]="data.simpleGameName" type='text' placeholder="Nom de la partie" class='gameNameInput'>
+            </mat-form-field>
         </div>
         <div class='firstImage'>
-            <label for="uploadImage1" class="btn btn btn-outline-primary mb-2 mr-2 imageButtons">Première image</label>
+            <button mat-button class='mat-elevation-z6'><label for="uploadImage1" style='margin:0'>Première image</label></button>
             <input id='uploadImage1' type="file" accept="image/*" #file style="visibility:hidden;" (change)='onFileSelected($event)'>
             <div class='imageFrame' id='firstImageFrame'> 
                 <div id='maskHeigth'></div>                      
@@ -14,8 +16,8 @@
             </div>
         </div>
         <div class='secondImage'>
-            <label for="uploadImage2" class="btn btn btn-outline-primary mb-2 mr-2 imageButtons">Deuxième image</label>
-            <input id='uploadImage2' type="file" accept="image/*" #file style="visibility:hidden;">
+                <button mat-button class='mat-elevation-z6'><label for="uploadImage2" style='margin:0'>Deuxième image</label></button>
+                <input id='uploadImage2' type="file" accept="image/*" #file style="visibility:hidden;">
             <div class='imageFrame' id='secondImageFrame'> 
                 <div id='maskHeigth'></div>           
                 <div id='maskWidth'></div>           
