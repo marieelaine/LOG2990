@@ -5,7 +5,52 @@
             <!-- Liste des parties point de vue simple -->
             <h2 class='simpleAndMultipleGamesHeader'>Parties en mode point de vue simple</h2>
             <hr>
-            <div id='listePartiesSimples' style="width:100%">
+            <div *ngFor="let partie of listeParties">
+                <mat-card class='container-fluid' 
+                [class.mat-elevation-z6]="!partie.isElevatedActive"
+                [class.mat-elevation-z10]="partie.isElevatedActive"
+                (mouseenter)="partie.isElevatedActive = !partie.isElevatedActive"
+                (mouseleave)="partie.isElevatedActive = !partie.isElevatedActive">
+                    <mat-card-header>
+                        <h2 class='gameNameHeader'> {{partie.title}} </h2>
+                    </mat-card-header>
+                    <div class='row'>
+                        <div class='col-sm-6'>
+                            <img src={{partie.imagePath}} class='gameImage img-responsive mat-elevation-z6'
+                            [class.mat-elevation-z6]="!partie.isElevatedActive"
+                            [class.mat-elevation-z10]="partie.isElevatedActive">
+                        </div> 
+                        <div class='col-sm-6'>
+                            <div class='row'>
+                                <div class='col-sm-12' style='margin-left:1%'>
+                                    <h2 class='topThreeHeaders'>Top 3</h2>
+                                </div>
+                                <div class='col-sm-1 text-center topThreeNumbersColumn'>
+                                    <span matBadge="1" matBadgeOverlap="true"></span> <br>
+                                    <span matBadge="2" matBadgeOverlap="true"></span> <br>
+                                    <span matBadge="3" matBadgeOverlap="true"></span> <br>
+                                </div>  
+                                <div class='col-sm-4 text-center'>
+                                    <h2 class='topThreeHeaders'> Solo </h2>
+                                    <p>-</p> 
+                                    <p>-</p> 
+                                    <p>-</p> 
+                                    <button class="mat-elevation-z6 newGameButtons btn btn-primary btn-block" 
+                                            style="display:block"
+                                            [routerLink]="['/partie-solo']" routerLinkActive="router-link-active">Jouer</button>
+                                </div>
+                                <div class='col-sm-2' style='height:100%;'></div>
+                                <div class='col-sm-4 text-center'>
+                                    <h2 class='topThreeHeaders'> 1v1 </h2> 
+                                    <p>-</p> 
+                                    <p>-</p> 
+                                    <p>-</p> 
+                                    <button class=" mat-elevation-z6 newGameButtons btn btn-primary btn-block">Créer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>   
             </div>
         </div>
         <div class="col-sm-6">

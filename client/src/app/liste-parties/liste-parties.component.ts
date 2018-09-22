@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PartieSimple } from './partie-simple/partie-simple.component';
+import { PartieSimpleComponent } from './partie-simple/partie-simple.component';
 
 @Component({
   selector: 'app-liste-parties',
@@ -9,27 +9,13 @@ import { PartieSimple } from './partie-simple/partie-simple.component';
 export class ListePartiesComponent implements OnInit {
 
   partieSimpleDiv: HTMLElement;
-  listeParties: PartieSimple[] = [
-    { title: 'Nissan Patrol', imagePath: 'assets/NissanPatrol.jpg' },
-    { title: 'Jeep Patrol', imagePath: 'assets/NissanPatrol.jpg' }
+  listeParties: PartieSimpleComponent[] = [
+    { title: 'Nissan Patrol', imagePath: 'assets/NissanPatrol.jpg', times: [], isElevatedActive: false },
+    { title: 'Jeep Patrol', imagePath: 'assets/NissanPatrol.jpg', times: [], isElevatedActive: false }
 ];
 
   constructor() { }
 
   ngOnInit() {
   }
-
-  // addGameListToHtml() {
-  //   this.listeParties.forEach( (partieSimple) => {
-  //     this.partieSimpleDiv = document.getElementById('listePartiesSimples') as HTMLElement;
-  //     this.partieSimpleDiv.appendChild(document.createTextNode(this.getHtmlComponentByGameTitle(partieSimple.title)));
-  //   });
-  // }
-
-  // getHtmlComponentByGameTitle(gameTitle: string) {
-  //   const gameTitleWithDashes = gameTitle.replace(" ", "-").toLowerCase();
-  //   console.log(gameTitleWithDashes);
-
-  //   return "<app-" + gameTitleWithDashes + "></app-" + gameTitleWithDashes + ">";
-  // }
 }
