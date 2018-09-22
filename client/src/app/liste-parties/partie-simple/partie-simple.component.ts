@@ -11,8 +11,8 @@ export class PartieSimpleComponent {
   imagePath: String;
   times: number[];
   isElevatedActive = false;
+  titleWithoutFirstLetter: String;
 
   constructor() {
   }
-
 }

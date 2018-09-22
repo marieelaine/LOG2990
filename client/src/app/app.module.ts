@@ -16,6 +16,8 @@ import { MatToolbarModule,
         MatDialogModule,
         MatDividerModule,
         MatMenuModule,
+        MatFormFieldModule,
+        MatInputModule,
       } from '@angular/material';
 
 import { ListePartiesComponent } from "./liste-parties/liste-parties.component";
@@ -73,7 +75,9 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatToolbarModule,
     MatBadgeModule,
-    MatMenuModule
+    MatMenuModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [BasicService],
   bootstrap: [AppComponent],

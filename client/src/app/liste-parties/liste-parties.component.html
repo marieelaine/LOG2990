@@ -12,31 +12,31 @@
                 (mouseenter)="partie.isElevatedActive = !partie.isElevatedActive"
                 (mouseleave)="partie.isElevatedActive = !partie.isElevatedActive">
                     <mat-card-header>
-                        <h2 class='gameNameHeader'> {{partie.title}} </h2>
+                        <h2 class='gameNameHeader titleFirstLetter'>{{partie.title[0]}}</h2>
+                        <h2 class='gameNameHeader'>{{partie.titleWithoutFirstLetter}}</h2>
                     </mat-card-header>
                     <div class='row'>
                         <div class='col-sm-6'>
-                            <img src={{partie.imagePath}} class='gameImage img-responsive mat-elevation-z6'
+                            <img src={{partie.imagePath}} class='gameImage img-responsive mat-elevation-z6 center'
                             [class.mat-elevation-z6]="!partie.isElevatedActive"
                             [class.mat-elevation-z10]="partie.isElevatedActive">
                         </div> 
                         <div class='col-sm-6'>
                             <div class='row'>
-                                <div class='col-sm-12' style='margin-left:1%'>
-                                    <h2 class='topThreeHeaders'>Top 3</h2>
+                                <div class='col-sm-12' style='margin-left:3%'>
+                                    <h2 class='topThreeHeaders'>Top <img class='bronzeMedal' src="assets/bronze-medal.png"></h2>
                                 </div>
                                 <div class='col-sm-1 text-center topThreeNumbersColumn'>
-                                    <span matBadge="1" matBadgeOverlap="true"></span> <br>
-                                    <span matBadge="2" matBadgeOverlap="true"></span> <br>
-                                    <span matBadge="3" matBadgeOverlap="true"></span> <br>
+                                    <span matBadge="1" matBadgeOverlap="true" matBadgeColor="warn"></span> <br>
+                                    <span matBadge="2" matBadgeOverlap="true" matBadgeColor="warn"></span> <br>
+                                    <span matBadge="3" matBadgeOverlap="true" matBadgeColor="warn"></span> <br>
                                 </div>  
                                 <div class='col-sm-4 text-center'>
                                     <h2 class='topThreeHeaders'> Solo </h2>
                                     <p>-</p> 
                                     <p>-</p> 
                                     <p>-</p> 
-                                    <button class="mat-elevation-z6 newGameButtons btn btn-primary btn-block" 
-                                            style="display:block"
+                                    <button mat-button class='mat-elevation-z6'
                                             [routerLink]="['/partie-solo']" routerLinkActive="router-link-active">Jouer</button>
                                 </div>
                                 <div class='col-sm-2' style='height:100%;'></div>
@@ -45,12 +45,13 @@
                                     <p>-</p> 
                                     <p>-</p> 
                                     <p>-</p> 
-                                    <button class=" mat-elevation-z6 newGameButtons btn btn-primary btn-block">Créer</button>
+                                    <button mat-button class='mat-elevation-z6'>Créer</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </mat-card>   
+                </mat-card>  
+                <br> 
             </div>
         </div>
         <div class="col-sm-6">
