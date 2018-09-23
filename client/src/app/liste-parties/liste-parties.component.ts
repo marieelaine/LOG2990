@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PartieSimpleComponent } from './partie-simple/partie-simple.component';
+import { PartieMultipleComponent } from './partie-multiple/partie-multiple.component';
 
 @Component({
   selector: 'app-liste-parties',
@@ -9,16 +10,28 @@ import { PartieSimpleComponent } from './partie-simple/partie-simple.component';
 export class ListePartiesComponent implements OnInit {
 
   partieSimpleDiv: HTMLElement;
-  listeParties: PartieSimpleComponent[] = [
-    { title: 'Nissan Patrol', imagePath: 'assets/NissanPatrol.jpg', times: [], isElevatedActive: false,
-      titleWithoutFirstLetter: this.getTitleWithoutFirstLetter('Nissan Patrol') },
-    { title: 'Jerry', imagePath: 'assets/Jerry.png', times: [], isElevatedActive: false,
-      titleWithoutFirstLetter: this.getTitleWithoutFirstLetter('Jerry') }
-];
+  listePartiesSimples: PartieSimpleComponent[] = [
+    { title: 'Nissan Patrol', imagePath: 'assets/NissanPatrol.jpg', isElevatedActive: false,
+      timesSolo: [320, 500], timesOneVsOne: [],
+      titleWithoutFirstLetter: this.getTitleWithoutFirstLetter('Nissan Patrol'),
+      listeParties: this.listePartiesSimples },
+
+    { title: 'Jerry', imagePath: 'assets/Jerry.png',  isElevatedActive: false,
+      timesSolo: [550, 302, 419, 3141], timesOneVsOne: [41241, 412, 52, 5235, 552],
+      titleWithoutFirstLetter: this.getTitleWithoutFirstLetter('Jerry'),
+      listeParties: this.listePartiesSimples }
+  ];
+
+  listePartiesMultiples: PartieMultipleComponent[] = [
+    { title: 'Mona Lisa', imagePath: 'assets/monaLisa.jpg', isElevatedActive: false,
+      timesSolo: [312, 415, 6462, 1], timesOneVsOne: [312, 3],
+      titleWithoutFirstLetter: this.getTitleWithoutFirstLetter('Mona Lisa'),
+      listeParties: this.listePartiesMultiples }
+  ];
 
   getTitleWithoutFirstLetter(title: string): String {
   return title.substr(1, title.length - 1);
-}
+  }
 
   constructor() { }
 
