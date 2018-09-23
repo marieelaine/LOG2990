@@ -21,9 +21,11 @@ const cors = require("cors");
 const types_1 = require("./types");
 const inversify_1 = require("inversify");
 const routes_1 = require("./routes");
+const routesBaseDeDonnees_1 = require("./routesBaseDeDonnees");
 let Application = class Application {
-    constructor(api) {
-        this.api = api;
+    constructor(index, baseDonnees) {
+        this.index = index;
+        this.baseDonnees = baseDonnees;
         this.internalError = 500;
         this.app = express();
         this.config();
@@ -39,10 +41,12 @@ let Application = class Application {
         this.app.use(cors());
     }
     routes() {
-        const router = express.Router();
-        router.use(this.api.routes);
-        this.app.use(router);
+        this.ajouterService(this.index);
+        this.ajouterService(this.baseDonnees);
         this.errorHandeling();
+    }
+    ajouterService(service) {
+        this.app.use(service.mainRoute, service.routes);
     }
     errorHandeling() {
         // Gestion des erreurs
@@ -77,7 +81,9 @@ let Application = class Application {
 Application = __decorate([
     inversify_1.injectable(),
     __param(0, inversify_1.inject(types_1.default.Routes)),
-    __metadata("design:paramtypes", [routes_1.Routes])
+    __param(1, inversify_1.inject(types_1.default.RoutesBaseDeDonnees)),
+    __metadata("design:paramtypes", [routes_1.Routes,
+        routesBaseDeDonnees_1.RoutesBaseDeDonnees])
 ], Application);
 exports.Application = Application;
 //# sourceMappingURL=app.js.map

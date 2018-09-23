@@ -37,8 +37,10 @@ export module RouteBaseDeDonnees {
             try {
                 await usager.save();
 
+                // tslint:disable-next-line:no-magic-numbers
                 return res.status(201).json(usager);
               } catch (err) {
+                // tslint:disable-next-line:no-magic-numbers
                 return res.status(501).json(err);
             }
         }
@@ -48,6 +50,7 @@ export module RouteBaseDeDonnees {
 
             await this.modelUser.findById(identifiant)
                 .then((res: Document) => { usager = res.toObject(); })
+                // tslint:disable-next-line:no-empty
                 .catch(() => {});
 
             return usager;
