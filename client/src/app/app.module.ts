@@ -27,8 +27,8 @@ import { HeaderComponent } from "./common/header/header.component";
 import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
 import { AdminComponent, DialogSimple, DialogMultiple } from "./admin/admin.component";
 import { LoginFormComponent } from "./vue-initiale/login-form/login-form.component";
-import { PartieSimpleComponent, PartieSimpleFonctions } from './liste-parties/partie-simple/partie-simple.component';
-import { PartieMultipleComponent, PartieMultipleFonctions } from './liste-parties/partie-multiple/partie-multiple.component';
+import { PartieSimpleFonctions } from './liste-parties/partie-simple/partie-simple.component';
+import { PartieMultipleFonctions } from './liste-parties/partie-multiple/partie-multiple.component';
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
@@ -85,7 +85,7 @@ const appRoutes: Routes = [
   bootstrap: [AppComponent],
   entryComponents: [
     DialogSimple,
-    DialogMultiple
+    DialogMultiple,
   ],
 })
 export class AppModule { }
