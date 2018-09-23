@@ -20,10 +20,16 @@
                                             !loginForm.get('username').valid }">
             <span class="invalid-feedback">
               <span *ngIf="loginForm.get('username').errors?.required">
-                Veuillez entre votre nom d'utilisateur.
+                Veuillez entre votre nom d'utilisateur.<br>
               </span>
               <span *ngIf="loginForm.get('username').errors?.minlength">
-                Votre nom doit être d'au moins 3 caractères.
+                Votre nom doit être d'au moins 3 caractères.<br>
+              </span>
+              <span *ngIf="loginForm.get('username').errors?.pattern">
+                Votre nom doit uniquement être composé de caractères alphanumériques.<br>
+              </span>
+              <span *ngIf="loginForm.get('usernameTaken').value">
+                Ce nom d'utilisateur existe déjà!<br>
               </span>
             </span>
           <button 

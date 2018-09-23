@@ -30,13 +30,20 @@ export class LoginFormComponent implements OnInit {
     const result: User = Object.assign({}, this.loginForm.value);
     this.userService.register(JSON.stringify(this.loginForm.value))
     .subscribe(
-    (data) => {console.log(data); this.router.navigate(["/liste-parties"]); },
-    (error) => console.error(error)
+    (data) => {
+      console.log(data);
+      this.router.navigate(["/liste-parties"]);
+      this.loginForm.setValue({usernameTaken: 0}); },
+    (error) => {
+      console.error(error);
+      this.loginForm.setValue({usernameTaken: 1});
+    }
     );
  }
 
   public createFormGroup(): FormGroup {
     return new FormGroup({
+        usernameTaken: new FormControl(""),
         username: new FormControl("", [
           Validators.pattern("^[A-Za-z\d]+$")
         ])
