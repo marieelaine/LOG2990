@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VueInitialeComponent } from './vue-initiale.component';
+import { HeaderComponent } from '../common/header/header.component';
+import { LoginFormComponent } from './login-form/login-form.component';
 
 describe('VueInitialeComponent', () => {
   let component: VueInitialeComponent;
@@ -8,7 +10,7 @@ describe('VueInitialeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VueInitialeComponent ]
+      declarations: [ VueInitialeComponent, HeaderComponent, LoginFormComponent ]
     })
     .compileComponents();
   }));
