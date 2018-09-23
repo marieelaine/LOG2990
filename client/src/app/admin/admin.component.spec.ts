@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { AdminComponent } from "./admin.component";
-import { MatMenuModule, MatToolbarModule, MatCardModule } from "@angular/material";
+import { MatMenuModule, MatToolbarModule, MatCardModule, MatDialogModule } from "@angular/material";
 import { ListePartiesComponent } from "../liste-parties/liste-parties.component";
 import { PartieSimpleComponent } from "../liste-parties/partie-simple/partie-simple.component";
 import { PartieMultipleComponent } from "../liste-parties/partie-multiple/partie-multiple.component";
@@ -14,7 +14,7 @@ describe("AdminComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AdminComponent, ListePartiesComponent, PartieSimpleComponent, PartieMultipleComponent ],
-      imports: [MatMenuModule, MatToolbarModule, MatCardModule, RouterTestingModule ]
+      imports: [MatMenuModule, MatToolbarModule, MatCardModule, RouterTestingModule, MatDialogModule ]
     })
     .compileComponents();
   }));
