@@ -27,6 +27,7 @@
     "nodemon": "1.18.4",
     "reflect-metadata": "^0.1.10",
     "serve-favicon": "~2.3.0",
+    "sinon": "^6.3.4",
     "socket.io": "1.4.5",
     "systemjs": "0.21.4",
     "ts-node": "^7.0.1"

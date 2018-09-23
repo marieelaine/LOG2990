@@ -20,5 +20,8 @@ describe("BaseDeDonnees", () => {
             assert.isDefined(db["schema"]);
         });
 
+        it("should call seConnecter()", () => {
+
+        });
     });
 });
