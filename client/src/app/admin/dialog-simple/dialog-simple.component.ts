@@ -31,7 +31,8 @@ export class DialogSimpleComponent {
   onFileSelectedImage1(event) {
     this.selectedFiles[0] = this.getSelectedFileFromEvent(event);
     this.wrongImageTypeMessage = this.getWrongImageTypeMessage();
-    // TODO :
+    // TODO : envoyer l'image upload vers le serveur
+
     // const fd = new FormData();
     // fd.append("image", this.selectedFile, this.selectedFile.name);
   }
@@ -85,12 +86,13 @@ export class DialogSimpleComponent {
   closeDialogIfRequirements(outOfBoundNameLengthMessage: String, wrongImageTypeMessage: String, wrongNumberOfImagesMessage: String) {
     if (outOfBoundNameLengthMessage === "" && wrongImageTypeMessage === "" && wrongNumberOfImagesMessage === "") {
       this.dialogRef.close();
-      this.createNewSimpleGameCard(this.data.simpleGameName);
+      this.createNewSimpleGameCard(this.data.simpleGameName, this.selectedFiles);
     }
   }
 
-  createNewSimpleGameCard(simpleGameName: String) {
-    // TODO :
+  createNewSimpleGameCard(simpleGameName: String, selectedFiles: File[]) {
+    // TODO : Créer un nouvelle carte et l'ajouter à la liste
+
     // const partieSimple: PartieSimpleComponent = {
     //     title: simpleGameName, imagePath: 'assets/NissanPatrol.jpg', isElevatedActive: false,
     //     timesSolo: [], timesOneVsOne: [],

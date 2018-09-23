@@ -28,6 +28,7 @@ var RouteBaseDeDonnees;
         constructor() {
             this.mongoURL = "mongodb://admin:admin1@ds239692.mlab.com:39692/log2990-05";
             this.mongoose = new mongoose_1.Mongoose();
+            this.mongoose.set("useCreateIndex", true);
             this.schema = new mongoose_1.Schema({
                 username: {
                     type: String,
@@ -41,7 +42,7 @@ var RouteBaseDeDonnees;
         }
         seConnecter() {
             return __awaiter(this, void 0, void 0, function* () {
-                yield this.mongoose.connect(this.mongoURL);
+                yield this.mongoose.connect(this.mongoURL, { useNewUrlParser: true });
             });
         }
         ajouterUser(usagerJson, res) {
