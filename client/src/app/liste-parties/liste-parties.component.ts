@@ -12,21 +12,21 @@ export class ListePartiesComponent implements OnInit {
   partieSimpleDiv: HTMLElement;
   listePartiesSimples: PartieSimpleComponent[] = [
     { title: 'Nissan Patrol', imagePath: 'assets/NissanPatrol.jpg', isElevatedActive: false,
-      timesSolo: [320, 500, 1200, 400], timesOneVsOne: [],
+      timesSolo: [320, 500], timesOneVsOne: [],
       titleWithoutFirstLetter: this.getTitleWithoutFirstLetter('Nissan Patrol'),
       listeParties: this.listePartiesSimples },
 
     { title: 'Jerry', imagePath: 'assets/Jerry.png',  isElevatedActive: false,
-      timesSolo: [550, 302, 419, 3141], timesOneVsOne: [],
+      timesSolo: [550, 302, 419, 3141], timesOneVsOne: [41241, 412, 52, 5235, 552],
       titleWithoutFirstLetter: this.getTitleWithoutFirstLetter('Jerry'),
       listeParties: this.listePartiesSimples }
   ];
 
   listePartiesMultiples: PartieMultipleComponent[] = [
     { title: 'Mona Lisa', imagePath: 'assets/monaLisa.jpg', isElevatedActive: false,
-      timesSolo: [312, 415, 6462, 1], timesOneVsOne: [],
+      timesSolo: [312, 415, 6462, 1], timesOneVsOne: [312, 3],
       titleWithoutFirstLetter: this.getTitleWithoutFirstLetter('Mona Lisa'),
-      listeParties: this.listePartiesMultiples },
+      listeParties: this.listePartiesMultiples }
   ];
 
   getTitleWithoutFirstLetter(title: string): String {

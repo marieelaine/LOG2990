@@ -26,18 +26,18 @@
                   </div>  
                   <div class='col-sm-4 text-center'>
                       <h2 class='topThreeHeaders'> Solo </h2>
-                      <p>-</p> 
-                      <p>-</p> 
-                      <p>-</p> 
+                      <p> {{ getBestTime(partieSimple.timesSolo) }} </p> 
+                      <p> {{ getSecondBestTime(partieSimple.timesSolo) }} </p> 
+                      <p> {{ getThirdBestTime(partieSimple.timesSolo) }} </p> 
                       <button mat-button class='mat-elevation-z6'
                               [routerLink]="['/partie-solo']" routerLinkActive="router-link-active">Jouer</button>
                   </div>
                   <div class='col-sm-2' style='height:100%;'></div>
                   <div class='col-sm-4 text-center'>
                       <h2 class='topThreeHeaders'> 1v1 </h2> 
-                      <p>-</p> 
-                      <p>-</p> 
-                      <p>-</p> 
+                      <p> {{ getBestTime(partieSimple.timesOneVsOne) }} </p> 
+                      <p> {{ getSecondBestTime(partieSimple.timesOneVsOne) }} </p> 
+                      <p> {{ getThirdBestTime(partieSimple.timesOneVsOne) }} </p>
                       <button mat-button class='mat-elevation-z6'>Créer</button>
                   </div>
               </div>
