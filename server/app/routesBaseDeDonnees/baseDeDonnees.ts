@@ -16,6 +16,7 @@ export module RouteBaseDeDonnees {
 
         public constructor() {
             this.mongoose = new Mongoose();
+            this.mongoose.set("useCreateIndex", true);
             this.schema = new Schema({
                 username: {
                     type: String,
@@ -29,7 +30,7 @@ export module RouteBaseDeDonnees {
         }
 
         private async seConnecter(): Promise<void> {
-            await this.mongoose.connect(this.mongoURL);
+            await this.mongoose.connect(this.mongoURL, { useNewUrlParser: true });
         }
 
         private async ajouterUser(usagerJson: {}, res: Response): Promise<Response> {
