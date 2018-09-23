@@ -19,8 +19,9 @@ const URL_AJOUTER_PISTE: string = USER_URL + "ajouter/";
 
 export class LoginFormComponent implements OnInit {
 
-  public BASE_URL: string = "http://localhost:3000/";
-  public loginForm: FormGroup;
+  private BASE_URL: string = "http://localhost:3000/";
+  private loginForm: FormGroup;
+  public usernameTaken: Boolean;
 
   public constructor(private router: Router, private http: HttpClient, private userService: UserService) {
     this.loginForm = this.createFormGroup();
@@ -33,17 +34,18 @@ export class LoginFormComponent implements OnInit {
     (data) => {
       console.log(data);
       this.router.navigate(["/liste-parties"]);
-      this.loginForm.setValue({usernameTaken: 0}); },
+      this.usernameTaken = true;
+    },
     (error) => {
       console.error(error);
-      this.loginForm.setValue({usernameTaken: 1});
+      this.usernameTaken = false;
+      let span = document.getElementById('usernameTaken').innerHTML = "Ce nom d'utilisateur existe déjà!";
     }
     );
  }
 
   public createFormGroup(): FormGroup {
     return new FormGroup({
-        usernameTaken: new FormControl(""),
         username: new FormControl("", [
           Validators.pattern("^[A-Za-z\d]+$")
         ])
