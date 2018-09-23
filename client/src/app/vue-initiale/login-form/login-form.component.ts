@@ -20,7 +20,7 @@ const URL_AJOUTER_PISTE: string = USER_URL + "ajouter/";
 export class LoginFormComponent implements OnInit {
 
   private BASE_URL: string = "http://localhost:3000/";
-  private loginForm: FormGroup;
+  public loginForm: FormGroup;
   public usernameTaken: Boolean;
 
   public constructor(private router: Router, private http: HttpClient, private userService: UserService) {
@@ -39,7 +39,6 @@ export class LoginFormComponent implements OnInit {
     (error) => {
       console.error(error);
       this.usernameTaken = false;
-      let span = document.getElementById('usernameTaken').innerHTML = "Ce nom d'utilisateur existe déjà!";
     }
     );
  }
