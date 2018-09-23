@@ -1,5 +1,8 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { PartieSimpleComponent } from "../liste-parties/partie-simple/partie-simple.component";
+import { PartieMultipleComponent } from "../liste-parties/partie-multiple/partie-multiple.component";
+import { ListePartiesComponent } from "../liste-parties/liste-parties.component";
 
 export interface DialogData {
   simpleGameName: string;
@@ -16,7 +19,6 @@ export class AdminComponent implements OnInit {
 
   gameName: string;
   selectedFile: File;
-  // MongoClient = require('mongodb').MongoClient;
 
   constructor(public dialog: MatDialog) {
   }
@@ -55,12 +57,14 @@ export class AdminComponent implements OnInit {
 })
 export class DialogSimple {
 
-  errorMessage: string;
+  outOfBoundNameLengthMessage: String;
+  partieSimple: PartieSimpleComponent;
+  listeParties: ListePartiesComponent;
 
   constructor(
     public dialogRef: MatDialogRef<DialogSimple>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-      this.errorMessage = "";
+      this.outOfBoundNameLengthMessage = "";
     }
 
   onNoClick(): void {
@@ -68,12 +72,38 @@ export class DialogSimple {
   }
 
   onAddSimpleGameClick(): void {
-    if (this.data.simpleGameName === "" || this.data.simpleGameName === undefined) {
-      // Regarder s'il y a bien deux images
-      this.errorMessage = "*Le jeu doit avoir un nom et deux images";
+    this.outOfBoundNameLengthMessage = this.getOutOfBoundNameLengthMessage();
+    this.closeDialogIfRequirements(this.outOfBoundNameLengthMessage);
+
+  }
+
+  getOutOfBoundNameLengthMessage(): String {
+    if (this.data.simpleGameName === "" || this.data.simpleGameName === undefined
+    || this.data.simpleGameName.length < 3 || this.data.simpleGameName.length > 20) {
+      return "*Le nom du jeu doit être entre 3 et 20 charactères";
     } else {
-      this.dialogRef.close();
+      return "";
     }
+  }
+
+  closeDialogIfRequirements(outOfBoundNameLengthMessage: String) {
+    if (outOfBoundNameLengthMessage === "") {
+      this.dialogRef.close();
+      this.createNewSimpleGameCard(this.data.simpleGameName);
+    }
+  }
+
+  createNewSimpleGameCard(simpleGameName: String) {
+    const partieSimple: PartieSimpleComponent = {
+        title: simpleGameName, imagePath: 'assets/NissanPatrol.jpg', isElevatedActive: false,
+        timesSolo: [], timesOneVsOne: [],
+        titleWithoutFirstLetter: this.listeParties.getTitleWithoutFirstLetter(simpleGameName)
+      };
+    this.addNewSimpleGameCardToList(partieSimple);
+  }
+
+  addNewSimpleGameCardToList(partieSimple: PartieMultipleComponent) {
+    this.listeParties.listePartiesSimples.push(partieSimple);
   }
 }
 
@@ -85,6 +115,8 @@ export class DialogSimple {
 export class DialogMultiple {
 
   errorMessage: string;
+  partieMultiple: PartieMultipleComponent;
+  listeParties: ListePartiesComponent;
 
   constructor(
     public dialogRef: MatDialogRef<DialogMultiple>,

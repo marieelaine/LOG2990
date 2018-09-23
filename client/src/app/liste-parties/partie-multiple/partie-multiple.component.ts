@@ -8,7 +8,6 @@ export interface PartieMultipleComponent {
   timesOneVsOne: number[];
   isElevatedActive: boolean;
   titleWithoutFirstLetter: String;
-  listeParties: PartieMultipleComponent[];
 }
 
 @Component({
