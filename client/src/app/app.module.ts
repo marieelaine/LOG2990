@@ -25,10 +25,12 @@ import { ChronoComponent } from './chrono/chrono.component';
 import { PartieSoloComponent } from './partie-solo/partie-solo.component';
 import { HeaderComponent } from "./common/header/header.component";
 import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
-import { AdminComponent, DialogSimple, DialogMultiple } from "./admin/admin.component";
+import { AdminComponent } from "./admin/admin.component";
 import { LoginFormComponent } from "./vue-initiale/login-form/login-form.component";
-import { PartieSimpleFonctions } from './liste-parties/partie-simple/partie-simple.component';
-import { PartieMultipleFonctions } from './liste-parties/partie-multiple/partie-multiple.component';
+import { PartieSimpleComponent, PartieSimpleFonctions } from './liste-parties/partie-simple/partie-simple.component';
+import { PartieMultipleComponent, PartieMultipleFonctions } from './liste-parties/partie-multiple/partie-multiple.component';
+import { DialogSimpleComponent } from './admin/dialog-simple/dialog-simple.component';
+import { DialogMultipleComponent } from './admin/dialog-multiple/dialog-multiple.component';
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
@@ -48,15 +50,13 @@ const appRoutes: Routes = [
     AdminComponent,
     AppComponent,
     ListePartiesComponent,
-    DialogMultiple,
-    DialogSimple,
     LoginFormComponent,
-    DialogSimple,
-    DialogMultiple,
     ChronoComponent,
     PartieSoloComponent,
     PartieSimpleFonctions,
     PartieMultipleFonctions,
+    DialogSimpleComponent,
+    DialogMultipleComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -84,8 +84,8 @@ const appRoutes: Routes = [
   providers: [BasicService],
   bootstrap: [AppComponent],
   entryComponents: [
-    DialogSimple,
-    DialogMultiple,
+    DialogSimpleComponent,
+    DialogMultipleComponent
   ],
 })
 export class AppModule { }
