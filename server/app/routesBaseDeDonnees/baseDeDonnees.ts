@@ -16,6 +16,7 @@ export module RouteBaseDeDonnees {
 
         public constructor() {
             this.mongoose = new Mongoose();
+            this.mongoose.set("useCreateIndex", true);
             this.schema = new Schema({
                 username: {
                     type: String,
@@ -29,7 +30,7 @@ export module RouteBaseDeDonnees {
         }
 
         private async seConnecter(): Promise<void> {
-            await this.mongoose.connect(this.mongoURL);
+            await this.mongoose.connect(this.mongoURL, { useNewUrlParser: true });
         }
 
         private async ajouterUser(usagerJson: {}, res: Response): Promise<Response> {
@@ -37,8 +38,10 @@ export module RouteBaseDeDonnees {
             try {
                 await usager.save();
 
+                // tslint:disable-next-line:no-magic-numbers
                 return res.status(201).json(usager);
               } catch (err) {
+                // tslint:disable-next-line:no-magic-numbers
                 return res.status(501).json(err);
             }
         }
@@ -48,6 +51,7 @@ export module RouteBaseDeDonnees {
 
             await this.modelUser.findById(identifiant)
                 .then((res: Document) => { usager = res.toObject(); })
+                // tslint:disable-next-line:no-empty
                 .catch(() => {});
 
             return usager;
