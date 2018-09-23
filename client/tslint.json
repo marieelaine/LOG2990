@@ -213,7 +213,7 @@
       }
     ],
     "no-constant-condition": true,
-    "no-suspicious-comment": true,
+    "no-suspicious-comment": false,
     "no-unnecessary-local-variable": true,
     "no-useless-files": true
   }
