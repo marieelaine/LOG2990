@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ListePartiesComponent } from '../liste-parties.component';
 
-export interface PartieMultipleComponent {
+export interface PartieMultipleInterface {
   title: String;
   imagePath: String;
   timesSolo: number[];
@@ -15,7 +15,7 @@ export interface PartieMultipleComponent {
   templateUrl: './partie-multiple.component.html',
   styleUrls: ['./partie-multiple.component.css']
 })
-export class PartieMultipleFonctions {
+export class PartieMultipleComponent {
 
   listeParties = new ListePartiesComponent().listePartiesMultiples;
 

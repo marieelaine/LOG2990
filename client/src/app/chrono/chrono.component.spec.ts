@@ -28,8 +28,8 @@ describe('ChronoComponent', () => {
   });
 
   it ("should return value 0", () => {
-    component.startTimer()
+    component.startTimer();
     setTimeout(expect(component.getTime()).toBe(0), 5000);
-    
+
   });
 });

@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { PartieSimpleComponent } from '../../liste-parties/partie-simple/partie-simple.component';
+import { PartieSimpleInterface, PartieSimpleComponent } from '../../liste-parties/partie-simple/partie-simple.component';
 import { ListePartiesComponent } from '../../liste-parties/liste-parties.component';
 import { DialogData } from '../admin.component';
 import { PartieMultipleComponent } from '../../liste-parties/partie-multiple/partie-multiple.component';
@@ -16,7 +16,7 @@ export class DialogSimpleComponent {
   outOfBoundNameLengthMessage: String = "";
   wrongImageTypeMessage: String = "";
   wrongNumberOfImagesMessage: String = "";
-  partieSimple: PartieSimpleComponent;
+  partieSimple: PartieSimpleInterface;
   listeParties: ListePartiesComponent;
   selectedFile: File;
   selectedFiles: File[] = [];
@@ -101,7 +101,7 @@ export class DialogSimpleComponent {
     // this.addNewSimpleGameCardToList(partieSimple);
   }
 
-  addNewSimpleGameCardToList(partieSimple: PartieMultipleComponent) {
+  addNewSimpleGameCardToList(partieSimple: PartieSimpleInterface) {
     this.listeParties.listePartiesSimples.push(partieSimple);
   }
 }

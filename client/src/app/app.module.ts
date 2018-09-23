@@ -27,8 +27,8 @@ import { HeaderComponent } from "./common/header/header.component";
 import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
 import { AdminComponent } from "./admin/admin.component";
 import { LoginFormComponent } from "./vue-initiale/login-form/login-form.component";
-import { PartieSimpleComponent, PartieSimpleFonctions } from './liste-parties/partie-simple/partie-simple.component';
-import { PartieMultipleComponent, PartieMultipleFonctions } from './liste-parties/partie-multiple/partie-multiple.component';
+import { PartieSimpleInterface, PartieSimpleComponent } from './liste-parties/partie-simple/partie-simple.component';
+import { PartieMultipleComponent, PartieMultipleInterface } from './liste-parties/partie-multiple/partie-multiple.component';
 import { DialogSimpleComponent } from './admin/dialog-simple/dialog-simple.component';
 import { DialogMultipleComponent } from './admin/dialog-multiple/dialog-multiple.component';
 
@@ -53,8 +53,8 @@ const appRoutes: Routes = [
     LoginFormComponent,
     ChronoComponent,
     PartieSoloComponent,
-    PartieSimpleFonctions,
-    PartieMultipleFonctions,
+    PartieSimpleComponent,
+    PartieMultipleComponent,
     DialogSimpleComponent,
     DialogMultipleComponent
   ],

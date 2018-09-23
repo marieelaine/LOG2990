@@ -6,17 +6,16 @@ describe('PartieSimpleComponent', () => {
   let component: PartieSimpleComponent;
   let fixture: ComponentFixture<PartieSimpleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ PartieSimpleComponent ]
     })
     .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PartieSimpleComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

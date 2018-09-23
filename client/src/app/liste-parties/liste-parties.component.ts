@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PartieSimpleComponent } from './partie-simple/partie-simple.component';
-import { PartieMultipleComponent } from './partie-multiple/partie-multiple.component';
+import { PartieSimpleInterface } from './partie-simple/partie-simple.component';
+import { PartieMultipleComponent, PartieMultipleInterface } from './partie-multiple/partie-multiple.component';
 
 @Component({
   selector: 'app-liste-parties',
@@ -10,7 +10,7 @@ import { PartieMultipleComponent } from './partie-multiple/partie-multiple.compo
 export class ListePartiesComponent implements OnInit {
 
   partieSimpleDiv: HTMLElement;
-  listePartiesSimples: PartieSimpleComponent[] = [
+  listePartiesSimples: PartieSimpleInterface[] = [
     { title: 'Nissan Patrol', imagePath: 'assets/NissanPatrol.jpg', isElevatedActive: false,
       timesSolo: [320, 500], timesOneVsOne: [],
       titleWithoutFirstLetter: this.getTitleWithoutFirstLetter('Nissan Patrol') },
@@ -20,7 +20,7 @@ export class ListePartiesComponent implements OnInit {
       titleWithoutFirstLetter: this.getTitleWithoutFirstLetter('Jerry') }
   ];
 
-  listePartiesMultiples: PartieMultipleComponent[] = [
+  listePartiesMultiples: PartieMultipleInterface[] = [
     { title: 'Mona Lisa', imagePath: 'assets/monaLisa.jpg', isElevatedActive: false,
       timesSolo: [312, 415, 6462, 1], timesOneVsOne: [312, 3],
       titleWithoutFirstLetter: this.getTitleWithoutFirstLetter('Mona Lisa') }
