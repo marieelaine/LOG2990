@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { PartieSimpleComponent } from '../../liste-parties/partie-simple/partie-simple.component';
+import { PartieSimpleInterface, PartieSimpleComponent } from '../../liste-parties/partie-simple/partie-simple.component';
 import { ListePartiesComponent } from '../../liste-parties/liste-parties.component';
 import { DialogData } from '../admin.component';
 import { PartieMultipleComponent } from '../../liste-parties/partie-multiple/partie-multiple.component';
@@ -16,11 +16,11 @@ export class DialogSimpleComponent {
   outOfBoundNameLengthMessage: String = "";
   wrongImageTypeMessage: String = "";
   wrongNumberOfImagesMessage: String = "";
-  partieSimple: PartieSimpleComponent;
+  partieSimple: PartieSimpleInterface;
   listeParties: ListePartiesComponent;
   selectedFile: File;
   selectedFiles: File[] = [];
-  correctImageExtensions: String[] = ["image/png", "image/jpeg", "image/gif"];
+  correctImageExtension: String = "image/bmp";
 
   constructor(
     public dialogRef: MatDialogRef<DialogSimpleComponent>,
@@ -28,8 +28,10 @@ export class DialogSimpleComponent {
     private http: HttpClient) {
     }
 
-  onFileSelectedImage1(event) {
-    this.selectedFiles[0] = this.getSelectedFileFromEvent(event);
+  onFileSelectedImage(event, i) {
+    console.log(event);
+    this.selectedFiles[i] = this.getSelectedFileFromEvent(event);
+    this.getImageSizeInPixels(this.selectedFiles[i]);
     this.wrongImageTypeMessage = this.getWrongImageTypeMessage();
     // TODO : envoyer l'image upload vers le serveur
 
@@ -37,9 +39,8 @@ export class DialogSimpleComponent {
     // fd.append("image", this.selectedFile, this.selectedFile.name);
   }
 
-  onFileSelectedImage2(event) {
-    this.selectedFiles[1] = this.getSelectedFileFromEvent(event);
-    this.wrongImageTypeMessage = this.getWrongImageTypeMessage();
+  getImageSizeInPixels(imageFile) {
+    // const datav = new DataView(this.fileReader.readAsArrayBuffer(imageFile));
   }
 
   getSelectedFileFromEvent(event) {
@@ -66,9 +67,9 @@ export class DialogSimpleComponent {
   }
 
   getWrongImageTypeMessage(): String {
-    if (this.selectedFiles[0] !== undefined && !this.correctImageExtensions.includes(this.selectedFiles[0].type)
-    || this.selectedFiles[1] !== undefined && !this.correctImageExtensions.includes(this.selectedFiles[1].type)) {
-      return '*Les images doivent être de type "png", "jpg" ou "gif".';
+    if (this.selectedFiles[0] !== undefined && this.selectedFiles[0].type !== this.correctImageExtension
+    || this.selectedFiles[1] !== undefined && this.correctImageExtension !== this.selectedFiles[1].type) {
+      return '*Les images doivent être de type "bmp".';
     } else {
       return "";
     }
@@ -101,7 +102,7 @@ export class DialogSimpleComponent {
     // this.addNewSimpleGameCardToList(partieSimple);
   }
 
-  addNewSimpleGameCardToList(partieSimple: PartieMultipleComponent) {
+  addNewSimpleGameCardToList(partieSimple: PartieSimpleInterface) {
     this.listeParties.listePartiesSimples.push(partieSimple);
   }
 }

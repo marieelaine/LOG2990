@@ -5,6 +5,7 @@ import { User} from "../login-form/user";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { UserService } from "../user.service";
+// tslint:disable-next-line:no-any
 declare var particlesJS: any;
 
 export const USER_URL: string = "http://localhost:3000/users/";

@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { ListePartiesComponent } from '../liste-parties.component';
 
-export interface PartieSimpleComponent {
+export interface PartieSimpleInterface {
   title: String;
   imagePath: String;
   timesSolo: number[];
   timesOneVsOne: number[];
   isElevatedActive: boolean;
-  titleWithoutFirstLetter: String;
 }
 
 @Component({
@@ -15,7 +14,7 @@ export interface PartieSimpleComponent {
   templateUrl: './partie-simple.component.html',
   styleUrls: ['./partie-simple.component.css']
 })
-export class PartieSimpleFonctions {
+export class PartieSimpleComponent {
 
   listeParties = new ListePartiesComponent().listePartiesSimples;
 
@@ -66,5 +65,9 @@ export class PartieSimpleFonctions {
 
       return minutes + ":" + secondes;
       }
+  }
+
+  getTitleWithoutFirstLetter(title: String): String {
+    return title.substr(1, title.length - 1);
   }
 }

@@ -5,12 +5,12 @@
         <div class='gameName'>
             <mat-form-field class='formField'>
                 <input matInput [(ngModel)]="data.simpleGameName" type='text' placeholder="Nom de la partie" class='gameNameInput'>
-                <!-- TODO : <mat-error *ngIf="show"> {{ outOfBoundNameLengthMessage }} </mat-error> -->
+                <!-- <mat-error *ngIf="show"> {{ outOfBoundNameLengthMessage }} </mat-error> -->
             </mat-form-field>
         </div>
         <div class='firstImage'>
             <button mat-button class='mat-elevation-z6'><label for="uploadImage1" style='margin:0'>Première image</label></button>
-            <input id='uploadImage1' type="file" accept="image/*" #file style="visibility:hidden;" (change)='onFileSelectedImage1($event)'>
+            <input id='uploadImage1' type="file" accept="image/*" #file style="visibility:hidden;" (change)='onFileSelectedImage($event, 0)'>
             <div class='imageFrame' id='firstImageFrame'> 
                 <div id='maskHeigth'></div>                      
                 <div id='maskWidth'></div>                      
@@ -18,7 +18,7 @@
         </div>
         <div class='secondImage'>
                 <button mat-button class='mat-elevation-z6'><label for="uploadImage2" style='margin:0'>Deuxième image</label></button>
-                <input id='uploadImage2' type="file" accept="image/*" #file style="visibility:hidden;" (change)='onFileSelectedImage2($event)'>
+                <input id='uploadImage2' type="file" accept="image/*" #file style="visibility:hidden;" (change)='onFileSelectedImage($event, 1)'>
             <div class='imageFrame' id='secondImageFrame'> 
                 <div id='maskHeigth'></div>           
                 <div id='maskWidth'></div>           

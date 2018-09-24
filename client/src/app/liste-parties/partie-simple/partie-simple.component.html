@@ -6,7 +6,7 @@
   (mouseleave)="partieSimple.isElevatedActive = !partieSimple.isElevatedActive">
       <mat-card-header>
           <h2 class='gameNameHeader titleFirstLetter'>{{partieSimple.title[0]}}</h2>
-          <h2 class='gameNameHeader'>{{partieSimple.titleWithoutFirstLetter}}</h2>
+          <h2 class='gameNameHeader'>{{getTitleWithoutFirstLetter(partieSimple.title)}}</h2>
       </mat-card-header>
       <div class='row'>
           <div class='col-sm-6'>
