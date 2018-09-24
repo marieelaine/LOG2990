@@ -19,7 +19,7 @@ export class PartieSoloComponent implements OnInit {
   start(){
     this.blur = false;
     let button = document.getElementById("StartButton");
-    button.remove();
+    button!.remove();
     this.chrono.startTimer();
   }
 
