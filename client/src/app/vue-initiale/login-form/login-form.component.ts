@@ -52,7 +52,7 @@ export class LoginFormComponent implements OnInit {
   public createFormGroup(): FormGroup {
     return new FormGroup({
         username: new FormControl("", [
-          Validators.pattern("^[A-Za-z\d]+$")
+          Validators.pattern("^[A-Za-z0-9]+$")
         ])
     });
   }
