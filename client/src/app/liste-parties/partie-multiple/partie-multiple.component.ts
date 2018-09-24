@@ -7,7 +7,6 @@ export interface PartieMultipleComponent {
   timesSolo: number[];
   timesOneVsOne: number[];
   isElevatedActive: boolean;
-  titleWithoutFirstLetter: String;
 }
 
 @Component({
@@ -66,5 +65,9 @@ export class PartieMultipleFonctions {
 
       return minutes + ":" + secondes;
       }
+  }
+
+  getTitleWithoutFirstLetter(title: String): String {
+    return title.substr(1, title.length - 1);
   }
 }
