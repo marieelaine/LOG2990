@@ -7,14 +7,26 @@
 </head>   
 
 <div class="container-fluid ">
-    <div class="row">
-        <div class="col-lg-6 test1">
-            <img src="https://static.gamespot.com/uploads/original/1575/15759911/3392408-pokemon-letsgopikachueevee-promo.jpg" alt="">
-        </div>
-        <div class="col-lg-6 test2">
-            <img src="https://static.gamespot.com/uploads/original/1575/15759911/3392408-pokemon-letsgopikachueevee-promo.jpg" alt="pokémon-droite"> 
-        </div>
+    <div>
+        <h1 class="title">
+            Il reste 69 différences à trouver!
+        </h1>
     </div>
+
+    <div>
+        <div class="row">
+            <div class="col-lg-6 ">
+                <img [ngClass]="{'blurImg': blur}" (click)="terminerPartie()" src="https://static.gamespot.com/uploads/original/1575/15759911/3392408-pokemon-letsgopikachueevee-promo.jpg" alt="">
+            </div>
+            <div class="col-lg-6 ">
+                <img [ngClass]="{'blurImg': blur}" (click)="terminerPartie()" src="https://static.gamespot.com/uploads/original/1575/15759911/3392408-pokemon-letsgopikachueevee-promo.jpg" alt="pokémon-droite"> 
+            </div>
+        </div>  
+        <button mat-button id="StartButton" class="mat-elevation-z6" (click)="start()">Commencer!</button>
+    </div>
+    <div class="title">
+        {{chrono.getMinutesString()}}:{{chrono.getSecondsSrtring()}}
+    </div>
+    
 </div>
 
-<app-chrono></app-chrono>

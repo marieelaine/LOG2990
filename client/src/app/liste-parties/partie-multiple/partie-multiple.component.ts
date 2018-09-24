@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ListePartiesComponent } from '../liste-parties.component';
 
-export interface PartieSimpleComponent {
+export interface PartieMultipleComponent {
   title: String;
   imagePath: String;
   timesSolo: number[];
@@ -11,13 +11,13 @@ export interface PartieSimpleComponent {
 }
 
 @Component({
-  selector: 'app-partie-simple',
-  templateUrl: './partie-simple.component.html',
-  styleUrls: ['./partie-simple.component.css']
+  selector: 'app-partie-multiple',
+  templateUrl: './partie-multiple.component.html',
+  styleUrls: ['./partie-multiple.component.css']
 })
-export class PartieSimpleFonctions {
+export class PartieMultipleFonctions {
 
-  listeParties = new ListePartiesComponent().listePartiesSimples;
+  listeParties = new ListePartiesComponent().listePartiesMultiples;
 
   getSortedTimes(times: number[]): number[] {
     // tslint:disable-next-line:only-arrow-functions

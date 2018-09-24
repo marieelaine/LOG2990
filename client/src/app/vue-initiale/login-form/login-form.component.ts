@@ -19,8 +19,9 @@ const URL_AJOUTER_PISTE: string = USER_URL + "ajouter/";
 
 export class LoginFormComponent implements OnInit {
 
-  public BASE_URL: string = "http://localhost:3000/";
+  private BASE_URL: string = "http://localhost:3000/";
   public loginForm: FormGroup;
+  public usernameTaken: Boolean;
 
   public constructor(private router: Router, private http: HttpClient, private userService: UserService) {
     this.loginForm = this.createFormGroup();
@@ -30,8 +31,15 @@ export class LoginFormComponent implements OnInit {
     const result: User = Object.assign({}, this.loginForm.value);
     this.userService.register(JSON.stringify(this.loginForm.value))
     .subscribe(
-    (data) => {console.log(data); this.router.navigate(["/liste-parties"]); },
-    (error) => console.error(error)
+    (data) => {
+      console.log(data);
+      this.router.navigate(["/liste-parties"]);
+      this.usernameTaken = true;
+    },
+    (error) => {
+      console.error(error);
+      this.usernameTaken = false;
+    }
     );
  }
 

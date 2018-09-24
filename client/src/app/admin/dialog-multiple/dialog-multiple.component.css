@@ -1,0 +1,33 @@
+.addGameCard
+{
+    margin:1%;
+    background-color: #dadada;
+    border-radius: 20px;
+    height: 250px;
+}
+
+.gameName
+{
+    text-align: center;
+    margin:0;
+}
+
+.gameNameInput
+{
+    width: 100%;
+    text-align: center;
+}
+
+.formField
+{
+    margin: 0;
+    width: 50%;
+}
+
+.dialogButtons
+{
+    margin-top:3%;
+    margin-bottom:3%;
+    float:right;
+    margin-right:2%;
+}

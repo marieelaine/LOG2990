@@ -88,3 +88,9 @@ body, html {
 	top: 0px;
 	z-index:1;
 }
+
+#usernameTaken{
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+}

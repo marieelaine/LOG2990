@@ -17,15 +17,20 @@
             unique
             [ngClass]="{'is-invalid': (loginForm.get('username').touched || 
                                             loginForm.get('username').dirty) &&
-                                            !loginForm.get('username').valid }">
+                                            !loginForm.get('username').valid}">
             <span class="invalid-feedback">
               <span *ngIf="loginForm.get('username').errors?.required">
-                Veuillez entre votre nom d'utilisateur.
+                Veuillez entre votre nom d'utilisateur.<br>
               </span>
               <span *ngIf="loginForm.get('username').errors?.minlength">
-                Votre nom doit être d'au moins 3 caractères.
+                Votre nom doit être d'au moins 3 caractères.<br>
+              </span>
+              <span *ngIf="loginForm.get('username').errors?.pattern">
+                Votre nom doit uniquement être composé de caractères alphanumériques.<br>
               </span>
             </span>
+            <span *ngIf="!usernameTaken; else usernameTakenTrue" id="usernameTaken"></span>
+            <ng-template #usernameTakenTrue>Ce nom d'utilisateur existe déjà! Veuillez en choisir un autre.<br></ng-template>
           <button 
             type="submit" 
             class="btn btn-default btn-block btn-custom" 

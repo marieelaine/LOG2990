@@ -1,9 +1,11 @@
 <h1 mat-dialog-title>Ajouter une partie en point de vue multiple</h1>
 <mat-divider></mat-divider>
 <div mat-dialog-content>
-    <mat-card class='addGameCard'>
+    <mat-card class='addGameCard mat-elevation-z10'>
         <div class='gameName'>
-            <input matInput [(ngModel)]="data.multipleGameName" type='text' placeholder="Nom de la partie" class="gameNameInput">
+            <mat-form-field class='formField'>
+                <input matInput [(ngModel)]="data.multipleGameName" type='text' placeholder="Nom de la partie" class='gameNameInput'>
+            </mat-form-field>
         </div>
     </mat-card>
     <button mat-button (click)='onAddMultipleGameClick()' class='dialogButtons mat-elevation-z6'>Ajouter</button>

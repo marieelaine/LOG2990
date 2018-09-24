@@ -158,7 +158,7 @@
     ],
     "arrow-parens": true,
     "no-any": true,
-    "no-magic-numbers": true,
+    "no-magic-numbers": false,
     "only-arrow-functions": true,
     "adjacent-overload-signatures": true,
     "max-file-line-count": [
@@ -213,7 +213,7 @@
       }
     ],
     "no-constant-condition": true,
-    "no-suspicious-comment": true,
+    "no-suspicious-comment": false,
     "no-unnecessary-local-variable": true,
     "no-useless-files": true
   }

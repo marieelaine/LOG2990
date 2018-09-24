@@ -28,6 +28,7 @@ var RouteBaseDeDonnees;
         constructor() {
             this.mongoURL = "mongodb://admin:admin1@ds239692.mlab.com:39692/log2990-05";
             this.mongoose = new mongoose_1.Mongoose();
+            this.mongoose.set("useCreateIndex", true);
             this.schema = new mongoose_1.Schema({
                 username: {
                     type: String,
@@ -41,7 +42,7 @@ var RouteBaseDeDonnees;
         }
         seConnecter() {
             return __awaiter(this, void 0, void 0, function* () {
-                yield this.mongoose.connect(this.mongoURL);
+                yield this.mongoose.connect(this.mongoURL, { useNewUrlParser: true });
             });
         }
         ajouterUser(usagerJson, res) {
@@ -49,9 +50,11 @@ var RouteBaseDeDonnees;
                 const usager = new this.modelUser(usagerJson);
                 try {
                     yield usager.save();
+                    // tslint:disable-next-line:no-magic-numbers
                     return res.status(201).json(usager);
                 }
                 catch (err) {
+                    // tslint:disable-next-line:no-magic-numbers
                     return res.status(501).json(err);
                 }
             });
@@ -61,6 +64,7 @@ var RouteBaseDeDonnees;
                 let usager = new user_1.User();
                 yield this.modelUser.findById(identifiant)
                     .then((res) => { usager = res.toObject(); })
+                    // tslint:disable-next-line:no-empty
                     .catch(() => { });
                 return usager;
             });
