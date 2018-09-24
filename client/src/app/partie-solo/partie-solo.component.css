@@ -18,7 +18,7 @@ img{
 
 #StartButton{
     background-color: rgb(43, 43, 43);
-    color: aliceblue;
+    color: whitesmoke;
     position: absolute;
     top: 30%;
     left: 50%;
@@ -28,5 +28,5 @@ img{
 
 .chrono{
     text-align: center;
-    font-size: 32   px;
+    font-size: 32px;
 }
