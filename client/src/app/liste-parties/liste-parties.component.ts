@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PartieSimpleComponent } from './partie-simple/partie-simple.component';
-import { PartieMultipleComponent } from './partie-multiple/partie-multiple.component';
+import { PartieSimpleInterface } from './partie-simple/partie-simple.component';
+import { PartieMultipleComponent, PartieMultipleInterface } from './partie-multiple/partie-multiple.component';
 
 @Component({
   selector: 'app-liste-parties',

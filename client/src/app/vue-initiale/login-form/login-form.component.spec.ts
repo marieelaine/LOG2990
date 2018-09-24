@@ -1,25 +1,33 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoginFormComponent } from './login-form.component';
+// import { LoginFormComponent } from './login-form.component';
+// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-describe('LoginFormComponent', () => {
-  let component: LoginFormComponent;
-  let fixture: ComponentFixture<LoginFormComponent>;
+// import { HttpClientTestingModule } from '@angular/common/http/testing';
+// import { RouterTestingModule } from "@angular/router/testing";
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ LoginFormComponent ]
-    })
-    .compileComponents();
-  }));
+// describe('LoginFormComponent', () => {
+//   let component: LoginFormComponent;
+//   let fixture: ComponentFixture<LoginFormComponent>;
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(LoginFormComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [ LoginFormComponent ],
+//       imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule, RouterTestingModule]
+//     })
+//     .compileComponents();
+//   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(LoginFormComponent);
+//     component = fixture.componentInstance;
+//   });
+
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+
+//   // it("should", () => {
+
+//   // });
+// });

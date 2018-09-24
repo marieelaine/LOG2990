@@ -4,13 +4,17 @@ import { TestBed, async, ComponentFixture } from "@angular/core/testing";
 import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from "@angular/router/testing";
+import { HeaderComponent } from "./common/header/header.component";
+import { MatToolbarModule } from "@angular/material";
 describe("AppComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        HeaderComponent
       ],
-      imports: [HttpClientModule],
+      imports: [HttpClientModule, RouterTestingModule, MatToolbarModule],
       providers: [BasicService]
     }).compileComponents();
   }));
