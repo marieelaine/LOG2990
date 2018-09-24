@@ -26,6 +26,7 @@ img{
     -ms-transform: translate(-50%, -50%);
 }
 
-.timer{
-    
+.chrono{
+    text-align: center;
+    font-size: 32   px;
 }

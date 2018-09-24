@@ -24,7 +24,7 @@ describe('ChronoComponent', () => {
   });
 
   it ("should return value 0", () => {
-    expect(component.getTime()).toBe(0);
+    expect(component.getTime()).toBe(5);
   });
 
   it ("should return value 0", () => {
