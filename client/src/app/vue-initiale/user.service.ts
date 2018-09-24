@@ -6,6 +6,7 @@ export class UserService {
 
   constructor(private _http: HttpClient) { }
 
+  // tslint:disable-next-line:no-any
   register(body: any) {
     return this._http.post("http://127.0.0.1:3000/users/ajouter", body, {
       observe: "body",

@@ -24,6 +24,7 @@
     "@angular/router": "^6.1.0",
     "@ng-bootstrap/ng-bootstrap": "^3.2.0",
     "angular-material": "^1.1.10",
+    "angular-particle": "^1.0.4",
     "core-js": "^2.5.4",
     "file-api": "^0.10.4",
     "modal": "^1.2.0",
