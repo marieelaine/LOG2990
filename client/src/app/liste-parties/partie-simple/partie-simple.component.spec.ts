@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PartieSimpleComponent } from './partie-simple.component';
+import { PartieSimpleFonctions } from './partie-simple.component';
 
 describe('PartieSimpleComponent', () => {
-  let component: PartieSimpleComponent;
-  let fixture: ComponentFixture<PartieSimpleComponent>;
+  let component: PartieSimpleFonctions;
+  let fixture: ComponentFixture<PartieSimpleFonctions>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PartieSimpleComponent ]
+      declarations: [ PartieSimpleFonctions ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PartieSimpleComponent);
+    fixture = TestBed.createComponent(PartieSimpleFonctions);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
