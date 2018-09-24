@@ -88,6 +88,6 @@ const appRoutes: Routes = [
   entryComponents: [
     DialogSimpleComponent,
     DialogMultipleComponent
-  ],
+  ]
 })
 export class AppModule { }

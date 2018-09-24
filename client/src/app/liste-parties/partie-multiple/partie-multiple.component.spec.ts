@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
 import { PartieMultipleFonctions } from './partie-multiple.component';
 
 describe('PartieMultipleComponent', () => {
@@ -8,7 +9,11 @@ describe('PartieMultipleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PartieMultipleFonctions ]
+      imports: [RouterTestingModule],
+      declarations: [ PartieMultipleFonctions ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ],
     })
     .compileComponents();
   }));

@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ListePartiesComponent } from './liste-parties.component';
 import { PartieSimpleFonctions } from './partie-simple/partie-simple.component';
 import { PartieMultipleFonctions } from './partie-multiple/partie-multiple.component';
@@ -13,6 +13,9 @@ describe('ListePartiesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ListePartiesComponent, PartieSimpleFonctions, PartieMultipleFonctions ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ],
       imports: [MatCardModule, RouterTestingModule ]
     })
     .compileComponents();
