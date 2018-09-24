@@ -5,8 +5,8 @@ import { User} from "../login-form/user";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { UserService } from "../user.service";
-// tslint:disable-next-line:no-any
-declare var particlesJS: any;
+import { ParticlesModule } from 'angular-particle';
+import { myParams, myStyle } from "../../../assets/particles";
 
 export const USER_URL: string = "http://localhost:3000/users/";
 const URL_AJOUTER_PISTE: string = USER_URL + "ajouter/";
@@ -23,6 +23,11 @@ export class LoginFormComponent implements OnInit {
   private BASE_URL: string = "http://localhost:3000/";
   public loginForm: FormGroup;
   public usernameTaken: Boolean;
+
+  myStyle: object = {};
+  myParams: object = {};
+  width: number = 100;
+  height: number = 100;
 
   public constructor(private router: Router, private http: HttpClient, private userService: UserService) {
     this.loginForm = this.createFormGroup();
@@ -54,7 +59,8 @@ export class LoginFormComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   public ngOnInit() {
-    particlesJS.load("particles-js", "assets/particles.json", null);
+    this.myStyle = myStyle;
+    this.myParams = myParams;
   }
 
   public obtenirUserId(identifiant: string): Observable<User> {
