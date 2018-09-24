@@ -1,9 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { PartieSimpleInterface, PartieSimpleComponent } from '../../liste-parties/partie-simple/partie-simple.component';
+import { PartieSimpleInterface } from '../../liste-parties/partie-simple/partie-simple.component';
 import { ListePartiesComponent } from '../../liste-parties/liste-parties.component';
 import { DialogData } from '../admin.component';
-import { PartieMultipleComponent } from '../../liste-parties/partie-multiple/partie-multiple.component';
 import { HttpClient } from '@angular/common/http';
 
 @Component({

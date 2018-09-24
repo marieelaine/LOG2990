@@ -14,7 +14,7 @@ export interface PartieMultipleInterface {
   templateUrl: './partie-multiple.component.html',
   styleUrls: ['./partie-multiple.component.css']
 })
-export class PartieMultipleComponent {
+export class PartieMultipleFonctions {
 
   listeParties = new ListePartiesComponent().listePartiesMultiples;
 

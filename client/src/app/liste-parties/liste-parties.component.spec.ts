@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListePartiesComponent } from './liste-parties.component';
-import { PartieSimpleComponent } from './partie-simple/partie-simple.component';
-import { PartieMultipleComponent } from './partie-multiple/partie-multiple.component';
+import { PartieSimpleFonctions } from './partie-simple/partie-simple.component';
+import { PartieMultipleFonctions } from './partie-multiple/partie-multiple.component';
 import { MatCardHeader, MatCardModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -12,7 +12,7 @@ describe('ListePartiesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListePartiesComponent, PartieSimpleComponent, PartieMultipleComponent ],
+      declarations: [ ListePartiesComponent, PartieSimpleFonctions, PartieMultipleFonctions ],
       imports: [MatCardModule, RouterTestingModule ]
     })
     .compileComponents();
