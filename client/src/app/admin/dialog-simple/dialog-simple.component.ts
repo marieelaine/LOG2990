@@ -20,7 +20,7 @@ export class DialogSimpleComponent {
   listeParties: ListePartiesComponent;
   selectedFile: File;
   selectedFiles: File[] = [];
-  correctImageExtensions: String[] = ["image/png", "image/jpeg", "image/gif"];
+  correctImageExtension: String = "image/bmp";
 
   constructor(
     public dialogRef: MatDialogRef<DialogSimpleComponent>,
@@ -28,8 +28,10 @@ export class DialogSimpleComponent {
     private http: HttpClient) {
     }
 
-  onFileSelectedImage1(event) {
-    this.selectedFiles[0] = this.getSelectedFileFromEvent(event);
+  onFileSelectedImage(event, i) {
+    console.log(event);
+    this.selectedFiles[i] = this.getSelectedFileFromEvent(event);
+    this.getImageSizeInPixels(this.selectedFiles[i]);
     this.wrongImageTypeMessage = this.getWrongImageTypeMessage();
     // TODO : envoyer l'image upload vers le serveur
 
@@ -37,9 +39,8 @@ export class DialogSimpleComponent {
     // fd.append("image", this.selectedFile, this.selectedFile.name);
   }
 
-  onFileSelectedImage2(event) {
-    this.selectedFiles[1] = this.getSelectedFileFromEvent(event);
-    this.wrongImageTypeMessage = this.getWrongImageTypeMessage();
+  getImageSizeInPixels(imageFile) {
+    // const datav = new DataView(this.fileReader.readAsArrayBuffer(imageFile));
   }
 
   getSelectedFileFromEvent(event) {
@@ -66,9 +67,9 @@ export class DialogSimpleComponent {
   }
 
   getWrongImageTypeMessage(): String {
-    if (this.selectedFiles[0] !== undefined && !this.correctImageExtensions.includes(this.selectedFiles[0].type)
-    || this.selectedFiles[1] !== undefined && !this.correctImageExtensions.includes(this.selectedFiles[1].type)) {
-      return '*Les images doivent être de type "png", "jpg" ou "gif".';
+    if (this.selectedFiles[0] !== undefined && this.selectedFiles[0].type !== this.correctImageExtension
+    || this.selectedFiles[1] !== undefined && this.correctImageExtension !== this.selectedFiles[1].type) {
+      return '*Les images doivent être de type "bmp".';
     } else {
       return "";
     }
