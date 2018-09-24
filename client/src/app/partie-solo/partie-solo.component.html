@@ -16,14 +16,17 @@
     <div>
         <div class="row">
             <div class="col-lg-6 ">
-                <img [ngClass]="{'blurImg': blur}" src="https://static.gamespot.com/uploads/original/1575/15759911/3392408-pokemon-letsgopikachueevee-promo.jpg" alt="">
+                <img [ngClass]="{'blurImg': blur}" (click)="terminerPartie()" src="https://static.gamespot.com/uploads/original/1575/15759911/3392408-pokemon-letsgopikachueevee-promo.jpg" alt="">
             </div>
             <div class="col-lg-6 ">
-                <img [ngClass]="{'blurImg': blur}" src="https://static.gamespot.com/uploads/original/1575/15759911/3392408-pokemon-letsgopikachueevee-promo.jpg" alt="pokémon-droite"> 
+                <img [ngClass]="{'blurImg': blur}" (click)="terminerPartie()" src="https://static.gamespot.com/uploads/original/1575/15759911/3392408-pokemon-letsgopikachueevee-promo.jpg" alt="pokémon-droite"> 
             </div>
         </div>  
         <button id="StartButton" class=" btn btn-lg" (click)="start()">Commencer!</button>
     </div>
-    <app-chrono></app-chrono>
+    <div class="title">
+        {{chrono.getMinutesString()}}:{{chrono.getSecondsSrtring()}}
+    </div>
+    
 </div>
 

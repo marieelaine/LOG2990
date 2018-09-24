@@ -10,7 +10,7 @@ import { ChronoComponent } from "../chrono/chrono.component"
 export class PartieSoloComponent implements OnInit {
 
   blur: boolean = true;
-  chrono: ChronoComponent;
+  chrono: ChronoComponent = new ChronoComponent();
   timer: number = 0;
   
 
@@ -20,7 +20,14 @@ export class PartieSoloComponent implements OnInit {
     this.blur = false;
     let button = document.getElementById("StartButton");
     button.remove();
+    this.chrono.startTimer();
   }
+
+  terminerPartie(){
+    this.chrono.stopTimer();
+  }
+
+
   ngOnInit() {
   }
 
