@@ -1,0 +1,26 @@
+img{
+    max-width: 95%;
+    max-height:95%;
+    border-radius: 40px;
+    display: block;
+    margin: 0 auto;
+}
+
+.blurImg{
+    filter: blur(1.6rem);
+}
+
+.title{
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+#StartButton{
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
