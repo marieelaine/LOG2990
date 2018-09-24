@@ -1,23 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PartieMultipleComponent } from './partie-multiple.component';
-import { MatCardModule } from '@angular/material';
-import { RouterTestingModule } from '@angular/router/testing';
+import { PartieMultipleFonctions } from './partie-multiple.component';
 
 describe('PartieMultipleComponent', () => {
-  let component: PartieMultipleComponent;
-  let fixture: ComponentFixture<PartieMultipleComponent>;
+  let component: PartieMultipleFonctions;
+  let fixture: ComponentFixture<PartieMultipleFonctions>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PartieMultipleComponent ],
-      imports: [ MatCardModule, RouterTestingModule]
+      declarations: [ PartieMultipleFonctions ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PartieMultipleComponent);
+    fixture = TestBed.createComponent(PartieMultipleFonctions);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
