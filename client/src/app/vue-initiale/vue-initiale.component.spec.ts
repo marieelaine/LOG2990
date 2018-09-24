@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ParticlesModule } from 'angular-particle';
 
 describe('VueInitialeComponent', () => {
   let component: VueInitialeComponent;
@@ -16,7 +17,7 @@ describe('VueInitialeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ VueInitialeComponent, HeaderComponent, LoginFormComponent ],
-      imports: [MatToolbarModule, FormsModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule]
+      imports: [MatToolbarModule, FormsModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, ParticlesModule]
     })
     .compileComponents();
   }));
