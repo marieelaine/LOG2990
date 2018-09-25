@@ -39,12 +39,12 @@ export class LoginFormComponent implements OnInit {
     .subscribe(
     (data) => {
       console.log(data);
+      this.usernameTaken = false;
       this.router.navigate(["/liste-parties"]);
-      this.usernameTaken = true;
     },
     (error) => {
       console.error(error);
-      this.usernameTaken = false;
+      this.usernameTaken = true;
     }
     );
  }
