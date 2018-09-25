@@ -1,6 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 
 import { ChronoComponent } from './chrono.component';
+import { runInThisContext } from 'vm';
 
 describe('ChronoComponent', () => {
   let component: ChronoComponent;
@@ -24,12 +25,21 @@ describe('ChronoComponent', () => {
   });
 
   it ("should return value 0", () => {
-    expect(component.getTime()).toBe(5);
+    expect(component.getTime()).toBe(0);
   });
 
-  it ("should return value 0", () => {
+  it ("should return value 5", fakeAsync(() => {
     component.startTimer();
-    setTimeout(expect(component.getTime()).toBe(0), 5000);
+    tick(5000)
+    component.stopTimer();
+    expect(component.getTime()).toBe(5);
+  }));
 
-  });
+  it ("should return string '05' for minute and second", fakeAsync(() =>{
+    component.startTimer();
+    tick(305000);
+    expect(component.getSecondsSrtring()).toBe("05");
+    expect(component.getMinutesString()).toBe("05");
+    component.stopTimer();
+  }));
 });
