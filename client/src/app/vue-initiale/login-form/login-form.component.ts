@@ -39,12 +39,12 @@ export class LoginFormComponent implements OnInit {
     .subscribe(
     (data) => {
       console.log(data);
+      this.usernameTaken = false;
       this.router.navigate(["/liste-parties"]);
-      this.usernameTaken = true;
     },
     (error) => {
       console.error(error);
-      this.usernameTaken = false;
+      this.usernameTaken = true;
     }
     );
  }
@@ -52,13 +52,15 @@ export class LoginFormComponent implements OnInit {
   public createFormGroup(): FormGroup {
     return new FormGroup({
         username: new FormControl("", [
-          Validators.pattern("^[A-Za-z\d]+$")
+          Validators.required,
+          Validators.pattern("^[A-Za-z0-9]+$"),
+          Validators.maxLength(12),
+          Validators.minLength(3)
         ])
     });
   }
 
-  // tslint:disable-next-line:typedef
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.myStyle = myStyle;
     this.myParams = myParams;
   }

@@ -4,6 +4,7 @@ import { Request, Response} from "express";
 import { Mongoose, Model, Document, Schema } from "mongoose";
 import uniqueValidator = require("mongoose-unique-validator");
 import {User} from "../../../client/src/app/vue-initiale/login-form/user";
+import { POINT_CONVERSION_UNCOMPRESSED } from "constants";
 
 export module RouteBaseDeDonnees {
     @injectable()
@@ -46,6 +47,20 @@ export module RouteBaseDeDonnees {
             }
         }
 
+        private async deleteUser(usagerJson: String, res: Response): Promise<Response> {
+            const username: String = this.obtenirUserId(usagerJson)["username"];
+
+            try {
+                await this.modelUser.findOneAndDelete(username);
+
+                // tslint:disable-next-line:no-magic-numbers
+                return res.status(201).json();
+            } catch (err) {
+            // tslint:disable-next-line:no-magic-numbers
+            return res.status(501).json(err);
+            }
+        }
+
         private async obtenirUserId(identifiant: String): Promise<User> {
             let usager: User = new User();
 
@@ -64,6 +79,10 @@ export module RouteBaseDeDonnees {
 
         public async requeteUserId(req: Request, res: Response): Promise<void> {
             res.send(await this.obtenirUserId(req.params.id));
+        }
+
+        public async requeteDeleteUser(req: Request, res: Response): Promise<void> {
+            res.send(await this.deleteUser(req.body, res));
         }
 
     }

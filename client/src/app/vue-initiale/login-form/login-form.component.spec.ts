@@ -22,13 +22,53 @@
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginFormComponent);
     component = fixture.componentInstance;
+    component.ngOnInit();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it("should", () => {
-
+  it('form invalid when empty', () => {
+    expect(component.loginForm.valid).toBeFalsy();
   });
+
+  // tslint:disable-next-line:max-func-body-length
+  it('username field validity', () => {
+    let errors = {};
+    const username = component.loginForm.controls['username'];
+    expect(username.valid).toBeFalsy();
+
+    // username field is required
+    errors = username.errors || {};
+    expect(errors['required']).toBeTruthy();
+
+    // Set username to something that doesn't respect the pattern
+    username.setValue("tEst10-;");
+    errors = username.errors || {};
+    expect(errors['required']).toBeFalsy();
+    expect(errors['pattern']).toBeTruthy();
+
+    // Set username to something that doesn't respect the pattern
+    username.setValue("tE");
+    errors = username.errors || {};
+    expect(errors['required']).toBeFalsy();
+    expect(errors['minlength']).toBeTruthy();
+
+    // Set username to something that doesn't respect the pattern
+    username.setValue("tEst10000000000");
+    errors = username.errors || {};
+    expect(errors['required']).toBeFalsy();
+    expect(errors['maxlength']).toBeTruthy();
+
+    // Set username to something correct
+    username.setValue("admiN1");
+    errors = username.errors || {};
+    expect(errors['required']).toBeFalsy();
+    expect(errors['minlength']).toBeFalsy();
+    expect(errors['maxlength']).toBeFalsy();
+    expect(errors['pattern']).toBeFalsy();
+  });
+
 });

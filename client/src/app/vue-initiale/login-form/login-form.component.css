@@ -89,8 +89,7 @@ particles{
 	z-index:1;
 }
 
-#usernameTaken{
-    margin-top: .25rem;
+#login-box .usernameTaken{
     font-size: 80%;
     color: #dc3545;
 }

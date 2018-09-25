@@ -29,8 +29,10 @@
                 Votre nom doit uniquement être composé de caractères alphanumériques.<br>
               </span>
             </span>
-            <span *ngIf="!usernameTaken; else usernameTakenTrue" id="usernameTaken"></span>
-            <ng-template #usernameTakenTrue>Ce nom d'utilisateur existe déjà! Veuillez en choisir un autre.<br></ng-template>
+            <span class="usernameTaken">
+              <span *ngIf="!usernameTaken; else usernameTakenTrue"></span>
+              <ng-template id="usernameTaken" #usernameTakenTrue>Ce nom d'utilisateur existe déjà! Veuillez en choisir un autre.<br></ng-template>
+            </span>
           <button 
             type="submit" 
             class="btn btn-default btn-block btn-custom" 
