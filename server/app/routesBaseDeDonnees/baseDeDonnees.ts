@@ -4,7 +4,7 @@ import { Request, Response} from "express";
 import { Mongoose, Model, Document, Schema } from "mongoose";
 import uniqueValidator = require("mongoose-unique-validator");
 import {User} from "../../../client/src/app/vue-initiale/login-form/user";
-import { POINT_CONVERSION_UNCOMPRESSED } from "constants";
+// import { POINT_CONVERSION_UNCOMPRESSED } from "constants";
 
 export module RouteBaseDeDonnees {
     @injectable()
