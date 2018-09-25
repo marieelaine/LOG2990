@@ -18,8 +18,8 @@ export module RouteBaseDeDonnees {
             this.mongoose = new Mongoose();
             this.mongoose.set("useCreateIndex", true);
             this.schema = new Schema({
-                id : String,
-                username: {
+                // _id : String,
+                _username: {
                     type: String,
                     required: true,
                     unique: true
@@ -34,8 +34,10 @@ export module RouteBaseDeDonnees {
             await this.mongoose.connect(this.mongoURL, { useNewUrlParser: true });
         }
 
-        private async ajouterUser(usagerJson: {}, res: Response): Promise<Response> {
-            const usager: Document = new this.modelUser(usagerJson);
+        private async ajouterUser(user: {}, res: Response): Promise<Response> {
+            const usager: Document = new this.modelUser(user);
+            // tslint:disable-next-line:no-console
+            console.log(usager);
             try {
                 await usager.save();
 
@@ -47,19 +49,20 @@ export module RouteBaseDeDonnees {
             }
         }
 
-        private async deleteUser(usagerJson: String, res: Response): Promise<Response> {
-            const username: String = this.obtenirUserId(usagerJson)["username"];
-            const userId: String = this.obtenirUserId(username)["id"];
+        private async deleteUser(username: String, res: Response): Promise<Response> {
+            // const userId: String = this.obtenirUserId(username)["id"];
 
-            try {
-                await this.modelUser.findByIdAndDelete(userId);
+            // try {
+            //     await this.modelUser.findByIdAndDelete(userId);
 
-                // tslint:disable-next-line:no-magic-numbers
-                return res.status(201).json();
-            } catch (err) {
+            //     // tslint:disable-next-line:no-magic-numbers
+            //     return res.status(201).json();
+            // } catch (err) {
+            // // tslint:disable-next-line:no-magic-numbers
+            // return res.status(501).json(err);
+            // }
             // tslint:disable-next-line:no-magic-numbers
-            return res.status(501).json(err);
-            }
+            return res.status(201).json();
         }
 
         private async obtenirUserId(username: String): Promise<String> {

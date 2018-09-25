@@ -9,7 +9,7 @@ import { ParticlesModule } from 'angular-particle';
 import { myParams, myStyle } from "../../../assets/particles";
 
 export const USER_URL: string = "http://localhost:3000/users/";
-const URL_AJOUTER_PISTE: string = USER_URL + "ajouter/";
+const URL_AJOUTER: string = USER_URL + "ajouter/";
 
 @Component({
   selector: "app-login-form",
@@ -34,7 +34,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
-    const result: User =  new User(this.loginForm.value);
+    const result: User =  new User(this.loginForm.value.username);
     this.userService.register(result)
     .subscribe(
     (data) => {
@@ -67,7 +67,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     console.log("on destroy fonctionne");
-    this.userService.delete(result);
+    this.userService.delete();
     // tslint:disable-next-line:no-unused-expression
     (data) => {
       console.log(data);
@@ -78,16 +78,16 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     };
   }
 
-  public obtenirUserId(identifiant: string): Observable<User> {
-    return this.http.get<User>(USER_URL + identifiant);
-  }
+  // public obtenirUserId(identifiant: string): Observable<User> {
+  //   return this.http.get<User>(USER_URL + identifiant);
+  // }
 
-  public obtenirUserName(username: string): Observable<User> {
-    return this.http.get<User>(USER_URL + username);
-  }
+  // public obtenirUserName(username: string): Observable<User> {
+  //   return this.http.get<User>(USER_URL + username);
+  // }
 
-  public async creerNouveauUser(user: User): Promise<Object> {
-    return this.http.post(URL_AJOUTER_PISTE, user).toPromise();
-  }
+  // public async creerNouveauUser(user: User): Promise<Object> {
+  //   return this.http.post(URL_AJOUTER, user).toPromise();
+  // }
 
 }

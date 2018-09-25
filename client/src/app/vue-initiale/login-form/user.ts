@@ -3,7 +3,7 @@ export class User {
   private _username: String;
 
   public constructor(username: String) {
-    this._id = "";
+    // this._id = "";
     this._username = username;
   }
 

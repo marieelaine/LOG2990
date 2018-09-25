@@ -29,8 +29,8 @@ var RouteBaseDeDonnees;
             this.mongoose = new mongoose_1.Mongoose();
             this.mongoose.set("useCreateIndex", true);
             this.schema = new mongoose_1.Schema({
-                id: String,
-                username: {
+                // _id : String,
+                _username: {
                     type: String,
                     required: true,
                     unique: true
@@ -45,9 +45,11 @@ var RouteBaseDeDonnees;
                 yield this.mongoose.connect(this.mongoURL, { useNewUrlParser: true });
             });
         }
-        ajouterUser(usagerJson, res) {
+        ajouterUser(user, res) {
             return __awaiter(this, void 0, void 0, function* () {
-                const usager = new this.modelUser(usagerJson);
+                const usager = new this.modelUser(user);
+                // tslint:disable-next-line:no-console
+                console.log(usager);
                 try {
                     yield usager.save();
                     // tslint:disable-next-line:no-magic-numbers
@@ -59,19 +61,19 @@ var RouteBaseDeDonnees;
                 }
             });
         }
-        deleteUser(usagerJson, res) {
+        deleteUser(username, res) {
             return __awaiter(this, void 0, void 0, function* () {
-                const username = this.obtenirUserId(usagerJson)["username"];
-                const userId = this.obtenirUserId(username)["id"];
-                try {
-                    yield this.modelUser.findByIdAndDelete(userId);
-                    // tslint:disable-next-line:no-magic-numbers
-                    return res.status(201).json();
-                }
-                catch (err) {
-                    // tslint:disable-next-line:no-magic-numbers
-                    return res.status(501).json(err);
-                }
+                // const userId: String = this.obtenirUserId(username)["id"];
+                // try {
+                //     await this.modelUser.findByIdAndDelete(userId);
+                //     // tslint:disable-next-line:no-magic-numbers
+                //     return res.status(201).json();
+                // } catch (err) {
+                // // tslint:disable-next-line:no-magic-numbers
+                // return res.status(501).json(err);
+                // }
+                // tslint:disable-next-line:no-magic-numbers
+                return res.status(201).json();
             });
         }
         obtenirUserId(username) {

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class User {
     constructor(username) {
-        this._id = "";
+        // this._id = "";
         this._username = username;
     }
     get id() {

@@ -19,7 +19,7 @@ export class UserService {
   }
 
   // tslint:disable-next-line:no-any
-  delete() {
-    return this._http.delete("http://127.0.0.1:3000/users/delete" + this.userCourant).toPromise();
+  public delete() {
+    return this._http.delete("http://127.0.0.1:3000/users/delete" + this.userCourant.id).toPromise();
   }
 }
