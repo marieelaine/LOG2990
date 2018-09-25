@@ -37,7 +37,7 @@
   // tslint:disable-next-line:max-func-body-length
   it('username field validity', () => {
     let errors = {};
-    let username = component.loginForm.controls['username'];
+    const username = component.loginForm.controls['username'];
     expect(username.valid).toBeFalsy();
 
     // username field is required

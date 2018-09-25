@@ -60,8 +60,7 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
-  // tslint:disable-next-line:typedef
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.myStyle = myStyle;
     this.myParams = myParams;
   }
