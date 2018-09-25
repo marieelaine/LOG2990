@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { User} from "../login-form/user";
@@ -18,7 +18,7 @@ const URL_AJOUTER_PISTE: string = USER_URL + "ajouter/";
   styleUrls: ["./login-form.component.css"]
 })
 
-export class LoginFormComponent implements OnInit {
+export class LoginFormComponent implements OnInit, OnDestroy {
 
   private BASE_URL: string = "http://localhost:3000/";
   public loginForm: FormGroup;
@@ -63,6 +63,19 @@ export class LoginFormComponent implements OnInit {
   public ngOnInit(): void {
     this.myStyle = myStyle;
     this.myParams = myParams;
+  }
+
+  ngOnDestroy(): void {
+    console.log("on destroy fonctionne");
+    this.userService.delete(JSON.stringify(this.loginForm.value));
+    // tslint:disable-next-line:no-unused-expression
+    (data) => {
+      console.log(data);
+    };
+    // tslint:disable-next-line:no-unused-expression
+    (error) => {
+      console.error(error);
+    };
   }
 
   public obtenirUserId(identifiant: string): Observable<User> {

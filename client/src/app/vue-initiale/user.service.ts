@@ -13,4 +13,9 @@ export class UserService {
       headers: new HttpHeaders().append("Content-Type", "application/json")
     });
   }
+
+  // tslint:disable-next-line:no-any
+  delete(body: any) {
+    return this._http.delete("http://127.0.0.1:3000/users/delete", body);
+  }
 }

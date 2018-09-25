@@ -61,9 +61,9 @@ var RouteBaseDeDonnees;
         }
         deleteUser(usagerJson, res) {
             return __awaiter(this, void 0, void 0, function* () {
-                const userId = this.obtenirUserId(usagerJson);
+                const username = this.obtenirUserId(usagerJson)["username"];
                 try {
-                    yield this.modelUser.findByIdAndDelete(userId);
+                    yield this.modelUser.findOneAndDelete(username);
                     // tslint:disable-next-line:no-magic-numbers
                     return res.status(201).json();
                 }
