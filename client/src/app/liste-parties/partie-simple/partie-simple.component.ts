@@ -14,7 +14,7 @@ export interface PartieSimpleInterface {
   templateUrl: './partie-simple.component.html',
   styleUrls: ['./partie-simple.component.css']
 })
-export class PartieSimpleFonctions {
+export class PartieSimpleComponent {
 
   listeParties = new ListePartiesComponent().listePartiesSimples;
 

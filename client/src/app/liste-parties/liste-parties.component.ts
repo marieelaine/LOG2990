@@ -10,6 +10,7 @@ import { PartieMultipleInterface } from './partie-multiple/partie-multiple.compo
 export class ListePartiesComponent implements OnInit {
 
   partieSimpleDiv: HTMLElement;
+
   listePartiesSimples: PartieSimpleInterface[] = [
     { title: 'Nissan Patrol', imagePath: 'assets/NissanPatrol.bmp', isElevatedActive: false,
       timesSolo: [320, 500], timesOneVsOne: [],
