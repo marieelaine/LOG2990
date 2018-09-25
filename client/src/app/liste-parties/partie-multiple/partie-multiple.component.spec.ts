@@ -16,7 +16,7 @@ describe('PartieMultipleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PartieMultipleComponent ]
+      declarations: [ PartieMultipleComponent ],
       imports: [RouterTestingModule],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA

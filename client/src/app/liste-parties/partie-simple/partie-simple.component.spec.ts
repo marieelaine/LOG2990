@@ -17,7 +17,7 @@ describe('PartieSimpleComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ PartieSimpleComponent ]
+      declarations: [ PartieSimpleComponent ],
       imports: [RouterTestingModule],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
