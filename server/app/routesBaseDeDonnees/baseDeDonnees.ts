@@ -18,6 +18,7 @@ export module RouteBaseDeDonnees {
             this.mongoose = new Mongoose();
             this.mongoose.set("useCreateIndex", true);
             this.schema = new Schema({
+                id : String,
                 username: {
                     type: String,
                     required: true,
@@ -48,9 +49,10 @@ export module RouteBaseDeDonnees {
 
         private async deleteUser(usagerJson: String, res: Response): Promise<Response> {
             const username: String = this.obtenirUserId(usagerJson)["username"];
+            const userId: String = this.obtenirUserId(username)["id"];
 
             try {
-                await this.modelUser.findOneAndDelete(username);
+                await this.modelUser.findByIdAndDelete(userId);
 
                 // tslint:disable-next-line:no-magic-numbers
                 return res.status(201).json();
@@ -60,15 +62,13 @@ export module RouteBaseDeDonnees {
             }
         }
 
-        private async obtenirUserId(identifiant: String): Promise<User> {
-            let usager: User = new User();
-
-            await this.modelUser.findById(identifiant)
-                .then((res: Document) => { usager = res.toObject(); })
+        private async obtenirUserId(username: String): Promise<String> {
+            const usager: User = await this.modelUser.findOne(username)
+                .then((res: Document) => res.toObject())
                 // tslint:disable-next-line:no-empty
                 .catch(() => {});
 
-            return usager;
+            return usager.id;
 
         }
 

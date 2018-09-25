@@ -34,8 +34,8 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
-    const result: User = Object.assign({}, this.loginForm.value);
-    this.userService.register(JSON.stringify(this.loginForm.value))
+    const result: User =  new User(this.loginForm.value);
+    this.userService.register(result)
     .subscribe(
     (data) => {
       console.log(data);
@@ -67,7 +67,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     console.log("on destroy fonctionne");
-    this.userService.delete(JSON.stringify(this.loginForm.value));
+    this.userService.delete(result);
     // tslint:disable-next-line:no-unused-expression
     (data) => {
       console.log(data);

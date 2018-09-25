@@ -21,7 +21,6 @@ const inversify_1 = require("inversify");
 require("reflect-metadata");
 const mongoose_1 = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
-const user_1 = require("../../../client/src/app/vue-initiale/login-form/user");
 var RouteBaseDeDonnees;
 (function (RouteBaseDeDonnees) {
     let BaseDeDonnees = class BaseDeDonnees {
@@ -30,6 +29,7 @@ var RouteBaseDeDonnees;
             this.mongoose = new mongoose_1.Mongoose();
             this.mongoose.set("useCreateIndex", true);
             this.schema = new mongoose_1.Schema({
+                id: String,
                 username: {
                     type: String,
                     required: true,
@@ -62,8 +62,9 @@ var RouteBaseDeDonnees;
         deleteUser(usagerJson, res) {
             return __awaiter(this, void 0, void 0, function* () {
                 const username = this.obtenirUserId(usagerJson)["username"];
+                const userId = this.obtenirUserId(username)["id"];
                 try {
-                    yield this.modelUser.findOneAndDelete(username);
+                    yield this.modelUser.findByIdAndDelete(userId);
                     // tslint:disable-next-line:no-magic-numbers
                     return res.status(201).json();
                 }
@@ -73,14 +74,13 @@ var RouteBaseDeDonnees;
                 }
             });
         }
-        obtenirUserId(identifiant) {
+        obtenirUserId(username) {
             return __awaiter(this, void 0, void 0, function* () {
-                let usager = new user_1.User();
-                yield this.modelUser.findById(identifiant)
-                    .then((res) => { usager = res.toObject(); })
+                const usager = yield this.modelUser.findOne(username)
+                    .then((res) => res.toObject())
                     // tslint:disable-next-line:no-empty
                     .catch(() => { });
-                return usager;
+                return usager.id;
             });
         }
         requeteAjouterUser(req, res) {
