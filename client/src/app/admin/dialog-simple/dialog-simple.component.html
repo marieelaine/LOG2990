@@ -5,7 +5,7 @@
         <div class='gameName'>
             <mat-form-field class='formField'>
                 <input matInput [(ngModel)]="data.simpleGameName" type='text' placeholder="Nom de la partie" class='gameNameInput'>
-                <!-- <mat-error *ngIf="show"> {{ outOfBoundNameLengthMessage }} </mat-error> -->
+                <!-- <mat-error *ngIf="checkIfOutOfBoundName(titrePartie)"> {{ outOfBoundNameLengthMessage }} </mat-error> -->
             </mat-form-field>
         </div>
         <div class='firstImage'>
@@ -28,7 +28,6 @@
     <button mat-button (click)='onAddSimpleGameClick()' class='dialogButtons mat-elevation-z6'>Ajouter</button>
     <button mat-button (click)="onNoClick()" class='dialogButtons mat-elevation-z6'>Annuler</button>
     <p id='errorMessage'> {{ outOfBoundNameLengthMessage }} </p> 
-    <p id='errorMessage'> {{ wrongImageTypeMessage }} </p> 
+    <p id='errorMessage'> {{ wrongImageSizeOrTypeMessage }} </p> 
     <p id='errorMessage'> {{ wrongNumberOfImagesMessage }} </p> 
-    <p id='errorMessage'> {{ wrongImageSizeMessage }} </p> 
 </div>
