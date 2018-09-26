@@ -22,6 +22,7 @@ require("reflect-metadata");
 const mongoose_1 = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 const user_1 = require("../../../client/src/app/vue-initiale/login-form/user");
+// import { POINT_CONVERSION_UNCOMPRESSED } from "constants";
 var RouteBaseDeDonnees;
 (function (RouteBaseDeDonnees) {
     let BaseDeDonnees = class BaseDeDonnees {
@@ -61,9 +62,9 @@ var RouteBaseDeDonnees;
         }
         deleteUser(usagerJson, res) {
             return __awaiter(this, void 0, void 0, function* () {
-                const userId = this.obtenirUserId(usagerJson);
+                const username = this.obtenirUserId(usagerJson)["username"];
                 try {
-                    yield this.modelUser.findByIdAndDelete(userId);
+                    yield this.modelUser.findOneAndDelete(username);
                     // tslint:disable-next-line:no-magic-numbers
                     return res.status(201).json();
                 }

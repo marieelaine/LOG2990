@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-{"version":3,"file":"user.js","sourceRoot":"C:/Users/BERNARD/Desktop/LOG2990/server/app/","sources":["client/src/app/vue-initiale/login-form/user.ts"],"names":[],"mappings":";;AAAA;CAEC;AAFD,oBAEC"}
-=======
-{"version":3,"file":"user.js","sourceRoot":"C:/Users/mrieln/Documents/git/log2990/server/app/","sources":["client/src/app/vue-initiale/login-form/user.ts"],"names":[],"mappings":";;AAAA;CAEC;AAFD,oBAEC"}
->>>>>>> 26328099673751589baba8f04be5626567034c04
+{"version":3,"file":"user.js","sourceRoot":"C:/Users/Olivi/Desktop/Poly/A2018/LOG2990/LOG2990/server/app/","sources":["client/src/app/vue-initiale/login-form/user.ts"],"names":[],"mappings":";;AAAA;CAEC;AAFD,oBAEC"}

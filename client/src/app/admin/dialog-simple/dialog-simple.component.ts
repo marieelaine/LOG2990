@@ -15,8 +15,9 @@ export class DialogSimpleComponent {
   outOfBoundNameLengthMessage: String = "";
   wrongImageTypeMessage: String = "";
   wrongNumberOfImagesMessage: String = "";
+  wrongImageSizeMessage: String = "";
   partieSimple: PartieSimpleInterface;
-  listeParties: ListePartiesComponent;
+  listeParties: ListePartiesComponent = new ListePartiesComponent();
   selectedFile: File;
   selectedFiles: File[] = [];
   correctImageExtension: String = "image/bmp";
@@ -28,18 +29,33 @@ export class DialogSimpleComponent {
     }
 
   onFileSelectedImage(event, i) {
-    console.log(event);
     this.selectedFiles[i] = this.getSelectedFileFromEvent(event);
-    this.getImageSizeInPixels(this.selectedFiles[i]);
     this.wrongImageTypeMessage = this.getWrongImageTypeMessage();
-    // TODO : envoyer l'image upload vers le serveur
+    this.setWrongImageSizeMessage(this.selectedFiles[i]);
 
+    // TODO : envoyer l'image upload vers le serveur
     // const fd = new FormData();
     // fd.append("image", this.selectedFile, this.selectedFile.name);
   }
 
-  getImageSizeInPixels(imageFile) {
-    // const datav = new DataView(this.fileReader.readAsArrayBuffer(imageFile));
+  public setWrongImageSizeMessage(file): void {
+    const self = this;
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    // tslint:disable-next-line:only-arrow-functions
+    reader.onload = function() {
+      const dv = new DataView(reader.result as ArrayBuffer);
+      const imageInfo = {"size": dv.getUint16(28, true), "width": dv.getUint32(18, true), "height": dv.getUint32(22, true)};
+      self.wrongImageSizeMessage = self.getWrongImageSizeMessage(imageInfo);
+    };
+  }
+
+  public getWrongImageSizeMessage(imageInfo): String {
+    if (imageInfo["size"] !== 24 && imageInfo["width"] !== 640 && imageInfo["height"] !== 480) {
+      return "L'image doit etr...";
+    } else {
+      return "";
+    }
   }
 
   getSelectedFileFromEvent(event) {
@@ -53,7 +69,7 @@ export class DialogSimpleComponent {
   onAddSimpleGameClick(): void {
     this.wrongNumberOfImagesMessage = this.getWrongNumberOfImagesMessage();
     this.outOfBoundNameLengthMessage = this.getOutOfBoundNameLengthMessage();
-    this.closeDialogIfRequirements(this.outOfBoundNameLengthMessage, this.wrongImageTypeMessage, this.wrongNumberOfImagesMessage);
+    this.closeDialogIfRequirements();
   }
 
   getWrongNumberOfImagesMessage(): String {
@@ -83,22 +99,22 @@ export class DialogSimpleComponent {
     }
   }
 
-  closeDialogIfRequirements(outOfBoundNameLengthMessage: String, wrongImageTypeMessage: String, wrongNumberOfImagesMessage: String) {
-    if (outOfBoundNameLengthMessage === "" && wrongImageTypeMessage === "" && wrongNumberOfImagesMessage === "") {
+  closeDialogIfRequirements() {
+    if (this.outOfBoundNameLengthMessage === ""
+    && this.wrongImageTypeMessage === ""
+    && this.wrongNumberOfImagesMessage === ""
+    && this.wrongImageSizeMessage === "") {
       this.dialogRef.close();
-      this.createNewSimpleGameCard(this.data.simpleGameName, this.selectedFiles);
+      this.createNewSimpleGameCard();
     }
   }
 
-  createNewSimpleGameCard(simpleGameName: String, selectedFiles: File[]) {
-    // TODO : Créer un nouvelle carte et l'ajouter à la liste
-
-    // const partieSimple: PartieSimpleComponent = {
-    //     title: simpleGameName, imagePath: 'assets/NissanPatrol.jpg', isElevatedActive: false,
-    //     timesSolo: [], timesOneVsOne: [],
-    //     titleWithoutFirstLetter: this.listeParties.getTitleWithoutFirstLetter(simpleGameName)
-    //   };
-    // this.addNewSimpleGameCardToList(partieSimple);
+  createNewSimpleGameCard() {
+    const partieSimple: PartieSimpleInterface = {
+        title: this.data.simpleGameName, imagePath: 'assets/NissanPatrol.jpg', isElevatedActive: false,
+        timesSolo: [], timesOneVsOne: [],
+      };
+    this.addNewSimpleGameCardToList(partieSimple);
   }
 
   addNewSimpleGameCardToList(partieSimple: PartieSimpleInterface) {
