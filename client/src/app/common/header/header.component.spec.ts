@@ -1,5 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { Location } from "@angular/common";
+import { ListePartiesComponent } from '../../liste-parties/liste-parties.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HeaderComponent } from './header.component';
 import { MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -7,16 +9,24 @@ import { RouterTestingModule } from '@angular/router/testing';
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
+  let location: Location;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ],
-      imports: [MatToolbarModule, RouterTestingModule]
+      declarations: [ HeaderComponent, ListePartiesComponent ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ],
+      imports: [MatToolbarModule, RouterTestingModule.withRoutes([
+        { path: "liste-parties", component: ListePartiesComponent },
+        { path: "header", component: HeaderComponent },
+      ]) ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
+    location = TestBed.get(Location);
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -25,4 +35,12 @@ describe('HeaderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('click header title redirects you to /liste-parties', fakeAsync(() => {
+    component.OnHeaderTitleClick();
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(location.path()).toBe('/liste-parties');
+    });
+  }));
 });
