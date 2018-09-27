@@ -65,18 +65,18 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     this.myParams = myParams;
   }
 
-  ngOnDestroy(): void {
-    console.log("on destroy fonctionne");
-    this.userService.delete();
-    // tslint:disable-next-line:no-unused-expression
-    (data) => {
-      console.log(data);
-    };
-    // tslint:disable-next-line:no-unused-expression
-    (error) => {
-      console.error(error);
-    };
-  }
+  // ngOnDestroy(): void {
+  //   console.log("on destroy fonctionne");
+  //   this.userService.delete();
+  //   // tslint:disable-next-line:no-unused-expression
+  //   (data) => {
+  //     console.log(data);
+  //   };
+  //   // tslint:disable-next-line:no-unused-expression
+  //   (error) => {
+  //     console.error(error);
+  //   };
+  // }
 
   // public obtenirUserId(identifiant: string): Observable<User> {
   //   return this.http.get<User>(USER_URL + identifiant);

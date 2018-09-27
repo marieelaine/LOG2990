@@ -50,17 +50,19 @@ export module RouteBaseDeDonnees {
         }
 
         private async deleteUser(username: String, res: Response): Promise<Response> {
-            // const userId: String = this.obtenirUserId(username)["id"];
+            const userId: String = this.obtenirUserId(username)["id"];
+            // tslint:disable-next-line:no-console
+            console.log(userId);
+            try {
+                await this.modelUser.findByIdAndDelete(userId);
 
-            // try {
-            //     await this.modelUser.findByIdAndDelete(userId);
+                // tslint:disable-next-line:no-magic-numbers
+                return res.status(201).json();
+            } catch (err) {
+            // tslint:disable-next-line:no-magic-numbers
+            return res.status(501).json(err);
+            }
 
-            //     // tslint:disable-next-line:no-magic-numbers
-            //     return res.status(201).json();
-            // } catch (err) {
-            // // tslint:disable-next-line:no-magic-numbers
-            // return res.status(501).json(err);
-            // }
             // tslint:disable-next-line:no-magic-numbers
             return res.status(201).json();
         }

@@ -18,4 +18,8 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl("/liste-parties");
   }
 
+  public onLogout(): void {
+    console.log("clicked");
+  }
+
 }

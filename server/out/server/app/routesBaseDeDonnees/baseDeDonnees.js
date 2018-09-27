@@ -63,15 +63,18 @@ var RouteBaseDeDonnees;
         }
         deleteUser(username, res) {
             return __awaiter(this, void 0, void 0, function* () {
-                // const userId: String = this.obtenirUserId(username)["id"];
-                // try {
-                //     await this.modelUser.findByIdAndDelete(userId);
-                //     // tslint:disable-next-line:no-magic-numbers
-                //     return res.status(201).json();
-                // } catch (err) {
-                // // tslint:disable-next-line:no-magic-numbers
-                // return res.status(501).json(err);
-                // }
+                const userId = this.obtenirUserId(username)["id"];
+                // tslint:disable-next-line:no-console
+                console.log(userId);
+                try {
+                    yield this.modelUser.findByIdAndDelete(userId);
+                    // tslint:disable-next-line:no-magic-numbers
+                    return res.status(201).json();
+                }
+                catch (err) {
+                    // tslint:disable-next-line:no-magic-numbers
+                    return res.status(501).json(err);
+                }
                 // tslint:disable-next-line:no-magic-numbers
                 return res.status(201).json();
             });
