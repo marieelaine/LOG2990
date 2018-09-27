@@ -41,9 +41,13 @@ export class LoginFormComponent implements OnInit {
     this.userService.register(result)
     .subscribe(
     (data) => {
-      console.log(data);
+      // TODO
+      console.log(data._username);
+
+      
       this.usernameTaken = false;
       // create cookie
+      this.createCookie(this.loginForm.value.username);
       this.router.navigate(["/liste-parties"]);
     },
     (error) => {
@@ -64,6 +68,10 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
+  public createCookie(username: string): void {
+    this.cookieService.set(username, username);
+  }
+
   public ngOnInit(): void {
     this.myStyle = myStyle;
     this.myParams = myParams;
@@ -82,16 +90,16 @@ export class LoginFormComponent implements OnInit {
   //   };
   // }
 
-  // public obtenirUserId(identifiant: string): Observable<User> {
-  //   return this.http.get<User>(USER_URL + identifiant);
-  // }
+  public obtenirUserId(identifiant: string): Observable<User> {
+    return this.http.get<User>(USER_URL + identifiant);
+  }
 
-  // public obtenirUserName(username: string): Observable<User> {
-  //   return this.http.get<User>(USER_URL + username);
-  // }
+  public obtenirUserName(username: string): Observable<User> {
+    return this.http.get<User>(USER_URL + username);
+  }
 
-  // public async creerNouveauUser(user: User): Promise<Object> {
-  //   return this.http.post(URL_AJOUTER, user).toPromise();
-  // }
+  public async creerNouveauUser(user: User): Promise<Object> {
+    return this.http.post(URL_AJOUTER, user).toPromise();
+  }
 
 }

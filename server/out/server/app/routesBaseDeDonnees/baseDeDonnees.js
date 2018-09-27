@@ -48,12 +48,10 @@ var RouteBaseDeDonnees;
         ajouterUser(user, res) {
             return __awaiter(this, void 0, void 0, function* () {
                 const usager = new this.modelUser(user);
-                // tslint:disable-next-line:no-console
-                console.log(usager);
                 try {
                     yield usager.save();
                     // tslint:disable-next-line:no-magic-numbers
-                    return res.status(201).json(usager);
+                    return res.status(201).json(user);
                 }
                 catch (err) {
                     // tslint:disable-next-line:no-magic-numbers

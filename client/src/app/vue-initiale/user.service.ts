@@ -1,16 +1,16 @@
 import { Injectable } from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { User } from "./login-form/user";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 
 @Injectable()
 export class UserService {
-  userCourant: User;
+  private userCourantSujet: Subject<User> = new Subject<User>();
+  private userCourantObservable$: Observable<User> = this.userCourantSujet.asObservable();
+
   constructor(private _http: HttpClient) { }
 
   public register(user: User): Observable<Object> {
-
-    this.userCourant = user;
 
     return this._http.post("http://127.0.0.1:3000/users/ajouter", user, {
       observe: "body",
@@ -20,5 +20,13 @@ export class UserService {
 
   public delete(): Promise<Object> {
     return this._http.delete("http://127.0.0.1:3000/users/delete").toPromise();
+  }
+
+  public envoieNouveauUser(nouveauUser: User): void {
+    this.userCourantSujet.next(nouveauUser);
+  }
+
+  public recevoirNouveauUser(): Observable<User> {
+    return this.userCourantObservable$;
   }
 }

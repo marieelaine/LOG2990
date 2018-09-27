@@ -36,13 +36,11 @@ export module RouteBaseDeDonnees {
 
         private async ajouterUser(user: {}, res: Response): Promise<Response> {
             const usager: Document = new this.modelUser(user);
-            // tslint:disable-next-line:no-console
-            console.log(usager);
             try {
                 await usager.save();
 
                 // tslint:disable-next-line:no-magic-numbers
-                return res.status(201).json(usager);
+                return res.status(201).json(user);
               } catch (err) {
                 // tslint:disable-next-line:no-magic-numbers
                 return res.status(501).json(err);
