@@ -159,7 +159,7 @@
     "arrow-parens": true,
     "no-any": true,
     "no-magic-numbers": false,
-    "only-arrow-functions": true,
+    "only-arrow-functions": false,
     "adjacent-overload-signatures": true,
     "max-file-line-count": [
       true,
