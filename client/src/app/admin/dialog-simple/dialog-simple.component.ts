@@ -29,6 +29,7 @@ export class DialogSimpleComponent {
     private http: HttpClient) {
     }
 
+  // Tested
   public onFileSelectedImage(event, i) {
     this.selectedFiles[i] = this.getSelectedFileFromEvent(event);
     this.convertImageToArrayToCheckSize(this.selectedFiles[i]);
@@ -38,11 +39,14 @@ export class DialogSimpleComponent {
     // fd.append("image", this.selectedFile, this.selectedFile.name);
   }
 
-  private convertImageToArrayToCheckSize(file): void {
+  public getSelectedFileFromEvent(event): File {
+    return this.selectedFile = event.target.files[0] as File;
+  }
+
+  public convertImageToArrayToCheckSize(file: File): void {
     const self: DialogSimpleComponent = this;
     const reader: FileReader = new FileReader();
     reader.readAsArrayBuffer(file);
-    // tslint:disable-next-line:only-arrow-functions
     reader.onload = function() {
       const dv: DataView = new DataView(reader.result as ArrayBuffer);
       const imageInfo = {"size": dv.getUint16(28, true), "width": dv.getUint32(18, true), "height": dv.getUint32(22, true)};
@@ -50,12 +54,14 @@ export class DialogSimpleComponent {
     };
   }
 
-  private setWrongImageSizeOrTypeMessage(imageInfo): void {
+  // Tested
+  public setWrongImageSizeOrTypeMessage(imageInfo): void {
     this.checkIfWrongImageSize(imageInfo) || this.checkIfWrongImageType() ?
       this.wrongImageSizeOrTypeMessage = "*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels" :
       this.wrongImageSizeOrTypeMessage = "";
   }
 
+  // Tested
   private checkIfWrongImageSize(imageInfo): Boolean {
     if (imageInfo["size"] !== 24 || imageInfo["width"] !== 640 || imageInfo["height"] !== 480) {
       return true;
@@ -64,29 +70,7 @@ export class DialogSimpleComponent {
     return false;
   }
 
-  private getSelectedFileFromEvent(event): File {
-    return this.selectedFile = event.target.files[0] as File;
-  }
-
-  public onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  public onAddSimpleGameClick(): void {
-    this.setWrongNumberOfImagesMessage();
-    this.setOutOfBoundNameLengthMessage();
-    this.closeDialogIfRequirements();
-  }
-
-  private checkIfWrongNumberOfImages(): Boolean {
-    if (this.selectedFiles[0] === undefined || this.selectedFiles[0] === null
-      || this.selectedFiles[1] === undefined || this.selectedFiles[1] === null) {
-        return true;
-      }
-
-    return false;
-  }
-
+  // Tested
   private checkIfWrongImageType(): Boolean {
     if (this.selectedFiles[0] !== undefined && this.selectedFiles[0].type !== this.correctImageExtension
       || this.selectedFiles[1] !== undefined && this.selectedFiles[1].type !== this.correctImageExtension) {
@@ -96,13 +80,36 @@ export class DialogSimpleComponent {
     return false;
   }
 
-  // Testé
+  // Tested
+  public onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  // Tested
+  public onAddSimpleGameClick(): void {
+    this.setWrongNumberOfImagesMessage();
+    this.setOutOfBoundNameLengthMessage();
+    this.closeDialogIfRequirements();
+  }
+
+  // Tested
+  private checkIfWrongNumberOfImages(): Boolean {
+    if (this.selectedFiles[0] === undefined || this.selectedFiles[0] === null
+      || this.selectedFiles[1] === undefined || this.selectedFiles[1] === null) {
+        return true;
+      }
+
+    return false;
+  }
+
+  // Tested
   public setWrongNumberOfImagesMessage(): void {
     this.checkIfWrongNumberOfImages() ?
     this.wrongNumberOfImagesMessage = '*Vous devez entrer deux images.' :
     this.wrongNumberOfImagesMessage = "";
   }
 
+  // Tested
   private checkIfOutOfBoundNameLength(): Boolean {
     if (this.data.simpleGameName === "" || this.data.simpleGameName === undefined
     || this.data.simpleGameName.length < 3 || this.data.simpleGameName.length > 20) {
@@ -110,6 +117,46 @@ export class DialogSimpleComponent {
     }
 
     return false;
+  }
+
+  // Tested
+  public setOutOfBoundNameLengthMessage(): void {
+    this.checkIfOutOfBoundNameLength() ?
+      this.outOfBoundNameLengthMessage = "*Le nom du jeu doit être entre 3 et 20 charactères." :
+      this.outOfBoundNameLengthMessage = "" ;
+  }
+
+  // Tested
+  public checkIfNoErrorMessage(): Boolean {
+    if (this.outOfBoundNameLengthMessage === ""
+    && this.wrongNumberOfImagesMessage === ""
+    && this.wrongImageSizeOrTypeMessage === "") {
+      return true;
+    }
+
+    return false;
+  }
+
+  // Tested
+  public closeDialogIfRequirements(): void {
+   if (this.checkIfNoErrorMessage()) {
+      this.dialogRef.close();
+      this.createNewSimpleGameCardAndAddToList();
+    }
+  }
+
+  // Tested
+  public createNewSimpleGameCardAndAddToList(): void {
+    const partieSimple: PartieSimpleInterface = {
+        title: this.data.simpleGameName, imagePath: 'assets/NissanPatrol.jpg', isElevatedActive: false,
+        timesSolo: [], timesOneVsOne: [],
+      };
+    this.addNewSimpleGameCardToList(partieSimple);
+  }
+
+  // Tested
+  private addNewSimpleGameCardToList(partieSimple: PartieSimpleInterface): void {
+    this.listeParties.listePartiesSimples.push(partieSimple);
   }
 
   // TODO : implementer le mat-error dans le html
@@ -124,41 +171,4 @@ export class DialogSimpleComponent {
 
   //   return false;
   // }
-
-  // Testé
-  public setOutOfBoundNameLengthMessage(): void {
-    this.checkIfOutOfBoundNameLength() ?
-      this.outOfBoundNameLengthMessage = "*Le nom du jeu doit être entre 3 et 20 charactères." :
-      this.outOfBoundNameLengthMessage = "" ;
-  }
-
-  // Testé
-  public checkIfNoErrorMessage(): Boolean {
-    if (this.outOfBoundNameLengthMessage === ""
-    && this.wrongNumberOfImagesMessage === ""
-    && this.wrongImageSizeOrTypeMessage === "") {
-      return true;
-    }
-
-    return false;
-  }
-
-  private closeDialogIfRequirements(): void {
-   if (this.checkIfNoErrorMessage()) {
-      this.dialogRef.close();
-      this.createNewSimpleGameCard();
-    }
-  }
-
-  private createNewSimpleGameCard(): void {
-    const partieSimple: PartieSimpleInterface = {
-        title: this.data.simpleGameName, imagePath: 'assets/NissanPatrol.jpg', isElevatedActive: false,
-        timesSolo: [], timesOneVsOne: [],
-      };
-    this.addNewSimpleGameCardToList(partieSimple);
-  }
-
-  private addNewSimpleGameCardToList(partieSimple: PartieSimpleInterface): void {
-    this.listeParties.listePartiesSimples.push(partieSimple);
-  }
 }

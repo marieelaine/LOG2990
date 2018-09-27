@@ -7,6 +7,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { createMockImageFile } from '../../../testing/file-creator';
+import { By } from '@angular/platform-browser';
+import { PartieSimpleInterface } from '../../liste-parties/partie-simple/partie-simple.component';
 
 describe('DialogSimpleComponent', () => {
   let component: DialogSimpleComponent;
@@ -52,25 +55,89 @@ describe('DialogSimpleComponent', () => {
     expect(component.outOfBoundNameLengthMessage).toEqual("*Le nom du jeu doit être entre 3 et 20 charactères.");
   });
 
+  it('should set outOfBoundNameLengthMessage if name does not meet requierments', () => {
+    component.data.simpleGameName = "aaaaaaaaaaaaaaaaaaaaa"; // Nom plus long que vingt caractères
+    component.setOutOfBoundNameLengthMessage();  // Cette fonction teste aussi checkIfOutOfBoundNameLength()
+    expect(component.outOfBoundNameLengthMessage).toEqual("*Le nom du jeu doit être entre 3 et 20 charactères.");
+  });
+
   it('should not set outOfBoundNameLengthMessage if name meet requierments', () => {
-    component.data.simpleGameName = "Nissan Patrol"; // Nom plus court que trois caractères
+    component.data.simpleGameName = "Nissan Patrol"; // Nom correct
     component.setOutOfBoundNameLengthMessage();  // Cette fonction teste aussi checkIfOutOfBoundNameLength()
     expect(component.outOfBoundNameLengthMessage).toEqual("");
   });
 
   it('should set wrongNumberOfImagesMessage if there are less than two images', () => {
+    component.selectedFiles[0] = createMockImageFile(true);
     component.setWrongNumberOfImagesMessage();  // Cette fonction teste aussi checkIfWrongNumberOfImages()
     expect(component.wrongNumberOfImagesMessage).toEqual('*Vous devez entrer deux images.');
   });
 
-  it('should set wrongNumberOfImagesMessage if there are less than two images', () => {
-    const content = "Test image";
-    const data = new Blob([content], { type: 'image' });
-    const arrayOfBlob = new Array<Blob>();
-    arrayOfBlob.push(data);
-    component.selectedFiles[0] = new File(arrayOfBlob, "MockFile");
-    component.selectedFiles[1] = new File(arrayOfBlob, "MockFile");
+  it('should not set wrongNumberOfImagesMessage if there are two images', () => {
+    component.selectedFiles[0] = createMockImageFile(true);
+    component.selectedFiles[1] = createMockImageFile(true);
     component.setWrongNumberOfImagesMessage();  // Cette fonction teste aussi checkIfWrongNumberOfImages()
     expect(component.wrongNumberOfImagesMessage).toEqual('');
+  });
+
+  it('should call onFileSelectedImage when an image is uploaded', () => {
+  const uploadImage1 = fixture.debugElement.query(By.css('#uploadImage1')).nativeElement;
+
+  spyOn(component, 'onFileSelectedImage');
+  uploadImage1.dispatchEvent(new Event('change'));
+  expect(component.onFileSelectedImage).toHaveBeenCalled();
+  });
+
+  it('should close the dialog if cancel button is clicked', () => {
+    const onNoClickButton = fixture.debugElement.query(By.css('#onNoClickButton')).nativeElement;
+
+    spyOn(component, 'onNoClick');
+    onNoClickButton.dispatchEvent(new Event('click'));
+
+    expect(component.onNoClick).toHaveBeenCalled();
+  });
+
+  it('should call onAddSimpleGameClick when an add game button is clicked', () => {
+    const onAddClickButton = fixture.debugElement.query(By.css('#onAddClickButton')).nativeElement;
+
+    spyOn(component, 'onAddSimpleGameClick');
+    onAddClickButton.dispatchEvent(new Event('click'));
+
+    expect(component.onAddSimpleGameClick).toHaveBeenCalled();
+  });
+
+  it('should set wrongImageSizeOrTypeMessage image does not respect good size', () => {
+    const imageInfo = { "size": 64, "width": 1080, "height": 480 };
+    component.setWrongImageSizeOrTypeMessage(imageInfo);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
+    expect(component.wrongImageSizeOrTypeMessage).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
+  });
+
+  it('should set wrongImageSizeOrTypeMessage image does not respect good type', () => {
+    const imageInfo = { "size": 24, "width": 640, "height": 480 };
+    component.selectedFiles[0] = createMockImageFile(false);  // isBMP = false
+    component.setWrongImageSizeOrTypeMessage(imageInfo);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
+    expect(component.wrongImageSizeOrTypeMessage).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
+  });
+
+  // it('should not set wrongImageSizeOrTypeMessage image respect good type and size', () => {
+  //   const imageInfo = { "size": 24, "width": 640, "height": 480 };
+  //   component.selectedFiles[0] = createMockImageFile(true);  // isBMP = true
+  //   component.setWrongImageSizeOrTypeMessage(imageInfo);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
+  //   expect(component.wrongImageSizeOrTypeMessage).toEqual("");
+  // });
+
+  it('should return the event.target.files[0] as a File', () => {
+    const uploadImage1 = fixture.debugElement.query(By.css('#uploadImage1')).nativeElement;
+
+    spyOn(component, 'onFileSelectedImage');
+    uploadImage1.dispatchEvent(new Event('change'));
+    // expect(component.wrongImageSizeOrTypeMessage).toEqual("");
+  });
+
+  it('should add new game to simple games list', () => {
+    const expectedNumberOfGames = component.listeParties.listePartiesSimples.length + 1;
+    component.createNewSimpleGameCardAndAddToList();  // Cette fonction teste aussi addNewSimpleGameCardToList()
+
+    expect(component.listeParties.listePartiesSimples.length).toEqual(expectedNumberOfGames);
   });
 });
