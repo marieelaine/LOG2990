@@ -108,31 +108,34 @@ describe('DialogSimpleComponent', () => {
 
   it('should set wrongImageSizeOrTypeMessage image does not respect good size', () => {
     const imageInfo = { "size": 64, "width": 1080, "height": 480 };
-    component.setWrongImageSizeOrTypeMessage(imageInfo);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
+    component.selectedFiles[0] = createMockImageFile(true);  // isBMP = true
+    component.setWrongImageSizeOrTypeMessage(imageInfo, 0);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
     expect(component.wrongImageSizeOrTypeMessage).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
   });
 
   it('should set wrongImageSizeOrTypeMessage image does not respect good type', () => {
     const imageInfo = { "size": 24, "width": 640, "height": 480 };
     component.selectedFiles[0] = createMockImageFile(false);  // isBMP = false
-    component.setWrongImageSizeOrTypeMessage(imageInfo);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
+    component.setWrongImageSizeOrTypeMessage(imageInfo, 0);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
     expect(component.wrongImageSizeOrTypeMessage).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
   });
 
-  // it('should not set wrongImageSizeOrTypeMessage image respect good type and size', () => {
-  //   const imageInfo = { "size": 24, "width": 640, "height": 480 };
-  //   component.selectedFiles[0] = createMockImageFile(true);  // isBMP = true
-  //   component.setWrongImageSizeOrTypeMessage(imageInfo);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
-  //   expect(component.wrongImageSizeOrTypeMessage).toEqual("");
-  // });
-
-  it('should return the event.target.files[0] as a File', () => {
-    const uploadImage1 = fixture.debugElement.query(By.css('#uploadImage1')).nativeElement;
-
-    spyOn(component, 'onFileSelectedImage');
-    uploadImage1.dispatchEvent(new Event('change'));
-    // expect(component.wrongImageSizeOrTypeMessage).toEqual("");
+  it('should not set wrongImageSizeOrTypeMessage image respect good type and size', () => {
+    const imageInfo = { "size": 24, "width": 640, "height": 480 };
+    component.selectedFiles[0] = createMockImageFile(true);  // isBMP = true
+    component.setWrongImageSizeOrTypeMessage(imageInfo, 0);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
+    expect(component.wrongImageSizeOrTypeMessage).toEqual("");
   });
+
+  // it('should return the event.target.files[0] as a File', () => {
+  //   const uploadImage1 = fixture.debugElement.query(By.css('#uploadImage1')).nativeElement;
+
+  //   var event = document.createEvent('Event');
+
+  //   spyOn(component, 'getSelectedFileFromEvent');
+  //   uploadImage1.dispatchEvent(new Event('change'));
+  //   expect(component.getSelectedFileFromEvent()).toBeTruthy();
+  // });
 
   it('should add new game to simple games list', () => {
     const expectedNumberOfGames = component.listeParties.listePartiesSimples.length + 1;

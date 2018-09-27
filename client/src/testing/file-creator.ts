@@ -1,11 +1,13 @@
 export function createMockImageFile(isBMP: Boolean) {
     const content = "Test image";
     var data: Blob;
-    isBMP ?
-    data = new Blob([content], { type: 'image/bmp' }) :
-    data = new Blob([content], { type: 'image/jpeg' });
+    data = new Blob([content]);
     const arrayOfBlob = new Array<Blob>();
     arrayOfBlob.push(data);
 
-    return new File(arrayOfBlob, "MockFile");
+    if (isBMP) {
+        return new File(arrayOfBlob, "MockFile", { type: 'image/bmp' });
+    }
+
+    return new File(arrayOfBlob, "MockFile", { type: 'image/jpeg' });
 }

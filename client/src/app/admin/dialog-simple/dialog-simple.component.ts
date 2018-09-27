@@ -32,7 +32,7 @@ export class DialogSimpleComponent {
   // Tested
   public onFileSelectedImage(event, i) {
     this.selectedFiles[i] = this.getSelectedFileFromEvent(event);
-    this.convertImageToArrayToCheckSize(this.selectedFiles[i]);
+    this.convertImageToArrayToCheckSize(this.selectedFiles[i], i);
 
     // TODO : envoyer l'image upload vers le serveur
     // const fd = new FormData();
@@ -43,20 +43,20 @@ export class DialogSimpleComponent {
     return this.selectedFile = event.target.files[0] as File;
   }
 
-  public convertImageToArrayToCheckSize(file: File): void {
+  public convertImageToArrayToCheckSize(file: File, i: number): void {
     const self: DialogSimpleComponent = this;
     const reader: FileReader = new FileReader();
     reader.readAsArrayBuffer(file);
     reader.onload = function() {
       const dv: DataView = new DataView(reader.result as ArrayBuffer);
       const imageInfo = {"size": dv.getUint16(28, true), "width": dv.getUint32(18, true), "height": dv.getUint32(22, true)};
-      self.setWrongImageSizeOrTypeMessage(imageInfo);
+      self.setWrongImageSizeOrTypeMessage(imageInfo, i);
     };
   }
 
   // Tested
-  public setWrongImageSizeOrTypeMessage(imageInfo): void {
-    this.checkIfWrongImageSize(imageInfo) || this.checkIfWrongImageType() ?
+  public setWrongImageSizeOrTypeMessage(imageInfo, i: number): void {
+    this.checkIfWrongImageSize(imageInfo) || this.checkIfWrongImageType(i) ?
       this.wrongImageSizeOrTypeMessage = "*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels" :
       this.wrongImageSizeOrTypeMessage = "";
   }
@@ -71,11 +71,10 @@ export class DialogSimpleComponent {
   }
 
   // Tested
-  private checkIfWrongImageType(): Boolean {
-    if (this.selectedFiles[0] !== undefined && this.selectedFiles[0].type !== this.correctImageExtension
-      || this.selectedFiles[1] !== undefined && this.selectedFiles[1].type !== this.correctImageExtension) {
+  private checkIfWrongImageType(i: number): Boolean {
+    if (this.selectedFiles[i] !== undefined && this.selectedFiles[i].type !== this.correctImageExtension) {
         return true;
-      }
+    }
 
     return false;
   }
