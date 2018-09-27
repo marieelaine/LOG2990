@@ -9,6 +9,8 @@ import { BasicService } from "./basic.service";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule, Routes } from "@angular/router";
 
+import { CookieService } from "ngx-cookie-service";
+
 import { MatToolbarModule,
         MatCardModule,
         MatBadgeModule,
@@ -83,7 +85,7 @@ const appRoutes: Routes = [
     MatInputModule,
     ParticlesModule
   ],
-  providers: [BasicService],
+  providers: [BasicService, CookieService],
   bootstrap: [AppComponent],
   entryComponents: [
     DialogSimpleComponent,

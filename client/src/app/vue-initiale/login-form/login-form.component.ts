@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit} from "@angular/core";
 import { Router } from "@angular/router";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { User} from "../login-form/user";
@@ -7,6 +7,7 @@ import { HttpClient } from "@angular/common/http";
 import { UserService } from "../user.service";
 import { ParticlesModule } from 'angular-particle';
 import { myParams, myStyle } from "../../../assets/particles";
+import { CookieService } from "ngx-cookie-service";
 
 export const USER_URL: string = "http://localhost:3000/users/";
 const URL_AJOUTER: string = USER_URL + "ajouter/";
@@ -18,7 +19,7 @@ const URL_AJOUTER: string = USER_URL + "ajouter/";
   styleUrls: ["./login-form.component.css"]
 })
 
-export class LoginFormComponent implements OnInit, OnDestroy {
+export class LoginFormComponent implements OnInit {
 
   private BASE_URL: string = "http://localhost:3000/";
   public loginForm: FormGroup;
@@ -29,7 +30,9 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   width: number = 100;
   height: number = 100;
 
-  public constructor(private router: Router, private http: HttpClient, private userService: UserService) {
+  public constructor(private router: Router, private http: HttpClient,
+                     private userService: UserService,
+                     private cookieService: CookieService ) {
     this.loginForm = this.createFormGroup();
   }
 
@@ -40,6 +43,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     (data) => {
       console.log(data);
       this.usernameTaken = false;
+      // create cookie
       this.router.navigate(["/liste-parties"]);
     },
     (error) => {
