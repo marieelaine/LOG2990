@@ -39,12 +39,12 @@ export class DialogSimpleComponent {
   }
 
   private convertImageToArrayToCheckSize(file): void {
-    const self = this;
-    const reader = new FileReader();
+    const self: DialogSimpleComponent = this;
+    const reader: FileReader = new FileReader();
     reader.readAsArrayBuffer(file);
     // tslint:disable-next-line:only-arrow-functions
     reader.onload = function() {
-      const dv = new DataView(reader.result as ArrayBuffer);
+      const dv: DataView = new DataView(reader.result as ArrayBuffer);
       const imageInfo = {"size": dv.getUint16(28, true), "width": dv.getUint32(18, true), "height": dv.getUint32(22, true)};
       self.setWrongImageSizeOrTypeMessage(imageInfo);
     };
@@ -58,8 +58,6 @@ export class DialogSimpleComponent {
 
   private checkIfWrongImageSize(imageInfo): Boolean {
     if (imageInfo["size"] !== 24 || imageInfo["width"] !== 640 || imageInfo["height"] !== 480) {
-      console.log("allo");
-
       return true;
     }
 
@@ -97,7 +95,9 @@ export class DialogSimpleComponent {
 
     return false;
   }
-  private setWrongNumberOfImagesMessage(): void {
+
+  // Testé
+  public setWrongNumberOfImagesMessage(): void {
     this.checkIfWrongNumberOfImages() ?
     this.wrongNumberOfImagesMessage = '*Vous devez entrer deux images.' :
     this.wrongNumberOfImagesMessage = "";
@@ -125,13 +125,15 @@ export class DialogSimpleComponent {
   //   return false;
   // }
 
-  private setOutOfBoundNameLengthMessage(): void {
+  // Testé
+  public setOutOfBoundNameLengthMessage(): void {
     this.checkIfOutOfBoundNameLength() ?
       this.outOfBoundNameLengthMessage = "*Le nom du jeu doit être entre 3 et 20 charactères." :
       this.outOfBoundNameLengthMessage = "" ;
   }
 
-  private checkIfNoErrorMessage(): Boolean {
+  // Testé
+  public checkIfNoErrorMessage(): Boolean {
     if (this.outOfBoundNameLengthMessage === ""
     && this.wrongNumberOfImagesMessage === ""
     && this.wrongImageSizeOrTypeMessage === "") {

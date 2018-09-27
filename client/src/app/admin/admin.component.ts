@@ -17,7 +17,6 @@ export interface DialogData {
 export class AdminComponent implements OnInit {
 
   gameName: string;
-  selectedFile: File;
 
   constructor(public dialog: MatDialog) {
   }
@@ -38,10 +37,6 @@ export class AdminComponent implements OnInit {
       width: '600px',
       data: {name: this.gameName}
     });
-  }
-
-  onFileSelected(event) {
-    this.selectedFile = this.selectedFile = event.target.files[0] as File;
   }
 
   public ngOnInit() {

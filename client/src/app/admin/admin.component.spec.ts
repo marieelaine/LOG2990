@@ -14,7 +14,7 @@ describe("AdminComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AdminComponent, ListePartiesComponent, PartieSimpleComponent, PartieMultipleComponent ],
-      imports: [MatMenuModule, MatToolbarModule, MatCardModule, RouterTestingModule, MatDialogModule ]
+      imports: [MatMenuModule, MatToolbarModule, MatCardModule, RouterTestingModule, MatDialogModule ],
     })
     .compileComponents();
   }));
@@ -28,4 +28,9 @@ describe("AdminComponent", () => {
   it("should create", () => {
     expect(component).toBeTruthy();
   });
+
+  // it("should create dialog-simple on simple game click", () => {
+  //   component.openDialogSimple();
+  //   // Regarder si le componenet est bien ouvert..
+  // });
 });

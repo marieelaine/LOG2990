@@ -13,7 +13,6 @@ describe('PartieSimpleComponent', () => {
   const convertTimeTest: number = 547;
   const displaySecondsTest: number = 57;
   const displayMinutesTest: number = 9;
-  
 
   beforeEach(() => {
     TestBed.configureTestingModule({
