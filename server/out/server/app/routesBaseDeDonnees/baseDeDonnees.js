@@ -21,8 +21,6 @@ const inversify_1 = require("inversify");
 require("reflect-metadata");
 const mongoose_1 = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
-const user_1 = require("../../../client/src/app/vue-initiale/login-form/user");
-// import { POINT_CONVERSION_UNCOMPRESSED } from "constants";
 var RouteBaseDeDonnees;
 (function (RouteBaseDeDonnees) {
     let BaseDeDonnees = class BaseDeDonnees {
@@ -31,7 +29,7 @@ var RouteBaseDeDonnees;
             this.mongoose = new mongoose_1.Mongoose();
             this.mongoose.set("useCreateIndex", true);
             this.schema = new mongoose_1.Schema({
-                username: {
+                _username: {
                     type: String,
                     required: true,
                     unique: true
@@ -46,13 +44,13 @@ var RouteBaseDeDonnees;
                 yield this.mongoose.connect(this.mongoURL, { useNewUrlParser: true });
             });
         }
-        ajouterUser(usagerJson, res) {
+        ajouterUser(user, res) {
             return __awaiter(this, void 0, void 0, function* () {
-                const usager = new this.modelUser(usagerJson);
+                const usager = new this.modelUser(user);
                 try {
                     yield usager.save();
                     // tslint:disable-next-line:no-magic-numbers
-                    return res.status(201).json(usager);
+                    return res.status(201).json(user);
                 }
                 catch (err) {
                     // tslint:disable-next-line:no-magic-numbers
@@ -60,11 +58,11 @@ var RouteBaseDeDonnees;
                 }
             });
         }
-        deleteUser(usagerJson, res) {
+        deleteUser(username, res) {
             return __awaiter(this, void 0, void 0, function* () {
-                const username = this.obtenirUserId(usagerJson)["username"];
+                const userId = yield this.obtenirUserId(username);
                 try {
-                    yield this.modelUser.findOneAndDelete(username);
+                    yield this.modelUser.findByIdAndDelete(userId);
                     // tslint:disable-next-line:no-magic-numbers
                     return res.status(201).json();
                 }
@@ -74,14 +72,22 @@ var RouteBaseDeDonnees;
                 }
             });
         }
-        obtenirUserId(identifiant) {
+        obtenirUserId(username) {
             return __awaiter(this, void 0, void 0, function* () {
-                let usager = new user_1.User();
-                yield this.modelUser.findById(identifiant)
-                    .then((res) => { usager = res.toObject(); })
-                    // tslint:disable-next-line:no-empty
-                    .catch(() => { });
-                return usager;
+                const users = [];
+                yield this.modelUser.find()
+                    .then((res) => {
+                    for (const user of res) {
+                        users.push(user.toObject());
+                    }
+                });
+                for (const user of users) {
+                    if (user._username === username) {
+                        return user._id;
+                    }
+                }
+                // Change the return.
+                return users[0]._id;
             });
         }
         requeteAjouterUser(req, res) {
@@ -96,7 +102,7 @@ var RouteBaseDeDonnees;
         }
         requeteDeleteUser(req, res) {
             return __awaiter(this, void 0, void 0, function* () {
-                res.send(yield this.deleteUser(req.body, res));
+                res.send(yield this.deleteUser(req.params.id, res));
             });
         }
     };

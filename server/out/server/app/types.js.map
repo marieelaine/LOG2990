@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 {"version":3,"file":"types.js","sourceRoot":"C:/Users/BERNARD/Desktop/LOG2990/server/app/","sources":["server/app/types.ts"],"names":[],"mappings":";;AAAA,kBAAgB;IACR,MAAM,EAAE,MAAM,CAAC,QAAQ,CAAC;IACxB,WAAW,EAAE,MAAM,CAAC,aAAa,CAAC;IAClC,MAAM,EAAE,MAAM,CAAC,QAAQ,CAAC;IACxB,KAAK,EAAE,MAAM,CAAC,OAAO,CAAC;IAEtB,mBAAmB,EAAE,MAAM,CAAC,oBAAoB,CAAC;IACjD,aAAa,EAAE,MAAM,CAAC,eAAe,CAAC;CAC7C,CAAC"}
 =======
 {"version":3,"file":"types.js","sourceRoot":"C:/Users/Jean-Sébastien/Desktop/LOG2990/server/app/","sources":["server/app/types.ts"],"names":[],"mappings":";;AAAA,kBAAgB;IACR,MAAM,EAAE,MAAM,CAAC,QAAQ,CAAC;IACxB,WAAW,EAAE,MAAM,CAAC,aAAa,CAAC;IAClC,MAAM,EAAE,MAAM,CAAC,QAAQ,CAAC;IACxB,KAAK,EAAE,MAAM,CAAC,OAAO,CAAC;IAEtB,mBAAmB,EAAE,MAAM,CAAC,oBAAoB,CAAC;IACjD,aAAa,EAAE,MAAM,CAAC,eAAe,CAAC;CAC7C,CAAC"}
 >>>>>>> Stashed changes
+=======
+{"version":3,"file":"types.js","sourceRoot":"C:/Users/mrieln/Documents/git/log2990/server/app/","sources":["server/app/types.ts"],"names":[],"mappings":";;AAAA,kBAAgB;IACR,MAAM,EAAE,MAAM,CAAC,QAAQ,CAAC;IACxB,WAAW,EAAE,MAAM,CAAC,aAAa,CAAC;IAClC,MAAM,EAAE,MAAM,CAAC,QAAQ,CAAC;IACxB,KAAK,EAAE,MAAM,CAAC,OAAO,CAAC;IAEtB,mBAAmB,EAAE,MAAM,CAAC,oBAAoB,CAAC;IACjD,aAAa,EAAE,MAAM,CAAC,eAAe,CAAC;CAC7C,CAAC"}
+>>>>>>> bd

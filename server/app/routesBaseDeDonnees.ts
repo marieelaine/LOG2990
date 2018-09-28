@@ -25,7 +25,7 @@ export class RoutesBaseDeDonnees extends ServiceWeb {
             await this.baseDeDonnees.requeteAjouterUser(req, res);
         });
 
-        router.delete("/delete", async (req: Request, res: Response) => {
+        router.delete("/delete/:id", async (req: Request, res: Response) => {
             await this.baseDeDonnees.requeteDeleteUser(req, res);
         });
 

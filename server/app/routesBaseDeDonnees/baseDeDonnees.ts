@@ -3,8 +3,11 @@ import "reflect-metadata";
 import { Request, Response} from "express";
 import { Mongoose, Model, Document, Schema } from "mongoose";
 import uniqueValidator = require("mongoose-unique-validator");
-import {User} from "../../../client/src/app/vue-initiale/login-form/user";
-// import { POINT_CONVERSION_UNCOMPRESSED } from "constants";
+
+interface User {
+    _id: string;
+    _username: string;
+}
 
 export module RouteBaseDeDonnees {
     @injectable()
@@ -19,7 +22,7 @@ export module RouteBaseDeDonnees {
             this.mongoose = new Mongoose();
             this.mongoose.set("useCreateIndex", true);
             this.schema = new Schema({
-                username: {
+                _username: {
                     type: String,
                     required: true,
                     unique: true
@@ -34,24 +37,23 @@ export module RouteBaseDeDonnees {
             await this.mongoose.connect(this.mongoURL, { useNewUrlParser: true });
         }
 
-        private async ajouterUser(usagerJson: {}, res: Response): Promise<Response> {
-            const usager: Document = new this.modelUser(usagerJson);
+        private async ajouterUser(user: {}, res: Response): Promise<Response> {
+            const usager: Document = new this.modelUser(user);
             try {
                 await usager.save();
 
                 // tslint:disable-next-line:no-magic-numbers
-                return res.status(201).json(usager);
+                return res.status(201).json(user);
               } catch (err) {
                 // tslint:disable-next-line:no-magic-numbers
                 return res.status(501).json(err);
             }
         }
 
-        private async deleteUser(usagerJson: String, res: Response): Promise<Response> {
-            const username: String = this.obtenirUserId(usagerJson)["username"];
-
+        private async deleteUser(username: String, res: Response): Promise<Response> {
+            const userId: String = await this.obtenirUserId(username);
             try {
-                await this.modelUser.findOneAndDelete(username);
+                await this.modelUser.findByIdAndDelete(userId);
 
                 // tslint:disable-next-line:no-magic-numbers
                 return res.status(201).json();
@@ -61,16 +63,23 @@ export module RouteBaseDeDonnees {
             }
         }
 
-        private async obtenirUserId(identifiant: String): Promise<User> {
-            let usager: User = new User();
+        private async obtenirUserId(username: String): Promise<String> {
+            const users: User[] = [];
+            await this.modelUser.find()
+                .then((res: Document[]) => {
+                    for (const user of res) {
+                        users.push(user.toObject());
+                    }
+                });
 
-            await this.modelUser.findById(identifiant)
-                .then((res: Document) => { usager = res.toObject(); })
-                // tslint:disable-next-line:no-empty
-                .catch(() => {});
+            for (const user of users) {
+                if (user._username === username) {
+                    return user._id;
+                }
+            }
 
-            return usager;
-
+            // Change the return.
+            return users[0]._id;
         }
 
         public async requeteAjouterUser(req: Request, res: Response): Promise<void> {
@@ -82,8 +91,7 @@ export module RouteBaseDeDonnees {
         }
 
         public async requeteDeleteUser(req: Request, res: Response): Promise<void> {
-            res.send(await this.deleteUser(req.body, res));
+            res.send(await this.deleteUser(req.params.id, res));
         }
-
     }
 }
