@@ -1,10 +1,10 @@
 export class ImageSimple {
     private _id: String;
-    private _Imagename: String;
+    private _ImageName: String;
 
     public constructor(imageName: String) {
       // this._id = "";
-      this._Imagename = imageName;
+      this._ImageName = imageName;
     }
 
     public get id(): String {
@@ -14,6 +14,6 @@ export class ImageSimple {
 
     public get username(): String {
 
-      return this._Imagename;
+      return this._ImageName;
     }
   }

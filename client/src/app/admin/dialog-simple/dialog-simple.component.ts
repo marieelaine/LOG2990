@@ -50,7 +50,6 @@ export class DialogSimpleComponent {
 
   public onSubmit(): void {
     const imageName: string = this.selectedFiles[this.currentImageNumber].name;
-    console.log(imageName);
     const result: ImageSimple = new ImageSimple(imageName);
     this.imageService.register(result)
         .subscribe(
