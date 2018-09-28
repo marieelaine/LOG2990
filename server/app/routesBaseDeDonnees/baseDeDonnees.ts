@@ -53,7 +53,7 @@ export module RouteBaseDeDonnees {
         private async deleteUser(username: String, res: Response): Promise<Response> {
             const userId: String = await this.obtenirUserId(username);
             try {
-                await this.modelUser.findByIdAndDelete(userId);
+                await this.modelUser.findByIdAndRemove(userId);
 
                 // tslint:disable-next-line:no-magic-numbers
                 return res.status(201).json();
