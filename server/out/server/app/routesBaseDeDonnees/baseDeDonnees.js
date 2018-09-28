@@ -20,7 +20,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const inversify_1 = require("inversify");
 require("reflect-metadata");
 const mongoose_1 = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator");
 var RouteBaseDeDonnees;
 (function (RouteBaseDeDonnees) {
     let BaseDeDonnees = class BaseDeDonnees {
@@ -28,81 +27,11 @@ var RouteBaseDeDonnees;
             this.mongoURL = "mongodb://admin:admin1@ds239692.mlab.com:39692/log2990-05";
             this.mongoose = new mongoose_1.Mongoose();
             this.mongoose.set("useCreateIndex", true);
-            this.schema = new mongoose_1.Schema({
-                _username: {
-                    type: String,
-                    required: true,
-                    unique: true
-                }
-            });
-            this.schema.plugin(uniqueValidator);
-            this.modelUser = this.mongoose.model("users", this.schema);
             this.seConnecter();
         }
         seConnecter() {
             return __awaiter(this, void 0, void 0, function* () {
                 yield this.mongoose.connect(this.mongoURL, { useNewUrlParser: true });
-            });
-        }
-        ajouterUser(user, res) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const usager = new this.modelUser(user);
-                try {
-                    yield usager.save();
-                    // tslint:disable-next-line:no-magic-numbers
-                    return res.status(201).json(user);
-                }
-                catch (err) {
-                    // tslint:disable-next-line:no-magic-numbers
-                    return res.status(501).json(err);
-                }
-            });
-        }
-        deleteUser(username, res) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const userId = yield this.obtenirUserId(username);
-                try {
-                    yield this.modelUser.findByIdAndRemove(userId);
-                    // tslint:disable-next-line:no-magic-numbers
-                    return res.status(201).json();
-                }
-                catch (err) {
-                    // tslint:disable-next-line:no-magic-numbers
-                    return res.status(501).json(err);
-                }
-            });
-        }
-        obtenirUserId(username) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const users = [];
-                yield this.modelUser.find()
-                    .then((res) => {
-                    for (const user of res) {
-                        users.push(user.toObject());
-                    }
-                });
-                for (const user of users) {
-                    if (user._username === username) {
-                        return user._id;
-                    }
-                }
-                // Change the return.
-                return users[0]._id;
-            });
-        }
-        requeteAjouterUser(req, res) {
-            return __awaiter(this, void 0, void 0, function* () {
-                res.send(yield this.ajouterUser(req.body, res));
-            });
-        }
-        requeteUserId(req, res) {
-            return __awaiter(this, void 0, void 0, function* () {
-                res.send(yield this.obtenirUserId(req.params.id));
-            });
-        }
-        requeteDeleteUser(req, res) {
-            return __awaiter(this, void 0, void 0, function* () {
-                res.send(yield this.deleteUser(req.params.id, res));
             });
         }
     };
