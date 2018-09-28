@@ -22,9 +22,11 @@ const types_1 = require("./types");
 const inversify_1 = require("inversify");
 const routes_1 = require("./routes");
 const routesBaseDeDonnees_1 = require("./routesBaseDeDonnees");
+const routesUser_1 = require("./routesUser");
 let Application = class Application {
-    constructor(index, baseDonnees) {
+    constructor(index, user, baseDonnees) {
         this.index = index;
+        this.user = user;
         this.baseDonnees = baseDonnees;
         this.internalError = 500;
         this.app = express();
@@ -43,6 +45,7 @@ let Application = class Application {
     routes() {
         this.ajouterService(this.index);
         this.ajouterService(this.baseDonnees);
+        this.ajouterService(this.user);
         this.errorHandeling();
     }
     ajouterService(service) {
@@ -81,8 +84,10 @@ let Application = class Application {
 Application = __decorate([
     inversify_1.injectable(),
     __param(0, inversify_1.inject(types_1.default.Routes)),
-    __param(1, inversify_1.inject(types_1.default.RoutesBaseDeDonnees)),
+    __param(1, inversify_1.inject(types_1.default.RoutesUser)),
+    __param(2, inversify_1.inject(types_1.default.RoutesBaseDeDonnees)),
     __metadata("design:paramtypes", [routes_1.Routes,
+        routesUser_1.RoutesUser,
         routesBaseDeDonnees_1.RoutesBaseDeDonnees])
 ], Application);
 exports.Application = Application;
