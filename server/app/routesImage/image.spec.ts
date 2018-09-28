@@ -1,11 +1,11 @@
 import { assert } from "chai";
-import { RouteUser } from "./user";
+import { RouteImage } from "./image";
 
 describe("BaseDeDonnees", () => {
     describe("Constructeur", () => {
-        let user: RouteUser.User;
+        let image: RouteImage.Image;
         beforeEach(() => {
-            user = new RouteUser.User();
+            image = new RouteImage.Image();
         });
 
         it ("should do nothing", () => {
@@ -13,7 +13,7 @@ describe("BaseDeDonnees", () => {
         });
 
         it ("should be defined", () => {
-            assert.isDefined(user);
+            assert.isDefined(image);
         });
 
     });

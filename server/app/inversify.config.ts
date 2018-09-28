@@ -11,6 +11,9 @@ import { RouteBaseDeDonnees } from "./routesBaseDeDonnees/baseDeDonnees";
 import { RoutesUser } from "./routesUser";
 import { RouteUser } from "./routesUser/user";
 
+import { RoutesImage } from "./routesImage";
+import { RouteImage } from "./routesImage/image";
+
 const container: Container = new Container();
 
 container.bind(Types.Server).to(Server);
@@ -24,5 +27,8 @@ container.bind(Types.BaseDeDonnees).to(RouteBaseDeDonnees.BaseDeDonnees);
 
 container.bind(Types.RoutesUser).to(RoutesUser);
 container.bind(Types.User).to(RouteUser.User);
+
+container.bind(Types.RoutesImage).to(RoutesImage);
+container.bind(Types.Image).to(RouteImage.Image);
 
 export { container };

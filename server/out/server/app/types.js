@@ -9,5 +9,7 @@ exports.default = {
     BaseDeDonnees: Symbol("BaseDeDonnees"),
     RoutesUser: Symbol("RoutesUser"),
     User: Symbol("User"),
+    RoutesImage: Symbol("RoutesImage"),
+    Image: Symbol("Image"),
 };
 //# sourceMappingURL=types.js.map

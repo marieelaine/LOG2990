@@ -10,6 +10,8 @@ const routesBaseDeDonnees_1 = require("./routesBaseDeDonnees");
 const baseDeDonnees_1 = require("./routesBaseDeDonnees/baseDeDonnees");
 const routesUser_1 = require("./routesUser");
 const user_1 = require("./routesUser/user");
+const routesImage_1 = require("./routesImage");
+const image_1 = require("./routesImage/image");
 const container = new inversify_1.Container();
 exports.container = container;
 container.bind(types_1.default.Server).to(server_1.Server);
@@ -20,4 +22,6 @@ container.bind(types_1.default.RoutesBaseDeDonnees).to(routesBaseDeDonnees_1.Rou
 container.bind(types_1.default.BaseDeDonnees).to(baseDeDonnees_1.RouteBaseDeDonnees.BaseDeDonnees);
 container.bind(types_1.default.RoutesUser).to(routesUser_1.RoutesUser);
 container.bind(types_1.default.User).to(user_1.RouteUser.User);
+container.bind(types_1.default.RoutesImage).to(routesImage_1.RoutesImage);
+container.bind(types_1.default.Image).to(image_1.RouteImage.Image);
 //# sourceMappingURL=inversify.config.js.map
