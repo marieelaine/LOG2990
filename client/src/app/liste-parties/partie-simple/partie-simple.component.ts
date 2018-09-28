@@ -19,7 +19,6 @@ export class PartieSimpleComponent {
   listeParties = new ListePartiesComponent().listePartiesSimples;
 
   getSortedTimes(times: number[]): number[] { // Tested
-    // tslint:disable-next-line:only-arrow-functions
     return times.sort(function (a, b) {  return a - b;  });
   }
 
