@@ -42,10 +42,8 @@ export module RouteBaseDeDonnees {
             try {
                 await usager.save();
 
-                // tslint:disable-next-line:no-magic-numbers
                 return res.status(201).json(user);
               } catch (err) {
-                // tslint:disable-next-line:no-magic-numbers
                 return res.status(501).json(err);
             }
         }
@@ -55,10 +53,8 @@ export module RouteBaseDeDonnees {
             try {
                 await this.modelUser.findByIdAndRemove(userId);
 
-                // tslint:disable-next-line:no-magic-numbers
                 return res.status(201).json();
             } catch (err) {
-            // tslint:disable-next-line:no-magic-numbers
             return res.status(501).json(err);
             }
         }
