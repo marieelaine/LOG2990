@@ -5,6 +5,9 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HeaderComponent } from './header.component';
 import { MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CookieService } from 'ngx-cookie-service';
+import { UserService } from '../../vue-initiale/user.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -20,7 +23,8 @@ describe('HeaderComponent', () => {
       imports: [MatToolbarModule, RouterTestingModule.withRoutes([
         { path: "liste-parties", component: ListePartiesComponent },
         { path: "header", component: HeaderComponent },
-      ]) ]
+      ]),       HttpClientTestingModule],
+      providers: [CookieService, UserService]
     })
     .compileComponents();
   }));

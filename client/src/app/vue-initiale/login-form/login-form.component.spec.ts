@@ -6,6 +6,7 @@
  import { HttpClientTestingModule } from '@angular/common/http/testing';
  import { RouterTestingModule } from "@angular/router/testing";
  import { ParticlesModule } from 'angular-particle';
+ import { CookieService } from 'ngx-cookie-service';
 
  describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
@@ -14,7 +15,8 @@
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LoginFormComponent ],
-      imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule, RouterTestingModule, ParticlesModule ]
+      imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule, RouterTestingModule, ParticlesModule ],
+      providers: [CookieService]
     })
     .compileComponents();
   }));
