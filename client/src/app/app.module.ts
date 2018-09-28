@@ -34,6 +34,7 @@ import { PartieMultipleFonctions } from './liste-parties/partie-multiple/partie-
 import { DialogSimpleComponent } from './admin/dialog-simple/dialog-simple.component';
 import { DialogMultipleComponent } from './admin/dialog-multiple/dialog-multiple.component';
 import { ParticlesModule } from "angular-particle";
+import { UserService } from "./vue-initiale/user.service";
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
@@ -85,7 +86,7 @@ const appRoutes: Routes = [
     MatInputModule,
     ParticlesModule
   ],
-  providers: [BasicService, CookieService],
+  providers: [BasicService, CookieService, UserService],
   bootstrap: [AppComponent],
   entryComponents: [
     DialogSimpleComponent,

@@ -29,7 +29,6 @@ var RouteBaseDeDonnees;
             this.mongoose = new mongoose_1.Mongoose();
             this.mongoose.set("useCreateIndex", true);
             this.schema = new mongoose_1.Schema({
-                // _id : String,
                 _username: {
                     type: String,
                     required: true,
@@ -61,9 +60,7 @@ var RouteBaseDeDonnees;
         }
         deleteUser(username, res) {
             return __awaiter(this, void 0, void 0, function* () {
-                const userId = this.obtenirUserId(username)["id"];
-                // tslint:disable-next-line:no-console
-                console.log(userId);
+                const userId = yield this.obtenirUserId(username);
                 try {
                     yield this.modelUser.findByIdAndDelete(userId);
                     // tslint:disable-next-line:no-magic-numbers
@@ -73,17 +70,24 @@ var RouteBaseDeDonnees;
                     // tslint:disable-next-line:no-magic-numbers
                     return res.status(501).json(err);
                 }
-                // tslint:disable-next-line:no-magic-numbers
-                return res.status(201).json();
             });
         }
         obtenirUserId(username) {
             return __awaiter(this, void 0, void 0, function* () {
-                const usager = yield this.modelUser.findOne(username)
-                    .then((res) => res.toObject())
-                    // tslint:disable-next-line:no-empty
-                    .catch(() => { });
-                return usager.id;
+                const users = [];
+                yield this.modelUser.find()
+                    .then((res) => {
+                    for (const user of res) {
+                        users.push(user.toObject());
+                    }
+                });
+                for (const user of users) {
+                    if (user._username === username) {
+                        return user._id;
+                    }
+                }
+                // Change the return.
+                return users[0]._id;
             });
         }
         requeteAjouterUser(req, res) {
@@ -98,7 +102,7 @@ var RouteBaseDeDonnees;
         }
         requeteDeleteUser(req, res) {
             return __awaiter(this, void 0, void 0, function* () {
-                res.send(yield this.deleteUser(req.body, res));
+                res.send(yield this.deleteUser(req.params.id, res));
             });
         }
     };

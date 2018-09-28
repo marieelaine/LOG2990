@@ -1,32 +1,38 @@
 import { Injectable } from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { User } from "./login-form/user";
-import { Observable, Subject } from "rxjs";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class UserService {
-  private userCourantSujet: Subject<User> = new Subject<User>();
-  private userCourantObservable$: Observable<User> = this.userCourantSujet.asObservable();
+    private readonly BASE_URL: string = "http://127.0.0.1:3000/users/";
+    private readonly AJOUTER_URL: string = this.BASE_URL + "ajouter";
+    private readonly SUPPRIMER_URL: string = this.BASE_URL + "delete/";
 
-  constructor(private _http: HttpClient) { }
+    // Pour le prochain sprint.
+    // private usernameCourantSujet: BehaviorSubject<string> = new BehaviorSubject<string>("");
+    // private usernameCourantObservable$: Observable<string> = this.usernameCourantSujet.asObservable();
 
-  public register(user: User): Observable<Object> {
+    constructor(private _http: HttpClient) { }
 
-    return this._http.post("http://127.0.0.1:3000/users/ajouter", user, {
-      observe: "body",
-      headers: new HttpHeaders().append("Content-Type", "application/json")
-    });
-  }
+    public register(user: User): Observable<Object> {
+        return this._http.post(this.AJOUTER_URL, user, {
+            observe: "body",
+            headers: new HttpHeaders().append("Content-Type", "application/json")
+        });
+    }
 
-  public delete(): Promise<Object> {
-    return this._http.delete("http://127.0.0.1:3000/users/delete").toPromise();
-  }
+    public delete(username: string): Promise<Object> {
+        return this._http.delete(this.SUPPRIMER_URL + username).toPromise();
+    }
 
-  public envoieNouveauUser(nouveauUser: User): void {
-    this.userCourantSujet.next(nouveauUser);
-  }
+    // Pour le prochain sprint.
+    // public envoieNouveauUser(nouveauUsername: string): void {
+        // this.usernameCourantSujet.next(nouveauUsername);
+    // }
 
-  public recevoirNouveauUser(): Observable<User> {
-    return this.userCourantObservable$;
-  }
+    // Pour le prochain sprint.
+    // public recevoirNouveauUser(): Observable<string> {
+    //     return this.usernameCourantObservable$;
+    // }
 }

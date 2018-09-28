@@ -3,7 +3,11 @@ import "reflect-metadata";
 import { Request, Response} from "express";
 import { Mongoose, Model, Document, Schema } from "mongoose";
 import uniqueValidator = require("mongoose-unique-validator");
-import {User} from "../../../client/src/app/vue-initiale/login-form/user";
+
+interface User {
+    _id: string;
+    _username: string;
+}
 
 export module RouteBaseDeDonnees {
     @injectable()
@@ -18,7 +22,6 @@ export module RouteBaseDeDonnees {
             this.mongoose = new Mongoose();
             this.mongoose.set("useCreateIndex", true);
             this.schema = new Schema({
-                // _id : String,
                 _username: {
                     type: String,
                     required: true,
@@ -48,9 +51,7 @@ export module RouteBaseDeDonnees {
         }
 
         private async deleteUser(username: String, res: Response): Promise<Response> {
-            const userId: String = this.obtenirUserId(username)["id"];
-            // tslint:disable-next-line:no-console
-            console.log(userId);
+            const userId: String = await this.obtenirUserId(username);
             try {
                 await this.modelUser.findByIdAndDelete(userId);
 
@@ -60,19 +61,25 @@ export module RouteBaseDeDonnees {
             // tslint:disable-next-line:no-magic-numbers
             return res.status(501).json(err);
             }
-
-            // tslint:disable-next-line:no-magic-numbers
-            return res.status(201).json();
         }
 
         private async obtenirUserId(username: String): Promise<String> {
-            const usager: User = await this.modelUser.findOne(username)
-                .then((res: Document) => res.toObject())
-                // tslint:disable-next-line:no-empty
-                .catch(() => {});
+            const users: User[] = [];
+            await this.modelUser.find()
+                .then((res: Document[]) => {
+                    for (const user of res) {
+                        users.push(user.toObject());
+                    }
+                });
 
-            return usager.id;
+            for (const user of users) {
+                if (user._username === username) {
+                    return user._id;
+                }
+            }
 
+            // Change the return.
+            return users[0]._id;
         }
 
         public async requeteAjouterUser(req: Request, res: Response): Promise<void> {
@@ -84,8 +91,7 @@ export module RouteBaseDeDonnees {
         }
 
         public async requeteDeleteUser(req: Request, res: Response): Promise<void> {
-            res.send(await this.deleteUser(req.body, res));
+            res.send(await this.deleteUser(req.params.id, res));
         }
-
     }
 }
