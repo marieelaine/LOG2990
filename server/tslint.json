@@ -137,7 +137,7 @@
         "align": [true, "arguments", "elements", "members", "parameters", "statements"],
         "arrow-parens": true,
         "no-any": true,
-        "no-magic-numbers": true,
+        "no-magic-numbers": false,
         "only-arrow-functions": true,
         "adjacent-overload-signatures": true,
         "max-file-line-count": [true, 300],
