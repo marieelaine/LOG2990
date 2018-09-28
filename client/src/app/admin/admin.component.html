@@ -7,9 +7,9 @@
   <div class='stickyToolbar'>
     <mat-toolbar class='adminToolbar'>        
         <button id="addGameButton" class='toolbarButtons' mat-raised-button [matMenuTriggerFor]="menu">Ajouter une partie</button>
-        <mat-menu #menu="matMenu">
-          <button id="dialogueSimpleBouton" mat-menu-item (click)="openDialogSimple()">Point de vue simple</button>
-          <button mat-menu-item (click)="openDialogMultiple()">Points de vue multiples</button>
+        <mat-menu id="menuBouton" #menu="matMenu">
+          <button id="simpleDialog" class="menu-item" mat-menu-item (click)="openDialogSimple()">Point de vue simple</button>
+          <button id="multipleDialog" class="menu-item" mat-menu-item (click)="openDialogMultiple()">Points de vue multiples</button>
         </mat-menu>
         <button class='toolbarButtons' mat-raised-button>Supprimer une partie</button>
     </mat-toolbar>

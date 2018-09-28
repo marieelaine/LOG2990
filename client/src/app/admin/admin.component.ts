@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { MatDialog, MatMenuTrigger } from '@angular/material';
 import { DialogSimpleComponent, } from "./dialog-simple/dialog-simple.component";
 import { DialogMultipleComponent } from "./dialog-multiple/dialog-multiple.component";
 
@@ -17,7 +17,7 @@ export interface DialogData {
 export class AdminComponent implements OnInit {
 
   gameName: string;
-
+  @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger;
   constructor(public dialog: MatDialog) {
   }
 
