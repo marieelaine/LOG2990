@@ -9,6 +9,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ParticlesModule } from 'angular-particle';
+import { CookieService } from 'ngx-cookie-service';
+import { UserService } from './user.service';
 
 describe('VueInitialeComponent', () => {
   let component: VueInitialeComponent;
@@ -17,7 +19,8 @@ describe('VueInitialeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ VueInitialeComponent, HeaderComponent, LoginFormComponent ],
-      imports: [MatToolbarModule, FormsModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, ParticlesModule]
+      imports: [MatToolbarModule, FormsModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, ParticlesModule],
+      providers: [CookieService, UserService]
     })
     .compileComponents();
   }));
