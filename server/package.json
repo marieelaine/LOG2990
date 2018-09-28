@@ -25,6 +25,7 @@
     "mongoose-unique-validator": "^2.0.2",
     "morgan": "1.7.0",
     "nodemon": "1.18.4",
+    "npm": "^6.4.1",
     "reflect-metadata": "^0.1.10",
     "serve-favicon": "~2.3.0",
     "sinon": "^6.3.4",

@@ -6,4 +6,6 @@ export default  {
 
         RoutesBaseDeDonnees: Symbol("RoutesBaseDeDonees"),
         BaseDeDonnees: Symbol("BaseDeDonnees"),
+        RoutesUser: Symbol("RoutesUser"),
+        User: Symbol("User"),
 };

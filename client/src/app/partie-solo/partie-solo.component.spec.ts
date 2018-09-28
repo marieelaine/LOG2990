@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 
 import { PartieSoloComponent } from './partie-solo.component';
 import { ChronoComponent } from '../chrono/chrono.component';
@@ -26,4 +26,16 @@ describe('PartieSoloComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should return value 0', fakeAsync(() => {
+    tick(1000);
+    expect(component.chrono.getTime()).toBe(0);   
+  }));
+
+  it('should return value 2', fakeAsync(() => {
+    component.start();
+    tick(2000);
+    component.terminerPartie();
+    expect(component.chrono.getTime()).toBe(2);  
+  }));
 });

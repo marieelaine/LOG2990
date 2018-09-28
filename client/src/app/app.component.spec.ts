@@ -7,6 +7,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { RouterTestingModule } from "@angular/router/testing";
 import { HeaderComponent } from "./common/header/header.component";
 import { MatToolbarModule } from "@angular/material";
+import { CookieService } from "ngx-cookie-service";
+import { UserService } from "./vue-initiale/user.service";
 describe("AppComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -15,7 +17,7 @@ describe("AppComponent", () => {
         HeaderComponent
       ],
       imports: [HttpClientModule, RouterTestingModule, MatToolbarModule],
-      providers: [BasicService]
+      providers: [BasicService, CookieService, UserService]
     }).compileComponents();
   }));
   it("should create the app", async(() => {

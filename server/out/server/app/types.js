@@ -7,5 +7,7 @@ exports.default = {
     Index: Symbol("Index"),
     RoutesBaseDeDonnees: Symbol("RoutesBaseDeDonees"),
     BaseDeDonnees: Symbol("BaseDeDonnees"),
+    RoutesUser: Symbol("RoutesUser"),
+    User: Symbol("User"),
 };
 //# sourceMappingURL=types.js.map

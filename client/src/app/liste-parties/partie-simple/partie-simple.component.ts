@@ -18,12 +18,11 @@ export class PartieSimpleComponent {
 
   listeParties = new ListePartiesComponent().listePartiesSimples;
 
-  getSortedTimes(times: number[]): number[] {
-    // tslint:disable-next-line:only-arrow-functions
+  getSortedTimes(times: number[]): number[] { // Tested
     return times.sort(function (a, b) {  return a - b;  });
   }
 
-  getBestTime(times: number[]): String {
+  getBestTime(times: number[]): String { // Tested
       const sortedTimes = this.getSortedTimes(times);
       if (sortedTimes[0] == null) {
         return "-";
@@ -32,7 +31,7 @@ export class PartieSimpleComponent {
       return this.convertSecondsToMinutes(sortedTimes[0]);
   }
 
-  getSecondBestTime(times: number[]): String {
+  getSecondBestTime(times: number[]): String { // Tested
       const sortedTimes = this.getSortedTimes(times);
       if (sortedTimes[1] == null) {
         return "-";
@@ -41,7 +40,7 @@ export class PartieSimpleComponent {
       return this.convertSecondsToMinutes(sortedTimes[1]);
   }
 
-  getThirdBestTime(times: number[]): String {
+  getThirdBestTime(times: number[]): String { // Tested
       const sortedTimes = this.getSortedTimes(times);
       if (sortedTimes[2] == null) {
         return "-";
@@ -50,14 +49,14 @@ export class PartieSimpleComponent {
       return this.convertSecondsToMinutes(sortedTimes[2]);
   }
 
-  convertSecondsToMinutes(time: number): String {
+  convertSecondsToMinutes(time: number): String { // Tested
       const minutes = Math.floor(time / 60);
       const secondes = time - minutes * 60;
 
       return this.getDisplayTime(minutes, secondes);
   }
 
-  getDisplayTime(minutes: number, secondes: number): String {
+  getDisplayTime(minutes: number, secondes: number): String { // Tested
       if (secondes < 10) {
         return minutes + ":0" + secondes;
 
@@ -67,7 +66,7 @@ export class PartieSimpleComponent {
       }
   }
 
-  getTitleWithoutFirstLetter(title: String): String {
+  getTitleWithoutFirstLetter(title: String): String { // Tested
     return title.substr(1, title.length - 1);
   }
 }
