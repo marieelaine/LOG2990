@@ -39,7 +39,7 @@ let RoutesBaseDeDonnees = class RoutesBaseDeDonnees extends serviceWeb_1.Service
         router.post("/ajouter", (req, res) => __awaiter(this, void 0, void 0, function* () {
             yield this.baseDeDonnees.requeteAjouterUser(req, res);
         }));
-        router.delete("/delete", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        router.delete("/delete/:id", (req, res) => __awaiter(this, void 0, void 0, function* () {
             yield this.baseDeDonnees.requeteDeleteUser(req, res);
         }));
         return router;

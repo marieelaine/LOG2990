@@ -19,3 +19,16 @@ mat-toolbar{
     color: #ff5252;
     cursor: pointer;
 }
+
+.filler{
+    flex: 1 1 auto;
+}
+
+#logout-button{
+    color: white;
+}
+
+#logout-button:hover{
+    color: black;
+    background-color: #ff5252;
+}

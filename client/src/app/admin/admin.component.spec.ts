@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminComponent } from "./admin.component";
-import { MatMenuModule, MatToolbarModule, MatCardModule, MatDialogModule } from "@angular/material";
+import { MatMenuModule, MatToolbarModule, MatCardModule, MatDialogModule, MatMenuTrigger } from "@angular/material";
 import { ListePartiesComponent } from "../liste-parties/liste-parties.component";
 import { PartieSimpleComponent } from "../liste-parties/partie-simple/partie-simple.component";
 import { PartieMultipleComponent } from "../liste-parties/partie-multiple/partie-multiple.component";
@@ -15,7 +15,7 @@ describe("AdminComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AdminComponent, ListePartiesComponent, PartieSimpleComponent, PartieMultipleComponent ],
-      imports: [MatMenuModule, MatToolbarModule, MatCardModule, RouterTestingModule, MatDialogModule ],
+      imports: [MatMenuModule, MatToolbarModule, MatCardModule, RouterTestingModule, MatDialogModule, NoopAnimationsModule ],
     })
     .compileComponents();
   }));
@@ -30,11 +30,29 @@ describe("AdminComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should open dialog-simple on simple game click", () => {
-    const dialogueSimpleBouton = fixture.debugElement.nativeElement.querySelector('#addGameButton > dialogueSimpleBouton');
+  it('should have a menu with 2 options (native click), one simple dialog window and one multiple dialog window', async () => {
+    const elem = fixture.debugElement;
+    const button = elem.query((e) => e.name === 'button');
+    expect(!!button).toBe(true);
+
+    button.nativeElement.click();
+    fixture.detectChanges();
+    expect(fixture.debugElement.queryAll(By.css('.menu-item')).length).toEqual(2);
+
+    const buttonSimple = fixture.debugElement.query(By.css('#simpleDialog')).nativeElement;
+    const buttonMultiple = fixture.debugElement.query(By.css('#multipleDialog')).nativeElement;
 
     spyOn(component, 'openDialogSimple');
-    // dialogueSimpleBouton.dispatchEvent(new Event('click'));
-    // expect(component.openDialogSimple).toHaveBeenCalled();
+    buttonSimple.dispatchEvent(new Event('click'));
+
+    fixture.detectChanges();
+    expect(component.openDialogSimple).toHaveBeenCalled();
+
+    spyOn(component, 'openDialogMultiple');
+    buttonMultiple.dispatchEvent(new Event('click'));
+
+    fixture.detectChanges();
+    expect(component.openDialogMultiple).toHaveBeenCalled();
   });
+
 });

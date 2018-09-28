@@ -9,6 +9,8 @@ import { BasicService } from "./basic.service";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule, Routes } from "@angular/router";
 
+import { CookieService } from "ngx-cookie-service";
+
 import { MatToolbarModule,
         MatCardModule,
         MatBadgeModule,
@@ -32,6 +34,7 @@ import { PartieMultipleComponent } from './liste-parties/partie-multiple/partie-
 import { DialogSimpleComponent } from './admin/dialog-simple/dialog-simple.component';
 import { DialogMultipleComponent } from './admin/dialog-multiple/dialog-multiple.component';
 import { ParticlesModule } from "angular-particle";
+import { UserService } from "./vue-initiale/user.service";
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
@@ -83,7 +86,7 @@ const appRoutes: Routes = [
     MatInputModule,
     ParticlesModule
   ],
-  providers: [BasicService],
+  providers: [BasicService, CookieService, UserService],
   bootstrap: [AppComponent],
   entryComponents: [
     DialogSimpleComponent,
