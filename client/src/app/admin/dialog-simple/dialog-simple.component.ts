@@ -31,16 +31,13 @@ export class DialogSimpleComponent {
 
   // Tested
   public onFileSelectedImage(event, i) {
-    this.selectedFiles[i] = this.getSelectedFileFromEvent(event);
+    const file = event.target.files[0] as File;
+    this.selectedFiles[i] = file;
     this.convertImageToArrayToCheckSize(this.selectedFiles[i], i);
 
     // TODO : envoyer l'image upload vers le serveur
     // const fd = new FormData();
     // fd.append("image", this.selectedFile, this.selectedFile.name);
-  }
-
-  public getSelectedFileFromEvent(event): File {
-    return this.selectedFile = event.target.files[0] as File;
   }
 
   public convertImageToArrayToCheckSize(file: File, i: number): void {

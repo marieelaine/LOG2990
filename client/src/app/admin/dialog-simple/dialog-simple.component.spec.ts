@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { createMockImageFile } from '../../../testing/file-creator';
+import { createMockImageFile, createMockBmpFile } from '../../../testing/file-creator';
 import { By } from '@angular/platform-browser';
 import { PartieSimpleInterface } from '../../liste-parties/partie-simple/partie-simple.component';
 
@@ -126,16 +126,6 @@ describe('DialogSimpleComponent', () => {
     component.setWrongImageSizeOrTypeMessage(imageInfo, 0);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
     expect(component.wrongImageSizeOrTypeMessage).toEqual("");
   });
-
-  // it('should return the event.target.files[0] as a File', () => {
-  //   const uploadImage1 = fixture.debugElement.query(By.css('#uploadImage1')).nativeElement;
-
-  //   var event = document.createEvent('Event');
-
-  //   spyOn(component, 'getSelectedFileFromEvent');
-  //   uploadImage1.dispatchEvent(new Event('change'));
-  //   expect(component.getSelectedFileFromEvent()).toBeTruthy();
-  // });
 
   it('should add new game to simple games list', () => {
     const expectedNumberOfGames = component.listeParties.listePartiesSimples.length + 1;
