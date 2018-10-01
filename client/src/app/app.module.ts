@@ -35,6 +35,7 @@ import { DialogSimpleComponent } from './admin/dialog-simple/dialog-simple.compo
 import { DialogMultipleComponent } from './admin/dialog-multiple/dialog-multiple.component';
 import { ParticlesModule } from "angular-particle";
 import { UserService } from "./vue-initiale/user.service";
+import { ImageService } from "./admin/image.service";
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
@@ -85,7 +86,7 @@ const appRoutes: Routes = [
     MatInputModule,
     ParticlesModule
   ],
-  providers: [BasicService, CookieService, UserService],
+  providers: [BasicService, CookieService, UserService, ImageService],
   bootstrap: [AppComponent],
   entryComponents: [
     DialogSimpleComponent,

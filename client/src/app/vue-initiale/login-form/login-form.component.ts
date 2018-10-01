@@ -24,6 +24,7 @@ export class LoginFormComponent implements OnInit {
     public loginForm: FormGroup;
     public usernameTaken: Boolean;
 
+    // Parametres de particles background
     myStyle: object = {};
     myParams: object = {};
     width: number = 100;
@@ -83,5 +84,4 @@ export class LoginFormComponent implements OnInit {
     public async creerNouveauUser(user: User): Promise<Object> {
         return this.http.post(URL_AJOUTER, user).toPromise();
     }
-
 }

@@ -4,7 +4,15 @@ import { PartieSimpleInterface } from '../../liste-parties/partie-simple/partie-
 import { ListePartiesComponent } from '../../liste-parties/liste-parties.component';
 import { DialogData } from '../admin.component';
 import { HttpClient } from '@angular/common/http';
-import {FormControl, Validators} from '@angular/forms';
+import {FormControl, Validators, FormGroup} from '@angular/forms';
+import { ImageSimple } from './image-simple';
+import { ImageService } from "../image.service";
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { Observable } from 'rxjs';
+
+export const IMAGE_URL: string = "http://localhost:3000/images/";
+const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
 
 @Component({
   selector: 'app-dialog-simple',
@@ -13,50 +21,74 @@ import {FormControl, Validators} from '@angular/forms';
 })
 export class DialogSimpleComponent {
 
-  outOfBoundNameLengthMessage: String = "";
-  wrongNumberOfImagesMessage: String = "";
-  wrongImageSizeOrTypeMessage: String = "";
-  partieSimple: PartieSimpleInterface;
-  listeParties: ListePartiesComponent = new ListePartiesComponent();
-  selectedFile: File;
-  selectedFiles: File[] = [];
-  correctImageExtension: String = "image/bmp";
-  titrePartie = new FormControl('', [Validators.required]);
+  public outOfBoundNameLengthMessage: String = "";
+  public wrongNumberOfImagesMessage: String = "";
+  public wrongImageSizeOrTypeMessage: String = "";
+  public currentImageNumber: number;
+  public partieSimple: PartieSimpleInterface;
+  public listeParties: ListePartiesComponent = new ListePartiesComponent();
+  public selectedFiles: File[] = [];
+  public correctImageExtension: String = "image/bmp";
+  public titrePartie = new FormControl('', [Validators.required]);
+  public imageNameTaken: Boolean;
 
   constructor(
     public dialogRef: MatDialogRef<DialogSimpleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private http: HttpClient) {
+    private http: HttpClient,
+    private cookieService: CookieService,
+    private imageService: ImageService) {
     }
 
   // Tested
   public onFileSelectedImage(event, i) {
-    this.selectedFiles[i] = this.getSelectedFileFromEvent(event);
-    this.convertImageToArrayToCheckSize(this.selectedFiles[i], i);
-
-    // TODO : envoyer l'image upload vers le serveur
-    // const fd = new FormData();
-    // fd.append("image", this.selectedFile, this.selectedFile.name);
+    console.log(event);
+    this.currentImageNumber = i;
+    const file = event.target.files[0] as File;
+    this.selectedFiles[this.currentImageNumber] = file;
+    this.convertImageToArrayToCheckSize(this.selectedFiles[this.currentImageNumber]);
   }
 
-  public getSelectedFileFromEvent(event): File {
-    return this.selectedFile = event.target.files[0] as File;
+  public onSubmit(): void {
+    const imageName: string = this.selectedFiles[this.currentImageNumber].name;
+    const result: ImageSimple = new ImageSimple(imageName);
+    this.imageService.register(result)
+        .subscribe(
+            (data) => {
+                this.imageNameTaken = false;
+            },
+            (error) => {
+                console.error(error);
+                this.imageNameTaken = true;
+            });
   }
 
-  public convertImageToArrayToCheckSize(file: File, i: number): void {
+  public obtenirImageId(identifiant: string): Observable<ImageSimple> {
+      return this.http.get<ImageSimple>(IMAGE_URL + identifiant);
+  }
+
+  public obtenirImageName(imageName: string): Observable<ImageSimple> {
+      return this.http.get<ImageSimple>(IMAGE_URL + imageName);
+  }
+
+  public async creerNouvelleImage(image: ImageSimple): Promise<Object> {
+      return this.http.post(URL_AJOUTER, image).toPromise();
+  }
+
+  public convertImageToArrayToCheckSize(file: File): void {
     const self: DialogSimpleComponent = this;
     const reader: FileReader = new FileReader();
     reader.readAsArrayBuffer(file);
     reader.onload = function() {
       const dv: DataView = new DataView(reader.result as ArrayBuffer);
       const imageInfo = {"size": dv.getUint16(28, true), "width": dv.getUint32(18, true), "height": dv.getUint32(22, true)};
-      self.setWrongImageSizeOrTypeMessage(imageInfo, i);
+      self.setWrongImageSizeOrTypeMessage(imageInfo);
     };
   }
 
   // Tested
-  public setWrongImageSizeOrTypeMessage(imageInfo, i: number): void {
-    this.checkIfWrongImageSize(imageInfo) || this.checkIfWrongImageType(i) ?
+  public setWrongImageSizeOrTypeMessage(imageInfo): void {
+    this.checkIfWrongImageSize(imageInfo) || this.checkIfWrongImageType() ?
       this.wrongImageSizeOrTypeMessage = "*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels" :
       this.wrongImageSizeOrTypeMessage = "";
   }
@@ -71,8 +103,9 @@ export class DialogSimpleComponent {
   }
 
   // Tested
-  private checkIfWrongImageType(i: number): Boolean {
-    if (this.selectedFiles[i] !== undefined && this.selectedFiles[i].type !== this.correctImageExtension) {
+  private checkIfWrongImageType(): Boolean {
+    if (this.selectedFiles[this.currentImageNumber] !== undefined
+      && this.selectedFiles[this.currentImageNumber].type !== this.correctImageExtension) {
         return true;
     }
 
@@ -139,6 +172,7 @@ export class DialogSimpleComponent {
   // Tested
   public closeDialogIfRequirements(): void {
    if (this.checkIfNoErrorMessage()) {
+      this.onSubmit();
       this.dialogRef.close();
       this.createNewSimpleGameCardAndAddToList();
     }
