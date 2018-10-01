@@ -42,6 +42,7 @@ export class DialogSimpleComponent {
 
   // Tested
   public onFileSelectedImage(event, i) {
+    console.log(event);
     this.currentImageNumber = i;
     const file = event.target.files[0] as File;
     this.selectedFiles[this.currentImageNumber] = file;
@@ -55,16 +56,11 @@ export class DialogSimpleComponent {
         .subscribe(
             (data) => {
                 this.imageNameTaken = false;
-                this.createCookie(imageName);
             },
             (error) => {
                 console.error(error);
                 this.imageNameTaken = true;
             });
-  }
-
-  public createCookie(imageName: string): void {
-      this.cookieService.set("imageName", imageName);
   }
 
   public obtenirImageId(identifiant: string): Observable<ImageSimple> {
