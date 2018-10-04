@@ -8,7 +8,6 @@ import {FormControl, Validators, FormGroup} from '@angular/forms';
 import { ImageSimple } from './image-simple';
 import { ImageService } from "../image.service";
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 
 export const IMAGE_URL: string = "http://localhost:3000/images/";
@@ -17,7 +16,9 @@ const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
 @Component({
   selector: 'app-dialog-simple',
   templateUrl: './dialog-simple.component.html',
-  styleUrls: ['./dialog-simple.component.css']
+  styleUrls: ['./dialog-simple.component.css'],
+  providers: [ImageService],
+
 })
 export class DialogSimpleComponent {
 
@@ -36,7 +37,6 @@ export class DialogSimpleComponent {
     public dialogRef: MatDialogRef<DialogSimpleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private http: HttpClient,
-    private cookieService: CookieService,
     private imageService: ImageService) {
     }
 

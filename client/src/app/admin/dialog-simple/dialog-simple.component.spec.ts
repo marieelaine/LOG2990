@@ -109,21 +109,22 @@ describe('DialogSimpleComponent', () => {
   it('should set wrongImageSizeOrTypeMessage image does not respect good size', () => {
     const imageInfo = { "size": 64, "width": 1080, "height": 480 };
     component.selectedFiles[0] = createMockImageFile(true);  // isBMP = true
-    component.setWrongImageSizeOrTypeMessage(imageInfo, 0);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
+    component.setWrongImageSizeOrTypeMessage(imageInfo);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
     expect(component.wrongImageSizeOrTypeMessage).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
   });
 
   it('should set wrongImageSizeOrTypeMessage image does not respect good type', () => {
     const imageInfo = { "size": 24, "width": 640, "height": 480 };
+    component.currentImageNumber = 0;
     component.selectedFiles[0] = createMockImageFile(false);  // isBMP = false
-    component.setWrongImageSizeOrTypeMessage(imageInfo, 0);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
+    component.setWrongImageSizeOrTypeMessage(imageInfo);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
     expect(component.wrongImageSizeOrTypeMessage).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
   });
 
   it('should not set wrongImageSizeOrTypeMessage image respect good type and size', () => {
     const imageInfo = { "size": 24, "width": 640, "height": 480 };
     component.selectedFiles[0] = createMockImageFile(true);  // isBMP = true
-    component.setWrongImageSizeOrTypeMessage(imageInfo, 0);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
+    component.setWrongImageSizeOrTypeMessage(imageInfo);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
     expect(component.wrongImageSizeOrTypeMessage).toEqual("");
   });
 
