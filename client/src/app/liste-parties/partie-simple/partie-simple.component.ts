@@ -19,15 +19,4 @@ export class PartieSimpleComponent extends PartieAbstraiteComponent {
 
   listeParties = new ListePartiesComponent().listePartiesSimples;
 
-  protected getSortedTimes(times: number[]): number[];
-
-  protected getBestTime(times: number[]): String;
-
-  protected getSecondBestTime(times: number[]): String;
-
-  protected getThirdBestTime(times: number[]): String;
-
-  protected getDisplayTime(minutes: number, secondes: number): String;
-
-  protected getTitleWithoutFirstLetter(title: String): String;
 }
