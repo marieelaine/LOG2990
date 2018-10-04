@@ -1,8 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PartieAbstraiteClass } from './partie-abstraite';
-import { RouterTestingModule } from '@angular/router/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 class AbstractClassInstance extends PartieAbstraiteClass {
 
