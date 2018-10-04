@@ -3,10 +3,10 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminComponent } from "./admin.component";
 import { MatMenuModule, MatToolbarModule, MatCardModule, MatDialogModule, MatMenuTrigger } from "@angular/material";
 import { ListePartiesComponent } from "../liste-parties/liste-parties.component";
-import { PartieSimpleComponent } from "../liste-parties/partie-simple/partie-simple.component";
-import { PartieMultipleComponent } from "../liste-parties/partie-multiple/partie-multiple.component";
 import { RouterTestingModule } from "@angular/router/testing";
 import { By } from "@angular/platform-browser";
+import { ListePartieMultipleComponent } from "../liste-parties/liste-partie-multiple/liste-partie-multiple.component";
+import { ListePartieSimpleComponent } from "../liste-parties/liste-partie-simple/liste-partie-simple.component";
 
 describe("AdminComponent", () => {
   let component: AdminComponent;
@@ -14,7 +14,7 @@ describe("AdminComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminComponent, ListePartiesComponent, PartieSimpleComponent, PartieMultipleComponent ],
+      declarations: [ AdminComponent, ListePartiesComponent, ListePartieSimpleComponent, ListePartieMultipleComponent ],
       imports: [MatMenuModule, MatToolbarModule, MatCardModule, RouterTestingModule, MatDialogModule, NoopAnimationsModule ],
     })
     .compileComponents();

@@ -1,4 +1,4 @@
-export abstract class PartieAbstraiteClass {
+export abstract class ListePartieAbstraiteClass {
 
     constructor() { }
 
