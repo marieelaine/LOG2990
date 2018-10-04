@@ -85,9 +85,12 @@ const appRoutes: Routes = [
     MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
-    ParticlesModule
+    ParticlesModule,
   ],
-  providers: [BasicService, CookieService, UserService, ImageService],
+  providers: [BasicService,
+              CookieService,
+              UserService,
+              ImageService],
   bootstrap: [AppComponent],
   entryComponents: [
     DialogSimpleComponent,

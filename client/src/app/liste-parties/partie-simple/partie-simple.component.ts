@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ListePartiesComponent } from '../liste-parties.component';
+import { PartieAbstraiteComponent } from '../partie-abstraite/partie-abstraite.component';
 
 export interface PartieSimpleInterface {
   title: String;
@@ -14,59 +15,19 @@ export interface PartieSimpleInterface {
   templateUrl: './partie-simple.component.html',
   styleUrls: ['./partie-simple.component.css']
 })
-export class PartieSimpleComponent {
+export class PartieSimpleComponent extends PartieAbstraiteComponent {
 
   listeParties = new ListePartiesComponent().listePartiesSimples;
 
-  getSortedTimes(times: number[]): number[] { // Tested
-    return times.sort(function (a, b) {  return a - b;  });
-  }
+  protected getSortedTimes(times: number[]): number[];
 
-  getBestTime(times: number[]): String { // Tested
-      const sortedTimes = this.getSortedTimes(times);
-      if (sortedTimes[0] == null) {
-        return "-";
-      }
+  protected getBestTime(times: number[]): String;
 
-      return this.convertSecondsToMinutes(sortedTimes[0]);
-  }
+  protected getSecondBestTime(times: number[]): String;
 
-  getSecondBestTime(times: number[]): String { // Tested
-      const sortedTimes = this.getSortedTimes(times);
-      if (sortedTimes[1] == null) {
-        return "-";
-      }
+  protected getThirdBestTime(times: number[]): String;
 
-      return this.convertSecondsToMinutes(sortedTimes[1]);
-  }
+  protected getDisplayTime(minutes: number, secondes: number): String;
 
-  getThirdBestTime(times: number[]): String { // Tested
-      const sortedTimes = this.getSortedTimes(times);
-      if (sortedTimes[2] == null) {
-        return "-";
-      }
-
-      return this.convertSecondsToMinutes(sortedTimes[2]);
-  }
-
-  convertSecondsToMinutes(time: number): String { // Tested
-      const minutes = Math.floor(time / 60);
-      const secondes = time - minutes * 60;
-
-      return this.getDisplayTime(minutes, secondes);
-  }
-
-  getDisplayTime(minutes: number, secondes: number): String { // Tested
-      if (secondes < 10) {
-        return minutes + ":0" + secondes;
-
-      } else {
-
-      return minutes + ":" + secondes;
-      }
-  }
-
-  getTitleWithoutFirstLetter(title: String): String { // Tested
-    return title.substr(1, title.length - 1);
-  }
+  protected getTitleWithoutFirstLetter(title: String): String;
 }
