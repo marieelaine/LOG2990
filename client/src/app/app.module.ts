@@ -54,7 +54,6 @@ const appRoutes: Routes = [
     HeaderComponent,
     VueInitialeComponent,
     AdminComponent,
-    AppComponent,
     ListePartiesComponent,
     LoginFormComponent,
     ChronoComponent,
