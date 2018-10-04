@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { element } from '@angular/core/src/render3/instructions';
-import { ChronoComponent } from "../chrono/chrono.component";
+import { ChronoComponent } from '../../chrono/chrono.component';
 
 @Component({
   selector: 'app-partie-solo',

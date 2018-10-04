@@ -24,7 +24,6 @@ import { MatToolbarModule,
 
 import { ListePartiesComponent } from "./liste-parties/liste-parties.component";
 import { ChronoComponent } from './chrono/chrono.component';
-import { PartieSoloComponent } from './partie-solo/partie-solo.component';
 import { HeaderComponent } from "./common/header/header.component";
 import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
 import { AdminComponent } from "./admin/admin.component";
@@ -36,6 +35,9 @@ import { UserService } from "./vue-initiale/user.service";
 import { ImageService } from "./admin/image.service";
 import { ListePartieSimpleComponent } from "./liste-parties/liste-partie-simple/liste-partie-simple.component";
 import { ListePartieMultipleComponent } from "./liste-parties/liste-partie-multiple/liste-partie-multiple.component";
+import { PartieSoloComponent } from "./partie/partie-solo/partie-solo.component";
+import { PartieMultijoueurComponentComponent } from './partie/partie-multijoueur-component/partie-multijoueur-component.component';
+import { PartieMultijoueurComponent } from './partie/partie-multijoueur/partie-multijoueur.component';
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
@@ -61,6 +63,8 @@ const appRoutes: Routes = [
     ListePartieMultipleComponent,
     DialogSimpleComponent,
     DialogMultipleComponent,
+    PartieMultijoueurComponentComponent,
+    PartieMultijoueurComponent,
   ],
   imports: [
     RouterModule.forRoot(

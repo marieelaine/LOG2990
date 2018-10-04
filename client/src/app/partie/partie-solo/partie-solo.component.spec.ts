@@ -1,9 +1,8 @@
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 
 import { PartieSoloComponent } from './partie-solo.component';
-import { ChronoComponent } from '../chrono/chrono.component';
-import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ChronoComponent } from '../../chrono/chrono.component';
 
 describe('PartieSoloComponent', () => {
   let component: PartieSoloComponent;

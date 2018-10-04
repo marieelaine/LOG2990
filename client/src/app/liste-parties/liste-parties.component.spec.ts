@@ -5,9 +5,9 @@ import { ListePartiesComponent } from './liste-parties.component';
 import { MatCardHeader, MatCardModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { PartieSoloComponent } from "../partie-solo/partie-solo.component";
 import { ListePartieSimpleComponent } from './liste-partie-simple/liste-partie-simple.component';
 import { ListePartieMultipleComponent } from './liste-partie-multiple/liste-partie-multiple.component';
+import { PartieSoloComponent } from '../partie/partie-solo/partie-solo.component';
 
 describe('ListePartiesComponent', () => {
   let component: ListePartiesComponent;
