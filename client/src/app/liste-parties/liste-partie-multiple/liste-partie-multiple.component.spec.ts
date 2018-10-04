@@ -1,16 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PartieMultipleComponent } from './partie-multiple.component';
+import { ListePartieMultipleComponent } from './liste-partie-multiple.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PartieMultipleComponent', () => {
-  let component: PartieMultipleComponent;
-  let fixture: ComponentFixture<PartieMultipleComponent>;
+  let component: ListePartieMultipleComponent;
+  let fixture: ComponentFixture<ListePartieMultipleComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PartieMultipleComponent ],
+      declarations: [ ListePartieMultipleComponent ],
       imports: [RouterTestingModule],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
@@ -20,7 +20,7 @@ describe('PartieMultipleComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PartieMultipleComponent);
+    fixture = TestBed.createComponent(ListePartieMultipleComponent);
     component = fixture.componentInstance;
   });
 

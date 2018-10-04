@@ -1,8 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ListePartieAbstraiteClass } from './partie-abstraite';
 
-import { PartieAbstraiteClass } from './partie-abstraite';
-
-class AbstractClassInstance extends PartieAbstraiteClass {
+class AbstractClassInstance extends ListePartieAbstraiteClass {
 
 }
 

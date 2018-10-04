@@ -2,12 +2,12 @@ import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Location } from "@angular/common";
 import { ListePartiesComponent } from './liste-parties.component';
-import { PartieSimpleComponent } from './partie-simple/partie-simple.component';
-import { PartieMultipleComponent } from './partie-multiple/partie-multiple.component';
 import { MatCardHeader, MatCardModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { PartieSoloComponent } from "../partie-solo/partie-solo.component";
+import { ListePartieSimpleComponent } from './liste-partie-simple/liste-partie-simple.component';
+import { ListePartieMultipleComponent } from './liste-partie-multiple/liste-partie-multiple.component';
 
 describe('ListePartiesComponent', () => {
   let component: ListePartiesComponent;
@@ -16,7 +16,7 @@ describe('ListePartiesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListePartiesComponent, PartieSimpleComponent, PartieMultipleComponent, PartieSoloComponent ],
+      declarations: [ ListePartiesComponent, ListePartieSimpleComponent, ListePartieMultipleComponent, PartieSoloComponent ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
       ],
