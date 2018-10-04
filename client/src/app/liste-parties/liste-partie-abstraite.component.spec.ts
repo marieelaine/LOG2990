@@ -1,4 +1,4 @@
-import { ListePartieAbstraiteClass } from './partie-abstraite';
+import { ListePartieAbstraiteClass } from "src/app/liste-parties/liste-partie-abstraite";
 
 class AbstractClassInstance extends ListePartieAbstraiteClass {
 

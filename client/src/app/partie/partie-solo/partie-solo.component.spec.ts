@@ -26,15 +26,4 @@ describe('PartieSoloComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should return value 0', fakeAsync(() => {
-    tick(1000);
-    expect(component.chrono.getTime()).toBe(0);
-  }));
-
-  it('should return value 2', fakeAsync(() => {
-    component.start();
-    tick(2000);
-    component.terminerPartie();
-    expect(component.chrono.getTime()).toBe(2);
-  }));
 });

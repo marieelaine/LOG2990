@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ListePartiesComponent } from '../liste-parties.component';
-import { ListePartieAbstraiteClass } from '../partie-abstraite';
+import { ListePartieAbstraiteClass } from '../liste-partie-abstraite';
 
 export interface ListePartieSimpleInterface {
   title: String;

@@ -1,32 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { element } from '@angular/core/src/render3/instructions';
-import { ChronoComponent } from '../../chrono/chrono.component';
+import { PartieAbstraiteClass } from '../partie-abstraite-class';
 
 @Component({
   selector: 'app-partie-solo',
   templateUrl: './partie-solo.component.html',
   styleUrls: ['./partie-solo.component.css']
 })
-export class PartieSoloComponent implements OnInit {
-
-  blur: boolean = true;
-  chrono: ChronoComponent = new ChronoComponent();
-  timer: number = 0;
-
-  public constructor() { }
-
-  start() {
-    this.blur = false;
-    const button = document.getElementById("StartButton");
-    button!.remove();
-    this.chrono.startTimer();
-  }
-
-  terminerPartie() {
-    this.chrono.stopTimer();
-  }
-
-  public ngOnInit() {
-  }
+export class PartieSoloComponent extends PartieAbstraiteClass {
 
 }
