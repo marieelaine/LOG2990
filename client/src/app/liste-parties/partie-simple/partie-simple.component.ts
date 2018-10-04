@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ListePartiesComponent } from '../liste-parties.component';
-import { PartieAbstraiteComponent } from '../partie-abstraite/partie-abstraite.component';
+import { PartieAbstraiteClass } from '../partie-abstraite';
 
 export interface PartieSimpleInterface {
   title: String;
@@ -15,7 +15,7 @@ export interface PartieSimpleInterface {
   templateUrl: './partie-simple.component.html',
   styleUrls: ['./partie-simple.component.css']
 })
-export class PartieSimpleComponent extends PartieAbstraiteComponent {
+export class PartieSimpleComponent extends PartieAbstraiteClass {
 
   listeParties = new ListePartiesComponent().listePartiesSimples;
 

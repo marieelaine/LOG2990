@@ -36,7 +36,6 @@ import { DialogMultipleComponent } from './admin/dialog-multiple/dialog-multiple
 import { ParticlesModule } from "angular-particle";
 import { UserService } from "./vue-initiale/user.service";
 import { ImageService } from "./admin/image.service";
-import { PartieAbstraiteComponent } from './liste-parties/partie-abstraite/partie-abstraite.component';
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
