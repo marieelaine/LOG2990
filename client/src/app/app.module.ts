@@ -53,7 +53,6 @@ const appRoutes: Routes = [
     HeaderComponent,
     VueInitialeComponent,
     AdminComponent,
-    AppComponent,
     ListePartiesComponent,
     LoginFormComponent,
     ChronoComponent,
@@ -61,7 +60,7 @@ const appRoutes: Routes = [
     PartieSimpleComponent,
     PartieMultipleComponent,
     DialogSimpleComponent,
-    DialogMultipleComponent
+    DialogMultipleComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -84,9 +83,12 @@ const appRoutes: Routes = [
     MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
-    ParticlesModule
+    ParticlesModule,
   ],
-  providers: [BasicService, CookieService, UserService, ImageService],
+  providers: [BasicService,
+              CookieService,
+              UserService,
+              ImageService],
   bootstrap: [AppComponent],
   entryComponents: [
     DialogSimpleComponent,

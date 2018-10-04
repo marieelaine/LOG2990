@@ -1,3 +1,4 @@
 #Directories and files to ignore
 
 package-lock.json
+server/out/*

@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint --type-check --format stylish",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "preinstall": "pip3 install -r ../executables/bmpdiff/requirements.txt"
   },
   "private": true,
   "dependencies": {
@@ -33,6 +34,7 @@
     "ng2-bootstrap": "^1.6.3",
     "ngx-bootstrap": "^3.0.1",
     "ngx-cookie-service": "^1.0.10",
+    "npm": "^6.4.1",
     "rxjs": "^6.0.0",
     "socket.io": "1.4.5",
     "socket.io-client": "1.4.5",
