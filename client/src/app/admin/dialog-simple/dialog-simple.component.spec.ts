@@ -9,7 +9,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { createMockImageFile, createMockBmpFile } from '../../../testing/file-creator';
 import { By } from '@angular/platform-browser';
-import { PartieSimpleInterface } from '../../liste-parties/partie-simple/partie-simple.component';
 
 describe('DialogSimpleComponent', () => {
   let component: DialogSimpleComponent;

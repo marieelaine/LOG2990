@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { PartieMultipleInterface } from '../../liste-parties/partie-multiple/partie-multiple.component';
 import { ListePartiesComponent } from '../../liste-parties/liste-parties.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogData } from '../admin.component';
+import { ListePartieMultipleInterface } from '../../liste-parties/liste-partie-multiple/liste-partie-multiple.component';
 
 @Component({
   selector: 'app-dialog-multiple',
@@ -12,7 +12,7 @@ import { DialogData } from '../admin.component';
 export class DialogMultipleComponent {
 
   errorMessage: string;
-  partieMultiple: PartieMultipleInterface;
+  partieMultiple: ListePartieMultipleInterface;
   listeParties: ListePartiesComponent;
 
   constructor(

@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { PartieSimpleInterface } from '../../liste-parties/partie-simple/partie-simple.component';
 import { ListePartiesComponent } from '../../liste-parties/liste-parties.component';
 import { DialogData } from '../admin.component';
 import { HttpClient } from '@angular/common/http';
@@ -9,6 +8,7 @@ import { ImageSimple } from './image-simple';
 import { ImageService } from "../image.service";
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ListePartieSimpleInterface } from '../../liste-parties/liste-partie-simple/liste-partie-simple.component';
 
 export const IMAGE_URL: string = "http://localhost:3000/images/";
 const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
@@ -26,7 +26,7 @@ export class DialogSimpleComponent {
   public wrongNumberOfImagesMessage: String = "";
   public wrongImageSizeOrTypeMessage: String = "";
   public currentImageNumber: number;
-  public partieSimple: PartieSimpleInterface;
+  public partieSimple: ListePartieSimpleInterface;
   public listeParties: ListePartiesComponent = new ListePartiesComponent();
   public selectedFiles: File[] = [];
   public correctImageExtension: String = "image/bmp";
@@ -180,7 +180,7 @@ export class DialogSimpleComponent {
 
   // Tested
   public createNewSimpleGameCardAndAddToList(): void {
-    const partieSimple: PartieSimpleInterface = {
+    const partieSimple: ListePartieSimpleInterface = {
         title: this.data.simpleGameName, imagePath: 'assets/NissanPatrol.jpg', isElevatedActive: false,
         timesSolo: [], timesOneVsOne: [],
       };
@@ -188,7 +188,7 @@ export class DialogSimpleComponent {
   }
 
   // Tested
-  private addNewSimpleGameCardToList(partieSimple: PartieSimpleInterface): void {
+  private addNewSimpleGameCardToList(partieSimple: ListePartieSimpleInterface): void {
     this.listeParties.listePartiesSimples.push(partieSimple);
   }
 
