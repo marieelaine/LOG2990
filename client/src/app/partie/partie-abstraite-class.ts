@@ -8,12 +8,13 @@ export abstract class PartieAbstraiteClass {
 
     constructor() { }
 
-    // protected start(): void {
-    //     this.blur = false;
-    //     const button = document.getElementById("StartButton");
-    //     button!.remove();
-    //     this.chrono.startTimer();
-    //   }
+    protected start(): void {
+        this.blur = false;
+        const button = document.getElementById("StartButton");
+        // tslint:disable-next-line:no-non-null-assertion
+        button!.remove();
+        this.chrono.startTimer();
+      }
 
     protected terminerPartie(): void {
         this.chrono.stopTimer();
