@@ -3,6 +3,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ListePartieSimpleComponent } from './liste-partie-simple.component';
+import { By } from '@angular/platform-browser';
 
 describe('PartieSimpleComponent', () => {
   let component: ListePartieSimpleComponent;
@@ -27,5 +28,14 @@ describe('PartieSimpleComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // it('should call onJouerOuReinitialiserClick when click on "Jouer" or "Reinitialiser" button', () => {
+  //   const button = fixture.debugElement.query(By.css('#boutonJouerOurReinitialiser')).nativeElement;
+
+  //   spyOn(component, 'onJouerOuReinitialiserClick');
+  //   button.dispatchEvent(new Event('click'));
+
+  //   expect(component.onJouerOuReinitialiserClick).toHaveBeenCalled();
+  // });
 
 });

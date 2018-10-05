@@ -17,8 +17,32 @@ export interface ListePartieSimpleInterface {
 })
 export class ListePartieSimpleComponent extends ListePartiesComponent {
 
-  constructor(router: Router) {
+  constructor(private router: Router) {
     super(router);
+  }
+
+  public onJouerOuReinitialiserClick(): void {
+    if (this.isListePartiesMode) {
+      this.router.navigate(["/partie-solo"]);
+    } else if (this.isAdminMode) {
+      this.reinitialiserTemps();
+    }
+  }
+
+  private reinitialiserTemps(): void {
+    // Reinitialiser les temps de la parties
+  }
+
+  protected onCreerOuSupprimerClick(): void {
+    if (this.isListePartiesMode) {
+      // Naviguer vers partie-multijouer
+    } else if (this.isAdminMode) {
+      this.supprimerPartie();
+    }
+  }
+
+  private supprimerPartie(): void {
+    // Supprimer la partie
   }
 
 }

@@ -47,16 +47,19 @@ describe('ListePartiesComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('click on button partie-solo redirects you to /partie-solo', fakeAsync(() => {
-    const elem = fixture.debugElement;
-    const button = elem.query((e) => e.name === 'button');
-    expect(!!button).toBe(true);
-    button.nativeElement.click();
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(location.path()).toBe('/partie-solo');
-    });
-  }));
+  it('should change jouerOuReinitialiser and creerOuSupprimer to "Jouer" and "Supprimer" when url is /liste-parties', () => {
+    component["setjouerOuReinitialiserAndcreerOuSupprimer"]('/liste-parties');
+    expect(component.jouerOuReinitialiser).toBe('Jouer');
+    expect(component.creerOuSupprimer).toBe('Créer');
+    expect(component.isListePartiesMode).toBe(true);
+  });
+
+  it('should change jouerOuReinitialiser and creerOuSupprimer to "Reinitialiser" and "Supprimer" when url is /admin', () => {
+    component["setjouerOuReinitialiserAndcreerOuSupprimer"]('/admin');
+    expect(component.jouerOuReinitialiser).toBe('Réinitialiser');
+    expect(component.creerOuSupprimer).toBe('Supprimer');
+    expect(component.isAdminMode).toBe(true);
+  });
 
    // Tests classement des meilleurs temps
   it('should return best time', () => {

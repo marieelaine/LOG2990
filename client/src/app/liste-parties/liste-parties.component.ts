@@ -28,20 +28,39 @@ export class ListePartiesComponent {
 
   public jouerOuReinitialiser: string;
   public creerOuSupprimer: string;
+  public isListePartiesMode: boolean;
+  public isAdminMode: boolean;
 
   public constructor(router: Router) {
+    this.jouerOuReinitialiser = '';
+    this.creerOuSupprimer = '';
+    this.isListePartiesMode = false;
+    this.isAdminMode = false;
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
-
-        if (val.url === '/liste-parties') {
-          this.jouerOuReinitialiser = 'Jouer';
-          this.creerOuSupprimer = 'Créer';
-        } else if (val.url === '/admin') {
-          this.jouerOuReinitialiser = 'Réinitialiser';
-          this.creerOuSupprimer = 'Supprimer';
-        }
+        this.setjouerOuReinitialiserAndcreerOuSupprimer(val.url);
       }
     });
+  }
+
+  protected setjouerOuReinitialiserAndcreerOuSupprimer(url: string): void {
+    if (url === '/liste-parties') {
+      this.setToJouerAndCreer();
+    } else if (url === '/admin') {
+      this.setToReinitialiserAndSupprimer();
+    }
+  }
+
+  private setToJouerAndCreer(): void {
+    this.isListePartiesMode = true;
+    this.jouerOuReinitialiser = 'Jouer';
+    this.creerOuSupprimer = 'Créer';
+  }
+
+  private setToReinitialiserAndSupprimer(): void {
+    this.isAdminMode = true;
+    this.jouerOuReinitialiser = 'Réinitialiser';
+    this.creerOuSupprimer = 'Supprimer';
   }
 
   protected getSortedTimes(times: number[]): number[] {
