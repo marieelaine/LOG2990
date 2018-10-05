@@ -30,7 +30,7 @@
                       <p> {{ getSecondBestTime(partieMultiple.timesSolo) }} </p> 
                       <p> {{ getThirdBestTime(partieMultiple.timesSolo) }} </p> 
                       <button mat-button class='mat-elevation-z6'
-                              [routerLink]="['/partie-solo']" routerLinkActive="router-link-active">Jouer</button>
+                              [routerLink]="['/partie-solo']" routerLinkActive="router-link-active"> {{jouerOuReinitialiser}} </button>
                   </div>
                   <div class='col-sm-2'></div>
                   <div class='col-sm-4 text-center'>
@@ -38,7 +38,7 @@
                       <p> {{ getBestTime(partieMultiple.timesOneVsOne) }} </p> 
                       <p> {{ getSecondBestTime(partieMultiple.timesOneVsOne) }} </p> 
                       <p> {{ getThirdBestTime(partieMultiple.timesOneVsOne) }} </p>
-                      <button mat-button class='mat-elevation-z6'>Créer</button>
+                      <button mat-button class='mat-elevation-z6'> {{creerOuSupprimer}} </button>
                   </div>
               </div>
           </div>
