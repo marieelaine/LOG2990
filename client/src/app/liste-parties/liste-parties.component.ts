@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ListePartieMultipleInterface } from 'src/app/liste-parties/liste-partie-multiple/liste-partie-multiple.component';
 import { ListePartieSimpleInterface } from './liste-partie-simple/liste-partie-simple.component';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-liste-parties',
   templateUrl: './liste-parties.component.html',
   styleUrls: ['./liste-parties.component.css']
 })
-export class ListePartiesComponent implements OnInit {
+
+export class ListePartiesComponent {
 
   partieSimpleDiv: HTMLElement;
 
@@ -24,8 +26,73 @@ export class ListePartiesComponent implements OnInit {
       timesSolo: [312, 415, 6462, 1], timesOneVsOne: [312, 3],
     }  ];
 
-  constructor() { }
+  public jouerOuReinitialiser: string;
+  public creerOuSupprimer: string;
 
-  ngOnInit() {
+  public constructor(router: Router) {
+    router.events.subscribe((val) => {
+      if (val instanceof NavigationEnd) {
+
+        if (val.url === '/liste-parties') {
+          this.jouerOuReinitialiser = 'Jouer';
+          this.creerOuSupprimer = 'Créer';
+        } else if (val.url === '/admin') {
+          this.jouerOuReinitialiser = 'Réinitialiser';
+          this.creerOuSupprimer = 'Supprimer';
+        }
+      }
+    });
+  }
+
+  protected getSortedTimes(times: number[]): number[] {
+      return times.sort(function (a, b) {  return a - b;  });
+  }
+
+  protected getBestTime(times: number[]): String {
+    const sortedTimes = this.getSortedTimes(times);
+    if (sortedTimes[0] == null) {
+      return "-";
+    }
+
+    return this.convertSecondsToMinutes(sortedTimes[0]);
+  }
+
+  protected getSecondBestTime(times: number[]): String {
+    const sortedTimes = this.getSortedTimes(times);
+    if (sortedTimes[1] == null) {
+      return "-";
+  }
+
+    return this.convertSecondsToMinutes(sortedTimes[1]);
+  }
+
+  protected getThirdBestTime(times: number[]): String {
+    const sortedTimes = this.getSortedTimes(times);
+    if (sortedTimes[2] == null) {
+      return "-";
+  }
+
+    return this.convertSecondsToMinutes(sortedTimes[2]);
+  }
+
+  protected getDisplayTime(minutes: number, secondes: number): String {
+    if (secondes < 10) {
+      return minutes + ":0" + secondes;
+
+    } else {
+
+    return minutes + ":" + secondes;
+    }
+  }
+
+  protected getTitleWithoutFirstLetter(title: String): String {
+    return title.substr(1, title.length - 1);
+  }
+
+  protected convertSecondsToMinutes(time: number): String {
+    const minutes = Math.floor(time / 60);
+    const secondes = time - minutes * 60;
+
+    return this.getDisplayTime(minutes, secondes);
   }
 }

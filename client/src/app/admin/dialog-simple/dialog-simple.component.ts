@@ -27,7 +27,7 @@ export class DialogSimpleComponent {
   public wrongImageSizeOrTypeMessage: String = "";
   public currentImageNumber: number;
   public partieSimple: ListePartieSimpleInterface;
-  public listeParties: ListePartiesComponent = new ListePartiesComponent();
+  public router: Router;
   public selectedFiles: File[] = [];
   public correctImageExtension: String = "image/bmp";
   public titrePartie = new FormControl('', [Validators.required]);
@@ -175,22 +175,7 @@ export class DialogSimpleComponent {
    if (this.checkIfNoErrorMessage()) {
       this.onSubmit();
       this.dialogRef.close();
-      this.createNewSimpleGameCardAndAddToList();
     }
-  }
-
-  // Tested
-  public createNewSimpleGameCardAndAddToList(): void {
-    const partieSimple: ListePartieSimpleInterface = {
-        title: this.data.simpleGameName, imagePath: 'assets/NissanPatrol.jpg', isElevatedActive: false,
-        timesSolo: [], timesOneVsOne: [],
-      };
-    this.addNewSimpleGameCardToList(partieSimple);
-  }
-
-  // Tested
-  private addNewSimpleGameCardToList(partieSimple: ListePartieSimpleInterface): void {
-    this.listeParties.listePartiesSimples.push(partieSimple);
   }
 
   // TODO : implementer le mat-error dans le html
