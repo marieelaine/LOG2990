@@ -6,6 +6,9 @@ import sys
 import argparse
 import os.path
 
+newImage = Image.new("RGB", (640, 480), 0)
+newpixels = newImage.load()
+
 def file_choices(choices,fname):
     ext = os.path.splitext(fname)[1][1:]
     if ext not in choices:
@@ -22,23 +25,28 @@ def compare_images(settings, enlargePixels):
     pixels_one = np.asarray(image_one)
     pixels_two = np.asarray(image_two)
 
-    newImage = Image.new("RGB", (640,480), 0)
-    newpixels = newImage.load()
-
     for y in range(0,width):
         for x in range(0,height):
 
             px_one = pixels_one[x,y]
             px_two = pixels_two[x,y]
-            if (px_one==px_two).all():
-                newpixels[y,x] = (255, 255, 255)
-            else:
-                newpixels[y,x] = (0, 0, 0)
+            if not (px_one==px_two).all():
+                if(enlargePixels):
+                    enlarge_pixels(x,y)
+                else:
+                    newpixels[y, x] = (0, 0, 0)
+            elif(newpixels[y, x] == (0, 0, 0)):
+                newpixels[y, x] = (255, 255, 255)
 
     newImage.save(settings.imageSortie)
 
-    if(enlargePixels):
-        print("Enlarge works!")
+def enlarge_pixels(x, y):
+    for i in range(-3, 4):
+        for j in range(-3, 4):
+            if(not ((abs(i) > 1 and abs(j) == 3) or (abs(j) > 1 and abs(i) == 3))):
+                newpixels[y+i,x+j] = (0, 0, 0)
+            else:
+                newpixels[y+i,x+j] = (255, 0, 0)
 
 if __name__ == '__main__':
 
