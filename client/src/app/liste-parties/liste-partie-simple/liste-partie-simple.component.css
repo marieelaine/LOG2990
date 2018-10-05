@@ -15,6 +15,11 @@ mat-card-header
     margin-bottom:2%;
 }
 
+.top 
+{
+    margin-left:3%;
+}
+
 .gameNameHeader
 {
     font-weight: bolder;

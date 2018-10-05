@@ -42,7 +42,6 @@ export class DialogSimpleComponent {
 
   // Tested
   public onFileSelectedImage(event, i) {
-    console.log(event);
     this.currentImageNumber = i;
     const file = event.target.files[0] as File;
     this.selectedFiles[this.currentImageNumber] = file;
@@ -104,12 +103,14 @@ export class DialogSimpleComponent {
 
   // Tested
   private checkIfWrongImageType(): Boolean {
-    if (this.selectedFiles[this.currentImageNumber] !== undefined
-      && this.selectedFiles[this.currentImageNumber].type !== this.correctImageExtension) {
-        return true;
+    var isWrongType: Boolean = false;
+    this.selectedFiles.forEach((file) => {
+    if (file !== undefined && file.type !== this.correctImageExtension) {
+      isWrongType = true;
     }
+  });
 
-    return false;
+    return isWrongType;
   }
 
   // Tested

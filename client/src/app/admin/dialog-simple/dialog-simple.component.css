@@ -29,14 +29,6 @@
     display:none;
 }
 
-.imageButtons
-{
-    color: white;
-    font-weight: bold;
-    background-color: cornflowerblue; 
-    width:100%;
-}
-
 .firstImage
 {
     width: 40%;
@@ -58,6 +50,7 @@
     position:absolute;
     top:70px;
     left:20px;
+    visibility:hidden;
 }
 
 #uploadImage2
@@ -65,6 +58,12 @@
     position:absolute;
     top:70px;
     left:140px;
+    visibility:hidden;
+}
+
+.imageButtons
+{
+    margin:0;
 }
 
 .imageFrame
