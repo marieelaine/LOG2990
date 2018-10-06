@@ -26,8 +26,8 @@ export class DialogSimpleComponent {
   public wrongImageSizeOrTypeMessage: String = "";
   public currentImageNumber: number;
   public partieSimple: ListePartieSimpleInterface;
-  public router: Router;
   public selectedFiles: File[] = [];
+  public selectedFilesAsArrayBuffers: ArrayBuffer[] = [];
   public correctImageExtension: String = "image/bmp";
   public titrePartie = new FormControl('', [Validators.required]);
   public gameNameTaken: Boolean;
@@ -47,17 +47,44 @@ export class DialogSimpleComponent {
   }
 
   public onSubmit(): void {
-    const imageName: string = this.selectedFiles[this.currentImageNumber].name;
-    const result: PartieSimple = new PartieSimple(imageName);
-    this.partieSimpleService.register(result)
+    const self = this;
+    var i = 0;
+    this.selectedFiles.forEach((file) => {
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+      reader.onload = function() {
+        self.addToSelectedFilesAsArrayBuffer(reader.result as ArrayBuffer, i);
+        self.selectedFilesAsArrayBuffers[i] = reader.result as ArrayBuffer;
+        i++;
+      };
+    });
+  }
+
+  public AddBufferToArray(arrayBuffer: ArrayBuffer) {
+    console.log(arrayBuffer);
+    const array = new Array<ArrayBuffer>();
+    array[0] = arrayBuffer;
+    console.log(array);
+
+    return array;
+  }
+
+  public addToSelectedFilesAsArrayBuffer(file: ArrayBuffer, i: number) {
+    this.selectedFilesAsArrayBuffers[i] = file;
+    if (i === 1) {
+      const result: PartieSimple = new PartieSimple(this.data.simpleGameName, new Array<number>(),
+                                                    new Array<number>(), this.AddBufferToArray(this.selectedFilesAsArrayBuffers[0]),
+                                                    this.AddBufferToArray(this.selectedFilesAsArrayBuffers[1]));
+      this.partieSimpleService.register(result)
         .subscribe(
-            (data) => {
-                this.gameNameTaken = false;
-            },
-            (error) => {
-                console.error(error);
-                this.gameNameTaken = true;
-            });
+          (data) => {
+            this.gameNameTaken = false;
+          },
+          (error) => {
+            console.error(error);
+            this.gameNameTaken = true;
+          });
+    }
   }
 
   public obtenirImageId(identifiant: string): Observable<PartieSimple> {

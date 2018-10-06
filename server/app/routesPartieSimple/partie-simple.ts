@@ -8,7 +8,10 @@ import { injectable } from "inversify";
 interface PartieSimpleInterface {
     _id: string;
     _nomPartie: string;
-    _imageName: string;
+    _tempsSolo: Array<number>;
+    _tempsUnContreUn: Array<number>;
+    _image1: Array<ArrayBuffer>;
+    _image2: Array<ArrayBuffer>;
 }
 
 export module RoutePartieSimple {
@@ -22,14 +25,25 @@ export module RoutePartieSimple {
         public constructor() {
             this.baseDeDonnees = new RouteBaseDeDonnees.BaseDeDonnees();
             this.schema = new Schema({
-                _ImageName: {
-                    type: String,
-                    required: true
-                },
                 _nomPartie: {
                     type: String,
                     required: true,
-                    unique: true
+                },
+                _tempsSolo: {
+                    type: Array,
+                    required: true,
+                },
+                _tempsUnContreUn: {
+                    type: Array,
+                    required: true,
+                },
+                _image1: {
+                    type: Array,
+                    required: true,
+                },
+                _image2: {
+                    type: Array,
+                    required: true,
                 }
             });
             this.schema.plugin(uniqueValidator);
@@ -59,22 +73,22 @@ export module RoutePartieSimple {
         }
 
         private async obtenirPartieSimpleId(nomPartie: String): Promise<String> {
-            const images: PartieSimpleInterface[] = [];
+            const partieSimples: PartieSimpleInterface[] = [];
             await this.modelImage.find()
                 .then((res: Document[]) => {
-                    for (const image of res) {
-                        images.push(image.toObject());
+                    for (const partieSimple of res) {
+                        partieSimples.push(partieSimple.toObject());
                     }
                 });
 
-            for (const image of images) {
-                if (image._imageName === nomPartie) {
-                    return image._id;
+            for (const partieSimple of partieSimples) {
+                if (partieSimple._nomPartie === nomPartie) {
+                    return partieSimple._id;
                 }
             }
 
             // Change the return.
-            return images[0]._id;
+            return partieSimples[0]._id;
         }
 
         public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {

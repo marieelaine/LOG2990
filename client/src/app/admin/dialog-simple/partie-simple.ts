@@ -1,11 +1,18 @@
 export class PartieSimple {
     private _id: string;
     private _nomPartie: string;
-    private _ImageName: string;
+    private _tempsSolo: Array<number>;
+    private _tempsUnContreUn: Array<number>;
+    private _image1: Array<ArrayBuffer>;
+    private _image2: Array<ArrayBuffer>;
 
-    public constructor(imageName: string) {
-      // this._id = "";
-      this._ImageName = imageName;
+    public constructor(nomPartie: string, tempsSolo: Array<number>, tempsUnContreUn: Array<number>,
+                       image1: Array<ArrayBuffer>, image2: Array<ArrayBuffer>) {
+      this._nomPartie = nomPartie;
+      this._tempsSolo = tempsSolo;
+      this._tempsUnContreUn = tempsUnContreUn;
+      this._image1 = image1;
+      this._image2 = image2;
     }
 
     public get id(): String {
@@ -15,7 +22,7 @@ export class PartieSimple {
 
     public get username(): String {
 
-      return this._ImageName;
+      return this._nomPartie;
     }
 
   }
