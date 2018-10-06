@@ -126,11 +126,4 @@ describe('DialogSimpleComponent', () => {
     component.setWrongImageSizeOrTypeMessage(imageInfo);  // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
     expect(component.wrongImageSizeOrTypeMessage).toEqual("");
   });
-
-  it('should add new game to simple games list', () => {
-    const expectedNumberOfGames = component.listeParties.listePartiesSimples.length + 1;
-    component.createNewSimpleGameCardAndAddToList();  // Cette fonction teste aussi addNewSimpleGameCardToList()
-
-    expect(component.listeParties.listePartiesSimples.length).toEqual(expectedNumberOfGames);
-  });
 });

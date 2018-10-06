@@ -37,6 +37,7 @@ import { ListePartieSimpleComponent } from "./liste-parties/liste-partie-simple/
 import { ListePartieMultipleComponent } from "./liste-parties/liste-partie-multiple/liste-partie-multiple.component";
 import { PartieSoloComponent } from "./partie/partie-solo/partie-solo.component";
 import { PartieMultijoueurComponent } from './partie/partie-multijoueur/partie-multijoueur.component';
+import { VueMultipleComponent } from './partie/vue-multiple/vue-multiple.component';
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
@@ -63,6 +64,7 @@ const appRoutes: Routes = [
     DialogSimpleComponent,
     DialogMultipleComponent,
     PartieMultijoueurComponent,
+    VueMultipleComponent,
   ],
   imports: [
     RouterModule.forRoot(

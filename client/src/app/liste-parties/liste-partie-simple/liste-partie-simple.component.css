@@ -15,6 +15,11 @@ mat-card-header
     margin-bottom:2%;
 }
 
+.top 
+{
+    margin-left:3%;
+}
+
 .gameNameHeader
 {
     font-weight: bolder;
@@ -59,7 +64,6 @@ mat-card-header
 
 .mat-button{
     border-radius: 10px;
-    max-width:100%;
 }
 
 .numberOneImage{

@@ -1,4 +1,4 @@
-<div *ngFor="let partieMultiple of listeParties">
+<div *ngFor="let partieMultiple of listePartiesMultiples">
   <mat-card class='container-fluid' 
   [class.mat-elevation-z6]="!partieMultiple.isElevatedActive"
   [class.mat-elevation-z10]="partieMultiple.isElevatedActive"
@@ -16,7 +16,7 @@
           </div> 
           <div class='col-sm-6'>
               <div class='row'>
-                  <div class='col-sm-12' style='margin-left:3%'>
+                  <div class='col-sm-12 top'>
                       <h2 class='topThreeHeaders'>Top <img class='bronzeMedal' src="assets/bronze-medal.png"></h2>
                   </div>
                   <div class='col-sm-1 text-center topThreeNumbersColumn'>
@@ -30,15 +30,15 @@
                       <p> {{ getSecondBestTime(partieMultiple.timesSolo) }} </p> 
                       <p> {{ getThirdBestTime(partieMultiple.timesSolo) }} </p> 
                       <button mat-button class='mat-elevation-z6'
-                              [routerLink]="['/partie-solo']" routerLinkActive="router-link-active">Jouer</button>
+                              [routerLink]="['/partie-solo']" routerLinkActive="router-link-active"> {{jouerOuReinitialiser}} </button>
                   </div>
-                  <div class='col-sm-2' style='height:100%;'></div>
+                  <div class='col-sm-2'></div>
                   <div class='col-sm-4 text-center'>
                       <h2 class='topThreeHeaders'> 1v1 </h2> 
                       <p> {{ getBestTime(partieMultiple.timesOneVsOne) }} </p> 
                       <p> {{ getSecondBestTime(partieMultiple.timesOneVsOne) }} </p> 
                       <p> {{ getThirdBestTime(partieMultiple.timesOneVsOne) }} </p>
-                      <button mat-button class='mat-elevation-z6'>Créer</button>
+                      <button mat-button class='mat-elevation-z6'> {{creerOuSupprimer}} </button>
                   </div>
               </div>
           </div>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ListePartiesComponent } from '../liste-parties.component';
-import { ListePartieAbstraiteClass } from '../liste-partie-abstraite';
+import { Router } from '@angular/router';
 
 export interface ListePartieMultipleInterface {
   title: String;
@@ -15,7 +15,9 @@ export interface ListePartieMultipleInterface {
   templateUrl: './liste-partie-multiple.component.html',
   styleUrls: ['./liste-partie-multiple.component.css']
 })
-export class ListePartieMultipleComponent extends ListePartieAbstraiteClass {
+export class ListePartieMultipleComponent extends ListePartiesComponent {
 
-  listeParties = new ListePartiesComponent().listePartiesMultiples;
+  constructor(router: Router) {
+    super(router);
+  }
 }

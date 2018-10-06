@@ -1,48 +1,48 @@
-<div *ngFor="let partieSimple of listeParties">
-  <mat-card class='container-fluid' 
-  [class.mat-elevation-z6]="!partieSimple.isElevatedActive"
-  [class.mat-elevation-z10]="partieSimple.isElevatedActive"
-  (mouseenter)="partieSimple.isElevatedActive = !partieSimple.isElevatedActive"
-  (mouseleave)="partieSimple.isElevatedActive = !partieSimple.isElevatedActive">
-      <mat-card-header>
-          <h2 class='gameNameHeader titleFirstLetter'>{{partieSimple.title[0]}}</h2>
-          <h2 class='gameNameHeader'>{{getTitleWithoutFirstLetter(partieSimple.title)}}</h2>
-      </mat-card-header>
-      <div class='row'>
-          <div class='col-sm-6'>
-              <img src={{partieSimple.imagePath}} class='gameImage img-responsive mat-elevation-z6 center'
-              [class.mat-elevation-z6]="!partieSimple.isElevatedActive"
-              [class.mat-elevation-z10]="partieSimple.isElevatedActive">
-          </div> 
-          <div class='col-sm-6'>
-              <div class='row'>
-                  <div class='col-sm-12' style='margin-left:3%'>
-                      <h2 class='topThreeHeaders'>Top <img class='bronzeMedal' src="assets/bronze-medal.png"></h2>
-                  </div>
-                  <div class='col-sm-1 text-center topThreeNumbersColumn'>
-                      <span matBadge="1" matBadgeOverlap="true" matBadgeColor="warn"></span> <br>
-                      <span matBadge="2" matBadgeOverlap="true" matBadgeColor="warn"></span> <br>
-                      <span matBadge="3" matBadgeOverlap="true" matBadgeColor="warn"></span> <br>
-                  </div>  
-                  <div class='col-sm-4 text-center'>
-                      <h2 class='topThreeHeaders'> Solo </h2>
-                      <p> {{ getBestTime(partieSimple.timesSolo) }} </p> 
-                      <p> {{ getSecondBestTime(partieSimple.timesSolo) }} </p> 
-                      <p> {{ getThirdBestTime(partieSimple.timesSolo) }} </p> 
-                      <button mat-button class='mat-elevation-z6'
-                              [routerLink]="['/partie-solo']" routerLinkActive="router-link-active">Jouer</button>
-                  </div>
-                  <div class='col-sm-2' style='height:100%;'></div>
-                  <div class='col-sm-4 text-center'>
-                      <h2 class='topThreeHeaders'> 1v1 </h2> 
-                      <p> {{ getBestTime(partieSimple.timesOneVsOne) }} </p> 
-                      <p> {{ getSecondBestTime(partieSimple.timesOneVsOne) }} </p> 
-                      <p> {{ getThirdBestTime(partieSimple.timesOneVsOne) }} </p>
-                      <button mat-button class='mat-elevation-z6' id="boutonCreer">Créer</button>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </mat-card>  
-  <br> 
+<div *ngFor="let partieSimple of listePartiesSimples">
+    <mat-card class='container-fluid' 
+    [class.mat-elevation-z6]="!partieSimple.isElevatedActive"
+    [class.mat-elevation-z10]="partieSimple.isElevatedActive"
+    (mouseenter)="partieSimple.isElevatedActive = !partieSimple.isElevatedActive"
+    (mouseleave)="partieSimple.isElevatedActive = !partieSimple.isElevatedActive">
+        <mat-card-header>
+            <h2 class='gameNameHeader titleFirstLetter'>{{partieSimple.title[0]}}</h2>
+            <h2 class='gameNameHeader'>{{getTitleWithoutFirstLetter(partieSimple.title)}}</h2>
+        </mat-card-header>
+        <div class='row'>
+            <div class='col-sm-6'>
+                <img src={{partieSimple.imagePath}} class='gameImage img-responsive mat-elevation-z6 center'
+                [class.mat-elevation-z6]="!partieSimple.isElevatedActive"
+                [class.mat-elevation-z10]="partieSimple.isElevatedActive">
+            </div> 
+            <div class='col-sm-6'>
+                <div class='row'>
+                    <div class='col-sm-12 top'>
+                        <h2 class='topThreeHeaders'>Top <img class='bronzeMedal' src="assets/bronze-medal.png"></h2>
+                    </div>
+                    <div class='col-sm-1 text-center topThreeNumbersColumn'>
+                        <span matBadge="1" matBadgeOverlap="true" matBadgeColor="warn"></span> <br>
+                        <span matBadge="2" matBadgeOverlap="true" matBadgeColor="warn"></span> <br>
+                        <span matBadge="3" matBadgeOverlap="true" matBadgeColor="warn"></span> <br>
+                    </div>  
+                    <div class='col-sm-4 text-center'>
+                        <h2 class='topThreeHeaders'> Solo </h2>
+                        <p> {{ getBestTime(partieSimple.timesSolo) }} </p> 
+                        <p> {{ getSecondBestTime(partieSimple.timesSolo) }} </p> 
+                        <p> {{ getThirdBestTime(partieSimple.timesSolo) }} </p> 
+                        <button mat-button class='mat-elevation-z6' id='boutonJouerOurReinitialiser'
+                        (click)='onJouerOuReinitialiserClick()'> {{jouerOuReinitialiser}} </button>
+                    </div>
+                    <div class='col-sm-2'></div>
+                    <div class='col-sm-4 text-center'>
+                        <h2 class='topThreeHeaders'> 1v1 </h2> 
+                        <p> {{ getBestTime(partieSimple.timesOneVsOne) }} </p> 
+                        <p> {{ getSecondBestTime(partieSimple.timesOneVsOne) }} </p> 
+                        <p> {{ getThirdBestTime(partieSimple.timesOneVsOne) }} </p>
+                        <button mat-button class='mat-elevation-z6'> {{creerOuSupprimer}} </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card>  
+    <br> 
 </div>

@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10055236-5c28-4fa1-8fbb-136cc576218d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2.bmp" beforeDir="false" afterPath="$PROJECT_DIR$/2.bmp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3.bmp" beforeDir="false" afterPath="$PROJECT_DIR$/3.bmp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bmpdiff.py" beforeDir="false" afterPath="$PROJECT_DIR$/bmpdiff.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,7 +18,7 @@
     <session id="899197385">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.opened" value="2" />
@@ -30,6 +34,16 @@
           <entry key="Python" value="1" />
         </counts>
       </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="py" value="1799" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Python" value="1799" />
+        </counts>
+      </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
@@ -37,11 +51,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bmpdiff.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
+            <state relative-caret-position="1065">
+              <caret line="71" column="34" selection-start-line="71" selection-start-column="34" selection-end-line="71" selection-end-column="34" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <marker date="1538746416676" expanded="true" signature="1422:1425" ph="..." />
+                <marker date="1538757112291" expanded="true" signature="2183:2185" ph="..." />
+                <marker date="1538757112291" expanded="true" signature="2434:2436" ph="..." />
               </folding>
             </state>
           </provider>
@@ -66,9 +81,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="4">
-    <option name="x" value="987" />
+    <option name="x" value="55" />
     <option name="y" value="30" />
-    <option name="width" value="923" />
+    <option name="width" value="933" />
     <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -95,6 +110,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -122,8 +138,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="55" y="30" width="1865" height="1050" extended-state="6" />
-    <editor active="true" />
+    <frame x="55" y="30" width="933" height="1050" extended-state="4" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.0" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -157,11 +172,12 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/bmpdiff.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
+        <state relative-caret-position="1065">
+          <caret line="71" column="34" selection-start-line="71" selection-start-column="34" selection-end-line="71" selection-end-column="34" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <marker date="1538746416676" expanded="true" signature="1422:1425" ph="..." />
+            <marker date="1538757112291" expanded="true" signature="2183:2185" ph="..." />
+            <marker date="1538757112291" expanded="true" signature="2434:2436" ph="..." />
           </folding>
         </state>
       </provider>
