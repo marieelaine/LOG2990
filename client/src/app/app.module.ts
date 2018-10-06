@@ -32,7 +32,7 @@ import { DialogSimpleComponent } from './admin/dialog-simple/dialog-simple.compo
 import { DialogMultipleComponent } from './admin/dialog-multiple/dialog-multiple.component';
 import { ParticlesModule } from "angular-particle";
 import { UserService } from "./vue-initiale/user.service";
-import { ImageService } from "./admin/image.service";
+import { PartieSimpleService } from "./admin/partie-simple.service";
 import { ListePartieSimpleComponent } from "./liste-parties/liste-partie-simple/liste-partie-simple.component";
 import { ListePartieMultipleComponent } from "./liste-parties/liste-partie-multiple/liste-partie-multiple.component";
 import { PartieSoloComponent } from "./partie/partie-solo/partie-solo.component";
@@ -90,7 +90,7 @@ const appRoutes: Routes = [
   providers: [BasicService,
               CookieService,
               UserService,
-              ImageService],
+              PartieSimpleService],
   bootstrap: [AppComponent],
   entryComponents: [
     DialogSimpleComponent,

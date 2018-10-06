@@ -3,14 +3,15 @@ import { Router, Request, Response } from "express";
 
 import { ServiceWeb } from "./serviceWeb";
 import Types from "./types";
-import { RouteImage } from "./routesImage/image";
+import { RoutePartieSimple } from "./routesPartieSimple/partie-simple";
 
 @injectable()
-export class RoutesImage extends ServiceWeb {
+export class RoutesPartieSimple extends ServiceWeb {
 
     public readonly mainRoute: string = "/images";
 
-    public constructor(@inject(Types.Image) private image: RouteImage.Image = new RouteImage.Image()) {
+    public constructor(@inject(Types.PartieSimple)
+    private partieSimple: RoutePartieSimple.PartieSimple = new RoutePartieSimple.PartieSimple()) {
         super();
     }
 
@@ -18,15 +19,15 @@ export class RoutesImage extends ServiceWeb {
         const router: Router = Router();
 
         router.get("/:id", async (req: Request, res: Response) => {
-            await this.image.requeteImageId(req, res);
+            await this.partieSimple.requetePartieSimpleId(req, res);
         });
 
         router.post("/ajouter", async (req: Request, res: Response) => {
-            await this.image.requeteAjouterImage(req, res);
+            await this.partieSimple.requeteAjouterPartieSimple(req, res);
         });
 
         router.delete("/delete/:id", async (req: Request, res: Response) => {
-            await this.image.requeteDeleteImage(req, res);
+            await this.partieSimple.requeteDeletePartieSimple(req, res);
         });
 
         return router;

@@ -5,14 +5,15 @@ import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
 
-interface ImageInterface {
+interface PartieSimpleInterface {
     _id: string;
+    _nomPartie: string;
     _imageName: string;
 }
 
-export module RouteImage {
+export module RoutePartieSimple {
     @injectable()
-    export class Image {
+    export class PartieSimple {
 
         private baseDeDonnees: RouteBaseDeDonnees.BaseDeDonnees;
         private modelImage: Model<Document>;
@@ -23,27 +24,31 @@ export module RouteImage {
             this.schema = new Schema({
                 _ImageName: {
                     type: String,
+                    required: true
+                },
+                _nomPartie: {
+                    type: String,
                     required: true,
                     unique: true
                 }
             });
             this.schema.plugin(uniqueValidator);
-            this.modelImage = this.baseDeDonnees.mongoose.model("images", this.schema);
+            this.modelImage = this.baseDeDonnees.mongoose.model("parties-simples", this.schema);
         }
 
-        private async ajouterImage(im: {}, res: Response): Promise<Response> {
-            const image: Document = new this.modelImage(im);
+        private async ajouterPartieSimple(partie: {}, res: Response): Promise<Response> {
+            const image: Document = new this.modelImage(partie);
             try {
                 await image.save();
 
-                return res.status(201).json(im);
+                return res.status(201).json(partie);
             } catch (err) {
                 return res.status(501).json(err);
             }
         }
 
-        private async deleteImage(imageName: String, res: Response): Promise<Response> {
-            const imageId: String = await this.obtenirImageId(imageName);
+        private async deletePartieSimple(nomPartie: String, res: Response): Promise<Response> {
+            const imageId: String = await this.obtenirPartieSimpleId(nomPartie);
             try {
                 await this.modelImage.findByIdAndRemove(imageId);
 
@@ -53,8 +58,8 @@ export module RouteImage {
             }
         }
 
-        private async obtenirImageId(imageName: String): Promise<String> {
-            const images: ImageInterface[] = [];
+        private async obtenirPartieSimpleId(nomPartie: String): Promise<String> {
+            const images: PartieSimpleInterface[] = [];
             await this.modelImage.find()
                 .then((res: Document[]) => {
                     for (const image of res) {
@@ -63,7 +68,7 @@ export module RouteImage {
                 });
 
             for (const image of images) {
-                if (image._imageName === imageName) {
+                if (image._imageName === nomPartie) {
                     return image._id;
                 }
             }
@@ -72,16 +77,16 @@ export module RouteImage {
             return images[0]._id;
         }
 
-        public async requeteAjouterImage(req: Request, res: Response): Promise<void> {
-            res.send(await this.ajouterImage(req.body, res));
+        public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
+            res.send(await this.ajouterPartieSimple(req.body, res));
         }
 
-        public async requeteImageId(req: Request, res: Response): Promise<void> {
-            res.send(await this.obtenirImageId(req.params.id));
+        public async requetePartieSimpleId(req: Request, res: Response): Promise<void> {
+            res.send(await this.obtenirPartieSimpleId(req.params.id));
         }
 
-        public async requeteDeleteImage(req: Request, res: Response): Promise<void> {
-            res.send(await this.deleteImage(req.params.id, res));
+        public async requeteDeletePartieSimple(req: Request, res: Response): Promise<void> {
+            res.send(await this.deletePartieSimple(req.params.id, res));
         }
     }
 }

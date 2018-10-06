@@ -1,8 +1,9 @@
-export class ImageSimple {
-    private _id: String;
-    private _ImageName: String;
+export class PartieSimple {
+    private _id: string;
+    private _nomPartie: string;
+    private _ImageName: string;
 
-    public constructor(imageName: String) {
+    public constructor(imageName: string) {
       // this._id = "";
       this._ImageName = imageName;
     }
@@ -16,4 +17,5 @@ export class ImageSimple {
 
       return this._ImageName;
     }
+
   }

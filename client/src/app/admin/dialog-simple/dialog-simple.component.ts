@@ -4,9 +4,8 @@ import { ListePartiesComponent } from '../../liste-parties/liste-parties.compone
 import { DialogData } from '../admin.component';
 import { HttpClient } from '@angular/common/http';
 import {FormControl, Validators, FormGroup} from '@angular/forms';
-import { ImageSimple } from './image-simple';
-import { ImageService } from "../image.service";
-import { Router } from '@angular/router';
+import { PartieSimple } from './partie-simple';
+import { PartieSimpleService } from "../partie-simple.service";
 import { Observable } from 'rxjs';
 import { ListePartieSimpleInterface } from '../../liste-parties/liste-partie-simple/liste-partie-simple.component';
 
@@ -17,7 +16,7 @@ const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
   selector: 'app-dialog-simple',
   templateUrl: './dialog-simple.component.html',
   styleUrls: ['./dialog-simple.component.css'],
-  providers: [ImageService],
+  providers: [PartieSimpleService],
 
 })
 export class DialogSimpleComponent {
@@ -31,18 +30,17 @@ export class DialogSimpleComponent {
   public selectedFiles: File[] = [];
   public correctImageExtension: String = "image/bmp";
   public titrePartie = new FormControl('', [Validators.required]);
-  public imageNameTaken: Boolean;
+  public gameNameTaken: Boolean;
 
   constructor(
     public dialogRef: MatDialogRef<DialogSimpleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private http: HttpClient,
-    private imageService: ImageService) {
+    private partieSimpleService: PartieSimpleService) {
     }
 
   // Tested
   public onFileSelectedImage(event, i) {
-    console.log(event);
     this.currentImageNumber = i;
     const file = event.target.files[0] as File;
     this.selectedFiles[this.currentImageNumber] = file;
@@ -51,27 +49,27 @@ export class DialogSimpleComponent {
 
   public onSubmit(): void {
     const imageName: string = this.selectedFiles[this.currentImageNumber].name;
-    const result: ImageSimple = new ImageSimple(imageName);
-    this.imageService.register(result)
+    const result: PartieSimple = new PartieSimple(imageName);
+    this.partieSimpleService.register(result)
         .subscribe(
             (data) => {
-                this.imageNameTaken = false;
+                this.gameNameTaken = false;
             },
             (error) => {
                 console.error(error);
-                this.imageNameTaken = true;
+                this.gameNameTaken = true;
             });
   }
 
-  public obtenirImageId(identifiant: string): Observable<ImageSimple> {
-      return this.http.get<ImageSimple>(IMAGE_URL + identifiant);
+  public obtenirImageId(identifiant: string): Observable<PartieSimple> {
+      return this.http.get<PartieSimple>(IMAGE_URL + identifiant);
   }
 
-  public obtenirImageName(imageName: string): Observable<ImageSimple> {
-      return this.http.get<ImageSimple>(IMAGE_URL + imageName);
+  public obtenirImageName(imageName: string): Observable<PartieSimple> {
+      return this.http.get<PartieSimple>(IMAGE_URL + imageName);
   }
 
-  public async creerNouvelleImage(image: ImageSimple): Promise<Object> {
+  public async creerNouvelleImage(image: PartieSimple): Promise<Object> {
       return this.http.post(URL_AJOUTER, image).toPromise();
   }
 
