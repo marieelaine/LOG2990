@@ -2,3 +2,7 @@
 
 package-lock.json
 server/out/*
+
+\.angulardoc\.json
+
+client/package\.json
