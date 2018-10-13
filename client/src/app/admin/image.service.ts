@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { ImageSimple } from "./dialog-simple/image-simple";
 import { Observable } from "rxjs";
+import { ListePartieSimpleInterface} from "../liste-parties/liste-partie-simple/liste-partie-simple.component";
 
 @Injectable()
 export class ImageService {

@@ -19,7 +19,6 @@ export interface ListePartieSimpleInterface {
 })
 export class ListePartieSimpleComponent extends ListePartiesComponent {
 
-
   constructor(private router: Router) {
     super(router);
   }
