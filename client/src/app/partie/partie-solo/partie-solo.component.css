@@ -1,7 +1,7 @@
 img{
     max-width: 95%;
     max-height:95%;
-    border-radius: 40px;
+    border-radius: 35px;
     display: block;
     margin: 0 auto;
 }
@@ -29,4 +29,8 @@ img{
 .chrono{
     text-align: center;
     font-size: 32px;
+}
+
+.test{
+    background-color: #f2eeee;
 }

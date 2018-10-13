@@ -14,17 +14,19 @@ export class ListePartiesComponent {
   partieSimpleDiv: HTMLElement;
 
   listePartiesSimples: ListePartieSimpleInterface[] = [
-    { title: 'Nissan Patrol', imagePath: 'assets/NissanPatrol.bmp', isElevatedActive: false,
-      timesSolo: [320, 500], timesOneVsOne: [],
-      },
-    { title: 'Jerry', imagePath: 'assets/Jerry.bmp',  isElevatedActive: false,
-      timesSolo: [550, 302, 419, 3141], timesOneVsOne: [41241, 412, 52, 5235, 552],
-      }  ];
+        { title: 'Nissan Patrol', imagePath: 'assets/NissanPatrol.bmp', isElevatedActive: false,
+          timesSolo: [320, 500], timesOneVsOne: [], idImage: 1
+        },
+        { title: 'Jerry', imagePath: 'assets/Jerry.bmp',  isElevatedActive: false,
+          timesSolo: [550, 302, 419, 3141], timesOneVsOne: [41241, 412, 52, 5235, 552], idImage: 2
+        }
+    ];
 
   listePartiesMultiples: ListePartieMultipleInterface[] = [
-    { title: 'Mona Lisa', imagePath: 'assets/monaLisa.bmp', isElevatedActive: false,
-      timesSolo: [312, 415, 6462, 1], timesOneVsOne: [312, 3],
-    }  ];
+        { title: 'Mona Lisa', imagePath: 'assets/monaLisa.bmp', isElevatedActive: false,
+          timesSolo: [312, 415, 6462, 1], timesOneVsOne: [312, 3], idImage: 3
+        }
+    ];
 
   public jouerOuReinitialiser: string;
   public creerOuSupprimer: string;

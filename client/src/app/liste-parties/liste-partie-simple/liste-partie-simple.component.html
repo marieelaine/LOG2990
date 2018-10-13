@@ -28,9 +28,9 @@
                         <h2 class='topThreeHeaders'> Solo </h2>
                         <p> {{ getBestTime(partieSimple.timesSolo) }} </p> 
                         <p> {{ getSecondBestTime(partieSimple.timesSolo) }} </p> 
-                        <p> {{ getThirdBestTime(partieSimple.timesSolo) }} </p> 
-                        <button mat-button class='mat-elevation-z6' id='boutonJouerOurReinitialiser'
-                        (click)='onJouerOuReinitialiserClick()'> {{jouerOuReinitialiser}} </button>
+                        <p> {{ getThirdBestTime(partieSimple.timesSolo) }} </p>
+                        <button mat-button class='mat-elevation-z6'
+                                [routerLink]="['/partie-solo/', partieSimple.idImage]" routerLinkActive="router-link-active">Jouer</button>
                     </div>
                     <div class='col-sm-2'></div>
                     <div class='col-sm-4 text-center'>

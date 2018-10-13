@@ -8,6 +8,9 @@ export interface ListePartieMultipleInterface {
   timesSolo: number[];
   timesOneVsOne: number[];
   isElevatedActive: boolean;
+  idImage: number;
+
+
 }
 
 @Component({
@@ -16,7 +19,6 @@ export interface ListePartieMultipleInterface {
   styleUrls: ['./liste-partie-multiple.component.css']
 })
 export class ListePartieMultipleComponent extends ListePartiesComponent {
-
   constructor(router: Router) {
     super(router);
   }

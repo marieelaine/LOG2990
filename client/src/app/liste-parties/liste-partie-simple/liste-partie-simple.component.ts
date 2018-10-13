@@ -8,6 +8,8 @@ export interface ListePartieSimpleInterface {
   timesSolo: number[];
   timesOneVsOne: number[];
   isElevatedActive: boolean;
+  idImage: number;
+
 }
 
 @Component({
@@ -16,6 +18,7 @@ export interface ListePartieSimpleInterface {
   styleUrls: ['./liste-partie-simple.component.css']
 })
 export class ListePartieSimpleComponent extends ListePartiesComponent {
+
 
   constructor(private router: Router) {
     super(router);

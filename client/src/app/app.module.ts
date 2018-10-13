@@ -38,6 +38,7 @@ import { ListePartieMultipleComponent } from "./liste-parties/liste-partie-multi
 import { PartieSoloComponent } from "./partie/partie-solo/partie-solo.component";
 import { PartieMultijoueurComponent } from './partie/partie-multijoueur/partie-multijoueur.component';
 import { VueMultipleComponent } from './partie/vue-multiple/vue-multiple.component';
+import { ImageComponent } from './partie/image/image.component';
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
@@ -45,7 +46,7 @@ const appRoutes: Routes = [
   { path: "admin", component: AdminComponent },
   { path: "liste-parties", component: ListePartiesComponent },
   { path: "chrono", component: ChronoComponent },
-  { path: "partie-solo", component: PartieSoloComponent },
+  { path: "partie-solo/:idImage", component: PartieSoloComponent },
 
 ];
 
@@ -65,6 +66,7 @@ const appRoutes: Routes = [
     DialogMultipleComponent,
     PartieMultijoueurComponent,
     VueMultipleComponent,
+    ImageComponent,
   ],
   imports: [
     RouterModule.forRoot(
