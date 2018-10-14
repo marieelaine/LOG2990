@@ -10,7 +10,7 @@
         </mat-card-header>
         <div class='row'>
             <div class='col-sm-6'>
-                <img src={{partieSimple.imagePath}} class='gameImage img-responsive mat-elevation-z6 center'
+                <img src={{partieSimple.image1Path}} class='gameImage img-responsive mat-elevation-z6 center'
                 [class.mat-elevation-z6]="!partieSimple.isElevatedActive"
                 [class.mat-elevation-z10]="partieSimple.isElevatedActive">
             </div> 
@@ -30,7 +30,7 @@
                         <p> {{ getSecondBestTime(partieSimple.timesSolo) }} </p> 
                         <p> {{ getThirdBestTime(partieSimple.timesSolo) }} </p>
                         <button mat-button class='mat-elevation-z6'
-                                [routerLink]="['/partie-solo/', partieSimple.idImage]" routerLinkActive="router-link-active">Jouer</button>
+                                [routerLink]="['/partie-solo/', partieSimple.idPartie]" routerLinkActive="router-link-active">Jouer</button>
                     </div>
                     <div class='col-sm-2'></div>
                     <div class='col-sm-4 text-center'>

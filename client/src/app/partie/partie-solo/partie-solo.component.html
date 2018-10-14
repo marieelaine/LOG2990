@@ -9,7 +9,6 @@
 <div class="container-fluid ">
     <div>
         <h1 class="title">
-            {{idImage}}
             {{message}}
         </h1>
     </div>
@@ -19,7 +18,7 @@
             <div class="col-sm-6">
                 <mat-card class="container-fluid test">
                     <div class="row">
-                        <img [ngClass]="{'blurImg': blur}" (click)="trouverDifference()" src={{image.imagePath}} alt="">
+                        <img [ngClass]="{'blurImg': blur}" (click)="trouverDifference()" src={{image.path}} alt="">
                     </div>
                 </mat-card>
             </div>

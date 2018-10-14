@@ -2,15 +2,13 @@ import { Component } from '@angular/core';
 import { ListePartiesComponent } from '../liste-parties.component';
 import { Router } from '@angular/router';
 
-export interface ListePartieMultipleInterface {
+export interface PartieMultipleInterface {
   title: String;
   imagePath: String;
   timesSolo: number[];
   timesOneVsOne: number[];
   isElevatedActive: boolean;
-  idImage: number;
-
-
+  idPartie: number;
 }
 
 @Component({

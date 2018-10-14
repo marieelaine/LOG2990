@@ -8,7 +8,8 @@ import { ImageSimple } from './image-simple';
 import { ImageService } from "../image.service";
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ListePartieSimpleInterface } from '../../liste-parties/liste-partie-simple/liste-partie-simple.component';
+import { PartieSimpleInterface } from '../../liste-parties/liste-partie-simple/liste-partie-simple.component';
+import { PartiesService} from "../parties.service";
 
 export const IMAGE_URL: string = "http://localhost:3000/images/";
 const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
@@ -17,16 +18,16 @@ const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
   selector: 'app-dialog-simple',
   templateUrl: './dialog-simple.component.html',
   styleUrls: ['./dialog-simple.component.css'],
-  providers: [ImageService],
-
+  providers: [ImageService, PartiesService],
 })
+
 export class DialogSimpleComponent {
 
   public outOfBoundNameLengthMessage: String = "";
   public wrongNumberOfImagesMessage: String = "";
   public wrongImageSizeOrTypeMessage: String = "";
   public currentImageNumber: number;
-  public partieSimple: ListePartieSimpleInterface;
+  public partieSimple: PartieSimpleInterface;
   public router: Router;
   public selectedFiles: File[] = [];
   public correctImageExtension: String = "image/bmp";
@@ -37,7 +38,8 @@ export class DialogSimpleComponent {
     public dialogRef: MatDialogRef<DialogSimpleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private http: HttpClient,
-    private imageService: ImageService) {
+    private imageService: ImageService,
+    private partiesService: PartiesService) {
     }
 
   public onFileSelectedImage(event, i) {
@@ -49,8 +51,18 @@ export class DialogSimpleComponent {
 
   public onSubmit(): void {
     const imageName: string = this.selectedFiles[this.currentImageNumber].name;
-    const result: ImageSimple = new ImageSimple(imageName);
-    this.imageService.register(result)
+    const result: PartieSimpleInterface = new class implements PartieSimpleInterface {
+        _id: string;
+        idPartie: number = 0;
+        image1Path: string = imageName;
+        image2Path: string = imageName;
+        isElevatedActive: boolean = false;
+        timesOneVsOne: number[];
+        timesSolo: number[];
+        title: string = "test";
+    };
+
+    this.partiesService.register(result)
         .subscribe(
             (data) => {
                 this.imageNameTaken = false;

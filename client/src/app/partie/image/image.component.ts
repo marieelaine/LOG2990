@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+
+export interface ImageInterface {
+    path: string;
+}
 
 @Component({
     selector: 'app-image',
@@ -7,10 +11,6 @@ import { Component } from '@angular/core';
 })
 
 export class ImageComponent {
-
-    imagePath: string;
-
-    constructor(path: string) {
-        this.imagePath = path;
+    constructor() {
     }
 }

@@ -46,7 +46,7 @@ const appRoutes: Routes = [
   { path: "admin", component: AdminComponent },
   { path: "liste-parties", component: ListePartiesComponent },
   { path: "chrono", component: ChronoComponent },
-  { path: "partie-solo/:idImage", component: PartieSoloComponent },
+  { path: "partie-solo/:idPartie", component: PartieSoloComponent },
 
 ];
 

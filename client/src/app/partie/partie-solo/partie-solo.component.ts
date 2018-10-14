@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { PartieAbstraiteClass } from '../partie-abstraite-class';
-import { ImageComponent } from '../image/image.component';
+import { ImageInterface } from '../image/image.component';
 import { ActivatedRoute} from "@angular/router";
 
 @Component({
@@ -15,13 +15,16 @@ export class PartieSoloComponent extends PartieAbstraiteClass implements OnInit 
     ) {
         super(); }
 
-    imageComp: ImageComponent[] = [new ImageComponent("../../assets/Jerry.bmp"), new ImageComponent("../../assets/Jerry.bmp")];
+    imageComp: ImageInterface[] = [
+        {path: "../../assets/Jerry.bmp"},
+        {path: "../../assets/Jerry.bmp"}
+    ];
 
-    idImage: number;
+    idPartie: number;
 
     protected getImage(): void {
         // @ts-ignore
-        this.idImage = +this.route.snapshot.paramMap.get('idImage');
+        this.idPartie = +this.route.snapshot.paramMap.get('idPartie');
     }
 
     ngOnInit() {
