@@ -12,6 +12,7 @@ interface PartieSimpleInterface {
     _tempsUnContreUn: Array<number>;
     _image1: Array<ArrayBuffer>;
     _image2: Array<ArrayBuffer>;
+    _imageDiff: Array<ArrayBuffer>;
 }
 
 export module RoutePartieSimple {
@@ -24,6 +25,13 @@ export module RoutePartieSimple {
 
         public constructor() {
             this.baseDeDonnees = new RouteBaseDeDonnees.BaseDeDonnees();
+            this.CreateSchema();
+
+            this.schema.plugin(uniqueValidator);
+            this.modelImage = this.baseDeDonnees.mongoose.model("parties-simples", this.schema);
+        }
+
+        private CreateSchema(): void {
             this.schema = new Schema({
                 _nomPartie: {
                     type: String,
@@ -44,10 +52,12 @@ export module RoutePartieSimple {
                 _image2: {
                     type: Array,
                     required: true,
+                },
+                _imageDiff: {
+                    type: Array,
+                    required: true,
                 }
             });
-            this.schema.plugin(uniqueValidator);
-            this.modelImage = this.baseDeDonnees.mongoose.model("parties-simples", this.schema);
         }
 
         private async ajouterPartieSimple(partie: {}, res: Response): Promise<Response> {

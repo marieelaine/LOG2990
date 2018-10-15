@@ -61,10 +61,8 @@ export class DialogSimpleComponent {
   }
 
   public AddBufferToArray(arrayBuffer: ArrayBuffer) {
-    console.log(arrayBuffer);
     const array = new Array<ArrayBuffer>();
     array[0] = arrayBuffer;
-    console.log(array);
 
     return array;
   }
@@ -74,7 +72,8 @@ export class DialogSimpleComponent {
     if (i === 1) {
       const result: PartieSimple = new PartieSimple(this.data.simpleGameName, new Array<number>(),
                                                     new Array<number>(), this.AddBufferToArray(this.selectedFilesAsArrayBuffers[0]),
-                                                    this.AddBufferToArray(this.selectedFilesAsArrayBuffers[1]));
+                                                    this.AddBufferToArray(this.selectedFilesAsArrayBuffers[1]),
+                                                    new Array<ArrayBuffer>());
       this.partieSimpleService.register(result)
         .subscribe(
           (data) => {
