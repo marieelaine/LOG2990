@@ -1,14 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { ListePartiesComponent } from '../../liste-parties/liste-parties.component';
 import { DialogData } from '../admin.component';
 import { HttpClient } from '@angular/common/http';
 import {FormControl, Validators, FormGroup} from '@angular/forms';
 import { PartieSimple } from './partie-simple';
 import { PartieSimpleService } from "../partie-simple.service";
 import { Observable } from 'rxjs';
-import { PartieSimpleInterface } from '../../liste-parties/liste-partie-simple/liste-partie-simple.component';
-import { PartiesService} from "../parties.service";
 
 export const IMAGE_URL: string = "http://localhost:3000/images/";
 const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
@@ -17,7 +14,7 @@ const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
   selector: 'app-dialog-simple',
   templateUrl: './dialog-simple.component.html',
   styleUrls: ['./dialog-simple.component.css'],
-  providers: [PartieSimpleService],
+  providers: [PartieSimpleService]})
 
 export class DialogSimpleComponent {
 
@@ -25,7 +22,6 @@ export class DialogSimpleComponent {
   public wrongNumberOfImagesMessage: String = "";
   public wrongImageSizeOrTypeMessage: String = "";
   public currentImageNumber: number;
-  public partieSimple: ListePartieSimpleInterface;
   public selectedFiles: File[] = [];
   public selectedFilesAsArrayBuffers: ArrayBuffer[] = [];
   public correctImageExtension: String = "image/bmp";
