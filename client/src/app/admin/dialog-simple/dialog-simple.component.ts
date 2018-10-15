@@ -4,9 +4,8 @@ import { ListePartiesComponent } from '../../liste-parties/liste-parties.compone
 import { DialogData } from '../admin.component';
 import { HttpClient } from '@angular/common/http';
 import {FormControl, Validators, FormGroup} from '@angular/forms';
-import { ImageSimple } from './image-simple';
-import { ImageService } from "../image.service";
-import { Router } from '@angular/router';
+import { PartieSimple } from './partie-simple';
+import { PartieSimpleService } from "../partie-simple.service";
 import { Observable } from 'rxjs';
 import { PartieSimpleInterface } from '../../liste-parties/liste-partie-simple/liste-partie-simple.component';
 import { PartiesService} from "../parties.service";
@@ -18,8 +17,7 @@ const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
   selector: 'app-dialog-simple',
   templateUrl: './dialog-simple.component.html',
   styleUrls: ['./dialog-simple.component.css'],
-  providers: [ImageService, PartiesService],
-})
+  providers: [PartieSimpleService],
 
 export class DialogSimpleComponent {
 
@@ -27,19 +25,18 @@ export class DialogSimpleComponent {
   public wrongNumberOfImagesMessage: String = "";
   public wrongImageSizeOrTypeMessage: String = "";
   public currentImageNumber: number;
-  public partieSimple: PartieSimpleInterface;
-  public router: Router;
+  public partieSimple: ListePartieSimpleInterface;
   public selectedFiles: File[] = [];
+  public selectedFilesAsArrayBuffers: ArrayBuffer[] = [];
   public correctImageExtension: String = "image/bmp";
   public titrePartie = new FormControl('', [Validators.required]);
-  public imageNameTaken: Boolean;
+  public gameNameTaken: Boolean;
 
   constructor(
     public dialogRef: MatDialogRef<DialogSimpleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private http: HttpClient,
-    private imageService: ImageService,
-    private partiesService: PartiesService) {
+    private partieSimpleService: PartieSimpleService) {
     }
 
   public onFileSelectedImage(event, i) {
@@ -50,38 +47,54 @@ export class DialogSimpleComponent {
   }
 
   public onSubmit(): void {
-    const imageName: string = this.selectedFiles[this.currentImageNumber].name;
-    const result: PartieSimpleInterface = new class implements PartieSimpleInterface {
-        _id: string;
-        idPartie: number = 0;
-        image1Path: string = imageName;
-        image2Path: string = imageName;
-        isElevatedActive: boolean = false;
-        timesOneVsOne: number[];
-        timesSolo: number[];
-        title: string = "test";
-    };
+    const self = this;
+    var i = 0;
+    this.selectedFiles.forEach((file) => {
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+      reader.onload = function() {
+        self.addToSelectedFilesAsArrayBuffer(reader.result as ArrayBuffer, i);
+        self.selectedFilesAsArrayBuffers[i] = reader.result as ArrayBuffer;
+        i++;
+      };
+    });
+  }
 
-    this.partiesService.register(result)
+  public AddBufferToArray(arrayBuffer: ArrayBuffer) {
+    const array = new Array<ArrayBuffer>();
+    array[0] = arrayBuffer;
+
+    return array;
+  }
+
+  public addToSelectedFilesAsArrayBuffer(file: ArrayBuffer, i: number) {
+    this.selectedFilesAsArrayBuffers[i] = file;
+    if (i === 1) {
+      const result: PartieSimple = new PartieSimple(this.data.simpleGameName, new Array<number>(),
+                                                    new Array<number>(), this.AddBufferToArray(this.selectedFilesAsArrayBuffers[0]),
+                                                    this.AddBufferToArray(this.selectedFilesAsArrayBuffers[1]),
+                                                    new Array<ArrayBuffer>());
+      this.partieSimpleService.register(result)
         .subscribe(
-            (data) => {
-                this.imageNameTaken = false;
-            },
-            (error) => {
-                console.error(error);
-                this.imageNameTaken = true;
-            });
+          (data) => {
+            this.gameNameTaken = false;
+          },
+          (error) => {
+            console.error(error);
+            this.gameNameTaken = true;
+          });
+    }
   }
 
-  public obtenirImageId(identifiant: string): Observable<ImageSimple> {
-      return this.http.get<ImageSimple>(IMAGE_URL + identifiant);
+  public obtenirImageId(identifiant: string): Observable<PartieSimple> {
+      return this.http.get<PartieSimple>(IMAGE_URL + identifiant);
   }
 
-  public obtenirImageName(imageName: string): Observable<ImageSimple> {
-      return this.http.get<ImageSimple>(IMAGE_URL + imageName);
+  public obtenirImageName(imageName: string): Observable<PartieSimple> {
+      return this.http.get<PartieSimple>(IMAGE_URL + imageName);
   }
 
-  public async creerNouvelleImage(image: ImageSimple): Promise<Object> {
+  public async creerNouvelleImage(image: PartieSimple): Promise<Object> {
       return this.http.post(URL_AJOUTER, image).toPromise();
   }
 
