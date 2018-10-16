@@ -10,6 +10,6 @@ export default  {
         RoutesUser: Symbol("RoutesUser"),
         User: Symbol("User"),
 
-        RoutesImage: Symbol("RoutesImage"),
-        Image: Symbol("Image"),
+        RoutesPartieSimple: Symbol("RoutesPartieSimple"),
+        PartieSimple: Symbol("PartieSimple"),
 };

@@ -11,7 +11,7 @@ import { ServiceWeb } from "./serviceWeb";
 import { Routes } from "./routes";
 import { RoutesBaseDeDonnees } from "./routesBaseDeDonnees";
 import { RoutesUser } from "./routesUser";
-import { RoutesImage } from "./routesImage";
+import { RoutesPartieSimple } from "./routesPartieSimple";
 
 @injectable()
 export class Application {
@@ -21,7 +21,7 @@ export class Application {
 
     public constructor(@inject(Types.Routes) private index: Routes,
                        @inject(Types.RoutesUser) private user: RoutesUser,
-                       @inject(Types.RoutesImage) private image: RoutesImage,
+                       @inject(Types.RoutesPartieSimple) private partieSimple: RoutesPartieSimple,
                        @inject(Types.RoutesBaseDeDonnees) private baseDonnees: RoutesBaseDeDonnees) {
         this.app = express();
 
@@ -44,7 +44,7 @@ export class Application {
         this.ajouterService(this.index);
         this.ajouterService(this.baseDonnees);
         this.ajouterService(this.user);
-        this.ajouterService(this.image);
+        this.ajouterService(this.partieSimple);
 
         this.errorHandeling();
     }
