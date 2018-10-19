@@ -29,6 +29,6 @@ container.bind(Types.RoutesUser).to(RoutesUser);
 container.bind(Types.User).to(RouteUser.User);
 
 container.bind(Types.RoutesPartieSimple).to(RoutesPartieSimple);
-container.bind(Types.PartieSimple).to(RoutePartieSimple.PartieSimple);
+container.bind(Types.PartieSimple).to(RoutePartieSimple);
 
 export { container };

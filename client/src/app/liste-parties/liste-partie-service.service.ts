@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PartieSimple } from '../admin/dialog-simple/partie-simple';
 import { HttpClient } from '@angular/common/http';
-import {Observable} from "rxjs";
-
-
+import {Observable, of} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +14,8 @@ export class ListePartieServiceService {
     private http: HttpClient
   ) { }
 
-  public getListeImageSimple(): Observable<Object> {
-    return this.http.get(this.GETLISTE_URL);
+  public getListeImageSimple(): Observable<PartieSimple> {
+
+      return(this.http.get<PartieSimple>(this.GETLISTE_URL));
   }
 }

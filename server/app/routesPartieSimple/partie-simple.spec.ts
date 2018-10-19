@@ -3,9 +3,9 @@ import { RoutePartieSimple } from "./partie-simple";
 
 describe("BaseDeDonnees", () => {
     describe("Constructeur", () => {
-        let image: RoutePartieSimple.PartieSimple;
+        let image: RoutePartieSimple;
         beforeEach(() => {
-            image = new RoutePartieSimple.PartieSimple();
+            image = new RoutePartieSimple();
         });
 
         it ("should do nothing", () => {

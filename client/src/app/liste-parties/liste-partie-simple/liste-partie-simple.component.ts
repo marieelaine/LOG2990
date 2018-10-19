@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ListePartiesComponent } from '../liste-parties.component';
 import { Router } from '@angular/router';
+import {ListePartieServiceService} from "../liste-partie-service.service";
+import { PartieSimple } from '../../admin/dialog-simple/partie-simple';
 
 export interface PartieSimpleInterface {
   title: string;
@@ -20,8 +22,12 @@ export interface PartieSimpleInterface {
 })
 export class ListePartieSimpleComponent extends ListePartiesComponent {
 
-  constructor(private router: Router) {
-    super(router);
+  constructor(public router: Router,
+              public listePartieService: ListePartieServiceService) {
+    super(router, listePartieService);
+    console.log(this.listePartieService);
+    console.log('helloo');
+    this.listePartieService.getListeImageSimple().subscribe((res: PartieSimple) => {console.log(res.username); });
   }
 
   public onJouerOuReinitialiserClick(): void {

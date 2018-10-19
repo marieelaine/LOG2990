@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import { PartieMultipleInterface } from 'src/app/liste-parties/liste-partie-multiple/liste-partie-multiple.component';
-import { PartieSimpleInterface } from './liste-partie-simple/liste-partie-simple.component';
 import { Router, NavigationEnd } from '@angular/router';
 import { PartieSimple } from '../admin/dialog-simple/partie-simple';
 import { ListePartieServiceService } from './liste-partie-service.service';
@@ -12,10 +11,7 @@ import { ListePartieServiceService } from './liste-partie-service.service';
   providers: [ListePartieServiceService]
 })
 
-export class ListePartiesComponent implements OnInit{
-
-  partieSimpleDiv: HTMLElement;
-
+export class ListePartiesComponent implements OnInit {
   listePartiesSimples: PartieSimple[] = [];
 
   listePartiesMultiples: PartieMultipleInterface[] = [
@@ -28,9 +24,9 @@ export class ListePartiesComponent implements OnInit{
   public creerOuSupprimer: string;
   public isListePartiesMode: boolean;
   public isAdminMode: boolean;
-  public listePartieService: ListePartieServiceService;
 
-  public constructor(router: Router) {
+  public constructor(public router: Router,
+                     public listePartieService: ListePartieServiceService) {
     this.jouerOuReinitialiser = '';
     this.creerOuSupprimer = '';
     this.isListePartiesMode = false;
@@ -115,6 +111,5 @@ export class ListePartiesComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.listePartieService.getListeImageSimple();
   }
 }

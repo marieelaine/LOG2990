@@ -11,7 +11,7 @@ export class RoutesPartieSimple extends ServiceWeb {
     public readonly mainRoute: string = "/partie";
 
     public constructor(@inject(Types.PartieSimple)
-    private partieSimple: RoutePartieSimple.PartieSimple = new RoutePartieSimple.PartieSimple()) {
+    private partieSimple: RoutePartieSimple = new RoutePartieSimple()) {
         super();
     }
 
@@ -30,7 +30,7 @@ export class RoutesPartieSimple extends ServiceWeb {
             await this.partieSimple.requeteDeletePartieSimple(req, res);
         });
 
-        router.get("/getListe", async (req: Request, res: Response) =>{
+        router.get("/getListe", async (req: Request, res: Response) => {
            await this.partieSimple.requeteGetListePartie(req, res);
         });
 
