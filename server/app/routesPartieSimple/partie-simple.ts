@@ -12,7 +12,7 @@ interface PartieSimpleInterface {
     _tempsUnContreUn: Array<number>;
     _image1: Buffer;
     _image2: Buffer;
-    _imageDiff: Array<ArrayBuffer>;
+    _imageDiff: Buffer;
 }
 
 export module RoutePartieSimple {
@@ -54,8 +54,7 @@ export module RoutePartieSimple {
                     required: true,
                 },
                 _imageDiff: {
-                    type: Array,
-                    required: true,
+                    type: Buffer,
                 }
             });
         }

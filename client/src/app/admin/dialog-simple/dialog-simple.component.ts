@@ -62,7 +62,7 @@ export class DialogSimpleComponent {
       const result: PartieSimple = new PartieSimple(this.data.simpleGameName, new Array<number>(),
                                                     new Array<number>(), this.selectedFilesAsArrayBuffers[0],
                                                     this.selectedFilesAsArrayBuffers[1],
-                                                    new Array<ArrayBuffer>());
+                                                    Buffer.from(new Array()));
       this.partieSimpleService.register(result)
         .subscribe(
           (data) => {

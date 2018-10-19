@@ -5,10 +5,10 @@ export class PartieSimple {
     private _tempsUnContreUn: Array<number>;
     private _image1: Buffer;
     private _image2: Buffer;
-    private _imageDiff: Array<ArrayBuffer>;
+    private _imageDiff: Buffer;
 
     public constructor(nomPartie: string, tempsSolo: Array<number>, tempsUnContreUn: Array<number>,
-                       image1: Buffer, image2: Buffer, imageDiff: Array<ArrayBuffer>) {
+                       image1: Buffer, image2: Buffer, imageDiff: Buffer) {
       this._nomPartie = nomPartie;
       this._tempsSolo = tempsSolo;
       this._tempsUnContreUn = tempsUnContreUn;
