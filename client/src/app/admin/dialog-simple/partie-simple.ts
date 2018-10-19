@@ -3,12 +3,12 @@ export class PartieSimple {
     private _nomPartie: string;
     private _tempsSolo: Array<number>;
     private _tempsUnContreUn: Array<number>;
-    private _image1: Array<ArrayBuffer>;
-    private _image2: Array<ArrayBuffer>;
+    private _image1: Buffer;
+    private _image2: Buffer;
     private _imageDiff: Array<ArrayBuffer>;
 
     public constructor(nomPartie: string, tempsSolo: Array<number>, tempsUnContreUn: Array<number>,
-                       image1: Array<ArrayBuffer>, image2: Array<ArrayBuffer>, imageDiff: Array<ArrayBuffer>) {
+                       image1: Buffer, image2: Buffer, imageDiff: Array<ArrayBuffer>) {
       this._nomPartie = nomPartie;
       this._tempsSolo = tempsSolo;
       this._tempsUnContreUn = tempsUnContreUn;

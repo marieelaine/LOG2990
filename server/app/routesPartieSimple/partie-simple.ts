@@ -10,8 +10,8 @@ interface PartieSimpleInterface {
     _nomPartie: string;
     _tempsSolo: Array<number>;
     _tempsUnContreUn: Array<number>;
-    _image1: Array<ArrayBuffer>;
-    _image2: Array<ArrayBuffer>;
+    _image1: Buffer;
+    _image2: Buffer;
     _imageDiff: Array<ArrayBuffer>;
 }
 
@@ -46,11 +46,11 @@ export module RoutePartieSimple {
                     required: true,
                 },
                 _image1: {
-                    type: Array,
+                    type: Buffer,
                     required: true,
                 },
                 _image2: {
-                    type: Array,
+                    type: Buffer,
                     required: true,
                 },
                 _imageDiff: {

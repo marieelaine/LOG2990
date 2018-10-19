@@ -23,7 +23,7 @@ export class DialogSimpleComponent {
   public wrongImageSizeOrTypeMessage: String = "";
   public currentImageNumber: number;
   public selectedFiles: File[] = [];
-  public selectedFilesAsArrayBuffers: ArrayBuffer[] = [];
+  public selectedFilesAsArrayBuffers: Buffer[] = [];
   public correctImageExtension: String = "image/bmp";
   public titrePartie = new FormControl('', [Validators.required]);
   public gameNameTaken: Boolean;
@@ -50,25 +50,18 @@ export class DialogSimpleComponent {
       reader.readAsArrayBuffer(file);
       reader.onload = function() {
         self.addToSelectedFilesAsArrayBuffer(reader.result as ArrayBuffer, i);
-        self.selectedFilesAsArrayBuffers[i] = reader.result as ArrayBuffer;
         i++;
       };
     });
   }
 
-  public AddBufferToArray(arrayBuffer: ArrayBuffer) {
-    const array = new Array<ArrayBuffer>();
-    array[0] = arrayBuffer;
-
-    return array;
-  }
-
   public addToSelectedFilesAsArrayBuffer(file: ArrayBuffer, i: number) {
-    this.selectedFilesAsArrayBuffers[i] = file;
+    const Buffer = require('buffer/').Buffer;
+    this.selectedFilesAsArrayBuffers[i] = Buffer.from(file);
     if (i === 1) {
       const result: PartieSimple = new PartieSimple(this.data.simpleGameName, new Array<number>(),
-                                                    new Array<number>(), this.AddBufferToArray(this.selectedFilesAsArrayBuffers[0]),
-                                                    this.AddBufferToArray(this.selectedFilesAsArrayBuffers[1]),
+                                                    new Array<number>(), this.selectedFilesAsArrayBuffers[0],
+                                                    this.selectedFilesAsArrayBuffers[1],
                                                     new Array<ArrayBuffer>());
       this.partieSimpleService.register(result)
         .subscribe(
