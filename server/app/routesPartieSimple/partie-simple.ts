@@ -100,6 +100,10 @@ export module RoutePartieSimple {
             // Change the return.
             return partieSimples[0]._id;
         }
+        
+        private async getListePartie(): Promise<Object>{
+
+        }
 
         public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
             res.send(await this.ajouterPartieSimple(req.body, res));
@@ -111,6 +115,10 @@ export module RoutePartieSimple {
 
         public async requeteDeletePartieSimple(req: Request, res: Response): Promise<void> {
             res.send(await this.deletePartieSimple(req.params.id, res));
+        }
+
+        public async requeteGetListePartie(req: Request, res: Response): Promise<void>{
+            res.send(await this.getListePartie());
         }
     }
 }

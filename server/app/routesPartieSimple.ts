@@ -8,7 +8,7 @@ import { RoutePartieSimple } from "./routesPartieSimple/partie-simple";
 @injectable()
 export class RoutesPartieSimple extends ServiceWeb {
 
-    public readonly mainRoute: string = "/images";
+    public readonly mainRoute: string = "/partie";
 
     public constructor(@inject(Types.PartieSimple)
     private partieSimple: RoutePartieSimple.PartieSimple = new RoutePartieSimple.PartieSimple()) {
@@ -28,6 +28,10 @@ export class RoutesPartieSimple extends ServiceWeb {
 
         router.delete("/delete/:id", async (req: Request, res: Response) => {
             await this.partieSimple.requeteDeletePartieSimple(req, res);
+        });
+
+        router.get("/getListe", async (req: Request, res: Response) =>{
+           await this.partieSimple.requeteGetListePartie(req, res);
         });
 
         return router;

@@ -1,1 +1,1 @@
-{"version":3,"file":"serviceWeb.js","sourceRoot":"C:/Users/Olivi/Desktop/Poly/A2018/LOG2990/LOG2990/server/app/","sources":["server/app/serviceWeb.ts"],"names":[],"mappings":";;;;;;;;AAAA,8CAA8C;AAC9C,yCAAuC;AAIvC,IAAuB,UAAU,GAAjC;CAGC,CAAA;AAHsB,UAAU;IADhC,sBAAU,EAAE;GACU,UAAU,CAGhC;AAHsB,gCAAU"}
+{"version":3,"file":"serviceWeb.js","sourceRoot":"C:/Users/BERNARD/Desktop/LOG2990/server/app/","sources":["server/app/serviceWeb.ts"],"names":[],"mappings":";;;;;;;;AAAA,8CAA8C;AAC9C,yCAAuC;AAIvC,IAAuB,UAAU,GAAjC;CAGC,CAAA;AAHsB,UAAU;IADhC,sBAAU,EAAE;GACU,UAAU,CAGhC;AAHsB,gCAAU"}
