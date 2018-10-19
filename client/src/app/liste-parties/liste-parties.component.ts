@@ -1,26 +1,22 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { PartieMultipleInterface } from 'src/app/liste-parties/liste-partie-multiple/liste-partie-multiple.component';
 import { PartieSimpleInterface } from './liste-partie-simple/liste-partie-simple.component';
 import { Router, NavigationEnd } from '@angular/router';
+import { PartieSimple } from '../admin/dialog-simple/partie-simple';
+import { ListePartieServiceService } from './liste-partie-service.service';
 
 @Component({
   selector: 'app-liste-parties',
   templateUrl: './liste-parties.component.html',
-  styleUrls: ['./liste-parties.component.css']
+  styleUrls: ['./liste-parties.component.css'],
+  providers: [ListePartieServiceService]
 })
 
-export class ListePartiesComponent {
+export class ListePartiesComponent implements OnInit{
 
   partieSimpleDiv: HTMLElement;
 
-  listePartiesSimples: PartieSimpleInterface[] = [
-        { title: 'Nissan Patrol', image1Path: 'assets/NissanPatrol.bmp', image2Path: 'assets/NissanPatrol.bmp', isElevatedActive: false,
-          timesSolo: [320, 500], timesOneVsOne: [], idPartie: 1, _id: ""
-        },
-        { title: 'Jerry', image1Path: 'assets/Jerry.bmp', image2Path: 'assets/Jerry.bmp',  isElevatedActive: false,
-          timesSolo: [550, 302, 419, 3141], timesOneVsOne: [41241, 412, 52, 5235, 552], idPartie: 2, _id: ""
-        }
-    ];
+  listePartiesSimples: PartieSimple[] = [];
 
   listePartiesMultiples: PartieMultipleInterface[] = [
         { title: 'Mona Lisa', imagePath: 'assets/monaLisa.bmp', isElevatedActive: false,
@@ -32,6 +28,7 @@ export class ListePartiesComponent {
   public creerOuSupprimer: string;
   public isListePartiesMode: boolean;
   public isAdminMode: boolean;
+  public listePartieService: ListePartieServiceService;
 
   public constructor(router: Router) {
     this.jouerOuReinitialiser = '';
@@ -111,9 +108,13 @@ export class ListePartiesComponent {
   }
 
   protected convertSecondsToMinutes(time: number): String {
-    const minutes = Math.floor(time / 60);
-    const secondes = time - minutes * 60;
+      const minutes = Math.floor(time / 60);
+      const secondes = time - minutes * 60;
 
-    return this.getDisplayTime(minutes, secondes);
+      return this.getDisplayTime(minutes, secondes);
+  }
+
+  ngOnInit() {
+    this.listePartieService.getListeImageSimple();
   }
 }
