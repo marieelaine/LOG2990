@@ -7,15 +7,15 @@ import {Observable, of} from "rxjs";
   providedIn: 'root'
 })
 export class ListePartieServiceService {
-  private readonly BASE_URL: string = "http://127.0.0.1:3000/partie/";
+  private readonly BASE_URL: string = "http://localhost:3000/partie/";
   private readonly GETLISTE_URL: string = this.BASE_URL + "getListe";
 
   constructor(
     private http: HttpClient
   ) { }
 
-  public getListeImageSimple(): Observable<PartieSimple> {
+  public getListeImageSimple(): Observable<PartieSimple[]> {
 
-      return(this.http.get<PartieSimple>(this.GETLISTE_URL));
+      return this.http.get<PartieSimple[]>(this.GETLISTE_URL);
   }
 }

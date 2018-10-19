@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ListePartiesComponent } from '../liste-parties.component';
 import { Router } from '@angular/router';
 import {ListePartieServiceService} from "../liste-partie-service.service";
@@ -20,14 +20,15 @@ export interface PartieSimpleInterface {
   templateUrl: './liste-partie-simple.component.html',
   styleUrls: ['./liste-partie-simple.component.css']
 })
-export class ListePartieSimpleComponent extends ListePartiesComponent {
+export class ListePartieSimpleComponent extends ListePartiesComponent implements OnInit {
 
   constructor(public router: Router,
               public listePartieService: ListePartieServiceService) {
     super(router, listePartieService);
-    console.log(this.listePartieService);
-    console.log('helloo');
-    this.listePartieService.getListeImageSimple().subscribe((res: PartieSimple) => {console.log(res.username); });
+  }
+
+  public ngOnInit() {
+    this.listePartieService.getListeImageSimple().subscribe((res: PartieSimple[]) => { });
   }
 
   public onJouerOuReinitialiserClick(): void {

@@ -29,6 +29,13 @@ var RouteBaseDeDonnees;
             this.mongoose.set("useCreateIndex", true);
             this.seConnecter();
         }
+        assurerConnection() {
+            return __awaiter(this, void 0, void 0, function* () {
+                if (this.mongoose.connection.readyState !== 1) {
+                    yield this.seConnecter();
+                }
+            });
+        }
         seConnecter() {
             return __awaiter(this, void 0, void 0, function* () {
                 yield this.mongoose.connect(this.mongoURL, { useNewUrlParser: true });

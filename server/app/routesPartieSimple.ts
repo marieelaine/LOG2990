@@ -18,10 +18,6 @@ export class RoutesPartieSimple extends ServiceWeb {
     public get routes(): Router {
         const router: Router = Router();
 
-        router.get("/:id", async (req: Request, res: Response) => {
-            await this.partieSimple.requetePartieSimpleId(req, res);
-        });
-
         router.post("/ajouter", async (req: Request, res: Response) => {
             await this.partieSimple.requeteAjouterPartieSimple(req, res);
         });
@@ -31,7 +27,11 @@ export class RoutesPartieSimple extends ServiceWeb {
         });
 
         router.get("/getListe", async (req: Request, res: Response) => {
-           await this.partieSimple.requeteGetListePartie(req, res);
+            await this.partieSimple.requeteGetListePartie(req, res);
+        });
+
+        router.get("/:id", async (req: Request, res: Response) => {
+            await this.partieSimple.requetePartieSimpleId(req, res);
         });
 
         return router;

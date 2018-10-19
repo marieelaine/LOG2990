@@ -4,7 +4,7 @@ import { RouteBaseDeDonnees } from "../routesBaseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
-import { PartieSimple } from "../../../client/src/app/admin/dialog-simple/partie-simple"
+import { PartieSimple } from "../../../client/src/app/admin/dialog-simple/partie-simple";
 
 interface PartieSimpleInterface {
     _id: string;
@@ -95,12 +95,12 @@ export class RoutePartieSimple {
                 return partieSimple._id;
             }
         }
-
         // Change the return.
+
         return partieSimples[0]._id;
     }
 
-    private async getListePartie(): Promise<PartieSimple> {
+    private async getListePartie(): Promise<PartieSimple[]> {
         const listeParties: PartieSimple[] = [];
         await this.modelPartie.find()
             .then((res: Document[]) => {
@@ -108,10 +108,8 @@ export class RoutePartieSimple {
                     listeParties.push(listePartie.toObject());
                 }
             });
-        // tslint:disable-next-line:no-console
-//            console.log("lskdf");
 
-        return listeParties[0];
+        return listeParties;
     }
 
     public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
@@ -127,6 +125,7 @@ export class RoutePartieSimple {
     }
 
     public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
+        await this.baseDeDonnees.assurerConnection();
         res.send(await this.getListePartie());
     }
 
