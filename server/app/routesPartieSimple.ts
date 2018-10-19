@@ -26,7 +26,7 @@ export class RoutesPartieSimple extends ServiceWeb {
             await this.partieSimple.requeteDeletePartieSimple(req, res);
         });
 
-        router.get("/getListe", async (req: Request, res: Response) => {
+        router.get("/getPartieSimple", async (req: Request, res: Response) => {
             await this.partieSimple.requeteGetListePartie(req, res);
         });
 

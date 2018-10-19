@@ -8,7 +8,7 @@ import {Observable, of} from "rxjs";
 })
 export class ListePartieServiceService {
   private readonly BASE_URL: string = "http://localhost:3000/partie/";
-  private readonly GETLISTE_URL: string = this.BASE_URL + "getListe";
+  private readonly GETLISTE_URL: string = this.BASE_URL + "getPartieSimple";
 
   constructor(
     private http: HttpClient
