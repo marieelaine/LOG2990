@@ -1,27 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ListePartiesComponent } from '../liste-parties.component';
 import { Router } from '@angular/router';
-
-export interface PartieSimpleInterface {
-  title: string;
-  image1Path: string;
-  image2Path: string;
-  timesSolo: number[];
-  timesOneVsOne: number[];
-  isElevatedActive: boolean;
-  idPartie: number;
-  _id: string;
-}
+import {ListePartieServiceService} from "../liste-partie-service.service";
+import { PartieSimple } from '../../admin/dialog-simple/partie-simple';
 
 @Component({
   selector: 'app-liste-partie-simple',
   templateUrl: './liste-partie-simple.component.html',
   styleUrls: ['./liste-partie-simple.component.css']
 })
-export class ListePartieSimpleComponent extends ListePartiesComponent {
+export class ListePartieSimpleComponent extends ListePartiesComponent implements OnInit {
 
-  constructor(private router: Router) {
-    super(router);
+  protected listeParties;
+
+  constructor(public router: Router,
+              public listePartieService: ListePartieServiceService) {
+    super(router, listePartieService);
+  }
+
+  public ngOnInit() {
+    this.listePartieService.getListeImageSimple().subscribe((res: PartieSimple[]) => {
+      this.listeParties = res;
+    });
   }
 
   public onJouerOuReinitialiserClick(): void {

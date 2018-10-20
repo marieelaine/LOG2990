@@ -1,26 +1,18 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { PartieMultipleInterface } from 'src/app/liste-parties/liste-partie-multiple/liste-partie-multiple.component';
-import { PartieSimpleInterface } from './liste-partie-simple/liste-partie-simple.component';
 import { Router, NavigationEnd } from '@angular/router';
+import { PartieSimple } from '../admin/dialog-simple/partie-simple';
+import { ListePartieServiceService } from './liste-partie-service.service';
 
 @Component({
   selector: 'app-liste-parties',
   templateUrl: './liste-parties.component.html',
-  styleUrls: ['./liste-parties.component.css']
+  styleUrls: ['./liste-parties.component.css'],
+  providers: [ListePartieServiceService]
 })
 
-export class ListePartiesComponent {
-
-  partieSimpleDiv: HTMLElement;
-
-  listePartiesSimples: PartieSimpleInterface[] = [
-        { title: 'Nissan Patrol', image1Path: 'assets/NissanPatrol.bmp', image2Path: 'assets/NissanPatrol.bmp', isElevatedActive: false,
-          timesSolo: [320, 500], timesOneVsOne: [], idPartie: 1, _id: ""
-        },
-        { title: 'Jerry', image1Path: 'assets/Jerry.bmp', image2Path: 'assets/Jerry.bmp',  isElevatedActive: false,
-          timesSolo: [550, 302, 419, 3141], timesOneVsOne: [41241, 412, 52, 5235, 552], idPartie: 2, _id: ""
-        }
-    ];
+export class ListePartiesComponent implements OnInit {
+  listePartiesSimples: PartieSimple[] = [];
 
   listePartiesMultiples: PartieMultipleInterface[] = [
         { title: 'Mona Lisa', imagePath: 'assets/monaLisa.bmp', isElevatedActive: false,
@@ -33,7 +25,8 @@ export class ListePartiesComponent {
   public isListePartiesMode: boolean;
   public isAdminMode: boolean;
 
-  public constructor(router: Router) {
+  public constructor(public router: Router,
+                     public listePartieService: ListePartieServiceService) {
     this.jouerOuReinitialiser = '';
     this.creerOuSupprimer = '';
     this.isListePartiesMode = false;
@@ -66,7 +59,11 @@ export class ListePartiesComponent {
   }
 
   protected getSortedTimes(times: number[]): number[] {
-      return times.sort(function (a, b) {  return a - b;  });
+      if (times) {
+        return times.sort(function (a, b) {  return a - b;  });
+      }
+
+      return [];
   }
 
   protected getBestTime(times: number[]): String {
@@ -106,14 +103,23 @@ export class ListePartiesComponent {
     }
   }
 
+  protected getTitleFirstLetter(title: String): String {
+    return title.substr(0, 1);
+  }
+
   protected getTitleWithoutFirstLetter(title: String): String {
+    console.log(title);
+
     return title.substr(1, title.length - 1);
   }
 
   protected convertSecondsToMinutes(time: number): String {
-    const minutes = Math.floor(time / 60);
-    const secondes = time - minutes * 60;
+      const minutes = Math.floor(time / 60);
+      const secondes = time - minutes * 60;
 
-    return this.getDisplayTime(minutes, secondes);
+      return this.getDisplayTime(minutes, secondes);
+  }
+
+  ngOnInit() {
   }
 }

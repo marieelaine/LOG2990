@@ -6,7 +6,7 @@ import { PartieSimpleInterface} from "../liste-parties/liste-partie-simple/liste
 
 @Injectable()
 export class PartieSimpleService {
-    private readonly BASE_URL: string = "http://127.0.0.1:3000/images/";
+    private readonly BASE_URL: string = "http://127.0.0.1:3000/partie/";
     private readonly AJOUTER_URL: string = this.BASE_URL + "ajouter";
     private readonly SUPPRIMER_URL: string = this.BASE_URL + "delete/";
 

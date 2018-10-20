@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ListePartiesComponent } from '../liste-parties.component';
 import { Router } from '@angular/router';
+import {ListePartieServiceService} from "../liste-partie-service.service";
 
 export interface PartieMultipleInterface {
   title: String;
@@ -16,8 +17,13 @@ export interface PartieMultipleInterface {
   templateUrl: './liste-partie-multiple.component.html',
   styleUrls: ['./liste-partie-multiple.component.css']
 })
-export class ListePartieMultipleComponent extends ListePartiesComponent {
-  constructor(router: Router) {
-    super(router);
+export class ListePartieMultipleComponent extends ListePartiesComponent implements OnInit {
+  constructor(public router: Router,
+              public listePartieService: ListePartieServiceService) {
+    super(router, listePartieService);
+  }
+
+  ngOnInit() {
+
   }
 }

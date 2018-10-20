@@ -18,6 +18,7 @@ const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
 
 export class DialogSimpleComponent {
 
+<<<<<<< HEAD
   public outOfBoundNameLengthMessage: String = "";
   public wrongNumberOfImagesMessage: String = "";
   public wrongImageSizeOrTypeMessage: String = "";
@@ -27,6 +28,19 @@ export class DialogSimpleComponent {
   public correctImageExtension: String = "image/bmp";
   public titrePartie = new FormControl('', [Validators.required]);
   public gameNameTaken: Boolean;
+=======
+  private outOfBoundNameLengthMessage: String = "";
+  private wrongNumberOfImagesMessage: String = "";
+  private wrongImageSizeOrTypeMessage: String = "";
+  private currentImageNumber: number;
+  private selectedFiles: File[] = [];
+  private selectedFilesAsArrayBuffers: ArrayBuffer[] = [];
+  private correctImageExtension: String = "image/bmp";
+  private titrePartie = new FormControl('', [Validators.required]);
+  private gameNameTaken: Boolean;
+  protected premiereImage: string;
+  protected deuxiemeImage: string;
+>>>>>>> get_partie_from_DB
 
   constructor(
     public dialogRef: MatDialogRef<DialogSimpleComponent>,
@@ -40,6 +54,19 @@ export class DialogSimpleComponent {
     const file = event.target.files[0] as File;
     this.selectedFiles[this.currentImageNumber] = file;
     this.convertImageToArrayToCheckSize(this.selectedFiles[this.currentImageNumber]);
+
+    const reader: FileReader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (resultat: ProgressEvent) => {
+      if (this.currentImageNumber) {
+        this.deuxiemeImage = resultat.target.result;
+      } else {
+        this.premiereImage = resultat.target.result;
+      }
+
+      return 0;
+    };
+
   }
 
   public onSubmit(): void {

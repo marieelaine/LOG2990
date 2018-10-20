@@ -15,6 +15,13 @@ export module RouteBaseDeDonnees {
             this.seConnecter();
         }
 
+        public async assurerConnection(): Promise<void> {
+            if (this.mongoose.connection.readyState !== 1) {
+                await this.seConnecter();
+            }
+
+        }
+
         private async seConnecter(): Promise<void> {
             await this.mongoose.connect(this.mongoURL, { useNewUrlParser: true });
         }
