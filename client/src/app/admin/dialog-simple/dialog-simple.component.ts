@@ -30,14 +30,14 @@ export class DialogSimpleComponent {
   protected premiereImage: string;
   protected deuxiemeImage: string;
 
-  constructor(
+  public constructor(
     public dialogRef: MatDialogRef<DialogSimpleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private http: HttpClient,
     private partieSimpleService: PartieSimpleService) {
     }
 
-  public onFileSelectedImage(event, i) {
+  public onFileSelectedImage(event, i): void {
     this.currentImageNumber = i;
     const file = event.target.files[0] as File;
     this.selectedFiles[this.currentImageNumber] = file;
@@ -45,14 +45,13 @@ export class DialogSimpleComponent {
 
     const reader: FileReader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = (resultat: ProgressEvent) => {
-      if (this.currentImageNumber) {
-        this.deuxiemeImage = resultat.target.result;
-      } else {
-        this.premiereImage = resultat.target.result;
-      }
+    reader.onload = () => {
+        if (this.currentImageNumber) {
+          this.deuxiemeImage = reader.result as string;
+        } else {
+          this.premiereImage = reader.result as string;
+        }
 
-      return 0;
     };
 
   }
