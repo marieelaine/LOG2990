@@ -1,16 +1,16 @@
-<div *ngFor="let partieSimple of listePartiesSimples">
+<div *ngFor="let partieSimple of listeParties">
     <mat-card class='container-fluid' 
     [class.mat-elevation-z6]="!partieSimple.isElevatedActive"
     [class.mat-elevation-z10]="partieSimple.isElevatedActive"
     (mouseenter)="partieSimple.isElevatedActive = !partieSimple.isElevatedActive"
     (mouseleave)="partieSimple.isElevatedActive = !partieSimple.isElevatedActive">
         <mat-card-header>
-            <h2 class='gameNameHeader titleFirstLetter'>{{partieSimple.title[0]}}</h2>
-            <h2 class='gameNameHeader'>{{getTitleWithoutFirstLetter(partieSimple.title)}}</h2>
+            <h2 class='gameNameHeader titleFirstLetter'>{{getTitleFirstLetter(partieSimple._nomPartie)|uppercase}}</h2>
+            <h2 class='gameNameHeader'>{{getTitleWithoutFirstLetter(partieSimple._nomPartie)}}</h2>
         </mat-card-header>
         <div class='row'>
             <div class='col-sm-6'>
-                <img src={{partieSimple.image1Path}} class='gameImage img-responsive mat-elevation-z6 center'
+                <img src={{partieSimple._image1}} class='gameImage img-responsive mat-elevation-z6 center'
                 [class.mat-elevation-z6]="!partieSimple.isElevatedActive"
                 [class.mat-elevation-z10]="partieSimple.isElevatedActive">
             </div> 
@@ -26,18 +26,18 @@
                     </div>  
                     <div class='col-sm-4 text-center'>
                         <h2 class='topThreeHeaders'> Solo </h2>
-                        <p> {{ getBestTime(partieSimple.timesSolo) }} </p> 
-                        <p> {{ getSecondBestTime(partieSimple.timesSolo) }} </p> 
-                        <p> {{ getThirdBestTime(partieSimple.timesSolo) }} </p>
+                        <p> {{ getBestTime(partieSimple._timesSolo) }} </p> 
+                        <p> {{ getSecondBestTime(partieSimple._timesSolo) }} </p> 
+                        <p> {{ getThirdBestTime(partieSimple._timesSolo) }} </p>
                         <button mat-button class='mat-elevation-z6'
                                 [routerLink]="['/partie-solo/', partieSimple.idPartie]" routerLinkActive="router-link-active">Jouer</button>
                     </div>
                     <div class='col-sm-2'></div>
                     <div class='col-sm-4 text-center'>
                         <h2 class='topThreeHeaders'> 1v1 </h2> 
-                        <p> {{ getBestTime(partieSimple.timesOneVsOne) }} </p> 
-                        <p> {{ getSecondBestTime(partieSimple.timesOneVsOne) }} </p> 
-                        <p> {{ getThirdBestTime(partieSimple.timesOneVsOne) }} </p>
+                        <p> {{ getBestTime(partieSimple._timesOneVsOne) }} </p> 
+                        <p> {{ getSecondBestTime(partieSimple._timesOneVsOne) }} </p> 
+                        <p> {{ getThirdBestTime(partieSimple._timesOneVsOne) }} </p>
                         <button mat-button class='mat-elevation-z6'> {{creerOuSupprimer}} </button>
                     </div>
                 </div>

@@ -45,13 +45,14 @@ export class DialogSimpleComponent {
 
     const reader: FileReader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = (result: ProgressEvent) => {
-      if (this.currentImageNumber){
-        this.deuxiemeImage = result.target.result;
+    reader.onload = (resultat: ProgressEvent) => {
+      if (this.currentImageNumber) {
+        this.deuxiemeImage = resultat.target.result;
+      } else {
+        this.premiereImage = resultat.target.result;
       }
-      else{
-        this.premiereImage = result.target.result;
-      }
+
+      return 0;
     };
 
   }

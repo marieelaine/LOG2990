@@ -59,7 +59,11 @@ export class ListePartiesComponent implements OnInit {
   }
 
   protected getSortedTimes(times: number[]): number[] {
-      return times.sort(function (a, b) {  return a - b;  });
+      if (times) {
+        return times.sort(function (a, b) {  return a - b;  });
+      }
+
+      return [];
   }
 
   protected getBestTime(times: number[]): String {
@@ -99,7 +103,13 @@ export class ListePartiesComponent implements OnInit {
     }
   }
 
+  protected getTitleFirstLetter(title: String): String {
+    return title.substr(0, 1);
+  }
+
   protected getTitleWithoutFirstLetter(title: String): String {
+    console.log(title);
+
     return title.substr(1, title.length - 1);
   }
 

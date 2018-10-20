@@ -4,17 +4,6 @@ import { Router } from '@angular/router';
 import {ListePartieServiceService} from "../liste-partie-service.service";
 import { PartieSimple } from '../../admin/dialog-simple/partie-simple';
 
-export interface PartieSimpleInterface {
-  title: string;
-  image1Path: string;
-  image2Path: string;
-  timesSolo: number[];
-  timesOneVsOne: number[];
-  isElevatedActive: boolean;
-  idPartie: number;
-  _id: string;
-}
-
 @Component({
   selector: 'app-liste-partie-simple',
   templateUrl: './liste-partie-simple.component.html',
@@ -22,13 +11,17 @@ export interface PartieSimpleInterface {
 })
 export class ListePartieSimpleComponent extends ListePartiesComponent implements OnInit {
 
+  protected listeParties;
+
   constructor(public router: Router,
               public listePartieService: ListePartieServiceService) {
     super(router, listePartieService);
   }
 
   public ngOnInit() {
-    this.listePartieService.getListeImageSimple().subscribe((res: PartieSimple[]) => { });
+    this.listePartieService.getListeImageSimple().subscribe((res: PartieSimple[]) => {
+      this.listeParties = res;
+    });
   }
 
   public onJouerOuReinitialiserClick(): void {
