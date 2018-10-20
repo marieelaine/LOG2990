@@ -18,29 +18,17 @@ const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
 
 export class DialogSimpleComponent {
 
-<<<<<<< HEAD
-  public outOfBoundNameLengthMessage: String = "";
-  public wrongNumberOfImagesMessage: String = "";
-  public wrongImageSizeOrTypeMessage: String = "";
-  public currentImageNumber: number;
-  public selectedFiles: File[] = [];
-  public selectedFilesAsArrayBuffers: Buffer[] = [];
-  public correctImageExtension: String = "image/bmp";
-  public titrePartie = new FormControl('', [Validators.required]);
-  public gameNameTaken: Boolean;
-=======
-  private outOfBoundNameLengthMessage: String = "";
-  private wrongNumberOfImagesMessage: String = "";
-  private wrongImageSizeOrTypeMessage: String = "";
+  protected outOfBoundNameLengthMessage: String = "";
+  protected wrongNumberOfImagesMessage: String = "";
+  protected wrongImageSizeOrTypeMessage: String = "";
   private currentImageNumber: number;
   private selectedFiles: File[] = [];
-  private selectedFilesAsArrayBuffers: ArrayBuffer[] = [];
+  private selectedFilesAsArrayBuffers: Buffer[] = [];
   private correctImageExtension: String = "image/bmp";
   private titrePartie = new FormControl('', [Validators.required]);
   private gameNameTaken: Boolean;
   protected premiereImage: string;
   protected deuxiemeImage: string;
->>>>>>> get_partie_from_DB
 
   constructor(
     public dialogRef: MatDialogRef<DialogSimpleComponent>,

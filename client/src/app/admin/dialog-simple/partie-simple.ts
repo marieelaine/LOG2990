@@ -8,13 +8,13 @@ export class PartieSimple {
     private _imageDiff: Buffer;
 
     public constructor( nomPartie: string, tempsSolo: Array<number>, tempsUnContreUn: Array<number>,
-                        image1: Array<ArrayBuffer>, image2: Array<ArrayBuffer>, imageDiff: Array<ArrayBuffer>, id?: string) {
+                        image1: Buffer, image2: Buffer, imageDiff: Buffer, id?: string) {
       this._nomPartie = nomPartie;
-      // this._tempsSolo = tempsSolo;
-      // this._tempsUnContreUn = tempsUnContreUn;
-      // this._image1 = image1;
-      // this._image2 = image2;
-      // this._imageDiff = imageDiff;
+      this._tempsSolo = tempsSolo;
+      this._tempsUnContreUn = tempsUnContreUn;
+      this._image1 = image1;
+      this._image2 = image2;
+      this._imageDiff = imageDiff;
       if (id) {
           this._id = id;
       }
