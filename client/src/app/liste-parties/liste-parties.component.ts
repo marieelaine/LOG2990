@@ -108,7 +108,6 @@ export class ListePartiesComponent implements OnInit {
   }
 
   protected getTitleWithoutFirstLetter(title: String): String {
-    console.log(title);
 
     return title.substr(1, title.length - 1);
   }
