@@ -31,4 +31,29 @@ export class PartieSimple {
       return this._nomPartie;
     }
 
+    public get tempsSolo(): Array<number> {
+
+      return this._tempsSolo;
+    }
+
+    public get tempsUnContreUn(): Array<number> {
+
+      return this._tempsUnContreUn;
+    }
+
+    public get image1(): Buffer {
+
+      return this._image1;
+    }
+
+    public get image2(): Buffer {
+
+      return this._image2;
+    }
+
+    public get imageDiff(): Buffer {
+
+      return this._imageDiff;
+    }
+
   }
