@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public onLogout(): void {
     const cookieUsername: string = this.cookieService.get("username");
-    this.cookieService.delete(cookieUsername);
+    this.cookieService.deleteAll();
     this.userService.delete(cookieUsername);
     this.router.navigate(["/"]);
   }

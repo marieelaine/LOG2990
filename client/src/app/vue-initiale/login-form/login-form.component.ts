@@ -40,6 +40,10 @@ export class LoginFormComponent implements OnInit {
     public ngOnInit(): void {
         this.myStyle = myStyle;
         this.myParams = myParams;
+
+        if (this.cookieService.check("username")) {
+            this.router.navigate(["/liste-parties"]);
+        }
     }
 
     protected onSubmit(): void {
