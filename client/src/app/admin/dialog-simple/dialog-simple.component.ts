@@ -73,8 +73,8 @@ export class DialogSimpleComponent {
     const Buffer = require("buffer/").Buffer;
     this.selectedFilesAsArrayBuffers[i] = Buffer.from(file);
     if (i === 1) {
-      const result: PartieSimple = new PartieSimple(this.data.simpleGameName, new Array<number>(),
-                                                    new Array<number>(), this.selectedFilesAsArrayBuffers[0],
+      const result: PartieSimple = new PartieSimple(this.data.simpleGameName, this.genererTableauTempsAleatoires(),
+                                                    this.genererTableauTempsAleatoires(), this.selectedFilesAsArrayBuffers[0],
                                                     this.selectedFilesAsArrayBuffers[1],
                                                     Buffer.from(new Array()));
       this.partieSimpleService.register(result)
@@ -87,6 +87,19 @@ export class DialogSimpleComponent {
             this.gameNameTaken = true;
           });
     }
+  }
+
+  private genererTableauTempsAleatoires(): Array<number> {
+    const arr: Array<number> = new Array<number>();
+    for (let i: number = 0; i < 6; i++) {
+      arr[i] = this.genererTempsAleatoire();
+    }
+
+    return arr;
+  }
+
+  private genererTempsAleatoire(): number {
+    return 312;
   }
 
   protected obtenirImageId(identifiant: string): Observable<PartieSimple> {
@@ -114,7 +127,7 @@ export class DialogSimpleComponent {
 
   protected setWrongImageSizeOrTypeMessage(imageInfo): void {
     this.checkIfWrongImageSize(imageInfo) || this.checkIfWrongImageType() ?
-      this.wrongImageSizeOrTypeMessage = "*Limage doit être de format BMP 24 bits et de taille 640 x 480 pixels" :
+      this.wrongImageSizeOrTypeMessage = "*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels" :
       this.wrongImageSizeOrTypeMessage = "";
   }
 

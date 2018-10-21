@@ -1,21 +1,21 @@
-import {Component, OnInit} from '@angular/core';
-import { PartieMultipleInterface } from 'src/app/liste-parties/liste-partie-multiple/liste-partie-multiple.component';
-import { Router, NavigationEnd } from '@angular/router';
-import { PartieSimple } from '../admin/dialog-simple/partie-simple';
-import { ListePartieServiceService } from './liste-partie-service.service';
+import { Component } from "@angular/core";
+import { PartieMultipleInterface } from "src/app/liste-parties/liste-partie-multiple/liste-partie-multiple.component";
+import { Router, NavigationEnd } from "@angular/router";
+import { PartieSimple } from "../admin/dialog-simple/partie-simple";
+import { ListePartieServiceService } from "./liste-partie-service.service";
 
 @Component({
-  selector: 'app-liste-parties',
-  templateUrl: './liste-parties.component.html',
-  styleUrls: ['./liste-parties.component.css'],
+  selector: "app-liste-parties",
+  templateUrl: "./liste-parties.component.html",
+  styleUrls: ["./liste-parties.component.css"],
   providers: [ListePartieServiceService]
 })
 
-export class ListePartiesComponent implements OnInit {
+export class ListePartiesComponent {
   listePartiesSimples: PartieSimple[] = [];
 
   listePartiesMultiples: PartieMultipleInterface[] = [
-        { title: 'Mona Lisa', imagePath: 'assets/monaLisa.bmp', isElevatedActive: false,
+        { title: "Mona Lisa", imagePath: "assets/monaLisa.bmp", isElevatedActive: false,
           timesSolo: [312, 415, 6462, 1], timesOneVsOne: [312, 3], idPartie: 3
         }
     ];
@@ -27,8 +27,8 @@ export class ListePartiesComponent implements OnInit {
 
   public constructor(public router: Router,
                      public listePartieService: ListePartieServiceService) {
-    this.jouerOuReinitialiser = '';
-    this.creerOuSupprimer = '';
+    this.jouerOuReinitialiser = "";
+    this.creerOuSupprimer = "";
     this.isListePartiesMode = false;
     this.isAdminMode = false;
     router.events.subscribe((val) => {
@@ -39,23 +39,23 @@ export class ListePartiesComponent implements OnInit {
   }
 
   protected setjouerOuReinitialiserAndcreerOuSupprimer(url: string): void {
-    if (url === '/liste-parties') {
+    if (url === "/liste-parties") {
       this.setToJouerAndCreer();
-    } else if (url === '/admin') {
+    } else if (url === "/admin") {
       this.setToReinitialiserAndSupprimer();
     }
   }
 
   private setToJouerAndCreer(): void {
     this.isListePartiesMode = true;
-    this.jouerOuReinitialiser = 'Jouer';
-    this.creerOuSupprimer = 'Créer';
+    this.jouerOuReinitialiser = "Jouer";
+    this.creerOuSupprimer = "Créer";
   }
 
   private setToReinitialiserAndSupprimer(): void {
     this.isAdminMode = true;
-    this.jouerOuReinitialiser = 'Réinitialiser';
-    this.creerOuSupprimer = 'Supprimer';
+    this.jouerOuReinitialiser = "Réinitialiser";
+    this.creerOuSupprimer = "Supprimer";
   }
 
   protected getSortedTimes(times: number[]): number[] {
@@ -119,6 +119,4 @@ export class ListePartiesComponent implements OnInit {
       return this.getDisplayTime(minutes, secondes);
   }
 
-  ngOnInit() {
-  }
 }

@@ -26,18 +26,18 @@
                     </div>  
                     <div class='col-sm-4 text-center'>
                         <h2 class='topThreeHeaders'> Solo </h2>
-                        <p> {{ getBestTime(partieSimple._timesSolo) }} </p> 
-                        <p> {{ getSecondBestTime(partieSimple._timesSolo) }} </p> 
-                        <p> {{ getThirdBestTime(partieSimple._timesSolo) }} </p>
+                        <p> {{ getBestTime(partieSimple._tempsSolo) }} </p> 
+                        <p> {{ getSecondBestTime(partieSimple._tempsSolo) }} </p> 
+                        <p> {{ getThirdBestTime(partieSimple._tempsSolo) }} </p>
                         <button mat-button class='mat-elevation-z6'
                                 [routerLink]="['/partie-solo/', partieSimple.idPartie]" routerLinkActive="router-link-active">Jouer</button>
                     </div>
                     <div class='col-sm-2'></div>
                     <div class='col-sm-4 text-center'>
                         <h2 class='topThreeHeaders'> 1v1 </h2> 
-                        <p> {{ getBestTime(partieSimple._timesOneVsOne) }} </p> 
-                        <p> {{ getSecondBestTime(partieSimple._timesOneVsOne) }} </p> 
-                        <p> {{ getThirdBestTime(partieSimple._timesOneVsOne) }} </p>
+                        <p> {{ getBestTime(partieSimple._tempsUnContreUn) }} </p> 
+                        <p> {{ getSecondBestTime(partieSimple._tempsUnContreUn) }} </p> 
+                        <p> {{ getThirdBestTime(partieSimple._tempsUnContreUn) }} </p>
                         <button mat-button class='mat-elevation-z6'> {{creerOuSupprimer}} </button>
                     </div>
                 </div>
