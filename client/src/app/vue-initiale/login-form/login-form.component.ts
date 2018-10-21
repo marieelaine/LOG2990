@@ -49,7 +49,7 @@ export class LoginFormComponent implements OnInit {
     protected onSubmit(): void {
         const username: string = this.loginForm.value.username;
         const result: User = new User(username);
-        this.userService.register(result)
+        this.userService["register"](result)
             .subscribe(
                 (data) => {
                     this.usernameTaken = false;
