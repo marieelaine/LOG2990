@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { PartieSimple } from "./dialog-simple/partie-simple";
 import { Observable } from "rxjs";
-import { PartieSimpleInterface} from "../liste-parties/liste-partie-simple/liste-partie-simple.component";
+import { ListePartieSimpleComponent} from "../liste-parties/liste-partie-simple/liste-partie-simple.component";
 
 @Injectable()
 export class PartieSimpleService {
