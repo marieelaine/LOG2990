@@ -202,14 +202,14 @@ class FenetreTP
       int width, height;
       glfwGetWindowSize( window, &width, &height );
       fen->redimensionner( width, height );
-      fen->afficherPremiereScene();
+      fen->afficherScene();
       fen->swap();
    }
    static void window_size_callback( GLFWwindow* window, int width, int height )
    {
       FenetreTP *fen = (FenetreTP*) glfwGetWindowUserPointer( window );
       fen->redimensionner( width, height );
-      fen->afficherPremiereScene();
+      fen->afficherScene();
       fen->swap();
    }
 #else
@@ -365,9 +365,7 @@ public:
    // fonction pour détruire les ressources OpenGL allouées
    void conclure( );
    // fonction appelée pour tracer la scène
-   void afficherPremiereScene( );
-   // fonction appelée pour tracer la scène
-   void afficherDeuxiemeScene( );
+   void afficherScene( );
    // fonction appelée lors d'un événement de redimensionnement
    void redimensionner( GLsizei w, GLsizei h );
    // fonction appelée lors d'un événement de clavier

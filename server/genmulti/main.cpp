@@ -8,6 +8,10 @@
 #include <thread>
 #include <chrono>
 #include <vector>
+#include <string>
+#include <bits/stdc++.h> 
+  
+using namespace std; 
 
 // variables pour l'utilisation des nuanceurs
 GLuint progBase;  // le programme de nuanceurs de base
@@ -30,10 +34,16 @@ FormePyramideBaseCarree *pyramide = NULL;
 // diverses variables d'état
 struct Etat
 {
-   char capture1[100];
-   char capture2[100];
    double dimBoite;
-} etat = { "/home/camarois/git/LOG2990/server/genmulti/genmulti1.bmp", "/home/camarois/git/LOG2990/server/genmulti/genmulti2.bmp", 10.0};
+   string theme;
+   int nombreFormes;
+   string modifications;
+   string filename;
+   string capture1;
+   string capture2;
+   string capture3;
+   string capture4;
+} etat = {};
 
 // diverses variables de creation
 struct Geometrie
@@ -65,6 +75,13 @@ double callRandomAngle()
 {
    int min = -1;
    int max = 1;
+   return rand()%((max - min) + 1) + min;
+}
+
+double callRandomNumber(int number)
+{
+   int min = 0;
+   int max = number;
    return rand()%((max - min) + 1) + min;
 }
 
@@ -108,14 +125,14 @@ struct StructPyramide
     double colorR; double colorG; double colorB;
 };
 
-std::vector<StructSphere> vecSphere;
-std::vector<StructCube> vecCube;
-std::vector<StructCylindre> vecCylindre;
-std::vector<StructCone> vecCone;
-std::vector<StructPyramide> vecPyramide;
+vector<StructSphere> vecSphere;
+vector<StructCube> vecCube;
+vector<StructCylindre> vecCylindre;
+vector<StructCone> vecCone;
+vector<StructPyramide> vecPyramide;
 
-void makeCones(){
-    for(int i = 0; i < 2; i++){
+void makeCones(int nombreFormes){
+    for(int i = 0; i < nombreFormes; i++){
         StructCone cone = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
                                 callRandomTranslate(), callRandomTranslate(), callRandomTranslate(),
@@ -125,8 +142,8 @@ void makeCones(){
     }
 }
 
-void makeCylindres(){
-    for(int i = 0; i < 2; i++){
+void makeCylindres(int nombreFormes){
+    for(int i = 0; i < nombreFormes; i++){
         StructCylindre cylindre = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
                                 callRandomTranslate(), callRandomTranslate(), callRandomTranslate(),
@@ -136,8 +153,8 @@ void makeCylindres(){
     }
 }
 
-void makeSpheres(){
-    for(int i = 0; i < 2; i++){
+void makeSpheres(int nombreFormes){
+    for(int i = 0; i < nombreFormes; i++){
         StructSphere sphere = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
                                 callRandomTranslate(), callRandomTranslate(), callRandomTranslate(),
@@ -147,8 +164,8 @@ void makeSpheres(){
     }
 }
 
-void makeCubes(){
-    for(int i = 0; i < 2; i++){
+void makeCubes(int nombreFormes){
+    for(int i = 0; i < nombreFormes; i++){
         StructCube cube = { callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
                                 callRandomTranslate(), callRandomTranslate(), callRandomTranslate(),
@@ -158,8 +175,8 @@ void makeCubes(){
     }
 }
 
-void makePyramides(){
-    for(int i = 0; i < 2; i++){
+void makePyramides(int nombreFormes){
+    for(int i = 0; i < nombreFormes; i++){
         StructPyramide pyramide = { callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
                                 callRandomTranslate(), callRandomTranslate(), callRandomTranslate(),
@@ -231,11 +248,11 @@ void chargerNuanceurs()
       ProgNuanceur::afficherLogLink( progBase );
 
       // demander la "Location" des variables
-      if ( ( locVertex = glGetAttribLocation( progBase, "Vertex" ) ) == -1 ) std::cerr << "!!! pas trouvé la \"Location\" de Vertex" << std::endl;
-      if ( ( locColor = glGetAttribLocation( progBase, "Color" ) ) == -1 ) std::cerr << "!!! pas trouvé la \"Location\" de Color" << std::endl;
-      if ( ( locmatrModel = glGetUniformLocation( progBase, "matrModel" ) ) == -1 ) std::cerr << "!!! pas trouvé la \"Location\" de matrModel" << std::endl;
-      if ( ( locmatrVisu = glGetUniformLocation( progBase, "matrVisu" ) ) == -1 ) std::cerr << "!!! pas trouvé la \"Location\" de matrVisu" << std::endl;
-      if ( ( locmatrProj = glGetUniformLocation( progBase, "matrProj" ) ) == -1 ) std::cerr << "!!! pas trouvé la \"Location\" de matrProj" << std::endl;
+      if ( ( locVertex = glGetAttribLocation( progBase, "Vertex" ) ) == -1 ) cerr << "!!! pas trouvé la \"Location\" de Vertex" << endl;
+      if ( ( locColor = glGetAttribLocation( progBase, "Color" ) ) == -1 ) cerr << "!!! pas trouvé la \"Location\" de Color" << endl;
+      if ( ( locmatrModel = glGetUniformLocation( progBase, "matrModel" ) ) == -1 ) cerr << "!!! pas trouvé la \"Location\" de matrModel" << endl;
+      if ( ( locmatrVisu = glGetUniformLocation( progBase, "matrVisu" ) ) == -1 ) cerr << "!!! pas trouvé la \"Location\" de matrVisu" << endl;
+      if ( ( locmatrProj = glGetUniformLocation( progBase, "matrProj" ) ) == -1 ) cerr << "!!! pas trouvé la \"Location\" de matrProj" << endl;
    }
 }
 
@@ -301,7 +318,7 @@ void afficherPyramide( )
 
 void genererCylindres()
 {
-   for(std::vector<StructCylindre>::iterator vec = vecCylindre.begin(); vec != vecCylindre.end(); ++vec){
+   for(vector<StructCylindre>::iterator vec = vecCylindre.begin(); vec != vecCylindre.end(); ++vec){
       matrModel.PushMatrix();
       {
          int height = vec->height;
@@ -319,7 +336,7 @@ void genererCylindres()
 
 void genererCones()
 {
-    for(std::vector<StructCone>::iterator vec = vecCone.begin(); vec != vecCone.end(); ++vec){
+    for(vector<StructCone>::iterator vec = vecCone.begin(); vec != vecCone.end(); ++vec){
       matrModel.PushMatrix();
       {
          int height = vec->height;
@@ -337,7 +354,7 @@ void genererCones()
 
 void genererSpheres()
 {
-   for(std::vector<StructSphere>::iterator vec = vecSphere.begin(); vec != vecSphere.end(); ++vec){
+   for(vector<StructSphere>::iterator vec = vecSphere.begin(); vec != vecSphere.end(); ++vec){
       matrModel.PushMatrix();
       {
          matrModel.Translate( vec->translateX, vec->translateY, vec->translateZ);
@@ -353,7 +370,7 @@ void genererSpheres()
 
 void genererCubes()
 {
-   for(std::vector<StructCube>::iterator vec = vecCube.begin(); vec != vecCube.end(); ++vec){
+   for(vector<StructCube>::iterator vec = vecCube.begin(); vec != vecCube.end(); ++vec){
       matrModel.PushMatrix();
       {
          int arreteCube = vec->arrete;
@@ -370,7 +387,7 @@ void genererCubes()
 
 void genererPyramides()
 {
-   for(std::vector<StructPyramide>::iterator vec = vecPyramide.begin(); vec != vecPyramide.end(); ++vec){
+   for(vector<StructPyramide>::iterator vec = vecPyramide.begin(); vec != vecPyramide.end(); ++vec){
       matrModel.PushMatrix();
       {
          int arretePyramide = vec->arrete;
@@ -388,11 +405,25 @@ void genererPyramides()
 
 void makeFormesGeometriques()
 {
-    makeSpheres();
-    makeCubes();
-    makePyramides();
-    makeCones();
-    makeCylindres();
+    int nombre = etat.nombreFormes;
+    cout << nombre << endl;
+    int nombreSpheres = callRandomNumber(nombre);
+    makeSpheres(nombreSpheres);
+    nombre = nombre - nombreSpheres;
+    cout << nombreSpheres << ";" <<nombre << endl;
+    int nombreCubes = callRandomNumber(nombre);
+    makeCubes(nombreCubes);
+    nombre = nombre - nombreCubes;
+    cout << nombreCubes<< ";" <<nombre << endl;
+    int nombrePyramides = callRandomNumber(nombre);
+    makePyramides(nombrePyramides);
+    nombre = nombre - nombrePyramides;
+    cout << nombrePyramides << ";" <<nombre << endl;
+    int nombreCones = callRandomNumber(nombre);
+    makeCones(nombreCones);
+    nombre = nombre - nombreCones;
+    cout << nombreCones << ";" <<nombre << endl;
+    makeCylindres(nombre);
 }
 
 void afficherFormesGeometriques()
@@ -409,11 +440,13 @@ void afficherFormesGeometriques()
    glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
 }
 
-void capturerScene(char* filepath)
+void capturerScene(string filepath)
 {
     // Make the BYTE array, factor of 3 because it's RBG.
     int width = 640;
-    int height = 480;
+    int height = 480; 
+    char charArray[100];  
+    strcpy(charArray, filepath.c_str());  
 
     BYTE* pixels = new BYTE[3 * width * height];
 
@@ -421,14 +454,14 @@ void capturerScene(char* filepath)
 
     // Convert to FreeImage format & save to file
     FIBITMAP* image = FreeImage_ConvertFromRawBits(pixels, width, height, 3 * width, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
-    FreeImage_Save(FIF_BMP, image, filepath, 0);
+    FreeImage_Save(FIF_BMP, image, charArray, 0);
 
     // Free resources
     FreeImage_Unload(image);
     delete [] pixels;
 }
 
-void FenetreTP::afficherPremiereScene()
+void FenetreTP::afficherScene()
 {
    // effacer l'ecran et le tampon de profondeur
    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -453,6 +486,25 @@ void FenetreTP::afficherPremiereScene()
 
 }
 
+void creerEtat(const char* argv[], Etat& etat){
+
+    etat.dimBoite = 10.0;
+    etat.theme =  argv[1];
+    etat.nombreFormes = atoi(argv[2]);
+    etat.modifications = argv[3];
+    etat.filename = argv[4];
+
+    string capture1 = string("/home/camarois/git/LOG2990/server/genmulti/") + etat.filename + string("_a_ori.bmp");
+    string capture2 = string("/home/camarois/git/LOG2990/server/genmulti/") + etat.filename + string("_b_ori.bmp");
+    string capture3 = string("/home/camarois/git/LOG2990/server/genmulti/") + etat.filename + string("_a_mod.bmp");
+    string capture4 = string("/home/camarois/git/LOG2990/server/genmulti/") + etat.filename + string("_b_mod.bmp");
+
+    etat.capture1 = capture1;
+    etat.capture2 = capture2; 
+    etat.capture3 = capture3;
+    etat.capture4 = capture4;
+}
+
 void FenetreTP::redimensionner( GLsizei w, GLsizei h )
 {
    glViewport( 0, 0, w, h );
@@ -473,7 +525,7 @@ void FenetreTP::clavier( TP_touche touche )
 
    case TP_l: // Utiliser LookAt ou Translate+Rotate pour placer la caméra
       camera.modeLookAt = !camera.modeLookAt;
-      std::cout << " camera.modeLookAt=" << camera.modeLookAt << std::endl;
+      cout << " camera.modeLookAt=" << camera.modeLookAt << endl;
       break;
 
    case TP_SOULIGNE:
@@ -486,7 +538,7 @@ void FenetreTP::clavier( TP_touche touche )
       break;
 
    default:
-      std::cout << " touche inconnue : " << (char) touche << std::endl;
+      cout << " touche inconnue : " << (char) touche << endl;
       imprimerTouches();
       break;
    }
@@ -518,21 +570,43 @@ void FenetreTP::sourisMolette( int x, int y )
 
 int main( int argc, const char* argv[] )
 {
-   srand(time(NULL));
-   makeFormesGeometriques();
-   FenetreTP fenetre( "INF2990" );
-   fenetre.initialiser();
+    if (argc != 5 )
+        {
+            cerr << "Erreur: Nombre invalid de parametres!\n";
+            cerr << "Template: main.exe geo 15 as nomFicher\n";
+            return 1;
+	    }
+    else {
+        creerEtat(argv, etat);
+        if (etat.theme == "geo"){
+            if(etat.nombreFormes >= 10 && etat.nombreFormes <= 200){
+                srand(time(NULL));
+                FenetreTP fenetre( "INF2990" );
+                fenetre.initialiser();
 
-   fenetre.afficherPremiereScene();
-   fenetre.swap();
-   
-   std::this_thread::sleep_for(std::chrono::seconds(1));
-   camera.modeLookAt = !camera.modeLookAt;
-   fenetre.afficherPremiereScene(); 
-   fenetre.swap();
-   
-   std::this_thread::sleep_for(std::chrono::seconds(1));
-   fenetre.conclure();
+                makeFormesGeometriques();
+
+                fenetre.afficherScene();
+                fenetre.swap();
+                
+                this_thread::sleep_for(chrono::seconds(3));
+                camera.modeLookAt = !camera.modeLookAt;
+                fenetre.afficherScene(); 
+                fenetre.swap();
+                
+                this_thread::sleep_for(chrono::seconds(3));
+                fenetre.conclure();
+            }
+            else {
+                cerr << "Erreur: Il faut choisir entre 10 et 200 formes geometriques.\n";
+                return 1;
+        }
+        }
+        else if (etat.theme == "theme"){
+            cerr << "Erreur: L'executable ne peut creer de themes pour l'instant! Essayez plutot geo.\n";
+            return 1;
+        }
+    }
 
    return 0;
 }
