@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { MatDialog, MatMenuTrigger } from '@angular/material';
+import { Component, ViewChild } from "@angular/core";
+import { MatDialog, MatMenuTrigger } from "@angular/material";
 import { DialogSimpleComponent, } from "./dialog-simple/dialog-simple.component";
 import { DialogMultipleComponent } from "./dialog-multiple/dialog-multiple.component";
 
@@ -9,36 +9,34 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'app-admin',
+  selector: "app-admin",
   templateUrl: "./admin.component.html",
   styleUrls: ["./admin.component.css"]
 })
 
-export class AdminComponent implements OnInit {
+export class AdminComponent {
 
   gameName: string;
-  @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger;
-  constructor(public dialog: MatDialog) {
+  @ViewChild("menuTrigger") menuTrigger: MatMenuTrigger;
+
+  public constructor(public dialog: MatDialog) {
   }
 
-  openDialogSimple(): void {
+  protected openDialogSimple(): void {
     this.gameName = "";
     this.dialog.open(DialogSimpleComponent, {
-      height: '433px',
-      width: '600px',
+      height: "433px",
+      width: "600px",
       data: {name: this.gameName}
     });
   }
 
-  openDialogMultiple(): void {
+  protected openDialogMultiple(): void {
     this.gameName = "";
     this.dialog.open(DialogMultipleComponent, {
-      height: '433px',
-      width: '600px',
+      height: "433px",
+      width: "600px",
       data: {name: this.gameName}
     });
-  }
-
-  public ngOnInit() {
   }
 }

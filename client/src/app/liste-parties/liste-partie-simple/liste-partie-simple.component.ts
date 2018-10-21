@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ListePartiesComponent } from '../liste-parties.component';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { ListePartiesComponent } from "../liste-parties.component";
+import { Router } from "@angular/router";
 import {ListePartieServiceService} from "../liste-partie-service.service";
-import { PartieSimple } from '../../admin/dialog-simple/partie-simple';
+import { PartieSimple } from "../../admin/dialog-simple/partie-simple";
 
 @Component({
-  selector: 'app-liste-partie-simple',
-  templateUrl: './liste-partie-simple.component.html',
-  styleUrls: ['./liste-partie-simple.component.css']
+  selector: "app-liste-partie-simple",
+  templateUrl: "./liste-partie-simple.component.html",
+  styleUrls: ["./liste-partie-simple.component.css"]
 })
 export class ListePartieSimpleComponent extends ListePartiesComponent implements OnInit {
 

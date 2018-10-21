@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { AdminComponent } from "./admin.component";
 import { MatMenuModule, MatToolbarModule, MatCardModule, MatDialogModule, MatMenuTrigger } from "@angular/material";
 import { ListePartiesComponent } from "../liste-parties/liste-parties.component";
@@ -30,29 +30,29 @@ describe("AdminComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have a menu with 2 options (native click), one simple dialog window and one multiple dialog window', async () => {
+  it("should have a menu with 2 options (native click), one simple dialog window and one multiple dialog window", async () => {
     const elem = fixture.debugElement;
-    const button = elem.query((e) => e.name === 'button');
+    const button = elem.query((e) => e.name === "button");
     expect(!!button).toBe(true);
 
     button.nativeElement.click();
     fixture.detectChanges();
-    expect(fixture.debugElement.queryAll(By.css('.menu-item')).length).toEqual(2);
+    expect(fixture.debugElement.queryAll(By.css(".menu-item")).length).toEqual(2);
 
-    const buttonSimple = fixture.debugElement.query(By.css('#simpleDialog')).nativeElement;
-    const buttonMultiple = fixture.debugElement.query(By.css('#multipleDialog')).nativeElement;
+    const buttonSimple = fixture.debugElement.query(By.css("#simpleDialog")).nativeElement;
+    const buttonMultiple = fixture.debugElement.query(By.css("#multipleDialog")).nativeElement;
 
-    spyOn(component, 'openDialogSimple');
-    buttonSimple.dispatchEvent(new Event('click'));
-
-    fixture.detectChanges();
-    expect(component.openDialogSimple).toHaveBeenCalled();
-
-    spyOn(component, 'openDialogMultiple');
-    buttonMultiple.dispatchEvent(new Event('click'));
+    const spySimple: jasmine.Spy = spyOn(component, "openDialogSimple");
+    buttonSimple.dispatchEvent(new Event("click"));
 
     fixture.detectChanges();
-    expect(component.openDialogMultiple).toHaveBeenCalled();
+    expect(spySimple).toHaveBeenCalled();
+
+    const spyMultiple: jasmine.Spy = spyOn(component, "openDialogMultiple");
+    buttonMultiple.dispatchEvent(new Event("click"));
+
+    fixture.detectChanges();
+    expect(spyMultiple).toHaveBeenCalled();
   });
 
 });
