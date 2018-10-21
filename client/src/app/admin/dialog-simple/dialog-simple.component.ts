@@ -69,6 +69,63 @@ export class DialogSimpleComponent {
     });
   }
 
+  protected obtenirImageId(identifiant: string): Observable<PartieSimple> {
+    return this.http.get<PartieSimple>(IMAGE_URL + identifiant);
+  }
+
+  protected obtenirImageName(imageName: string): Observable<PartieSimple> {
+    return this.http.get<PartieSimple>(IMAGE_URL + imageName);
+  }
+
+  protected async creerNouvelleImage(image: PartieSimple): Promise<Object> {
+    return this.http.post(URL_AJOUTER, image).toPromise();
+  }
+
+  protected setWrongImageSizeOrTypeMessage(imageInfo): void {
+    this.checkIfWrongImageSize(imageInfo) || this.checkIfWrongImageType() ?
+    this.wrongImageSizeOrTypeMessage = "*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels" :
+    this.wrongImageSizeOrTypeMessage = "";
+  }
+
+  protected onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  protected onAddSimpleGameClick(): void {
+    this.setWrongNumberOfImagesMessage();
+    this.setOutOfBoundNameLengthMessage();
+    this.closeDialogIfRequirements();
+  }
+
+  protected setWrongNumberOfImagesMessage(): void {
+    this.checkIfWrongNumberOfImages() ?
+    this.wrongNumberOfImagesMessage = "*Vous devez entrer deux images." :
+    this.wrongNumberOfImagesMessage = "";
+  }
+
+  protected setOutOfBoundNameLengthMessage(): void {
+    this.checkIfOutOfBoundNameLength() ?
+      this.outOfBoundNameLengthMessage = "*Le nom du jeu doit être entre 3 et 20 charactères." :
+      this.outOfBoundNameLengthMessage = "" ;
+  }
+
+  protected checkIfNoErrorMessage(): Boolean {
+    if (this.outOfBoundNameLengthMessage === ""
+    && this.wrongNumberOfImagesMessage === ""
+    && this.wrongImageSizeOrTypeMessage === "") {
+      return true;
+    }
+
+    return false;
+  }
+
+  protected closeDialogIfRequirements(): void {
+   if (this.checkIfNoErrorMessage()) {
+      this.onSubmit();
+      this.dialogRef.close();
+    }
+  }
+
   private addToSelectedFilesAsArrayBuffer(file: ArrayBuffer, i: number) {
     const Buffer = require("buffer/").Buffer;
     this.selectedFilesAsArrayBuffers[i] = Buffer.from(file);
@@ -99,19 +156,7 @@ export class DialogSimpleComponent {
   }
 
   private genererTempsAleatoire(): number {
-    return 312;
-  }
-
-  protected obtenirImageId(identifiant: string): Observable<PartieSimple> {
-      return this.http.get<PartieSimple>(IMAGE_URL + identifiant);
-  }
-
-  protected obtenirImageName(imageName: string): Observable<PartieSimple> {
-      return this.http.get<PartieSimple>(IMAGE_URL + imageName);
-  }
-
-  protected async creerNouvelleImage(image: PartieSimple): Promise<Object> {
-      return this.http.post(URL_AJOUTER, image).toPromise();
+    return Math.floor(Math.random() * 400) + 100;
   }
 
   private convertImageToArrayToCheckSize(file: File): void {
@@ -123,12 +168,6 @@ export class DialogSimpleComponent {
       const imageInfo = {"size": dv.getUint16(28, true), "width": dv.getUint32(18, true), "height": dv.getUint32(22, true)};
       self.setWrongImageSizeOrTypeMessage(imageInfo);
     };
-  }
-
-  protected setWrongImageSizeOrTypeMessage(imageInfo): void {
-    this.checkIfWrongImageSize(imageInfo) || this.checkIfWrongImageType() ?
-      this.wrongImageSizeOrTypeMessage = "*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels" :
-      this.wrongImageSizeOrTypeMessage = "";
   }
 
   private checkIfWrongImageSize(imageInfo): Boolean {
@@ -150,16 +189,6 @@ export class DialogSimpleComponent {
     return isWrongType;
   }
 
-  protected onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  protected onAddSimpleGameClick(): void {
-    this.setWrongNumberOfImagesMessage();
-    this.setOutOfBoundNameLengthMessage();
-    this.closeDialogIfRequirements();
-  }
-
   private checkIfWrongNumberOfImages(): Boolean {
     if (this.selectedFiles[0] === undefined || this.selectedFiles[0] === null
       || this.selectedFiles[1] === undefined || this.selectedFiles[1] === null) {
@@ -169,12 +198,6 @@ export class DialogSimpleComponent {
     return false;
   }
 
-  protected setWrongNumberOfImagesMessage(): void {
-    this.checkIfWrongNumberOfImages() ?
-    this.wrongNumberOfImagesMessage = "*Vous devez entrer deux images." :
-    this.wrongNumberOfImagesMessage = "";
-  }
-
   private checkIfOutOfBoundNameLength(): Boolean {
     if (this.data.simpleGameName === "" || this.data.simpleGameName === undefined
     || this.data.simpleGameName.length < 3 || this.data.simpleGameName.length > 20) {
@@ -182,29 +205,6 @@ export class DialogSimpleComponent {
     }
 
     return false;
-  }
-
-  protected setOutOfBoundNameLengthMessage(): void {
-    this.checkIfOutOfBoundNameLength() ?
-      this.outOfBoundNameLengthMessage = "*Le nom du jeu doit être entre 3 et 20 charactères." :
-      this.outOfBoundNameLengthMessage = "" ;
-  }
-
-  protected checkIfNoErrorMessage(): Boolean {
-    if (this.outOfBoundNameLengthMessage === ""
-    && this.wrongNumberOfImagesMessage === ""
-    && this.wrongImageSizeOrTypeMessage === "") {
-      return true;
-    }
-
-    return false;
-  }
-
-  protected closeDialogIfRequirements(): void {
-   if (this.checkIfNoErrorMessage()) {
-      this.onSubmit();
-      this.dialogRef.close();
-    }
   }
 
   // TODO : implementer le mat-error dans le html
