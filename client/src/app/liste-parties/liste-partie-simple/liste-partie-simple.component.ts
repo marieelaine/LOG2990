@@ -32,10 +32,6 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     }
   }
 
-  private reinitialiserTemps(): void {
-    // Reinitialiser les temps de la parties
-  }
-
   protected onCreerOuSupprimerClick(): void {
     if (this.isListePartiesMode) {
       // Naviguer vers partie-multijouer
@@ -46,6 +42,10 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   private supprimerPartie(): void {
     // Supprimer la partie
+  }
+
+  private reinitialiserTemps(): void {
+    // Reinitialiser les temps de la parties
   }
 
 }

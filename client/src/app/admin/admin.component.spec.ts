@@ -48,7 +48,7 @@ describe("AdminComponent", () => {
     fixture.detectChanges();
     expect(spySimple).toHaveBeenCalled();
 
-    const spyMultiple: jasmine.Spy = spyOn(component, "openDialogMultiple");
+    const spyMultiple: jasmine.Spy = spyOn<any>(component, "openDialogMultiple");
     buttonMultiple.dispatchEvent(new Event("click"));
 
     fixture.detectChanges();

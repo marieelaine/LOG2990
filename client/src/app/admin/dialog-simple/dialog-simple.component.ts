@@ -1,19 +1,19 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { DialogData } from '../admin.component';
-import { HttpClient } from '@angular/common/http';
-import {FormControl, Validators, FormGroup} from '@angular/forms';
-import { PartieSimple } from './partie-simple';
+import { Component, Inject } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { DialogData } from "../admin.component";
+import { HttpClient } from "@angular/common/http";
+import {FormControl, Validators, FormGroup} from "@angular/forms";
+import { PartieSimple } from "./partie-simple";
 import { PartieSimpleService } from "../partie-simple.service";
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
 export const IMAGE_URL: string = "http://localhost:3000/images/";
 const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
 
 @Component({
-  selector: 'app-dialog-simple',
-  templateUrl: './dialog-simple.component.html',
-  styleUrls: ['./dialog-simple.component.css'],
+  selector: "app-dialog-simple",
+  templateUrl: "./dialog-simple.component.html",
+  styleUrls: ["./dialog-simple.component.css"],
   providers: [PartieSimpleService]})
 
 export class DialogSimpleComponent {
@@ -21,14 +21,14 @@ export class DialogSimpleComponent {
   protected outOfBoundNameLengthMessage: String = "";
   protected wrongNumberOfImagesMessage: String = "";
   protected wrongImageSizeOrTypeMessage: String = "";
+  protected premiereImage: string;
+  protected deuxiemeImage: string;
   private currentImageNumber: number;
   private selectedFiles: File[] = [];
   private selectedFilesAsArrayBuffers: Buffer[] = [];
   private correctImageExtension: String = "image/bmp";
-  private titrePartie = new FormControl('', [Validators.required]);
+  private titrePartie = new FormControl("", [Validators.required]);
   private gameNameTaken: Boolean;
-  protected premiereImage: string;
-  protected deuxiemeImage: string;
 
   public constructor(
     public dialogRef: MatDialogRef<DialogSimpleComponent>,
@@ -37,7 +37,7 @@ export class DialogSimpleComponent {
     private partieSimpleService: PartieSimpleService) {
     }
 
-  public onFileSelectedImage(event, i): void {
+  protected onFileSelectedImage(event, i): void {
     this.currentImageNumber = i;
     const file = event.target.files[0] as File;
     this.selectedFiles[this.currentImageNumber] = file;
@@ -56,7 +56,7 @@ export class DialogSimpleComponent {
 
   }
 
-  public onSubmit(): void {
+  protected onSubmit(): void {
     const self = this;
     var i = 0;
     this.selectedFiles.forEach((file) => {
@@ -69,8 +69,8 @@ export class DialogSimpleComponent {
     });
   }
 
-  public addToSelectedFilesAsArrayBuffer(file: ArrayBuffer, i: number) {
-    const Buffer = require('buffer/').Buffer;
+  private addToSelectedFilesAsArrayBuffer(file: ArrayBuffer, i: number) {
+    const Buffer = require("buffer/").Buffer;
     this.selectedFilesAsArrayBuffers[i] = Buffer.from(file);
     if (i === 1) {
       const result: PartieSimple = new PartieSimple(this.data.simpleGameName, new Array<number>(),
@@ -89,19 +89,19 @@ export class DialogSimpleComponent {
     }
   }
 
-  public obtenirImageId(identifiant: string): Observable<PartieSimple> {
+  protected obtenirImageId(identifiant: string): Observable<PartieSimple> {
       return this.http.get<PartieSimple>(IMAGE_URL + identifiant);
   }
 
-  public obtenirImageName(imageName: string): Observable<PartieSimple> {
+  protected obtenirImageName(imageName: string): Observable<PartieSimple> {
       return this.http.get<PartieSimple>(IMAGE_URL + imageName);
   }
 
-  public async creerNouvelleImage(image: PartieSimple): Promise<Object> {
+  protected async creerNouvelleImage(image: PartieSimple): Promise<Object> {
       return this.http.post(URL_AJOUTER, image).toPromise();
   }
 
-  public convertImageToArrayToCheckSize(file: File): void {
+  private convertImageToArrayToCheckSize(file: File): void {
     const self: DialogSimpleComponent = this;
     const reader: FileReader = new FileReader();
     reader.readAsArrayBuffer(file);
@@ -112,9 +112,9 @@ export class DialogSimpleComponent {
     };
   }
 
-  public setWrongImageSizeOrTypeMessage(imageInfo): void {
+  protected setWrongImageSizeOrTypeMessage(imageInfo): void {
     this.checkIfWrongImageSize(imageInfo) || this.checkIfWrongImageType() ?
-      this.wrongImageSizeOrTypeMessage = "*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels" :
+      this.wrongImageSizeOrTypeMessage = "*Limage doit être de format BMP 24 bits et de taille 640 x 480 pixels" :
       this.wrongImageSizeOrTypeMessage = "";
   }
 
@@ -137,11 +137,11 @@ export class DialogSimpleComponent {
     return isWrongType;
   }
 
-  public onNoClick(): void {
+  protected onNoClick(): void {
     this.dialogRef.close();
   }
 
-  public onAddSimpleGameClick(): void {
+  protected onAddSimpleGameClick(): void {
     this.setWrongNumberOfImagesMessage();
     this.setOutOfBoundNameLengthMessage();
     this.closeDialogIfRequirements();
@@ -156,9 +156,9 @@ export class DialogSimpleComponent {
     return false;
   }
 
-  public setWrongNumberOfImagesMessage(): void {
+  protected setWrongNumberOfImagesMessage(): void {
     this.checkIfWrongNumberOfImages() ?
-    this.wrongNumberOfImagesMessage = '*Vous devez entrer deux images.' :
+    this.wrongNumberOfImagesMessage = "*Vous devez entrer deux images." :
     this.wrongNumberOfImagesMessage = "";
   }
 
@@ -171,13 +171,13 @@ export class DialogSimpleComponent {
     return false;
   }
 
-  public setOutOfBoundNameLengthMessage(): void {
+  protected setOutOfBoundNameLengthMessage(): void {
     this.checkIfOutOfBoundNameLength() ?
       this.outOfBoundNameLengthMessage = "*Le nom du jeu doit être entre 3 et 20 charactères." :
       this.outOfBoundNameLengthMessage = "" ;
   }
 
-  public checkIfNoErrorMessage(): Boolean {
+  protected checkIfNoErrorMessage(): Boolean {
     if (this.outOfBoundNameLengthMessage === ""
     && this.wrongNumberOfImagesMessage === ""
     && this.wrongImageSizeOrTypeMessage === "") {
@@ -187,7 +187,7 @@ export class DialogSimpleComponent {
     return false;
   }
 
-  public closeDialogIfRequirements(): void {
+  protected closeDialogIfRequirements(): void {
    if (this.checkIfNoErrorMessage()) {
       this.onSubmit();
       this.dialogRef.close();
