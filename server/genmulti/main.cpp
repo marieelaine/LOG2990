@@ -32,7 +32,7 @@ struct Etat
    char capture1[100];
    char capture2[100];
    double dimBoite;
-} etat = { "/home/camarois/git/tp1-pipeline/src/genmulti1.bmp", "/home/camarois/git/tp1-pipeline/src/genmulti2.bmp", 10.0};
+} etat = { "/home/camarois/git/LOG2990/server/genmulti/genmulti1.bmp", "/home/camarois/git/LOG2990/server/genmulti/genmulti2.bmp", 10.0};
 
 // diverses variables de creation
 struct Geometrie
@@ -67,6 +67,22 @@ double callRandomAngle()
    return rand()%((max - min) + 1) + min;
 }
 
+struct StructCone
+{
+    double rayon; double height;
+    double angleX; double angleY; double angleZ;
+    double translateX; double translateY; double translateZ;
+    double colorR; double colorG; double colorB;
+};
+
+struct StructCylindre
+{
+    double rayon; double height;
+    double angleX; double angleY; double angleZ;
+    double translateX; double translateY; double translateZ;
+    double colorR; double colorG; double colorB;
+};
+
 struct StructSphere
 {
     double tailleX; double tailleY; double tailleZ;
@@ -75,7 +91,41 @@ struct StructSphere
     double colorR; double colorG; double colorB;
 };
 
+struct StructCube
+{
+    double arrete;
+    double angleX; double angleY; double angleZ;
+    double translateX; double translateY; double translateZ;
+    double colorR; double colorG; double colorB;
+};
+
 std::vector<StructSphere> vecSphere;
+std::vector<StructCube> vecCube;
+std::vector<StructCylindre> vecCylindre;
+std::vector<StructCone> vecCone;
+
+void makeCone(){
+    for(int i = 0; i < 2; i++){
+        StructCone cone = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
+                                callRandomAngle(), callRandomAngle(), callRandomAngle(),
+                                callRandomTranslate(), callRandomTranslate(), callRandomTranslate(),
+                                callRandom(), callRandom(), callRandom()
+                                };
+        vecCone.push_back(cone);
+    }
+}
+
+void makeCylindre(){
+    for(int i = 0; i < 2; i++){
+        StructCylindre cylindre = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
+                                callRandomAngle(), callRandomAngle(), callRandomAngle(),
+                                callRandomTranslate(), callRandomTranslate(), callRandomTranslate(),
+                                callRandom(), callRandom(), callRandom()
+                                };
+        vecCylindre.push_back(cylindre);
+    }
+}
+
 void makeSphere(){
     for(int i = 0; i < 2; i++){
         StructSphere sphere = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
@@ -87,9 +137,19 @@ void makeSphere(){
     }
 }
 
+void makeCube(){
+    for(int i = 0; i < 2; i++){
+        StructCube cube = { callRandomSize(geo.tailleReference),
+                                callRandomAngle(), callRandomAngle(), callRandomAngle(),
+                                callRandomTranslate(), callRandomTranslate(), callRandomTranslate(),
+                                callRandom(), callRandom(), callRandom()
+                                };
+        vecCube.push_back(cube);
+    }
+}
+
 // variables pour définir le point de vue
 const GLdouble thetaInit = 0.0, phiInit = 80.0, distInit = 65.;
-const GLdouble theta2Init = 30., phi2Init = 40., dist2Init = 100.;
 class Camera
 {
 public:
@@ -99,29 +159,21 @@ public:
         {
             matrVisu.LookAt( dist*cos(glm::radians(theta))*sin(glm::radians(phi)),
                             dist*sin(glm::radians(theta))*sin(glm::radians(phi)),
-                            dist*cos(glm::radians(phi)) + 5., // <= prennez note du +5
-                            0., 0., 5.,  // <= prenez note du 5
+                            dist*cos(glm::radians(phi)) + 5.,
+                            0., 0., 5.,
                             0., 0., 1. );
         }
         else
-        {
+        {   
+            const GLdouble theta2Init = 30., phi2Init = 90., dist2Init = 65.;
             matrVisu.LoadIdentity( );
-            matrVisu.LookAt( 100*cos(glm::radians(30.))*sin(glm::radians(phi)),
-                    100*sin(glm::radians(30.))*sin(glm::radians(phi)),
-                    100*cos(glm::radians(40.)),
+            matrVisu.LookAt( dist2Init*cos(glm::radians(theta2Init))*sin(glm::radians(phi2Init)),
+                    dist2Init*sin(glm::radians(theta2Init))*sin(glm::radians(phi2Init)),
+                    dist2Init*cos(glm::radians(phi2Init)),
                     1., 0., 5.,
                     0., 0., 1. );
         }
     }
-   void definirDeuxiemePrise(double theta2, double phi2, double dist2)
-   {
-    matrVisu.LookAt( dist2*cos(glm::radians(theta2))*sin(glm::radians(phi2)),
-                    dist2*sin(glm::radians(theta2))*sin(glm::radians(phi2)),
-                    dist2*cos(glm::radians(phi2)),
-                    1., 0., 5.,
-                    0., 0., 1. );
-      
-   }
    double theta;         // angle de rotation de la caméra (coord. sphériques)
    double phi;           // angle de rotation de la caméra (coord. sphériques)
    double dist;          // distance (coord. sphériques)
@@ -221,17 +273,16 @@ void afficherCube( )
 
 void genererCylindres()
 {
-   for(int i = 0; i < 2; i++){
+   for(std::vector<StructCylindre>::iterator vec = vecCylindre.begin(); vec != vecCylindre.end(); ++vec){
       matrModel.PushMatrix();
       {
-         int height = callRandomSize(geo.tailleReference);
-         int rayon = callRandomSize(geo.tailleReference);
-         matrModel.Translate( callRandomTranslate(), callRandomTranslate(), callRandomTranslate());
-         matrModel.Rotate(geo.angleReference, callRandomAngle(), callRandomAngle(), callRandomAngle());
+         int height = vec->height;
+         int rayon = vec->rayon;
+         matrModel.Translate( vec->translateX, vec->translateY, vec->translateZ);
+         matrModel.Rotate(geo.angleReference, vec->angleX, vec->angleY, vec->angleZ);
          matrModel.Scale(rayon, rayon, height);
-         //afficherRepereCourant( ); // débogage
          glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
-         glVertexAttrib3f( locColor, callRandom(), callRandom(), callRandom());
+         glVertexAttrib3f( locColor, vec->colorR, vec->colorG, vec->colorB);
          afficherCylindre();
       }
       matrModel.PopMatrix(); glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
@@ -240,17 +291,16 @@ void genererCylindres()
 
 void genererCones()
 {
-   for(int i = 0; i < 2; i++){
+    for(std::vector<StructCone>::iterator vec = vecCone.begin(); vec != vecCone.end(); ++vec){
       matrModel.PushMatrix();
       {
-         int height = callRandomSize(geo.tailleReference);
-         int rayon = callRandomSize(geo.tailleReference);
-         matrModel.Translate( callRandomTranslate(), callRandomTranslate(), callRandomTranslate());
-         matrModel.Rotate(geo.angleReference, callRandomAngle(), callRandomAngle(), callRandomAngle());
+         int height = vec->height;
+         int rayon = vec->rayon;
+         matrModel.Translate( vec->translateX, vec->translateY, vec->translateZ);
+         matrModel.Rotate(geo.angleReference, vec->angleX, vec->angleY, vec->angleZ);
          matrModel.Scale(rayon, rayon, height);
-         //afficherRepereCourant( ); // débogage
          glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
-         glVertexAttrib3f( locColor, callRandom(), callRandom(), callRandom());
+         glVertexAttrib3f( locColor, vec->colorR, vec->colorG, vec->colorB);
          afficherCone();
       }
       matrModel.PopMatrix(); glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
@@ -265,7 +315,6 @@ void genererSpheres()
          matrModel.Translate( vec->translateX, vec->translateY, vec->translateZ);
          matrModel.Rotate(geo.angleReference, vec->angleX, vec->angleY, vec->angleZ);
          matrModel.Scale(vec->tailleX, vec->tailleY, vec->tailleZ);
-         //afficherRepereCourant( ); // débogage
          glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
          glVertexAttrib3f( locColor, vec->colorR, vec->colorG, vec->colorB);
          afficherSphere();
@@ -276,16 +325,15 @@ void genererSpheres()
 
 void genererCubes()
 {
-   for(int i = 0; i < 2; i++){
+   for(std::vector<StructCube>::iterator vec = vecCube.begin(); vec != vecCube.end(); ++vec){
       matrModel.PushMatrix();
       {
-         int arreteCube = callRandomSize(geo.tailleReference);
-         matrModel.Translate( callRandomTranslate(), callRandomTranslate(), callRandomTranslate());
-         matrModel.Rotate(geo.angleReference, callRandomAngle(), callRandomAngle(), callRandomAngle());
+         int arreteCube = vec->arrete;
+         matrModel.Translate( vec->translateX, vec->translateY, vec->translateZ);
+         matrModel.Rotate(geo.angleReference, vec->angleX, vec->angleY, vec->angleZ);
          matrModel.Scale(arreteCube, arreteCube, arreteCube);
-         //afficherRepereCourant( ); // débogage
          glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
-         glVertexAttrib3f( locColor, callRandom(), callRandom(), callRandom());
+         glVertexAttrib3f( locColor, vec->colorR, vec->colorG, vec->colorB);
          afficherCube();
       }
       matrModel.PopMatrix(); glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
@@ -295,11 +343,13 @@ void genererCubes()
 void makeFormesGeometriques()
 {
     makeSphere();
+    makeCube();
+    makeCone();
+    makeCylindre();
 }
 
 void afficherFormesGeometriques()
 {
-   // afficherRepereCourant( ); // débogage
    matrModel.PushMatrix();{ // sauvegarder la tranformation courante
 
       genererSpheres();
@@ -308,7 +358,7 @@ void afficherFormesGeometriques()
       genererCones();
 
    }matrModel.PopMatrix(); glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
-   glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel ); // informer ...
+   glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
 }
 
 void capturerScene(char* filepath)
@@ -348,27 +398,11 @@ void FenetreTP::afficherPremiereScene()
    glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel ); // informer la carte graphique des changements faits à la matrice
 
    afficherFormesGeometriques();
-   capturerScene(etat.capture1);
-
-}
-
-void FenetreTP::afficherDeuxiemeScene()
-{
-   // effacer l'ecran et le tampon de profondeur
-   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-   glUseProgram( progBase );
-   // définir le pipeline graphique
-   matrProj.Perspective( 40.0, (GLdouble) largeur_ / (GLdouble) hauteur_, 0.1, 90.0 );
-   glUniformMatrix4fv( locmatrProj, 1, GL_FALSE, matrProj ); // informer la carte graphique des changements faits à la matrice
-
-   camera.definirDeuxiemePrise(theta2Init, phi2Init, dist2Init);
-   glUniformMatrix4fv( locmatrVisu, 1, GL_FALSE, matrVisu ); // informer la carte graphique des changements faits à la matrice
    
-   matrModel.LoadIdentity();
-   glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel ); // informer la carte graphique des changements faits à la matrice
+   if (camera.modeLookAt)
+    capturerScene(etat.capture1);
+   else capturerScene(etat.capture2);
 
-   capturerScene(etat.capture2);
 }
 
 void FenetreTP::redimensionner( GLsizei w, GLsizei h )
@@ -440,15 +474,16 @@ int main( int argc, const char* argv[] )
    makeFormesGeometriques();
    FenetreTP fenetre( "INF2990" );
    fenetre.initialiser();
+
    fenetre.afficherPremiereScene();
    fenetre.swap();
-
-   bool boucler = true;
-   while ( boucler )
-   {
-      boucler = fenetre.gererEvenement();
-   }
-
+   
+   std::this_thread::sleep_for(std::chrono::seconds(1));
+   camera.modeLookAt = !camera.modeLookAt;
+   fenetre.afficherPremiereScene(); 
+   fenetre.swap();
+   
+   std::this_thread::sleep_for(std::chrono::seconds(1));
    fenetre.conclure();
 
    return 0;
