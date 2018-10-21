@@ -25,6 +25,7 @@ FormeCube *cube = NULL;
 FormeSphere *sphere = NULL;
 FormeCylindre *cylindre = NULL;
 FormeCylindre *cone = NULL;
+FormePyramideBaseCarree *pyramide = NULL;
 
 // diverses variables d'état
 struct Etat
@@ -99,12 +100,21 @@ struct StructCube
     double colorR; double colorG; double colorB;
 };
 
+struct StructPyramide
+{
+    double arrete;
+    double angleX; double angleY; double angleZ;
+    double translateX; double translateY; double translateZ;
+    double colorR; double colorG; double colorB;
+};
+
 std::vector<StructSphere> vecSphere;
 std::vector<StructCube> vecCube;
 std::vector<StructCylindre> vecCylindre;
 std::vector<StructCone> vecCone;
+std::vector<StructPyramide> vecPyramide;
 
-void makeCone(){
+void makeCones(){
     for(int i = 0; i < 2; i++){
         StructCone cone = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
@@ -115,7 +125,7 @@ void makeCone(){
     }
 }
 
-void makeCylindre(){
+void makeCylindres(){
     for(int i = 0; i < 2; i++){
         StructCylindre cylindre = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
@@ -126,7 +136,7 @@ void makeCylindre(){
     }
 }
 
-void makeSphere(){
+void makeSpheres(){
     for(int i = 0; i < 2; i++){
         StructSphere sphere = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
@@ -137,7 +147,7 @@ void makeSphere(){
     }
 }
 
-void makeCube(){
+void makeCubes(){
     for(int i = 0; i < 2; i++){
         StructCube cube = { callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
@@ -145,6 +155,17 @@ void makeCube(){
                                 callRandom(), callRandom(), callRandom()
                                 };
         vecCube.push_back(cube);
+    }
+}
+
+void makePyramides(){
+    for(int i = 0; i < 2; i++){
+        StructPyramide pyramide = { callRandomSize(geo.tailleReference),
+                                callRandomAngle(), callRandomAngle(), callRandomAngle(),
+                                callRandomTranslate(), callRandomTranslate(), callRandomTranslate(),
+                                callRandom(), callRandom(), callRandom()
+                                };
+        vecPyramide.push_back(pyramide);
     }
 }
 
@@ -234,6 +255,7 @@ void FenetreTP::initialiser()
    sphere = new FormeSphere( 0.25, 8, 8, true );
    cylindre = new FormeCylindre( 1.0, 1.0, 1.0, 16, 1, true );
    cone = new FormeCylindre( 1.0, 0.0, 1.0, 16, 1, true );
+   pyramide = new FormePyramideBaseCarree(1.0, true);
 }
 
 void FenetreTP::conclure()
@@ -242,6 +264,7 @@ void FenetreTP::conclure()
    delete sphere;
    delete cylindre;
    delete cone;
+   delete pyramide;
 }
 
 // affiche la position courante du repère (pour débogage)
@@ -269,6 +292,11 @@ void afficherSphere( )
 void afficherCube( )
 {
    cube->afficher();
+}
+
+void afficherPyramide( )
+{
+   pyramide->afficher();
 }
 
 void genererCylindres()
@@ -340,12 +368,31 @@ void genererCubes()
    }
 }
 
+void genererPyramides()
+{
+   for(std::vector<StructPyramide>::iterator vec = vecPyramide.begin(); vec != vecPyramide.end(); ++vec){
+      matrModel.PushMatrix();
+      {
+         int arretePyramide = vec->arrete;
+         matrModel.Translate( vec->translateX, vec->translateY, vec->translateZ);
+         matrModel.Rotate(geo.angleReference, vec->angleX, vec->angleY, vec->angleZ);
+         matrModel.Scale(arretePyramide, arretePyramide, arretePyramide);
+         glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
+         glVertexAttrib3f( locColor, vec->colorR, vec->colorG, vec->colorB);
+         afficherPyramide();
+      }
+      matrModel.PopMatrix(); glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
+   }
+}
+
+
 void makeFormesGeometriques()
 {
-    makeSphere();
-    makeCube();
-    makeCone();
-    makeCylindre();
+    makeSpheres();
+    makeCubes();
+    makePyramides();
+    makeCones();
+    makeCylindres();
 }
 
 void afficherFormesGeometriques()
@@ -356,6 +403,7 @@ void afficherFormesGeometriques()
       genererCubes();
       genererCylindres();
       genererCones();
+      genererPyramides();
 
    }matrModel.PopMatrix(); glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
    glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );

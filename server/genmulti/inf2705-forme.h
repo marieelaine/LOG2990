@@ -702,6 +702,132 @@ private:
 
 //////////
 
+class FormePyramideBaseCarree : public FormeBase2705
+{
+public:
+   FormePyramideBaseCarree( GLfloat taille = 1.0,
+              bool plein = true )
+      : FormeBase2705( plein )
+   {
+
+      static GLint faces[5][4] =
+      {
+         { 2, 1, 0, 0 },
+         { 4, 3, 0, 1 },
+         { 4, 2, 1, 1 },
+         { 4, 3, 2, 2 },
+         { 3, 2, 0, 0 }
+      };
+      static GLfloat n[5][3] =
+      {
+         {  0.0,  0.0, -1.0 },
+         {  0.0, -1.0,  0.0 },
+         {  1.0,  0.0,  0.0 },
+         {  0.0,  0.0,  1.0 },
+         { -1.0,  0.0,  0.0 }
+      };
+
+      GLfloat v[5][3];
+      v[3][0] = v[0][0] = -taille / 2.;
+      v[4][0] = v[1][0] = +taille / 2.;
+      v[2][0] = 0.0;
+
+      v[4][1] = v[3][1] = v[1][1] = v[0][1] = -taille / 2.;
+      v[2][1] = +taille / 2.;
+      
+      v[1][2] = v[0][2] = -taille / 2.;
+      v[4][2] = v[3][2] = +taille / 2.;
+      
+      GLfloat t[5][2];
+      t[3][0] = t[0][0] = 0.;
+      t[4][0] = t[2][0] = t[1][0] = 1.;
+      t[3][1] = t[0][1] = t[1][1] = t[4][1] = 0.;
+      t[2][1] = 1.;
+
+      if ( obtenirAttributs( ) )
+      {
+         // initialisation
+         const int TAILLEMAX = 10000;
+         assert( TAILLEMAX > 6*6 );
+         GLfloat sommets[3*TAILLEMAX], normales[3*TAILLEMAX], texcoord[2*TAILLEMAX];
+         int nsommets = 0;
+
+         if ( plein_ )
+         {
+            for ( int i = 0 ; i < 5 ; ++i )
+            {
+               AJOUTE( v[faces[i][0]][0], v[faces[i][0]][1], v[faces[i][0]][2], n[i][0], n[i][1], n[i][2], t[faces[i][0]][0], t[faces[i][0]][1] );
+               AJOUTE( v[faces[i][1]][0], v[faces[i][1]][1], v[faces[i][1]][2], n[i][0], n[i][1], n[i][2], t[faces[i][1]][0], t[faces[i][1]][1] );
+               AJOUTE( v[faces[i][2]][0], v[faces[i][2]][1], v[faces[i][2]][2], n[i][0], n[i][1], n[i][2], t[faces[i][2]][0], t[faces[i][2]][1] );
+               AJOUTE( v[faces[i][2]][0], v[faces[i][2]][1], v[faces[i][2]][2], n[i][0], n[i][1], n[i][2], t[faces[i][2]][0], t[faces[i][2]][1] );
+               AJOUTE( v[faces[i][3]][0], v[faces[i][3]][1], v[faces[i][3]][2], n[i][0], n[i][1], n[i][2], t[faces[i][3]][0], t[faces[i][3]][1] );
+               AJOUTE( v[faces[i][0]][0], v[faces[i][0]][1], v[faces[i][0]][2], n[i][0], n[i][1], n[i][2], t[faces[i][0]][0], t[faces[i][0]][1] );
+            }
+         }
+         else
+         {
+            for ( int i = 0 ; i < 5 ; ++i )
+            {
+               AJOUTE( v[faces[i][0]][0], v[faces[i][0]][1], v[faces[i][0]][2], n[i][0], n[i][1], n[i][2], t[faces[i][0]][0], t[faces[i][0]][1] );
+               AJOUTE( v[faces[i][1]][0], v[faces[i][1]][1], v[faces[i][1]][2], n[i][0], n[i][1], n[i][2], t[faces[i][1]][0], t[faces[i][1]][1] );
+               AJOUTE( v[faces[i][2]][0], v[faces[i][2]][1], v[faces[i][2]][2], n[i][0], n[i][1], n[i][2], t[faces[i][2]][0], t[faces[i][2]][1] );
+               AJOUTE( v[faces[i][3]][0], v[faces[i][3]][1], v[faces[i][3]][2], n[i][0], n[i][1], n[i][2], t[faces[i][3]][0], t[faces[i][3]][1] );
+            }
+         }
+         nsommets_ = nsommets;
+         assert( TAILLEMAX >= nsommets );
+
+         // remplir VBOs
+         glBindVertexArray( vao );
+         glGenBuffers( 3, vbo );
+
+         glBindBuffer( GL_ARRAY_BUFFER, vbo[0] );
+         glBufferData( GL_ARRAY_BUFFER, 3*nsommets*sizeof(GLfloat), NULL, GL_STATIC_DRAW );
+         glBufferSubData( GL_ARRAY_BUFFER, 0, 3*nsommets*sizeof(GLfloat), sommets );
+         glVertexAttribPointer( locVertex, 3, GL_FLOAT, GL_FALSE, 0, 0 );
+         glEnableVertexAttribArray(locVertex);
+
+         if ( locNormal >= 0 )
+         {
+            glBindBuffer( GL_ARRAY_BUFFER, vbo[1] );
+            glBufferData( GL_ARRAY_BUFFER, 3*nsommets*sizeof(GLfloat), NULL, GL_STATIC_DRAW );
+            glBufferSubData( GL_ARRAY_BUFFER, 0, 3*nsommets*sizeof(GLfloat), normales );
+            glVertexAttribPointer( locNormal, 3, GL_FLOAT, GL_FALSE, 0, 0 );
+            glEnableVertexAttribArray(locNormal);
+         }
+
+         if ( locTexCoord >= 0 )
+         {
+            glBindBuffer( GL_ARRAY_BUFFER, vbo[2] );
+            glBufferData( GL_ARRAY_BUFFER, 2*nsommets*sizeof(GLfloat), NULL, GL_STATIC_DRAW );
+            glBufferSubData( GL_ARRAY_BUFFER, 0, 2*nsommets*sizeof(GLfloat), texcoord );
+            glVertexAttribPointer( locTexCoord, 2, GL_FLOAT, GL_FALSE, 0, 0 );
+            glEnableVertexAttribArray(locTexCoord);
+         }
+
+         glBindVertexArray( 0 );
+      }
+   }
+   ~FormePyramideBaseCarree()
+   {
+      glDeleteBuffers( 3, vbo );
+   }
+   void afficher()
+   {
+      glBindVertexArray( vao );
+      if ( plein_ )
+         glDrawArrays( GL_TRIANGLES, 0, nsommets_ );
+      else
+         for ( int i = 0 ; i < 6 ; ++i ) glDrawArrays( GL_LINE_LOOP, 4*i, 4 );
+      glBindVertexArray( 0 );
+   }
+private:
+   GLint nsommets_;
+   GLuint vbo[3];
+};
+
+////////
+
 class FormeSphere : public FormeBase2705
 {
 public:
