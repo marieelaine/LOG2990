@@ -24,7 +24,7 @@ export class LoginFormComponent implements OnInit {
     public loginForm: FormGroup;
     public usernameTaken: Boolean;
 
-    // Parametres de particles background
+    // Paramètres de particles background
     myStyle: object = {};
     myParams: object = {};
     width: number = 100;
@@ -37,7 +37,12 @@ export class LoginFormComponent implements OnInit {
         this.loginForm = this.createFormGroup();
     }
 
-    public onSubmit(): void {
+    public ngOnInit(): void {
+        this.myStyle = myStyle;
+        this.myParams = myParams;
+    }
+
+    protected onSubmit(): void {
         const username: string = this.loginForm.value.username;
         const result: User = new User(username);
         this.userService.register(result)
@@ -53,7 +58,7 @@ export class LoginFormComponent implements OnInit {
                 });
     }
 
-    public createFormGroup(): FormGroup {
+    private createFormGroup(): FormGroup {
         return new FormGroup({
             username: new FormControl("", [
                 Validators.required,
@@ -64,24 +69,19 @@ export class LoginFormComponent implements OnInit {
         });
     }
 
-    public createCookie(username: string): void {
+    private createCookie(username: string): void {
         this.cookieService.set("username", username);
     }
 
-    public ngOnInit(): void {
-        this.myStyle = myStyle;
-        this.myParams = myParams;
-    }
-
-    public obtenirUserId(identifiant: string): Observable<User> {
+    private obtenirUserId(identifiant: string): Observable<User> {
         return this.http.get<User>(USER_URL + identifiant);
     }
 
-    public obtenirUserName(username: string): Observable<User> {
+    private obtenirUserName(username: string): Observable<User> {
         return this.http.get<User>(USER_URL + username);
     }
 
-    public async creerNouveauUser(user: User): Promise<Object> {
+    private async creerNouveauUser(user: User): Promise<Object> {
         return this.http.post(URL_AJOUTER, user).toPromise();
     }
 }
