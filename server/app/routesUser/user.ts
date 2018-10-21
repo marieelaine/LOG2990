@@ -31,6 +31,18 @@ export module RouteUser {
             this.modelUser = this.baseDeDonnees.mongoose.model("users", this.schema);
         }
 
+        public async requeteAjouterUser(req: Request, res: Response): Promise<void> {
+            res.send(await this.ajouterUser(req.body, res));
+        }
+
+        public async requeteUserId(req: Request, res: Response): Promise<void> {
+            res.send(await this.obtenirUserId(req.params.id));
+        }
+
+        public async requeteDeleteUser(req: Request, res: Response): Promise<void> {
+            res.send(await this.deleteUser(req.params.id, res));
+        }
+
         private async ajouterUser(user: {}, res: Response): Promise<Response> {
             const usager: Document = new this.modelUser(user);
             try {
@@ -72,16 +84,5 @@ export module RouteUser {
             return users[0]._id;
         }
 
-        public async requeteAjouterUser(req: Request, res: Response): Promise<void> {
-            res.send(await this.ajouterUser(req.body, res));
-        }
-
-        public async requeteUserId(req: Request, res: Response): Promise<void> {
-            res.send(await this.obtenirUserId(req.params.id));
-        }
-
-        public async requeteDeleteUser(req: Request, res: Response): Promise<void> {
-            res.send(await this.deleteUser(req.params.id, res));
-        }
     }
 }
