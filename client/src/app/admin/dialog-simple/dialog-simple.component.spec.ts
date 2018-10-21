@@ -45,7 +45,7 @@ describe("DialogSimpleComponent", () => {
 
   it("should return false if at least one error message is not null", () => {
     component["outOfBoundNameLengthMessage"] = "Error message";
-    expect(component.["checkIfNoErrorMessage"]()).toBe(false);
+    expect(component["checkIfNoErrorMessage"]()).toBe(false);
   });
 
   it("should set outOfBoundNameLengthMessage if name does not meet requierments", () => {
