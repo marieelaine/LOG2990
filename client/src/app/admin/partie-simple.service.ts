@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { PartieSimple } from "./dialog-simple/partie-simple";
 import { Observable } from "rxjs";
-import { ListePartieSimpleComponent} from "../liste-parties/liste-partie-simple/liste-partie-simple.component";
 
 @Injectable()
 export class PartieSimpleService {
@@ -12,14 +11,15 @@ export class PartieSimpleService {
 
     constructor(private _http: HttpClient) { }
 
-    public register(partieSimple: PartieSimple): Observable<Object> {
+    private register(partieSimple: PartieSimple): Observable<Object> {
         return this._http.post(this.AJOUTER_URL, partieSimple, {
             observe: "body",
             headers: new HttpHeaders().append("Content-Type", "application/json")
         });
     }
 
-    public delete(partieSimple: string): Promise<Object> {
-        return this._http.delete(this.SUPPRIMER_URL + partieSimple).toPromise();
-    }
+    // TODO : pas utilise
+    // private delete(partieSimple: string): Promise<Object> {
+    //     return this._http.delete(this.SUPPRIMER_URL + partieSimple).toPromise();
+    // }
 }
