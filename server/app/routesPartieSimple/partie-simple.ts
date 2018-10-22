@@ -1,3 +1,6 @@
+import * as fs from "fs";
+import * as fsx from "fs-extra";
+import * as util from "util";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
 import { RouteBaseDeDonnees } from "../routesBaseDeDonnees/baseDeDonnees";
@@ -58,15 +61,51 @@ export class RoutePartieSimple {
             });
         }
 
-    private async ajouterPartieSimple(partie: {}, res: Response): Promise<Response> {
-        const image: Document = new this.modelPartie(partie);
-        try {
-            await image.save();
+    private async ajouterPartieSimple(partie: PartieSimpleInterface, res: Response): Promise<PartieSimpleInterface> {
+        const buffers: Array<Buffer> = [partie._image1, partie._image2];
+        partie._imageDiff = await this.getImageDiffAsBuffer(buffers);
 
-            return res.status(201).json(partie);
-        } catch (err) {
-            return res.status(501).json(err);
+        const image: Document = new this.modelPartie(partie);
+        await image.save();
+
+        return partie;
+    }
+
+    private async getImageDiffAsBuffer(buffers: Array<Buffer>): Promise<Buffer> {
+        await this.generateImageDiff(buffers);
+
+        return new Buffer("");
+    }
+
+    // private convertImageToBuffer(image: File): Buffer {
+    //     return new Buffer("");
+    // }
+
+    private async generateImageDiff(buffers: Array<Buffer>): Promise<void> {
+        await this.addImagesToDirectory(buffers);
+        // Runner le script
+    }
+
+    private async addImagesToDirectory(buffers: Array<Buffer>): Promise<void> {
+        await this.makeImagesDirectory();
+        const writeFilePromise: Function = util.promisify(fs.writeFile);
+        let i: number = 1;
+        for (const buf of buffers) {
+            await writeFilePromise("Images/image" + i.toString() + ".bmp", new Buffer(buf));
+            i++;
         }
+    }
+
+    private async makeImagesDirectory(): Promise<void> {
+        const dir: string = "Images";
+        const mkdirPromise: Function = util.promisify(fs.mkdir);
+        const existsPromise: Function = util.promisify(fs.exists);
+
+        if (existsPromise(dir)) {
+            await fsx.remove(dir);
+        }
+
+        await mkdirPromise(dir);
     }
 
     private async deletePartieSimple(nomPartie: String, res: Response): Promise<Response> {
@@ -112,7 +151,13 @@ export class RoutePartieSimple {
     }
 
     public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
-        res.send(await this.ajouterPartieSimple(req.body, res));
+        try {
+            await this.ajouterPartieSimple(req.body, res);
+            // res.status(201).json(partie);
+            res.status(201).json({});
+        } catch (err) {
+            res.status(501).json(err);
+        }
     }
 
     public async requetePartieSimpleId(req: Request, res: Response): Promise<void> {
