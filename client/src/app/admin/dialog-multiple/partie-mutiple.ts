@@ -4,17 +4,24 @@ export class PartieMultiple {
     private _tempsSolo: Array<number>;
     private _tempsUnContreUn: Array<number>;
     private _image1: Buffer;
+    private _image3D1: Buffer;
     private _image2: Buffer;
-    private _imageDiff: Buffer;
+    private _image3D2: Buffer;
+    private _imageDiff1: Buffer;
+    private _imageDiff2: Buffer;
 
     public constructor( nomPartie: string, tempsSolo: Array<number>, tempsUnContreUn: Array<number>,
-                        image1: Buffer, image2: Buffer, imageDiff: Buffer, id?: string) {
+                        image1: Buffer, image3D1: Buffer, image2: Buffer, image3D2: Buffer,
+                        imageDiff1: Buffer, imageDiff2: Buffer, id?: string) {
       this._nomPartie = nomPartie;
       this._tempsSolo = tempsSolo;
       this._tempsUnContreUn = tempsUnContreUn;
       this._image1 = image1;
+      this._image3D1 = image3D1;
       this._image2 = image2;
-      this._imageDiff = imageDiff;
+      this._image3D2 = image3D2;
+      this._imageDiff1 = imageDiff1;
+      this._imageDiff2 = imageDiff2;
       if (id) {
           this._id = id;
       }
@@ -46,14 +53,29 @@ export class PartieMultiple {
       return this._image1;
     }
 
+    public get image3D1(): Buffer {
+
+      return this._image3D1;
+    }
+
     public get image2(): Buffer {
 
       return this._image2;
     }
 
-    public get imageDiff(): Buffer {
+    public get image3D2(): Buffer {
 
-      return this._imageDiff;
+      return this._image3D2;
+    }
+
+    public get imageDiff1(): Buffer {
+
+      return this._imageDiff1;
+    }
+
+    public get imageDiff2(): Buffer {
+
+      return this._imageDiff2;
     }
 
   }
