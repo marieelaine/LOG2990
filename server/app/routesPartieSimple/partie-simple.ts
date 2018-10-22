@@ -1,8 +1,8 @@
-import * as fs from "fs";
-import * as fsx from "fs-extra";
-import * as util from "util";
+// import * as fs from "fs";
+// import * as fsx from "fs-extra";
+// import * as util from "util";
+import * as p from "path";
 import { spawn } from "child_process";
-// import { PythonShell } from "python-shell";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
 import { RouteBaseDeDonnees } from "../routesBaseDeDonnees/baseDeDonnees";
@@ -87,11 +87,28 @@ export class RoutePartieSimple {
         // Runner le script
         // const child_process = require("child_process");
         // child_process.exec("python ./bmpdiff/bmpdiff.py ../../Images/image1.bmp ../../Images/image2.bmp ../../Images/image3.bmp");
+        const pyScript = p.resolve("app/routesPartieSimple/bmpdiff/bmpdiff.py");
+        const imageOri1 = p.resolve("Images/image1.bmp");
+        const imageOri2 = p.resolve("Images/image2.bmp");
+        const imageMod = p.resolve("Images/image3.bmp");
+        
+        const args: string[] = [imageOri1,imageOri2,imageMod];
+        args.unshift(pyScript);
+        const child = spawn('python', args);
 
-        const bmpDiffPath: string = "./bmpdiff/bmpdiff.py";
-        const args: string[] = ["../../Images/image1.bmp", "../../Images/image2.bmp", "../../Images/image3.bmp"];
-        args.unshift(bmpDiffPath);
-        spawn("python", args);
+        child.stdout.on('data', (data) => {
+          console.log(`stdout: ${data}`);
+        });
+        
+        child.stderr.on('data', (data) => {
+          console.log(`stderr: ${data}`);
+        });
+        
+        child.on('close', (code) => {
+          console.log(`child process exited with code ${code}`);
+        });
+        
+          
 
         // const options = {
         //     args: ["../../Images/image1.bmp", "../../Images/image2.bmp", "../../Images/image3.bmp"]
