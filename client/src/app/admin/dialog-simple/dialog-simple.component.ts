@@ -89,10 +89,6 @@ export class DialogSimpleComponent extends DialogAbstrait {
     this.wrongImageSizeOrTypeMessage = "";
   }
 
-  protected onNoClick(): void {
-    this.dialogRef.close();
-  }
-
   protected onAddSimpleGameClick(): void {
     this.setWrongNumberOfImagesMessage();
     this.setOutOfBoundNameLengthMessage();

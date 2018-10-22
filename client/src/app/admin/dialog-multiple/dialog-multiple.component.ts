@@ -1,8 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { ListePartiesComponent } from '../../liste-parties/liste-parties.component';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { DialogData } from '../admin.component';
 import { PartieMultipleInterface } from '../../liste-parties/liste-partie-multiple/liste-partie-multiple.component';
+import { DialogAbstrait } from '../dialog-abstrait';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { DialogData } from '../admin.component';
+import { HttpClient } from '@angular/common/http';
+import { PartieSimpleService } from '../partie-simple.service';
 
 @Component({
   selector: 'app-dialog-multiple',
@@ -15,10 +18,11 @@ export class DialogMultipleComponent {
   partieMultiple: PartieMultipleInterface;
   listeParties: ListePartiesComponent;
 
-  constructor(
+  public constructor(
     public dialogRef: MatDialogRef<DialogMultipleComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-      this.errorMessage = "";
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private http: HttpClient,
+    private partieSimpleService: PartieSimpleService) {
     }
 
   onNoClick(): void {
