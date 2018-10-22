@@ -45,6 +45,16 @@
     margin-right:3%;
 }
 
+#firstImageFrame, #secondImageFrame
+{
+    height: 105px;
+    width: 140px;
+    border: 2px solid #a2a2a2;
+    border-radius: 7px;
+    fill: #a2a2a2;
+    margin: 0 auto;
+}
+
 #uploadImage1
 {
     position:absolute;
@@ -63,8 +73,11 @@
 
 #firstImage, #secondImage
 {
-    height:101px;
-    width:136px;
+    height:105px;
+    width:140px;
+    border: 2px solid #a2a2a2;
+    border-radius: 7px;
+    margin: 0 auto;
 }
 
 .mat-button{
@@ -76,14 +89,6 @@
     margin:0;
 }
 
-.imageFrame
-{
-    margin:auto;
-    border: 2px solid gray;
-    height:105px;
-    width: 140px;
-}
-
 /* #maskHeigth
 {
     position: relative;
@@ -91,7 +96,7 @@
     left:8px;
     width:90%;
     height:101px;
-    background-color: #dadada;
+    background-color: black;
 }
 
 #maskWidth
@@ -101,7 +106,7 @@
     right:4px;
     width:200px;
     height:85%;
-    background-color: #dadada;
+    background-color: black;
 } */
 
 mat-form-field
