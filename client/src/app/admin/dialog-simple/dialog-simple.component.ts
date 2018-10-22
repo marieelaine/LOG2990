@@ -124,6 +124,10 @@ export class DialogSimpleComponent extends DialogAbstrait {
     }
   }
 
+  protected onNoClick(): void {
+    this.dialogRef.close();
+  }
+
   private addToSelectedFilesAsArrayBuffer(file: ArrayBuffer, i: number) {
     const Buffer = require("buffer/").Buffer;
     this.selectedFilesAsArrayBuffers[i] = Buffer.from(file);

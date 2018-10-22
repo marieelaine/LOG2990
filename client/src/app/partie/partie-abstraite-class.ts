@@ -5,15 +5,17 @@ export abstract class PartieAbstraiteClass {
     protected blur: boolean = true;
     protected chrono: ChronoComponent = new ChronoComponent();
     protected timer: number = 0;
-    message = 'Cliquez pour commencer';
-    differenceRestentes = 7;
-    partieCommence = false;
+    protected message = "Cliquez pour commencer";
+    protected differenceRestantes = 7;
+    protected partieCommence = false;
 
-    constructor() { }
+    public constructor() {
 
-    protected start() {
+    }
+
+    protected start(): void {
         this.partieCommence = true;
-        this.message = `Il reste ${this.differenceRestentes} differences a trouver`;
+        this.message = "Il reste ${this.differenceRestantes} différences à trouver";
         this.blur = false;
         const button = document.getElementById("StartButton");
         // tslint:disable-next-line:no-non-null-assertion
@@ -21,12 +23,12 @@ export abstract class PartieAbstraiteClass {
         this.chrono.startTimer();
     }
 
-    trouverDifference() {
+    protected trouverDifference(): void {
         if (this.partieCommence) {
-            this.differenceRestentes -= 1;
-            this.message = `Il reste ${this.differenceRestentes} differences a trouver`;
+            this.differenceRestantes -= 1;
+            this.message = "Il reste ${this.differenceRestantes} differences a trouver";
         }
-        if (this.differenceRestentes === 0) {
+        if (this.differenceRestantes === 0) {
             this.partieCommence = false;
             this.terminerPartie();
         }

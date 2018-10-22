@@ -14,11 +14,11 @@
     </div>
 
     <div>
-        <div *ngFor="let image of imageComp">
+        <div *ngFor="">
             <div class="col-sm-6">
                 <mat-card class="container-fluid test">
                     <div class="row">
-                        <img [ngClass]="{'blurImg': blur}" (click)="trouverDifference()" src={{image.path}} alt="">
+                        <img [ngClass]="{'blurImg': blur}" (click)="trouverDifference()" src="" alt="">
                     </div>
                 </mat-card>
             </div>
