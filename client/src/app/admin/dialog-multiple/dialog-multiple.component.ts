@@ -31,4 +31,8 @@ export class DialogMultipleComponent extends DialogAbstrait {
   protected onSubmit(): void {
     // a faire
   }
+
+  protected onThemeClickButton(): void {
+    console.log("bonjour du bouton geometrique");
+  }
 }
