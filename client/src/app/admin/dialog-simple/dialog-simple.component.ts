@@ -32,11 +32,11 @@ export class DialogSimpleComponent extends DialogAbstrait {
   private gameNameTaken: Boolean;
 
   public constructor(
-    public dialogRef: MatDialogRef<DialogSimpleComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private http: HttpClient,
+    dialogRef: MatDialogRef<DialogSimpleComponent>,
+    @Inject(MAT_DIALOG_DATA) data: DialogData,
+    http: HttpClient,
     private partieSimpleService: PartieSimpleService) {
-      super();
+      super(dialogRef, data, http);
     }
 
   protected onFileSelectedImage(event, i): void {

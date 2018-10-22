@@ -12,18 +12,26 @@ import { PartieSimpleService } from '../partie-simple.service';
   templateUrl: './dialog-multiple.component.html',
   styleUrls: ['./dialog-multiple.component.css']
 })
-export class DialogMultipleComponent {
+export class DialogMultipleComponent extends DialogAbstrait {
 
   errorMessage: string;
   partieMultiple: PartieMultipleInterface;
   listeParties: ListePartiesComponent;
 
   public constructor(
-    public dialogRef: MatDialogRef<DialogMultipleComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private http: HttpClient,
-    private partieSimpleService: PartieSimpleService) {
+    dialogRef: MatDialogRef<DialogMultipleComponent>,
+    @Inject(MAT_DIALOG_DATA) data: DialogData,
+    http: HttpClient) {
+      super(dialogRef, data, http);
     }
+
+  protected onFileSelectedImage(event, i): void {
+    // a faire
+  }
+
+  protected onSubmit(): void {
+    // a faire
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
