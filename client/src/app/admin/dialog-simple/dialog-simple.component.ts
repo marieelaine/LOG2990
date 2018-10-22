@@ -6,6 +6,7 @@ import {FormControl, Validators, FormGroup} from "@angular/forms";
 import { PartieSimple } from "./partie-simple";
 import { PartieSimpleService } from "../partie-simple.service";
 import { Observable } from "rxjs";
+import { DialogAbstrait } from "../dialog-abstrait";
 
 export const IMAGE_URL: string = "http://localhost:3000/images/";
 const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
@@ -16,7 +17,7 @@ const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
   styleUrls: ["./dialog-simple.component.css"],
   providers: [PartieSimpleService]})
 
-export class DialogSimpleComponent {
+export class DialogSimpleComponent extends DialogAbstrait {
 
   protected outOfBoundNameLengthMessage: String = "";
   protected wrongNumberOfImagesMessage: String = "";
@@ -35,6 +36,7 @@ export class DialogSimpleComponent {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private http: HttpClient,
     private partieSimpleService: PartieSimpleService) {
+      super();
     }
 
   protected onFileSelectedImage(event, i): void {
@@ -144,19 +146,6 @@ export class DialogSimpleComponent {
             this.gameNameTaken = true;
           });
     }
-  }
-
-  private genererTableauTempsAleatoires(): Array<number> {
-    const arr: Array<number> = new Array<number>();
-    for (let i: number = 0; i < 6; i++) {
-      arr[i] = this.genererTempsAleatoire();
-    }
-
-    return arr;
-  }
-
-  private genererTempsAleatoire(): number {
-    return Math.floor(Math.random() * 400) + 100;
   }
 
   private convertImageToArrayToCheckSize(file: File): void {
