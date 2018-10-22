@@ -68,6 +68,26 @@ export class DialogSimpleComponent extends DialogAbstrait {
     });
   }
 
+  private addToSelectedFilesAsArrayBuffer(file: ArrayBuffer, i: number) {
+    const Buffer = require("buffer/").Buffer;
+    this.selectedFilesAsArrayBuffers[i] = Buffer.from(file);
+    if (i === 1) {
+      const result: PartieSimple = new PartieSimple(this["data"].simpleGameName, this.genererTableauTempsAleatoires(),
+                                                    this.genererTableauTempsAleatoires(), this.selectedFilesAsArrayBuffers[0],
+                                                    this.selectedFilesAsArrayBuffers[1],
+                                                    Buffer.from(new Array()));
+      this.partieSimpleService.register(result)
+        .subscribe(
+          (data) => {
+            this.gameNameTaken = false;
+          },
+          (error) => {
+            console.error(error);
+            this.gameNameTaken = true;
+          });
+    }
+  }
+
   protected obtenirImageId(identifiant: string): Observable<PartieSimple> {
     return this["http"].get<PartieSimple>(IMAGE_URL + identifiant);
   }
@@ -102,26 +122,6 @@ export class DialogSimpleComponent extends DialogAbstrait {
     this.checkIfOutOfBoundNameLength() ?
       this.outOfBoundNameLengthMessage = "*Le nom du jeu doit être entre 3 et 20 charactères." :
       this.outOfBoundNameLengthMessage = "" ;
-  }
-
-  private addToSelectedFilesAsArrayBuffer(file: ArrayBuffer, i: number) {
-    const Buffer = require("buffer/").Buffer;
-    this.selectedFilesAsArrayBuffers[i] = Buffer.from(file);
-    if (i === 1) {
-      const result: PartieSimple = new PartieSimple(this["data"].simpleGameName, this.genererTableauTempsAleatoires(),
-                                                    this.genererTableauTempsAleatoires(), this.selectedFilesAsArrayBuffers[0],
-                                                    this.selectedFilesAsArrayBuffers[1],
-                                                    Buffer.from(new Array()));
-      this.partieSimpleService.register(result)
-        .subscribe(
-          (data) => {
-            this.gameNameTaken = false;
-          },
-          (error) => {
-            console.error(error);
-            this.gameNameTaken = true;
-          });
-    }
   }
 
   private convertImageToArrayToCheckSize(file: File): void {
