@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as fsx from "fs-extra";
 import * as util from "util";
+import * as commander from "commander";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
 import { RouteBaseDeDonnees } from "../routesBaseDeDonnees/baseDeDonnees";
@@ -63,7 +64,7 @@ export class RoutePartieSimple {
 
     private async ajouterPartieSimple(partie: PartieSimpleInterface, res: Response): Promise<PartieSimpleInterface> {
         const buffers: Array<Buffer> = [partie._image1, partie._image2];
-        partie._imageDiff = await this.getImageDiffAsBuffer(buffers);
+        // partie._imageDiff = await this.getImageDiffAsBuffer(buffers);
 
         const image: Document = new this.modelPartie(partie);
         await image.save();
@@ -83,7 +84,10 @@ export class RoutePartieSimple {
 
     private async generateImageDiff(buffers: Array<Buffer>): Promise<void> {
         await this.addImagesToDirectory(buffers);
+
         // Runner le script
+        commander.command("python ../../bmpdiff/bmpdiff.py ../../Images/image1.bmp ../../Images/image2.bmp ../../Images/image3.bmp");
+
     }
 
     private async addImagesToDirectory(buffers: Array<Buffer>): Promise<void> {
