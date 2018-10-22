@@ -5,7 +5,6 @@ import { DialogAbstrait } from '../dialog-abstrait';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DialogData } from '../admin.component';
 import { HttpClient } from '@angular/common/http';
-import { PartieSimpleService } from '../partie-simple.service';
 
 @Component({
   selector: 'app-dialog-multiple',
@@ -31,18 +30,5 @@ export class DialogMultipleComponent extends DialogAbstrait {
 
   protected onSubmit(): void {
     // a faire
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  onAddMultipleGameClick(): void {
-    if (this.data.multipleGameName === "" || this.data.multipleGameName === undefined) {
-      // Regarder s'il y a bien deux images
-      this.errorMessage = "*Message d'erreur...";
-    } else {
-      this.dialogRef.close();
-    }
   }
 }

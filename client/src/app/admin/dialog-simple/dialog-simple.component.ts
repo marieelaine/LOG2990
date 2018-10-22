@@ -19,9 +19,6 @@ const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
 
 export class DialogSimpleComponent extends DialogAbstrait {
 
-  protected outOfBoundNameLengthMessage: String = "";
-  protected wrongNumberOfImagesMessage: String = "";
-  protected wrongImageSizeOrTypeMessage: String = "";
   protected premiereImage: string;
   protected deuxiemeImage: string;
   private currentImageNumber: number;
@@ -72,15 +69,15 @@ export class DialogSimpleComponent extends DialogAbstrait {
   }
 
   protected obtenirImageId(identifiant: string): Observable<PartieSimple> {
-    return this.http.get<PartieSimple>(IMAGE_URL + identifiant);
+    return this["http"].get<PartieSimple>(IMAGE_URL + identifiant);
   }
 
   protected obtenirImageName(imageName: string): Observable<PartieSimple> {
-    return this.http.get<PartieSimple>(IMAGE_URL + imageName);
+    return this["http"].get<PartieSimple>(IMAGE_URL + imageName);
   }
 
   protected async creerNouvelleImage(image: PartieSimple): Promise<Object> {
-    return this.http.post(URL_AJOUTER, image).toPromise();
+    return this["http"].post(URL_AJOUTER, image).toPromise();
   }
 
   protected setWrongImageSizeOrTypeMessage(imageInfo): void {
@@ -107,32 +104,11 @@ export class DialogSimpleComponent extends DialogAbstrait {
       this.outOfBoundNameLengthMessage = "" ;
   }
 
-  protected checkIfNoErrorMessage(): Boolean {
-    if (this.outOfBoundNameLengthMessage === ""
-    && this.wrongNumberOfImagesMessage === ""
-    && this.wrongImageSizeOrTypeMessage === "") {
-      return true;
-    }
-
-    return false;
-  }
-
-  protected closeDialogIfRequirements(): void {
-   if (this.checkIfNoErrorMessage()) {
-      this.onSubmit();
-      this.dialogRef.close();
-    }
-  }
-
-  protected onNoClick(): void {
-    this.dialogRef.close();
-  }
-
   private addToSelectedFilesAsArrayBuffer(file: ArrayBuffer, i: number) {
     const Buffer = require("buffer/").Buffer;
     this.selectedFilesAsArrayBuffers[i] = Buffer.from(file);
     if (i === 1) {
-      const result: PartieSimple = new PartieSimple(this.data.simpleGameName, this.genererTableauTempsAleatoires(),
+      const result: PartieSimple = new PartieSimple(this["data"].simpleGameName, this.genererTableauTempsAleatoires(),
                                                     this.genererTableauTempsAleatoires(), this.selectedFilesAsArrayBuffers[0],
                                                     this.selectedFilesAsArrayBuffers[1],
                                                     Buffer.from(new Array()));
@@ -188,8 +164,8 @@ export class DialogSimpleComponent extends DialogAbstrait {
   }
 
   private checkIfOutOfBoundNameLength(): Boolean {
-    if (this.data.simpleGameName === "" || this.data.simpleGameName === undefined
-    || this.data.simpleGameName.length < 3 || this.data.simpleGameName.length > 20) {
+    if (this["data"].simpleGameName === "" || this["data"].simpleGameName === undefined
+    || this["data"].simpleGameName.length < 3 || this["data"].simpleGameName.length > 20) {
       return true;
     }
 

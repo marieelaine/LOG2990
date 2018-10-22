@@ -1,4 +1,3 @@
-import { PartieSimpleService } from "./partie-simple.service";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { Inject } from "@angular/core";
 import { DialogData } from "./admin.component";
@@ -21,6 +20,27 @@ export abstract class DialogAbstrait {
 
     protected abstract onFileSelectedImage(event, i): void;
     protected abstract onSubmit(): void;
+
+    protected closeDialogIfRequirements(): void {
+      if (this.checkIfNoErrorMessage()) {
+         this.onSubmit();
+         this.dialogRef.close();
+       }
+     }
+
+    protected checkIfNoErrorMessage(): Boolean {
+      if (this.outOfBoundNameLengthMessage === ""
+      && this.wrongNumberOfImagesMessage === ""
+      && this.wrongImageSizeOrTypeMessage === "") {
+        return true;
+      }
+
+      return false;
+    }
+
+    protected onNoClick(): void {
+      this.dialogRef.close();
+  }
 
     protected genererTableauTempsAleatoires(): Array<number> {
         const arr: Array<number> = new Array<number>();
