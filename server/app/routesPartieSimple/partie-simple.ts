@@ -1,7 +1,8 @@
 import * as fs from "fs";
 import * as fsx from "fs-extra";
 import * as util from "util";
-import * as commander from "commander";
+import { spawn } from "child_process";
+// import { PythonShell } from "python-shell";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
 import { RouteBaseDeDonnees } from "../routesBaseDeDonnees/baseDeDonnees";
@@ -64,7 +65,9 @@ export class RoutePartieSimple {
 
     private async ajouterPartieSimple(partie: PartieSimpleInterface, res: Response): Promise<PartieSimpleInterface> {
         const buffers: Array<Buffer> = [partie._image1, partie._image2];
-        // partie._imageDiff = await this.getImageDiffAsBuffer(buffers);
+        // this.addImagesToDirectory(buffers);
+        this.generateImageDiff(buffers);
+        // await this.getImageDiffAsBuffer(buffers);
 
         const image: Document = new this.modelPartie(partie);
         await image.save();
@@ -72,45 +75,55 @@ export class RoutePartieSimple {
         return partie;
     }
 
-    private async getImageDiffAsBuffer(buffers: Array<Buffer>): Promise<Buffer> {
-        await this.generateImageDiff(buffers);
+    // private async getImageDiffAsBuffer(buffers: Array<Buffer>): Promise<Buffer> {
+    //     await this.generateImageDiff(buffers);
 
-        return new Buffer("");
-    }
-
-    // private convertImageToBuffer(image: File): Buffer {
     //     return new Buffer("");
     // }
 
     private async generateImageDiff(buffers: Array<Buffer>): Promise<void> {
-        await this.addImagesToDirectory(buffers);
+        // await this.addImagesToDirectory(buffers);
 
         // Runner le script
-        commander.command("python ../../bmpdiff/bmpdiff.py ../../Images/image1.bmp ../../Images/image2.bmp ../../Images/image3.bmp");
+        // const child_process = require("child_process");
+        // child_process.exec("python ./bmpdiff/bmpdiff.py ../../Images/image1.bmp ../../Images/image2.bmp ../../Images/image3.bmp");
 
+        const bmpDiffPath: string = "./bmpdiff/bmpdiff.py";
+        const args: string[] = ["../../Images/image1.bmp", "../../Images/image2.bmp", "../../Images/image3.bmp"];
+        args.unshift(bmpDiffPath);
+        spawn("python", args);
+
+        // const options = {
+        //     args: ["../../Images/image1.bmp", "../../Images/image2.bmp", "../../Images/image3.bmp"]
+        //   };
+
+        // PythonShell.run("./bmpdiff/bmpdiff.py", options, (err, results) => {
+        //     if (err) { throw err; }
+        //     // results is an array consisting of messages collected during execution
+        //   });
     }
 
-    private async addImagesToDirectory(buffers: Array<Buffer>): Promise<void> {
-        await this.makeImagesDirectory();
-        const writeFilePromise: Function = util.promisify(fs.writeFile);
-        let i: number = 1;
-        for (const buf of buffers) {
-            await writeFilePromise("Images/image" + i.toString() + ".bmp", new Buffer(buf));
-            i++;
-        }
-    }
+    // private async addImagesToDirectory(buffers: Array<Buffer>): Promise<void> {
+    //     await this.makeImagesDirectory();
+    //     const writeFilePromise: Function = util.promisify(fs.writeFile);
+    //     let i: number = 1;
+    //     for (const buf of buffers) {
+    //         await writeFilePromise("Images/image" + i.toString() + ".bmp", new Buffer(buf));
+    //         i++;
+    //     }
+    // }
 
-    private async makeImagesDirectory(): Promise<void> {
-        const dir: string = "Images";
-        const mkdirPromise: Function = util.promisify(fs.mkdir);
-        const existsPromise: Function = util.promisify(fs.exists);
+    // private async makeImagesDirectory(): Promise<void> {
+    //     const dir: string = "Images";
+    //     const mkdirPromise: Function = util.promisify(fs.mkdir);
+    //     const existsPromise: Function = util.promisify(fs.exists);
 
-        if (await existsPromise(dir)) {
-            await fsx.remove(dir);
-        }
+    //     if (await existsPromise(dir)) {
+    //         await fsx.remove(dir);
+    //     }
 
-        await mkdirPromise(dir);
-    }
+    //     await mkdirPromise(dir);
+    // }
 
     private async deletePartieSimple(nomPartie: String, res: Response): Promise<Response> {
         const imageId: String = await this.obtenirPartieSimpleId(nomPartie);

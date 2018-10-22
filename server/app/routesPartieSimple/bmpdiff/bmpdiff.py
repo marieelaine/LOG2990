@@ -92,3 +92,4 @@ if __name__ == '__main__':
         compare_images(settings, 0)
     else:
         compare_images(settings, 1)
+    exit()
