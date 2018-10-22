@@ -11,8 +11,6 @@ export abstract class DialogAbstrait {
     protected wrongNumberOfImagesMessage: String = "";
     protected wrongImageSizeOrTypeMessage: String = "";
 
-    // TODO : trouver comment remplacer any
-    // tslint:disable-next-line:no-any
     public constructor (private dialogRef: MatDialogRef<T>,
                         @Inject(MAT_DIALOG_DATA) private data: DialogData,
                         private http: HttpClient) {
