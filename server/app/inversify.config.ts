@@ -9,8 +9,8 @@ import { RoutesUser } from "./routesUser";
 import { RouteUser } from "./routesUser/user";
 
 import { RoutesPartieSimple } from "./routesPartieSimple";
-import { RoutePartieSimple } from "./routesPartieSimple/partie-simple";
 import { BaseDeDonnees } from "./baseDeDonnees/baseDeDonnees";
+import { RoutePartieSimple } from "./partieSimple/partie-simple";
 
 const container: Container = new Container();
 

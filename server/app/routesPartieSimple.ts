@@ -3,7 +3,7 @@ import { Router, Request, Response } from "express";
 
 import { ServiceWeb } from "./serviceWeb";
 import Types from "./types";
-import { RoutePartieSimple } from "./routesPartieSimple/partie-simple";
+import { RoutePartieSimple } from "./partieSimple/partie-simple";
 
 @injectable()
 export class RoutesPartieSimple extends ServiceWeb {
