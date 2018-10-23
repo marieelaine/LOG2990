@@ -1,6 +1,8 @@
 import * as fs from "fs";
 import * as fsx from "fs-extra";
 import * as util from "util";
+import * as p from "path";
+import { spawn } from "child_process";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
 import { RouteBaseDeDonnees } from "../routesBaseDeDonnees/baseDeDonnees";
@@ -20,7 +22,6 @@ interface PartieSimpleInterface {
 }
 @injectable()
 export class RoutePartieSimple {
-
     private baseDeDonnees: RouteBaseDeDonnees.BaseDeDonnees;
     private modelPartie: Model<Document>;
     private schema: Schema;
@@ -38,6 +39,7 @@ export class RoutePartieSimple {
                 _nomPartie: {
                     type: String,
                     required: true,
+                    unique: true,
                 },
                 _tempsSolo: {
                     type: Array,
@@ -61,29 +63,59 @@ export class RoutePartieSimple {
             });
         }
 
-    private async ajouterPartieSimple(partie: PartieSimpleInterface, res: Response): Promise<string> {
+    private async enregistrerPartieSimple(partie: PartieSimpleInterface, res: Response, errorMsg: string): Promise<string> {
+    private async enregistrerPartieSimple(partie: PartieSimpleInterface, res: Response, errorMsg: string): Promise<PartieSimpleInterface> {
+        if (errorMsg === "") {
+            partie._imageDiff = await this.getImageDiffAsBuffer();
+            const partieSimple: Document = new this.modelPartie(partie);
+            await partieSimple.save();
+        } else {
+            // Retourner errorMsg vers le client
+        }
+
+        return this.obtenirPartieSimpleId(partie._nomPartie)
+        return partie;
+    }
+
+    private async getImageDiffAsBuffer(): Promise<Buffer> {
+        const imageMod: string = p.resolve("Images/image3.bmp");
+        const readFilePromise: Function = util.promisify(fs.readFile);
+        const buffer: Buffer = await readFilePromise(imageMod) as Buffer;
+        await this.deleteDirectory();
+
+        return buffer;
+    }
+
+    private async deleteDirectory(): Promise<void> {
+        const dir: string = "Images";
+        await fsx.remove(dir);
+    }
+
+    private async verifierErreurScript(child, partie: PartieSimpleInterface, res: Response): Promise<void> {
+        let errorMsg: string = "";
+
+        child.stderr.on("data", async (data) => {
+            errorMsg = `${data}`;
+            await this.enregistrerPartieSimple(partie, res, errorMsg);
+        });
+        child.stdout.on("data", async (data) => {
+            await this.enregistrerPartieSimple(partie, res, errorMsg);
+        });
+    }
+
+    private async genererImageMod(partie: PartieSimpleInterface, res: Response): Promise<void> {
         const buffers: Array<Buffer> = [partie._image1, partie._image2];
-        partie._imageDiff = await this.getImageDiffAsBuffer(buffers);
-
-        const image: Document = new this.modelPartie(partie);
-        await image.save();
-
-        return this.obtenirPartieSimpleId(partie._nomPartie);
-    }
-
-    private async getImageDiffAsBuffer(buffers: Array<Buffer>): Promise<Buffer> {
-        await this.generateImageDiff(buffers);
-
-        return new Buffer("");
-    }
-
-    // private convertImageToBuffer(image: File): Buffer {
-    //     return new Buffer("");
-    // }
-
-    private async generateImageDiff(buffers: Array<Buffer>): Promise<void> {
         await this.addImagesToDirectory(buffers);
-        // Runner le script
+
+        const pyScript: string = p.resolve("app/routesPartieSimple/bmpdiff/bmpdiff.py");
+        const imageOri1: string = p.resolve("Images/image1.bmp");
+        const imageOri2: string = p.resolve("Images/image2.bmp");
+        const imageMod: string = p.resolve("Images/image3.bmp");
+        const args: string[] = [imageOri1, imageOri2, imageMod];
+        args.unshift(pyScript);
+
+        const child = spawn("python", args);
+        this.verifierErreurScript(child, partie, res);
     }
 
     private async addImagesToDirectory(buffers: Array<Buffer>): Promise<void> {
@@ -154,8 +186,10 @@ export class RoutePartieSimple {
 
     public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
         try {
-            const partieId: string = await this.ajouterPartieSimple(req.body, res);
-            res.status(201).json(partieId);
+            res.status(201).json();
+            await this.genererImageMod(req.body, res);
+            // res.status(201).json(partie);
+            res.status(201).json({});
         } catch (err) {
             res.status(501).json(err);
         }
