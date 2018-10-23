@@ -41,8 +41,6 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   }
 
   protected supprimerPartie(partieId: string): void {
-    console.log("supprimer partie called");
-    console.log(partieId);
     this.listePartieService.deletePartieSimple(partieId);
   }
 

@@ -57,7 +57,7 @@ export module RouteUser {
         private async deleteUser(username: String, res: Response): Promise<Response> {
             const userId: String = await this.obtenirUserId(username);
             try {
-                await this.modelUser.findByIdAndRemove(userId);
+                await this.modelUser.findOneAndDelete(userId);
 
                 return res.status(201).json();
             } catch (err) {

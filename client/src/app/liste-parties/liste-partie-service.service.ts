@@ -20,11 +20,8 @@ export class ListePartieServiceService {
       return this.http.get<PartieSimple[]>(this.GETLISTE_URL);
   }
 
-  public async deletePartieSimple(partieId: string): Promise<Object> {
+  public async deletePartieSimple(partieId: string): Promise<void> {
 
-      console.log(partieId);
-      console.log(this.DELETE_PARTIE_URL + partieId);
-
-      return this.http.delete(this.DELETE_PARTIE_URL + partieId).toPromise();
+      this.http.delete(this.DELETE_PARTIE_URL + partieId).toPromise();
   }
 }

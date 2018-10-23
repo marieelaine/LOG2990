@@ -111,9 +111,11 @@ export class RoutePartieSimple {
     private async deletePartieSimple(nomPartie: String, res: Response): Promise<Response> {
         const imageId: String = await this.obtenirPartieSimpleId(nomPartie);
         try {
-            await this.modelPartie.findByIdAndRemove(imageId);
+            await this.modelPartie.findOneAndDelete(imageId).catch(() => {
+                throw new Error();
+            });
 
-            return res.status(201).json();
+            return res.status(201);
         } catch (err) {
             return res.status(501).json(err);
         }
@@ -153,7 +155,6 @@ export class RoutePartieSimple {
     public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
         try {
             const partieId: string = await this.ajouterPartieSimple(req.body, res);
-            // res.status(201).json(partie);
             res.status(201).json(partieId);
         } catch (err) {
             res.status(501).json(err);
@@ -165,9 +166,13 @@ export class RoutePartieSimple {
     }
 
     public async requeteDeletePartieSimple(req: Request, res: Response): Promise<void> {
-        // tslint:disable-next-line:no-console
-        console.log(req.params.id);
-        res.send(await this.deletePartieSimple(req.params.id, res));
+        try {
+            await this.deletePartieSimple(req.params.id, res);
+
+            res.status(201);
+        } catch (err) {
+            res.status(501).json(err);
+        }
     }
 
     public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
