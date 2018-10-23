@@ -22,15 +22,19 @@ export class RoutesPartieSimple extends ServiceWeb {
             await this.partieSimple.requeteAjouterPartieSimple(req, res);
         });
 
-        router.delete("/delete/:id", async (req: Request, res: Response) => {
-            await this.partieSimple.requeteDeletePartieSimple(req, res);
-        });
-
         router.get("/getPartieSimple", async (req: Request, res: Response) => {
             await this.partieSimple.requeteGetListePartie(req, res);
         });
 
+        router.delete("/delete/:id", async (req: Request, res: Response) => {
+            // tslint:disable-next-line:no-console
+            console.log("hello from le call de la requete");
+            await this.partieSimple.requeteDeletePartieSimple(req, res);
+        });
+
         router.get("/:id", async (req: Request, res: Response) => {
+            // tslint:disable-next-line:no-console
+            console.log("est ce ici");
             await this.partieSimple.requetePartieSimpleId(req, res);
         });
 

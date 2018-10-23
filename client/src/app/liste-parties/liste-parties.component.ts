@@ -12,7 +12,6 @@ import { ListePartieServiceService } from "./liste-partie-service.service";
 })
 
 export class ListePartiesComponent {
-  listePartiesSimples: PartieSimple[] = [];
 
   listePartiesMultiples: PartieMultipleInterface[] = [
         { title: "Mona Lisa", imagePath: "assets/monaLisa.bmp", isElevatedActive: false,
@@ -104,6 +103,7 @@ export class ListePartiesComponent {
   }
 
   protected getTitleFirstLetter(title: String): String {
+
     return title.substr(0, 1);
   }
 

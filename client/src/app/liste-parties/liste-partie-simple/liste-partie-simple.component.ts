@@ -36,12 +36,14 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     if (this.isListePartiesMode) {
       // Naviguer vers partie-multijouer
     } else if (this.isAdminMode) {
-      this.supprimerPartie();
+      // HUM?
     }
   }
 
-  private supprimerPartie(): void {
-    // Supprimer la partie
+  protected supprimerPartie(partieId: string): void {
+    console.log("supprimer partie called");
+    console.log(partieId);
+    this.listePartieService.deletePartieSimple(partieId);
   }
 
   private reinitialiserTemps(): void {

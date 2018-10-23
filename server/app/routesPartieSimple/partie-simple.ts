@@ -165,6 +165,8 @@ export class RoutePartieSimple {
     }
 
     public async requeteDeletePartieSimple(req: Request, res: Response): Promise<void> {
+        // tslint:disable-next-line:no-console
+        console.log(req.params.id);
         res.send(await this.deletePartieSimple(req.params.id, res));
     }
 
