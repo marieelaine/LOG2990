@@ -10,6 +10,7 @@ import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
 import { PartieSimple } from "../../../client/src/app/admin/dialog-simple/partie-simple";
+import { socketServer } from "../www";
 
 interface PartieSimpleInterface {
     _id: string;
@@ -70,6 +71,7 @@ export class RoutePartieSimple {
             await partieSimple.save();
         } else {
             // Retourner errorMsg vers le client
+            socketServer.envoyerMessageErreurScript(errorMsg);
         }
 
         return partie;
