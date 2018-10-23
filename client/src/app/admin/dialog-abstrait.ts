@@ -15,7 +15,6 @@ export abstract class DialogAbstrait {
       this.outOfBoundNameLengthMessage = "";
     }
 
-    protected abstract onFileSelectedImage(event, i): void;
     protected abstract onSubmit(): void;
     protected abstract onClickAjouterPartie(): void;
     protected abstract verifierSiMessageErreur(): Boolean;
@@ -27,12 +26,9 @@ export abstract class DialogAbstrait {
     }
 
     private checkIfOutOfBoundNameLength(): Boolean {
-      if (this["data"].simpleGameName === "" || this["data"].simpleGameName === undefined
-      || this["data"].simpleGameName.length < 3 || this["data"].simpleGameName.length > 20) {
-        return true;
-      }
 
-      return false;
+      return (this["data"].simpleGameName === "" || this["data"].simpleGameName === undefined
+      || this["data"].simpleGameName.length < 3 || this["data"].simpleGameName.length > 20);
     }
 
     protected closeDialogIfRequirements(): void {

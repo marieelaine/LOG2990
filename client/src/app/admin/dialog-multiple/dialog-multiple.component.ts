@@ -24,12 +24,8 @@ export class DialogMultipleComponent extends DialogAbstrait {
       super(dialogRef, data, http);
     }
 
-  protected onFileSelectedImage(event, i): void {
-    // a faire
-  }
-
   protected onSubmit(): void {
-    // a faire 
+    // a faire
     // quand tu click sur le bouton ajouter
   }
 
@@ -37,14 +33,13 @@ export class DialogMultipleComponent extends DialogAbstrait {
     console.log("bonjour du bouton geometrique");
   }
 
+  // sur le click ajouter, call close dialog if requ and on submit
   protected onClickAjouterPartie(): void {
 
   }
 
   protected verifierSiMessageErreur(): Boolean {
 
-    return (this.outOfBoundNameLengthMessage !== ""
-    || this.wrongNumberOfImagesMessage !== ""
-    || this.wrongImageSizeOrTypeMessage !== "");
+    return (this.outOfBoundNameLengthMessage !== "");
   }
 }

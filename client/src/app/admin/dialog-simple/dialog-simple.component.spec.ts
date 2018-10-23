@@ -8,7 +8,7 @@ import { FormsModule } from "@angular/forms";
 
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { createMockImageFile, createMockBmpFile } from "../../../testing/file-creator";
-import { By } from "@angular/platform-browser";
+// import { By } from "@angular/platform-browser";
 
 describe("DialogSimpleComponent", () => {
   let component: DialogSimpleComponent;

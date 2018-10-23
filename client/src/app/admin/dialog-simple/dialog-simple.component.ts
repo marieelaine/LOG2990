@@ -2,7 +2,7 @@ import { Component, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { DialogData } from "../admin.component";
 import { HttpClient } from "@angular/common/http";
-import {FormControl, Validators, FormGroup} from "@angular/forms";
+// import {FormControl, Validators, FormGroup} from "@angular/forms";
 import { PartieSimple } from "./partie-simple";
 import { PartieSimpleService } from "../partie-simple.service";
 import { Observable } from "rxjs";
@@ -22,14 +22,13 @@ export class DialogSimpleComponent extends DialogAbstrait {
 
   protected premiereImage: string;
   protected deuxiemeImage: string;
+  protected wrongNumberOfImagesMessage: string;
+  protected wrongImageSizeOrTypeMessage: string;
   private currentImageNumber: number;
   private selectedFiles: File[] = [];
   private selectedFilesAsBuffers: Buffer[] = [];
   private correctImageExtension: String = "image/bmp";
-  private titrePartie = new FormControl("", [Validators.required]);
-  private gameNameTaken: Boolean;
-  protected wrongNumberOfImagesMessage: string;
-  protected wrongImageSizeOrTypeMessage: string;
+  // private titrePartie = new FormControl("", [Validators.required]); mettre erreur juste en dessous quand on aentre le nom
 
   public constructor(
     dialogRef: MatDialogRef<DialogSimpleComponent>,
@@ -41,26 +40,11 @@ export class DialogSimpleComponent extends DialogAbstrait {
       this.wrongNumberOfImagesMessage = "";
     }
 
-  protected onFileSelectedImage(event, i): void {
-    this.currentImageNumber = i;
-    const file = event.target.files[0] as File;
-    this.selectedFiles[this.currentImageNumber] = file;
-    this.convertImageToArrayToCheckSize(this.selectedFiles[this.currentImageNumber]);
-
-    this.afficherImageSurUploadClient(file);
-  }
-
-  private afficherImageSurUploadClient(file: File) {
-    const reader: FileReader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-        if (this.currentImageNumber) {
-          this.deuxiemeImage = reader.result as string;
-        } else {
-          this.premiereImage = reader.result as string;
-        }
-    };
-  }
+  protected onClickAjouterPartie(): void {
+      this.setWrongNumberOfImagesMessage();
+      this.setOutOfBoundNameLengthMessage();
+      this.closeDialogIfRequirements();
+    }
 
   protected onSubmit(): void {
     let imageQty: number = 0;
@@ -83,8 +67,11 @@ export class DialogSimpleComponent extends DialogAbstrait {
     || this.wrongImageSizeOrTypeMessage !== "");
   }
 
-  private arraybufferToBuffer(file: ArrayBuffer, i: number) {
-    this.selectedFilesAsBuffers[i] = Buffer.Buffer.from(file);
+  protected onUploadImage(event, i): void {
+    this.currentImageNumber = i;
+    this.selectedFiles[this.currentImageNumber] = event.target.files[0] as File;
+    this.convertImageToArrayToCheckSize(this.selectedFiles[this.currentImageNumber]);
+    this.afficherImageSurUploadClient();
   }
 
   private ajouterPartie(): void {
@@ -95,39 +82,35 @@ export class DialogSimpleComponent extends DialogAbstrait {
       this.partieSimpleService.register(result)
         .subscribe(
           (data) => {
-            this.gameNameTaken = false;
           },
           (error) => {
             console.error(error);
-            this.gameNameTaken = true;
           });
     }
 
-  protected obtenirImageId(identifiant: string): Observable<PartieSimple> {
-    return this["http"].get<PartieSimple>(IMAGE_URL + identifiant);
+  private afficherImageSurUploadClient() {
+    const reader: FileReader = new FileReader();
+    reader.readAsDataURL(this.selectedFiles[this.currentImageNumber]);
+    reader.onload = () => {
+        if (this.currentImageNumber) {
+          this.deuxiemeImage = reader.result as string;
+        } else {
+          this.premiereImage = reader.result as string;
+        }
+    };
   }
 
-  protected obtenirImageName(imageName: string): Observable<PartieSimple> {
-    return this["http"].get<PartieSimple>(IMAGE_URL + imageName);
+  private arraybufferToBuffer(file: ArrayBuffer, i: number) {
+    this.selectedFilesAsBuffers[i] = Buffer.Buffer.from(file);
   }
 
-  protected async creerNouvelleImage(image: PartieSimple): Promise<Object> {
-    return this["http"].post(URL_AJOUTER, image).toPromise();
-  }
-
-  protected setWrongImageSizeOrTypeMessage(imageInfo): void {
+  private setWrongImageSizeOrTypeMessage(imageInfo): void {
     this.checkIfWrongImageSize(imageInfo) || this.checkIfWrongImageType() ?
     this.wrongImageSizeOrTypeMessage = "*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels" :
     this.wrongImageSizeOrTypeMessage = "";
   }
 
-  protected onClickAjouterPartie(): void {
-    this.setWrongNumberOfImagesMessage();
-    this.setOutOfBoundNameLengthMessage();
-    this.closeDialogIfRequirements();
-  }
-
-  protected setWrongNumberOfImagesMessage(): void {
+  private setWrongNumberOfImagesMessage(): void {
     this.checkIfWrongNumberOfImages() ?
     this.wrongNumberOfImagesMessage = "*Vous devez entrer deux images." :
     this.wrongNumberOfImagesMessage = "";
@@ -145,11 +128,8 @@ export class DialogSimpleComponent extends DialogAbstrait {
   }
 
   private checkIfWrongImageSize(imageInfo): Boolean {
-    if (imageInfo["size"] !== 24 || imageInfo["width"] !== 640 || imageInfo["height"] !== 480) {
-      return true;
-    }
 
-    return false;
+    return (imageInfo["size"] !== 24 || imageInfo["width"] !== 640 || imageInfo["height"] !== 480);
   }
 
   private checkIfWrongImageType(): Boolean {
@@ -164,12 +144,9 @@ export class DialogSimpleComponent extends DialogAbstrait {
   }
 
   private checkIfWrongNumberOfImages(): Boolean {
-    if (this.selectedFiles[0] === undefined || this.selectedFiles[0] === null
-      || this.selectedFiles[1] === undefined || this.selectedFiles[1] === null) {
-        return true;
-      }
 
-    return false;
+    return (this.selectedFiles[0] === undefined || this.selectedFiles[0] === null
+      || this.selectedFiles[1] === undefined || this.selectedFiles[1] === null);
   }
 
   // TODO : implementer le mat-error dans le html
@@ -183,5 +160,18 @@ export class DialogSimpleComponent extends DialogAbstrait {
   //   this.outOfBoundNameLengthMessage = "" ;
 
   //   return false;
+  // }
+
+    // Pas utilise
+  // protected obtenirImageId(identifiant: string): Observable<PartieSimple> {
+  //   return this["http"].get<PartieSimple>(IMAGE_URL + identifiant);
+  // }
+
+  // protected obtenirImageName(imageName: string): Observable<PartieSimple> {
+  //   return this["http"].get<PartieSimple>(IMAGE_URL + imageName);
+  // }
+
+  // protected async creerNouvelleImage(image: PartieSimple): Promise<Object> {
+  //   return this["http"].post(URL_AJOUTER, image).toPromise();
   // }
 }
