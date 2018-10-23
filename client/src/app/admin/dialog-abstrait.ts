@@ -15,8 +15,9 @@ export abstract class DialogAbstrait {
       this.outOfBoundNameLengthMessage = "";
     }
 
-    protected abstract onSubmit(): void;
     protected abstract onClickAjouterPartie(): void;
+    protected abstract onSubmit(): void;
+    protected abstract ajouterPartie(): void;
     protected abstract verifierSiMessageErreur(): Boolean;
     protected abstract checkIfOutOfBoundNameLength(): Boolean;
 

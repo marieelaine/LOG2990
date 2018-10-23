@@ -8,7 +8,7 @@ import { RoutePartieSimple } from "./routesPartieSimple/partie-simple";
 @injectable()
 export class RoutesPartieSimple extends ServiceWeb {
 
-    public readonly mainRoute: string = "/partie";
+    public readonly mainRoute: string = "/partieSimple";
 
     public constructor(@inject(Types.PartieSimple)
     private partieSimple: RoutePartieSimple = new RoutePartieSimple()) {
