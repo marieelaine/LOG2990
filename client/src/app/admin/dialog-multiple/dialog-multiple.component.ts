@@ -29,7 +29,8 @@ export class DialogMultipleComponent extends DialogAbstrait {
   }
 
   protected onSubmit(): void {
-    // a faire
+    // a faire 
+    // quand tu click sur le bouton ajouter
   }
 
   protected onThemeClickButton(): void {

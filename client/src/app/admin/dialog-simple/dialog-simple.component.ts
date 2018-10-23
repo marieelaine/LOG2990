@@ -28,6 +28,8 @@ export class DialogSimpleComponent extends DialogAbstrait {
   private correctImageExtension: String = "image/bmp";
   private titrePartie = new FormControl("", [Validators.required]);
   private gameNameTaken: Boolean;
+  protected wrongNumberOfImagesMessage: string;
+  protected wrongImageSizeOrTypeMessage: string;
 
   public constructor(
     dialogRef: MatDialogRef<DialogSimpleComponent>,
@@ -35,6 +37,8 @@ export class DialogSimpleComponent extends DialogAbstrait {
     http: HttpClient,
     private partieSimpleService: PartieSimpleService) {
       super(dialogRef, data, http);
+      this.wrongImageSizeOrTypeMessage = "";
+      this.wrongNumberOfImagesMessage = "";
     }
 
   protected onFileSelectedImage(event, i): void {
@@ -43,6 +47,10 @@ export class DialogSimpleComponent extends DialogAbstrait {
     this.selectedFiles[this.currentImageNumber] = file;
     this.convertImageToArrayToCheckSize(this.selectedFiles[this.currentImageNumber]);
 
+    this.afficherImageSurUploadClient(file);
+  }
+
+  private afficherImageSurUploadClient(file: File) {
     const reader: FileReader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
@@ -51,37 +59,32 @@ export class DialogSimpleComponent extends DialogAbstrait {
         } else {
           this.premiereImage = reader.result as string;
         }
-
     };
-
   }
 
   protected onSubmit(): void {
-    const self = this;
-    var imageQty = 0;
+    let imageQty: number = 0;
     this.selectedFiles.forEach((file) => {
-      const reader = new FileReader();
+      const reader: FileReader = new FileReader();
       reader.readAsArrayBuffer(file);
-      reader.onload = function() {
-        self.addToSelectedFilesAsArrayBuffer(reader.result as ArrayBuffer, imageQty);
+      reader.onload = () => {
+        this.arraybufferToBuffer(reader.result as ArrayBuffer, imageQty);
+        if (this.selectedFilesAsBuffers.length === 2) {
+          this.ajouterPartie();
+        }
         imageQty++;
       };
     });
   }
 
   protected verifierSiMessageErreur(): Boolean {
-
     return (this.outOfBoundNameLengthMessage !== ""
     || this.wrongNumberOfImagesMessage !== ""
     || this.wrongImageSizeOrTypeMessage !== "");
   }
 
-  private addToSelectedFilesAsArrayBuffer(file: ArrayBuffer, i: number) {
+  private arraybufferToBuffer(file: ArrayBuffer, i: number) {
     this.selectedFilesAsBuffers[i] = Buffer.Buffer.from(file);
-    if (this.selectedFilesAsBuffers.length === 2) {
-      this.ajouterPartie();
-    }
-
   }
 
   private ajouterPartie(): void {
@@ -130,12 +133,6 @@ export class DialogSimpleComponent extends DialogAbstrait {
     this.wrongNumberOfImagesMessage = "";
   }
 
-  protected setOutOfBoundNameLengthMessage(): void {
-    this.checkIfOutOfBoundNameLength() ?
-      this.outOfBoundNameLengthMessage = "*Le nom du jeu doit être entre 3 et 20 charactères." :
-      this.outOfBoundNameLengthMessage = "" ;
-  }
-
   private convertImageToArrayToCheckSize(file: File): void {
     const self: DialogSimpleComponent = this;
     const reader: FileReader = new FileReader();
@@ -171,15 +168,6 @@ export class DialogSimpleComponent extends DialogAbstrait {
       || this.selectedFiles[1] === undefined || this.selectedFiles[1] === null) {
         return true;
       }
-
-    return false;
-  }
-
-  private checkIfOutOfBoundNameLength(): Boolean {
-    if (this["data"].simpleGameName === "" || this["data"].simpleGameName === undefined
-    || this["data"].simpleGameName.length < 3 || this["data"].simpleGameName.length > 20) {
-      return true;
-    }
 
     return false;
   }

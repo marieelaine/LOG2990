@@ -7,19 +7,33 @@ export default class T {}
 
 export abstract class DialogAbstrait {
 
-    protected outOfBoundNameLengthMessage: String = "";
-    protected wrongNumberOfImagesMessage: String = "";
-    protected wrongImageSizeOrTypeMessage: String = "";
+    protected outOfBoundNameLengthMessage: string;
 
     public constructor (private dialogRef: MatDialogRef<T>,
                         @Inject(MAT_DIALOG_DATA) protected data: DialogData,
                         protected http: HttpClient) {
+      this.outOfBoundNameLengthMessage = "";
     }
 
     protected abstract onFileSelectedImage(event, i): void;
     protected abstract onSubmit(): void;
     protected abstract onClickAjouterPartie(): void;
     protected abstract verifierSiMessageErreur(): Boolean;
+
+    protected setOutOfBoundNameLengthMessage(): void {
+      this.checkIfOutOfBoundNameLength() ?
+        this.outOfBoundNameLengthMessage = "*Le nom du jeu doit être entre 3 et 20 charactères." :
+        this.outOfBoundNameLengthMessage = "" ;
+    }
+
+    private checkIfOutOfBoundNameLength(): Boolean {
+      if (this["data"].simpleGameName === "" || this["data"].simpleGameName === undefined
+      || this["data"].simpleGameName.length < 3 || this["data"].simpleGameName.length > 20) {
+        return true;
+      }
+
+      return false;
+    }
 
     protected closeDialogIfRequirements(): void {
       if (!this.verifierSiMessageErreur()) {
@@ -28,7 +42,7 @@ export abstract class DialogAbstrait {
        }
      }
 
-    protected onNoClick(): void {
+    protected surClickExterieurDialog(): void {
       this.dialogRef.close();
   }
 
