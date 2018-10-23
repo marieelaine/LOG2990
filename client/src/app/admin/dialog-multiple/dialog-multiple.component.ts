@@ -35,4 +35,15 @@ export class DialogMultipleComponent extends DialogAbstrait {
   protected onThemeClickButton(): void {
     console.log("bonjour du bouton geometrique");
   }
+
+  protected onClickAjouterPartie(): void {
+
+  }
+
+  protected verifierSiMessageErreur(): Boolean {
+
+    return (this.outOfBoundNameLengthMessage !== ""
+    || this.wrongNumberOfImagesMessage !== ""
+    || this.wrongImageSizeOrTypeMessage !== "");
+  }
 }

@@ -69,6 +69,13 @@ export class DialogSimpleComponent extends DialogAbstrait {
     });
   }
 
+  protected verifierSiMessageErreur(): Boolean {
+
+    return (this.outOfBoundNameLengthMessage !== ""
+    || this.wrongNumberOfImagesMessage !== ""
+    || this.wrongImageSizeOrTypeMessage !== "");
+  }
+
   private addToSelectedFilesAsArrayBuffer(file: ArrayBuffer, i: number) {
     this.selectedFilesAsBuffers[i] = Buffer.Buffer.from(file);
     if (this.selectedFilesAsBuffers.length === 2) {
@@ -77,7 +84,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
 
   }
 
-  private ajouterPartie() {
+  private ajouterPartie(): void {
       const result: PartieSimple = new PartieSimple(this["data"].simpleGameName, this.genererTableauTempsAleatoires(),
                                                     this.genererTableauTempsAleatoires(), this.selectedFilesAsBuffers[0],
                                                     this.selectedFilesAsBuffers[1],
@@ -111,7 +118,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
     this.wrongImageSizeOrTypeMessage = "";
   }
 
-  protected onAddSimpleGameClick(): void {
+  protected onClickAjouterPartie(): void {
     this.setWrongNumberOfImagesMessage();
     this.setOutOfBoundNameLengthMessage();
     this.closeDialogIfRequirements();

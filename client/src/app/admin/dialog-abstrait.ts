@@ -18,23 +18,15 @@ export abstract class DialogAbstrait {
 
     protected abstract onFileSelectedImage(event, i): void;
     protected abstract onSubmit(): void;
+    protected abstract onClickAjouterPartie(): void;
+    protected abstract verifierSiMessageErreur(): Boolean;
 
     protected closeDialogIfRequirements(): void {
-      if (this.checkIfNoErrorMessage()) {
+      if (!this.verifierSiMessageErreur()) {
          this.onSubmit();
          this.dialogRef.close();
        }
      }
-
-    protected checkIfNoErrorMessage(): Boolean {
-      if (this.outOfBoundNameLengthMessage === ""
-      && this.wrongNumberOfImagesMessage === ""
-      && this.wrongImageSizeOrTypeMessage === "") {
-        return true;
-      }
-
-      return false;
-    }
 
     protected onNoClick(): void {
       this.dialogRef.close();
