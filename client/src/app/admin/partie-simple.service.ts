@@ -11,7 +11,7 @@ export class PartieSimpleService {
 
     constructor(private _http: HttpClient) { }
 
-    private register(partieSimple: PartieSimple): Observable<Object> {
+    public register(partieSimple: PartieSimple): Observable<Object> {
         return this._http.post(this.AJOUTER_URL, partieSimple, {
             observe: "body",
             headers: new HttpHeaders().append("Content-Type", "application/json")

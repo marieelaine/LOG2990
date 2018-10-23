@@ -11,7 +11,7 @@ import { PartieSimple } from "../../admin/dialog-simple/partie-simple";
 })
 export class ListePartieSimpleComponent extends ListePartiesComponent implements OnInit {
 
-  protected listeParties;
+  protected listeParties: PartieSimple[];
 
   constructor(public router: Router,
               public listePartieService: ListePartieServiceService) {

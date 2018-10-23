@@ -61,14 +61,14 @@ export class RoutePartieSimple {
             });
         }
 
-    private async ajouterPartieSimple(partie: PartieSimpleInterface, res: Response): Promise<PartieSimpleInterface> {
+    private async ajouterPartieSimple(partie: PartieSimpleInterface, res: Response): Promise<string> {
         const buffers: Array<Buffer> = [partie._image1, partie._image2];
         partie._imageDiff = await this.getImageDiffAsBuffer(buffers);
 
         const image: Document = new this.modelPartie(partie);
         await image.save();
 
-        return partie;
+        return this.obtenirPartieSimpleId(partie._nomPartie);
     }
 
     private async getImageDiffAsBuffer(buffers: Array<Buffer>): Promise<Buffer> {
@@ -119,7 +119,7 @@ export class RoutePartieSimple {
         }
     }
 
-    private async obtenirPartieSimpleId(nomPartie: String): Promise<String> {
+    private async obtenirPartieSimpleId(nomPartie: String): Promise<string> {
         const partieSimples: PartieSimpleInterface[] = [];
         await this.modelPartie.find()
             .then((res: Document[]) => {
@@ -152,9 +152,9 @@ export class RoutePartieSimple {
 
     public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
         try {
-            await this.ajouterPartieSimple(req.body, res);
+            const partieId: string = await this.ajouterPartieSimple(req.body, res);
             // res.status(201).json(partie);
-            res.status(201).json({});
+            res.status(201).json(partieId);
         } catch (err) {
             res.status(501).json(err);
         }

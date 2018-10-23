@@ -76,7 +76,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
                                                     this.genererTableauTempsAleatoires(), this.selectedFilesAsArrayBuffers[0],
                                                     this.selectedFilesAsArrayBuffers[1],
                                                     Buffer.from(new Array()));
-      this.partieSimpleService["register"](result)
+      this.partieSimpleService.register(result)
         .subscribe(
           (data) => {
             this.gameNameTaken = false;
