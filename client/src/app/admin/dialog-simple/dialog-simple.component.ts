@@ -104,6 +104,12 @@ export class DialogSimpleComponent extends DialogAbstrait {
     this.selectedFilesAsBuffers[i] = Buffer.Buffer.from(file);
   }
 
+  protected checkIfOutOfBoundNameLength(): Boolean {
+
+    return (this["data"].simpleGameName === "" || this["data"].simpleGameName === undefined
+    || this["data"].simpleGameName.length < 3 || this["data"].simpleGameName.length > 20);
+  }
+
   private setWrongImageSizeOrTypeMessage(imageInfo): void {
     this.checkIfWrongImageSize(imageInfo) || this.checkIfWrongImageType() ?
     this.wrongImageSizeOrTypeMessage = "*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels" :

@@ -11,9 +11,9 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './dialog-multiple.component.html',
   styleUrls: ['./dialog-multiple.component.css']
 })
+
 export class DialogMultipleComponent extends DialogAbstrait {
 
-  errorMessage: string;
   partieMultiple: PartieMultipleInterface;
   listeParties: ListePartiesComponent;
 
@@ -25,8 +25,7 @@ export class DialogMultipleComponent extends DialogAbstrait {
     }
 
   protected onSubmit(): void {
-    // a faire
-    // quand tu click sur le bouton ajouter
+    console.log("hello du onSubmit");
   }
 
   protected onThemeClickButton(): void {
@@ -35,11 +34,19 @@ export class DialogMultipleComponent extends DialogAbstrait {
 
   // sur le click ajouter, call close dialog if requ and on submit
   protected onClickAjouterPartie(): void {
+    this.setOutOfBoundNameLengthMessage();
+    this.closeDialogIfRequirements();
 
   }
 
   protected verifierSiMessageErreur(): Boolean {
 
     return (this.outOfBoundNameLengthMessage !== "");
+  }
+
+  protected checkIfOutOfBoundNameLength(): Boolean {
+
+    return (this["data"].multipleGameName === "" || this["data"].multipleGameName === undefined
+    || this["data"].multipleGameName.length < 3 || this["data"].multipleGameName.length > 20);
   }
 }

@@ -18,6 +18,7 @@ export abstract class DialogAbstrait {
     protected abstract onSubmit(): void;
     protected abstract onClickAjouterPartie(): void;
     protected abstract verifierSiMessageErreur(): Boolean;
+    protected abstract checkIfOutOfBoundNameLength(): Boolean;
 
     protected setOutOfBoundNameLengthMessage(): void {
       this.checkIfOutOfBoundNameLength() ?
@@ -25,14 +26,10 @@ export abstract class DialogAbstrait {
         this.outOfBoundNameLengthMessage = "" ;
     }
 
-    private checkIfOutOfBoundNameLength(): Boolean {
-
-      return (this["data"].simpleGameName === "" || this["data"].simpleGameName === undefined
-      || this["data"].simpleGameName.length < 3 || this["data"].simpleGameName.length > 20);
-    }
-
     protected closeDialogIfRequirements(): void {
+
       if (!this.verifierSiMessageErreur()) {
+         console.log("hello du close dialog, pas derreur");
          this.onSubmit();
          this.dialogRef.close();
        }
