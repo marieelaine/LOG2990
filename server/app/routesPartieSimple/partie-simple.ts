@@ -1,6 +1,6 @@
-// import * as fs from "fs";
-// import * as fsx from "fs-extra";
-// import * as util from "util";
+import * as fs from "fs";
+import * as fsx from "fs-extra";
+import * as util from "util";
 import * as p from "path";
 import { spawn } from "child_process";
 import { Schema, Model, Document } from "mongoose";
@@ -22,7 +22,6 @@ interface PartieSimpleInterface {
 }
 @injectable()
 export class RoutePartieSimple {
-
     private baseDeDonnees: RouteBaseDeDonnees.BaseDeDonnees;
     private modelPartie: Model<Document>;
     private schema: Schema;
@@ -40,6 +39,7 @@ export class RoutePartieSimple {
                 _nomPartie: {
                     type: String,
                     required: true,
+                    unique: true,
                 },
                 _tempsSolo: {
                     type: Array,
@@ -63,84 +63,80 @@ export class RoutePartieSimple {
             });
         }
 
-    private async ajouterPartieSimple(partie: PartieSimpleInterface, res: Response): Promise<PartieSimpleInterface> {
-        const buffers: Array<Buffer> = [partie._image1, partie._image2];
-        // this.addImagesToDirectory(buffers);
-        this.generateImageDiff(buffers);
-        // await this.getImageDiffAsBuffer(buffers);
-
-        const image: Document = new this.modelPartie(partie);
-        await image.save();
+    private async enregistrerPartieSimple(partie: PartieSimpleInterface, res: Response, errorMsg: string): Promise<PartieSimpleInterface> {
+        if (errorMsg === "") {
+            partie._imageDiff = await this.getImageDiffAsBuffer();
+            const partieSimple: Document = new this.modelPartie(partie);
+            await partieSimple.save();
+        } else {
+            // Retourner errorMsg vers le client
+        }
 
         return partie;
     }
 
-    // private async getImageDiffAsBuffer(buffers: Array<Buffer>): Promise<Buffer> {
-    //     await this.generateImageDiff(buffers);
+    private async getImageDiffAsBuffer(): Promise<Buffer> {
+        const imageMod: string = p.resolve("Images/image3.bmp");
+        const readFilePromise: Function = util.promisify(fs.readFile);
+        const buffer: Buffer = await readFilePromise(imageMod) as Buffer;
+        await this.deleteDirectory();
 
-    //     return new Buffer("");
-    // }
-
-    private async generateImageDiff(buffers: Array<Buffer>): Promise<void> {
-        // await this.addImagesToDirectory(buffers);
-
-        // Runner le script
-        // const child_process = require("child_process");
-        // child_process.exec("python ./bmpdiff/bmpdiff.py ../../Images/image1.bmp ../../Images/image2.bmp ../../Images/image3.bmp");
-        const pyScript = p.resolve("app/routesPartieSimple/bmpdiff/bmpdiff.py");
-        const imageOri1 = p.resolve("Images/image1.bmp");
-        const imageOri2 = p.resolve("Images/image2.bmp");
-        const imageMod = p.resolve("Images/image3.bmp");
-        
-        const args: string[] = [imageOri1,imageOri2,imageMod];
-        args.unshift(pyScript);
-        const child = spawn('python', args);
-
-        child.stdout.on('data', (data) => {
-          console.log(`stdout: ${data}`);
-        });
-        
-        child.stderr.on('data', (data) => {
-          console.log(`stderr: ${data}`);
-        });
-        
-        child.on('close', (code) => {
-          console.log(`child process exited with code ${code}`);
-        });
-        
-          
-
-        // const options = {
-        //     args: ["../../Images/image1.bmp", "../../Images/image2.bmp", "../../Images/image3.bmp"]
-        //   };
-
-        // PythonShell.run("./bmpdiff/bmpdiff.py", options, (err, results) => {
-        //     if (err) { throw err; }
-        //     // results is an array consisting of messages collected during execution
-        //   });
+        return buffer;
     }
 
-    // private async addImagesToDirectory(buffers: Array<Buffer>): Promise<void> {
-    //     await this.makeImagesDirectory();
-    //     const writeFilePromise: Function = util.promisify(fs.writeFile);
-    //     let i: number = 1;
-    //     for (const buf of buffers) {
-    //         await writeFilePromise("Images/image" + i.toString() + ".bmp", new Buffer(buf));
-    //         i++;
-    //     }
-    // }
+    private async deleteDirectory(): Promise<void> {
+        const dir: string = "Images";
+        await fsx.remove(dir);
+    }
 
-    // private async makeImagesDirectory(): Promise<void> {
-    //     const dir: string = "Images";
-    //     const mkdirPromise: Function = util.promisify(fs.mkdir);
-    //     const existsPromise: Function = util.promisify(fs.exists);
+    private async verifierErreurScript(child, partie: PartieSimpleInterface, res: Response): Promise<void> {
+        let errorMsg: string = "";
 
-    //     if (await existsPromise(dir)) {
-    //         await fsx.remove(dir);
-    //     }
+        child.stderr.on("data", async (data) => {
+            errorMsg = `${data}`;
+            await this.enregistrerPartieSimple(partie, res, errorMsg);
+        });
+        child.stdout.on("data", async (data) => {
+            await this.enregistrerPartieSimple(partie, res, errorMsg);
+        });
+    }
 
-    //     await mkdirPromise(dir);
-    // }
+    private async genererImageMod(partie: PartieSimpleInterface, res: Response): Promise<void> {
+        const buffers: Array<Buffer> = [partie._image1, partie._image2];
+        await this.addImagesToDirectory(buffers);
+
+        const pyScript: string = p.resolve("app/routesPartieSimple/bmpdiff/bmpdiff.py");
+        const imageOri1: string = p.resolve("Images/image1.bmp");
+        const imageOri2: string = p.resolve("Images/image2.bmp");
+        const imageMod: string = p.resolve("Images/image3.bmp");
+        const args: string[] = [imageOri1, imageOri2, imageMod];
+        args.unshift(pyScript);
+
+        const child = spawn("python", args);
+        this.verifierErreurScript(child, partie, res);
+    }
+
+    private async addImagesToDirectory(buffers: Array<Buffer>): Promise<void> {
+        await this.makeImagesDirectory();
+        const writeFilePromise: Function = util.promisify(fs.writeFile);
+        let i: number = 1;
+        for (const buf of buffers) {
+            await writeFilePromise("Images/image" + i.toString() + ".bmp", new Buffer(buf));
+            i++;
+        }
+    }
+
+    private async makeImagesDirectory(): Promise<void> {
+        const dir: string = "Images";
+        const mkdirPromise: Function = util.promisify(fs.mkdir);
+        const existsPromise: Function = util.promisify(fs.exists);
+
+        if (await existsPromise(dir)) {
+            await fsx.remove(dir);
+        }
+
+        await mkdirPromise(dir);
+    }
 
     private async deletePartieSimple(nomPartie: String, res: Response): Promise<Response> {
         const imageId: String = await this.obtenirPartieSimpleId(nomPartie);
@@ -186,7 +182,7 @@ export class RoutePartieSimple {
 
     public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
         try {
-            await this.ajouterPartieSimple(req.body, res);
+            await this.genererImageMod(req.body, res);
             // res.status(201).json(partie);
             res.status(201).json({});
         } catch (err) {

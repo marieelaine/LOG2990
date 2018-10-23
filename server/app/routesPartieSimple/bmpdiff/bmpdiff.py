@@ -51,11 +51,13 @@ def compare_images(settings, enlargePixels):
     #Sauvegarde de l'image
     if (check_number_differences(newImage)):
         newImage.save(settings.imageSortie)
-        print('Image de différence générée avec succès!')
+        print('Image de différence générée avec succès!', file=sys.stdout)
+        sys.exit(0)
     else:
         print("Le nombre de différences entre les deux images ne correspond pas au nombre demandé! \n"
-              "Il faut exactement 7 différences entre les deux images.")
-
+              "Il faut exactement 7 différences entre les deux images.", file=sys.stderr)
+        sys.exit(1)
+        
 def check_number_differences(newImage):
 
     #Contouring pour compter les différences
