@@ -12,7 +12,7 @@ export abstract class DialogAbstrait {
     protected wrongImageSizeOrTypeMessage: String = "";
 
     public constructor (private dialogRef: MatDialogRef<T>,
-                        @Inject(MAT_DIALOG_DATA) private data: DialogData,
+                        @Inject(MAT_DIALOG_DATA) protected data: DialogData,
                         private http: HttpClient) {
     }
 
