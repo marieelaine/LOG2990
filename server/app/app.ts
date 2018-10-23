@@ -9,7 +9,6 @@ import { injectable, inject } from "inversify";
 
 import { ServiceWeb } from "./serviceWeb";
 import { Routes } from "./routes";
-import { RoutesBaseDeDonnees } from "./routesBaseDeDonnees";
 import { RoutesUser } from "./routesUser";
 import { RoutesPartieSimple } from "./routesPartieSimple";
 
@@ -21,8 +20,7 @@ export class Application {
 
     public constructor(@inject(Types.Routes) private index: Routes,
                        @inject(Types.RoutesUser) private user: RoutesUser,
-                       @inject(Types.RoutesPartieSimple) private partieSimple: RoutesPartieSimple,
-                       @inject(Types.RoutesBaseDeDonnees) private baseDonnees: RoutesBaseDeDonnees) {
+                       @inject(Types.RoutesPartieSimple) private partieSimple: RoutesPartieSimple) {
         this.app = express();
 
         this.config();
@@ -43,7 +41,6 @@ export class Application {
 
     public routes(): void {
         this.ajouterService(this.index);
-        this.ajouterService(this.baseDonnees);
         this.ajouterService(this.user);
         this.ajouterService(this.partieSimple);
 

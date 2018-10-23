@@ -20,32 +20,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const inversify_1 = require("inversify");
 require("reflect-metadata");
 const mongoose_1 = require("mongoose");
-var RouteBaseDeDonnees;
-(function (RouteBaseDeDonnees) {
-    let BaseDeDonnees = class BaseDeDonnees {
-        constructor() {
-            this.mongoURL = "mongodb://admin:admin1@ds239692.mlab.com:39692/log2990-05";
-            this.mongoose = new mongoose_1.Mongoose();
-            this.mongoose.set("useCreateIndex", true);
-            this.seConnecter();
-        }
-        assurerConnection() {
-            return __awaiter(this, void 0, void 0, function* () {
-                if (this.mongoose.connection.readyState !== 1) {
-                    yield this.seConnecter();
-                }
-            });
-        }
-        seConnecter() {
-            return __awaiter(this, void 0, void 0, function* () {
-                yield this.mongoose.connect(this.mongoURL, { useNewUrlParser: true });
-            });
-        }
-    };
-    BaseDeDonnees = __decorate([
-        inversify_1.injectable(),
-        __metadata("design:paramtypes", [])
-    ], BaseDeDonnees);
-    RouteBaseDeDonnees.BaseDeDonnees = BaseDeDonnees;
-})(RouteBaseDeDonnees = exports.RouteBaseDeDonnees || (exports.RouteBaseDeDonnees = {}));
+let BaseDeDonnees = class BaseDeDonnees {
+    constructor() {
+        this.mongoURL = "mongodb://admin:admin1@ds239692.mlab.com:39692/log2990-05";
+        this.mongoose = new mongoose_1.Mongoose();
+        this.mongoose.set("useCreateIndex", true);
+        this.seConnecter();
+    }
+    assurerConnection() {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (this.mongoose.connection.readyState !== 1) {
+                yield this.seConnecter();
+            }
+        });
+    }
+    seConnecter() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.mongoose.connect(this.mongoURL, { useNewUrlParser: true });
+        });
+    }
+};
+BaseDeDonnees = __decorate([
+    inversify_1.injectable(),
+    __metadata("design:paramtypes", [])
+], BaseDeDonnees);
+exports.BaseDeDonnees = BaseDeDonnees;
 //# sourceMappingURL=baseDeDonnees.js.map

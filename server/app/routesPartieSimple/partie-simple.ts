@@ -3,11 +3,11 @@ import * as fsx from "fs-extra";
 import * as util from "util";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
-import { RouteBaseDeDonnees } from "../routesBaseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
 import { PartieSimple } from "../../../client/src/app/admin/dialog-simple/partie-simple";
+import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 
 interface PartieSimpleInterface {
     _id: string;
@@ -21,12 +21,12 @@ interface PartieSimpleInterface {
 @injectable()
 export class RoutePartieSimple {
 
-    private baseDeDonnees: RouteBaseDeDonnees.BaseDeDonnees;
+    private baseDeDonnees: BaseDeDonnees;
     private modelPartie: Model<Document>;
     private schema: Schema;
 
     public constructor() {
-        this.baseDeDonnees = new RouteBaseDeDonnees.BaseDeDonnees();
+        this.baseDeDonnees = new BaseDeDonnees();
         this.CreateSchema();
 
         this.schema.plugin(uniqueValidator);

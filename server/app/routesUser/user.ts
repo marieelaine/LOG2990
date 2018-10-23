@@ -1,9 +1,9 @@
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
-import { RouteBaseDeDonnees } from "../routesBaseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
+import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 
 interface Usager {
     _id: string;
@@ -14,12 +14,12 @@ export module RouteUser {
     @injectable()
     export class User {
 
-        private baseDeDonnees: RouteBaseDeDonnees.BaseDeDonnees;
+        private baseDeDonnees: BaseDeDonnees;
         private modelUser: Model<Document>;
         private schema: Schema;
 
         public constructor() {
-            this.baseDeDonnees = new RouteBaseDeDonnees.BaseDeDonnees();
+            this.baseDeDonnees = new BaseDeDonnees();
             this.schema = new Schema({
                 _username: {
                     type: String,

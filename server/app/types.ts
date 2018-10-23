@@ -4,7 +4,6 @@ export default  {
         Routes: Symbol("Routes"),
         Index: Symbol("Index"),
 
-        RoutesBaseDeDonnees: Symbol("RoutesBaseDeDonees"),
         BaseDeDonnees: Symbol("BaseDeDonnees"),
 
         RoutesUser: Symbol("RoutesUser"),
