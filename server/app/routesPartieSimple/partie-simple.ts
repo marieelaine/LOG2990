@@ -63,7 +63,6 @@ export class RoutePartieSimple {
             });
         }
 
-    private async enregistrerPartieSimple(partie: PartieSimpleInterface, res: Response, errorMsg: string): Promise<string> {
     private async enregistrerPartieSimple(partie: PartieSimpleInterface, res: Response, errorMsg: string): Promise<PartieSimpleInterface> {
         if (errorMsg === "") {
             partie._imageDiff = await this.getImageDiffAsBuffer();
@@ -73,7 +72,6 @@ export class RoutePartieSimple {
             // Retourner errorMsg vers le client
         }
 
-        return this.obtenirPartieSimpleId(partie._nomPartie)
         return partie;
     }
 

@@ -10,7 +10,7 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "clean": "rimraf out node_modules",
-    "preinstall": "pip3 install --user -r ./bmpdiff/requirements.txt",
+    "preinstall": "pip3 install --user -r ./app/routesPartieSimple/bmpdiff/requirements.txt",
     "postinstall": "rimraf false"
   },
   "dependencies": {
