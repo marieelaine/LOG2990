@@ -13,7 +13,7 @@ export abstract class DialogAbstrait {
 
     public constructor (private dialogRef: MatDialogRef<T>,
                         @Inject(MAT_DIALOG_DATA) protected data: DialogData,
-                        private http: HttpClient) {
+                        protected http: HttpClient) {
     }
 
     protected abstract onFileSelectedImage(event, i): void;

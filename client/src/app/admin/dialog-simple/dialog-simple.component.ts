@@ -7,6 +7,7 @@ import { PartieSimple } from "./partie-simple";
 import { PartieSimpleService } from "../partie-simple.service";
 import { Observable } from "rxjs";
 import { DialogAbstrait } from "../dialog-abstrait";
+import * as Buffer from "Buffer";
 
 export const IMAGE_URL: string = "http://localhost:3000/images/";
 const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
@@ -23,7 +24,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
   protected deuxiemeImage: string;
   private currentImageNumber: number;
   private selectedFiles: File[] = [];
-  private selectedFilesAsArrayBuffers: Buffer[] = [];
+  private selectedFilesAsBuffers: Buffer[] = [];
   private correctImageExtension: String = "image/bmp";
   private titrePartie = new FormControl("", [Validators.required]);
   private gameNameTaken: Boolean;
@@ -57,25 +58,30 @@ export class DialogSimpleComponent extends DialogAbstrait {
 
   protected onSubmit(): void {
     const self = this;
-    var i = 0;
+    var imageQty = 0;
     this.selectedFiles.forEach((file) => {
       const reader = new FileReader();
       reader.readAsArrayBuffer(file);
       reader.onload = function() {
-        self.addToSelectedFilesAsArrayBuffer(reader.result as ArrayBuffer, i);
-        i++;
+        self.addToSelectedFilesAsArrayBuffer(reader.result as ArrayBuffer, imageQty);
+        imageQty++;
       };
     });
   }
 
   private addToSelectedFilesAsArrayBuffer(file: ArrayBuffer, i: number) {
-    const Buffer = require("buffer/").Buffer;
-    this.selectedFilesAsArrayBuffers[i] = Buffer.from(file);
-    if (i === 1) {
+    this.selectedFilesAsBuffers[i] = Buffer.Buffer.from(file);
+    if (this.selectedFilesAsBuffers.length === 2) {
+      this.ajouterPartie();
+    }
+
+  }
+
+  private ajouterPartie() {
       const result: PartieSimple = new PartieSimple(this["data"].simpleGameName, this.genererTableauTempsAleatoires(),
-                                                    this.genererTableauTempsAleatoires(), this.selectedFilesAsArrayBuffers[0],
-                                                    this.selectedFilesAsArrayBuffers[1],
-                                                    Buffer.from(new Array()));
+                                                    this.genererTableauTempsAleatoires(), this.selectedFilesAsBuffers[0],
+                                                    this.selectedFilesAsBuffers[1],
+                                                    Buffer.Buffer.from(new Array()));
       this.partieSimpleService.register(result)
         .subscribe(
           (data) => {
@@ -86,7 +92,6 @@ export class DialogSimpleComponent extends DialogAbstrait {
             this.gameNameTaken = true;
           });
     }
-  }
 
   protected obtenirImageId(identifiant: string): Observable<PartieSimple> {
     return this["http"].get<PartieSimple>(IMAGE_URL + identifiant);
