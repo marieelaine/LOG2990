@@ -27,7 +27,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
     protected partie: PartieSimple;
     protected image1: String;
     protected image2: String;
-    image = new Image();
+    protected image = new Image();
 
     protected getID(): void {
         this.partieID = this.route.snapshot.paramMap.get('idPartie') + "";
@@ -62,6 +62,5 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
         const blob = new Blob([result], {type: 'image/bmp'});
         // @ts-ignore
         document.getElementById(id).src = URL.createObjectURL(blob);
-
     }
 }
