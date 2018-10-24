@@ -28,7 +28,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
 
     protected getID(): void {
         // this.partieID = this.route.snapshot.paramMap.get('idPartie');
-        this.partieID = "5bcfd8576103bc537cd937bb" +
+        this.partieID = "5bcfeab96b82573740791a99" +
             "";
     }
 
@@ -41,13 +41,13 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
 
     protected setup(): void {
 
-        const a = this.partie._image1;
-        const b = this.partie._image2;
+      // const a = this.partie._image1;
+      // const b = this.partie._image2;
 
-        let enc = new TextEncoder();
-        console.log(a);
-        console.log(b);
+      // let enc = new TextEncoder();
+      // console.log(a);
+      // console.log(b);
 
-        this.image1 = new Blob([/*Array*/],{type : "image/bmp"});
+        this.image1 = new Blob([/*Array*/], {type : "image/bmp"});
     }
 }

@@ -152,6 +152,25 @@ export class RoutePartieSimple {
         return listeParties;
     }
 
+    private async getPartieSimple(partieID: String, res: Response): Promise<PartieSimpleInterface> {
+        const partieSimples: PartieSimpleInterface[] = [];
+        await this.modelPartie.find()
+            .then((parties: Document[]) => {
+                for (const partie of parties) {
+                    partieSimples.push(partie.toJSON());
+                }
+            });
+
+        for (const partie of partieSimples) {
+            if (partie._id === partieID) {
+                return partie;
+            }
+        }
+
+        // TODO: gestion de si la partie n'est pas trouvé
+        return partieSimples[0];
+    }
+
     public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
         try {
             const partieId: string = await this.ajouterPartieSimple(req.body, res);
@@ -178,6 +197,11 @@ export class RoutePartieSimple {
     public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();
         res.send(await this.getListePartie());
+    }
+
+    public async requeteGetPartieSimple(req: Request, res: Response): Promise<void> {
+        await this.baseDeDonnees.assurerConnection();
+        res.send(await this.getPartieSimple(req.params.id, res));
     }
 
 }

@@ -8,7 +8,6 @@ import { PartieSimpleService } from "../partie-simple.service";
 import { Observable } from "rxjs";
 import { DialogAbstrait } from "../dialog-abstrait";
 
-
 export const IMAGE_URL: string = "http://localhost:3000/images/";
 const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
 
@@ -28,7 +27,6 @@ export class DialogSimpleComponent extends DialogAbstrait {
   private correctImageExtension: String = "image/bmp";
   private titrePartie = new FormControl("", [Validators.required]);
   private gameNameTaken: Boolean;
-
 
   public constructor(
     dialogRef: MatDialogRef<DialogSimpleComponent>,
@@ -62,11 +60,6 @@ export class DialogSimpleComponent extends DialogAbstrait {
     const self = this;
     var i = 0;
     this.selectedFiles.forEach((file) => {
-     // let image: Uint8Array = new Uint8Array(file.size);
-     // let binaryString = String.fromCharCode.apply(null, image);
-     // console.log("---ICI---")
-     // console.log(image);
-     // console.log(binaryString);
       const reader = new FileReader();
       reader.readAsArrayBuffer(file);
       reader.onload = function() {
@@ -79,7 +72,6 @@ export class DialogSimpleComponent extends DialogAbstrait {
   private addToSelectedFilesAsArrayBuffer(file: ArrayBuffer, i: number) {
     const Buffer = require("buffer/").Buffer;
     this.selectedFilesAsArrayBuffers[i] = Buffer.from(file);
-    console.log(this.selectedFilesAsArrayBuffers[0]);
     if (i === 1) {
       const result: PartieSimple = new PartieSimple(this["data"].simpleGameName, this.genererTableauTempsAleatoires(),
                                                     this.genererTableauTempsAleatoires(), this.selectedFilesAsArrayBuffers[0],
