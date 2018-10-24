@@ -26,7 +26,7 @@
         <div class="secondaryText">Veuillez choisir un thème parmis les suivants:</div>
         <div>
             <form>
-                <button mat-button [ngClass]="toggle ? 'clicked' : 'notClicked'" value ="geo" id="geometricThemeButton" (click)='onThemeClickButton($event)' class='dialogButtons mat-elevation-z6'>Géométrique</button>
+                <button mat-button [ngClass]="toggle ? 'clicked' : 'notClicked'" id="geometricThemeButton" (click)='onThemeClickButton($event, "geo")' class='dialogButtons mat-elevation-z6'>Géométrique</button>
             </form>
         </div>
     </mat-card>

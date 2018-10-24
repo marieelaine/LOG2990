@@ -30,7 +30,7 @@ export class DBPartieMultiple {
         this.CreateSchema();
 
         this.schema.plugin(uniqueValidator);
-        this.modelPartie = this.baseDeDonnees.mongoose.model("parties-multiple", this.schema);
+        this.modelPartie = this.baseDeDonnees.mongoose.model("parties-multiples", this.schema);
     }
 
     private CreateSchema(): void {
@@ -40,19 +40,15 @@ export class DBPartieMultiple {
                 _tempsUnContreUn: { type: Array, required: true, },
                 _image1PV1: {
                     type: Buffer,
-                    required: true,
                 },
                 _image1PV2: {
                     type: Buffer,
-                    required: true,
                 },
                 _image2PV1: {
                     type: Buffer,
-                    required: true,
                 },
                 _image2PV2: {
                     type: Buffer,
-                    required: true,
                 },
                 _imageDiff1: {
                     type: Buffer,
@@ -66,6 +62,8 @@ export class DBPartieMultiple {
     private async ajouterPartie(partie: PartieMultipleInterface, res: Response): Promise<void> {
         // tslint:disable-next-line:no-console
         console.log("allo de ajouter partie");
+        // tslint:disable-next-line:no-console
+        console.log(partie);
         const doc: Document = new this.modelPartie(partie);
         await doc.save();
     }
@@ -85,6 +83,8 @@ export class DBPartieMultiple {
         // tslint:disable-next-line:no-console
         console.log("allo de requete ajouter partie");
         try {
+            // tslint:disable-next-line:no-console
+            console.log(req.body);
             await this.ajouterPartie(req.body, res);
             res.status(201);
         } catch (err) {

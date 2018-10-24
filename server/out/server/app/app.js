@@ -23,11 +23,13 @@ const inversify_1 = require("inversify");
 const routes_1 = require("./routes");
 const routesUser_1 = require("./routesUser");
 const routesPartieSimple_1 = require("./routesPartieSimple");
+const routesPartieMultiple_1 = require("./routesPartieMultiple");
 let Application = class Application {
-    constructor(index, user, partieSimple) {
+    constructor(index, user, partieSimple, partieMultiple) {
         this.index = index;
         this.user = user;
         this.partieSimple = partieSimple;
+        this.partieMultiple = partieMultiple;
         this.internalError = 500;
         this.app = express();
         this.config();
@@ -47,6 +49,7 @@ let Application = class Application {
         this.ajouterService(this.index);
         this.ajouterService(this.user);
         this.ajouterService(this.partieSimple);
+        this.ajouterService(this.partieMultiple);
         this.errorHandeling();
     }
     ajouterService(service) {
@@ -87,9 +90,11 @@ Application = __decorate([
     __param(0, inversify_1.inject(types_1.default.Routes)),
     __param(1, inversify_1.inject(types_1.default.RoutesUser)),
     __param(2, inversify_1.inject(types_1.default.RoutesPartieSimple)),
+    __param(3, inversify_1.inject(types_1.default.RoutesPartieMultiple)),
     __metadata("design:paramtypes", [routes_1.Routes,
         routesUser_1.RoutesUser,
-        routesPartieSimple_1.RoutesPartieSimple])
+        routesPartieSimple_1.RoutesPartieSimple,
+        routesPartieMultiple_1.RoutesPartieMultiple])
 ], Application);
 exports.Application = Application;
 //# sourceMappingURL=app.js.map

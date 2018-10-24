@@ -49,6 +49,7 @@ export class DialogMultipleComponent extends DialogAbstrait {
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()));
+    console.log(result);
     this.partieMultipleService.register(result)
       .subscribe(
         (data) => {
@@ -61,10 +62,10 @@ export class DialogMultipleComponent extends DialogAbstrait {
       );
   }
 
-  protected onThemeClickButton(event: Event): void {
+  protected onThemeClickButton(event: Event, theme: string): void {
     this.toggle = !this.toggle;
-    console.log("bonjour du bouton geometrique");
-    this.themeChoisi = event.currentTarget.value;
+    console.log("bonjour du bouton geometrique" + "----" + theme);
+    this.themeChoisi = theme;
   }
 
   protected verifierSiMessageErreur(): Boolean {
