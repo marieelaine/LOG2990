@@ -3,7 +3,8 @@
     margin:1%;
     background-color: #dadada;
     border-radius: 20px;
-    height: 250px;
+    height: 320px;
+    padding: 20px;
 }
 
 .gameName
@@ -34,4 +35,53 @@
 
 #geometricThemeButton {
     float:left;
+}
+
+.clicked {
+    background-color: #64b664;
+    font-size: 0.8em;
+    padding:0;
+    margin-top:2px;
+}
+
+.notClicked {
+    color: black;
+    font-size: 0.8em;
+    padding:0;
+    margin-top:2px;
+}
+
+mat-radio-button {
+    font-size: 0.8em;
+}
+
+.mat-radio-outer-circle {
+/* .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle { */
+    border-color: #64b664 !important;
+}
+
+#mat-radio-2 > label > div.mat-radio-container > div.mat-radio-inner-circle {
+    background-color: #64b664 !important;
+    border-color: #64b664 !important;
+}
+
+.secondaryText {
+    font-size: 0.8em;
+    margin: 5px 0;
+}
+
+mat-form-field {
+    font-size:0.8em;
+}
+
+.radioGroup {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+#errorMessage
+{
+    margin:0;
+    font-size:14px;
+    color:red;
 }

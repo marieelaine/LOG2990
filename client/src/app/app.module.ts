@@ -2,6 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import {MatRadioModule} from '@angular/material/radio';
 import { ModalModule } from 'ngx-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from "./app.component";
@@ -40,6 +41,7 @@ import { PartieSoloComponent } from "./partie/vue-simple/partie-solo/partie-solo
 import { PartieMultijoueurComponent } from './partie/partie-multijoueur/partie-multijoueur.component';
 import { VueMultipleComponent } from './partie/vue-multiple/vue-multiple.component';
 import { ImageComponent } from './partie/image/image.component';
+import { PartieMultipleService } from "./admin/partie-multiple.service";
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
@@ -91,15 +93,17 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     ParticlesModule,
+    MatRadioModule,
   ],
   providers: [BasicService,
               CookieService,
               UserService,
-              PartieSimpleService],
+              PartieSimpleService,
+              PartieMultipleService],
   bootstrap: [AppComponent],
   entryComponents: [
     DialogSimpleComponent,
-    DialogMultipleComponent
+    DialogMultipleComponent,
   ]
 })
 export class AppModule { }

@@ -8,22 +8,25 @@ import { HttpClient } from '@angular/common/http';
 import { ParticlesModule } from 'angular-particle';
 import { PartieMultiple } from './partie-mutiple';
 import * as Buffer from "Buffer";
+import { PartieMultipleService } from '../partie-multiple.service';
 
 @Component({
   selector: 'app-dialog-multiple',
   templateUrl: './dialog-multiple.component.html',
-  styleUrls: ['./dialog-multiple.component.css']
+  styleUrls: ['./dialog-multiple.component.css'],
 })
 
 export class DialogMultipleComponent extends DialogAbstrait {
 
-  partieMultiple: PartieMultipleInterface;
-  listeParties: ListePartiesComponent;
+  private partieMultiple: PartieMultipleInterface;
+  private listeParties: ListePartiesComponent;
+  protected toggleClassButton: boolean = false;
 
   public constructor(
     dialogRef: MatDialogRef<DialogMultipleComponent>,
     @Inject(MAT_DIALOG_DATA) data: DialogData,
-    http: HttpClient) {
+    http: HttpClient,
+    private partieMultipleService: PartieMultipleService) {
       super(dialogRef, data, http);
     }
 
@@ -35,20 +38,35 @@ export class DialogMultipleComponent extends DialogAbstrait {
 
   protected onSubmit(): void {
     console.log("hello du onSubmit");
+    this.ajouterPartie();
   }
 
   protected ajouterPartie() {
     const tempsSolo: Array<number> = this.genererTableauTempsAleatoires();
     const temps1v1: Array<number> = this.genererTableauTempsAleatoires();
+
     const result: PartieMultiple = new PartieMultiple(this["data"].multipleGameName, tempsSolo, temps1v1,
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
-                                                      Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()));
-
+                                                      Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
+                                                      this["data"].quantiteObjets, this["data"].theme,
+                                                      this["data"].typeModification);
+    console.log(result);
+    this.partieMultipleService.register(result)
+      .subscribe(
+        (data) => {
+          console.log(data);
+          console.log("allo du ajouterPartie Client");
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 
-  protected onThemeClickButton(): void {
-    console.log("bonjour du bouton geometrique");
+  protected onThemeClickButton(event: Event, theme: string): void {
+    this.toggleClassButton = !this.toggleClassButton;
+    this.data.theme = theme;
   }
 
   protected verifierSiMessageErreur(): Boolean {

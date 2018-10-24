@@ -9,10 +9,14 @@ export class PartieMultiple {
     protected _image2PV2: Buffer;
     protected _imageDiff1: Buffer;
     protected _imageDiff2: Buffer;
+    protected _quantiteObjets: number;
+    protected _theme: string;
+    protected _typeModification: string;
 
     public constructor( nomPartie: string, tempsSolo: Array<number>, tempsUnContreUn: Array<number>,
                         image1PV1: Buffer, image1PV2: Buffer, image2PV1: Buffer, image2PV2: Buffer,
-                        imageDiff1: Buffer, imageDiff2: Buffer, id?: string) {
+                        imageDiff1: Buffer, imageDiff2: Buffer, quantiteObjets: number, theme: string,
+                        typeModification: string,  id?: string) {
       this._nomPartie = nomPartie;
       this._tempsSolo = tempsSolo;
       this._tempsUnContreUn = tempsUnContreUn;
@@ -22,6 +26,9 @@ export class PartieMultiple {
       this._image2PV2 = image2PV2;
       this._imageDiff1 = imageDiff1;
       this._imageDiff2 = imageDiff2;
+      this._quantiteObjets = quantiteObjets;
+      this._theme = theme;
+      this._typeModification = typeModification;
       if (id) {
           this._id = id;
       }
