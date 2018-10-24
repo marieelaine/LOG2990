@@ -40,11 +40,11 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('click header title redirects you to /liste-parties', fakeAsync(() => {
-    component.OnHeaderTitleClick();
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(location.path()).toBe('/liste-parties');
-    });
-  }));
+//   it('click header title redirects you to /liste-parties', fakeAsync(() => {
+//     component.OnHeaderTitleClick();
+//     fixture.detectChanges();
+//     fixture.whenStable().then(() => {
+//       expect(location.path()).toBe('/liste-parties');
+//     });
+//   }));
 });

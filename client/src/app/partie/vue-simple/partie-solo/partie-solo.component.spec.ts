@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core
 
 import { PartieSoloComponent } from './partie-solo.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ChronoComponent } from '../../chrono/chrono.component';
+// import { ChronoComponent } from '../../chrono/chrono.component';
 
 describe('PartieSoloComponent', () => {
   let component: PartieSoloComponent;
@@ -10,7 +10,7 @@ describe('PartieSoloComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PartieSoloComponent, ChronoComponent ],
+      declarations: [ PartieSoloComponent ],
       imports: [ HttpClientTestingModule]
     })
     .compileComponents();
