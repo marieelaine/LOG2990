@@ -42,9 +42,9 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     }
   }
 
-  public onJouerOuReinitialiserClick(): void {
+  public onJouerOuReinitialiserClick(partieId: string): void {
     if (this.isListePartiesMode) {
-      this.router.navigate(["/partie-solo"]);
+      this.router.navigate(["/partie-solo/" + partieId]);
     } else if (this.isAdminMode) {
       this.reinitialiserTemps();
     }

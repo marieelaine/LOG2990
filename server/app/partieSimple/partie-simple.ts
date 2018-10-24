@@ -30,7 +30,6 @@ export class DBPartieSimple {
     private schemaArray: Schema;
     private schemaBuffer: Schema;
 
-
     public constructor() {
         this.baseDeDonnees = new BaseDeDonnees();
 
@@ -244,7 +243,6 @@ export class DBPartieSimple {
                 return partie;
             }
         }
-
 
         // TODO: gestion de si la partie n'est pas trouvé
         return partieSimples[0];
