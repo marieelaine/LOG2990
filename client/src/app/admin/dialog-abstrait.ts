@@ -30,7 +30,6 @@ export abstract class DialogAbstrait {
     protected closeDialogIfRequirements(): void {
 
       if (!this.verifierSiMessageErreur()) {
-         console.log("hello du close dialog, pas derreur");
          this.onSubmit();
          this.dialogRef.close();
        }
