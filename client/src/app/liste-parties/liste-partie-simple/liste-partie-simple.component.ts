@@ -11,7 +11,7 @@ import { PartieSimple } from "../../admin/dialog-simple/partie-simple";
 })
 export class ListePartieSimpleComponent extends ListePartiesComponent implements OnInit {
 
-  protected listeParties;
+  protected listeParties: PartieSimple[];
 
   constructor(public router: Router,
               public listePartieService: ListePartieServiceService) {
@@ -32,16 +32,23 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     }
   }
 
-  protected onCreerOuSupprimerClick(): void {
+  protected onCreerOuSupprimerClick(partieId: string): void {
     if (this.isListePartiesMode) {
       // Naviguer vers partie-multijouer
     } else if (this.isAdminMode) {
-      this.supprimerPartie();
+      this.supprimerPartie(partieId);
     }
   }
 
-  private supprimerPartie(): void {
-    // Supprimer la partie
+  protected supprimerPartie(partieId: string): void {
+    let i = 0;
+    this.listeParties.forEach((partie: PartieSimple) => {
+      if (partie._id === partieId) {
+        this.listeParties.splice(i, 1);
+        i++;
+      }
+    });
+    this.listePartieService.deletePartieSimple(partieId);
   }
 
   private reinitialiserTemps(): void {

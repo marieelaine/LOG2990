@@ -3,15 +3,15 @@ import { Router, Request, Response } from "express";
 
 import { ServiceWeb } from "./serviceWeb";
 import Types from "./types";
-import { RoutePartieSimple } from "./routesPartieSimple/partie-simple";
+import { DBPartieSimple } from "./partieSimple/partie-simple";
 
 @injectable()
 export class RoutesPartieSimple extends ServiceWeb {
 
-    public readonly mainRoute: string = "/partie";
+    public readonly mainRoute: string = "/partieSimple";
 
     public constructor(@inject(Types.PartieSimple)
-    private partieSimple: RoutePartieSimple = new RoutePartieSimple()) {
+    private partieSimple: DBPartieSimple = new DBPartieSimple()) {
         super();
     }
 
@@ -22,12 +22,12 @@ export class RoutesPartieSimple extends ServiceWeb {
             await this.partieSimple.requeteAjouterPartieSimple(req, res);
         });
 
-        router.delete("/delete/:id", async (req: Request, res: Response) => {
-            await this.partieSimple.requeteDeletePartieSimple(req, res);
-        });
-
         router.get("/getPartieSimple", async (req: Request, res: Response) => {
             await this.partieSimple.requeteGetListePartie(req, res);
+        });
+
+        router.delete("/delete/:id", async (req: Request, res: Response) => {
+            await this.partieSimple.requeteDeletePartieSimple(req, res);
         });
 
         router.get("/:id", async (req: Request, res: Response) => {

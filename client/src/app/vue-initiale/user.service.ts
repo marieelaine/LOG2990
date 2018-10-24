@@ -11,14 +11,14 @@ export class UserService {
 
     public constructor(private _http: HttpClient) { }
 
-    private register(user: User): Observable<Object> {
+    public register(user: User): Observable<Object> {
         return this._http.post(this.AJOUTER_URL, user, {
             observe: "body",
             headers: new HttpHeaders().append("Content-Type", "application/json")
         });
     }
 
-    private delete(username: string): Promise<Object> {
+    public delete(username: string): Promise<Object> {
         return this._http.delete(this.SUPPRIMER_URL + username).toPromise();
     }
 }

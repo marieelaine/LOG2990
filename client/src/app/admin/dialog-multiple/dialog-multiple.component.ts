@@ -5,15 +5,18 @@ import { DialogAbstrait } from '../dialog-abstrait';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DialogData } from '../admin.component';
 import { HttpClient } from '@angular/common/http';
+import { ParticlesModule } from 'angular-particle';
+import { PartieMultiple } from './partie-mutiple';
+import * as Buffer from "Buffer";
 
 @Component({
   selector: 'app-dialog-multiple',
   templateUrl: './dialog-multiple.component.html',
   styleUrls: ['./dialog-multiple.component.css']
 })
+
 export class DialogMultipleComponent extends DialogAbstrait {
 
-  errorMessage: string;
   partieMultiple: PartieMultipleInterface;
   listeParties: ListePartiesComponent;
 
@@ -24,11 +27,38 @@ export class DialogMultipleComponent extends DialogAbstrait {
       super(dialogRef, data, http);
     }
 
-  protected onFileSelectedImage(event, i): void {
-    // a faire
-  }
+    // sur le click ajouter, call close dialog if requ and on submit
+  protected onClickAjouterPartie(): void {
+      this.setOutOfBoundNameLengthMessage();
+      this.closeDialogIfRequirements();
+    }
 
   protected onSubmit(): void {
-    // a faire
+    console.log("hello du onSubmit");
+  }
+
+  protected ajouterPartie() {
+    const tempsSolo: Array<number> = this.genererTableauTempsAleatoires();
+    const temps1v1: Array<number> = this.genererTableauTempsAleatoires();
+    const result: PartieMultiple = new PartieMultiple(this["data"].multipleGameName, tempsSolo, temps1v1,
+                                                      Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
+                                                      Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
+                                                      Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()));
+
+  }
+
+  protected onThemeClickButton(): void {
+    console.log("bonjour du bouton geometrique");
+  }
+
+  protected verifierSiMessageErreur(): Boolean {
+
+    return (this.outOfBoundNameLengthMessage !== "");
+  }
+
+  protected checkIfOutOfBoundNameLength(): Boolean {
+
+    return (this["data"].multipleGameName === "" || this["data"].multipleGameName === undefined
+    || this["data"].multipleGameName.length < 3 || this["data"].multipleGameName.length > 20);
   }
 }

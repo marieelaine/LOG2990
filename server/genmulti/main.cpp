@@ -406,23 +406,23 @@ void genererPyramides()
 void makeFormesGeometriques()
 {
     int nombre = etat.nombreFormes;
-    cout << nombre << endl;
+
     int nombreSpheres = callRandomNumber(nombre);
     makeSpheres(nombreSpheres);
     nombre = nombre - nombreSpheres;
-    cout << nombreSpheres << ";" <<nombre << endl;
+
     int nombreCubes = callRandomNumber(nombre);
     makeCubes(nombreCubes);
     nombre = nombre - nombreCubes;
-    cout << nombreCubes<< ";" <<nombre << endl;
+
     int nombrePyramides = callRandomNumber(nombre);
     makePyramides(nombrePyramides);
     nombre = nombre - nombrePyramides;
-    cout << nombrePyramides << ";" <<nombre << endl;
+
     int nombreCones = callRandomNumber(nombre);
     makeCones(nombreCones);
     nombre = nombre - nombreCones;
-    cout << nombreCones << ";" <<nombre << endl;
+
     makeCylindres(nombre);
 }
 
@@ -438,6 +438,107 @@ void afficherFormesGeometriques()
 
    }matrModel.PopMatrix(); glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
    glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
+}
+
+void addForm(int index){
+    switch (index){
+        case 0 :
+            makeSpheres(1);
+            break;
+        case 1 : 
+            makeCubes(1);
+            break;
+        case 2 : 
+            makeCones(1);
+            break;
+        case 3 : 
+            makeCylindres(1);
+            break;
+        case 4 : 
+            makePyramides(1);
+            break;
+    }
+}
+
+void creerModifications()
+{
+    int compteur = 0;
+    while (compteur < 7){
+        int randomIndex = callRandomNumber(etat.modifications.length() - 1);
+        char modif = etat.modifications[randomIndex];
+
+        if (modif == 'a') {
+            addForm(callRandomNumber(4));
+            cout << "ajout" << endl;
+            
+        }
+        else if (modif == 's') {
+            
+            if (!vecSphere.empty())
+                vecSphere.pop_back();
+            
+            else if (!vecSphere.empty())
+                vecCube.pop_back();
+            
+            else if (!vecSphere.empty())
+                    vecCone.pop_back();
+            
+            else if (!vecSphere.empty())
+                    vecCylindre.pop_back();
+
+            else if (!vecSphere.empty())
+                    vecPyramide.pop_back();
+            
+            cout << "supression" << endl;
+
+        }
+        else if (modif == 'c') {
+            // int random = callRandomNumber(4);
+            // if (random == 0) {
+                // int randomForm = callRandomNumber(vecSphere.size() -1);
+                // if(!vecSphere.empty()){
+                //     StructSphere form = vecSphere.at(randomForm);
+                //     matrModel.PushMatrix();
+                //     {
+                //         matrModel.Translate( form.translateX, form.translateY, form.translateZ);
+                //         matrModel.Rotate(geo.angleReference, form.angleX, form.angleY, form.angleZ);
+                //         matrModel.Scale(form.tailleX, form.tailleY, form.tailleZ);
+                //         glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
+                //         glVertexAttrib3f( locColor, callRandom(), callRandom(), callRandom());
+                //         afficherSphere();
+                //     }
+                //     matrModel.PopMatrix(); glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
+                // }
+            // else if (random == 1) {
+            //     vector<StructCube> vec = vecCube;
+            //     int randomForm = callRandomNumber(vec.size() -1);
+            //     StructCube form = vec.at(randomForm);
+            //     form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
+            // }
+            // else if (random == 2) {
+            //     vector<StructCone> vec = vecCone;
+            //     int randomForm = callRandomNumber(vec.size() -1);
+            //     StructCone form = vec.at(randomForm);
+            //     form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
+            // }
+            // else if (random == 3) {
+            //     vector<StructCylindre> vec = vecCylindre;
+            //     int randomForm = callRandomNumber(vec.size() -1);
+            //     StructCylindre form = vec.at(randomForm);
+            //     form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
+            // }
+            // else if (random == 4) {
+            //     vector<StructPyramide> vec = vecPyramide;
+            //     int randomForm = callRandomNumber(vec.size() -1);
+            //     StructPyramide form = vec.at(randomForm);
+            //     form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
+            // }
+            cout << "couleur" << endl;
+
+        }
+        glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
+        compteur++;
+    }
 }
 
 void capturerScene(string filepath)
@@ -461,7 +562,7 @@ void capturerScene(string filepath)
     delete [] pixels;
 }
 
-void FenetreTP::afficherScene()
+void FenetreTP::afficherScene(int index)
 {
    // effacer l'ecran et le tampon de profondeur
    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -480,9 +581,19 @@ void FenetreTP::afficherScene()
 
    afficherFormesGeometriques();
    
-   if (camera.modeLookAt)
-    capturerScene(etat.capture1);
-   else capturerScene(etat.capture2);
+   if (index){
+    if (camera.modeLookAt)
+        capturerScene(etat.capture1);
+    else capturerScene(etat.capture2);   
+   }
+
+   else if (!index){
+    if (camera.modeLookAt){
+        capturerScene(etat.capture3);
+    }
+    else capturerScene(etat.capture4);   
+   }
+
 
 }
 
@@ -581,17 +692,32 @@ int main( int argc, const char* argv[] )
         if (etat.theme == "geo"){
             if(etat.nombreFormes >= 10 && etat.nombreFormes <= 200){
                 srand(time(NULL));
+                int index = 1;
+
                 FenetreTP fenetre( "INF2990" );
                 fenetre.initialiser();
 
                 makeFormesGeometriques();
 
-                fenetre.afficherScene();
+                fenetre.afficherScene(index);
                 fenetre.swap();
                 
                 this_thread::sleep_for(chrono::seconds(3));
                 camera.modeLookAt = !camera.modeLookAt;
-                fenetre.afficherScene(); 
+                fenetre.afficherScene(index); 
+                fenetre.swap();
+                index = 0;
+                creerModifications();
+
+                this_thread::sleep_for(chrono::seconds(3));
+                camera.modeLookAt = !camera.modeLookAt;
+                fenetre.afficherScene(index); 
+                fenetre.swap();
+
+                creerModifications();
+                this_thread::sleep_for(chrono::seconds(3));
+                camera.modeLookAt = !camera.modeLookAt;
+                fenetre.afficherScene(index); 
                 fenetre.swap();
                 
                 this_thread::sleep_for(chrono::seconds(3));

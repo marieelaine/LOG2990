@@ -21,15 +21,13 @@ const cors = require("cors");
 const types_1 = require("./types");
 const inversify_1 = require("inversify");
 const routes_1 = require("./routes");
-const routesBaseDeDonnees_1 = require("./routesBaseDeDonnees");
 const routesUser_1 = require("./routesUser");
 const routesPartieSimple_1 = require("./routesPartieSimple");
 let Application = class Application {
-    constructor(index, user, partieSimple, baseDonnees) {
+    constructor(index, user, partieSimple) {
         this.index = index;
         this.user = user;
         this.partieSimple = partieSimple;
-        this.baseDonnees = baseDonnees;
         this.internalError = 500;
         this.app = express();
         this.config();
@@ -47,7 +45,6 @@ let Application = class Application {
     }
     routes() {
         this.ajouterService(this.index);
-        this.ajouterService(this.baseDonnees);
         this.ajouterService(this.user);
         this.ajouterService(this.partieSimple);
         this.errorHandeling();
@@ -90,11 +87,9 @@ Application = __decorate([
     __param(0, inversify_1.inject(types_1.default.Routes)),
     __param(1, inversify_1.inject(types_1.default.RoutesUser)),
     __param(2, inversify_1.inject(types_1.default.RoutesPartieSimple)),
-    __param(3, inversify_1.inject(types_1.default.RoutesBaseDeDonnees)),
     __metadata("design:paramtypes", [routes_1.Routes,
         routesUser_1.RoutesUser,
-        routesPartieSimple_1.RoutesPartieSimple,
-        routesBaseDeDonnees_1.RoutesBaseDeDonnees])
+        routesPartieSimple_1.RoutesPartieSimple])
 ], Application);
 exports.Application = Application;
 //# sourceMappingURL=app.js.map

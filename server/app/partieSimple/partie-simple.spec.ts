@@ -1,11 +1,11 @@
 import { assert } from "chai";
-import { RouteUser } from "./user";
+import { DBPartieSimple } from "./partie-simple";
 
 describe("BaseDeDonnees", () => {
     describe("Constructeur", () => {
-        let user: RouteUser.User;
+        let image: DBPartieSimple;
         beforeEach(() => {
-            user = new RouteUser.User();
+            image = new DBPartieSimple();
         });
 
         it ("should do nothing", () => {
@@ -13,7 +13,7 @@ describe("BaseDeDonnees", () => {
         });
 
         it ("should be defined", () => {
-            assert.isDefined(user);
+            assert.isDefined(image);
         });
 
     });

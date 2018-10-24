@@ -5,7 +5,7 @@ import * as p from "path";
 import { spawn } from "child_process";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
-import { RouteBaseDeDonnees } from "../routesBaseDeDonnees/baseDeDonnees";
+import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
@@ -22,13 +22,13 @@ interface PartieSimpleInterface {
     _imageDiff: Buffer;
 }
 @injectable()
-export class RoutePartieSimple {
-    private baseDeDonnees: RouteBaseDeDonnees.BaseDeDonnees;
+export class DBPartieSimple {
+    private baseDeDonnees: BaseDeDonnees;
     private modelPartie: Model<Document>;
     private schema: Schema;
 
     public constructor() {
-        this.baseDeDonnees = new RouteBaseDeDonnees.BaseDeDonnees();
+        this.baseDeDonnees = new BaseDeDonnees();
         this.CreateSchema();
 
         this.schema.plugin(uniqueValidator);
@@ -74,16 +74,16 @@ export class RoutePartieSimple {
             // socketServer.envoyerMessageErreurScript(errorMsg);
         }
 
+        await this.deleteDirectory();
+
         return partie;
     }
 
     private async getImageDiffAsBuffer(): Promise<Buffer> {
         const imageMod: string = p.resolve("Images/image3.bmp");
         const readFilePromise: Function = util.promisify(fs.readFile);
-        const buffer: Buffer = await readFilePromise(imageMod) as Buffer;
-        await this.deleteDirectory();
 
-        return buffer;
+        return await readFilePromise(imageMod) as Buffer;
     }
 
     private async deleteDirectory(): Promise<void> {
@@ -107,7 +107,7 @@ export class RoutePartieSimple {
         const buffers: Array<Buffer> = [partie._image1, partie._image2];
         await this.addImagesToDirectory(buffers);
 
-        const pyScript: string = p.resolve("app/routesPartieSimple/bmpdiff/bmpdiff.py");
+        const pyScript: string = p.resolve("app/PartieSimple/bmpdiff/bmpdiff.py");
         const imageOri1: string = p.resolve("Images/image1.bmp");
         const imageOri2: string = p.resolve("Images/image2.bmp");
         const imageMod: string = p.resolve("Images/image3.bmp");
@@ -143,15 +143,17 @@ export class RoutePartieSimple {
     private async deletePartieSimple(nomPartie: String, res: Response): Promise<Response> {
         const imageId: String = await this.obtenirPartieSimpleId(nomPartie);
         try {
-            await this.modelPartie.findByIdAndRemove(imageId);
+            await this.modelPartie.findOneAndDelete(imageId).catch(() => {
+                throw new Error();
+            });
 
-            return res.status(201).json();
+            return res.status(201);
         } catch (err) {
             return res.status(501).json(err);
         }
     }
 
-    private async obtenirPartieSimpleId(nomPartie: String): Promise<String> {
+    private async obtenirPartieSimpleId(nomPartie: String): Promise<string> {
         const partieSimples: PartieSimpleInterface[] = [];
         await this.modelPartie.find()
             .then((res: Document[]) => {
@@ -197,7 +199,13 @@ export class RoutePartieSimple {
     }
 
     public async requeteDeletePartieSimple(req: Request, res: Response): Promise<void> {
-        res.send(await this.deletePartieSimple(req.params.id, res));
+        try {
+            await this.deletePartieSimple(req.params.id, res);
+
+            res.status(201);
+        } catch (err) {
+            res.status(501).json(err);
+        }
     }
 
     public async requeteGetListePartie(req: Request, res: Response): Promise<void> {

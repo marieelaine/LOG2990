@@ -6,3 +6,5 @@ server/out/*
 \.angulardoc\.json
 
 client/package\.json
+server/Images/image2.bmp
+server/Images/image1.bmp

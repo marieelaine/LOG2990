@@ -8,7 +8,7 @@ import { FormsModule } from "@angular/forms";
 
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { createMockImageFile, createMockBmpFile } from "../../../testing/file-creator";
-import { By } from "@angular/platform-browser";
+// import { By } from "@angular/platform-browser";
 
 describe("DialogSimpleComponent", () => {
   let component: DialogSimpleComponent;
@@ -49,19 +49,19 @@ describe("DialogSimpleComponent", () => {
   });
 
   it("should set outOfBoundNameLengthMessage if name does not meet requierments", () => {
-    component.data.simpleGameName = "A"; // Nom plus court que trois caractères
+    component["data"].simpleGameName = "A"; // Nom plus court que trois caractères
     component["setOutOfBoundNameLengthMessage"]();  // Cette fonction teste aussi checkIfOutOfBoundNameLength()
     expect(component["outOfBoundNameLengthMessage"]).toEqual("*Le nom du jeu doit être entre 3 et 20 charactères.");
   });
 
   it("should set outOfBoundNameLengthMessage if name does not meet requierments", () => {
-    component.data.simpleGameName = "aaaaaaaaaaaaaaaaaaaaa"; // Nom plus long que vingt caractères
+    component["data"].simpleGameName = "aaaaaaaaaaaaaaaaaaaaa"; // Nom plus long que vingt caractères
     component["setOutOfBoundNameLengthMessage"]();  // Cette fonction teste aussi checkIfOutOfBoundNameLength()
     expect(component["outOfBoundNameLengthMessage"]).toEqual("*Le nom du jeu doit être entre 3 et 20 charactères.");
   });
 
   it("should not set outOfBoundNameLengthMessage if name meet requierments", () => {
-    component.data.simpleGameName = "Nissan Patrol"; // Nom correct
+    component["data"].simpleGameName = "Nissan Patrol"; // Nom correct
     component["setOutOfBoundNameLengthMessage"]();  // Cette fonction teste aussi checkIfOutOfBoundNameLength()
     expect(component["outOfBoundNameLengthMessage"]).toEqual("");
   });
