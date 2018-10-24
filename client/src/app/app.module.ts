@@ -8,6 +8,7 @@ import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule, Routes } from "@angular/router";
+import { Observable } from "rxjs";
 
 import { CookieService } from "ngx-cookie-service";
 

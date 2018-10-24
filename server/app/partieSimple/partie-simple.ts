@@ -10,6 +10,7 @@ import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
 import { PartieSimple } from "../../../client/src/app/admin/dialog-simple/partie-simple";
+// import { socketServer } from "../www";
 
 interface PartieSimpleInterface {
     _id: string;
@@ -70,9 +71,10 @@ export class DBPartieSimple {
             await partieSimple.save();
         } else {
             // Retourner errorMsg vers le client
+            // socketServer.envoyerMessageErreurScript(errorMsg);
         }
 
-        await this.deleteDirectory();
+        await this.deleteFilesInImages();
 
         return partie;
     }
@@ -84,9 +86,17 @@ export class DBPartieSimple {
         return await readFilePromise(imageMod) as Buffer;
     }
 
-    private async deleteDirectory(): Promise<void> {
+    private async deleteFilesInImages(): Promise<void> {
         const dir: string = "Images";
-        await fsx.remove(dir);
+        fs.readdir(dir, (err: NodeJS.ErrnoException, files: string[]) => {
+            if (err) { throw err; }
+
+            for (const file of files) {
+                fs.unlink(p.join(dir, file), (error: NodeJS.ErrnoException) => {
+                    if (err) { throw error; }
+                });
+            }
+        });
     }
 
     private async verifierErreurScript(child, partie: PartieSimpleInterface, res: Response): Promise<void> {
@@ -117,25 +127,12 @@ export class DBPartieSimple {
     }
 
     private async addImagesToDirectory(buffers: Array<Buffer>): Promise<void> {
-        await this.makeImagesDirectory();
         const writeFilePromise: Function = util.promisify(fs.writeFile);
         let i: number = 1;
         for (const buf of buffers) {
             await writeFilePromise("Images/image" + i.toString() + ".bmp", new Buffer(buf));
             i++;
         }
-    }
-
-    private async makeImagesDirectory(): Promise<void> {
-        const dir: string = "Images";
-        const mkdirPromise: Function = util.promisify(fs.mkdir);
-        const existsPromise: Function = util.promisify(fs.exists);
-
-        if (await existsPromise(dir)) {
-            await fsx.remove(dir);
-        }
-
-        await mkdirPromise(dir);
     }
 
     private async deletePartieSimple(nomPartie: String, res: Response): Promise<Response> {
