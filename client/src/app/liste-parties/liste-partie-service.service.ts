@@ -12,6 +12,7 @@ export class ListePartieServiceService {
   private readonly GET_LISTE_SIMPLE_URL: string = this.BASE_URL + "getListePartieSimple";
   private readonly GET_LISTE_MULTIPLE_URL: string = this.BASE_URL + "getListePartieMultiple";
   private readonly DELETE_PARTIE_URL: string = this.BASE_URL + "delete/";
+  private readonly REINITIALISER_TEMPS_URL: string = this.BASE_URL + "reinitialiseTemps/";
 
   constructor( private http: HttpClient ) {}
 
@@ -25,8 +26,14 @@ export class ListePartieServiceService {
       this.http.delete(this.DELETE_PARTIE_URL + partieId).toPromise();
   }
 
+<<<<<<< HEAD
   public getListePartieMultiple(): Observable<PartieMultiple[]> {
 
     return this.http.get<PartieMultiple[]>(this.GET_LISTE_MULTIPLE_URL);
+=======
+  public async reinitialiserTempsPartie(partieId: string): Promise<void> {
+
+    this.http.get(this.REINITIALISER_TEMPS_URL + partieId).toPromise();
+>>>>>>> master
   }
 }

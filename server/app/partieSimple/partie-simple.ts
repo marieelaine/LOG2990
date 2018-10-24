@@ -66,7 +66,7 @@ export class DBPartieSimple {
                     required: true,
                 },
                 _imageDiff: {
-                    type: Buffer,
+                    type: Array,
                 }
             });
         }
@@ -125,16 +125,6 @@ export class DBPartieSimple {
     private async deleteImagesDirectory(): Promise<void> {
         const dir: string = "../Images";
         await fsx.remove(dir);
-        // const dir: string = "Images";
-        // fs.readdir(dir, (err: NodeJS.ErrnoException, files: string[]) => {
-        //     if (err) { throw err; }
-
-        //     for (const file of files) {
-        //         fs.unlink(p.join(dir, file), (error: NodeJS.ErrnoException) => {
-        //             if (err) { throw error; }
-        //         });
-        //     }
-        // });
     }
 
     private async verifierErreurScript(child, partie: PartieSimpleInterface, res: Response): Promise<void> {
@@ -229,6 +219,11 @@ export class DBPartieSimple {
         return listeParties;
     }
 
+    private async reinitialiserTemps(idPartie: String): Promise<void> {
+        await this.modelPartieBuffer.find().findOneAndUpdate(this.modelPartieBuffer.findById(idPartie));
+        // TODO : Changer les temps randoms dans la BD
+    }
+
     private async getPartieSimple(partieID: String, res: Response): Promise<PartieSimpleInterface> {
         const partieSimples: PartieSimpleInterface[] = [];
         await this.modelPartieArray.find()
@@ -275,6 +270,16 @@ export class DBPartieSimple {
     public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();
         res.send(await this.getListePartie());
+    }
+
+    public async requeteReinitialiserTemps(req: Request, res: Response): Promise<void> {
+        await this.baseDeDonnees.assurerConnection();
+        try {
+            await this.reinitialiserTemps(req.params.id);
+            res.status(201);
+        } catch (err) {
+            res.status(501).json(err);
+        }
     }
 
     public async requeteGetPartieSimple(req: Request, res: Response): Promise<void> {
