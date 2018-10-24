@@ -71,7 +71,7 @@ export class RoutePartieSimple {
             await partieSimple.save();
         } else {
             // Retourner errorMsg vers le client
-            socketServer.envoyerMessageErreurScript(errorMsg);
+            // socketServer.envoyerMessageErreurScript(errorMsg);
         }
 
         return partie;

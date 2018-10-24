@@ -8,10 +8,14 @@ export class SocketServer {
 
     public constructor(private leServeur: http.Server) {
         this.io = socket(this.leServeur);
+        this.init();
     }
 
     public init(): void {
         // Initialiser connection au scoket
+        this.io.on("connection", () => {
+            console.log("made connection to socket");
+        });
     }
 
     public envoyerMessageErreurScript(msgError: string): void {
