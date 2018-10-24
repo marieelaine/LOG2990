@@ -11,7 +11,7 @@ import { ListePartieServiceService } from "./liste-partie-service.service";
   providers: [ListePartieServiceService]
 })
 
-export abstract class ListePartiesComponent {
+export class ListePartiesComponent {
 
   listePartiesMultiples: PartieMultipleInterface[] = [
         { title: "Mona Lisa", imagePath: "assets/monaLisa.bmp", isElevatedActive: false,
@@ -37,8 +37,7 @@ export abstract class ListePartiesComponent {
     });
   }
 
-  protected abstract supprimerPartie(partieId: string): void;
-
+  // protected abstract supprimerPartie(partieId: string): void;
 
   protected setjouerOuReinitialiserAndcreerOuSupprimer(url: string): void {
     if (url === "/liste-parties") {
