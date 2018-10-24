@@ -55,8 +55,14 @@ mat-radio-button {
     font-size: 0.8em;
 }
 
-.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-    border-color: #64b664;
+.mat-radio-outer-circle {
+/* .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle { */
+    border-color: #64b664 !important;
+}
+
+#mat-radio-2 > label > div.mat-radio-container > div.mat-radio-inner-circle {
+    background-color: #64b664 !important;
+    border-color: #64b664 !important;
 }
 
 .secondaryText {
@@ -71,4 +77,11 @@ mat-form-field {
 .radioGroup {
     display: inline-flex;
     flex-direction: column;
+}
+
+#errorMessage
+{
+    margin:0;
+    font-size:14px;
+    color:red;
 }

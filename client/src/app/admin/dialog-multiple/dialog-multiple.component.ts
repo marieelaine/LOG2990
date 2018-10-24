@@ -20,8 +20,7 @@ export class DialogMultipleComponent extends DialogAbstrait {
 
   private partieMultiple: PartieMultipleInterface;
   private listeParties: ListePartiesComponent;
-  private themeChoisi: string;
-  protected toggle: boolean = false;
+  protected toggleClassButton: boolean = false;
 
   public constructor(
     dialogRef: MatDialogRef<DialogMultipleComponent>,
@@ -45,10 +44,13 @@ export class DialogMultipleComponent extends DialogAbstrait {
   protected ajouterPartie() {
     const tempsSolo: Array<number> = this.genererTableauTempsAleatoires();
     const temps1v1: Array<number> = this.genererTableauTempsAleatoires();
+
     const result: PartieMultiple = new PartieMultiple(this["data"].multipleGameName, tempsSolo, temps1v1,
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
-                                                      Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()));
+                                                      Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
+                                                      this["data"].quantiteObjets, this["data"].theme,
+                                                      this["data"].typeModification);
     console.log(result);
     this.partieMultipleService.register(result)
       .subscribe(
@@ -63,9 +65,8 @@ export class DialogMultipleComponent extends DialogAbstrait {
   }
 
   protected onThemeClickButton(event: Event, theme: string): void {
-    this.toggle = !this.toggle;
-    console.log("bonjour du bouton geometrique" + "----" + theme);
-    this.themeChoisi = theme;
+    this.toggleClassButton = !this.toggleClassButton;
+    this.data.theme = theme;
   }
 
   protected verifierSiMessageErreur(): Boolean {

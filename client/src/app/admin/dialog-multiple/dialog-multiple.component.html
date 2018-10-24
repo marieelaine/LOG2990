@@ -16,21 +16,21 @@
         <mat-divider></mat-divider>
         <div>
             <div class="secondaryText">Veuillez choisir la transformation à appliquer:</div>
-            <mat-radio-group class="radioGroup" required="true">
-                <mat-radio-button value="ajout"class="radiobutton">Ajout</mat-radio-button>
-                <mat-radio-button value="suppression"class="radiobutton">Suppression</mat-radio-button>
-                <mat-radio-button value="changementCouleur" class="radiobutton">Changement de couleur</mat-radio-button>
+            <mat-radio-group [(ngModel)]="data.typeModification" class="radioGroup" required="true">
+                <mat-radio-button color="primary" value="ajout" class="radiobutton">Ajout</mat-radio-button>
+                <mat-radio-button color="primary" value="suppression"class="radiobutton">Suppression</mat-radio-button>
+                <mat-radio-button color="primary" value="changementCouleur" class="radiobutton">Changement de couleur</mat-radio-button>
             </mat-radio-group>
         </div>
         <mat-divider></mat-divider>
         <div class="secondaryText">Veuillez choisir un thème parmis les suivants:</div>
         <div>
             <form>
-                <button mat-button [ngClass]="toggle ? 'clicked' : 'notClicked'" id="geometricThemeButton" (click)='onThemeClickButton($event, "geo")' class='dialogButtons mat-elevation-z6'>Géométrique</button>
+                <button mat-button [ngClass]="toggleClassButton ? 'clicked' : 'notClicked'" id="geometricThemeButton" (click)='onThemeClickButton($event, "geo")' class='dialogButtons mat-elevation-z6'>Géométrique</button>
             </form>
         </div>
     </mat-card>
     <button mat-button (click)='onClickAjouterPartie()' class='dialogButtons mat-elevation-z6'>Ajouter</button>
     <button mat-button (click)="surClickExterieurDialog()" class='dialogButtons mat-elevation-z6'>Annuler</button>
-    <p id='errorMessage'> {{ errorMessage }} </p>
+    <p id='errorMessage'> {{ outOfBoundNameLengthMessage }} </p> 
 </div>

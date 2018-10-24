@@ -16,6 +16,9 @@ interface PartieMultipleInterface {
     _image2PV2: Buffer;
     _imageDiff1: Buffer;
     _imageDiff2: Buffer;
+    _quantiteObjets: number;
+    _theme: string;
+    _typeModification: string;
 }
 
 @injectable()
@@ -38,24 +41,15 @@ export class DBPartieMultiple {
                 _nomPartie: { type: String, required: true, },
                 _tempsSolo: { type: Array, required: true, },
                 _tempsUnContreUn: { type: Array, required: true, },
-                _image1PV1: {
-                    type: Buffer,
-                },
-                _image1PV2: {
-                    type: Buffer,
-                },
-                _image2PV1: {
-                    type: Buffer,
-                },
-                _image2PV2: {
-                    type: Buffer,
-                },
-                _imageDiff1: {
-                    type: Buffer,
-                },
-                _imageDiff2: {
-                    type: Buffer,
-                }
+                _image1PV1: { type: Buffer },
+                _image1PV2: { type: Buffer },
+                _image2PV1: { type: Buffer },
+                _image2PV2: { type: Buffer },
+                _imageDiff1: { type: Buffer },
+                _imageDiff2: {type: Buffer },
+                _quantiteObjets: { type: Number, required: true },
+                _typeModification: { type: String, required: true },
+                _theme: { type: String, required: true }
             });
         }
 
