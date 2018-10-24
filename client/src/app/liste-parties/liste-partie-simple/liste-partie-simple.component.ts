@@ -24,25 +24,11 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     });
   }
 
-  protected ajusterImage(id: String) {
-    for (const partie of this.listeParties) {
-      if (partie["_id"] === id) {
-        const data: string = atob(String(partie["_image1"][0]));
-        let hex = 0x00;
-        const result: Uint8Array = new Uint8Array(data.length);
-
-        for (let i = 0; i < data.length; i++) {
-            hex = data.charCodeAt(i);
-            result[i] = hex;
-        }
-        const blob = new Blob([result], {type: 'image/bmp'});
-        // @ts-ignore
-        document.getElementById(id).src = URL.createObjectURL(blob);
-      }
-    }
+  protected afficherImage(id: string) {
+    this.ajusterImage(id, this.listeParties);
   }
 
-  public onJouerOuReinitialiserClick(partieId: string): void {
+  protected onJouerOuReinitialiserClick(partieId: string): void {
     if (this.isListePartiesMode) {
       this.router.navigate(["/partie-solo/" + partieId]);
     } else if (this.isAdminMode) {

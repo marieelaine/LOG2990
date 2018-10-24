@@ -30,7 +30,28 @@ export abstract class ListePartiesComponent {
     });
   }
 
+  protected abstract afficherImage(id: string);
   protected abstract supprimerPartie(partieId: string): void;
+  protected abstract onJouerOuReinitialiserClick(partieId: string): void;
+  protected abstract onCreerOuSupprimerClick(partieId: string): void;
+
+  protected ajusterImage(id: String, listeParties: T[]): void {
+    for (const partie of listeParties) {
+      if (partie["_id"] === id) {
+        const data: string = atob(String(partie["_image1"][0]));
+        let hex = 0x00;
+        const result: Uint8Array = new Uint8Array(data.length);
+
+        for (let i = 0; i < data.length; i++) {
+            hex = data.charCodeAt(i);
+            result[i] = hex;
+        }
+        const blob = new Blob([result], {type: 'image/bmp'});
+        // @ts-ignore
+        document.getElementById(id).src = URL.createObjectURL(blob);
+      }
+    }
+  }
 
   protected setjouerOuReinitialiserAndcreerOuSupprimer(url: string): void {
     if (url === "/liste-parties") {

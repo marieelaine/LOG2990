@@ -22,12 +22,17 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
     this.listePartieService.getListePartieMultiple().subscribe((res: PartieMultiple[]) => {
       this.listeParties = res;
     });
+  }
 
-  public onJouerOuReinitialiserClick(partieId: string): void {
+  protected afficherImage(id: string) {
+    this.ajusterImage(id, this.listeParties);
+  }
+
+  protected onJouerOuReinitialiserClick(partieId: string): void {
       if (this.isListePartiesMode) {
-        this.router.navigate(["/partie-solo/" + partieId]);
+        this.router.navigate(["/partie-multiple/" + partieId]);
       } else if (this.isAdminMode) {
-        this.reinitialiserTemps();
+        this.reinitialiserTemps(partieId);
       }
     }
 
@@ -45,13 +50,13 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
         this.listeParties.splice(i, 1);
       }
     }
-    this.listePartieService.deletePartieSimple(partieId);
+    // this.listePartieService.deletePartieMultiple(partieId);
   }
 
   protected reinitialiserTemps(partieId: string): void {
     this.listeParties.forEach((partie: PartieMultiple) => {
-      if (partie._id === partieId) {
-        this.genererTableauTempsAleatoires();
+      if (partie["_id"] === partieId) {
+        this.genererTableauTempsAleatoires(partie);
       }
     });
     this.listePartieService.reinitialiserTempsPartie(partieId);
