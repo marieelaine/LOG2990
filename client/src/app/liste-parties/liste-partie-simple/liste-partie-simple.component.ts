@@ -41,6 +41,13 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   }
 
   protected supprimerPartie(partieId: string): void {
+    let i = 0;
+    this.listeParties.forEach((partie: PartieSimple) => {
+      if (partie._id === partieId) {
+        this.listeParties.splice(i, 1);
+        i++;
+      }
+    });
     this.listePartieService.deletePartieSimple(partieId);
   }
 
