@@ -36,7 +36,7 @@ import { UserService } from "./vue-initiale/user.service";
 import { PartieSimpleService } from "./admin/partie-simple.service";
 import { ListePartieSimpleComponent } from "./liste-parties/liste-partie-simple/liste-partie-simple.component";
 import { ListePartieMultipleComponent } from "./liste-parties/liste-partie-multiple/liste-partie-multiple.component";
-import { PartieSoloComponent } from "./partie/partie-solo/partie-solo.component";
+import { PartieSoloComponent } from "./partie/vue-simple/partie-solo/partie-solo.component";
 import { PartieMultijoueurComponent } from './partie/partie-multijoueur/partie-multijoueur.component';
 import { VueMultipleComponent } from './partie/vue-multiple/vue-multiple.component';
 import { ImageComponent } from './partie/image/image.component';
