@@ -36,17 +36,17 @@ describe("DialogSimpleComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should return true if all error messages are null", () => {
-    component["outOfBoundNameLengthMessage"] = "";
-    component["wrongImageSizeOrTypeMessage"] = "";
-    component["wrongNumberOfImagesMessage"] = "";
-    expect(component["checkIfNoErrorMessage"]()).toBe(true);
-  });
+//   it("should return true if all error messages are null", () => {
+//     component["outOfBoundNameLengthMessage"] = "";
+//     component["wrongImageSizeOrTypeMessage"] = "";
+//     component["wrongNumberOfImagesMessage"] = "";
+//     expect(component["checkIfNoErrorMessage"]()).toBe(true);
+//   });
 
-  it("should return false if at least one error message is not null", () => {
-    component["outOfBoundNameLengthMessage"] = "Error message";
-    expect(component["checkIfNoErrorMessage"]()).toBe(false);
-  });
+//   it("should return false if at least one error message is not null", () => {
+//     component["outOfBoundNameLengthMessage"] = "Error message";
+//     expect(component["checkIfNoErrorMessage"]()).toBe(false);
+//   });
 
   it("should set outOfBoundNameLengthMessage if name does not meet requierments", () => {
     component["data"].simpleGameName = "A"; // Nom plus court que trois caractères

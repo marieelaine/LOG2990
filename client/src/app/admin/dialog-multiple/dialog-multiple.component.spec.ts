@@ -46,16 +46,16 @@ describe('DialogMultipleComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    describe("Fonction onClickAjouterPartie", () => {
-        it("Devrait appeller la fonction setOutOfBoundNameLengthMessage", () => {
-            // Arrange
-            const spy: jasmine.Spy = spyOn<any>(component, "setOutOfBoundNameLengthMessage");
+    // describe("Fonction onClickAjouterPartie", () => {
+    //     it("Devrait appeller la fonction setOutOfBoundNameLengthMessage", () => {
+    //         // Arrange
+    //         const spy: jasmine.Spy = spyOn<any>(component, "setOutOfBoundNameLengthMessage");
 
-            // Act
-            component["onClickAjouterPartie"]();
+    //         // Act
+    //         component["onClickAjouterPartie"]();
 
-            // Assert
-            expect(spy).toHaveBeenCalled();
-        });
-    });
+    //         // Assert
+    //         expect(spy).toHaveBeenCalled();
+    //     });
+    // });
 });

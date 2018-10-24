@@ -1,11 +1,13 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { PartieMultipleService } from './partie-multiple.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('PartieMultipleService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [PartieMultipleService]
+      providers: [PartieMultipleService],
+      imports: [HttpClientTestingModule],
     });
   });
 
