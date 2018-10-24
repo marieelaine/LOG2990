@@ -60,7 +60,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   protected supprimerPartie(partieId: string): void {
     for (let i = 0 ; i < this.listeParties.length ; i++) {
-      if (this.listeParties[i]._id === partieId) {
+      if (this.listeParties[i]["_id"] === partieId) {
         this.listeParties.splice(i, 1);
       }
     }
@@ -69,13 +69,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   protected reinitialiserTemps(partieId: string): void {
     this.listeParties.forEach((partie: PartieSimple) => {
-      if (partie._id === partieId) {
-        for (let i = 0 ; i < partie._tempsSolo.length ; i++) {
-          partie._tempsSolo[i] = Math.floor(Math.random() * 400) + 100;
-        }
-        for (let i = 0 ; i < partie._tempsUnContreUn.length ; i++) {
-          partie._tempsUnContreUn[i] = Math.floor(Math.random() * 400) + 100;
-        }
+      if (partie["_id"] === partieId) {
+       this.genererTableauTempsAleatoires(partie);
       }
     });
     this.listePartieService.reinitialiserTempsPartie(partieId);

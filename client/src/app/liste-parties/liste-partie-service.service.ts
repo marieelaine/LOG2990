@@ -26,14 +26,13 @@ export class ListePartieServiceService {
       this.http.delete(this.DELETE_PARTIE_URL + partieId).toPromise();
   }
 
-<<<<<<< HEAD
   public getListePartieMultiple(): Observable<PartieMultiple[]> {
 
     return this.http.get<PartieMultiple[]>(this.GET_LISTE_MULTIPLE_URL);
-=======
+  }
+
   public async reinitialiserTempsPartie(partieId: string): Promise<void> {
 
     this.http.get(this.REINITIALISER_TEMPS_URL + partieId).toPromise();
->>>>>>> master
   }
 }

@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
 import { ListePartieServiceService } from "./liste-partie-service.service";
+import T from "../admin/dialog-abstrait";
 
 @Component({
   selector: "app-liste-parties",
@@ -11,10 +12,10 @@ import { ListePartieServiceService } from "./liste-partie-service.service";
 
 export abstract class ListePartiesComponent {
 
-  public jouerOuReinitialiser: string;
-  public creerOuSupprimer: string;
-  public isListePartiesMode: boolean;
-  public isAdminMode: boolean;
+  protected jouerOuReinitialiser: string;
+  protected creerOuSupprimer: string;
+  protected isListePartiesMode: boolean;
+  protected isAdminMode: boolean;
 
   public constructor(public router: Router,
                      public listePartieService: ListePartieServiceService) {
@@ -30,7 +31,6 @@ export abstract class ListePartiesComponent {
   }
 
   protected abstract supprimerPartie(partieId: string): void;
-
 
   protected setjouerOuReinitialiserAndcreerOuSupprimer(url: string): void {
     if (url === "/liste-parties") {
@@ -114,5 +114,14 @@ export abstract class ListePartiesComponent {
       const secondes = time - minutes * 60;
 
       return this.getDisplayTime(minutes, secondes);
+  }
+
+  protected genererTableauTempsAleatoires(partie: T): void {
+    for (let i = 0 ; i < partie["_tempsSolo"].length ; i++) {
+      partie["_tempsSolo"][i] = Math.floor(Math.random() * 400) + 100;
+    }
+    for (let i = 0 ; i < partie["_tempsUnContreUn"].length ; i++) {
+      partie["_tempsUnContreUn"][i] = Math.floor(Math.random() * 400) + 100;
+    }
   }
 }
