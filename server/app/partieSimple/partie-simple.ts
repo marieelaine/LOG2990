@@ -10,6 +10,7 @@ import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
 import { PartieSimple } from "../../../client/src/app/admin/dialog-simple/partie-simple";
+import { Resolver } from "dns";
 
 interface PartieSimpleInterface {
     _id: string;
@@ -182,6 +183,27 @@ export class DBPartieSimple {
         return listeParties;
     }
 
+    private async reinitialiserTemps(idPartie: String): Promise<void> {
+        const partieSimples: PartieSimpleInterface[] = [];
+        await this.modelPartie.find()
+            .then((res: Document[]) => {
+                for (const partieSimple of res) {
+                    partieSimples.push(partieSimple.toObject());
+                }
+            });
+
+        for (const partieSimple of partieSimples) {
+            if (partieSimple._id === idPartie) {
+                partieSimple._tempsSolo.forEach((ts: number) => {
+                    ts = 0;
+                });
+                partieSimple._tempsUnContreUn.forEach((t1v1: number) => {
+                    t1v1 = 0;
+                });
+            }
+        }
+    }
+
     public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
         try {
             await this.genererImageMod(req.body, res);
@@ -209,6 +231,16 @@ export class DBPartieSimple {
     public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();
         res.send(await this.getListePartie());
+    }
+
+    public async requeteReinitialiserTemps(req: Request, res: Response): Promise<void> {
+        await this.baseDeDonnees.assurerConnection();
+        try {
+            await this.reinitialiserTemps(req.params.id);
+            res.status(201);
+        } catch (err) {
+            res.status(501).json(err);
+        }
     }
 
 }

@@ -24,11 +24,11 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     });
   }
 
-  public onJouerOuReinitialiserClick(): void {
+  public onJouerOuReinitialiserClick(partieId: string): void {
     if (this.isListePartiesMode) {
       this.router.navigate(["/partie-solo"]);
     } else if (this.isAdminMode) {
-      this.reinitialiserTemps();
+      this.reinitialiserTemps(partieId);
     }
   }
 
@@ -44,8 +44,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     this.listePartieService.deletePartieSimple(partieId);
   }
 
-  private reinitialiserTemps(): void {
-    // Reinitialiser les temps de la parties
+  private reinitialiserTemps(partieId: string): void {
+    this.listePartieService.deletePartieSimple(partieId);
   }
 
 }

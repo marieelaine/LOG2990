@@ -10,6 +10,7 @@ export class ListePartieServiceService {
   private readonly BASE_URL: string = "http://localhost:3000/partieSimple/";
   private readonly GETLISTE_URL: string = this.BASE_URL + "getPartieSimple";
   private readonly DELETE_PARTIE_URL: string = this.BASE_URL + "delete/";
+  private readonly REINITIALISER_TEMPS_URL: string = this.BASE_URL + "reinitialiseTemps/";
 
   constructor(
     private http: HttpClient
@@ -24,4 +25,9 @@ export class ListePartieServiceService {
 
       this.http.delete(this.DELETE_PARTIE_URL + partieId).toPromise();
   }
+
+  public async reinitialiserTempsPartie(partieId: string): Promise<void> {
+
+    this.http.get(this.REINITIALISER_TEMPS_URL + partieId).toPromise();
+}
 }

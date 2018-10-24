@@ -1,5 +1,5 @@
 export class PartieSimple {
-    protected _id: string;
+    public _id: string;
     protected _nomPartie: string;
     protected _tempsSolo: Array<number>;
     protected _tempsUnContreUn: Array<number>;
