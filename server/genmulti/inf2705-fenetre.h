@@ -365,7 +365,7 @@ public:
    // fonction pour détruire les ressources OpenGL allouées
    void conclure( );
    // fonction appelée pour tracer la scène
-   void afficherScene( );
+   void afficherScene( int index);
    // fonction appelée lors d'un événement de redimensionnement
    void redimensionner( GLsizei w, GLsizei h );
    // fonction appelée lors d'un événement de clavier
