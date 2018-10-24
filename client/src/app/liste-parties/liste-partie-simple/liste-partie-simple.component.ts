@@ -45,7 +45,17 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   }
 
   private reinitialiserTemps(partieId: string): void {
-    this.listePartieService.deletePartieSimple(partieId);
+    this.listeParties.forEach((partie: PartieSimple) => {
+      if (partie._id === partieId) {
+        partie._tempsSolo.forEach((ts) => {
+          ts = 0;
+        });
+        partie._tempsUnContreUn.forEach((t1v1) => {
+          t1v1 = 0;
+        });
+      }
+    });
+    this.listePartieService.reinitialiserTempsPartie(partieId);
   }
 
 }

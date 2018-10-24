@@ -1,8 +1,8 @@
 export class PartieSimple {
     public _id: string;
     protected _nomPartie: string;
-    protected _tempsSolo: Array<number>;
-    protected _tempsUnContreUn: Array<number>;
+    public _tempsSolo: Array<number>;
+    public _tempsUnContreUn: Array<number>;
     protected _image1: Buffer;
     protected _image2: Buffer;
     protected _imageDiff: Buffer;
