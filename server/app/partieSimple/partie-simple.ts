@@ -239,13 +239,13 @@ export class DBPartieSimple {
             });
 
         for (const partie of partieSimples) {
-            if (partie._id === partieID) {
+            if (partie._id == partieID) {
                 return partie;
             }
         }
 
         // TODO: gestion de si la partie n'est pas trouvé
-        return partieSimples[0];
+        return partieSimples[1];
     }
 
     public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
