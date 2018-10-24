@@ -18,7 +18,7 @@
         <div class="secondImageContainer">
                 <button mat-button class='mat-elevation-z6'><label for="uploadImage2" class='imageButtons'>Deuxième image</label></button>
                 <input id='uploadImage2' type="file" accept="image/*" (change)='onFileSelectedImage($event, 1)'>
-            <div id='secondImageFrame'> 
+            <div id='secondImageFrame'>
                 <img *ngIf = "deuxiemeImage" [src] = "deuxiemeImage" id = "secondImage">          
             </div>
         </div>
