@@ -605,10 +605,10 @@ void creerEtat(const char* argv[], Etat& etat){
     etat.modifications = argv[3];
     etat.filename = argv[4];
 
-    string capture1 = string("/home/camarois/git/LOG2990/server/app/partieMultiple/genmulti/") + etat.filename + string("_a_ori.bmp");
-    string capture2 = string("/home/camarois/git/LOG2990/server/app/partieMultiple/genmulti/") + etat.filename + string("_b_ori.bmp");
-    string capture3 = string("/home/camarois/git/LOG2990/server/app/partieMultiple/genmulti/") + etat.filename + string("_a_mod.bmp");
-    string capture4 = string("/home/camarois/git/LOG2990/server/app/partieMultiple/genmulti/") + etat.filename + string("_b_mod.bmp");
+    string capture1 = string(string("app/partieMultiple/Images/") + etat.filename + string("_a_ori.bmp"));
+    string capture2 = string(string("app/partieMultiple/Images/") + etat.filename + string("_b_ori.bmp"));
+    string capture3 = string(string("app/partieMultiple/Images/") + etat.filename + string("_a_mod.bmp"));
+    string capture4 = string(string("app/partieMultiple/Images/") + etat.filename + string("_b_mod.bmp"));
 
     etat.capture1 = capture1;
     etat.capture2 = capture2; 
@@ -700,27 +700,27 @@ int main( int argc, const char* argv[] )
                 makeFormesGeometriques();
 
                 fenetre.afficherScene(index);
-                fenetre.swap();
+                //fenetre.swap();
                 
-                this_thread::sleep_for(chrono::seconds(3));
+                //this_thread::sleep_for(chrono::seconds(3));
                 camera.modeLookAt = !camera.modeLookAt;
                 fenetre.afficherScene(index); 
-                fenetre.swap();
+                //fenetre.swap();
                 index = 0;
                 creerModifications();
 
-                this_thread::sleep_for(chrono::seconds(3));
+                //this_thread::sleep_for(chrono::seconds(3));
                 camera.modeLookAt = !camera.modeLookAt;
                 fenetre.afficherScene(index); 
-                fenetre.swap();
+                //fenetre.swap();
 
                 creerModifications();
-                this_thread::sleep_for(chrono::seconds(3));
+                //this_thread::sleep_for(chrono::seconds(3));
                 camera.modeLookAt = !camera.modeLookAt;
                 fenetre.afficherScene(index); 
-                fenetre.swap();
+                //fenetre.swap();
                 
-                this_thread::sleep_for(chrono::seconds(3));
+                //this_thread::sleep_for(chrono::seconds(3));
                 fenetre.conclure();
             }
             else {
