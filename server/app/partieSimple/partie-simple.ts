@@ -1,5 +1,4 @@
 import * as fs from "fs";
-import * as fsx from "fs-extra";
 import * as util from "util";
 import * as p from "path";
 import { spawn } from "child_process";
@@ -9,7 +8,6 @@ import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
-// import { PartieSimple } from "../../../client/src/app/admin/dialog-simple/partie-simple";
 
 interface PartieSimpleInterface {
     _id: string;
