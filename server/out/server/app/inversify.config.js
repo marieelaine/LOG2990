@@ -9,8 +9,10 @@ const routes_1 = require("./routes");
 const routesUser_1 = require("./routesUser");
 const user_1 = require("./User/user");
 const routesPartieSimple_1 = require("./routesPartieSimple");
+const routesPartieMultiple_1 = require("./routesPartieMultiple");
 const baseDeDonnees_1 = require("./baseDeDonnees/baseDeDonnees");
 const partie_simple_1 = require("./partieSimple/partie-simple");
+const partie_multiple_1 = require("./partieMultiple/partie-multiple");
 const container = new inversify_1.Container();
 exports.container = container;
 container.bind(types_1.default.Server).to(server_1.Server);
@@ -22,4 +24,6 @@ container.bind(types_1.default.RoutesUser).to(routesUser_1.RoutesUser);
 container.bind(types_1.default.User).to(user_1.DBUser.User);
 container.bind(types_1.default.RoutesPartieSimple).to(routesPartieSimple_1.RoutesPartieSimple);
 container.bind(types_1.default.PartieSimple).to(partie_simple_1.DBPartieSimple);
+container.bind(types_1.default.RoutesPartieMultiple).to(routesPartieMultiple_1.RoutesPartieMultiple);
+container.bind(types_1.default.PartieMultiple).to(partie_multiple_1.DBPartieMultiple);
 //# sourceMappingURL=inversify.config.js.map

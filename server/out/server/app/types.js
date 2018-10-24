@@ -10,5 +10,7 @@ exports.default = {
     User: Symbol("User"),
     RoutesPartieSimple: Symbol("RoutesPartieSimple"),
     PartieSimple: Symbol("PartieSimple"),
+    RoutesPartieMultiple: Symbol("RoutesPartieMultiple"),
+    PartieMultiple: Symbol("PartieMultiple"),
 };
 //# sourceMappingURL=types.js.map

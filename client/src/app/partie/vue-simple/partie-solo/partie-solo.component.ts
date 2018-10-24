@@ -31,7 +31,6 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
 
     protected getID(): void {
         this.partieID = this.route.snapshot.paramMap.get('idPartie') + "";
-        //this.partieID = "5bcfeab96b82573740791a99" + "";
     }
 
     protected getPartie(): void {
