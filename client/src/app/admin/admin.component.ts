@@ -6,6 +6,9 @@ import { DialogMultipleComponent } from "./dialog-multiple/dialog-multiple.compo
 export interface DialogData {
   simpleGameName: string;
   multipleGameName: string;
+  quantiteObjets: number;
+  theme: string;
+  typeModification: string;
 }
 
 @Component({
@@ -25,7 +28,7 @@ export class AdminComponent {
   protected openDialogSimple(): void {
     this.gameName = "";
     this.dialog.open(DialogSimpleComponent, {
-      height: "433px",
+      height: "470px",
       width: "600px",
       data: {name: this.gameName}
     });
@@ -34,7 +37,7 @@ export class AdminComponent {
   protected openDialogMultiple(): void {
     this.gameName = "";
     this.dialog.open(DialogMultipleComponent, {
-      height: "433px",
+      height: "520px",
       width: "600px",
       data: {name: this.gameName}
     });

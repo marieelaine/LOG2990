@@ -13,13 +13,15 @@ import { PartieMultipleService } from '../partie-multiple.service';
 @Component({
   selector: 'app-dialog-multiple',
   templateUrl: './dialog-multiple.component.html',
-  styleUrls: ['./dialog-multiple.component.css']
+  styleUrls: ['./dialog-multiple.component.css'],
 })
 
 export class DialogMultipleComponent extends DialogAbstrait {
 
-  partieMultiple: PartieMultipleInterface;
-  listeParties: ListePartiesComponent;
+  private partieMultiple: PartieMultipleInterface;
+  private listeParties: ListePartiesComponent;
+  private themeChoisi: string;
+  protected toggle: boolean = false;
 
   public constructor(
     dialogRef: MatDialogRef<DialogMultipleComponent>,
@@ -59,8 +61,10 @@ export class DialogMultipleComponent extends DialogAbstrait {
       );
   }
 
-  protected onThemeClickButton(): void {
+  protected onThemeClickButton(event: Event): void {
+    this.toggle = !this.toggle;
     console.log("bonjour du bouton geometrique");
+    this.themeChoisi = event.currentTarget.value;
   }
 
   protected verifierSiMessageErreur(): Boolean {
