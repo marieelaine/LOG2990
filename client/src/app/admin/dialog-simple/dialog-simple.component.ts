@@ -89,7 +89,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
 
       setTimeout(() => {
         window.location.reload(); },
-                 1200);
+                 2500);
     }
 
   private afficherImageSurUploadClient() {
