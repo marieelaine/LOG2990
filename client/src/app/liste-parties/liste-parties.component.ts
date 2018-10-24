@@ -10,12 +10,13 @@ import T from "../admin/dialog-abstrait";
   providers: [ListePartieServiceService]
 })
 
-export abstract class ListePartiesComponent {
+export class ListePartiesComponent {
 
   protected jouerOuReinitialiser: string;
   protected creerOuSupprimer: string;
   protected isListePartiesMode: boolean;
   protected isAdminMode: boolean;
+  protected isElevatedActive: boolean;
 
   public constructor(public router: Router,
                      public listePartieService: ListePartieServiceService) {
@@ -29,11 +30,6 @@ export abstract class ListePartiesComponent {
       }
     });
   }
-
-  protected abstract afficherImage(id: string);
-  protected abstract supprimerPartie(partieId: string): void;
-  protected abstract onJouerOuReinitialiserClick(partieId: string): void;
-  protected abstract onCreerOuSupprimerClick(partieId: string): void;
 
   protected ajusterImage(id: String, listeParties: T[]): void {
     for (const partie of listeParties) {

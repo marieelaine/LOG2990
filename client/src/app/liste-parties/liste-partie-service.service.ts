@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PartieSimple } from '../admin/dialog-simple/partie-simple';
 import { HttpClient } from '@angular/common/http';
-import {Observable, of} from "rxjs";
+import { Observable } from "rxjs";
 import { PartieMultiple } from '../admin/dialog-multiple/partie-mutiple';
 
 @Injectable({
