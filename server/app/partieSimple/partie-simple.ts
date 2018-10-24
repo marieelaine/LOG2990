@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as util from "util";
 import * as p from "path";
+import * as fsx from "fs-extra";
 import { spawn } from "child_process";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
@@ -8,7 +9,6 @@ import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
-import { PartieSimple } from "../../../client/src/app/admin/dialog-simple/partie-simple";
 // import { socketServer } from "../www";
 
 interface PartieSimpleInterface {
@@ -23,8 +23,6 @@ interface PartieSimpleInterface {
 @injectable()
 export class DBPartieSimple {
     private baseDeDonnees: BaseDeDonnees;
-    private modelPartie: Model<Document>;
-    private schema: Schema;
 
     private modelPartieBuffer: Model<Document>;
     private modelPartieArray: Model<Document>;
@@ -189,12 +187,13 @@ export class DBPartieSimple {
 
     private async deletePartieSimple(idPartie: String, res: Response): Promise<Response> {
         try {
-            await this.modelPartie.findOneAndRemove(this.modelPartie.findById(idPartie)).catch(() => {
+            await this.modelPartieBuffer.findOneAndRemove(this.modelPartieBuffer.findById(idPartie)).catch(() => {
                 throw new Error();
             });
 
             return res.status(201);
         } catch (err) {
+
             return res.status(501).json(err);
         }
     }
@@ -258,7 +257,6 @@ export class DBPartieSimple {
             res.status(201).json({});
         } catch (err) {
             res.status(501).json(err);
-            console.log(err);
         }
     }
 
