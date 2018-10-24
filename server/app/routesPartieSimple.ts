@@ -22,7 +22,7 @@ export class RoutesPartieSimple extends ServiceWeb {
             await this.partieSimple.requeteAjouterPartieSimple(req, res);
         });
 
-        router.get("/getPartieSimple", async (req: Request, res: Response) => {
+        router.get("/getListePartieSimple", async (req: Request, res: Response) => {
             await this.partieSimple.requeteGetListePartie(req, res);
         });
 
@@ -32,6 +32,10 @@ export class RoutesPartieSimple extends ServiceWeb {
 
         router.get("/:id", async (req: Request, res: Response) => {
             await this.partieSimple.requetePartieSimpleId(req, res);
+        });
+
+        router.get("/getPartieSimple/:id", async (req: Request, res: Response) => {
+            await this.partieSimple.requeteGetPartieSimple(req, res);
         });
 
         return router;

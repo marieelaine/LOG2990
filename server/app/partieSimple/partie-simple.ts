@@ -9,7 +9,7 @@ import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
-import { PartieSimple } from "../../../client/src/app/admin/dialog-simple/partie-simple";
+// import { PartieSimple } from "../../../client/src/app/admin/dialog-simple/partie-simple";
 
 interface PartieSimpleInterface {
     _id: string;
@@ -50,11 +50,11 @@ export class DBPartieSimple {
                     required: true,
                 },
                 _image1: {
-                    type: Buffer,
+                    type: Array,
                     required: true,
                 },
                 _image2: {
-                    type: Buffer,
+                    type: Array,
                     required: true,
                 },
                 _imageDiff: {
@@ -170,8 +170,8 @@ export class DBPartieSimple {
         return partieSimples[0]._id;
     }
 
-    private async getListePartie(): Promise<PartieSimple[]> {
-        const listeParties: PartieSimple[] = [];
+    private async getListePartie(): Promise<PartieSimpleInterface[]> {
+        const listeParties: PartieSimpleInterface[] = [];
         await this.modelPartie.find()
             .then((res: Document[]) => {
                 for (const partie of res) {
@@ -180,6 +180,25 @@ export class DBPartieSimple {
             });
 
         return listeParties;
+    }
+
+    private async getPartieSimple(partieID: String, res: Response): Promise<PartieSimpleInterface> {
+        const partieSimples: PartieSimpleInterface[] = [];
+        await this.modelPartie.find()
+            .then((parties: Document[]) => {
+                for (const partie of parties) {
+                    partieSimples.push(partie.toJSON());
+                }
+            });
+
+        for (const partie of partieSimples) {
+            if (partie._id === partieID) {
+                return partie;
+            }
+        }
+
+        // TODO: gestion de si la partie n'est pas trouvé
+        return partieSimples[0];
     }
 
     public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
@@ -209,6 +228,11 @@ export class DBPartieSimple {
     public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();
         res.send(await this.getListePartie());
+    }
+
+    public async requeteGetPartieSimple(req: Request, res: Response): Promise<void> {
+        await this.baseDeDonnees.assurerConnection();
+        res.send(await this.getPartieSimple(req.params.id, res));
     }
 
 }
