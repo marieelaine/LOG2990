@@ -1,12 +1,12 @@
-<div *ngFor="let partieMultiple of listePartiesMultiples">
+<div *ngFor="let partieMultiple of listeParties">
   <mat-card class='container-fluid' 
   [class.mat-elevation-z6]="!partieMultiple.isElevatedActive"
   [class.mat-elevation-z10]="partieMultiple.isElevatedActive"
   (mouseenter)="partieMultiple.isElevatedActive = !partieMultiple.isElevatedActive"
   (mouseleave)="partieMultiple.isElevatedActive = !partieMultiple.isElevatedActive">
       <mat-card-header>
-            <h2 class='gameNameHeader titleFirstLetter'>{{partieMultiple.title[0]}}</h2> 
-            <h2 class='gameNameHeader'>{{getTitleWithoutFirstLetter(partieMultiple.title)}}</h2> 
+            <h2 class='gameNameHeader titleFirstLetter'>{{getTitleFirstLetter(partieMultiple._nomPartie)|uppercase}}</h2> 
+            <h2 class='gameNameHeader'>{{getTitleWithoutFirstLetter(partieMultiple._nomPartie)}}</h2> 
       </mat-card-header>
       <div class='row'>
           <div class='col-sm-6'>
@@ -45,5 +45,6 @@
       </div>
   </mat-card>  
   <br> 
+  <!-- {{this.afficherImage(partieMultiple["_id"])}} -->
 </div>
 

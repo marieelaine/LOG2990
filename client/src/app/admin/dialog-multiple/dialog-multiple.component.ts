@@ -1,6 +1,4 @@
 import { Component, Inject } from '@angular/core';
-import { ListePartiesComponent } from '../../liste-parties/liste-parties.component';
-import { PartieMultipleInterface } from '../../liste-parties/liste-partie-multiple/liste-partie-multiple.component';
 import { DialogAbstrait } from '../dialog-abstrait';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DialogData } from '../admin.component';
@@ -18,8 +16,6 @@ import { PartieMultipleService } from '../partie-multiple.service';
 
 export class DialogMultipleComponent extends DialogAbstrait {
 
-  private partieMultiple: PartieMultipleInterface;
-  private listeParties: ListePartiesComponent;
   protected toggleClassButton: boolean = false;
 
   public constructor(
@@ -37,7 +33,6 @@ export class DialogMultipleComponent extends DialogAbstrait {
     }
 
   protected onSubmit(): void {
-    console.log("hello du onSubmit");
     this.ajouterPartie();
   }
 
@@ -51,12 +46,9 @@ export class DialogMultipleComponent extends DialogAbstrait {
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
                                                       this["data"].quantiteObjets, this["data"].theme,
                                                       this["data"].typeModification);
-    console.log(result);
     this.partieMultipleService.register(result)
       .subscribe(
         (data) => {
-          console.log(data);
-          console.log("allo du ajouterPartie Client");
         },
         (error) => {
           console.error(error);

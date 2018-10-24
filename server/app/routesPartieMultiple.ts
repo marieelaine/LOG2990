@@ -28,6 +28,10 @@ export class RoutesPartieMultiple extends ServiceWeb {
             await this.partieMultiple.requeteGetListePartie(req, res);
         });
 
+        router.get("/reinitialiseTemps/:id", async (req: Request, res: Response) => {
+            await this.partieMultiple.requeteGetListePartie(req, res);
+        });
+
         // router.delete("/delete/:id", async (req: Request, res: Response) => {
         //     await this.partieSimple.requeteDeletePartieSimple(req, res);
         // });
@@ -35,6 +39,8 @@ export class RoutesPartieMultiple extends ServiceWeb {
         // router.get("/:id", async (req: Request, res: Response) => {
         //     await this.partieSimple.requetePartieSimpleId(req, res);
         // });
+
+
 
         return router;
     }
