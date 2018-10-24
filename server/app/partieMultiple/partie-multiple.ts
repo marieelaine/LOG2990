@@ -161,19 +161,50 @@ export class DBPartieMultiple {
         }
     }
 
-    // public async requetePartieSimpleId(req: Request, res: Response): Promise<void> {
-    //     res.send(await this.obtenirPartieId(req.params.id));
-    // }
+    public async requetePartieSimpleId(req: Request, res: Response): Promise<void> {
+        res.send(await this.obtenirPartieId(req.params.id));
+    }
 
-    // public async requeteDeletePartie(req: Request, res: Response): Promise<void> {
-    //     try {
-    //         await this.deletePartie(req.params.id, res);
+    private async obtenirPartieId(nomPartie: String): Promise<string> {
+        const partieSimples: PartieMultipleInterface[] = [];
+        await this.modelPartie.find()
+            .then((res: Document[]) => {
+                for (const partieSimple of res) {
+                    partieSimples.push(partieSimple.toObject());
+                }
+            });
 
-    //         res.status(201);
-    //     } catch (err) {
-    //         res.status(501).json(err);
-    //     }
-    // }
+        for (const partieSimple of partieSimples) {
+            if (partieSimple._nomPartie === nomPartie) {
+                return partieSimple._id;
+            }
+        }
+        // Change the return.
+
+        return partieSimples[0]._id;
+    }
+
+    public async requeteDeletePartie(req: Request, res: Response): Promise<void> {
+        try {
+            await this.deletePartie(req.params.id, res);
+            res.status(201);
+        } catch (err) {
+            res.status(501).json(err);
+        }
+    }
+
+    private async deletePartie(idPartie: String, res: Response): Promise<Response> {
+        try {
+            await this.modelPartie.findOneAndRemove(this.modelPartie.findById(idPartie)).catch(() => {
+                throw new Error();
+            });
+
+            return res.status(201);
+        } catch (err) {
+
+            return res.status(501).json(err);
+        }
+    }
 
     public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();

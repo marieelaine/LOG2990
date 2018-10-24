@@ -38,7 +38,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
   protected onCreerOuSupprimerClick(partieId: string): void {
       if (this.isListePartiesMode) {
-        // Naviguer vers partie-multijouer
+        // Naviguer vers partie-multiple
       } else if (this.isAdminMode) {
         this.supprimerPartie(partieId);
       }
@@ -50,7 +50,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
         this.listeParties.splice(i, 1);
       }
     }
-    // this.listePartieService.deletePartieMultiple(partieId);
+    this.listePartieService.deletePartieMultiple(partieId);
   }
 
   protected reinitialiserTemps(partieId: string): void {

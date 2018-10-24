@@ -19,8 +19,6 @@ export class RoutesPartieMultiple extends ServiceWeb {
         const router: Router = Router();
 
         router.post("/ajouter", async (req: Request, res: Response) => {
-            // tslint:disable-next-line:no-console
-            console.log("allo de la route");
             await this.partieMultiple.requeteAjouterPartie(req, res);
         });
 
@@ -32,16 +30,13 @@ export class RoutesPartieMultiple extends ServiceWeb {
             await this.partieMultiple.requeteGetListePartie(req, res);
         });
 
-        // router.delete("/delete/:id", async (req: Request, res: Response) => {
-        //     await this.partieSimple.requeteDeletePartieSimple(req, res);
-        // });
+        router.delete("/delete/:id", async (req: Request, res: Response) => {
+            await this.partieMultiple.requeteDeletePartie(req, res);
+        });
 
         // router.get("/:id", async (req: Request, res: Response) => {
         //     await this.partieSimple.requetePartieSimpleId(req, res);
         // });
-
-
-
         return router;
     }
 }
