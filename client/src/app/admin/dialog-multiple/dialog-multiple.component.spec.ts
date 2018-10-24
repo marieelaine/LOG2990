@@ -7,12 +7,17 @@ import {
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { PartieMultipleService } from '../partie-multiple.service';
 
 describe('DialogMultipleComponent', () => {
+    let mockPartieMultipleService: jasmine.SpyObj<PartieMultipleService>;
     let component: DialogMultipleComponent;
     let fixture: ComponentFixture<DialogMultipleComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(() => {
+        mockPartieMultipleService = jasmine.createSpyObj(["register"]);
+
         TestBed.configureTestingModule({
             declarations: [DialogMultipleComponent],
             imports: [
@@ -23,17 +28,16 @@ describe('DialogMultipleComponent', () => {
                 MatDialogModule,
                 MatInputModule,
                 BrowserAnimationsModule,
-                MatRadioModule
+                MatRadioModule,
+                HttpClientTestingModule
             ],
             providers: [
                 { provide: MatDialogRef, useValue: {} },
-                { provide: MAT_DIALOG_DATA, useValue: {} }
+                { provide: MAT_DIALOG_DATA, useValue: {} },
+                { provide: PartieMultipleService, useValue: mockPartieMultipleService },
             ]
-        })
-            .compileComponents();
-    }));
+        });
 
-    beforeEach(() => {
         fixture = TestBed.createComponent(DialogMultipleComponent);
         component = fixture.componentInstance;
     });
