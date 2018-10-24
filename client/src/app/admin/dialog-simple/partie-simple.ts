@@ -3,8 +3,8 @@ export class PartieSimple {
     protected _nomPartie: string;
     protected _tempsSolo: Array<number>;
     protected _tempsUnContreUn: Array<number>;
-    public _image1: Buffer;
-    public _image2: Buffer;
+    protected _image1: Buffer;
+    protected _image2: Buffer;
     protected _imageDiff: Buffer;
 
     public constructor( nomPartie: string, tempsSolo: Array<number>, tempsUnContreUn: Array<number>,

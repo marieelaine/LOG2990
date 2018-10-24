@@ -7,7 +7,7 @@ import { RouteBaseDeDonnees } from "../routesBaseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
-import { PartieSimple } from "../../../client/src/app/admin/dialog-simple/partie-simple";
+// import { PartieSimple } from "../../../client/src/app/admin/dialog-simple/partie-simple";
 
 interface PartieSimpleInterface {
     _id: string;
@@ -48,11 +48,11 @@ export class RoutePartieSimple {
                     required: true,
                 },
                 _image1: {
-                    type: Buffer,
+                    type: Array,
                     required: true,
                 },
                 _image2: {
-                    type: Buffer,
+                    type: Array,
                     required: true,
                 },
                 _imageDiff: {
@@ -140,8 +140,8 @@ export class RoutePartieSimple {
         return partieSimples[0]._id;
     }
 
-    private async getListePartie(): Promise<PartieSimple[]> {
-        const listeParties: PartieSimple[] = [];
+    private async getListePartie(): Promise<PartieSimpleInterface[]> {
+        const listeParties: PartieSimpleInterface[] = [];
         await this.modelPartie.find()
             .then((res: Document[]) => {
                 for (const partie of res) {
