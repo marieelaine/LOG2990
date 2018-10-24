@@ -12,7 +12,7 @@ export class Server {
 
     private readonly appPort: string|number|boolean = this.normalizePort(process.env.PORT || "3000");
     private readonly baseDix: number = 10;
-    private server: http.Server;
+    public server: http.Server;
 
     public constructor(@inject(Types.Application) private application: Application) { }
 

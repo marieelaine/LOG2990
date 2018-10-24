@@ -74,18 +74,22 @@ export class DialogSimpleComponent extends DialogAbstrait {
     this.afficherImageSurUploadClient();
   }
 
-  protected ajouterPartie(): void {
+  protected async ajouterPartie(): Promise<void> {
       const result: PartieSimple = new PartieSimple(this["data"].simpleGameName, this.genererTableauTempsAleatoires(),
                                                     this.genererTableauTempsAleatoires(), this.selectedFilesAsBuffers[0],
                                                     this.selectedFilesAsBuffers[1],
                                                     Buffer.Buffer.from(new Array()));
-      this.partieSimpleService.register(result)
+      await this.partieSimpleService.register(result)
         .subscribe(
           (data) => {
           },
           (error) => {
             console.error(error);
           });
+
+      setTimeout(() => {
+        window.location.reload(); },
+                 2500);
     }
 
   private afficherImageSurUploadClient() {

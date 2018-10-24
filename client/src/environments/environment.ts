@@ -4,8 +4,9 @@ import { IEnvironment } from "./IEnvironment";
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment: IEnvironment = {
-  production: false
+export const environment = {
+  production: false,
+  wbUrl: "http://localhost:4200"
 };
 
 /*
