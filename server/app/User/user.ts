@@ -10,7 +10,7 @@ interface Usager {
     _username: string;
 }
 
-export module RouteUser {
+export module DBUser {
     @injectable()
     export class User {
 

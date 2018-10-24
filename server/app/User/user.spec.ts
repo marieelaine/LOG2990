@@ -1,11 +1,11 @@
 import { assert } from "chai";
-import { RouteUser } from "./user";
+import { DBUser } from "./user";
 
 describe("BaseDeDonnees", () => {
     describe("Constructeur", () => {
-        let user: RouteUser.User;
+        let user: DBUser.User;
         beforeEach(() => {
-            user = new RouteUser.User();
+            user = new DBUser.User();
         });
 
         it ("should do nothing", () => {

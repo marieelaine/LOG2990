@@ -7,7 +7,7 @@ const app_1 = require("./app");
 const index_1 = require("./routes/index");
 const routes_1 = require("./routes");
 const routesUser_1 = require("./routesUser");
-const user_1 = require("./routesUser/user");
+const user_1 = require("./User/user");
 const routesPartieSimple_1 = require("./routesPartieSimple");
 const baseDeDonnees_1 = require("./baseDeDonnees/baseDeDonnees");
 const partie_simple_1 = require("./partieSimple/partie-simple");
@@ -19,7 +19,7 @@ container.bind(types_1.default.Routes).to(routes_1.Routes);
 container.bind(types_1.default.Index).to(index_1.Route.Index);
 container.bind(types_1.default.BaseDeDonnees).to(baseDeDonnees_1.BaseDeDonnees);
 container.bind(types_1.default.RoutesUser).to(routesUser_1.RoutesUser);
-container.bind(types_1.default.User).to(user_1.RouteUser.User);
+container.bind(types_1.default.User).to(user_1.DBUser.User);
 container.bind(types_1.default.RoutesPartieSimple).to(routesPartieSimple_1.RoutesPartieSimple);
 container.bind(types_1.default.PartieSimple).to(partie_simple_1.DBPartieSimple);
 //# sourceMappingURL=inversify.config.js.map

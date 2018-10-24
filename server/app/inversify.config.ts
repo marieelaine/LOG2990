@@ -6,7 +6,7 @@ import { Route } from "./routes/index";
 import { Routes } from "./routes";
 
 import { RoutesUser } from "./routesUser";
-import { RouteUser } from "./routesUser/user";
+import { DBUser } from "./User/user";
 
 import { RoutesPartieSimple } from "./routesPartieSimple";
 import { BaseDeDonnees } from "./baseDeDonnees/baseDeDonnees";
@@ -23,7 +23,7 @@ container.bind(Types.Index).to(Route.Index);
 container.bind(Types.BaseDeDonnees).to(BaseDeDonnees);
 
 container.bind(Types.RoutesUser).to(RoutesUser);
-container.bind(Types.User).to(RouteUser.User);
+container.bind(Types.User).to(DBUser.User);
 
 container.bind(Types.RoutesPartieSimple).to(RoutesPartieSimple);
 container.bind(Types.PartieSimple).to(DBPartieSimple);
