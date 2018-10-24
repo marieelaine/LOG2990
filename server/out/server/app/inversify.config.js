@@ -21,5 +21,5 @@ container.bind(types_1.default.BaseDeDonnees).to(baseDeDonnees_1.BaseDeDonnees);
 container.bind(types_1.default.RoutesUser).to(routesUser_1.RoutesUser);
 container.bind(types_1.default.User).to(user_1.RouteUser.User);
 container.bind(types_1.default.RoutesPartieSimple).to(routesPartieSimple_1.RoutesPartieSimple);
-container.bind(types_1.default.PartieSimple).to(partie_simple_1.RoutePartieSimple);
+container.bind(types_1.default.PartieSimple).to(partie_simple_1.DBPartieSimple);
 //# sourceMappingURL=inversify.config.js.map

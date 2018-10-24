@@ -1,11 +1,11 @@
 import { assert } from "chai";
-import { RoutePartieSimple } from "./partie-simple";
+import { DBPartieSimple } from "./partie-simple";
 
 describe("BaseDeDonnees", () => {
     describe("Constructeur", () => {
-        let image: RoutePartieSimple;
+        let image: DBPartieSimple;
         beforeEach(() => {
-            image = new RoutePartieSimple();
+            image = new DBPartieSimple();
         });
 
         it ("should do nothing", () => {

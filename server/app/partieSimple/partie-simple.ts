@@ -19,7 +19,7 @@ interface PartieSimpleInterface {
     _imageDiff: Buffer;
 }
 @injectable()
-export class RoutePartieSimple {
+export class DBPartieSimple {
 
     private baseDeDonnees: BaseDeDonnees;
     private modelPartie: Model<Document>;

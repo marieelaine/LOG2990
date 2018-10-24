@@ -10,7 +10,7 @@ import { RouteUser } from "./routesUser/user";
 
 import { RoutesPartieSimple } from "./routesPartieSimple";
 import { BaseDeDonnees } from "./baseDeDonnees/baseDeDonnees";
-import { RoutePartieSimple } from "./partieSimple/partie-simple";
+import { DBPartieSimple } from "./partieSimple/partie-simple";
 
 const container: Container = new Container();
 
@@ -26,6 +26,6 @@ container.bind(Types.RoutesUser).to(RoutesUser);
 container.bind(Types.User).to(RouteUser.User);
 
 container.bind(Types.RoutesPartieSimple).to(RoutesPartieSimple);
-container.bind(Types.PartieSimple).to(RoutePartieSimple);
+container.bind(Types.PartieSimple).to(DBPartieSimple);
 
 export { container };

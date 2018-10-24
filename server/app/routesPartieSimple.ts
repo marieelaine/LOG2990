@@ -3,7 +3,7 @@ import { Router, Request, Response } from "express";
 
 import { ServiceWeb } from "./serviceWeb";
 import Types from "./types";
-import { RoutePartieSimple } from "./partieSimple/partie-simple";
+import { DBPartieSimple } from "./partieSimple/partie-simple";
 
 @injectable()
 export class RoutesPartieSimple extends ServiceWeb {
@@ -11,7 +11,7 @@ export class RoutesPartieSimple extends ServiceWeb {
     public readonly mainRoute: string = "/partieSimple";
 
     public constructor(@inject(Types.PartieSimple)
-    private partieSimple: RoutePartieSimple = new RoutePartieSimple()) {
+    private partieSimple: DBPartieSimple = new DBPartieSimple()) {
         super();
     }
 
