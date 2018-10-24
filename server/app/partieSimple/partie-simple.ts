@@ -78,14 +78,14 @@ export class DBPartieSimple {
     }
 
     private async getImageDiffAsBuffer(): Promise<Buffer> {
-        const imageMod: string = p.resolve("Images/image3.bmp");
+        const imageMod: string = p.resolve("../Images/image3.bmp");
         const readFilePromise: Function = util.promisify(fs.readFile);
 
         return await readFilePromise(imageMod) as Buffer;
     }
 
     private async deleteDirectory(): Promise<void> {
-        const dir: string = "Images";
+        const dir: string = "../Images";
         await fsx.remove(dir);
     }
 
@@ -106,12 +106,11 @@ export class DBPartieSimple {
         await this.addImagesToDirectory(buffers);
 
         const pyScript: string = p.resolve("app/PartieSimple/bmpdiff/bmpdiff.py");
-        const imageOri1: string = p.resolve("Images/image1.bmp");
-        const imageOri2: string = p.resolve("Images/image2.bmp");
-        const imageMod: string = p.resolve("Images/image3.bmp");
+        const imageOri1: string = p.resolve("../Images/image1.bmp");
+        const imageOri2: string = p.resolve("../Images/image2.bmp");
+        const imageMod: string = p.resolve("../Images/image3.bmp");
         const args: string[] = [imageOri1, imageOri2, imageMod];
         args.unshift(pyScript);
-
         const child = spawn("python", args);
         this.verifierErreurScript(child, partie, res);
     }
@@ -121,13 +120,13 @@ export class DBPartieSimple {
         const writeFilePromise: Function = util.promisify(fs.writeFile);
         let i: number = 1;
         for (const buf of buffers) {
-            await writeFilePromise("Images/image" + i.toString() + ".bmp", new Buffer(buf));
+            await writeFilePromise("../Images/image" + i.toString() + ".bmp", new Buffer(buf));
             i++;
         }
     }
 
     private async makeImagesDirectory(): Promise<void> {
-        const dir: string = "Images";
+        const dir: string = "../Images";
         const mkdirPromise: Function = util.promisify(fs.mkdir);
         const existsPromise: Function = util.promisify(fs.exists);
 
@@ -208,6 +207,7 @@ export class DBPartieSimple {
             res.status(201).json({});
         } catch (err) {
             res.status(501).json(err);
+            console.log(err);
         }
     }
 
