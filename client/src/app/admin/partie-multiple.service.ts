@@ -11,8 +11,6 @@ export class PartieMultipleService {
   constructor(private _http: HttpClient) { }
 
   public register(partieMultiple: PartieMultiple): Observable<Object> {
-    console.log("allo du register dans service");
-    console.log(partieMultiple);
 
     return this._http.post(this.AJOUTER_URL, partieMultiple, {
       observe: "body",

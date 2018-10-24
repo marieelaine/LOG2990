@@ -54,10 +54,6 @@ export class DBPartieMultiple {
         }
 
     private async ajouterPartie(partie: PartieMultipleInterface, res: Response): Promise<void> {
-        // tslint:disable-next-line:no-console
-        console.log("allo de ajouter partie");
-        // tslint:disable-next-line:no-console
-        console.log(partie);
         const doc: Document = new this.modelPartie(partie);
         await doc.save();
     }
@@ -70,15 +66,21 @@ export class DBPartieMultiple {
 
     // }
 
-    // private async getListePartie(): Promise<PartieSimple[]> {
-    // }
+    private async getListePartie(): Promise<PartieMultipleInterface[]> {
+        const listeParties: PartieMultipleInterface[] = [];
+
+        await this.modelPartie.find()
+            .then((res: Document[]) => {
+                for (const partie of res) {
+                    listeParties.push(partie.toJSON());
+                }
+            });
+
+        return listeParties;
+    }
 
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> {
-        // tslint:disable-next-line:no-console
-        console.log("allo de requete ajouter partie");
         try {
-            // tslint:disable-next-line:no-console
-            console.log(req.body);
             await this.ajouterPartie(req.body, res);
             res.status(201);
         } catch (err) {
@@ -100,9 +102,9 @@ export class DBPartieMultiple {
     //     }
     // }
 
-    // public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
-    //     await this.baseDeDonnees.assurerConnection();
-    //     res.send(await this.getListePartie());
-    // }
+    public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
+        await this.baseDeDonnees.assurerConnection();
+        res.send(await this.getListePartie());
+    }
 
 }

@@ -2,15 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ListePartiesComponent } from '../liste-parties.component';
 import { Router } from '@angular/router';
 import {ListePartieServiceService} from "../liste-partie-service.service";
-
-export interface PartieMultipleInterface {
-  title: String;
-  imagePath: String;
-  timesSolo: number[];
-  timesOneVsOne: number[];
-  isElevatedActive: boolean;
-  idPartie: number;
-}
+import { PartieMultiple } from 'src/app/admin/dialog-multiple/partie-mutiple';
 
 @Component({
   selector: 'app-liste-partie-multiple',
@@ -18,12 +10,33 @@ export interface PartieMultipleInterface {
   styleUrls: ['./liste-partie-multiple.component.css']
 })
 export class ListePartieMultipleComponent extends ListePartiesComponent implements OnInit {
+
+  protected listeParties: PartieMultiple[];
+
   constructor(public router: Router,
               public listePartieService: ListePartieServiceService) {
     super(router, listePartieService);
   }
 
-  ngOnInit() {
+  public ngOnInit() {
+    this.listePartieService.getListePartieMultiple().subscribe((res: PartieMultiple[]) => {
+      this.listeParties = res;
+    });
 
+  public onJouerOuReinitialiserClick(partieId: string): void {
+      if (this.isListePartiesMode) {
+        this.router.navigate(["/partie-solo/" + partieId]);
+      } else if (this.isAdminMode) {
+        this.reinitialiserTemps();
+      }
+    }
+
+  protected onCreerOuSupprimerClick(partieId: string): void {
+      if (this.isListePartiesMode) {
+        // Naviguer vers partie-multijouer
+      } else if (this.isAdminMode) {
+        this.supprimerPartie(partieId);
+      }
+    }
   }
 }

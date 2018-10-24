@@ -239,7 +239,7 @@ export class DBPartieSimple {
             });
 
         for (const partie of partieSimples) {
-            if (partie._id == partieID) {
+            if (partie._id === partieID) {
                 return partie;
             }
         }

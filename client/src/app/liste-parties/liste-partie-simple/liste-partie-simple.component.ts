@@ -19,7 +19,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   }
 
   public ngOnInit() {
-    this.listePartieService.getListeImageSimple().subscribe((res: PartieSimple[]) => {
+    this.listePartieService.getListePartieSimple().subscribe((res: PartieSimple[]) => {
       this.listeParties = res;
     });
   }

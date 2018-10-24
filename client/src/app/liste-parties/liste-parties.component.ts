@@ -1,7 +1,5 @@
-import { Component } from "@angular/core";
-import { PartieMultipleInterface } from "src/app/liste-parties/liste-partie-multiple/liste-partie-multiple.component";
+import { Component, OnInit } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
-import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { ListePartieServiceService } from "./liste-partie-service.service";
 
 @Component({
@@ -12,12 +10,6 @@ import { ListePartieServiceService } from "./liste-partie-service.service";
 })
 
 export class ListePartiesComponent {
-
-  listePartiesMultiples: PartieMultipleInterface[] = [
-        { title: "Mona Lisa", imagePath: "assets/monaLisa.bmp", isElevatedActive: false,
-          timesSolo: [312, 415, 6462, 1], timesOneVsOne: [312, 3], idPartie: 3
-        }
-    ];
 
   public jouerOuReinitialiser: string;
   public creerOuSupprimer: string;

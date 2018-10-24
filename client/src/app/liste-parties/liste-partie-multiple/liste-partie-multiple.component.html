@@ -10,7 +10,7 @@
       </mat-card-header>
       <div class='row'>
           <div class='col-sm-6'>
-              <img src={{partieMultiple.imagePath}} class='gameImage img-responsive mat-elevation-z6 center'
+              <img src='' id="{{partieMultiple['_id']}}" class='gameImage img-responsive mat-elevation-z6 center'
               [class.mat-elevation-z6]="!partieMultiple.isElevatedActive"
               [class.mat-elevation-z10]="partieMultiple.isElevatedActive">
           </div> 
@@ -26,19 +26,19 @@
                   </div>  
                   <div class='col-sm-4 text-center'>
                       <h2 class='topThreeHeaders'> Solo </h2>
-                      <p> {{ getBestTime(partieMultiple.timesSolo) }} </p> 
-                      <p> {{ getSecondBestTime(partieMultiple.timesSolo) }} </p> 
-                      <p> {{ getThirdBestTime(partieMultiple.timesSolo) }} </p> 
+                      <p> {{ getBestTime(partieMultiple._tempsSolo) }} </p> 
+                      <p> {{ getSecondBestTime(partieMultiple._tempsSolo) }} </p> 
+                      <p> {{ getThirdBestTime(partieMultiple._tempsSolo) }} </p> 
                       <button mat-button class='mat-elevation-z6'
                               [routerLink]="['/partie-solo']" routerLinkActive="router-link-active"> {{jouerOuReinitialiser}} </button>
                   </div>
                   <div class='col-sm-2'></div>
                   <div class='col-sm-4 text-center'>
                       <h2 class='topThreeHeaders'> 1v1 </h2> 
-                      <p> {{ getBestTime(partieMultiple.timesOneVsOne) }} </p> 
-                      <p> {{ getSecondBestTime(partieMultiple.timesOneVsOne) }} </p> 
-                      <p> {{ getThirdBestTime(partieMultiple.timesOneVsOne) }} </p>
-                      <button mat-button class='mat-elevation-z6'> {{creerOuSupprimer}} </button>
+                      <p> {{ getBestTime(partieMultiple._tempsUnContreUn) }} </p> 
+                      <p> {{ getSecondBestTime(partieMultiple._tempsUnContreUn) }} </p> 
+                      <p> {{ getThirdBestTime(partieMultiple._tempsUnContreUn) }} </p>
+                      <button mat-button (click) = "onCreerOuSupprimerClick(partieMultiple._id)" class='mat-elevation-z6'> {{creerOuSupprimer}} </button>
                   </div>
               </div>
           </div>
