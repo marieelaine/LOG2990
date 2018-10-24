@@ -46,12 +46,14 @@ export class ListePartiesComponent {
   }
 
   private setToJouerAndCreer(): void {
+    this.isAdminMode = false;
     this.isListePartiesMode = true;
     this.jouerOuReinitialiser = "Jouer";
     this.creerOuSupprimer = "Créer";
   }
 
   private setToReinitialiserAndSupprimer(): void {
+    this.isListePartiesMode = false;
     this.isAdminMode = true;
     this.jouerOuReinitialiser = "Réinitialiser";
     this.creerOuSupprimer = "Supprimer";

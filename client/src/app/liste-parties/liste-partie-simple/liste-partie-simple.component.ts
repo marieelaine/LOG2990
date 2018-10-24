@@ -32,11 +32,11 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     }
   }
 
-  protected onCreerOuSupprimerClick(): void {
+  protected onCreerOuSupprimerClick(partieId: string): void {
     if (this.isListePartiesMode) {
       // Naviguer vers partie-multijouer
     } else if (this.isAdminMode) {
-      // HUM?
+      this.supprimerPartie(partieId);
     }
   }
 
