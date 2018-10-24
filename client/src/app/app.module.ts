@@ -8,6 +8,7 @@ import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule, Routes } from "@angular/router";
+import { Observable } from "rxjs";
 
 import { CookieService } from "ngx-cookie-service";
 
@@ -35,7 +36,7 @@ import { UserService } from "./vue-initiale/user.service";
 import { PartieSimpleService } from "./admin/partie-simple.service";
 import { ListePartieSimpleComponent } from "./liste-parties/liste-partie-simple/liste-partie-simple.component";
 import { ListePartieMultipleComponent } from "./liste-parties/liste-partie-multiple/liste-partie-multiple.component";
-import { PartieSoloComponent } from "./partie/partie-solo/partie-solo.component";
+import { PartieSoloComponent } from "./partie/vue-simple/partie-solo/partie-solo.component";
 import { PartieMultijoueurComponent } from './partie/partie-multijoueur/partie-multijoueur.component';
 import { VueMultipleComponent } from './partie/vue-multiple/vue-multiple.component';
 import { ImageComponent } from './partie/image/image.component';

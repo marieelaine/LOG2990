@@ -4,7 +4,6 @@ export abstract class PartieAbstraiteClass {
 
     protected blur: boolean = true;
     protected chrono: ChronoComponent = new ChronoComponent();
-    protected timer: number = 0;
     protected message = "Cliquez pour commencer";
     protected differenceRestantes = 7;
     protected partieCommence = false;
@@ -15,7 +14,7 @@ export abstract class PartieAbstraiteClass {
 
     protected start(): void {
         this.partieCommence = true;
-        this.message = "Il reste ${this.differenceRestantes} différences à trouver";
+        this.message = `Il reste ${this.differenceRestantes} différences à trouver`;
         this.blur = false;
         const button = document.getElementById("StartButton");
         // tslint:disable-next-line:no-non-null-assertion
@@ -26,7 +25,7 @@ export abstract class PartieAbstraiteClass {
     protected trouverDifference(): void {
         if (this.partieCommence) {
             this.differenceRestantes -= 1;
-            this.message = "Il reste ${this.differenceRestantes} differences a trouver";
+            this.message = `Il reste ${this.differenceRestantes} differences a trouver`;
         }
         if (this.differenceRestantes === 0) {
             this.partieCommence = false;
@@ -36,5 +35,9 @@ export abstract class PartieAbstraiteClass {
 
     protected terminerPartie(): void {
         this.chrono.stopTimer();
+    }
+
+    protected getPartie(): void{
+
     }
 }

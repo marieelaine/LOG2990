@@ -24,9 +24,27 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     });
   }
 
+  protected ajusterImage(id: String) {
+    for (const partie of this.listeParties) {
+      if (partie["_id"] === id) {
+        const data: string = atob(String(partie["_image1"][0]));
+        let hex = 0x00;
+        const result: Uint8Array = new Uint8Array(data.length);
+
+        for (let i = 0; i < data.length; i++) {
+            hex = data.charCodeAt(i);
+            result[i] = hex;
+        }
+        const blob = new Blob([result], {type: 'image/bmp'});
+        // @ts-ignore
+        document.getElementById(id).src = URL.createObjectURL(blob);
+      }
+    }
+  }
+
   public onJouerOuReinitialiserClick(partieId: string): void {
     if (this.isListePartiesMode) {
-      this.router.navigate(["/partie-solo"]);
+      this.router.navigate(["/partie-solo/" + partieId]);
     } else if (this.isAdminMode) {
       this.reinitialiserTemps(partieId);
     }
@@ -41,6 +59,11 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   }
 
   protected supprimerPartie(partieId: string): void {
+    for (let i = 0 ; i < this.listeParties.length ; i++) {
+      if (this.listeParties[i]._id === partieId) {
+        this.listeParties.splice(i, 1);
+      }
+    }
     this.listePartieService.deletePartieSimple(partieId);
   }
 

@@ -20,4 +20,7 @@ export class PartieSimple {
       }
 
     }
+    get user(): string {
+        return this._nomPartie;
+    }
   }
