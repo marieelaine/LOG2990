@@ -74,29 +74,31 @@ export class DBPartieSimple {
             // socketServer.envoyerMessageErreurScript(errorMsg);
         }
 
-        await this.deleteFilesInImages();
+        await this.deleteImagesDirectory();
 
         return partie;
     }
 
     private async getImageDiffAsBuffer(): Promise<Buffer> {
-        const imageMod: string = p.resolve("Images/image3.bmp");
+        const imageMod: string = p.resolve("../Images/image3.bmp");
         const readFilePromise: Function = util.promisify(fs.readFile);
 
         return await readFilePromise(imageMod) as Buffer;
     }
 
-    private async deleteFilesInImages(): Promise<void> {
-        const dir: string = "Images";
-        fs.readdir(dir, (err: NodeJS.ErrnoException, files: string[]) => {
-            if (err) { throw err; }
+    private async deleteImagesDirectory(): Promise<void> {
+        const dir: string = "../Images";
+        await fsx.remove(dir);
+        // const dir: string = "Images";
+        // fs.readdir(dir, (err: NodeJS.ErrnoException, files: string[]) => {
+        //     if (err) { throw err; }
 
-            for (const file of files) {
-                fs.unlink(p.join(dir, file), (error: NodeJS.ErrnoException) => {
-                    if (err) { throw error; }
-                });
-            }
-        });
+        //     for (const file of files) {
+        //         fs.unlink(p.join(dir, file), (error: NodeJS.ErrnoException) => {
+        //             if (err) { throw error; }
+        //         });
+        //     }
+        // });
     }
 
     private async verifierErreurScript(child, partie: PartieSimpleInterface, res: Response): Promise<void> {
@@ -116,9 +118,9 @@ export class DBPartieSimple {
         await this.addImagesToDirectory(buffers);
 
         const pyScript: string = p.resolve("app/PartieSimple/bmpdiff/bmpdiff.py");
-        const imageOri1: string = p.resolve("Images/image1.bmp");
-        const imageOri2: string = p.resolve("Images/image2.bmp");
-        const imageMod: string = p.resolve("Images/image3.bmp");
+        const imageOri1: string = p.resolve("../Images/image1.bmp");
+        const imageOri2: string = p.resolve("../Images/image2.bmp");
+        const imageMod: string = p.resolve("../Images/image3.bmp");
         const args: string[] = [imageOri1, imageOri2, imageMod];
         args.unshift(pyScript);
 
@@ -126,19 +128,30 @@ export class DBPartieSimple {
         this.verifierErreurScript(child, partie, res);
     }
 
+    private async makeImagesDirectory(): Promise<void> {
+        const dir: string = "../Images";
+        const mkdirPromise: Function = util.promisify(fs.mkdir);
+        const existsPromise: Function = util.promisify(fs.exists);
+        if (await existsPromise(dir)) {
+            await fsx.remove(dir);
+        }
+
+        await mkdirPromise(dir);
+    }
+
     private async addImagesToDirectory(buffers: Array<Buffer>): Promise<void> {
+        await this.makeImagesDirectory();
         const writeFilePromise: Function = util.promisify(fs.writeFile);
         let i: number = 1;
         for (const buf of buffers) {
-            await writeFilePromise("Images/image" + i.toString() + ".bmp", new Buffer(buf));
+            await writeFilePromise("../Images/image" + i.toString() + ".bmp", new Buffer(buf));
             i++;
         }
     }
 
-    private async deletePartieSimple(nomPartie: String, res: Response): Promise<Response> {
-        const imageId: String = await this.obtenirPartieSimpleId(nomPartie);
+    private async deletePartieSimple(idPartie: String, res: Response): Promise<Response> {
         try {
-            await this.modelPartie.findOneAndDelete(imageId).catch(() => {
+            await this.modelPartie.findOneAndRemove(this.modelPartie.findById(idPartie)).catch(() => {
                 throw new Error();
             });
 

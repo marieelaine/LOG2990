@@ -33,6 +33,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   }
 
   protected onCreerOuSupprimerClick(partieId: string): void {
+    console.log(partieId);
     if (this.isListePartiesMode) {
       // Naviguer vers partie-multijouer
     } else if (this.isAdminMode) {
