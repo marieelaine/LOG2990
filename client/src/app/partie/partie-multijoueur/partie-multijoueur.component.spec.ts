@@ -10,7 +10,8 @@ describe('PartieMultijoueurComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ PartieMultijoueurComponent ],
-      imports: [HttpClientTestingModule],
+      imports: [],
+      providers: [HttpClientTestingModule]
     });
 
     fixture = TestBed.createComponent(PartieMultijoueurComponent);

@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ListePartieMultipleComponent } from './liste-partie-multiple.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('PartieMultipleComponent', () => {
   let component: ListePartieMultipleComponent;
@@ -11,7 +12,7 @@ describe('PartieMultipleComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ListePartieMultipleComponent ],
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, HttpClientTestingModule],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
       ],
