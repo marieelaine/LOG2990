@@ -11,4 +11,7 @@ export default  {
 
         RoutesPartieSimple: Symbol("RoutesPartieSimple"),
         PartieSimple: Symbol("PartieSimple"),
+
+        RoutesPartieMultiple: Symbol("RoutesPartieMultiple"),
+        PartieMultiple: Symbol("PartieMultiple"),
 };

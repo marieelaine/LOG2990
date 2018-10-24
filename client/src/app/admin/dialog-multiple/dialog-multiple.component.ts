@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { ParticlesModule } from 'angular-particle';
 import { PartieMultiple } from './partie-mutiple';
 import * as Buffer from "Buffer";
+import { PartieMultipleService } from '../partie-multiple.service';
 
 @Component({
   selector: 'app-dialog-multiple',
@@ -23,7 +24,8 @@ export class DialogMultipleComponent extends DialogAbstrait {
   public constructor(
     dialogRef: MatDialogRef<DialogMultipleComponent>,
     @Inject(MAT_DIALOG_DATA) data: DialogData,
-    http: HttpClient) {
+    http: HttpClient,
+    private partieMultipleService: PartieMultipleService) {
       super(dialogRef, data, http);
     }
 
@@ -35,6 +37,7 @@ export class DialogMultipleComponent extends DialogAbstrait {
 
   protected onSubmit(): void {
     console.log("hello du onSubmit");
+    this.ajouterPartie();
   }
 
   protected ajouterPartie() {
@@ -44,7 +47,16 @@ export class DialogMultipleComponent extends DialogAbstrait {
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()));
-
+    this.partieMultipleService.register(result)
+      .subscribe(
+        (data) => {
+          console.log(data);
+          console.log("allo du ajouterPartie Client");
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 
   protected onThemeClickButton(): void {

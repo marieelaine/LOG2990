@@ -65,8 +65,8 @@ export class DBPartieSimple {
         const buffers: Array<Buffer> = [partie._image1, partie._image2];
         partie._imageDiff = await this.getImageDiffAsBuffer(buffers);
 
-        const image: Document = new this.modelPartie(partie);
-        await image.save();
+        const doc: Document = new this.modelPartie(partie);
+        await doc.save();
 
         return this.obtenirPartieSimpleId(partie._nomPartie);
     }

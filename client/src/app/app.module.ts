@@ -39,6 +39,7 @@ import { PartieSoloComponent } from "./partie/partie-solo/partie-solo.component"
 import { PartieMultijoueurComponent } from './partie/partie-multijoueur/partie-multijoueur.component';
 import { VueMultipleComponent } from './partie/vue-multiple/vue-multiple.component';
 import { ImageComponent } from './partie/image/image.component';
+import { PartieMultipleService } from "./admin/partie-multiple.service";
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
@@ -94,7 +95,8 @@ const appRoutes: Routes = [
   providers: [BasicService,
               CookieService,
               UserService,
-              PartieSimpleService],
+              PartieSimpleService,
+              PartieMultipleService],
   bootstrap: [AppComponent],
   entryComponents: [
     DialogSimpleComponent,
