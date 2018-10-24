@@ -9,7 +9,6 @@ import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
-import { Resolver } from "dns";
 // import { socketServer } from "../www";
 
 interface PartieSimpleInterface {
@@ -67,7 +66,7 @@ export class DBPartieSimple {
                     required: true,
                 },
                 _imageDiff: {
-                    type: Buffer,
+                    type: Array,
                 }
             });
         }
@@ -126,16 +125,6 @@ export class DBPartieSimple {
     private async deleteImagesDirectory(): Promise<void> {
         const dir: string = "../Images";
         await fsx.remove(dir);
-        // const dir: string = "Images";
-        // fs.readdir(dir, (err: NodeJS.ErrnoException, files: string[]) => {
-        //     if (err) { throw err; }
-
-        //     for (const file of files) {
-        //         fs.unlink(p.join(dir, file), (error: NodeJS.ErrnoException) => {
-        //             if (err) { throw error; }
-        //         });
-        //     }
-        // });
     }
 
     private async verifierErreurScript(child, partie: PartieSimpleInterface, res: Response): Promise<void> {
