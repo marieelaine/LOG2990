@@ -9,6 +9,7 @@ import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
+import { Resolver } from "dns";
 // import { socketServer } from "../www";
 
 interface PartieSimpleInterface {
@@ -229,6 +230,11 @@ export class DBPartieSimple {
         return listeParties;
     }
 
+    private async reinitialiserTemps(idPartie: String): Promise<void> {
+        await this.modelPartieBuffer.find().findOneAndUpdate(this.modelPartieBuffer.findById(idPartie));
+        // TODO : Changer les temps randoms dans la BD
+    }
+
     private async getPartieSimple(partieID: String, res: Response): Promise<PartieSimpleInterface> {
         const partieSimples: PartieSimpleInterface[] = [];
         await this.modelPartieArray.find()
@@ -275,6 +281,16 @@ export class DBPartieSimple {
     public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();
         res.send(await this.getListePartie());
+    }
+
+    public async requeteReinitialiserTemps(req: Request, res: Response): Promise<void> {
+        await this.baseDeDonnees.assurerConnection();
+        try {
+            await this.reinitialiserTemps(req.params.id);
+            res.status(201);
+        } catch (err) {
+            res.status(501).json(err);
+        }
     }
 
     public async requeteGetPartieSimple(req: Request, res: Response): Promise<void> {

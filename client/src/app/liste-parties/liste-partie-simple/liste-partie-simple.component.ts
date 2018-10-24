@@ -46,7 +46,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     if (this.isListePartiesMode) {
       this.router.navigate(["/partie-solo/" + partieId]);
     } else if (this.isAdminMode) {
-      this.reinitialiserTemps();
+      this.reinitialiserTemps(partieId);
     }
   }
 
@@ -67,8 +67,18 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     this.listePartieService.deletePartieSimple(partieId);
   }
 
-  private reinitialiserTemps(): void {
-    // Reinitialiser les temps de la parties
+  private reinitialiserTemps(partieId: string): void {
+    this.listeParties.forEach((partie: PartieSimple) => {
+      if (partie._id === partieId) {
+        for (let i = 0 ; i < partie._tempsSolo.length ; i++) {
+          partie._tempsSolo[i] = Math.floor(Math.random() * 400) + 100;
+        }
+        for (let i = 0 ; i < partie._tempsUnContreUn.length ; i++) {
+          partie._tempsUnContreUn[i] = Math.floor(Math.random() * 400) + 100;
+        }
+      }
+    });
+    this.listePartieService.reinitialiserTempsPartie(partieId);
   }
 
 }
