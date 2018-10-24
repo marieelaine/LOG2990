@@ -3,6 +3,7 @@ import { PartieAbstraiteClass } from '../../partie-abstraite-class';
 import { ActivatedRoute} from "@angular/router";
 import { PartieSimple} from "../../../admin/dialog-simple/partie-simple";
 import { PartieSimpleService} from "../../partie-simple.service";
+import {createElement} from "@angular/core/src/view/element";
 
 @Component({
     selector: 'app-partie-solo',
@@ -25,6 +26,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
     protected partie: PartieSimple;
     protected image1: Blob;
     protected image2: Blob;
+    image = new Image();
 
     protected getID(): void {
         // this.partieID = this.route.snapshot.paramMap.get('idPartie');
@@ -40,14 +42,25 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
     }
 
     protected setup(): void {
+        const Buffer = require("buffer/").Buffer;
+        const bufferA = Buffer.from(this.partie._image1);
+        const bufferB = Buffer.from(this.partie._image2);
 
-      // const a = this.partie._image1;
-      // const b = this.partie._image2;
+        const image1Uint8Array = new Array();
+        for (const data of bufferA) {
+            image1Uint8Array.push(data);
+        }
 
-      // let enc = new TextEncoder();
-      // console.log(a);
-      // console.log(b);
+        const image2Uint8Array = new Array();
+        for (const data of bufferB) {
+            image1Uint8Array.push(data);
+        }
 
-        this.image1 = new Blob([/*Array*/], {type : "image/bmp"});
+        this.image1 = new Blob(image1Uint8Array, {type : "image/bmp"});
+        this.image2 = new Blob(image2Uint8Array, {type : "image/bmp"});
+
+        this.image.src = URL.createObjectURL(this.image1);
+        document.body.appendChild(this.image);
+
     }
 }

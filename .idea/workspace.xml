@@ -2,27 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5318e456-584b-41e5-b635-5edc71b7e237" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/admin/dialog-simple/dialog-simple.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/admin/dialog-simple/dialog-simple.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/admin/dialog-simple/partie-simple.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/admin/dialog-simple/partie-simple.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/Images/image1.bmp" beforeDir="false" afterPath="$PROJECT_DIR$/server/Images/image1.bmp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/Images/image2.bmp" beforeDir="false" afterPath="$PROJECT_DIR$/server/Images/image2.bmp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/app/routesPartieSimple.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/app/routesPartieSimple.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/app/routesPartieSimple/partie-simple.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/app/routesPartieSimple/partie-simple.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/out/common/communication/message.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/out/common/communication/message.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/out/server/app/app.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/out/server/app/app.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/out/server/app/inversify.config.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/out/server/app/inversify.config.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/out/server/app/routes.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/out/server/app/routes.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/out/server/app/routes/index.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/out/server/app/routes/index.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/out/server/app/routes/sample.spec.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/out/server/app/routes/sample.spec.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/out/server/app/routesBaseDeDonnees.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/out/server/app/routesBaseDeDonnees.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/out/server/app/routesBaseDeDonnees/baseDeDonnees.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/out/server/app/routesBaseDeDonnees/baseDeDonnees.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/out/server/app/routesBaseDeDonnees/baseDeDonnees.spec.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/out/server/app/routesBaseDeDonnees/baseDeDonnees.spec.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/out/server/app/server.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/out/server/app/server.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/out/server/app/serviceWeb.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/out/server/app/serviceWeb.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/out/server/app/types.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/out/server/app/types.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/out/server/app/www.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/server/out/server/app/www.js.map" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -43,8 +25,8 @@
                 <file pinned="false" current-in-tab="true">
                   <entry file="file://$PROJECT_DIR$/client/src/app/admin/dialog-simple/dialog-simple.component.ts">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="595">
-                        <caret line="74" selection-start-line="74" selection-end-line="74" />
+                      <state relative-caret-position="255">
+                        <caret line="72" column="42" lean-forward="true" selection-start-line="72" selection-start-column="42" selection-end-line="72" selection-end-column="42" />
                         <folding>
                           <element signature="e#0#50#0" expanded="true" />
                         </folding>
@@ -125,33 +107,29 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="344" />
+          <entry key="html" value="381" />
           <entry key="json" value="16" />
-          <entry key="ts" value="5625" />
+          <entry key="ts" value="6119" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="344" />
+          <entry key="HTML" value="381" />
           <entry key="JSON" value="16" />
-          <entry key="TypeScript" value="5625" />
+          <entry key="TypeScript" value="6119" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6080988">
+    <splitter split-orientation="horizontal" split-proportion="0.6925189">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="727">
-                  <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
-                  <caret line="44" column="8" selection-start-line="44" selection-start-column="8" selection-end-line="44" selection-end-column="8" />
-                  <caret line="46" column="8" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="8" />
-                  <caret line="47" column="8" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="8" />
-                  <caret line="48" column="8" selection-start-line="48" selection-start-column="8" selection-end-line="48" selection-end-column="8" />
+                <state relative-caret-position="778">
+                  <caret line="63" column="22" selection-start-line="63" selection-start-column="22" selection-end-line="63" selection-end-column="22" />
                   <folding>
                     <element signature="e#0#49#0" expanded="true" />
                   </folding>
@@ -162,8 +140,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="561">
-                  <caret line="33" column="28" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
+                <state relative-caret-position="204">
+                  <caret line="12" column="91" selection-start-line="12" selection-start-column="91" selection-end-line="12" selection-end-column="91" />
                 </state>
               </provider>
             </entry>
@@ -181,20 +159,20 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/client/src/app/admin/dialog-simple/partie-simple.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="85">
-                  <caret line="5" column="26" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="26" />
+                <state relative-caret-position="442">
+                  <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/server/app/routesPartieSimple/partie-simple.ts">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="595">
-                  <caret line="50" column="32" selection-start-line="50" selection-start-column="32" selection-end-line="50" selection-end-column="32" />
+                <state relative-caret-position="119">
+                  <caret line="16" column="23" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="23" />
                 </state>
               </provider>
             </entry>
@@ -249,11 +227,11 @@
         <option value="$PROJECT_DIR$/client/src/app/partie/partie-abstraite-class.ts" />
         <option value="$PROJECT_DIR$/server/app/routesPartieSimple.ts" />
         <option value="$PROJECT_DIR$/client/src/app/partie/partie-simple.service.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.html" />
         <option value="$PROJECT_DIR$/client/src/app/admin/dialog-simple/dialog-simple.component.html" />
-        <option value="$PROJECT_DIR$/server/app/routesPartieSimple/partie-simple.ts" />
         <option value="$PROJECT_DIR$/client/src/app/admin/dialog-simple/partie-simple.ts" />
         <option value="$PROJECT_DIR$/client/src/app/admin/dialog-simple/dialog-simple.component.ts" />
+        <option value="$PROJECT_DIR$/server/app/routesPartieSimple/partie-simple.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.html" />
         <option value="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.ts" />
       </list>
     </option>
@@ -473,12 +451,12 @@
       <workItem from="1537298348374" duration="4952000" />
       <workItem from="1537369380732" duration="1380000" />
       <workItem from="1540323106522" duration="18136000" />
-      <workItem from="1540348108206" duration="4751000" />
+      <workItem from="1540348108206" duration="8284000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49827000" />
+    <option name="totallyTimeSpent" value="53360000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
@@ -772,27 +750,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/app/routesPartieSimple/partie-simple.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="50" column="32" selection-start-line="50" selection-start-column="32" selection-end-line="50" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/admin/dialog-simple/partie-simple.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="26" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="28" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/app/partie/partie-abstraite-class.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -807,24 +764,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/admin/dialog-simple/partie-simple.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/app/routesPartieSimple/partie-simple.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="16" column="23" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/app/admin/dialog-simple/dialog-simple.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="74" selection-start-line="74" selection-end-line="74" />
+        <state relative-caret-position="255">
+          <caret line="72" column="42" lean-forward="true" selection-start-line="72" selection-start-column="42" selection-end-line="72" selection-end-column="42" />
           <folding>
             <element signature="e#0#50#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="91" selection-start-line="12" selection-start-column="91" selection-end-line="12" selection-end-column="91" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="727">
-          <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
-          <caret line="44" column="8" selection-start-line="44" selection-start-column="8" selection-end-line="44" selection-end-column="8" />
-          <caret line="46" column="8" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="8" />
-          <caret line="47" column="8" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="8" />
-          <caret line="48" column="8" selection-start-line="48" selection-start-column="8" selection-end-line="48" selection-end-column="8" />
+        <state relative-caret-position="778">
+          <caret line="63" column="22" selection-start-line="63" selection-start-column="22" selection-end-line="63" selection-end-column="22" />
           <folding>
             <element signature="e#0#49#0" expanded="true" />
           </folding>
