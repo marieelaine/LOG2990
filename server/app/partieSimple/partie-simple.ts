@@ -231,24 +231,8 @@ export class DBPartieSimple {
     }
 
     private async reinitialiserTemps(idPartie: String): Promise<void> {
-        const partieSimples: PartieSimpleInterface[] = [];
-        await this.modelPartie.find()
-            .then((res: Document[]) => {
-                for (const partieSimple of res) {
-                    partieSimples.push(partieSimple.toObject());
-                }
-            });
-
-        for (const partieSimple of partieSimples) {
-            if (partieSimple._id === idPartie) {
-                partieSimple._tempsSolo.forEach((ts: number) => {
-                    ts = 0;
-                });
-                partieSimple._tempsUnContreUn.forEach((t1v1: number) => {
-                    t1v1 = 0;
-                });
-            }
-        }
+        await this.modelPartieBuffer.find().findOneAndUpdate(this.modelPartieBuffer.findById(idPartie));
+        // TODO : Changer les temps randoms dans la BD
     }
 
     public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {

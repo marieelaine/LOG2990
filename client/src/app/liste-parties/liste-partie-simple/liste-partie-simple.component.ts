@@ -70,12 +70,12 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   private reinitialiserTemps(partieId: string): void {
     this.listeParties.forEach((partie: PartieSimple) => {
       if (partie._id === partieId) {
-        partie._tempsSolo.forEach((ts) => {
-          ts = 0;
-        });
-        partie._tempsUnContreUn.forEach((t1v1) => {
-          t1v1 = 0;
-        });
+        for (let i = 0 ; i < partie._tempsSolo.length ; i++) {
+          partie._tempsSolo[i] = Math.floor(Math.random() * 400) + 100;
+        }
+        for (let i = 0 ; i < partie._tempsUnContreUn.length ; i++) {
+          partie._tempsUnContreUn[i] = Math.floor(Math.random() * 400) + 100;
+        }
       }
     });
     this.listePartieService.reinitialiserTempsPartie(partieId);

@@ -29,5 +29,5 @@ export class ListePartieServiceService {
   public async reinitialiserTempsPartie(partieId: string): Promise<void> {
 
     this.http.get(this.REINITIALISER_TEMPS_URL + partieId).toPromise();
-}
+  }
 }
