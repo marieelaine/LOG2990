@@ -7,7 +7,7 @@ import {Observable, of} from "rxjs";
   providedIn: 'root'
 })
 export class ListePartieServiceService {
-  private readonly BASE_URL: string = "http://localhost:3000/partie/";
+  private readonly BASE_URL: string = "http://localhost:3000/partieSimple/";
   private readonly GETLISTE_URL: string = this.BASE_URL + "getPartieSimple";
   private readonly DELETE_PARTIE_URL: string = this.BASE_URL + "delete/";
 

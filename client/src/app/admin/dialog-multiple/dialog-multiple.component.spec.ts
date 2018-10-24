@@ -26,7 +26,7 @@ describe('DialogMultipleComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DialogMultipleComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should create', () => {

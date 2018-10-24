@@ -3,14 +3,14 @@ import { Router, Request, Response } from "express";
 
 import { ServiceWeb } from "./serviceWeb";
 import Types from "./types";
-import { RouteUser } from "./routesUser/user";
+import { DBUser } from "./User/user";
 
 @injectable()
 export class RoutesUser extends ServiceWeb {
 
     public readonly mainRoute: string = "/users";
 
-    public constructor(@inject(Types.User) private user: RouteUser.User = new RouteUser.User()) {
+    public constructor(@inject(Types.User) private user: DBUser.User = new DBUser.User()) {
         super();
     }
 

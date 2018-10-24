@@ -1,12 +1,12 @@
 import { assert } from "chai";
-import { RouteBaseDeDonnees } from "./baseDeDonnees";
+import { BaseDeDonnees } from "./baseDeDonnees";
 import * as sinon from "sinon";
 
 describe("BaseDeDonnees", () => {
     describe("Constructeur", () => {
-        let db: RouteBaseDeDonnees.BaseDeDonnees;
+        let db: BaseDeDonnees;
         beforeEach(() => {
-            db = new RouteBaseDeDonnees.BaseDeDonnees();
+            db = new BaseDeDonnees();
         });
 
         it ("should do nothing", () => {
