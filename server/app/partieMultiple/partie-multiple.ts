@@ -1,10 +1,11 @@
+import * as p from "path";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
-import { spawn } from "child_process";
+import { execFile } from "child_process";
 
 interface PartieMultipleInterface {
     _id: string;
@@ -54,12 +55,12 @@ export class DBPartieMultiple {
             });
         }
 
-    private async ajouterPartie(partie: PartieMultipleInterface, res: Response): Promise<void> {
-        const doc: Document = new this.modelPartie(partie);
-        // tslint:disable-next-line:no-console
-        console.log("la partie av: " + doc);
-        await doc.save();
-    }
+    // private async ajouterPartie(partie: PartieMultipleInterface, res: Response): Promise<void> {
+    //     const doc: Document = new this.modelPartie(partie);
+    //     // tslint:disable-next-line:no-console
+    //     console.log("la partie av: " + doc);
+    //     await doc.save();
+    // }
 
     // private async deletePartie(nomPartie: String, res: Response): Promise<Response> {
 
@@ -68,6 +69,16 @@ export class DBPartieMultiple {
     // private async obtenirPartieId(nomPartie: String): Promise<string> {
 
     // }
+
+    private async genererScene(partie: PartieMultipleInterface): Promise<void> {
+        // tslint:disable-next-line:no-console
+        console.log(partie);
+        const script: string = p.resolve("app/PartieMultiple/genmulti/main.exe");
+        const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, partie._nomPartie];
+
+        const child = execFile(script, args);
+        console.log(child);
+    }
 
     private async getListePartie(): Promise<PartieMultipleInterface[]> {
         const listeParties: PartieMultipleInterface[] = [];
@@ -90,13 +101,6 @@ export class DBPartieMultiple {
         } catch (err) {
             res.status(501).json(err);
         }
-    }
-
-    private async genererScene(partie: PartieMultipleInterface): Promise<void> {
-        // tslint:disable-next-line:no-console
-        console.log(partie);
-
-        const child = spawn ()
     }
 
     // public async requetePartieSimpleId(req: Request, res: Response): Promise<void> {
