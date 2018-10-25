@@ -96,7 +96,6 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     ParticlesModule,
-    MatRadioModule,
     SocketIoModule.forRoot(config),
     MatCheckboxModule,
   ],
