@@ -5,10 +5,10 @@ export abstract class PartieAbstraiteClass {
     protected blur: boolean = true;
     protected chrono: ChronoComponent = new ChronoComponent();
     protected message = "Cliquez pour commencer";
-    protected differenceRestantes = 7;
+    protected differencesTrouvees = 0;
     protected partieCommence = false;
     protected audio = new Audio();
-
+    protected differenceRestantes;
 
     public constructor() {
 
@@ -16,7 +16,7 @@ export abstract class PartieAbstraiteClass {
 
     protected start(): void {
         this.partieCommence = true;
-        this.message = `Il reste ${this.differenceRestantes} différences à trouver`;
+        this.message = `Il reste ${this.differenceRestantes - this.differencesTrouvees} différences à trouver`;
         this.blur = false;
         const button = document.getElementById("StartButton");
         try {
@@ -29,13 +29,13 @@ export abstract class PartieAbstraiteClass {
     protected trouverDifference(): void {
 
         if (this.partieCommence) {
-            this.differenceRestantes -= 1;
-            this.message = `Il reste ${this.differenceRestantes} différences à trouver`;
+            this.differencesTrouvees ++;
+            this.message = `Il reste ${this.differenceRestantes - this.differencesTrouvees} différences à trouver`;
             this.audio.src = "../assets/diffTrouvee.mp3";
             this.audio.load();
             this.audio.play();
         }
-        if (this.differenceRestantes === 0) {
+        if (this.differenceRestantes === this.differencesTrouvees) {
             this.partieCommence = false;
             this.terminerPartie();
         }
