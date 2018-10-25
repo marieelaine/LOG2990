@@ -59,15 +59,22 @@ def compare_images(settings, enlargePixels):
         sys.exit(1)
         
 def check_number_differences(newImage):
-
+    f = open(str(settings.imageSortie)+".txt",'w+')
     #Contouring pour compter les différences
     lower = np.array([0, 0, 0])
     upper = np.array([15, 15, 15])
     image = np.asarray(newImage)
     shapeMask = cv2.inRange(image, lower, upper)
-
+    
     (_, cnts, _) = cv2.findContours(shapeMask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
+    
+    compteur = 1
+    for i in cnts:
+        f.write('diff'+str(compteur)+"\n")
+        for j in i:
+            f.write(str(j[0])+'\n')
+        compteur+=1
+        
     return len(cnts) == 7
 
 def enlarge_pixels(x, y):
