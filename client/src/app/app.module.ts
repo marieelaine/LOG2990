@@ -2,7 +2,6 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ModalModule } from 'ngx-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from "./app.component";
@@ -10,7 +9,6 @@ import { BasicService } from "./basic.service";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule, Routes } from "@angular/router";
 import { SocketIoModule, SocketIoConfig } from 'ng6-socket-io';
-
 import { CookieService } from "ngx-cookie-service";
 
 import { MatToolbarModule,
@@ -22,6 +20,7 @@ import { MatToolbarModule,
         MatMenuModule,
         MatFormFieldModule,
         MatInputModule,
+        MatCheckboxModule
       } from '@angular/material';
 
 import { ListePartiesComponent } from "./liste-parties/liste-parties.component";
@@ -90,12 +89,12 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatToolbarModule,
     MatBadgeModule,
+    MatCheckboxModule,
     MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
     ParticlesModule,
     SocketIoModule.forRoot(config),
-    MatCheckboxModule,
   ],
   providers: [BasicService,
               CookieService,
@@ -106,6 +105,6 @@ const appRoutes: Routes = [
   entryComponents: [
     DialogSimpleComponent,
     DialogMultipleComponent,
-  ]
+  ],
 })
 export class AppModule { }
