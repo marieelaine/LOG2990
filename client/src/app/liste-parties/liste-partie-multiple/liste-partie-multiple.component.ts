@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ErrorHandler } from '@angular/core';
 import { ListePartiesComponent } from '../liste-parties.component';
 import { Router } from '@angular/router';
 import { ListePartieServiceService } from "../liste-partie-service.service";
@@ -30,7 +30,8 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
   protected onJouerOuReinitialiserClick(partieId: string): void {
       if (this.isListePartiesMode) {
-        this.router.navigate(["/partie-multiple/" + partieId]);
+        this.router.navigate(["/partie-multiple/" + partieId])
+        .catch(() => ErrorHandler);
       } else if (this.isAdminMode) {
         this.reinitialiserTemps(partieId);
       }
@@ -50,14 +51,16 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
         this.listeParties.splice(i, 1);
       }
     }
-    this.listePartieService.deletePartieMultiple(partieId);
+    this.listePartieService.deletePartieMultiple(partieId)
+    .catch(() => ErrorHandler);
   }
 
   protected reinitialiserTemps(partieId: string): void {
     this.listeParties.forEach((partie: PartieMultiple) => {
       if (partie["_id"] === partieId) {
         this.genererTableauTempsAleatoires(partie);
-        this.listePartieService.reinitialiserTempsPartieMultiple(partieId, partie["_tempsSolo"], partie["_tempsUnContreUn"]);
+        this.listePartieService.reinitialiserTempsPartieMultiple(partieId, partie["_tempsSolo"], partie["_tempsUnContreUn"])
+        .catch(() => ErrorHandler);
       }
     });
   }

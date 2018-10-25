@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ErrorHandler } from "@angular/core";
 import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 import { UserService } from "../../vue-initiale/user.service";
@@ -19,11 +19,14 @@ export class HeaderComponent {
   protected onLogout(): void {
     const cookieUsername: string = this.cookieService.get("username");
     this.cookieService.deleteAll();
-    this.userService["delete"](cookieUsername);
-    this.router.navigate(["/"]);
+    this.userService["delete"](cookieUsername)
+    .catch(() => ErrorHandler);
+    this.router.navigate(["/"])
+    .catch(() => ErrorHandler);
   }
 
   protected OnHeaderTitleClick() {
-    this.router.navigateByUrl("/liste-parties");
+    this.router.navigateByUrl("/liste-parties")
+    .catch(() => ErrorHandler);
   }
 }

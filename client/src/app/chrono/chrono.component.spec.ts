@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from "@angular/core/testing";
 
 import { ChronoComponent } from "./chrono.component";
-import { runInThisContext } from "vm";
+import { ErrorHandler } from "@angular/core";
 
 describe("ChronoComponent", () => {
   let component: ChronoComponent;
@@ -11,7 +11,8 @@ describe("ChronoComponent", () => {
     TestBed.configureTestingModule({
       declarations: [ ChronoComponent ]
     })
-    .compileComponents();
+    .compileComponents()
+    .catch(() => ErrorHandler);
   }));
 
   beforeEach(() => {
@@ -30,7 +31,7 @@ describe("ChronoComponent", () => {
 
   it ("should return value 5", fakeAsync(() => {
     component.startTimer();
-    tick(5000)
+    tick(5000);
     component.stopTimer();
     expect(component.getTime()).toBe(5);
   }));

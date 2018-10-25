@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ListePartiesComponent } from './liste-parties.component';
 import { MatCardModule } from '@angular/material';
@@ -47,16 +47,16 @@ describe('ListePartiesComponent', () => {
 
     it('should change jouerOuReinitialiser and creerOuSupprimer to "Jouer" and "Supprimer" when url is /liste-parties', () => {
         component["setjouerOuReinitialiserAndcreerOuSupprimer"]('/liste-parties');
-        expect(component.jouerOuReinitialiser).toBe('Jouer');
-        expect(component.creerOuSupprimer).toBe('Créer');
-        expect(component.isListePartiesMode).toBe(true);
+        expect(component["jouerOuReinitialiser"]).toBe('Jouer');
+        expect(component["creerOuSupprimer"]).toBe('Créer');
+        expect(component["isListePartiesMode"]).toBe(true);
     });
 
     it('should change jouerOuReinitialiser and creerOuSupprimer to "Reinitialiser" and "Supprimer" when url is /admin', () => {
         component["setjouerOuReinitialiserAndcreerOuSupprimer"]('/admin');
-        expect(component.jouerOuReinitialiser).toBe('Réinitialiser');
-        expect(component.creerOuSupprimer).toBe('Supprimer');
-        expect(component.isAdminMode).toBe(true);
+        expect(component["jouerOuReinitialiser"]).toBe('Réinitialiser');
+        expect(component["creerOuSupprimer"]).toBe('Supprimer');
+        expect(component["isAdminMode"]).toBe(true);
     });
 
     // Tests classement des meilleurs temps

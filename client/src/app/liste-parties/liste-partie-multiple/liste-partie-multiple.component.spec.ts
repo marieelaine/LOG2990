@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListePartieMultipleComponent } from './liste-partie-multiple.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';

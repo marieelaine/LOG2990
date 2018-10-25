@@ -8,7 +8,6 @@ import { ListePartieServiceService } from "../liste-partie-service.service";
 import { PartieSimple } from "src/app/admin/dialog-simple/partie-simple";
 import * as Buffer from "buffer";
 import { of } from "rxjs";
-import { Router } from "@angular/router";
 import { PartieSoloComponent } from "src/app/partie/vue-simple/partie-solo/partie-solo.component";
 
 describe("PartieSimpleComponent", () => {
@@ -64,11 +63,11 @@ describe("PartieSimpleComponent", () => {
                 new Array<Array<string>>(),
                 "1");
             const parties: PartieSimple[] = [partie];
-            mockListePartieService.getListeImageSimple.and.returnValue(of(parties));
+            mockListePartieService['getListeImageSimple'].and.returnValue(of(parties));
 
             component.ngOnInit();
 
-            expect(mockListePartieService.getListeImageSimple).toHaveBeenCalledTimes(1);
+            expect(mockListePartieService["getListeImageSimple"]).toHaveBeenCalledTimes(1);
             expect(component["listeParties"]).toEqual(parties);
         });
     });
@@ -78,7 +77,7 @@ describe("PartieSimpleComponent", () => {
             component["isListePartiesMode"] = true;
             const id: string = "";
 
-            component.onJouerOuReinitialiserClick(id);
+            component["onJouerOuReinitialiserClick"](id);
             tick();
 
             expect(location.path()).toBe("/partie-solo");
@@ -88,7 +87,7 @@ describe("PartieSimpleComponent", () => {
             component["isListePartiesMode"] = false;
             component["isAdminMode"] = false;
 
-            component.onJouerOuReinitialiserClick("");
+            component["onJouerOuReinitialiserClick"]("");
             tick();
 
             expect(location.path()).toBe(pathAvant);

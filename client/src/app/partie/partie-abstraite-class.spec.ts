@@ -1,6 +1,6 @@
 import { PartieAbstraiteClass } from "./partie-abstraite-class";
 
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { tick, fakeAsync } from '@angular/core/testing';
 
 class AbstractClassInstance extends PartieAbstraiteClass {
 

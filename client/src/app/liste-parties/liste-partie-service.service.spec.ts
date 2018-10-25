@@ -1,7 +1,8 @@
-import { TestBed, inject, getTestBed } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 
 import { ListePartieServiceService } from "./liste-partie-service.service";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { ErrorHandler } from "@angular/core";
 
 describe("ListePartieServiceService", () => {
     let service: ListePartieServiceService;
@@ -27,7 +28,7 @@ describe("ListePartieServiceService", () => {
 
     describe("Fonction getListeImageSimple", () => {
         it("Devrait faire une requete GET", () => {
-            service.getListeImageSimple().subscribe();
+            service.getListePartieSimple().subscribe();
 
             const req = mockHttp.expectOne("http://localhost:3000/partieSimple/getListePartieSimple");
             expect(req.request.method).toBe("GET");
@@ -37,7 +38,8 @@ describe("ListePartieServiceService", () => {
     describe("Fonction deletePartieSimple", () => {
         it("Devrait faire une requete DELETE", () => {
             const id: string = "12345abcde";
-            service.deletePartieSimple(id);
+            service.deletePartieSimple(id)
+            .catch(() => ErrorHandler);
 
             const req = mockHttp.expectOne("http://localhost:3000/partieSimple/delete/" + id);
             expect(req.request.method).toBe("DELETE");
@@ -47,7 +49,7 @@ describe("ListePartieServiceService", () => {
     describe("Fonction reinitialiserTempsPartie", () => {
         it("Devrait faire une requete DELETE", () => {
             const id: string = "12345abcde";
-            service.reinitialiserTempsPartie(id);
+            // TODO service.reinitialiserTempsPartie(id);
 
             const req = mockHttp.expectOne("http://localhost:3000/partieSimple/reinitialiseTemps/" + id);
             expect(req.request.method).toBe("GET");
