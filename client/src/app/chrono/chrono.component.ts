@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import index from "@angular/cli/lib/cli";
 
 @Component({
   selector: 'app-chrono',
