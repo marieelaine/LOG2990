@@ -11,8 +11,8 @@ describe("PartieSimpleService", () => {
                 PartieSimpleService
             ],
             imports: [
-                HttpClientTestingModule
-            ]
+                HttpClientTestingModule,
+            ],
         });
 
         service = TestBed.get(PartieSimpleService);
