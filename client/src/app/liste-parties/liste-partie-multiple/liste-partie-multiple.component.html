@@ -29,8 +29,8 @@
                       <p> {{ getBestTime(partieMultiple._tempsSolo) }} </p> 
                       <p> {{ getSecondBestTime(partieMultiple._tempsSolo) }} </p> 
                       <p> {{ getThirdBestTime(partieMultiple._tempsSolo) }} </p> 
-                      <button mat-button class='mat-elevation-z6'
-                              [routerLink]="['/partie-solo']" routerLinkActive="router-link-active"> {{jouerOuReinitialiser}} </button>
+                      <button mat-button (click) = "onJouerOuReinitialiserClick(partieMultiple._id)" class='mat-elevation-z6'> {{jouerOuReinitialiser}} </button>
+
                   </div>
                   <div class='col-sm-2'></div>
                   <div class='col-sm-4 text-center'>
@@ -45,6 +45,6 @@
       </div>
   </mat-card>  
   <br> 
-  <!-- {{this.afficherImage(partieMultiple["_id"])}} -->
+  {{this.afficherImage(partieMultiple["_id"])}}
 </div>
 

@@ -9,7 +9,6 @@ import "reflect-metadata";
 import { injectable } from "inversify";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import { execFile, ChildProcess } from "child_process";
-//import { RoutesPartieMultiple } from "../routesPartieMultiple";
 
 interface PartieMultipleInterface {
     _id: string;
@@ -32,14 +31,20 @@ export class DBPartieMultiple {
 
     private baseDeDonnees: BaseDeDonnees;
     private modelPartie: Model<Document>;
+    private modelPartieArray: Model<Document>;
     private schema: Schema;
+    private schemaArray: Schema;
 
     public constructor() {
         this.baseDeDonnees = new BaseDeDonnees();
         this.CreateSchema();
+        this.CreateSchemaArray();
 
         this.schema.plugin(uniqueValidator);
-        this.modelPartie = this.baseDeDonnees.mongoose.model("parties-multiples", this.schema);
+        this.schemaArray.plugin(uniqueValidator);
+        this.modelPartie = this.baseDeDonnees.mongoose.model("parties-multiples", this.schema, "parties-multiples");
+        this.modelPartieArray = this.baseDeDonnees.mongoose.model("parties-multiples-array", this.schemaArray, "parties-multiples");
+
     }
 
     private CreateSchema(): void {
@@ -59,16 +64,33 @@ export class DBPartieMultiple {
             });
         }
 
+    private CreateSchemaArray(): void {
+        this.schemaArray = new Schema({
+            _nomPartie: { type: String, required: true, unique: true, },
+            _tempsSolo: { type: Array, required: true, },
+            _tempsUnContreUn: { type: Array, required: true, },
+            _image1PV1: { type: Array, required: true, },
+            _image1PV2: { type: Array, required: true, },
+            _image2PV1: { type: Array, required: true, },
+            _image2PV2: { type: Array, required: true, },
+            _imageDiff1: { type: Buffer },
+            _imageDiff2: {type: Buffer },
+            _quantiteObjets: { type: Number, required: true },
+            _typeModification: { type: String, required: true },
+            _theme: { type: String, required: true }
+        });
+    }
+
+
     private async enregistrerPartieMultiple(partie: PartieMultipleInterface, res: Response, errorMsg: string): 
     Promise<PartieMultipleInterface> {
         if (errorMsg === "") {
-            partie._image1PV1 = await this.getImageDiffAsBuffer("../Images/allo_a_ori.bmp");
-            partie._image2PV1 = await this.getImageDiffAsBuffer("../Images/allo_b_ori.bmp");
-            partie._image1PV2 = await this.getImageDiffAsBuffer("../Images/allo_a_mod.bmp");
-            partie._image2PV2 = await this.getImageDiffAsBuffer("../Images/allo_b_mod.bmp");
+            partie._image1PV1 = await this.getImageDiffAsBuffer("../Images/"+partie._nomPartie+"_a_ori.bmp");
+            partie._image2PV1 = await this.getImageDiffAsBuffer("../Images/"+partie._nomPartie+"_b_ori.bmp");
+            partie._image1PV2 = await this.getImageDiffAsBuffer("../Images/"+partie._nomPartie+"_a_mod.bmp");
+            partie._image2PV2 = await this.getImageDiffAsBuffer("../Images/"+partie._nomPartie+"_b_mod.bmp");
             const partieMultiple: Document = new this.modelPartie(partie);
             // tslint:disable-next-line:no-console
-            console.log(partieMultiple);
             await partieMultiple.save();
         } else {
             // Retourner errorMsg vers le client
@@ -98,32 +120,10 @@ export class DBPartieMultiple {
         });
     }
 
-    private async ajouterPartie(partie: PartieMultipleInterface, res: Response): Promise<void> {
-        const doc: Document = new this.modelPartie(partie);
-        await doc.save();
-    }
-
-    // private async deletePartie(nomPartie: String, res: Response): Promise<Response> {
-
-    // }
-
-    // private async obtenirPartieId(nomPartie: String): Promise<string> {
-
-    // }
-
     private async deleteImagesDirectory(): Promise<void> {
         const dir: string = "../Images";
         await fsx.remove(dir);
     }
-
-    // private async runChild(partie: PartieMultipleInterface): Promise<ChildProcess> {
-    //     const script: string = p.resolve("app/genmulti/main.exe");
-    //     console.log(script);
-    //     const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, "../Images/"+partie._nomPartie];
-
-    //     const child: ChildProcess = execFile(script, args);
-    //     return child;
-    // }
 
     private async genererScene(partie: PartieMultipleInterface, res: Response): Promise<void> {
         // tslint:disable-next-line:no-console
@@ -146,14 +146,28 @@ export class DBPartieMultiple {
         await mkdirPromise(dir);
     }
 
+    private async deletePartie(idPartie: String, res: Response): Promise<Response> {
+        try {
+            await this.modelPartie.findOneAndRemove(this.modelPartie.findById(idPartie)).catch(() => {
+                throw new Error();
+            });
+
+            return res.status(201);
+        } catch (err) {
+
+            return res.status(501).json(err);
+        }
+    }
+
     private async getListePartie(): Promise<PartieMultipleInterface[]> {
         const listeParties: PartieMultipleInterface[] = [];
 
-        await this.modelPartie.find()
+        await this.modelPartieArray.find()
             .then((res: Document[]) => {
                 for (const partie of res) {
                     listeParties.push(partie.toJSON());
                 }
+                console.log(listeParties);
             });
 
         return listeParties;
@@ -169,19 +183,15 @@ export class DBPartieMultiple {
         }
     }
 
-    // public async requetePartieSimpleId(req: Request, res: Response): Promise<void> {
-    //     res.send(await this.obtenirPartieId(req.params.id));
-    // }
+    public async requeteDeletePartie(req: Request, res: Response): Promise<void> {
+        try {
+            await this.deletePartie(req.params.id, res);
 
-    // public async requeteDeletePartie(req: Request, res: Response): Promise<void> {
-    //     try {
-    //         await this.deletePartie(req.params.id, res);
-
-    //         res.status(201);
-    //     } catch (err) {
-    //         res.status(501).json(err);
-    //     }
-    // }
+            res.status(201);
+        } catch (err) {
+            res.status(501).json(err);
+        }
+    }
 
     public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();

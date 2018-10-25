@@ -49,6 +49,7 @@ const appRoutes: Routes = [
   { path: "liste-parties", component: ListePartiesComponent },
   { path: "chrono", component: ChronoComponent },
   { path: "partie-solo/:idPartie", component: PartieSoloComponent },
+  { path: "partie-multiple/:idPartie", component: VueMultipleComponent },
 
 ];
 

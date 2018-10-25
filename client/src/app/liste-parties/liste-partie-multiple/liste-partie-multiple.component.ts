@@ -25,7 +25,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
   }
 
   protected afficherImage(id: string) {
-    this.ajusterImage(id, this.listeParties);
+    this.ajusterImage(id, this.listeParties, false);
   }
 
   protected onJouerOuReinitialiserClick(partieId: string): void {

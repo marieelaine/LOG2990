@@ -30,13 +30,13 @@ export class RoutesPartieMultiple extends ServiceWeb {
             await this.partieMultiple.requeteGetListePartie(req, res);
         });
 
-        // router.delete("/delete/:id", async (req: Request, res: Response) => {
-        //     await this.partieMultiple.requeteDeletePartie(req, res);
-        // });
+        router.delete("/delete/:id", async (req: Request, res: Response) => {
+            await this.partieMultiple.requeteDeletePartie(req, res);
+        });
 
-        // router.get("/:id", async (req: Request, res: Response) => {
-        //     await this.partieSimple.requetePartieSimpleId(req, res);
-        // });
+        router.get("/:id", async (req: Request, res: Response) => {
+            await this.partieMultiple.requetePartieMultipleId(req, res);
+        });
         return router;
     }
 }

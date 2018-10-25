@@ -31,10 +31,15 @@ export class ListePartiesComponent {
     });
   }
 
-  protected ajusterImage(id: String, listeParties: T[]): void {
+  protected ajusterImage(id: String, listeParties: T[], isPartieSimple: Boolean): void {
     for (const partie of listeParties) {
       if (partie["_id"] === id) {
-        const data: string = atob(String(partie["_image1"][0]));
+        let data: string = "";
+        if(isPartieSimple){
+          data = atob(String(partie["_image1"][0]));
+        } else {
+          data = atob(String(partie["_image1PV1"][0]));
+        }
         let hex = 0x00;
         const result: Uint8Array = new Uint8Array(data.length);
 
