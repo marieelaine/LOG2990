@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Location } from "@angular/common";
 import { ListePartiesComponent } from '../../liste-parties/liste-parties.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -10,41 +10,72 @@ import { UserService } from '../../vue-initiale/user.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('HeaderComponent', () => {
-  let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
-  let location: Location;
+    let mockUserService: jasmine.SpyObj<UserService>;
+    let mockCookieService: jasmine.SpyObj<CookieService>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ HeaderComponent, ListePartiesComponent ],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ],
-      imports: [MatToolbarModule, RouterTestingModule.withRoutes([
-        { path: "liste-parties", component: ListePartiesComponent },
-        { path: "header", component: HeaderComponent },
-      ]),       HttpClientTestingModule],
-      providers: [CookieService, UserService]
-    })
-    .compileComponents();
-  }));
+    let component: HeaderComponent;
+    let fixture: ComponentFixture<HeaderComponent>;
+    let location: Location;
 
-  beforeEach(() => {
-    location = TestBed.get(Location);
-    fixture = TestBed.createComponent(HeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        mockUserService = jasmine.createSpyObj(["delete"]);
+        mockCookieService = jasmine.createSpyObj(["get", "deleteAll"]);
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+        TestBed.configureTestingModule({
+            declarations: [
+                HeaderComponent,
+                ListePartiesComponent
+            ],
+            schemas: [
+                CUSTOM_ELEMENTS_SCHEMA
+            ],
+            imports: [
+                MatToolbarModule,
+                RouterTestingModule.withRoutes([
+                    { path: "liste-parties", component: ListePartiesComponent },
+                    { path: "header", component: HeaderComponent },
+                ]),
+                HttpClientTestingModule
+            ],
+            providers: [
+                { provide: CookieService, useValue: mockCookieService },
+                { provide: UserService, useValue: mockUserService },
+            ]
+        });
 
-//   it('click header title redirects you to /liste-parties', fakeAsync(() => {
-//     component.OnHeaderTitleClick();
-//     fixture.detectChanges();
-//     fixture.whenStable().then(() => {
-//       expect(location.path()).toBe('/liste-parties');
-//     });
-//   }));
+        fixture = TestBed.createComponent(HeaderComponent);
+        component = fixture.componentInstance;
+        location = TestBed.get(Location);
+    });
+
+    it('Devrait etre construit', () => {
+        expect(component).toBeDefined();
+    });
+
+    describe("fonction onLogout", () => {
+        it("Devrait appeller les fonctions du cookieService et du userService", () => {
+            const unNomUsager: string = "un nom dusager";
+            mockCookieService.get.and.returnValue(unNomUsager);
+
+            component["onLogout"]();
+
+            expect(mockCookieService.get).toHaveBeenCalledWith("username");
+            expect(mockCookieService.deleteAll).toHaveBeenCalledTimes(1);
+            expect(mockUserService.delete).toHaveBeenCalledWith(unNomUsager);
+        });
+        it("Devrait naviguer à la route principal '/'", fakeAsync(() => {
+            component["onLogout"]();
+            tick();
+
+            expect(location.path()).toBe("/");
+        }));
+    });
+
+    //   it('click header title redirects you to /liste-parties', fakeAsync(() => {
+    //     component.OnHeaderTitleClick();
+    //     fixture.detectChanges();
+    //     fixture.whenStable().then(() => {
+    //       expect(location.path()).toBe('/liste-parties');
+    //     });
+    //   }));
 });
