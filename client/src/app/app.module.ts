@@ -82,7 +82,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule,
     ModalModule,
-    NgbModule.forRoot(),
+    NgbModule,
     BrowserAnimationsModule,
     MatDialogModule,
     MatDividerModule,
