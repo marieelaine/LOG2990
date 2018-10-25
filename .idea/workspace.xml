@@ -4,8 +4,12 @@
     <list default="true" id="5318e456-584b-41e5-b635-5edc71b7e237" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.css" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.html" afterDir="false" />
+=======
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
       <change beforePath="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/app/partieSimple/partie-simple.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/app/partieSimple/partie-simple.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -42,7 +46,11 @@
           <entry key="js" value="2" />
           <entry key="json" value="8" />
           <entry key="py" value="1" />
+<<<<<<< HEAD
           <entry key="ts" value="182" />
+=======
+          <entry key="ts" value="181" />
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
           <entry key="txt" value="1" />
         </counts>
       </usages-collector>
@@ -53,47 +61,84 @@
           <entry key="JSON" value="8" />
           <entry key="JavaScript" value="2" />
           <entry key="PLAIN_TEXT" value="2" />
+<<<<<<< HEAD
           <entry key="TypeScript" value="182" />
+=======
+          <entry key="TypeScript" value="181" />
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
+<<<<<<< HEAD
           <entry key="css" value="32" />
           <entry key="html" value="749" />
           <entry key="json" value="18" />
           <entry key="ts" value="9583" />
+=======
+          <entry key="css" value="17" />
+          <entry key="html" value="736" />
+          <entry key="json" value="18" />
+          <entry key="ts" value="8979" />
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
+<<<<<<< HEAD
           <entry key="CSS" value="32" />
           <entry key="HTML" value="749" />
           <entry key="JSON" value="18" />
           <entry key="TypeScript" value="9583" />
+=======
+          <entry key="CSS" value="17" />
+          <entry key="HTML" value="736" />
+          <entry key="JSON" value="18" />
+          <entry key="TypeScript" value="8979" />
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< HEAD
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="540">
               <caret line="27" column="34" selection-start-line="27" selection-end-line="28" />
+=======
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="514">
+              <caret line="70" column="31" lean-forward="true" selection-start-line="70" selection-start-column="31" selection-end-line="70" selection-end-column="31" />
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="554">
               <caret line="73" column="21" lean-forward="true" selection-start-line="73" selection-start-column="21" selection-end-line="73" selection-end-column="21" />
+=======
+        <entry file="file://$PROJECT_DIR$/server/app/partieSimple/partie-simple.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="251">
+              <caret line="113" column="5" lean-forward="true" selection-start-line="113" selection-start-column="5" selection-end-line="113" selection-end-column="5" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/src/app/partie/vue-multiple/vue-multiple.component.html">
           <provider selected="true" editor-type-id="text-editor" />
@@ -104,6 +149,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
               <caret line="9" selection-start-line="9" selection-end-line="9" />
+=======
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/app/routesPartieSimple.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="257">
+              <caret line="21" column="51" lean-forward="true" selection-start-line="21" selection-start-column="51" selection-end-line="21" selection-end-column="51" />
+              <folding>
+                <element signature="e#0#47#0" expanded="true" />
+              </folding>
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
             </state>
           </provider>
         </entry>
@@ -163,12 +218,21 @@
         <option value="$PROJECT_DIR$/client/src/app/liste-parties/liste-partie-simple/liste-partie-simple.component.html" />
         <option value="$PROJECT_DIR$/client/src/app/liste-parties/liste-partie-service.service.ts" />
         <option value="$PROJECT_DIR$/server/package.json" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/client/src/app/partie/partie-simple.service.ts" />
         <option value="$PROJECT_DIR$/client/src/app/partie/partie-abstraite-class.ts" />
         <option value="$PROJECT_DIR$/server/app/routesPartieSimple.ts" />
         <option value="$PROJECT_DIR$/server/app/partieSimple/partie-simple.ts" />
         <option value="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.html" />
         <option value="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.css" />
+=======
+        <option value="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.html" />
+        <option value="$PROJECT_DIR$/client/src/app/partie/partie-simple.service.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/partie/partie-abstraite-class.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.css" />
+        <option value="$PROJECT_DIR$/server/app/routesPartieSimple.ts" />
+        <option value="$PROJECT_DIR$/server/app/partieSimple/partie-simple.ts" />
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
         <option value="$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.ts" />
       </list>
     </option>
@@ -361,12 +425,20 @@
       <workItem from="1540406899804" duration="328000" />
       <workItem from="1540416343420" duration="67000" />
       <workItem from="1540416430103" duration="9730000" />
+<<<<<<< HEAD
       <workItem from="1540476653210" duration="9837000" />
+=======
+      <workItem from="1540476653210" duration="3184000" />
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="85747000" />
+=======
+    <option name="totallyTimeSpent" value="79094000" />
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1933" height="1053" extended-state="6" />
@@ -419,6 +491,10 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
+=======
+    <entry file="file://$PROJECT_DIR$/server/bmpdiff/requirements.txt" />
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
     <entry file="file://$PROJECT_DIR$/server/app/types.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -567,6 +643,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/tslint.json">
+<<<<<<< HEAD
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/app/admin/dialog-abstrait.ts">
@@ -592,6 +669,79 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/server/app/routes.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/app/app.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/app/server.ts">
+=======
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/admin/dialog-abstrait.ts">
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="16" column="33" lean-forward="true" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/server/app/www.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="8" column="14" lean-forward="true" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+=======
+    <entry file="file://$PROJECT_DIR$/client/src/app/admin/admin.component.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/admin/admin.component.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/admin/partie-simple.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="15" column="80" selection-start-line="15" selection-start-column="46" selection-end-line="15" selection-end-column="80" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
+          </folding>
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/client/src/app/partie/partie-abstraite-class.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="694">
+          <caret line="37" column="32" selection-start-line="37" selection-start-column="32" selection-end-line="37" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/partie/partie-simple.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="14" column="16" lean-forward="true" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/app/routesPartieSimple.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="21" column="51" lean-forward="true" selection-start-line="21" selection-start-column="51" selection-end-line="21" selection-end-column="51" />
+=======
     <entry file="file://$PROJECT_DIR$/server/app/routes.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -626,9 +776,25 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
           <caret line="14" column="16" lean-forward="true" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
           <folding>
-            <element signature="e#0#43#0" expanded="true" />
+            <element signature="e#0#47#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/server/app/partieSimple/partie-simple.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="113" column="5" lean-forward="true" selection-start-line="113" selection-start-column="5" selection-end-line="113" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+=======
+    <entry file="file://$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="30" column="20" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -638,20 +804,12 @@
           <caret line="21" column="51" lean-forward="true" selection-start-line="21" selection-start-column="51" selection-end-line="21" selection-end-column="51" />
           <folding>
             <element signature="e#0#47#0" expanded="true" />
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/app/partieSimple/partie-simple.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="113" column="5" lean-forward="true" selection-start-line="113" selection-start-column="5" selection-end-line="113" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/client/src/tslint.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -670,13 +828,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="9" selection-start-line="9" selection-end-line="9" />
+=======
+    <entry file="file://$PROJECT_DIR$/server/app/partieSimple/partie-simple.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="113" column="5" lean-forward="true" selection-start-line="113" selection-start-column="5" selection-end-line="113" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/app/partie/vue-simple/partie-solo/partie-solo.component.ts">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="554">
           <caret line="73" column="21" lean-forward="true" selection-start-line="73" selection-start-column="21" selection-end-line="73" selection-end-column="21" />
+=======
+        <state relative-caret-position="514">
+          <caret line="70" column="31" lean-forward="true" selection-start-line="70" selection-start-column="31" selection-end-line="70" selection-end-column="31" />
+>>>>>>> 54882aa2106a3ed290ceb3c4f01d7be792671a36
         </state>
       </provider>
     </entry>
