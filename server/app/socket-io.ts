@@ -16,7 +16,10 @@ export class SocketServer {
     }
 
     public envoyerMessageErreurScript(msgError: string): void {
-        console.log(msgError);
         this.io.emit(event.ENVOYER_MESSAGE_BMPDIFF, msgError);
+    }
+
+    public envoyerMessageErreurNomPris(msgNomPris: string): void {
+        this.io.emit(event.ENVOYER_MESSAGE_NOM_PRIS, msgNomPris);
     }
 }

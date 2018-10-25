@@ -1,5 +1,5 @@
-import { Component, ViewChild, OnInit } from "@angular/core";
-import { MatDialog, MatMenuTrigger } from "@angular/material";
+import { Component, ViewChild, OnInit, Inject } from "@angular/core";
+import { MatDialog, MatMenuTrigger, MAT_DIALOG_DATA } from "@angular/material";
 import { DialogSimpleComponent, } from "./dialog-simple/dialog-simple.component";
 import { DialogMultipleComponent } from "./dialog-multiple/dialog-multiple.component";
 import * as event from "../../../../common/communication/evenementsSocket";
@@ -32,8 +32,12 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.socket.on(event.ENVOYER_MESSAGE_BMPDIFF, (data) => {
-      console.log(data);
-  });
+      alert(data);
+    });
+
+    this.socket.on(event.ENVOYER_MESSAGE_NOM_PRIS, (data) => {
+      alert(data);
+    });
 }
 
   protected openDialogSimple(): void {

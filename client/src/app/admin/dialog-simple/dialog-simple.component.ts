@@ -5,7 +5,6 @@ import { HttpClient } from "@angular/common/http";
 // import {FormControl, Validators, FormGroup} from "@angular/forms";
 import { PartieSimple } from "./partie-simple";
 import { PartieSimpleService } from "../partie-simple.service";
-import { Observable } from "rxjs";
 import { DialogAbstrait } from "../dialog-abstrait";
 import * as Buffer from "Buffer";
 export const IMAGE_URL: string = "http://localhost:3000/images/";
@@ -38,10 +37,6 @@ export class DialogSimpleComponent extends DialogAbstrait {
       this.wrongImageSizeOrTypeMessage = "";
       this.wrongNumberOfImagesMessage = "";
     }
-
-  ngOnInit(): void {
-
-  }
 
   protected onClickAjouterPartie(): void {
       this.setWrongNumberOfImagesMessage();
@@ -87,12 +82,10 @@ export class DialogSimpleComponent extends DialogAbstrait {
           (data) => {
           },
           (error) => {
-            console.log("allo");
             console.error(error);
           });
-
       setTimeout(() => {
-        window.location.reload(); },
+          window.location.reload(); },
                  2500);
     }
 
