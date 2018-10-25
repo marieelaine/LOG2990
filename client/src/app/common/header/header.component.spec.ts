@@ -71,11 +71,12 @@ describe('HeaderComponent', () => {
         }));
     });
 
-    //   it('click header title redirects you to /liste-parties', fakeAsync(() => {
-    //     component.OnHeaderTitleClick();
-    //     fixture.detectChanges();
-    //     fixture.whenStable().then(() => {
-    //       expect(location.path()).toBe('/liste-parties');
-    //     });
-    //   }));
+    describe("fonction onHeaderTitleClick", () => {
+        it("Devrait naviguer a la router '/liste-parties'", fakeAsync(() => {
+            component["OnHeaderTitleClick"]();
+            tick();
+
+            expect(location.path()).toBe("/liste-parties");
+        }));
+    });
 });
