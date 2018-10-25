@@ -1,9 +1,9 @@
-import { TestBed, inject, getTestBed } from '@angular/core/testing';
+import { TestBed, inject, getTestBed } from "@angular/core/testing";
 
-import { ListePartieServiceService } from './liste-partie-service.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { ListePartieServiceService } from "./liste-partie-service.service";
+import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 
-describe('ListePartieServiceService', () => {
+describe("ListePartieServiceService", () => {
     let service: ListePartieServiceService;
     let mockHttp: HttpTestingController;
 
@@ -21,7 +21,7 @@ describe('ListePartieServiceService', () => {
         mockHttp = TestBed.get(HttpTestingController);
     });
 
-    it('should be created', () => {
+    it("should be created", () => {
         expect(service).toBeTruthy();
     });
 

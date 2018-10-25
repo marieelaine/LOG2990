@@ -1,9 +1,9 @@
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, tick, fakeAsync } from "@angular/core/testing";
 
-import { ChronoComponent } from './chrono.component';
-import { runInThisContext } from 'vm';
+import { ChronoComponent } from "./chrono.component";
+import { runInThisContext } from "vm";
 
-describe('ChronoComponent', () => {
+describe("ChronoComponent", () => {
   let component: ChronoComponent;
   let fixture: ComponentFixture<ChronoComponent>;
 
@@ -20,7 +20,7 @@ describe('ChronoComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 
@@ -35,7 +35,7 @@ describe('ChronoComponent', () => {
     expect(component.getTime()).toBe(5);
   }));
 
-  it ("should return string '05' for minute and second", fakeAsync(() =>{
+  it ("should return string \'05\' for minute and second", fakeAsync(() => {
     component.startTimer();
     tick(305000);
     expect(component.getSecondsSrtring()).toBe("05");

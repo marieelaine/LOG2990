@@ -46,6 +46,58 @@ describe('DialogMultipleComponent', () => {
         expect(component).toBeTruthy();
     });
 
+    describe("fonction verifierSiMessageErreur", () => {
+        it("Devrait retourner vrai si le message n\'est pas vide", () => {
+            component["outOfBoundNameLengthMessage"] = "Erreur";
+
+            const result: Boolean = component["verifierSiMessageErreur"]();
+
+            expect(result).toBeTruthy();
+        });
+
+        it("Devrait retourner faux si le message est vide", () => {
+            component["outOfBoundNameLengthMessage"] = "";
+
+            const result: Boolean = component["verifierSiMessageErreur"]();
+
+            expect(result).toBeFalsy();
+        });
+    });
+
+    describe("function checkIfOutOfBoundNameLength", () =>{
+        it("Devrait retourner vrai si aucun nom de partie multiple n'est présent", () => {
+            component["data"].multipleGameName = "";
+
+            const result: Boolean = component["checkIfOutOfBoundNameLength"]();
+
+            expect(result).toBeTruthy();
+        });
+
+        it("Devrait retourner vrai si le nom de partie multiple contient moins de trois caracteres", () => {
+            component["data"].multipleGameName = "ab";
+
+            const result: Boolean = component["checkIfOutOfBoundNameLength"]();
+
+            expect(result).toBeTruthy();
+        });
+
+        it("Devrait retourner vrai si le nom de partie multiple contient plus de vingt caracteres", () => {
+            component["data"].multipleGameName = "abcdefghijklmnopqrstuvwxyz";
+
+            const result: Boolean = component["checkIfOutOfBoundNameLength"]();
+
+            expect(result).toBeTruthy();
+        });
+
+        it("Devrait retourner faux si le nom de partie multiple est valide", () => {
+            component["data"].multipleGameName = "abcdefg";
+
+            const result: Boolean = component["checkIfOutOfBoundNameLength"]();
+
+            expect(result).toBeFalsy();
+        });
+    });
+
     // describe("Fonction onClickAjouterPartie", () => {
     //     it("Devrait appeller la fonction setOutOfBoundNameLengthMessage", () => {
     //         // Arrange
