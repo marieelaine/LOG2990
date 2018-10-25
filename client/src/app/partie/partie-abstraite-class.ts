@@ -48,7 +48,7 @@ export abstract class PartieAbstraiteClass {
 
     protected terminerPartie(): void {
         this.chrono.stopTimer();
-        this.message = "FELICITATION";
+        this.message = "FÉLICITATIONS!";
         this.audio.src = "../assets/applause.mp3";
         this.audio.load();
         this.audio.play().catch(() => ErrorHandler);
