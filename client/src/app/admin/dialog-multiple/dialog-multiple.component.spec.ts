@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { PartieMultipleService } from '../partie-multiple.service';
+import { of } from 'rxjs';
+import { PartieMultiple } from './partie-mutiple';
 
 describe('DialogMultipleComponent', () => {
     let mockPartieMultipleService: jasmine.SpyObj<PartieMultipleService>;
@@ -44,6 +46,21 @@ describe('DialogMultipleComponent', () => {
 
     it('Composant devrait être créé', () => {
         expect(component).toBeTruthy();
+    });
+
+    describe("fonction ajouterPartie", () => {
+        it("devrait appeler la fonction register du servie PartieMultiple", () => {
+            mockPartieMultipleService.register.and.callFake((data: PartieMultiple) => of(data));
+            component["data"].multipleGameName = "Partie1";
+            component["data"].quantiteObjets = 1;
+            component["data"].theme = "geo";
+            component["data"].typeModification = "a";
+
+            component["ajouterPartie"]();
+
+            expect(mockPartieMultipleService.register).toHaveBeenCalled();
+            expect(mockPartieMultipleService.register).toHaveBeenCalledTimes(1);
+        });
     });
 
     describe("fonction verifierSiMessageErreur", () => {
