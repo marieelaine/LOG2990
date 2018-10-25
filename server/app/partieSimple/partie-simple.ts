@@ -229,7 +229,6 @@ export class DBPartieSimple {
                 return partieSimple._id;
             }
         }
-        // Change the return.
 
         return partieSimples[0]._id;
     }
@@ -267,7 +266,6 @@ export class DBPartieSimple {
             }
         }
 
-        // TODO: gestion de si la partie n'est pas trouvé
         return partieSimples[1];
     }
 

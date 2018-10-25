@@ -171,6 +171,42 @@ export class DBPartieMultiple {
         return listeParties;
     }
 
+    private async obtenirPartieMultipleId(nomPartie: String): Promise<string> {
+        const partieMultiple: PartieMultipleInterface[] = [];
+        await this.modelPartie.find()
+            .then((res: Document[]) => {
+                for (const partie of res) {
+                    partieMultiple.push(partie.toObject());
+                }
+            });
+
+        for (const partieSimple of partieMultiple) {
+            if (partieSimple._nomPartie === nomPartie) {
+                return partieSimple._id;
+            }
+        }
+
+        return partieMultiple[0]._id;
+    }
+
+    private async getPartieMultiple(partieID: String, res: Response): Promise<PartieMultipleInterface> {
+        const partieMultiple: PartieMultipleInterface[] = [];
+        await this.modelPartieArray.find()
+            .then((parties: Document[]) => {
+                for (const partie of parties) {
+                    partieMultiple.push(partie.toJSON());
+                }
+            });
+
+        for (const partie of partieMultiple) {
+            if (partie._id.toString() === partieID) {
+                return partie;
+            }
+        }
+
+        return partieMultiple[1];
+    }
+
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> {
         try {
             await this.genererScene(req.body, res);
@@ -193,6 +229,15 @@ export class DBPartieMultiple {
     public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();
         res.send(await this.getListePartie());
+    }
+
+    public async requetePartieMultipleId(req: Request, res: Response): Promise<void> {
+        res.send(await this.obtenirPartieMultipleId(req.params.id));
+    }
+
+    public async requeteGetPartieMultiple(req: Request, res: Response): Promise<void> {
+        await this.baseDeDonnees.assurerConnection();
+        res.send(await this.getPartieMultiple(req.params.id, res));
     }
 
     public async requeteReinitialiserTemps(req: Request, res: Response): Promise<void> {

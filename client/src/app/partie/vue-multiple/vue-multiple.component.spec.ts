@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { VueMultipleComponent } from './vue-multiple.component';
 import { ErrorHandler } from '@angular/core';
 
