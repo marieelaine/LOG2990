@@ -18,7 +18,7 @@ export class UserService {
         });
     }
 
-    public delete(username: string): Promise<Object> {
+    public async delete(username: string): Promise<Object> {
         return this._http.delete(this.SUPPRIMER_URL + username).toPromise();
     }
 }

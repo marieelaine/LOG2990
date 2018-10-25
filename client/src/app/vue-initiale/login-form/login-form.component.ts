@@ -1,16 +1,12 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ErrorHandler } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { User } from "../login-form/user";
-import { Observable } from "rxjs";
-import { HttpClient } from "@angular/common/http";
 import { UserService } from "../user.service";
-import { ParticlesModule } from 'angular-particle';
 import { myParams, myStyle } from "../../../assets/particles";
 import { CookieService } from "ngx-cookie-service";
 
 export const USER_URL: string = "http://localhost:3000/users/";
-const URL_AJOUTER: string = USER_URL + "ajouter/";
 
 @Component({
     selector: "app-login-form",
@@ -31,7 +27,6 @@ export class LoginFormComponent implements OnInit {
     height: number = 100;
 
     public constructor(private router: Router,
-                       private http: HttpClient,
                        private userService: UserService,
                        private cookieService: CookieService) {
         this.loginForm = this.createFormGroup();
@@ -42,7 +37,8 @@ export class LoginFormComponent implements OnInit {
         this.myParams = myParams;
 
         if (this.cookieService.check("username")) {
-            this.router.navigate(["/liste-parties"]);
+            this.router.navigate(["/liste-parties"])
+            .catch(() => ErrorHandler);
         }
     }
 
@@ -54,7 +50,8 @@ export class LoginFormComponent implements OnInit {
                 (data) => {
                     this.usernameTaken = false;
                     this.createCookie(username);
-                    this.router.navigate(["/liste-parties"]);
+                    this.router.navigate(["/liste-parties"])
+                    .catch(() => ErrorHandler);
                 },
                 (error) => {
                     console.error(error);
@@ -75,17 +72,5 @@ export class LoginFormComponent implements OnInit {
 
     private createCookie(username: string): void {
         this.cookieService.set("username", username);
-    }
-
-    private obtenirUserId(identifiant: string): Observable<User> {
-        return this.http.get<User>(USER_URL + identifiant);
-    }
-
-    private obtenirUserName(username: string): Observable<User> {
-        return this.http.get<User>(USER_URL + username);
-    }
-
-    private async creerNouveauUser(user: User): Promise<Object> {
-        return this.http.post(URL_AJOUTER, user).toPromise();
     }
 }
