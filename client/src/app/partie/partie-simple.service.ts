@@ -17,14 +17,6 @@ export class PartieSimpleService {
     ) { }
 
     public getPartieSimple(partieID: string): Observable<PartieSimple> {
-
         return this.http.get<PartieSimple>(this.GETPARTIE_URL + partieID);
-    }
-
-    public verifierDiff(coords: Array<string>): Observable<Object> {
-        return this.http.post(this.VERIF_URL, coords, {
-            observe: "body",
-            headers: new HttpHeaders().append("Content-Type", "application/json")
-        });
     }
 }

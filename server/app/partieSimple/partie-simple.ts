@@ -313,7 +313,4 @@ export class DBPartieSimple {
         await this.baseDeDonnees.assurerConnection();
         res.send(await this.getPartieSimple(req.params.id, res));
     }
-
-    public async requeteVerifDiff(req: Request, res: Response): Promise<void> {
-    }
 }
