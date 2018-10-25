@@ -18,7 +18,7 @@ interface PartieSimpleInterface {
     _tempsUnContreUn: Array<number>;
     _image1: Buffer;
     _image2: Buffer;
-    _imageDiff: Buffer;
+    _imageDiff: Array<Array<string>>;
 }
 @injectable()
 export class DBPartieSimple {
@@ -95,16 +95,14 @@ export class DBPartieSimple {
                 required: true,
             },
             _imageDiff: {
-                type: Buffer,
+                type: Array,
             }
         });
     }
 
-    private async enregistrerPartieSimple(partie: PartieSimpleInterface, res: Response, errorMsg: string): Promise<PartieSimpleInterface> {
+    private async traiterMessageErreur(partie: PartieSimpleInterface, errorMsg: string): Promise<PartieSimpleInterface> {
         if (errorMsg === "") {
-            partie._imageDiff = await this.getImageDiffAsBuffer();
-            const partieSimple: Document = new this.modelPartieBuffer(partie);
-            await partieSimple.save();
+            await this.getImageDiffAsArrays(partie);
         } else {
             // Retourner errorMsg vers le client
             // socketServer.envoyerMessageErreurScript(errorMsg);
@@ -115,11 +113,38 @@ export class DBPartieSimple {
         return partie;
     }
 
-    private async getImageDiffAsBuffer(): Promise<Buffer> {
-        const imageMod: string = p.resolve("../Images/image3.bmp");
-        const readFilePromise: Function = util.promisify(fs.readFile);
+    private async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
+        partie._imageDiff = diffArrays;
+        const partieSimple: Document = new this.modelPartieBuffer(partie);
+        await partieSimple.save();
+    }
 
-        return await readFilePromise(imageMod) as Buffer;
+    private getImageDiffAsArrays(partie: PartieSimpleInterface): void {
+        const imageMod: string = p.resolve("../Images/image3.bmp.txt");
+        const diffArrays: Array<Array<string>> = new Array<Array<string>>();
+        const input = fs.createReadStream(imageMod);
+        const rl = require("readline").createInterface({
+            input: input,
+            terminal: false
+        });
+
+        let i: number = 0;
+        let arrayDiff: Array<string> = new Array<string>();
+
+        rl.on("line", (line: string) => {
+            if (line.startsWith("end")) {
+                this.enregistrerPartieSimple(diffArrays, partie);
+            } else if (i === 0) {
+                arrayDiff = new Array<string>();
+                i++;
+            } else if (line.startsWith("diff")) {
+                diffArrays.push(arrayDiff);
+                arrayDiff = new Array<string>();
+                i++;
+            } else {
+                arrayDiff.push(line.toString());
+            }
+        });
     }
 
     private async deleteImagesDirectory(): Promise<void> {
@@ -127,19 +152,19 @@ export class DBPartieSimple {
         await fsx.remove(dir);
     }
 
-    private async verifierErreurScript(child, partie: PartieSimpleInterface, res: Response): Promise<void> {
+    private async verifierErreurScript(child, partie: PartieSimpleInterface): Promise<void> {
         let errorMsg: string = "";
 
         child.stderr.on("data", async (data) => {
             errorMsg = `${data}`;
-            await this.enregistrerPartieSimple(partie, res, errorMsg);
+            await this.traiterMessageErreur(partie, errorMsg);
         });
         child.stdout.on("data", async (data) => {
-            await this.enregistrerPartieSimple(partie, res, errorMsg);
+            await this.traiterMessageErreur(partie, errorMsg);
         });
     }
 
-    private async genererImageMod(partie: PartieSimpleInterface, res: Response): Promise<void> {
+    private async genererImageMod(partie: PartieSimpleInterface): Promise<void> {
         const buffers: Array<Buffer> = [partie._image1, partie._image2];
         await this.addImagesToDirectory(buffers);
 
@@ -150,7 +175,7 @@ export class DBPartieSimple {
         const args: string[] = [imageOri1, imageOri2, imageMod];
         args.unshift(pyScript);
         const child = spawn("python", args);
-        this.verifierErreurScript(child, partie, res);
+        this.verifierErreurScript(child, partie);
     }
 
     private async makeImagesDirectory(): Promise<void> {
@@ -245,7 +270,7 @@ export class DBPartieSimple {
 
     public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
         try {
-            await this.genererImageMod(req.body, res);
+            await this.genererImageMod(req.body);
             // res.status(201).json(partie);
             res.status(201).json({});
         } catch (err) {
@@ -286,5 +311,4 @@ export class DBPartieSimple {
         await this.baseDeDonnees.assurerConnection();
         res.send(await this.getPartieSimple(req.params.id, res));
     }
-
 }

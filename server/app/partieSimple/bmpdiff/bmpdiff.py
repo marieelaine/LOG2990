@@ -74,7 +74,7 @@ def check_number_differences(newImage):
         for j in i:
             f.write(str(j[0])+'\n')
         compteur+=1
-        
+    f.write("end\n")
     return len(cnts) == 7
 
 def enlarge_pixels(x, y):
