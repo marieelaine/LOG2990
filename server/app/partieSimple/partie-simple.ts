@@ -124,7 +124,7 @@ export class DBPartieSimple {
     private getImageDiffAsArrays(partie: PartieSimpleInterface): void {
         const imageMod: string = p.resolve("../Images/image3.bmp.txt");
         const diffArrays: Array<Array<string>> = new Array<Array<string>>();
-        const input = fs.createReadStream(imageMod);
+        const input: fs.ReadStream = fs.createReadStream(imageMod);
         const rl = require("readline").createInterface({
             input: input,
             terminal: false
@@ -315,5 +315,6 @@ export class DBPartieSimple {
     }
 
     public async requeteVerifDiff(req: Request, res: Response): Promise<void> {
+        // TODO : implementer verifDiff
     }
 }
