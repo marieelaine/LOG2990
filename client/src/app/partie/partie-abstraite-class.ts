@@ -10,12 +10,15 @@ export abstract class PartieAbstraiteClass {
     protected partieCommence = false;
     protected audio = new Audio();
     protected differenceRestantes;
+    protected messageStack: string[] = [];
 
     public constructor() {
 
     }
 
     protected start(): void {
+        this.messageStack.push("test");
+        this.messageStack.push("testlsdlfgjkdf");
         this.partieCommence = true;
         this.message = `Il reste ${this.differenceRestantes - this.differencesTrouvees} différences à trouver`;
         this.blur = false;
@@ -35,6 +38,7 @@ export abstract class PartieAbstraiteClass {
             this.audio.src = "../assets/diffTrouvee.mp3";
             this.audio.load();
             this.audio.play().catch(() => ErrorHandler);
+            this.messageStack.push("Vous avez trouvé une différence!");
         }
         if (this.differenceRestantes === this.differencesTrouvees) {
             this.partieCommence = false;
@@ -52,4 +56,8 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected abstract ajouterTemps(temps: number);
+
+    protected envoyerMessage(): void {
+
+    }
 }
