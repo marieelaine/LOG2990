@@ -134,12 +134,12 @@ export class DBPartieSimple {
         let arrayDiff: Array<string> = new Array<string>();
 
         rl.on("line", (line: string) => {
-            if (line.startsWith("end")) {
+            if (line.startsWith("END")) {
                 this.enregistrerPartieSimple(diffArrays, partie);
             } else if (i === 0) {
                 arrayDiff = new Array<string>();
                 i++;
-            } else if (line.startsWith("diff")) {
+            } else if (line.startsWith("DIFF")) {
                 diffArrays.push(arrayDiff);
                 arrayDiff = new Array<string>();
                 i++;
