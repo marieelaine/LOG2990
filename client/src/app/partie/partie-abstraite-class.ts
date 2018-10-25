@@ -17,7 +17,7 @@ export abstract class PartieAbstraiteClass {
 
     protected start(): void {
         this.partieCommence = true;
-        this.message = `Il reste ${this.differenceRestantes - this.differencesTrouvees} différences à trouver`;
+        this.message = `Vous avez trouvé ${this.differencesTrouvees} différences`;
         this.blur = false;
         const button = document.getElementById("StartButton");
         try {
@@ -31,7 +31,7 @@ export abstract class PartieAbstraiteClass {
 
         if (this.partieCommence) {
             this.differencesTrouvees ++;
-            this.message = `Il reste ${this.differenceRestantes - this.differencesTrouvees} différences à trouver`;
+            this.message = `Vous avez trouvé ${this.differencesTrouvees} différences`;
             this.audio.src = "../assets/diffTrouvee.mp3";
             this.audio.load();
             this.audio.play().catch(() => ErrorHandler);
