@@ -5,7 +5,7 @@ import { DialogData } from '../admin.component';
 import { HttpClient } from '@angular/common/http';
 import { ParticlesModule } from 'angular-particle';
 import { PartieMultiple } from './partie-mutiple';
-import * as Buffer from "Buffer";
+import * as Buffer from "buffer";
 import { PartieMultipleService } from '../partie-multiple.service';
 
 @Component({
