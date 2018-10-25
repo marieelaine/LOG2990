@@ -22,10 +22,10 @@ describe('PartieAbstraiteComponent', () => {
     expect(abstractClassInstance["chrono"].getTime()).toBe(0);
   }));
 
-//   it('should return value 2', fakeAsync(() => {
-//     abstractClassInstance["start"]();
-//     tick(2000);
-//     abstractClassInstance["terminerPartie"]();
-//     expect(abstractClassInstance["chrono"].getTime()).toBe(2);
-//   }));
+  it('should return value 2', fakeAsync(() => {
+     abstractClassInstance["start"]();
+     tick(2000);
+     abstractClassInstance["terminerPartie"]();
+     expect(abstractClassInstance["chrono"].getTime()).toBe(2);
+  }));
 });

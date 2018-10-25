@@ -38,7 +38,7 @@ import { PartieSimpleService } from "./admin/partie-simple.service";
 import { ListePartieSimpleComponent } from "./liste-parties/liste-partie-simple/liste-partie-simple.component";
 import { ListePartieMultipleComponent } from "./liste-parties/liste-partie-multiple/liste-partie-multiple.component";
 import { PartieSoloComponent } from "./partie/vue-simple/partie-solo/partie-solo.component";
-import { PartieMultijoueurComponent } from './partie/partie-multijoueur/partie-multijoueur.component';
+import { PartieMultijoueurComponent } from './partie/vue-simple/partie-multijoueur/partie-multijoueur.component';
 import { VueMultipleComponent } from './partie/vue-multiple/vue-multiple.component';
 import { ImageComponent } from './partie/image/image.component';
 import { PartieMultipleService } from "./admin/partie-multiple.service";
@@ -52,8 +52,8 @@ const appRoutes: Routes = [
   { path: "liste-parties", component: ListePartiesComponent },
   { path: "chrono", component: ChronoComponent },
   { path: "partie-solo/:idPartie", component: PartieSoloComponent },
+  { path: "partie-multi/:idPartie", component: PartieMultijoueurComponent },
   { path: "partie-multiple/:idPartie", component: VueMultipleComponent },
-
 ];
 
 @NgModule({
