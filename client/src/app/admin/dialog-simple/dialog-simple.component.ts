@@ -8,7 +8,6 @@ import { PartieSimpleService } from "../partie-simple.service";
 import { Observable } from "rxjs";
 import { DialogAbstrait } from "../dialog-abstrait";
 import * as Buffer from "Buffer";
-
 export const IMAGE_URL: string = "http://localhost:3000/images/";
 const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
 
@@ -39,6 +38,10 @@ export class DialogSimpleComponent extends DialogAbstrait {
       this.wrongImageSizeOrTypeMessage = "";
       this.wrongNumberOfImagesMessage = "";
     }
+
+  ngOnInit(): void {
+
+  }
 
   protected onClickAjouterPartie(): void {
       this.setWrongNumberOfImagesMessage();
@@ -84,6 +87,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
           (data) => {
           },
           (error) => {
+            console.log("allo");
             console.error(error);
           });
 

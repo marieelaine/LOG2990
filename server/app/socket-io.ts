@@ -13,12 +13,10 @@ export class SocketServer {
 
     public init(): void {
         // Initialiser connection au scoket
-        this.io.on("connection", () => {
-            console.log("made connection to socket");
-        });
     }
 
     public envoyerMessageErreurScript(msgError: string): void {
+        console.log(msgError);
         this.io.emit(event.ENVOYER_MESSAGE_BMPDIFF, msgError);
     }
 }

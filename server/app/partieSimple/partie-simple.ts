@@ -9,7 +9,7 @@ import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
-// import { socketServer } from "../www";
+import { socketServer } from "../www";
 
 interface PartieSimpleInterface {
     _id: string;
@@ -104,10 +104,13 @@ export class DBPartieSimple {
         if (errorMsg === "") {
             partie._imageDiff = await this.getImageDiffAsBuffer();
             const partieSimple: Document = new this.modelPartieBuffer(partie);
-            await partieSimple.save();
+            await partieSimple.save((err: Error) => {
+                if (err !== null && err.name === "ValidationError") {
+                    // Msg nom deja pris
+                }
+            });
         } else {
-            // Retourner errorMsg vers le client
-            // socketServer.envoyerMessageErreurScript(errorMsg);
+            socketServer.envoyerMessageErreurScript("Les deux images n'ont pas exactement 7 différences, veuillez réessayer");
         }
 
         await this.deleteImagesDirectory();
