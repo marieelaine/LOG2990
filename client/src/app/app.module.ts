@@ -2,7 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
-import {MatRadioModule} from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ModalModule } from 'ngx-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from "./app.component";
@@ -92,7 +92,7 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     ParticlesModule,
-    MatRadioModule,
+    MatCheckboxModule,
   ],
   providers: [BasicService,
               CookieService,

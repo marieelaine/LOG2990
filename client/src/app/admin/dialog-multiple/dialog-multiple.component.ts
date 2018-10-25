@@ -17,6 +17,7 @@ import { PartieMultipleService } from '../partie-multiple.service';
 export class DialogMultipleComponent extends DialogAbstrait {
 
   protected toggleClassButton: boolean = false;
+  protected checkboxArray: Array<string> = [];
 
   public constructor(
     dialogRef: MatDialogRef<DialogMultipleComponent>,
@@ -59,6 +60,7 @@ export class DialogMultipleComponent extends DialogAbstrait {
   protected onThemeClickButton(event: Event, theme: string): void {
     this.toggleClassButton = !this.toggleClassButton;
     this.data.theme = theme;
+    console.log(this.data.typeModification);
   }
 
   protected verifierSiMessageErreur(): Boolean {
