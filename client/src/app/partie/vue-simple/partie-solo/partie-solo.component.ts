@@ -21,10 +21,12 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
         super();
         this.getID();
         this.getPartie();
+        this.differenceRestantes = 7;
     }
 
     protected partieID: string;
     protected partie: PartieSimple;
+    protected diffTrouvee: number[] = [];
 
     protected getID(): void {
         this.partieID = this.route.snapshot.paramMap.get('idPartie') + "";
@@ -71,9 +73,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
                 for (const pixel of diff) {
 
                     if (coords === pixel) {
-                        console.log(i);
-
-                        return i + 1;
+                        this.differenceTrouver(i);
                     }
                 }
                 i++;
@@ -81,6 +81,13 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
         }
 
         return 0;
+    }
+
+    protected differenceTrouver(i) {
+        if (!this.diffTrouvee.includes(i)) {
+            this.diffTrouvee.push(i);
+            this.trouverDifference();
+        }
     }
 
 }
