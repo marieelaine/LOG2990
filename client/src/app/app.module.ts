@@ -9,6 +9,7 @@ import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule, Routes } from "@angular/router";
+import { SocketIoModule, SocketIoConfig } from 'ng6-socket-io';
 
 import { CookieService } from "ngx-cookie-service";
 
@@ -41,6 +42,8 @@ import { PartieMultijoueurComponent } from './partie/partie-multijoueur/partie-m
 import { VueMultipleComponent } from './partie/vue-multiple/vue-multiple.component';
 import { ImageComponent } from './partie/image/image.component';
 import { PartieMultipleService } from "./admin/partie-multiple.service";
+
+const config: SocketIoConfig = { url: 'http://localhost:4200', options: {} };
 
 const appRoutes: Routes = [
   { path: "", component: VueInitialeComponent },
@@ -93,6 +96,7 @@ const appRoutes: Routes = [
     MatInputModule,
     ParticlesModule,
     MatRadioModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [BasicService,
               CookieService,

@@ -32,6 +32,7 @@
     "mongoose": "^5.2.15",
     "mongoose-unique-validator": "^2.0.2",
     "morgan": "1.7.0",
+    "ng6-socket-io": "^1.0.3",
     "nodemon": "1.18.4",
     "npm": "^6.4.1",
     "python-shell": "^1.0.6",
