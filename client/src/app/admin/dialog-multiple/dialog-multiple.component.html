@@ -16,11 +16,9 @@
         <mat-divider></mat-divider>
         <div>
             <div class="secondaryText">Veuillez choisir la transformation à appliquer:</div>
-            <section class="checkboxGroup" [(ngModel)]="data.typeModification" required="true">
-                <mat-checkbox value="a">Ajout</mat-checkbox>
-                <mat-checkbox value="s">Suppression</mat-checkbox>
-                <mat-checkbox value="c">Changement de couleur</mat-checkbox>
-            </section>
+            <div *ngFor="let item of checkboxArray" class="checkboxGroup">
+                <mat-checkbox [(ngModel)]="item.checked" (change)="getCheckboxes()">{{item.name}}</mat-checkbox>
+            </div>
         </div>
         <mat-divider></mat-divider>
         <div class="secondaryText">Veuillez choisir un thème parmis les suivants:</div>

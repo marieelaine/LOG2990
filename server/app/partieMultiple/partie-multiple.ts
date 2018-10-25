@@ -59,15 +59,17 @@ export class DBPartieMultiple {
             });
         }
 
-    private async enregistrerPartieSimple(partie: PartieMultipleInterface, res: Response, errorMsg: string): Promise<PartieMultipleInterface> {
+    private async enregistrerPartieSimple(partie: PartieMultipleInterface, res: Response, errorMsg: string):
+    Promise<PartieMultipleInterface> {
         if (errorMsg === "") {
-            //partie._image1PV1 = await this.getImageDiffAsBuffer("app/partieMultiple/Images/allo_a_ori.bmp");
-            //partie._image1PV2 = await this.getImageDiffAsBuffer("app/partieMultiple/Images/allo_b_ori.bmp");
-            //partie._image2PV1 = await this.getImageDiffAsBuffer("app/partieMultiple/Images/allo_a_mod.bmp");
-            //partie._image2PV2 = await this.getImageDiffAsBuffer("app/partieMultiple/Images/allo_b_mod.bmp");
-            const doc: Document = new this.modelPartie(partie);
-            console.log(doc);
-            //await doc.save()
+            // partie._image1PV1 = await this.getImageDiffAsBuffer("app/partieMultiple/Images/allo_a_ori.bmp");
+            // partie._image1PV2 = await this.getImageDiffAsBuffer("app/partieMultiple/Images/allo_b_ori.bmp");
+            // partie._image2PV1 = await this.getImageDiffAsBuffer("app/partieMultiple/Images/allo_a_mod.bmp");
+            // partie._image2PV2 = await this.getImageDiffAsBuffer("app/partieMultiple/Images/allo_b_mod.bmp");
+            // const doc: Document = new this.modelPartie(partie);
+            // console.log(doc);
+            // // await doc.save()
+            this.ajouterPartie(partie, res);
         } else {
             // Retourner errorMsg vers le client
             // socketServer.envoyerMessageErreurScript(errorMsg);
@@ -78,12 +80,10 @@ export class DBPartieMultiple {
         return partie;
     }
 
-    // private async ajouterPartie(partie: PartieMultipleInterface, res: Response): Promise<void> {
-    //     const doc: Document = new this.modelPartie(partie);
-    //     // tslint:disable-next-line:no-console
-    //     console.log("la partie av: " + doc);
-    //     await doc.save();
-    // }
+    private async ajouterPartie(partie: PartieMultipleInterface, res: Response): Promise<void> {
+        const doc: Document = new this.modelPartie(partie);
+        await doc.save();
+    }
 
     // private async deletePartie(nomPartie: String, res: Response): Promise<Response> {
 

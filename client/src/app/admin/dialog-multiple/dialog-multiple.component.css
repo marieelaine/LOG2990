@@ -61,7 +61,7 @@ mat-form-field {
 }
 
 .checkboxGroup {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
     font-size: 0.8em;
 }

@@ -1,9 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { DialogAbstrait } from '../dialog-abstrait';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { DialogData } from '../admin.component';
+import { DialogData, Checkbox } from '../admin.component';
 import { HttpClient } from '@angular/common/http';
-import { ParticlesModule } from 'angular-particle';
 import { PartieMultiple } from './partie-mutiple';
 import * as Buffer from "Buffer";
 import { PartieMultipleService } from '../partie-multiple.service';
@@ -17,7 +16,33 @@ import { PartieMultipleService } from '../partie-multiple.service';
 export class DialogMultipleComponent extends DialogAbstrait {
 
   protected toggleClassButton: boolean = false;
-  protected checkboxArray: Array<string> = [];
+
+  protected checkboxArray: Checkbox[] =  [
+  {
+    name: "Ajout",
+    checked: false,
+    value: "a"
+  },
+  {
+    name: "Suppression",
+    checked: false,
+    value: "s"
+  },
+  {
+    name: "Changement de couleur",
+    checked: false,
+    value: "c"
+  }
+  ];
+
+  protected getCheckboxes(): void {
+    const arr: Array<string> = this.checkboxArray.filter((x) => x.checked === true).map((x) => x.value);
+    let typeModif: string = "";
+    for (const item of arr) {
+      typeModif += item;
+    }
+    this.data.typeModification = typeModif;
+  }
 
   public constructor(
     dialogRef: MatDialogRef<DialogMultipleComponent>,
@@ -60,7 +85,6 @@ export class DialogMultipleComponent extends DialogAbstrait {
   protected onThemeClickButton(event: Event, theme: string): void {
     this.toggleClassButton = !this.toggleClassButton;
     this.data.theme = theme;
-    console.log(this.data.typeModification);
   }
 
   protected verifierSiMessageErreur(): Boolean {
