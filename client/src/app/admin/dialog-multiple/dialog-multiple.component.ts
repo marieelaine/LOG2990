@@ -28,7 +28,7 @@ export class DialogMultipleComponent extends DialogAbstrait {
       super(dialogRef, data, http);
       this.outOfBoundNumberForms = "";
       this.checkboxMessage = "";
-      this.themeButtonMessage = ""
+      this.themeButtonMessage = "";
       this.data.theme = "";
   }
 
@@ -90,8 +90,8 @@ export class DialogMultipleComponent extends DialogAbstrait {
           console.error(error);
         });
       setTimeout(() => {
-        window.location.reload(); },
-        2500);
+          window.location.reload(); },
+            2500);
   }
 
   protected onThemeClickButton(event: Event, theme: string): void {
