@@ -40,7 +40,6 @@ import { ListePartieMultipleComponent } from "./liste-parties/liste-partie-multi
 import { PartieSoloComponent } from "./partie/vue-simple/partie-solo/partie-solo.component";
 import { PartieMultijoueurComponent } from './partie/vue-simple/partie-multijoueur/partie-multijoueur.component';
 import { VueMultipleComponent } from './partie/vue-multiple/vue-multiple.component';
-import { ImageComponent } from './partie/image/image.component';
 import { PartieMultipleService } from "./admin/partie-multiple.service";
 
 const config: SocketIoConfig = { url: 'http://localhost:4200', options: {} };
@@ -72,7 +71,6 @@ const appRoutes: Routes = [
     DialogMultipleComponent,
     PartieMultijoueurComponent,
     VueMultipleComponent,
-    ImageComponent,
   ],
   imports: [
     RouterModule.forRoot(
