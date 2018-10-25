@@ -1,6 +1,5 @@
 import { injectable, inject } from "inversify";
 import { Router, Request, Response } from "express";
-
 import { ServiceWeb } from "./serviceWeb";
 import Types from "./types";
 import { DBPartieMultiple } from "./partieMultiple/partie-multiple";
@@ -34,9 +33,13 @@ export class RoutesPartieMultiple extends ServiceWeb {
             await this.partieMultiple.requeteDeletePartie(req, res);
         });
 
-        // router.get("/:id", async (req: Request, res: Response) => {
-        //     await this.partieMultiple.requetePartieMultipleId(req, res);
-        // });
+        router.get("/:id", async (req: Request, res: Response) => {
+            await this.partieMultiple.requetePartieMultipleId(req, res);
+        });
+
+        router.get("/getPartieMultiple/:id", async (req: Request, res: Response) => {
+            await this.partieMultiple.requeteGetPartieMultiple(req, res);
+        });
 
         return router;
     }

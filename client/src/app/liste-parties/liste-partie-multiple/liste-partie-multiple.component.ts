@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ListePartiesComponent } from '../liste-parties.component';
 import { Router } from '@angular/router';
 import { ListePartieServiceService } from "../liste-partie-service.service";
-import { PartieMultiple } from 'src/app/admin/dialog-multiple/partie-mutiple';
+import { PartieMultiple } from 'src/app/admin/dialog-multiple/partie-multiple';
 
 @Component({
   selector: 'app-liste-partie-multiple',

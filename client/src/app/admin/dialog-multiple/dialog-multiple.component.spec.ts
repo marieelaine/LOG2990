@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { PartieMultipleService } from '../partie-multiple.service';
 import { of } from 'rxjs';
-import { PartieMultiple } from './partie-mutiple';
+import { PartieMultiple } from './partie-multiple';
 
 describe('DialogMultipleComponent', () => {
     let mockPartieMultipleService: jasmine.SpyObj<PartieMultipleService>;
