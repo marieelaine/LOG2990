@@ -45,8 +45,8 @@ export class ListePartieServiceService {
     this.http.put(this.REINITIALISER_TEMPS_SIMPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise();
   }
 
-  public async reinitialiserTempsPartieMultiple(partieId: string): Promise<void> {
+  public async reinitialiserTempsPartieMultiple(partieId: string, tempsSolo: Array<number>, tempsUnContreUn: Array<number>): Promise<void> {
 
-    this.http.get(this.REINITIALISER_TEMPS_MULTIPLE_URL + partieId).toPromise();
+    this.http.put(this.REINITIALISER_TEMPS_MULTIPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise();
   }
 }

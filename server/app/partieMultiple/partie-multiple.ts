@@ -167,7 +167,6 @@ export class DBPartieMultiple {
                 for (const partie of res) {
                     listeParties.push(partie.toJSON());
                 }
-                console.log(listeParties);
             });
 
         return listeParties;
@@ -175,7 +174,6 @@ export class DBPartieMultiple {
 
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> {
         try {
-            // tslint:disable-next-line:no-console
             await this.genererScene(req.body, res);
             res.status(201);
         } catch (err) {
@@ -196,6 +194,21 @@ export class DBPartieMultiple {
     public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();
         res.send(await this.getListePartie());
+    }
+
+    public async requeteReinitialiserTemps(req: Request, res: Response): Promise<void> {
+        await this.baseDeDonnees.assurerConnection();
+        try {
+            await this.reinitialiserTemps(req.params.id, req.body.tempsSolo, req.body.tempsUnContreUn);
+            res.status(201);
+        } catch (err) {
+            res.status(501).json(err);
+        }
+    }
+
+    private async reinitialiserTemps(idPartie: String, tempsSolo: Array<number>, tempsUnContreUn: Array<number>): Promise<void> {
+        await this.modelPartie.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
+            .catch(() => { throw new Error(); });
     }
 
 }
