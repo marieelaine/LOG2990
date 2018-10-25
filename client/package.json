@@ -12,7 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^6.1.0",
-    "@angular/cdk": "^6.2.0",
+    "@angular/cdk": "^6.1.0",
     "@angular/common": "^6.1.0",
     "@angular/compiler": "^6.1.0",
     "@angular/core": "^6.1.0",
@@ -23,7 +23,6 @@
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
     "@ng-bootstrap/ng-bootstrap": "^3.2.0",
-    "angular-material": "^1.1.10",
     "angular-particle": "^1.0.4",
     "arraybuffer-to-buffer": "0.0.4",
     "buffer": "^5.2.1",
