@@ -12,7 +12,6 @@ export class PartieSimpleService {
     private readonly GETPARTIESIMPLE_URL: string = this.BASE_URL_SIMPLE + "getPartieSimple/";
     private readonly BASE_URL_MULTIPLE: string = "http://localhost:3000/partiemultiple/";
     private readonly GETPARTIEMULTIPLE_URL: string = this.BASE_URL_MULTIPLE + "getPartieMultiple/";
-    private readonly VERIF_URL: string = this.BASE_URL_MULTIPLE + "coordDiff/";
 
     constructor(
         private http: HttpClient
