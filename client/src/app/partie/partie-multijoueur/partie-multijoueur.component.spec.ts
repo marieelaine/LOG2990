@@ -1,22 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PartieMultijoueurComponent } from './partie-multijoueur.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('PartieMultijoueurComponent', () => {
   let component: PartieMultijoueurComponent;
   let fixture: ComponentFixture<PartieMultijoueurComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ PartieMultijoueurComponent ]
-    })
-    .compileComponents();
-  }));
-
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [ PartieMultijoueurComponent ],
+      imports: [],
+      providers: [HttpClientTestingModule]
+    });
+
     fixture = TestBed.createComponent(PartieMultijoueurComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

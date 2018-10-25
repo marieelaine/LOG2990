@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { ListePartieSimpleComponent } from './liste-partie-simple.component';
 import { By } from '@angular/platform-browser';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('PartieSimpleComponent', () => {
   let component: ListePartieSimpleComponent;
@@ -12,7 +13,7 @@ describe('PartieSimpleComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ ListePartieSimpleComponent ],
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, HttpClientTestingModule],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
       ],
