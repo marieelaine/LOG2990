@@ -25,9 +25,6 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
 
     protected partieID: string;
     protected partie: PartieSimple;
-    protected image1: String;
-    protected image2: String;
-    protected image = new Image();
 
     protected getID(): void {
         this.partieID = this.route.snapshot.paramMap.get('idPartie') + "";
@@ -46,7 +43,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
         const data2: string = atob(String(this.partie["_image2"][0]));
 
         this.ajusterSourceImage(data1, "imageG");
-        this.ajusterSourceImage(data2, "imageD");
+       // this.ajusterSourceImage(data2, "imageD");
 
     }
 
@@ -63,12 +60,23 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
         document.getElementById(id).src = URL.createObjectURL(blob);
     }
 
-    protected testerPourDiff(event) {
+    protected testerPourDiff(event): number {
+
         if (this.partieCommence) {
-            const coords: Array<string> = [event.offsetX.toString(), event.offsetY.toString(), this.partieID];
-            const estDiff = this.partieSimpleService.verifierDiff(coords);
-            console.log(estDiff);
+
+            let i: number = 0;
+            for (const diff of this.partie["_imageDiff"]) {
+                for (const coord of diff) {
+
+                    if (parseInt(coord.substring(1, 4), 10) === event.offsetX && parseInt(coord.substring(5, 8), 10) === event.offsetY) {
+                        return i + 1;
+                    }
+                }
+                i++;
+            }
         }
+
+        return 0;
     }
 
 }
