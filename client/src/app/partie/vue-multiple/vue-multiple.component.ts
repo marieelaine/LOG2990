@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ErrorHandler} from '@angular/core';
 import { PartieAbstraiteClass } from "../partie-abstraite-class";
 import { ActivatedRoute} from "@angular/router";
 import { PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
@@ -22,6 +22,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
 
     protected partieID: string;
     protected partie: PartieMultiple;
+    protected diffTrouvee: number[] = [];
 
     protected getID(): void {
     this.partieID = this.route.snapshot.paramMap.get('idPartie') + "";
@@ -59,22 +60,36 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
       document.getElementById(id).src = URL.createObjectURL(blob);
     }
 
-    protected testerPourDiff(event): number {
+    protected testerPourDiff(event): void {
 
       if (this.partieCommence) {
 
-        let i: number = 0;
-        for (const diff of this.partie["_imageDiff"]) {
-          for (const coord of diff) {
+          const coords = "[" + event.offsetX + ", " + event.offsetY + "]";
+          console.log(coords);
 
-            if (parseInt(coord.substring(1, 4), 10) === event.offsetX && parseInt(coord.substring(5, 8), 10) === event.offsetY) {
-                return i + 1;
-            }
+          let i: number = 0;
+          for (const diff of this.partie["_imageDiff"]) {
+              for (const pixel of diff) {
+
+                  if (coords === pixel) {
+                      this.differenceTrouver(i);
+                  }
+              }
+              i++;
           }
-          i++;
-        }
       }
+    }
 
-      return 0;
+    protected differenceTrouver(i): void {
+        if (!this.diffTrouvee.includes(i)) {
+            this.diffTrouvee.push(i);
+            this.trouverDifference();
+        }
+    }
+
+    protected ajouterTemps(temps: number): void {
+        this.partie["_tempsSolo"].push(temps);
+        this.partieSimpleService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
+            .catch(() => ErrorHandler);
     }
   }

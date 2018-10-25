@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ErrorHandler } from '@angular/core';
 import { PartieAbstraiteClass } from '../../partie-abstraite-class';
 import { ActivatedRoute} from "@angular/router";
 import { PartieSimple} from "../../../admin/dialog-simple/partie-simple";
@@ -59,7 +59,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
         document.getElementById(id).src = URL.createObjectURL(blob);
     }
 
-    protected testerPourDiff(event): number {
+    protected testerPourDiff(event): void {
 
         if (this.partieCommence) {
 
@@ -77,15 +77,19 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
                 i++;
             }
         }
-
-        return 0;
     }
 
-    protected differenceTrouver(i) {
+    protected differenceTrouver(i): void {
         if (!this.diffTrouvee.includes(i)) {
             this.diffTrouvee.push(i);
             this.trouverDifference();
         }
+    }
+
+    protected ajouterTemps(temps: number): void {
+        this.partie["_tempsSolo"].push(temps);
+        this.partieSimpleService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
+        .catch(() => ErrorHandler);
     }
 
 }

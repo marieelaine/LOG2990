@@ -47,6 +47,8 @@ export abstract class PartieAbstraiteClass {
         this.audio.src = "../assets/applause.mp3";
         this.audio.load();
         this.audio.play();
-
+        this.ajouterTemps(this.chrono.getTime());
     }
+
+    protected abstract ajouterTemps(temps: number);
 }
