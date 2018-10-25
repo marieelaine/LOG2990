@@ -63,11 +63,16 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
 
         if (this.partieCommence) {
 
+            const coords = "[" + event.offsetX + ", " + event.offsetY + "]";
+            console.log(coords)
+
             let i: number = 0;
             for (const diff of this.partie["_imageDiff"]) {
-                for (const coord of diff) {
+                for (const pixel of diff) {
 
-                    if (parseInt(coord.substring(1, 4), 10) === event.offsetX && parseInt(coord.substring(5, 8), 10) === event.offsetY) {
+                    if (coords === pixel) {
+                        console.log(i);
+
                         return i + 1;
                     }
                 }

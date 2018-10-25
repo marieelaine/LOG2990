@@ -135,6 +135,7 @@ export class DBPartieSimple {
 
         rl.on("line", (line: string) => {
             if (line.startsWith("END")) {
+                diffArrays.push(arrayDiff);
                 this.enregistrerPartieSimple(diffArrays, partie);
             } else if (i === 0) {
                 arrayDiff = new Array<string>();
