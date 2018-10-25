@@ -13,24 +13,24 @@ import { PartieSimpleService} from "../../partie-simple.service";
 
 export class PartieSoloComponent extends PartieAbstraiteClass {
 
+    protected partieID: string;
+    protected nomPartie: string;
+    protected partie: PartieSimple;
+
     public constructor(private route: ActivatedRoute,
-                       protected partieSimpleService: PartieSimpleService
-    ) {
+                       protected partieSimpleService: PartieSimpleService) {
         super();
-        this.getID();
-        this.getPartie();
         this.differenceRestantes = 7;
+        this.setID();
+        this.setPartie();
     }
 
-    protected partieID: string;
-    protected partie: PartieSimple;
     protected diffTrouvee: number[] = [];
-
-    protected getID(): void {
+    protected setID(): void {
         this.partieID = this.route.snapshot.paramMap.get('idPartie') + "";
     }
 
-    protected getPartie(): void {
+    protected setPartie(): void {
         this.partieSimpleService.getPartieSimple(this.partieID).subscribe((res: PartieSimple) => {
             this.partie = res;
             this.setup();
@@ -38,6 +38,8 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
     }
 
     protected setup(): void {
+        this.nomPartie = this.partie["_nomPartie"].charAt(0).toUpperCase() + this.partie["_nomPartie"].slice(1);
+
         const data1: string = atob(String(this.partie["_image1"][0]));
         const data2: string = atob(String(this.partie["_image2"][0]));
 
