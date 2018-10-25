@@ -1,4 +1,7 @@
 import * as p from "path";
+import * as fs from "fs";
+import * as util from "util";
+import * as fsx from "fs-extra";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
 import uniqueValidator = require("mongoose-unique-validator");
@@ -6,6 +9,7 @@ import "reflect-metadata";
 import { injectable } from "inversify";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import { execFile } from "child_process";
+//import { RoutesPartieMultiple } from "../routesPartieMultiple";
 
 interface PartieMultipleInterface {
     _id: string;
@@ -55,6 +59,25 @@ export class DBPartieMultiple {
             });
         }
 
+    private async enregistrerPartieSimple(partie: PartieMultipleInterface, res: Response, errorMsg: string): Promise<PartieMultipleInterface> {
+        if (errorMsg === "") {
+            //partie._image1PV1 = await this.getImageDiffAsBuffer("app/partieMultiple/Images/allo_a_ori.bmp");
+            //partie._image1PV2 = await this.getImageDiffAsBuffer("app/partieMultiple/Images/allo_b_ori.bmp");
+            //partie._image2PV1 = await this.getImageDiffAsBuffer("app/partieMultiple/Images/allo_a_mod.bmp");
+            //partie._image2PV2 = await this.getImageDiffAsBuffer("app/partieMultiple/Images/allo_b_mod.bmp");
+            const doc: Document = new this.modelPartie(partie);
+            console.log(doc);
+            //await doc.save()
+        } else {
+            // Retourner errorMsg vers le client
+            // socketServer.envoyerMessageErreurScript(errorMsg);
+        }
+
+        await this.deleteImagesDirectory();
+
+        return partie;
+    }
+
     // private async ajouterPartie(partie: PartieMultipleInterface, res: Response): Promise<void> {
     //     const doc: Document = new this.modelPartie(partie);
     //     // tslint:disable-next-line:no-console
@@ -69,16 +92,51 @@ export class DBPartieMultiple {
     // private async obtenirPartieId(nomPartie: String): Promise<string> {
 
     // }
+    // private async getImageDiffAsBuffer(filename: string): Promise<Buffer> {
+    //     const imageOri1: string = p.resolve(filename);
+    //     const readFilePromise: Function = util.promisify(fs.readFile);
 
-    private async genererScene(partie: PartieMultipleInterface): Promise<void> {
+    //     return await readFilePromise(imageOri1) as Buffer;
+    // }
+
+    private async deleteImagesDirectory(): Promise<void> {
+        const dir: string = "app/partieMultiple/Images";
+        await fsx.remove(dir);
+    }
+
+    private async verifierErreurScript(child, partie: PartieMultipleInterface, res: Response): Promise<void> {
+        let errorMsg: string = "";
+
+        child.stderr.on("data", async (data) => {
+            errorMsg = `${data}`;
+            await this.enregistrerPartieSimple(partie, res, errorMsg);
+        });
+        child.stdout.on("data", async (data) => {
+            await this.enregistrerPartieSimple(partie, res, errorMsg);
+        });
+    }
+
+    private async genererScene(partie: PartieMultipleInterface, res: Response): Promise<void> {
         // tslint:disable-next-line:no-console
-        console.log(partie);
-        const script: string = p.resolve("app/PartieMultiple/genmulti/main.exe");
+        await this.makeImagesDirectory();
+        const script: string = p.resolve("app/partieMultiple/genmulti/main.exe");
         const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, partie._nomPartie];
 
         const child = execFile(script, args);
-        console.log(child);
+        this.verifierErreurScript(child, partie, res);
     }
+
+    private async makeImagesDirectory(): Promise<void> {
+        const dir: string = "app/partieMultiple/Images";
+        const mkdirPromise: Function = util.promisify(fs.mkdir);
+        const existsPromise: Function = util.promisify(fs.exists);
+        if (await existsPromise(dir)) {
+            await fsx.remove(dir);
+        }
+
+        await mkdirPromise(dir);
+    }
+
 
     private async getListePartie(): Promise<PartieMultipleInterface[]> {
         const listeParties: PartieMultipleInterface[] = [];
@@ -96,7 +154,7 @@ export class DBPartieMultiple {
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> {
         try {
             // tslint:disable-next-line:no-console
-            await this.ajouterPartie(req.body, res);
+            await this.genererScene(req.body, res);
             res.status(201);
         } catch (err) {
             res.status(501).json(err);
