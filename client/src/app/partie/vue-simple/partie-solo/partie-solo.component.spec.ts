@@ -1,9 +1,10 @@
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PartieSoloComponent } from './partie-solo.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatCardModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ErrorHandler } from '@angular/core';
 // import { ChronoComponent } from '../../chrono/chrono.component';
 
 describe('PartieSoloComponent', () => {
@@ -19,7 +20,8 @@ describe('PartieSoloComponent', () => {
                 MatCardModule
             ],
         })
-            .compileComponents();
+            .compileComponents()
+            .catch(() => ErrorHandler);
     }));
 
     beforeEach(() => {

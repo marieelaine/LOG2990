@@ -1,10 +1,8 @@
-import { Component, OnInit} from '@angular/core';
+import { Component } from '@angular/core';
 import { PartieAbstraiteClass } from '../../partie-abstraite-class';
 import { ActivatedRoute} from "@angular/router";
 import { PartieSimple} from "../../../admin/dialog-simple/partie-simple";
 import { PartieSimpleService} from "../../partie-simple.service";
-import {createElement} from "@angular/core/src/view/element";
-import {toBase64String} from "@angular/compiler/src/output/source_map";
 
 @Component({
     selector: 'app-partie-solo',
@@ -64,7 +62,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
         if (this.partieCommence) {
 
             const coords = "[" + event.offsetX + ", " + event.offsetY + "]";
-            console.log(coords)
+            console.log(coords);
 
             let i: number = 0;
             for (const diff of this.partie["_imageDiff"]) {
