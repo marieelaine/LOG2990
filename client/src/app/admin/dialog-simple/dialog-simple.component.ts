@@ -5,7 +5,6 @@ import { HttpClient } from "@angular/common/http";
 // import {FormControl, Validators, FormGroup} from "@angular/forms";
 import { PartieSimple } from "./partie-simple";
 import { PartieSimpleService } from "../partie-simple.service";
-import { Observable } from "rxjs";
 import { DialogAbstrait } from "../dialog-abstrait";
 import * as Buffer from "buffer";
 
@@ -86,9 +85,8 @@ export class DialogSimpleComponent extends DialogAbstrait {
           (error) => {
             console.error(error);
           });
-
       setTimeout(() => {
-        window.location.reload(); },
+          window.location.reload(); },
                  2500);
     }
 

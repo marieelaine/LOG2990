@@ -1,2 +1,3 @@
 export const CONNECTION = "connection";
-export const ENVOYER_MESSAGE_BMPDIFF = "connection";
+export const ENVOYER_MESSAGE_BMPDIFF = "ENVOYER_MESSAGE_BMPDIFF";
+export const ENVOYER_MESSAGE_NOM_PRIS = "ENVOYER_MESSAGE_NOM_PRIS";

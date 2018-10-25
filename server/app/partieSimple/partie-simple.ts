@@ -9,7 +9,7 @@ import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
-// import { socketServer } from "../www";
+import { socketServer } from "../www";
 
 interface PartieSimpleInterface {
     _id: string;
@@ -104,10 +104,7 @@ export class DBPartieSimple {
         if (errorMsg === "") {
             await this.getImageDiffAsArrays(partie);
         } else {
-            // tslint:disable-next-line:no-console
-            console.log("erreur");
-            // Retourner errorMsg vers le client
-            // socketServer.envoyerMessageErreurScript(errorMsg);
+            socketServer.envoyerMessageErreurScript("Les images ne contiennent pas exactement 7 différences, veuillez réessayer.");
         }
 
         await this.deleteImagesDirectory();
@@ -118,8 +115,11 @@ export class DBPartieSimple {
     private async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
         partie._imageDiff = diffArrays;
         const partieSimple: Document = new this.modelPartieBuffer(partie);
-        await partieSimple.save();
-    }
+        await partieSimple.save((err: Error) => {
+            if (err !== null && err.name === "ValidationError") {
+                socketServer.envoyerMessageErreurNomPris("Le nom de la partie est déjà pris. Veuillez réessayer avec un autre nom.");
+            }
+        });    }
 
     private getImageDiffAsArrays(partie: PartieSimpleInterface): void {
         const imageMod: string = p.resolve("../Images/image3.bmp.txt");
@@ -133,10 +133,9 @@ export class DBPartieSimple {
         let i: number = 0;
         let arrayDiff: Array<string> = new Array<string>();
 
-        rl.on("line", async(line: string) => {
+        rl.on("line", (line: string) => {
             if (line.startsWith("end")) {
-                diffArrays.push(arrayDiff);
-                await this.enregistrerPartieSimple(diffArrays, partie);
+                this.enregistrerPartieSimple(diffArrays, partie);
             } else if (i === 0) {
                 arrayDiff = new Array<string>();
                 i++;
@@ -155,7 +154,7 @@ export class DBPartieSimple {
         await fsx.remove(dir);
     }
 
-    private async verifierErreurScript(child: ChildProcess, partie: PartieSimpleInterface, res: Response): Promise<void> {
+    private async verifierErreurScript(child: ChildProcess, partie: PartieSimpleInterface): Promise<void> {
         let errorMsg: string = "";
 
         child.stderr.on("data", async (data: string) => {
@@ -163,7 +162,7 @@ export class DBPartieSimple {
             await this.traiterMessageErreur(partie, errorMsg);
         });
         child.stdout.on("data", async (data: string) => {
-            await this.enregistrerPartieSimple(partie, res, errorMsg);
+            await this.traiterMessageErreur(partie, errorMsg);
         });
     }
 
@@ -178,7 +177,7 @@ export class DBPartieSimple {
         const args: string[] = [imageOri1, imageOri2, imageMod];
         args.unshift(pyScript);
         const child: ChildProcess = spawn("python", args);
-        this.verifierErreurScript(child, partie, res);
+        this.verifierErreurScript(child, partie);
     }
 
     private async makeImagesDirectory(): Promise<void> {
@@ -316,7 +315,5 @@ export class DBPartieSimple {
     }
 
     public async requeteVerifDiff(req: Request, res: Response): Promise<void> {
-        await
-
     }
 }
