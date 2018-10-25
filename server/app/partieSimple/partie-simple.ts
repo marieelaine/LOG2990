@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as util from "util";
 import * as p from "path";
 import * as fsx from "fs-extra";
-import { spawn } from "child_process";
+import { spawn, ChildProcess } from "child_process";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
@@ -131,14 +131,14 @@ export class DBPartieSimple {
         await fsx.remove(dir);
     }
 
-    private async verifierErreurScript(child, partie: PartieSimpleInterface, res: Response): Promise<void> {
+    private async verifierErreurScript(child: ChildProcess, partie: PartieSimpleInterface, res: Response): Promise<void> {
         let errorMsg: string = "";
 
-        child.stderr.on("data", async (data) => {
+        child.stderr.on("data", async (data: string) => {
             errorMsg = `${data}`;
             await this.enregistrerPartieSimple(partie, res, errorMsg);
         });
-        child.stdout.on("data", async (data) => {
+        child.stdout.on("data", async (data: string) => {
             await this.enregistrerPartieSimple(partie, res, errorMsg);
         });
     }
@@ -153,7 +153,7 @@ export class DBPartieSimple {
         const imageMod: string = p.resolve("../Images/image3.bmp");
         const args: string[] = [imageOri1, imageOri2, imageMod];
         args.unshift(pyScript);
-        const child = spawn("python", args);
+        const child: ChildProcess = spawn("python", args);
         this.verifierErreurScript(child, partie, res);
     }
 

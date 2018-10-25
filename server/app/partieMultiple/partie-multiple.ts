@@ -108,14 +108,14 @@ export class DBPartieMultiple {
         return await readFilePromise(imageMod) as Buffer;
     }
 
-    private async verifierErreurScript(child, partie: PartieMultipleInterface, res: Response): Promise<void> {
+    private async verifierErreurScript(child: ChildProcess, partie: PartieMultipleInterface, res: Response): Promise<void> {
         let errorMsg: string = "";
 
-        child.stderr.on("data", async (data) => {
+        child.stderr.on("data", async (data: string) => {
             errorMsg = `${data}`;
             await this.enregistrerPartieMultiple(partie, res, errorMsg);
         });
-        child.stdout.on("data", async (data) => {
+        child.stdout.on("data", async (data: string) => {
             await this.enregistrerPartieMultiple(partie, res, errorMsg);
         });
     }
