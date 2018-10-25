@@ -64,10 +64,11 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
     }
 
     protected testerPourDiff(event) {
-        console.log(event.offsetX, event.offsetY);
-        const coords: Array<string> = [event.offsetX.toString(), event.offsetY.toString(), this.partieID];
-        const estDiff = await this.partieSimpleService.verifierDiff(coords);
-        console.log(estDiff);
+        if (this.partieCommence) {
+            const coords: Array<string> = [event.offsetX.toString(), event.offsetY.toString(), this.partieID];
+            const estDiff = this.partieSimpleService.verifierDiff(coords);
+            console.log(estDiff);
+        }
     }
 
 }
