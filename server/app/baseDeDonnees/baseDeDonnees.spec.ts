@@ -1,47 +1,21 @@
+
 import { assert } from "chai";
 import { BaseDeDonnees } from "./baseDeDonnees";
 import * as sinon from "sinon";
 
 describe("BaseDeDonnees", () => {
+    let db: BaseDeDonnees;
+    beforeEach(() => {
+        db = new BaseDeDonnees();
+    });
+
     describe("Constructeur", () => {
-        let db: BaseDeDonnees;
-        beforeEach(() => {
-            db = new BaseDeDonnees();
-        });
-
-        it ("should do nothing", () => {
-            assert(true);
-        });
-
-        it ("should be defined", () => {
+        it("Devrait etre defini", () => {
             assert.isDefined(db);
         });
 
-        it("should have defined a schema attribute", () => {
+        it("Devrait avoir un schema", () => {
             assert.isDefined(db["schema"]);
-        });
-
-        // it("should call ajouterUser()", () => {
-        //     // tslint:disable-next-line:no-any
-        //     const stub: sinon.SinonStub = sinon.stub(db as any, "ajouterUser")
-        //         .callsFake(() => {
-        //             return true;
-        //         });
-
-        //     const body: Blob = new Blob();
-        //     const init: {} = {"status": 200, "statusText": ""};
-        //     const res: Response = new Response(body, init);
-        //     db["ajouterUser"]({}, res);
-        // });
-
-        it("should call obtenirUserId() once", () => {
-            // tslint:disable-next-line:no-any
-            const stub: sinon.SinonStub = sinon.stub(db as any, "obtenirUserId")
-                .callsFake(() => {
-                    return true;
-                });
-            db["obtenirUserId"]("test");
-            sinon.assert.calledOnce(stub);
         });
     });
 });

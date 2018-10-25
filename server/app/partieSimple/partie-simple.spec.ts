@@ -1,20 +1,32 @@
-import { assert } from "chai";
-import { DBPartieSimple } from "./partie-simple";
+// import { assert } from "chai";
+// import { DBPartieSimple } from "./partie-simple";
 
-describe("BaseDeDonnees", () => {
-    describe("Constructeur", () => {
-        let image: DBPartieSimple;
-        beforeEach(() => {
-            image = new DBPartieSimple();
-        });
+// describe("BaseDeDonnees", () => {
+//     let dbPartieSimple: DBPartieSimple;
 
-        it ("should do nothing", () => {
-            assert(true);
-        });
+//     beforeEach(() => {
+//         dbPartieSimple = new DBPartieSimple();
+//     });
 
-        it ("should be defined", () => {
-            assert.isDefined(image);
-        });
-
-    });
-});
+//     describe("Constructeur", () => {
+//         it("Devrait etre defini", () => {
+//             assert.isDefined(dbPartieSimple);
+//         });
+//         it("Devrait definir tous les attributs", () => {
+//             assert.isDefined(dbPartieSimple["baseDeDonnees"]);
+//             assert.isDefined(dbPartieSimple["schemaArray"]);
+//             assert.isDefined(dbPartieSimple["modelPartieArray"]);
+//             assert.isDefined(dbPartieSimple["schemaBuffer"]);
+//             assert.isDefined(dbPartieSimple["modelPartieBuffer"]);
+//         });
+//     });
+    // it("should call obtenirUserId() once", () => {
+        //     // tslint:disable-next-line:no-any
+        //     const stub: sinon.SinonStub = sinon.stub(db as any, "obtenirUserId")
+        //         .callsFake(() => {
+        //             return true;
+        //         });
+        //     db["obtenirUserId"]("test");
+        //     sinon.assert.calledOnce(stub);
+        // });
+// });
