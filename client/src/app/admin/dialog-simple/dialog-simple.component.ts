@@ -1,15 +1,13 @@
-import { Component, Inject } from "@angular/core";
+import { Component, Inject, ErrorHandler } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { DialogData } from "../admin.component";
 import { HttpClient } from "@angular/common/http";
-// import {FormControl, Validators, FormGroup} from "@angular/forms";
 import { PartieSimple } from "./partie-simple";
 import { PartieSimpleService } from "../partie-simple.service";
 import { DialogAbstrait } from "../dialog-abstrait";
 import * as Buffer from "buffer";
 
 export const IMAGE_URL: string = "http://localhost:3000/images/";
-const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
 
 @Component({
   selector: "app-dialog-simple",
@@ -27,7 +25,6 @@ export class DialogSimpleComponent extends DialogAbstrait {
   private selectedFiles: File[] = [];
   private selectedFilesAsBuffers: Buffer[] = [];
   private correctImageExtension: String = "image/bmp";
-  // private titrePartie = new FormControl("", [Validators.required]); mettre erreur juste en dessous quand on aentre le nom
 
   public constructor(
     dialogRef: MatDialogRef<DialogSimpleComponent>,
@@ -53,7 +50,8 @@ export class DialogSimpleComponent extends DialogAbstrait {
       reader.onload = () => {
         this.arraybufferToBuffer(reader.result as ArrayBuffer, imageQty);
         if (this.selectedFilesAsBuffers.length === 2) {
-          this.ajouterPartie();
+          this.ajouterPartie()
+          .catch(() => ErrorHandler);
         }
         imageQty++;
       };
@@ -78,7 +76,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
                                                     this.genererTableauTempsAleatoires(), this.selectedFilesAsBuffers[0],
                                                     this.selectedFilesAsBuffers[1],
                                                     new Array<Array<string>>());
-      await this.partieSimpleService.register(result)
+      this.partieSimpleService.register(result)
         .subscribe(
           (data) => {
           },

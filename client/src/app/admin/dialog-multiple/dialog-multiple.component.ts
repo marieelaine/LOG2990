@@ -36,7 +36,7 @@ export class DialogMultipleComponent extends DialogAbstrait {
   ];
 
   protected getCheckboxes(): void {
-    const arr: Array<string> = this.checkboxArray.filter((x) => x.checked === true).map((x) => x.value);
+    const arr: Array<string> = this.checkboxArray.filter((x) => x.checked).map((x) => x.value);
     let typeModif: string = "";
     for (const item of arr) {
       typeModif += item;
