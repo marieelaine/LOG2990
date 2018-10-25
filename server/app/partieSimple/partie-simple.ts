@@ -104,13 +104,15 @@ export class DBPartieSimple {
         if (errorMsg === "") {
             partie._imageDiff = await this.getImageDiffAsBuffer();
             const partieSimple: Document = new this.modelPartieBuffer(partie);
+            console.log("save");
             await partieSimple.save();
         } else {
+            console.log("erreur");
             // Retourner errorMsg vers le client
             // socketServer.envoyerMessageErreurScript(errorMsg);
         }
 
-        await this.deleteImagesDirectory();
+        //await this.deleteImagesDirectory();
 
         return partie;
     }
