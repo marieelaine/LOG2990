@@ -1,8 +1,7 @@
 import { Component } from "@angular/core";
-import { PartieMultipleInterface } from "src/app/liste-parties/liste-partie-multiple/liste-partie-multiple.component";
 import { Router, NavigationEnd } from "@angular/router";
-import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { ListePartieServiceService } from "./liste-partie-service.service";
+import T from "../admin/dialog-abstrait";
 
 @Component({
   selector: "app-liste-parties",
@@ -13,16 +12,11 @@ import { ListePartieServiceService } from "./liste-partie-service.service";
 
 export class ListePartiesComponent {
 
-  listePartiesMultiples: PartieMultipleInterface[] = [
-        { title: "Mona Lisa", imagePath: "assets/monaLisa.bmp", isElevatedActive: false,
-          timesSolo: [312, 415, 6462, 1], timesOneVsOne: [312, 3], idPartie: 3
-        }
-    ];
-
-  public jouerOuReinitialiser: string;
-  public creerOuSupprimer: string;
-  public isListePartiesMode: boolean;
-  public isAdminMode: boolean;
+  protected jouerOuReinitialiser: string;
+  protected creerOuSupprimer: string;
+  protected isListePartiesMode: boolean;
+  protected isAdminMode: boolean;
+  protected isElevatedActive: boolean;
 
   public constructor(public router: Router,
                      public listePartieService: ListePartieServiceService) {
@@ -37,7 +31,28 @@ export class ListePartiesComponent {
     });
   }
 
-  // protected abstract supprimerPartie(partieId: string): void;
+  protected ajusterImage(id: String, listeParties: T[], isPartieSimple: Boolean): void {
+    for (const partie of listeParties) {
+      if (partie["_id"] === id) {
+        let data: string = "";
+        if(isPartieSimple){
+          data = atob(String(partie["_image1"][0]));
+        } else {
+          data = atob(String(partie["_image1PV1"][0]));
+        }
+        let hex = 0x00;
+        const result: Uint8Array = new Uint8Array(data.length);
+
+        for (let i = 0; i < data.length; i++) {
+            hex = data.charCodeAt(i);
+            result[i] = hex;
+        }
+        const blob = new Blob([result], {type: 'image/bmp'});
+        // @ts-ignore
+        document.getElementById(id).src = URL.createObjectURL(blob);
+      }
+    }
+  }
 
   protected setjouerOuReinitialiserAndcreerOuSupprimer(url: string): void {
     if (url === "/liste-parties") {
@@ -121,5 +136,14 @@ export class ListePartiesComponent {
       const secondes = time - minutes * 60;
 
       return this.getDisplayTime(minutes, secondes);
+  }
+
+  protected genererTableauTempsAleatoires(partie: T): void {
+    for (let i = 0 ; i < partie["_tempsSolo"].length ; i++) {
+      partie["_tempsSolo"][i] = Math.floor(Math.random() * 400) + 100;
+    }
+    for (let i = 0 ; i < partie["_tempsUnContreUn"].length ; i++) {
+      partie["_tempsUnContreUn"][i] = Math.floor(Math.random() * 400) + 100;
+    }
   }
 }

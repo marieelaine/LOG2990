@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as util from "util";
 import * as p from "path";
 import * as fsx from "fs-extra";
-import { spawn } from "child_process";
+import { spawn, ChildProcess } from "child_process";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
@@ -104,6 +104,8 @@ export class DBPartieSimple {
         if (errorMsg === "") {
             await this.getImageDiffAsArrays(partie);
         } else {
+            // tslint:disable-next-line:no-console
+            console.log("erreur");
             // Retourner errorMsg vers le client
             // socketServer.envoyerMessageErreurScript(errorMsg);
         }
@@ -153,15 +155,15 @@ export class DBPartieSimple {
         await fsx.remove(dir);
     }
 
-    private async verifierErreurScript(child, partie: PartieSimpleInterface): Promise<void> {
+    private async verifierErreurScript(child: ChildProcess, partie: PartieSimpleInterface, res: Response): Promise<void> {
         let errorMsg: string = "";
 
-        child.stderr.on("data", async (data) => {
+        child.stderr.on("data", async (data: string) => {
             errorMsg = `${data}`;
             await this.traiterMessageErreur(partie, errorMsg);
         });
-        child.stdout.on("data", async (data) => {
-            await this.traiterMessageErreur(partie, errorMsg);
+        child.stdout.on("data", async (data: string) => {
+            await this.enregistrerPartieSimple(partie, res, errorMsg);
         });
     }
 
@@ -175,8 +177,8 @@ export class DBPartieSimple {
         const imageMod: string = p.resolve("../Images/image3.bmp");
         const args: string[] = [imageOri1, imageOri2, imageMod];
         args.unshift(pyScript);
-        const child = spawn("python", args);
-        this.verifierErreurScript(child, partie);
+        const child: ChildProcess = spawn("python", args);
+        this.verifierErreurScript(child, partie, res);
     }
 
     private async makeImagesDirectory(): Promise<void> {
@@ -245,9 +247,9 @@ export class DBPartieSimple {
         return listeParties;
     }
 
-    private async reinitialiserTemps(idPartie: String): Promise<void> {
-        await this.modelPartieBuffer.find().findOneAndUpdate(this.modelPartieBuffer.findById(idPartie));
-        // TODO : Changer les temps randoms dans la BD
+    private async reinitialiserTemps(idPartie: String, tempsSolo: Array<number>, tempsUnContreUn: Array<number>): Promise<void> {
+        await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
+            .catch(() => { throw new Error(); });
     }
 
     private async getPartieSimple(partieID: String, res: Response): Promise<PartieSimpleInterface> {
@@ -260,7 +262,7 @@ export class DBPartieSimple {
             });
 
         for (const partie of partieSimples) {
-            if (partie._id == partieID) {
+            if (partie._id === partieID) {
                 return partie;
             }
         }
@@ -301,7 +303,7 @@ export class DBPartieSimple {
     public async requeteReinitialiserTemps(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();
         try {
-            await this.reinitialiserTemps(req.params.id);
+            await this.reinitialiserTemps(req.params.id, req.body.tempsSolo, req.body.tempsUnContreUn);
             res.status(201);
         } catch (err) {
             res.status(501).json(err);

@@ -11,6 +11,12 @@ export interface DialogData {
   typeModification: string;
 }
 
+export interface Checkbox {
+  name: string;
+  checked: boolean;
+  value: string;
+}
+
 @Component({
   selector: "app-admin",
   templateUrl: "./admin.component.html",
