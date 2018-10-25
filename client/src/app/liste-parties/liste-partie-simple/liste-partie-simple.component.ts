@@ -38,7 +38,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   protected onCreerOuSupprimerClick(partieId: string): void {
     if (this.isListePartiesMode) {
-      // Naviguer vers partie-multijouer
+        this.router.navigate(["/partie-multi/" + partieId]);
     } else if (this.isAdminMode) {
       this.supprimerPartie(partieId);
     }

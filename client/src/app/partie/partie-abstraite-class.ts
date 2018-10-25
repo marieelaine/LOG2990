@@ -17,8 +17,10 @@ export abstract class PartieAbstraiteClass {
         this.message = `Il reste ${this.differenceRestantes} différences à trouver`;
         this.blur = false;
         const button = document.getElementById("StartButton");
-        // tslint:disable-next-line:no-non-null-assertion
-        button!.remove();
+        try {
+            // tslint:disable-next-line:no-non-null-assertion
+            button!.remove();
+        } catch (e) {}
         this.chrono.startTimer();
     }
 
