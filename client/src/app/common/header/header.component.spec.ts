@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Location } from "@angular/common";
 import { ListePartiesComponent } from '../../liste-parties/liste-parties.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
