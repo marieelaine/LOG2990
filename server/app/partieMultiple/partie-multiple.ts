@@ -81,14 +81,13 @@ export class DBPartieMultiple {
         });
     }
 
-
-    private async enregistrerPartieMultiple(partie: PartieMultipleInterface, res: Response, errorMsg: string): 
+    private async enregistrerPartieMultiple(partie: PartieMultipleInterface, res: Response, errorMsg: string):
     Promise<PartieMultipleInterface> {
         if (errorMsg === "") {
-            partie._image1PV1 = await this.getImageDiffAsBuffer("../Images/"+partie._nomPartie+"_a_ori.bmp");
-            partie._image2PV1 = await this.getImageDiffAsBuffer("../Images/"+partie._nomPartie+"_b_ori.bmp");
-            partie._image1PV2 = await this.getImageDiffAsBuffer("../Images/"+partie._nomPartie+"_a_mod.bmp");
-            partie._image2PV2 = await this.getImageDiffAsBuffer("../Images/"+partie._nomPartie+"_b_mod.bmp");
+            partie._image1PV1 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_a_ori.bmp");
+            partie._image2PV1 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_b_ori.bmp");
+            partie._image1PV2 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_a_mod.bmp");
+            partie._image2PV2 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_b_mod.bmp");
             const partieMultiple: Document = new this.modelPartie(partie);
             // tslint:disable-next-line:no-console
             await partieMultiple.save();
@@ -129,7 +128,7 @@ export class DBPartieMultiple {
         // tslint:disable-next-line:no-console
         await this.makeDirectory("../Images");
         const script: string = p.resolve("app/genmulti/main.exe");
-        const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, "../Images/"+partie._nomPartie];
+        const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, "../Images/" + partie._nomPartie];
 
         const child: ChildProcess = execFile(script, args);
         this.verifierErreurScript(child, partie, res);
