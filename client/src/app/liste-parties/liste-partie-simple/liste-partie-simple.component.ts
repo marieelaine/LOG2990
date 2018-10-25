@@ -67,7 +67,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     this.listePartieService.deletePartieSimple(partieId);
   }
 
-  private reinitialiserTemps(partieId: string): void {
+  protected reinitialiserTemps(partieId: string): void {
     this.listeParties.forEach((partie: PartieSimple) => {
       if (partie._id === partieId) {
         for (let i = 0 ; i < partie._tempsSolo.length ; i++) {

@@ -37,6 +37,8 @@ export class ListePartiesComponent {
     });
   }
 
+  // protected abstract supprimerPartie(partieId: string): void;
+
   protected setjouerOuReinitialiserAndcreerOuSupprimer(url: string): void {
     if (url === "/liste-parties") {
       this.setToJouerAndCreer();
@@ -120,5 +122,4 @@ export class ListePartiesComponent {
 
       return this.getDisplayTime(minutes, secondes);
   }
-
 }

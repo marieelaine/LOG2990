@@ -23,6 +23,7 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected trouverDifference(): void {
+
         if (this.partieCommence) {
             this.differenceRestantes -= 1;
             this.message = `Il reste ${this.differenceRestantes} differences a trouver`;
@@ -35,9 +36,5 @@ export abstract class PartieAbstraiteClass {
 
     protected terminerPartie(): void {
         this.chrono.stopTimer();
-    }
-
-    protected getPartie(): void{
-
     }
 }

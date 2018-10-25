@@ -62,4 +62,13 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
         // @ts-ignore
         document.getElementById(id).src = URL.createObjectURL(blob);
     }
+
+    protected testerPourDiff(event) {
+        if (this.partieCommence) {
+            const coords: Array<string> = [event.offsetX.toString(), event.offsetY.toString(), this.partieID];
+            const estDiff = this.partieSimpleService.verifierDiff(coords);
+            console.log(estDiff);
+        }
+    }
+
 }
