@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ErrorHandler } from '@angular/core';
 import { PartieSimple } from '../admin/dialog-simple/partie-simple';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
@@ -27,7 +27,8 @@ export class ListePartieServiceService {
 
   public async deletePartieSimple(partieId: string): Promise<void> {
 
-      this.http.delete(this.DELETE_PARTIE_SIMPLE_URL + partieId).toPromise();
+      this.http.delete(this.DELETE_PARTIE_SIMPLE_URL + partieId).toPromise()
+      .catch(() => ErrorHandler);
   }
 
   public getListePartieMultiple(): Observable<PartieMultiple[]> {
@@ -37,16 +38,19 @@ export class ListePartieServiceService {
 
   public async deletePartieMultiple(partieId: string): Promise<void> {
 
-    this.http.delete(this.DELETE_PARTIE_MULTIPLE_URL + partieId).toPromise();
+    this.http.delete(this.DELETE_PARTIE_MULTIPLE_URL + partieId).toPromise()
+    .catch(() => ErrorHandler);
   }
 
   public async reinitialiserTempsPartie(partieId: string, tempsSolo: Array<number>, tempsUnContreUn: Array<number>): Promise<void> {
 
-    this.http.put(this.REINITIALISER_TEMPS_SIMPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise();
+    this.http.put(this.REINITIALISER_TEMPS_SIMPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise()
+    .catch(() => ErrorHandler);
   }
 
   public async reinitialiserTempsPartieMultiple(partieId: string, tempsSolo: Array<number>, tempsUnContreUn: Array<number>): Promise<void> {
 
-    this.http.put(this.REINITIALISER_TEMPS_MULTIPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise();
+    this.http.put(this.REINITIALISER_TEMPS_MULTIPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise()
+    .catch(() => ErrorHandler);
   }
 }
