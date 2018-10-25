@@ -1,17 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ListePartiesComponent } from '../liste-parties.component';
 import { Router } from '@angular/router';
-import {ListePartieServiceService} from "../liste-partie-service.service";
+import { ListePartieServiceService } from "../liste-partie-service.service";
 import { PartieMultiple } from 'src/app/admin/dialog-multiple/partie-mutiple';
-
-export interface PartieMultipleInterface {
-  title: String;
-  imagePath: String;
-  timesSolo: number[];
-  timesOneVsOne: number[];
-  isElevatedActive: boolean;
-  idPartie: number;
-}
 
 @Component({
   selector: 'app-liste-partie-multiple',
@@ -27,29 +18,47 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
     super(router, listePartieService);
   }
 
-  ngOnInit() {
-
+  public ngOnInit() {
+    this.listePartieService.getListePartieMultiple().subscribe((res: PartieMultiple[]) => {
+      this.listeParties = res;
+    });
   }
+
+  protected afficherImage(id: string) {
+    this.ajusterImage(id, this.listeParties, false);
+  }
+
+  protected onJouerOuReinitialiserClick(partieId: string): void {
+      if (this.isListePartiesMode) {
+        this.router.navigate(["/partie-multiple/" + partieId]);
+      } else if (this.isAdminMode) {
+        this.reinitialiserTemps(partieId);
+      }
+    }
+
+  protected onCreerOuSupprimerClick(partieId: string): void {
+      if (this.isListePartiesMode) {
+        // Naviguer vers partie-multiple
+      } else if (this.isAdminMode) {
+        this.supprimerPartie(partieId);
+      }
+    }
+
   protected supprimerPartie(partieId: string): void {
-    // for (let i = 0 ; i < this.listeParties.length ; i++) {
-    //   if (this.listeParties[i]._id === partieId) {
-    //     this.listeParties.splice(i, 1);
-    //   }
-    // }
-    // this.listePartieService.deletePartieSimple(partieId);
+    for (let i = 0 ; i < this.listeParties.length ; i++) {
+      if (this.listeParties[i]["_id"]  === partieId) {
+        this.listeParties.splice(i, 1);
+      }
+    }
+    this.listePartieService.deletePartieMultiple(partieId);
   }
 
   protected reinitialiserTemps(partieId: string): void {
-    // this.listeParties.forEach((partie: PartieMultiple) => {
-    //   if (partie._id === partieId) {
-    //     for (let i = 0 ; i < partie._tempsSolo.length ; i++) {
-    //       partie._tempsSolo[i] = Math.floor(Math.random() * 400) + 100;
-    //     }
-    //     for (let i = 0 ; i < partie._tempsUnContreUn.length ; i++) {
-    //       partie._tempsUnContreUn[i] = Math.floor(Math.random() * 400) + 100;
-    //     }
-    //   }
-    // });
-    // this.listePartieService.reinitialiserTempsPartie(partieId);
+    this.listeParties.forEach((partie: PartieMultiple) => {
+      if (partie["_id"] === partieId) {
+        this.genererTableauTempsAleatoires(partie);
+        this.listePartieService.reinitialiserTempsPartieMultiple(partieId, partie["_tempsSolo"], partie["_tempsUnContreUn"]);
+      }
+    });
   }
 }

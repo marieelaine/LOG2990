@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ListePartiesComponent } from "../liste-parties.component";
 import { Router } from "@angular/router";
-import {ListePartieServiceService} from "../liste-partie-service.service";
+import { ListePartieServiceService } from "../liste-partie-service.service";
 import { PartieSimple } from "../../admin/dialog-simple/partie-simple";
 
 @Component({
@@ -19,30 +19,16 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   }
 
   public ngOnInit() {
-    this.listePartieService.getListeImageSimple().subscribe((res: PartieSimple[]) => {
+    this.listePartieService.getListePartieSimple().subscribe((res: PartieSimple[]) => {
       this.listeParties = res;
     });
   }
 
-  protected ajusterImage(id: String) {
-    for (const partie of this.listeParties) {
-      if (partie["_id"] === id) {
-        const data: string = atob(String(partie["_image1"][0]));
-        let hex = 0x00;
-        const result: Uint8Array = new Uint8Array(data.length);
-
-        for (let i = 0; i < data.length; i++) {
-            hex = data.charCodeAt(i);
-            result[i] = hex;
-        }
-        const blob = new Blob([result], {type: 'image/bmp'});
-        // @ts-ignore
-        document.getElementById(id).src = URL.createObjectURL(blob);
-      }
-    }
+  protected afficherImage(id: string) {
+    this.ajusterImage(id, this.listeParties, true);
   }
 
-  public onJouerOuReinitialiserClick(partieId: string): void {
+  protected onJouerOuReinitialiserClick(partieId: string): void {
     if (this.isListePartiesMode) {
       this.router.navigate(["/partie-solo/" + partieId]);
     } else if (this.isAdminMode) {
@@ -60,7 +46,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   protected supprimerPartie(partieId: string): void {
     for (let i = 0 ; i < this.listeParties.length ; i++) {
-      if (this.listeParties[i]._id === partieId) {
+      if (this.listeParties[i]["_id"] === partieId) {
         this.listeParties.splice(i, 1);
       }
     }
@@ -69,16 +55,11 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   protected reinitialiserTemps(partieId: string): void {
     this.listeParties.forEach((partie: PartieSimple) => {
-      if (partie._id === partieId) {
-        for (let i = 0 ; i < partie._tempsSolo.length ; i++) {
-          partie._tempsSolo[i] = Math.floor(Math.random() * 400) + 100;
-        }
-        for (let i = 0 ; i < partie._tempsUnContreUn.length ; i++) {
-          partie._tempsUnContreUn[i] = Math.floor(Math.random() * 400) + 100;
-        }
+      if (partie["_id"] === partieId) {
+       this.genererTableauTempsAleatoires(partie);
+       this.listePartieService.reinitialiserTempsPartie(partieId, partie["_tempsSolo"], partie["_tempsUnContreUn"]);
       }
     });
-    this.listePartieService.reinitialiserTempsPartie(partieId);
   }
 
 }

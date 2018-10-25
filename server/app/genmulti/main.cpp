@@ -473,66 +473,83 @@ void creerModifications()
             
         }
         else if (modif == 's') {
-            
-            if (!vecSphere.empty())
-                vecSphere.pop_back();
-            
-            else if (!vecSphere.empty())
-                vecCube.pop_back();
-            
-            else if (!vecSphere.empty())
+            bool notChanged = true;
+            while (notChanged) {
+                int random = callRandomNumber(4);
+                if (random == 0 && !vecSphere.empty()){
+                    swap(vecSphere.front(), vecSphere.back());
+                    vecSphere.pop_back();
+                    notChanged = false;
+                }
+                else if (random == 1 && !vecCube.empty()){
+                    swap(vecCube.front(), vecCube.back());
+                    vecCube.pop_back();
+                    notChanged = false;
+                }
+                else if (random == 2 && !vecCone.empty()){
+                    swap(vecCone.front(), vecCone.back());
                     vecCone.pop_back();
-            
-            else if (!vecSphere.empty())
+                    notChanged = false;
+                }
+                else if (random == 3 &&!vecCylindre.empty()){
+                    swap(vecCylindre.front(), vecCylindre.back());
                     vecCylindre.pop_back();
-
-            else if (!vecSphere.empty())
+                    notChanged = false;
+                }
+                else if (random == 4 &&!vecPyramide.empty()){
+                    swap(vecPyramide.front(), vecPyramide.back());
                     vecPyramide.pop_back();
-            
+                    notChanged = false;
+                }    
+            }
             cout << "supression" << endl;
 
         }
         else if (modif == 'c') {
-            // int random = callRandomNumber(4);
-            // if (random == 0) {
-                // int randomForm = callRandomNumber(vecSphere.size() -1);
-                // if(!vecSphere.empty()){
-                //     StructSphere form = vecSphere.at(randomForm);
-                //     matrModel.PushMatrix();
-                //     {
-                //         matrModel.Translate( form.translateX, form.translateY, form.translateZ);
-                //         matrModel.Rotate(geo.angleReference, form.angleX, form.angleY, form.angleZ);
-                //         matrModel.Scale(form.tailleX, form.tailleY, form.tailleZ);
-                //         glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
-                //         glVertexAttrib3f( locColor, callRandom(), callRandom(), callRandom());
-                //         afficherSphere();
-                //     }
-                //     matrModel.PopMatrix(); glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
-                // }
-            // else if (random == 1) {
-            //     vector<StructCube> vec = vecCube;
-            //     int randomForm = callRandomNumber(vec.size() -1);
-            //     StructCube form = vec.at(randomForm);
-            //     form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
-            // }
-            // else if (random == 2) {
-            //     vector<StructCone> vec = vecCone;
-            //     int randomForm = callRandomNumber(vec.size() -1);
-            //     StructCone form = vec.at(randomForm);
-            //     form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
-            // }
-            // else if (random == 3) {
-            //     vector<StructCylindre> vec = vecCylindre;
-            //     int randomForm = callRandomNumber(vec.size() -1);
-            //     StructCylindre form = vec.at(randomForm);
-            //     form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
-            // }
-            // else if (random == 4) {
-            //     vector<StructPyramide> vec = vecPyramide;
-            //     int randomForm = callRandomNumber(vec.size() -1);
-            //     StructPyramide form = vec.at(randomForm);
-            //     form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
-            // }
+            bool notChanged = true;
+            while (notChanged) {
+                int random = callRandomNumber(4);
+                if (random == 0 && !vecSphere.empty()){
+                    StructSphere form = vecSphere.front();
+                    swap(vecSphere.front(), vecSphere.back());
+                    vecSphere.pop_back();
+                    form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+                    vecSphere.push_back(form);
+                    notChanged = false;
+                }
+                if (random == 1 && !vecCube.empty()){
+                    StructCube form = vecCube.front();
+                    swap(vecCube.front(), vecCube.back());
+                    vecCube.pop_back();
+                    form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+                    vecCube.push_back(form);
+                    notChanged = false;
+                }
+                if (random == 2 && !vecCone.empty()){
+                    StructCone form = vecCone.front();
+                    swap(vecCone.front(), vecCone.back());
+                    vecCone.pop_back();
+                    form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+                    vecCone.push_back(form);
+                    notChanged = false;
+                }
+                if (random == 3 && !vecCylindre.empty()){
+                    StructCylindre form = vecCylindre.front();
+                    swap(vecCylindre.front(), vecCylindre.back());
+                    vecCylindre.pop_back();
+                    form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+                    vecCylindre.push_back(form);
+                    notChanged = false;
+                }
+                if (random == 4 && !vecPyramide.empty()){
+                    StructPyramide form = vecPyramide.front();
+                    swap(vecPyramide.front(), vecPyramide.back());
+                    vecPyramide.pop_back();
+                    form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+                    vecPyramide.push_back(form);
+                    notChanged = false;
+                }    
+            }
             cout << "couleur" << endl;
 
         }
@@ -599,16 +616,16 @@ void FenetreTP::afficherScene(int index)
 
 void creerEtat(const char* argv[], Etat& etat){
 
-    etat.dimBoite = 10.0;
+    etat.dimBoite = 17.5;
     etat.theme =  argv[1];
     etat.nombreFormes = atoi(argv[2]);
     etat.modifications = argv[3];
     etat.filename = argv[4];
 
-    string capture1 = string("/home/camarois/git/LOG2990/server/genmulti/") + etat.filename + string("_a_ori.bmp");
-    string capture2 = string("/home/camarois/git/LOG2990/server/genmulti/") + etat.filename + string("_b_ori.bmp");
-    string capture3 = string("/home/camarois/git/LOG2990/server/genmulti/") + etat.filename + string("_a_mod.bmp");
-    string capture4 = string("/home/camarois/git/LOG2990/server/genmulti/") + etat.filename + string("_b_mod.bmp");
+    string capture1 = string(etat.filename + string("_a_ori.bmp"));
+    string capture2 = string(etat.filename + string("_b_ori.bmp"));
+    string capture3 = string(etat.filename + string("_a_mod.bmp"));
+    string capture4 = string(etat.filename + string("_b_mod.bmp"));
 
     etat.capture1 = capture1;
     etat.capture2 = capture2; 
@@ -702,25 +719,25 @@ int main( int argc, const char* argv[] )
                 fenetre.afficherScene(index);
                 fenetre.swap();
                 
-                this_thread::sleep_for(chrono::seconds(3));
+                //this_thread::sleep_for(chrono::seconds(1));
                 camera.modeLookAt = !camera.modeLookAt;
                 fenetre.afficherScene(index); 
                 fenetre.swap();
                 index = 0;
                 creerModifications();
 
-                this_thread::sleep_for(chrono::seconds(3));
+                //this_thread::sleep_for(chrono::seconds(1));
                 camera.modeLookAt = !camera.modeLookAt;
                 fenetre.afficherScene(index); 
                 fenetre.swap();
 
                 creerModifications();
-                this_thread::sleep_for(chrono::seconds(3));
+                //this_thread::sleep_for(chrono::seconds(1));
                 camera.modeLookAt = !camera.modeLookAt;
                 fenetre.afficherScene(index); 
                 fenetre.swap();
                 
-                this_thread::sleep_for(chrono::seconds(3));
+                //this_thread::sleep_for(chrono::seconds(1));
                 fenetre.conclure();
             }
             else {

@@ -1,13 +1,10 @@
 import { Component, Inject } from '@angular/core';
-import { ListePartiesComponent } from '../../liste-parties/liste-parties.component';
-import { PartieMultipleInterface } from '../../liste-parties/liste-partie-multiple/liste-partie-multiple.component';
 import { DialogAbstrait } from '../dialog-abstrait';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { DialogData } from '../admin.component';
+import { DialogData, Checkbox } from '../admin.component';
 import { HttpClient } from '@angular/common/http';
-import { ParticlesModule } from 'angular-particle';
 import { PartieMultiple } from './partie-mutiple';
-import * as Buffer from "Buffer";
+import * as Buffer from "buffer";
 import { PartieMultipleService } from '../partie-multiple.service';
 
 @Component({
@@ -18,9 +15,34 @@ import { PartieMultipleService } from '../partie-multiple.service';
 
 export class DialogMultipleComponent extends DialogAbstrait {
 
-  private partieMultiple: PartieMultipleInterface;
-  private listeParties: ListePartiesComponent;
   protected toggleClassButton: boolean = false;
+
+  protected checkboxArray: Checkbox[] =  [
+  {
+    name: "Ajout",
+    checked: false,
+    value: "a"
+  },
+  {
+    name: "Suppression",
+    checked: false,
+    value: "s"
+  },
+  {
+    name: "Changement de couleur",
+    checked: false,
+    value: "c"
+  }
+  ];
+
+  protected getCheckboxes(): void {
+    const arr: Array<string> = this.checkboxArray.filter((x) => x.checked === true).map((x) => x.value);
+    let typeModif: string = "";
+    for (const item of arr) {
+      typeModif += item;
+    }
+    this.data.typeModification = typeModif;
+  }
 
   public constructor(
     dialogRef: MatDialogRef<DialogMultipleComponent>,
@@ -37,7 +59,6 @@ export class DialogMultipleComponent extends DialogAbstrait {
     }
 
   protected onSubmit(): void {
-    console.log("hello du onSubmit");
     this.ajouterPartie();
   }
 
@@ -51,12 +72,9 @@ export class DialogMultipleComponent extends DialogAbstrait {
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
                                                       this["data"].quantiteObjets, this["data"].theme,
                                                       this["data"].typeModification);
-    console.log(result);
     this.partieMultipleService.register(result)
       .subscribe(
         (data) => {
-          console.log(data);
-          console.log("allo du ajouterPartie Client");
         },
         (error) => {
           console.error(error);

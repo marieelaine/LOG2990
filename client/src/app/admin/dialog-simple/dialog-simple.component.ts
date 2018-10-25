@@ -7,7 +7,7 @@ import { PartieSimple } from "./partie-simple";
 import { PartieSimpleService } from "../partie-simple.service";
 import { Observable } from "rxjs";
 import { DialogAbstrait } from "../dialog-abstrait";
-import * as Buffer from "Buffer";
+import * as Buffer from "buffer";
 
 export const IMAGE_URL: string = "http://localhost:3000/images/";
 const URL_AJOUTER: string = IMAGE_URL + "ajouter/";
