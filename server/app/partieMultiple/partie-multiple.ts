@@ -9,7 +9,6 @@ import "reflect-metadata";
 import { injectable } from "inversify";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import { execFile, ChildProcess } from "child_process";
-//import { RoutesPartieMultiple } from "../routesPartieMultiple";
 
 interface PartieMultipleInterface {
     _id: string;
@@ -121,32 +120,10 @@ export class DBPartieMultiple {
         });
     }
 
-    // private async ajouterPartie(partie: PartieMultipleInterface, res: Response): Promise<void> {
-    //     const doc: Document = new this.modelPartie(partie);
-    //     await doc.save();
-    // }
-
-    // private async deletePartie(nomPartie: String, res: Response): Promise<Response> {
-
-    // }
-
-    // private async obtenirPartieId(nomPartie: String): Promise<string> {
-
-    // }
-
     private async deleteImagesDirectory(): Promise<void> {
         const dir: string = "../Images";
         await fsx.remove(dir);
     }
-
-    // private async runChild(partie: PartieMultipleInterface): Promise<ChildProcess> {
-    //     const script: string = p.resolve("app/genmulti/main.exe");
-    //     console.log(script);
-    //     const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, "../Images/"+partie._nomPartie];
-
-    //     const child: ChildProcess = execFile(script, args);
-    //     return child;
-    // }
 
     private async genererScene(partie: PartieMultipleInterface, res: Response): Promise<void> {
         // tslint:disable-next-line:no-console
@@ -167,6 +144,19 @@ export class DBPartieMultiple {
         }
 
         await mkdirPromise(dir);
+    }
+
+    private async deletePartie(idPartie: String, res: Response): Promise<Response> {
+        try {
+            await this.modelPartie.findOneAndRemove(this.modelPartie.findById(idPartie)).catch(() => {
+                throw new Error();
+            });
+
+            return res.status(201);
+        } catch (err) {
+
+            return res.status(501).json(err);
+        }
     }
 
     private async getListePartie(): Promise<PartieMultipleInterface[]> {
@@ -193,19 +183,15 @@ export class DBPartieMultiple {
         }
     }
 
-    // public async requetePartieSimpleId(req: Request, res: Response): Promise<void> {
-    //     res.send(await this.obtenirPartieId(req.params.id));
-    // }
+    public async requeteDeletePartie(req: Request, res: Response): Promise<void> {
+        try {
+            await this.deletePartie(req.params.id, res);
 
-    // public async requeteDeletePartie(req: Request, res: Response): Promise<void> {
-    //     try {
-    //         await this.deletePartie(req.params.id, res);
-
-    //         res.status(201);
-    //     } catch (err) {
-    //         res.status(501).json(err);
-    //     }
-    // }
+            res.status(201);
+        } catch (err) {
+            res.status(501).json(err);
+        }
+    }
 
     public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();

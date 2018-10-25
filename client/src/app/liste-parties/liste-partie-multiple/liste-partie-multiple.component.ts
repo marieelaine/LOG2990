@@ -21,7 +21,6 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
   public ngOnInit() {
     this.listePartieService.getListePartieMultiple().subscribe((res: PartieMultiple[]) => {
       this.listeParties = res;
-      console.log(res);
     });
   }
 
