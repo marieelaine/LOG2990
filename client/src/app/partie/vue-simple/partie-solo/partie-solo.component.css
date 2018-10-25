@@ -38,13 +38,6 @@ canvas {
     background-color: #f2eeee;
 }
 
-.chatBox{
-    background-color: #bdb5b5;
-    width: 100%;
-    height: ;
-    border-radius: 10px;
-}
-
 .chatperson{
     display: block;
     border-bottom: 1px solid #eee;
@@ -185,3 +178,7 @@ canvas {
       text-align: center;
       margin-top: 2%;
   }
+
+  .chat{
+    margin-bottom:1%;
+  }  

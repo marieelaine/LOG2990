@@ -15,20 +15,21 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                        protected partieSimpleService: PartieSimpleService
     ) {
       super();
-      this.getID();
-      this.getPartie();
+      this.setID();
+      this.setPartie();
       this.differenceRestantes = 14;
     }
 
+    protected nomPartie: string;
     protected partieID: string;
     protected partie: PartieMultiple;
     protected diffTrouvee: number[] = [];
 
-    protected getID(): void {
+    protected setID(): void {
     this.partieID = this.route.snapshot.paramMap.get('idPartie') + "";
   }
 
-    protected getPartie(): void {
+    protected setPartie(): void {
       this.partieSimpleService.getPartieMultiple(this.partieID).subscribe((res: PartieMultiple) => {
         this.partie = res;
         this.setup();
@@ -36,6 +37,8 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     }
 
     protected setup(): void {
+      this.nomPartie = this.partie["_nomPartie"].charAt(0).toUpperCase() + this.partie["_nomPartie"].slice(1);
+
       const data1: string = atob(String(this.partie["_image1PV1"][0]));
       const data2: string = atob(String(this.partie["_image1PV2"][0]));
       const data3: string = atob(String(this.partie["_image2PV1"][0]));
