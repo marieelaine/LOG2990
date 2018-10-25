@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ErrorHandler} from '@angular/core';
 import { PartieAbstraiteClass } from '../../partie-abstraite-class';
 import { ActivatedRoute} from "@angular/router";
 import { PartieSimple} from "../../../admin/dialog-simple/partie-simple";
@@ -13,23 +13,24 @@ import { PartieSimpleService} from "../../partie-simple.service";
 
 export class PartieMultijoueurComponent extends PartieAbstraiteClass {
 
-    public constructor(private route: ActivatedRoute,
-                       protected partieSimpleService: PartieSimpleService
-    ) {
-        super();
-        this.getID();
-        this.getPartie();
-        this.message = "PARTIE MULTIJOUEUR EN COURS DE CONSTRUCTION";
-    }
-
     protected partieID: string;
+    protected nomPartie: string;
     protected partie: PartieSimple;
 
-    protected getID(): void {
+    public constructor(private route: ActivatedRoute,
+                       protected partieSimpleService: PartieSimpleService) {
+        super();
+        this.differenceRestantes = 7;
+        this.setID();
+        this.setPartie();
+    }
+
+    protected diffTrouvee: number[] = [];
+    protected setID(): void {
         this.partieID = this.route.snapshot.paramMap.get('idPartie') + "";
     }
 
-    protected getPartie(): void {
+    protected setPartie(): void {
         this.partieSimpleService.getPartieSimple(this.partieID).subscribe((res: PartieSimple) => {
             this.partie = res;
             this.setup();
@@ -37,6 +38,7 @@ export class PartieMultijoueurComponent extends PartieAbstraiteClass {
     }
 
     protected setup(): void {
+        this.nomPartie = this.partie["_nomPartie"].charAt(0).toUpperCase() + this.partie["_nomPartie"].slice(1);
 
         const data1: string = atob(String(this.partie["_image1"][0]));
         const data2: string = atob(String(this.partie["_image2"][0]));
@@ -59,23 +61,36 @@ export class PartieMultijoueurComponent extends PartieAbstraiteClass {
         document.getElementById(id).src = URL.createObjectURL(blob);
     }
 
-    protected testerPourDiff(event): number {
+    protected testerPourDiff(event): void {
 
         if (this.partieCommence) {
 
+            const coords = "[" + event.offsetX + ", " + event.offsetY + "]";
+            console.log(coords);
+
             let i: number = 0;
             for (const diff of this.partie["_imageDiff"]) {
-                for (const coord of diff) {
+                for (const pixel of diff) {
 
-                    if (parseInt(coord.substring(1, 4), 10) === event.offsetX && parseInt(coord.substring(5, 8), 10) === event.offsetY) {
-                        return i + 1;
+                    if (coords === pixel) {
+                        this.differenceTrouver(i);
                     }
                 }
                 i++;
             }
         }
-
-        return 0;
     }
 
+    protected differenceTrouver(i): void {
+        if (!this.diffTrouvee.includes(i)) {
+            this.diffTrouvee.push(i);
+            this.trouverDifference();
+        }
+    }
+
+    protected ajouterTemps(temps: number): void {
+        this.partie["_tempsSolo"].push(temps);
+        this.partieSimpleService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
+            .catch(() => ErrorHandler);
+    }
 }
