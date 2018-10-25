@@ -25,7 +25,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   }
 
   protected afficherImage(id: string) {
-    this.ajusterImage(id, this.listeParties);
+    this.ajusterImage(id, this.listeParties, true);
   }
 
   protected onJouerOuReinitialiserClick(partieId: string): void {

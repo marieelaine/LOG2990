@@ -112,7 +112,7 @@ export class DBPartieSimple {
             // socketServer.envoyerMessageErreurScript(errorMsg);
         }
 
-        //await this.deleteImagesDirectory();
+        await this.deleteImagesDirectory();
 
         return partie;
     }

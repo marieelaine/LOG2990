@@ -21,11 +21,12 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
   public ngOnInit() {
     this.listePartieService.getListePartieMultiple().subscribe((res: PartieMultiple[]) => {
       this.listeParties = res;
+      console.log(res);
     });
   }
 
   protected afficherImage(id: string) {
-    this.ajusterImage(id, this.listeParties);
+    this.ajusterImage(id, this.listeParties, false);
   }
 
   protected onJouerOuReinitialiserClick(partieId: string): void {
