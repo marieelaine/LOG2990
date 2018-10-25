@@ -6,7 +6,16 @@ img{
     margin: 0 auto;
 }
 
-canvas {
+.vue{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.scene{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .blurImg{

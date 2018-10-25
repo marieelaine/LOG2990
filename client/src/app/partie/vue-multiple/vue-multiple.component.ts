@@ -36,8 +36,8 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
 
     protected setup(): void {
       const data1: string = atob(String(this.partie["_image1PV1"][0]));
-      const data2: string = atob(String(this.partie["_image2PV1"][0]));
-      const data3: string = atob(String(this.partie["_image1PV2"][0]));
+      const data2: string = atob(String(this.partie["_image1PV2"][0]));
+      const data3: string = atob(String(this.partie["_image2PV1"][0]));
       const data4: string = atob(String(this.partie["_image2PV2"][0]));
 
       this.ajusterSourceImage(data1, "imageG1");
