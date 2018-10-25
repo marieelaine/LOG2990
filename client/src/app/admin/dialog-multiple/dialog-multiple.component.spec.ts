@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DialogMultipleComponent } from './dialog-multiple.component';
 import {
@@ -81,7 +81,7 @@ describe('DialogMultipleComponent', () => {
         });
     });
 
-    describe("function checkIfOutOfBoundNameLength", () =>{
+    describe("function checkIfOutOfBoundNameLength", () => {
         it("Devrait retourner vrai si aucun nom de partie multiple n'est présent", () => {
             component["data"].multipleGameName = "";
 
@@ -115,16 +115,17 @@ describe('DialogMultipleComponent', () => {
         });
     });
 
-    // describe("Fonction onClickAjouterPartie", () => {
-    //     it("Devrait appeller la fonction setOutOfBoundNameLengthMessage", () => {
-    //         // Arrange
-    //         const spy: jasmine.Spy = spyOn<any>(component, "setOutOfBoundNameLengthMessage");
+    describe("Fonction onClickAjouterPartie", () => {
+        it("Devrait appeller la fonction setOutOfBoundNameLengthMessage", () => {
+            // Arrange
+            // tslint:disable-next-line:no-any
+            const spy: jasmine.Spy = spyOn<any>(component, "setOutOfBoundNameLengthMessage");
 
-    //         // Act
-    //         component["onClickAjouterPartie"]();
+            // Act
+            component["onClickAjouterPartie"]();
 
-    //         // Assert
-    //         expect(spy).toHaveBeenCalled();
-    //     });
-    // });
+            // Assert
+            expect(spy).toHaveBeenCalled();
+        });
+    });
 });

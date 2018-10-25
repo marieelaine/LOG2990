@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { DialogSimpleComponent } from "./dialog-simple.component";
 import {
@@ -10,6 +10,7 @@ import { FormsModule } from "@angular/forms";
 
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { createMockImageFile } from "../../../testing/file-creator";
+import { By } from "@angular/platform-browser";
 
 describe("DialogSimpleComponent", () => {
     let component: DialogSimpleComponent;
@@ -41,17 +42,17 @@ describe("DialogSimpleComponent", () => {
         expect(component).toBeTruthy();
     });
 
-    //   it("should return true if all error messages are null", () => {
-    //     component["outOfBoundNameLengthMessage"] = "";
-    //     component["wrongImageSizeOrTypeMessage"] = "";
-    //     component["wrongNumberOfImagesMessage"] = "";
-    //     expect(component["checkIfNoErrorMessage"]()).toBe(true);
-    //   });
+    it("should return true if all error messages are null", () => {
+        component["outOfBoundNameLengthMessage"] = "";
+        component["wrongImageSizeOrTypeMessage"] = "";
+        component["wrongNumberOfImagesMessage"] = "";
+        expect(component["checkIfNoErrorMessage"]()).toBe(true);
+    });
 
-    //   it("should return false if at least one error message is not null", () => {
-    //     component["outOfBoundNameLengthMessage"] = "Error message";
-    //     expect(component["checkIfNoErrorMessage"]()).toBe(false);
-    //   });
+    it("should return false if at least one error message is not null", () => {
+        component["outOfBoundNameLengthMessage"] = "Error message";
+        expect(component["checkIfNoErrorMessage"]()).toBe(false);
+    });
 
     it("should set outOfBoundNameLengthMessage if name does not meet requierments", () => {
         component["data"].simpleGameName = "A"; // Nom plus court que trois caractères
@@ -84,31 +85,34 @@ describe("DialogSimpleComponent", () => {
         expect(component["wrongNumberOfImagesMessage"]).toEqual("");
     });
 
-    // it("should call onFileSelectedImage when an image is uploaded", () => {
-    // const uploadImage1 = fixture.debugElement.query(By.css("#uploadImage1")).nativeElement;
+    it("should call onFileSelectedImage when an image is uploaded", () => {
+    const uploadImage1 = fixture.debugElement.query(By.css("#uploadImage1")).nativeElement;
 
-    // const spy: jasmine.Spy = spyOn(component, "onFileSelectedImage");
-    // uploadImage1.dispatchEvent(new Event("change"));
-    // expect(spy).toHaveBeenCalled();
-    // });
+    // tslint:disable-next-line:no-any
+    const spy: jasmine.Spy = spyOn<any>(component, "onFileSelectedImage");
+    uploadImage1.dispatchEvent(new Event("change"));
+    expect(spy).toHaveBeenCalled();
+    });
 
-    // it("should close the dialog if cancel button is clicked", () => {
-    //   const onNoClickButton = fixture.debugElement.query(By.css("#onNoClickButton")).nativeElement;
+    it("should close the dialog if cancel button is clicked", () => {
+      const onNoClickButton = fixture.debugElement.query(By.css("#onNoClickButton")).nativeElement;
 
-    //   const spy: jasmine.Spy = spyOn(component, "onNoClick");
-    //   onNoClickButton.dispatchEvent(new Event("click"));
+      // tslint:disable-next-line:no-any
+      const spy: jasmine.Spy = spyOn<any>(component, "onNoClick");
+      onNoClickButton.dispatchEvent(new Event("click"));
 
-    //   expect(spy).toHaveBeenCalled();
-    // });
+      expect(spy).toHaveBeenCalled();
+    });
 
-    // it("should call onAddSimpleGameClick when an add game button is clicked", () => {
-    //   const onAddClickButton = fixture.debugElement.query(By.css("#onAddClickButton")).nativeElement;
+    it("should call onAddSimpleGameClick when an add game button is clicked", () => {
+      const onAddClickButton = fixture.debugElement.query(By.css("#onAddClickButton")).nativeElement;
 
-    //   const spy: jasmine.Spy = spyOn(component, "onAddSimpleGameClick");
-    //   onAddClickButton.dispatchEvent(new Event("click"));
+      // tslint:disable-next-line:no-any
+      const spy: jasmine.Spy = spyOn<any>(component, "onAddSimpleGameClick");
+      onAddClickButton.dispatchEvent(new Event("click"));
 
-    //   expect(spy).toHaveBeenCalled();
-    // });
+      expect(spy).toHaveBeenCalled();
+    });
 
     it("should set wrongImageSizeOrTypeMessage image does not respect good size", () => {
         const imageInfo = { "size": 64, "width": 1080, "height": 480 };
