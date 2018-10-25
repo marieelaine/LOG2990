@@ -1,4 +1,5 @@
 import { ChronoComponent } from "../chrono/chrono.component";
+import {ErrorHandler} from "@angular/core";
 
 export abstract class PartieAbstraiteClass {
 
@@ -33,7 +34,7 @@ export abstract class PartieAbstraiteClass {
             this.message = `Il reste ${this.differenceRestantes - this.differencesTrouvees} différences à trouver`;
             this.audio.src = "../assets/diffTrouvee.mp3";
             this.audio.load();
-            this.audio.play();
+            this.audio.play().catch(() => ErrorHandler);
         }
         if (this.differenceRestantes === this.differencesTrouvees) {
             this.partieCommence = false;
@@ -46,7 +47,7 @@ export abstract class PartieAbstraiteClass {
         this.message = "FELICITATION";
         this.audio.src = "../assets/applause.mp3";
         this.audio.load();
-        this.audio.play();
+        this.audio.play().catch(() => ErrorHandler);
         this.ajouterTemps(this.chrono.getTime());
     }
 
