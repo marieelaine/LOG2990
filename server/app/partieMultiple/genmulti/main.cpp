@@ -605,10 +605,10 @@ void creerEtat(const char* argv[], Etat& etat){
     etat.modifications = argv[3];
     etat.filename = argv[4];
 
-    string capture1 = string("/home/camarois/git/LOG2990/server/genmulti/") + etat.filename + string("_a_ori.bmp");
-    string capture2 = string("/home/camarois/git/LOG2990/server/genmulti/") + etat.filename + string("_b_ori.bmp");
-    string capture3 = string("/home/camarois/git/LOG2990/server/genmulti/") + etat.filename + string("_a_mod.bmp");
-    string capture4 = string("/home/camarois/git/LOG2990/server/genmulti/") + etat.filename + string("_b_mod.bmp");
+    string capture1 = string("/home/camarois/git/LOG2990/server/app/partieMultiple/genmulti/") + etat.filename + string("_a_ori.bmp");
+    string capture2 = string("/home/camarois/git/LOG2990/server/app/partieMultiple/genmulti/") + etat.filename + string("_b_ori.bmp");
+    string capture3 = string("/home/camarois/git/LOG2990/server/app/partieMultiple/genmulti/") + etat.filename + string("_a_mod.bmp");
+    string capture4 = string("/home/camarois/git/LOG2990/server/app/partieMultiple/genmulti/") + etat.filename + string("_b_mod.bmp");
 
     etat.capture1 = capture1;
     etat.capture2 = capture2; 
