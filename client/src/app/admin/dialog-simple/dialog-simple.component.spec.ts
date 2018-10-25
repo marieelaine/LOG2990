@@ -55,33 +55,33 @@ describe("DialogSimpleComponent", () => {
     });
 
     it("should set outOfBoundNameLengthMessage if name does not meet requierments", () => {
-        component["data"].simpleGameName = "A"; // Nom plus court que trois caractères
-        component["setOutOfBoundNameLengthMessage"]();  // Cette fonction teste aussi checkIfOutOfBoundNameLength()
+        component["data"].simpleGameName = "A";
+        component["setOutOfBoundNameLengthMessage"]();
         expect(component["outOfBoundNameLengthMessage"]).toEqual("*Le nom du jeu doit être entre 3 et 20 charactères.");
     });
 
     it("should set outOfBoundNameLengthMessage if name does not meet requierments", () => {
-        component["data"].simpleGameName = "aaaaaaaaaaaaaaaaaaaaa"; // Nom plus long que vingt caractères
-        component["setOutOfBoundNameLengthMessage"]();  // Cette fonction teste aussi checkIfOutOfBoundNameLength()
+        component["data"].simpleGameName = "aaaaaaaaaaaaaaaaaaaaa";
+        component["setOutOfBoundNameLengthMessage"]();
         expect(component["outOfBoundNameLengthMessage"]).toEqual("*Le nom du jeu doit être entre 3 et 20 charactères.");
     });
 
     it("should not set outOfBoundNameLengthMessage if name meet requierments", () => {
-        component["data"].simpleGameName = "Nissan Patrol"; // Nom correct
-        component["setOutOfBoundNameLengthMessage"]();  // Cette fonction teste aussi checkIfOutOfBoundNameLength()
+        component["data"].simpleGameName = "Nissan Patrol";
+        component["setOutOfBoundNameLengthMessage"]();
         expect(component["outOfBoundNameLengthMessage"]).toEqual("");
     });
 
     it("should set wrongNumberOfImagesMessage if there are less than two images", () => {
         component["selectedFiles"][0] = createMockImageFile(true);
-        component["setWrongNumberOfImagesMessage"]();  // Cette fonction teste aussi checkIfWrongNumberOfImages()
+        component["setWrongNumberOfImagesMessage"]();
         expect(component["wrongNumberOfImagesMessage"]).toEqual("*Vous devez entrer deux images.");
     });
 
     it("should not set wrongNumberOfImagesMessage if there are two images", () => {
         component["selectedFiles"][0] = createMockImageFile(true);
         component["selectedFiles"][1] = createMockImageFile(true);
-        component["setWrongNumberOfImagesMessage"]();  // Cette fonction teste aussi checkIfWrongNumberOfImages()
+        component["setWrongNumberOfImagesMessage"]();
         expect(component["wrongNumberOfImagesMessage"]).toEqual("");
     });
 
@@ -116,8 +116,7 @@ describe("DialogSimpleComponent", () => {
 
     it("should set wrongImageSizeOrTypeMessage image does not respect good size", () => {
         const imageInfo = { "size": 64, "width": 1080, "height": 480 };
-        component["selectedFiles"][0] = createMockImageFile(true);  // isBMP = true
-        // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
+        component["selectedFiles"][0] = createMockImageFile(true);
         component["setWrongImageSizeOrTypeMessage"](imageInfo);
         expect(component["wrongImageSizeOrTypeMessage"]).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
     });
@@ -125,16 +124,14 @@ describe("DialogSimpleComponent", () => {
     it("should set wrongImageSizeOrTypeMessage image does not respect good type", () => {
         const imageInfo = { "size": 24, "width": 640, "height": 480 };
         component["currentImageNumber"] = 0;
-        component["selectedFiles"][0] = createMockImageFile(false);  // isBMP = false
-        // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
+        component["selectedFiles"][0] = createMockImageFile(false);
         component["setWrongImageSizeOrTypeMessage"](imageInfo);
         expect(component["wrongImageSizeOrTypeMessage"]).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
     });
 
     it("should not set wrongImageSizeOrTypeMessage image respect good type and size", () => {
         const imageInfo = { "size": 24, "width": 640, "height": 480 };
-        component["selectedFiles"][0] = createMockImageFile(true);  // isBMP = true
-        // Cette fonction teste aussi checkIfWrongImageSize() et checkIfWrongImageType
+        component["selectedFiles"][0] = createMockImageFile(true);
         component["setWrongImageSizeOrTypeMessage"](imageInfo);
         expect(component["wrongImageSizeOrTypeMessage"]).toEqual("");
     });
