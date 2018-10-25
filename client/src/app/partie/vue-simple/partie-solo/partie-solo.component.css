@@ -6,6 +6,9 @@ img{
     margin: 0 auto;
 }
 
+canvas {
+}
+
 .blurImg{
     filter: blur(1.5rem);
 }

@@ -43,7 +43,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
         const data2: string = atob(String(this.partie["_image2"][0]));
 
         this.ajusterSourceImage(data1, "imageG");
-        this.ajusterSourceImage(data2, "imageD");
+       // this.ajusterSourceImage(data2, "imageD");
 
     }
 
@@ -61,24 +61,20 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
     }
 
     protected testerPourDiff(event): number {
+
         if (this.partieCommence) {
-            const  coords: string = "[" + event.offsetX.toString() + "  " + event.offsetY.toString() + "]";
 
             let i: number = 0;
-
             for (const diff of this.partie["_imageDiff"]) {
                 for (const coord of diff) {
-                    console.log(coord, coords)
-                    if (coord === coords) {
-                        console.log(i+1);
 
+                    if (parseInt(coord.substring(1, 4), 10) === event.offsetX && parseInt(coord.substring(5, 8), 10) === event.offsetY) {
                         return i + 1;
                     }
                 }
                 i++;
             }
         }
-        console.log(0);
 
         return 0;
     }
