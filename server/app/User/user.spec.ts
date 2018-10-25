@@ -4,17 +4,27 @@ import { DBUser } from "./user";
 describe("BaseDeDonneesUsager classe", () => {
     describe("Constructeur", () => {
         let user: DBUser.User;
+
         beforeEach(() => {
             user = new DBUser.User();
         });
 
-        it ("should do nothing", () => {
-            assert(true);
-        });
+        describe("Constructeur", () => {
+            it ("Devrait etre defini", () => {
+                assert.isDefined(user);
+            });
 
-        it ("should be defined", () => {
-            assert.isDefined(user);
-        });
+            it("Devrait definir l'attribut baseDeDonnes", () => {
+                assert.isDefined(user["baseDeDonnees"]);
+            });
 
+            it("Devrait definir l'attribut schema", () => {
+                assert.isDefined(user["schema"]);
+            });
+
+            it("Devrait definir l'attribut modelUser", () => {
+                assert.isDefined(user["modelUser"]);
+            });
+        });
     });
 });

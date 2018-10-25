@@ -9,8 +9,7 @@ export class RoutesPartieMultiple extends ServiceWeb {
 
     public readonly mainRoute: string = "/partieMultiple";
 
-    public constructor(@inject(Types.PartieMultiple)
-    private partieMultiple: DBPartieMultiple = new DBPartieMultiple()) {
+    public constructor(@inject(Types.PartieMultiple) private partieMultiple: DBPartieMultiple) {
         super();
     }
 
