@@ -131,9 +131,10 @@ export class DBPartieSimple {
         let i: number = 0;
         let arrayDiff: Array<string> = new Array<string>();
 
-        rl.on("line", (line: string) => {
+        rl.on("line", async(line: string) => {
             if (line.startsWith("end")) {
-                this.enregistrerPartieSimple(diffArrays, partie);
+                diffArrays.push(arrayDiff);
+                await this.enregistrerPartieSimple(diffArrays, partie);
             } else if (i === 0) {
                 arrayDiff = new Array<string>();
                 i++;
@@ -310,5 +311,10 @@ export class DBPartieSimple {
     public async requeteGetPartieSimple(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();
         res.send(await this.getPartieSimple(req.params.id, res));
+    }
+
+    public async requeteVerifDiff(req: Request, res: Response): Promise<void> {
+        await
+
     }
 }

@@ -1,6 +1,6 @@
 img{
-    max-width: 95%;
-    max-height:95%;
+    width: 640px;
+    height:480px;
     border-radius: 35px;
     display: block;
     margin: 0 auto;
