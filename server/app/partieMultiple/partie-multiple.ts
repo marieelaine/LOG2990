@@ -90,7 +90,7 @@ export class DBPartieMultiple {
             partie._image2PV2 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_b_mod.bmp");
             const partieMultiple: Document = new this.modelPartie(partie);
             // tslint:disable-next-line:no-console
-            await partieMultiple.save();
+            await partieMultiple.save().catch(() => console.error());
         } else {
             // Retourner errorMsg vers le client
             // socketServer.envoyerMessageErreurScript(errorMsg);

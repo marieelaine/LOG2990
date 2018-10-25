@@ -1,5 +1,5 @@
-import { Component, ViewChild, OnInit, Inject } from "@angular/core";
-import { MatDialog, MatMenuTrigger, MAT_DIALOG_DATA } from "@angular/material";
+import { Component, ViewChild, OnInit } from "@angular/core";
+import { MatDialog, MatMenuTrigger } from "@angular/material";
 import { DialogSimpleComponent, } from "./dialog-simple/dialog-simple.component";
 import { DialogMultipleComponent } from "./dialog-multiple/dialog-multiple.component";
 import * as event from "../../../../common/communication/evenementsSocket";
