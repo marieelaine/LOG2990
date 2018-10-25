@@ -104,15 +104,17 @@ export class DBPartieSimple {
         if (errorMsg === "") {
             partie._imageDiff = await this.getImageDiffAsBuffer();
             const partieSimple: Document = new this.modelPartieBuffer(partie);
+            // tslint:disable-next-line:no-console
             console.log("save");
             await partieSimple.save();
         } else {
+            // tslint:disable-next-line:no-console
             console.log("erreur");
             // Retourner errorMsg vers le client
             // socketServer.envoyerMessageErreurScript(errorMsg);
         }
 
-        //await this.deleteImagesDirectory();
+        // await this.deleteImagesDirectory();
 
         return partie;
     }
@@ -221,9 +223,9 @@ export class DBPartieSimple {
         return listeParties;
     }
 
-    private async reinitialiserTemps(idPartie: String): Promise<void> {
-        await this.modelPartieBuffer.find().findOneAndUpdate(this.modelPartieBuffer.findById(idPartie));
-        // TODO : Changer les temps randoms dans la BD
+    private async reinitialiserTemps(idPartie: String, tempsSolo: Array<number>, tempsUnContreUn: Array<number>): Promise<void> {
+        await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
+            .catch(() => { throw new Error(); });
     }
 
     private async getPartieSimple(partieID: String, res: Response): Promise<PartieSimpleInterface> {
@@ -277,7 +279,7 @@ export class DBPartieSimple {
     public async requeteReinitialiserTemps(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();
         try {
-            await this.reinitialiserTemps(req.params.id);
+            await this.reinitialiserTemps(req.params.id, req.body.tempsSolo, req.body.tempsUnContreUn);
             res.status(201);
         } catch (err) {
             res.status(501).json(err);

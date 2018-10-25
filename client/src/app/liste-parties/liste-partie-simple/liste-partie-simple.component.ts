@@ -57,9 +57,9 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     this.listeParties.forEach((partie: PartieSimple) => {
       if (partie["_id"] === partieId) {
        this.genererTableauTempsAleatoires(partie);
+       this.listePartieService.reinitialiserTempsPartie(partieId, partie["_tempsSolo"], partie["_tempsUnContreUn"]);
       }
     });
-    this.listePartieService.reinitialiserTempsPartie(partieId);
   }
 
 }

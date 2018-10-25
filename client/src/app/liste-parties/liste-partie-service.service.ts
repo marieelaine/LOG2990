@@ -40,9 +40,9 @@ export class ListePartieServiceService {
     this.http.delete(this.DELETE_PARTIE_MULTIPLE_URL + partieId).toPromise();
   }
 
-  public async reinitialiserTempsPartie(partieId: string): Promise<void> {
+  public async reinitialiserTempsPartie(partieId: string, tempsSolo: Array<number>, tempsUnContreUn: Array<number>): Promise<void> {
 
-    this.http.get(this.REINITIALISER_TEMPS_SIMPLE_URL + partieId).toPromise();
+    this.http.put(this.REINITIALISER_TEMPS_SIMPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise();
   }
 
   public async reinitialiserTempsPartieMultiple(partieId: string): Promise<void> {
