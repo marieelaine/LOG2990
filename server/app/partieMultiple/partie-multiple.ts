@@ -4,6 +4,7 @@ import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
+import { spawn } from "child_process";
 
 interface PartieMultipleInterface {
     _id: string;
@@ -55,6 +56,8 @@ export class DBPartieMultiple {
 
     private async ajouterPartie(partie: PartieMultipleInterface, res: Response): Promise<void> {
         const doc: Document = new this.modelPartie(partie);
+        // tslint:disable-next-line:no-console
+        console.log("la partie av: " + doc);
         await doc.save();
     }
 
@@ -81,11 +84,19 @@ export class DBPartieMultiple {
 
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> {
         try {
-            await this.ajouterPartie(req.body, res);
+            // tslint:disable-next-line:no-console
+            await this.genererScene(req.body);
             res.status(201);
         } catch (err) {
             res.status(501).json(err);
         }
+    }
+
+    private async genererScene(partie: PartieMultipleInterface): Promise<void> {
+        // tslint:disable-next-line:no-console
+        console.log(partie);
+
+        const child = spawn ()
     }
 
     // public async requetePartieSimpleId(req: Request, res: Response): Promise<void> {
