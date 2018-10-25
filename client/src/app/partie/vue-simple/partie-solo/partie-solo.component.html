@@ -24,7 +24,7 @@
         <div class="col-sm-6">
             <mat-card class="container-fluid test">
                 <div class="row">
-                    <canvas id="c" width="640" height="480"></canvas>
+                    <img [ngClass]="{'blurImg': blur}" id="imageD" (click)="testerPourDiff($event)" src="" alt="">
                 </div>
             </mat-card>
         </div>

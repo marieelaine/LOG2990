@@ -43,7 +43,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
         const data2: string = atob(String(this.partie["_image2"][0]));
 
         this.ajusterSourceImage(data1, "imageG");
-       // this.ajusterSourceImage(data2, "imageD");
+        this.ajusterSourceImage(data2, "imageD");
 
     }
 
