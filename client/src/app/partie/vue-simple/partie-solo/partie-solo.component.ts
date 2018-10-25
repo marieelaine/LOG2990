@@ -1,10 +1,8 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PartieAbstraiteClass } from '../../partie-abstraite-class';
 import { ActivatedRoute} from "@angular/router";
 import { PartieSimple} from "../../../admin/dialog-simple/partie-simple";
 import { PartieSimpleService} from "../../partie-simple.service";
-import {createElement} from "@angular/core/src/view/element";
-import {toBase64String} from "@angular/compiler/src/output/source_map";
 
 @Component({
     selector: 'app-partie-solo',
@@ -15,22 +13,22 @@ import {toBase64String} from "@angular/compiler/src/output/source_map";
 
 export class PartieSoloComponent extends PartieAbstraiteClass {
 
-    public constructor(private route: ActivatedRoute,
-                       protected partieSimpleService: PartieSimpleService
-    ) {
-        super();
-        this.getID();
-        this.getPartie();
-    }
-
     protected partieID: string;
+    protected nomPartie: string;
     protected partie: PartieSimple;
 
-    protected getID(): void {
+    public constructor(private route: ActivatedRoute,
+                       protected partieSimpleService: PartieSimpleService) {
+        super();
+        this.setID();
+        this.setPartie();
+    }
+
+    protected setID(): void {
         this.partieID = this.route.snapshot.paramMap.get('idPartie') + "";
     }
 
-    protected getPartie(): void {
+    protected setPartie(): void {
         this.partieSimpleService.getPartieSimple(this.partieID).subscribe((res: PartieSimple) => {
             this.partie = res;
             this.setup();
@@ -38,6 +36,8 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
     }
 
     protected setup(): void {
+        this.nomPartie = this.partie["_nomPartie"].charAt(0).toUpperCase() + this.partie["_nomPartie"].slice(1);
+
         const data1: string = atob(String(this.partie["_image1"][0]));
         const data2: string = atob(String(this.partie["_image2"][0]));
 
