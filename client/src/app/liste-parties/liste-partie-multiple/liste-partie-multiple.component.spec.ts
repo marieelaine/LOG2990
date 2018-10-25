@@ -4,29 +4,41 @@ import { ListePartieMultipleComponent } from './liste-partie-multiple.component'
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ListePartieServiceService } from '../liste-partie-service.service';
 
 describe('PartieMultipleComponent', () => {
-  let component: ListePartieMultipleComponent;
-  let fixture: ComponentFixture<ListePartieMultipleComponent>;
+    let mockListePartieService: jasmine.SpyObj<ListePartieServiceService>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ListePartieMultipleComponent ],
-      imports: [RouterTestingModule, HttpClientTestingModule],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ],
-    })
-    .compileComponents();
-  }));
+    let component: ListePartieMultipleComponent;
+    let fixture: ComponentFixture<ListePartieMultipleComponent>;
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ListePartieMultipleComponent);
-    component = fixture.componentInstance;
-  });
+    beforeEach(() => {
+        mockListePartieService = jasmine.createSpyObj([
+            "deletePartieSimple",
+            "reinitialiserTempsPartie"
+        ]);
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+        TestBed.configureTestingModule({
+            declarations: [
+                ListePartieMultipleComponent
+            ],
+            imports: [
+                RouterTestingModule,
+                HttpClientTestingModule
+            ],
+            schemas: [
+                CUSTOM_ELEMENTS_SCHEMA
+            ],
+            providers: [
+                { provide: ListePartieServiceService, useValue: mockListePartieService },
+            ]
+        });
 
+        fixture = TestBed.createComponent(ListePartieMultipleComponent);
+        component = fixture.componentInstance;
+    });
+
+    it('Devrait creer le composant', () => {
+        expect(component).toBeDefined();
+    });
 });
