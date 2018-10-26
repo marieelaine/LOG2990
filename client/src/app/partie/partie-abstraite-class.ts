@@ -22,10 +22,9 @@ export abstract class PartieAbstraiteClass {
         this.partieCommence = true;
         this.message = `Vous avez trouvé ${this.differencesTrouvees} différences`;
         this.blur = false;
-        const button = document.getElementById("StartButton");
+        const button: HTMLElement = document.getElementById("StartButton") as HTMLElement;
         try {
-            // tslint:disable-next-line:no-non-null-assertion
-            button!.remove();
+            button.remove();
         } catch (e) {}
         this.chrono.startTimer();
     }
