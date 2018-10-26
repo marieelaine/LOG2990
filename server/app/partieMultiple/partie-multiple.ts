@@ -10,7 +10,7 @@ import { injectable } from "inversify";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import { execFile, ChildProcess } from "child_process";
 
-interface PartieMultipleInterface {
+export interface PartieMultipleInterface {
     _id: string;
     _nomPartie: string;
     _tempsSolo: Array<number>;
