@@ -28,7 +28,6 @@ export abstract class DialogAbstrait {
     }
 
     protected closeDialogIfRequirements(): void {
-
       if (!this.verifierSiMessageErreur()) {
          this.onSubmit();
          this.dialogRef.close();

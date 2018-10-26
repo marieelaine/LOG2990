@@ -88,12 +88,10 @@ export class DialogMultipleComponent extends DialogAbstrait {
   }
 
   protected verifierSiMessageErreur(): Boolean {
-
     return (this.outOfBoundNameLengthMessage !== "");
   }
 
   protected checkIfOutOfBoundNameLength(): Boolean {
-
     return (this["data"].multipleGameName === "" || this["data"].multipleGameName === undefined
     || this["data"].multipleGameName.length < 3 || this["data"].multipleGameName.length > 20);
   }
