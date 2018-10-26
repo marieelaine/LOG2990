@@ -1,47 +1,31 @@
+
 import { assert } from "chai";
 import { BaseDeDonnees } from "./baseDeDonnees";
 import * as sinon from "sinon";
 
-describe("BaseDeDonnees", () => {
+describe("BaseDeDonnees classe", () => {
+    let db: BaseDeDonnees;
+    let connectStub: sinon.SinonStub;
+    beforeEach(() => {
+        db = new BaseDeDonnees();
+        connectStub = sinon.stub(db.mongoose, "connect").withArgs(sinon.match.string, sinon.match.object);
+    });
+
     describe("Constructeur", () => {
-        let db: BaseDeDonnees;
-        beforeEach(() => {
-            db = new BaseDeDonnees();
-        });
-
-        it ("should do nothing", () => {
-            assert(true);
-        });
-
-        it ("should be defined", () => {
+        it("Devrait etre defini", () => {
             assert.isDefined(db);
         });
+    });
 
-        it("should have defined a schema attribute", () => {
-            assert.isDefined(db["schema"]);
+    describe("Fonction assurerConnection", () => {
+        it("Devrait appeller la fonction connect de Mongoose", () => {
+            db.assurerConnection();
+
+            assert(connectStub.calledOnce);
         });
+    });
 
-        // it("should call ajouterUser()", () => {
-        //     // tslint:disable-next-line:no-any
-        //     const stub: sinon.SinonStub = sinon.stub(db as any, "ajouterUser")
-        //         .callsFake(() => {
-        //             return true;
-        //         });
-
-        //     const body: Blob = new Blob();
-        //     const init: {} = {"status": 200, "statusText": ""};
-        //     const res: Response = new Response(body, init);
-        //     db["ajouterUser"]({}, res);
-        // });
-
-        it("should call obtenirUserId() once", () => {
-            // tslint:disable-next-line:no-any
-            const stub: sinon.SinonStub = sinon.stub(db as any, "obtenirUserId")
-                .callsFake(() => {
-                    return true;
-                });
-            db["obtenirUserId"]("test");
-            sinon.assert.calledOnce(stub);
-        });
+    afterEach(() => {
+        sinon.restore();
     });
 });

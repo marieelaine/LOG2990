@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import { DBUser } from "./user";
 
-describe("BaseDeDonnees", () => {
+describe("BaseDeDonneesUsager classe", () => {
     describe("Constructeur", () => {
         let user: DBUser.User;
         beforeEach(() => {
