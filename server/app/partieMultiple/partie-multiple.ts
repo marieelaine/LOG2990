@@ -9,7 +9,7 @@ import "reflect-metadata";
 import { injectable } from "inversify";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import { execFile, ChildProcess } from "child_process";
-import { socketServer } from "../www";
+// import { socketServer } from "../socket-io";
 
 export interface PartieMultipleInterface {
     _id: string;
@@ -95,12 +95,11 @@ export class DBPartieMultiple {
                 if (err !== null && err.name === "ValidationError") {
                     // tslint:disable-next-line:no-console
                     console.log("server");
-                    socketServer.envoyerMessageErreurNomPris
-                    ("Le nom de la partie est déjà pris. Veuillez réessayer avec un autre nom.");
+                    // socketServer.envoyerMessageErreurNomPris("Le nom de la partie est déjà pris. Veuillez réessayer avec un autre nom.");
                 }
             });
         } else {
-            socketServer.envoyerMessageErreurScript("Les images ne contiennent pas exactement 14 différences, veuillez réessayer.");
+            // socketServer.envoyerMessageErreurScript("Les images ne contiennent pas exactement 14 différences, veuillez réessayer.");
         }
         await this.deleteImagesDirectory();
 
