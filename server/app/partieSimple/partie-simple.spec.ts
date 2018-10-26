@@ -1,7 +1,7 @@
-// import { assert } from "chai";
+// import * as assert from "assert";
 // import { DBPartieSimple } from "./partie-simple";
 
-// describe("BaseDeDonnees", () => {
+// describe("Partie Simple BD classe", () => {
 //     let dbPartieSimple: DBPartieSimple;
 
 //     beforeEach(() => {
@@ -10,23 +10,14 @@
 
 //     describe("Constructeur", () => {
 //         it("Devrait etre defini", () => {
-//             assert.isDefined(dbPartieSimple);
+//             assert(dbPartieSimple);
 //         });
 //         it("Devrait definir tous les attributs", () => {
-//             assert.isDefined(dbPartieSimple["baseDeDonnees"]);
-//             assert.isDefined(dbPartieSimple["schemaArray"]);
-//             assert.isDefined(dbPartieSimple["modelPartieArray"]);
-//             assert.isDefined(dbPartieSimple["schemaBuffer"]);
-//             assert.isDefined(dbPartieSimple["modelPartieBuffer"]);
+//             assert(dbPartieSimple["baseDeDonnees"]);
+//             assert(dbPartieSimple["schemaArray"]);
+//             assert(dbPartieSimple["modelPartieArray"]);
+//             assert(dbPartieSimple["schemaBuffer"]);
+//             assert(dbPartieSimple["modelPartieBuffer"]);
 //         });
 //     });
-    // it("should call obtenirUserId() once", () => {
-        //     // tslint:disable-next-line:no-any
-        //     const stub: sinon.SinonStub = sinon.stub(db as any, "obtenirUserId")
-        //         .callsFake(() => {
-        //             return true;
-        //         });
-        //     db["obtenirUserId"]("test");
-        //     sinon.assert.calledOnce(stub);
-        // });
 // });
