@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DialogMultipleComponent } from './dialog-multiple.component';
 import {
     MatDividerModule, MatFormFieldModule, MatCardModule, MatDialogModule, MatDialogRef,
-    MAT_DIALOG_DATA, MatInputModule, MatRadioModule
+    MAT_DIALOG_DATA, MatInputModule, MatRadioModule, MatCheckboxModule
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,14 +11,18 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { PartieMultipleService } from '../partie-multiple.service';
 import { of } from 'rxjs';
 import { PartieMultiple } from './partie-multiple';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('DialogMultipleComponent', () => {
     let mockPartieMultipleService: jasmine.SpyObj<PartieMultipleService>;
+    let mockDialogRef: jasmine.SpyObj<MatDialogRef<DialogMultipleComponent>>;
     let component: DialogMultipleComponent;
     let fixture: ComponentFixture<DialogMultipleComponent>;
 
+    // tslint:disable-next-line:max-func-body-length
     beforeEach(() => {
         mockPartieMultipleService = jasmine.createSpyObj(["register"]);
+        mockDialogRef = jasmine.createSpyObj(["close"]);
 
         TestBed.configureTestingModule({
             declarations: [DialogMultipleComponent],
@@ -29,14 +33,18 @@ describe('DialogMultipleComponent', () => {
                 FormsModule,
                 MatDialogModule,
                 MatInputModule,
+                MatCheckboxModule,
                 BrowserAnimationsModule,
                 MatRadioModule,
                 HttpClientTestingModule
             ],
             providers: [
-                { provide: MatDialogRef, useValue: {} },
+                { provide: MatDialogRef, useValue: mockDialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: {} },
                 { provide: PartieMultipleService, useValue: mockPartieMultipleService },
+            ],
+            schemas: [
+                CUSTOM_ELEMENTS_SCHEMA,
             ]
         });
 
@@ -118,6 +126,8 @@ describe('DialogMultipleComponent', () => {
     describe("Fonction onClickAjouterPartie", () => {
         it("Devrait appeller la fonction setOutOfBoundNameLengthMessage", () => {
             // Arrange
+            mockPartieMultipleService.register.and.returnValue(of({}));
+            mockDialogRef.close.and.returnValue(true);
             // tslint:disable-next-line:no-any
             const spy: jasmine.Spy = spyOn<any>(component, "setOutOfBoundNameLengthMessage");
 

@@ -10,7 +10,7 @@ import * as Buffer from "buffer";
 import { of } from "rxjs";
 import { PartieSoloComponent } from "src/app/partie/vue-simple/partie-solo/partie-solo.component";
 
-describe("PartieSimpleComponent", () => {
+describe("Liste Partie Simple Component", () => {
     let mockListePartieService: jasmine.SpyObj<ListePartieServiceService>;
 
     let component: ListePartieSimpleComponent;
@@ -19,7 +19,7 @@ describe("PartieSimpleComponent", () => {
 
     beforeEach(() => {
         mockListePartieService = jasmine.createSpyObj([
-            "getListeImageSimple",
+            "getListePartieSimple",
             "deletePartieSimple",
             "reinitialiserTempsPartie"
         ]);
@@ -63,11 +63,11 @@ describe("PartieSimpleComponent", () => {
                 new Array<Array<string>>(),
                 "1");
             const parties: PartieSimple[] = [partie];
-            mockListePartieService['getListeImageSimple'].and.returnValue(of(parties));
+            mockListePartieService['getListePartieSimple'].and.returnValue(of(parties));
 
             component.ngOnInit();
 
-            expect(mockListePartieService["getListeImageSimple"]).toHaveBeenCalledTimes(1);
+            expect(mockListePartieService["getListePartieSimple"]).toHaveBeenCalledTimes(1);
             expect(component["listeParties"]).toEqual(parties);
         });
     });

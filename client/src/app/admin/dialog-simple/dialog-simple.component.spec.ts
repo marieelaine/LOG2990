@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { DialogSimpleComponent } from "./dialog-simple.component";
 import {
     MatDividerModule, MatFormFieldModule, MatCardModule, MatDialogModule, MatDialogRef,
-    MAT_DIALOG_DATA, MatInputModule
+    MAT_DIALOG_DATA, MatInputModule, MatCheckboxModule
 } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule } from "@angular/forms";
@@ -11,6 +11,7 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { createMockImageFile } from "../../../testing/file-creator";
 import { By } from "@angular/platform-browser";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 describe("DialogSimpleComponent", () => {
     let component: DialogSimpleComponent;
@@ -27,10 +28,15 @@ describe("DialogSimpleComponent", () => {
                 MatDialogModule,
                 MatInputModule,
                 BrowserAnimationsModule,
-                HttpClientTestingModule],
+                HttpClientTestingModule,
+                MatCheckboxModule
+            ],
             providers: [
                 { provide: MatDialogRef, useValue: {} },
                 { provide: MAT_DIALOG_DATA, useValue: {} }
+            ],
+            schemas: [
+                CUSTOM_ELEMENTS_SCHEMA,
             ]
         });
 
@@ -42,16 +48,16 @@ describe("DialogSimpleComponent", () => {
         expect(component).toBeTruthy();
     });
 
-    it("should return true if all error messages are null", () => {
+    it("should return false if all error messages are null", () => {
         component["outOfBoundNameLengthMessage"] = "";
         component["wrongImageSizeOrTypeMessage"] = "";
         component["wrongNumberOfImagesMessage"] = "";
-        expect(component["checkIfNoErrorMessage"]()).toBe(true);
+        expect(component["verifierSiMessageErreur"]()).toBe(false);
     });
 
-    it("should return false if at least one error message is not null", () => {
+    it("should return true if at least one error message is not null", () => {
         component["outOfBoundNameLengthMessage"] = "Error message";
-        expect(component["checkIfNoErrorMessage"]()).toBe(false);
+        expect(component["verifierSiMessageErreur"]()).toBe(true);
     });
 
     it("should set outOfBoundNameLengthMessage if name does not meet requierments", () => {
@@ -85,11 +91,11 @@ describe("DialogSimpleComponent", () => {
         expect(component["wrongNumberOfImagesMessage"]).toEqual("");
     });
 
-    it("should call onFileSelectedImage when an image is uploaded", () => {
+    it("should call onUploadImage when an image is uploaded", () => {
     const uploadImage1 = fixture.debugElement.query(By.css("#uploadImage1")).nativeElement;
 
     // tslint:disable-next-line:no-any
-    const spy: jasmine.Spy = spyOn<any>(component, "onFileSelectedImage");
+    const spy: jasmine.Spy = spyOn<any>(component, "onUploadImage");
     uploadImage1.dispatchEvent(new Event("change"));
     expect(spy).toHaveBeenCalled();
     });
@@ -98,17 +104,17 @@ describe("DialogSimpleComponent", () => {
       const onNoClickButton = fixture.debugElement.query(By.css("#onNoClickButton")).nativeElement;
 
       // tslint:disable-next-line:no-any
-      const spy: jasmine.Spy = spyOn<any>(component, "onNoClick");
+      const spy: jasmine.Spy = spyOn<any>(component, "surClickExterieurDialog");
       onNoClickButton.dispatchEvent(new Event("click"));
 
       expect(spy).toHaveBeenCalled();
     });
 
-    it("should call onAddSimpleGameClick when an add game button is clicked", () => {
+    it("should call onClickAjouterPartie when an add game button is clicked", () => {
       const onAddClickButton = fixture.debugElement.query(By.css("#onAddClickButton")).nativeElement;
 
       // tslint:disable-next-line:no-any
-      const spy: jasmine.Spy = spyOn<any>(component, "onAddSimpleGameClick");
+      const spy: jasmine.Spy = spyOn<any>(component, "onClickAjouterPartie");
       onAddClickButton.dispatchEvent(new Event("click"));
 
       expect(spy).toHaveBeenCalled();

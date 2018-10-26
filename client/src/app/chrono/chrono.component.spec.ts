@@ -39,8 +39,8 @@ describe("ChronoComponent", () => {
   it ("should return string \'05\' for minute and second", fakeAsync(() => {
     component.startTimer();
     tick(305000);
-    expect(component.getSecondsSrtring()).toBe("05");
-    expect(component.getMinutesString()).toBe("05");
+    expect(component["getSecondsSrtring"]()).toBe("05");
+    expect(component["getMinutesString"]()).toBe("05");
     component.stopTimer();
   }));
 });

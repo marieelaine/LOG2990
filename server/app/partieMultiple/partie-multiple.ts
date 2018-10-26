@@ -42,8 +42,8 @@ export class DBPartieMultiple {
 
         this.schema.plugin(uniqueValidator);
         this.schemaArray.plugin(uniqueValidator);
-        this.modelPartie = this.baseDeDonnees.mongoose.model("parties-multiples", this.schema, "parties-multiples");
-        this.modelPartieArray = this.baseDeDonnees.mongoose.model("parties-multiples-array", this.schemaArray, "parties-multiples");
+        this.modelPartie = this.baseDeDonnees._mongoose.model("parties-multiples", this.schema, "parties-multiples");
+        this.modelPartieArray = this.baseDeDonnees._mongoose.model("parties-multiples-array", this.schemaArray, "parties-multiples");
 
     }
 

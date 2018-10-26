@@ -53,20 +53,16 @@ describe('HeaderComponent', () => {
     });
 
     describe("fonction onLogout", () => {
-        it("Devrait appeller les fonctions du cookieService et du userService", () => {
+        it("Devrait appeller les fonctions du cookieService et du userService", fakeAsync(() => {
             const unNomUsager: string = "un nom dusager";
             mockCookieService.get.and.returnValue(unNomUsager);
 
             component["onLogout"]();
+            tick();
 
             expect(mockCookieService.get).toHaveBeenCalledWith("username");
             expect(mockCookieService.deleteAll).toHaveBeenCalledTimes(1);
             expect(mockUserService.delete).toHaveBeenCalledWith(unNomUsager);
-        });
-        it("Devrait naviguer à la route principal '/'", fakeAsync(() => {
-            component["onLogout"]();
-            tick();
-
             expect(location.path()).toBe("/");
         }));
     });
