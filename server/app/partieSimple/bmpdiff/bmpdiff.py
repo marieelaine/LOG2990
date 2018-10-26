@@ -52,8 +52,8 @@ def compare_images(settings, enlargePixels):
                     newpixels[y, x] = (0, 0, 0)
 
     #Sauvegarde de l'image
-    if (check_number_differences(newImage)):
-  #  if True:
+  #  if (check_number_differences(newImage)):
+    if True:
         findPixelsOfDifferences(newpixels)
         newImage.save(settings.imageSortie)
         print('Image de différence générée avec succès!', file=sys.stdout)
@@ -88,7 +88,8 @@ def enlarge_pixels(x, y):
         for j in range(-3, 4):
             if(not ((abs(i) > 1 and abs(j) == 3) or (abs(j) > 1 and abs(i) == 3))):
                 if y+j in range(480) and x+i in range(640):
-                    newpixels[y+i,x+j] = (0, 0, 0)
+                    if not newpixels[y+i,x+j] == (0,0,0):
+                        newpixels[y+i,x+j] = (0, 0, 0)
 
 def findPixelsOfDifferences(newpixels):
     f = open(str(settings.imageSortie)+".txt",'w+')
@@ -162,7 +163,7 @@ def checkPixel(file, x, y):
 
 
 if __name__ == '__main__':
-    sys.setrecursionlimit(1000000);
+    sys.setrecursionlimit(1000000)
     #Déclaration des arguments
     parser = argparse.ArgumentParser(
         description="Générer une image en noir et blanc décrivant les différences entre deux images")
