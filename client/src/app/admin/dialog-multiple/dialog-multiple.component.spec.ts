@@ -15,7 +15,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('DialogMultipleComponent', () => {
     let mockPartieMultipleService: jasmine.SpyObj<PartieMultipleService>;
-    let mockDialogRef: jasmine.SpyObj<MatDialogRef>;
+    let mockDialogRef: jasmine.SpyObj<MatDialogRef<DialogMultipleComponent>>;
     let component: DialogMultipleComponent;
     let fixture: ComponentFixture<DialogMultipleComponent>;
 
