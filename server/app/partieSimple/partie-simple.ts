@@ -12,7 +12,7 @@ import { injectable } from "inversify";
 // import { socketServer } from "../www";
 import { ReadLine } from "readline";
 
-interface PartieSimpleInterface {
+export interface PartieSimpleInterface {
     _id: string;
     _nomPartie: string;
     _tempsSolo: Array<number>;
@@ -113,7 +113,7 @@ export class DBPartieSimple {
         return partie;
     }
 
-    private async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
+    protected async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
         partie._imageDiff = diffArrays;
         const partieSimple: Document = new this.modelPartieBuffer(partie);
         await partieSimple.save((err: Error) => {
@@ -122,7 +122,7 @@ export class DBPartieSimple {
             }
         });    }
 
-    private getImageDiffAsArrays(partie: PartieSimpleInterface): void {
+    public getImageDiffAsArrays(partie: PartieSimpleInterface): void {
         const imageMod: string = p.resolve("../Images/image3.bmp.txt");
         const diffArrays: Array<Array<string>> = new Array<Array<string>>();
         const input: fs.ReadStream = fs.createReadStream(imageMod);
