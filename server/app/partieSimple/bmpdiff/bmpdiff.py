@@ -53,6 +53,7 @@ def compare_images(settings, enlargePixels):
 
     #Sauvegarde de l'image
     if (check_number_differences(newImage)):
+  #  if True:
         findPixelsOfDifferences(newpixels)
         newImage.save(settings.imageSortie)
         print('Image de différence générée avec succès!', file=sys.stdout)
@@ -86,7 +87,8 @@ def enlarge_pixels(x, y):
     for i in range(-3, 4):
         for j in range(-3, 4):
             if(not ((abs(i) > 1 and abs(j) == 3) or (abs(j) > 1 and abs(i) == 3))):
-                newpixels[y+i,x+j] = (0, 0, 0)
+                if y+j in range(480) and x+i in range(640):
+                    newpixels[y+i,x+j] = (0, 0, 0)
 
 def findPixelsOfDifferences(newpixels):
     f = open(str(settings.imageSortie)+".txt",'w+')
@@ -108,30 +110,59 @@ def findPixelsOfDifferences(newpixels):
 
 def checkPixel(file, x, y):
     file.write(str([x,y])+'\n')
-    if(newpixels[x+1,y] == (0,0,0) and visited[x+1,y] == False):
-        stack.append((x+1,y))
-        visited[x+1,y] = True
-        checkPixel(file,x+1,y)
-    if(newpixels[x,y+1] == (0,0,0) and visited[x,y+1] == False):
-        stack.append((x,y+1))
-        visited[x,y+1] = True
-        checkPixel(file,x,y+1)
-    if(newpixels[x-1,y] == (0,0,0) and visited[x-1,y] == False):
-        stack.append((x-1,y))
-        visited[x-1,y] = True
-        checkPixel(file,x-1,y)
-    if(newpixels[x,y-1] == (0,0,0) and visited[x,y-1] == False):
-        stack.append((x,y-1))
-        visited[x,y-1] = True
-        checkPixel(file, x,y-1)
-        
+    if y + 1 in range(480) and x + 1 in range(640):
+        if y - 1 in range(480) and x - 1 in range(640):
+            if(newpixels[x+1,y] == (0,0,0) and visited[x+1,y] == False):
+                stack.append((x+1,y))
+                visited[x+1,y] = True
+                checkPixel(file,x+1,y)
+            if(newpixels[x,y+1] == (0,0,0) and visited[x,y+1] == False):
+                stack.append((x,y+1))
+                visited[x,y+1] = True
+                checkPixel(file,x,y+1)
+            if(newpixels[x-1,y] == (0,0,0) and visited[x-1,y] == False):
+                stack.append((x-1,y))
+                visited[x-1,y] = True
+                checkPixel(file,x-1,y)
+            if(newpixels[x,y-1] == (0,0,0) and visited[x,y-1] == False):
+                stack.append((x,y-1))
+                visited[x,y-1] = True
+                checkPixel(file, x,y-1)
+
+                """    while True:
+        if y + 1 in range(480) and x + 1 in range(640):
+            if y - 1 in range(480) and x - 1 in range(640):
+                if (newpixels[x + 1, y] == (0, 0, 0) and visited[x + 1, y] == False):
+                    stack.append((x + 1, y))
+                    visited[x + 1, y] = True
+                   # checkPixel(file, x + 1, y)
+                    x = x+1
+                elif (newpixels[x, y + 1] == (0, 0, 0) and visited[x, y + 1] == False):
+                    stack.append((x, y + 1))
+                    visited[x, y + 1] = True
+                   # checkPixel(file, x, y + 1)
+                    y = y+1
+                elif (newpixels[x - 1, y] == (0, 0, 0) and visited[x - 1, y] == False):
+                    stack.append((x - 1, y))
+                    visited[x - 1, y] = True
+                    checkPixel(file, x - 1, y)
+                    x = x-1
+                elif (newpixels[x, y - 1] == (0, 0, 0) and visited[x, y - 1] == False):
+                    stack.append((x, y - 1))
+                    visited[x, y - 1] = True
+                    checkPixel(file, x, y - 1)
+                    y = y-1
+                else:
+                    break
+"""
+
     
 
 
 
 
 if __name__ == '__main__':
-
+    sys.setrecursionlimit(1000000);
     #Déclaration des arguments
     parser = argparse.ArgumentParser(
         description="Générer une image en noir et blanc décrivant les différences entre deux images")
