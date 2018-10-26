@@ -9,6 +9,7 @@ import "reflect-metadata";
 import { injectable } from "inversify";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import { execFile, ChildProcess } from "child_process";
+import { socketServer } from "../www";
 
 interface PartieMultipleInterface {
     _id: string;
@@ -89,11 +90,16 @@ export class DBPartieMultiple {
             partie._image1PV2 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_a_mod.bmp");
             partie._image2PV2 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_b_mod.bmp");
             const partieMultiple: Document = new this.modelPartie(partie);
-            // tslint:disable-next-line:no-console
-            await partieMultiple.save().catch(() => console.error());
+
+            await partieMultiple.save((err: Error) => {
+                if (err !== null && err.name === "ValidationError") {
+                    // tslint:disable-next-line:no-console
+                    console.log("server");
+                    socketServer.envoyerMessageErreurNomPris("Le nom de la partie est déjà pris. Veuillez réessayer avec un autre nom.");
+                }
+            });
         } else {
-            // Retourner errorMsg vers le client
-            // socketServer.envoyerMessageErreurScript(errorMsg);
+            socketServer.envoyerMessageErreurScript("Les images ne contiennent pas exactement 14 différences, veuillez réessayer.");
         }
         this.deleteImagesDirectory();
 

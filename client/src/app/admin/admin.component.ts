@@ -43,6 +43,7 @@ export class AdminComponent implements OnInit {
 
     this.socket.on(event.ENVOYER_MESSAGE_NOM_PRIS, (data) => {
       alert(data);
+      console.log("client");
     });
   }
 

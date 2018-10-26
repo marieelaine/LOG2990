@@ -5,12 +5,8 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: "./vue-initiale.component.html",
   styleUrls: ["./vue-initiale.component.css"]
 })
-export class VueInitialeComponent implements OnInit {
+export class VueInitialeComponent {
 
   public constructor() { }
-
-  // tslint:disable-next-line:typedef
-  public ngOnInit() {
-  }
 
 }
