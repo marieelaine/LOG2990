@@ -9,7 +9,7 @@ import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
-import { socketServer } from "../www";
+// import { socketServer } from "../www";
 import { ReadLine } from "readline";
 
 interface PartieSimpleInterface {
@@ -105,7 +105,7 @@ export class DBPartieSimple {
         if (errorMsg === "") {
             this.getImageDiffAsArrays(partie);
         } else {
-            socketServer.envoyerMessageErreurScript("Les images ne contiennent pas exactement 7 différences, veuillez réessayer.");
+            // socketServer.envoyerMessageErreurScript("Les images ne contiennent pas exactement 7 différences, veuillez réessayer.");
         }
 
         await this.deleteImagesDirectory();
@@ -118,7 +118,7 @@ export class DBPartieSimple {
         const partieSimple: Document = new this.modelPartieBuffer(partie);
         await partieSimple.save((err: Error) => {
             if (err !== null && err.name === "ValidationError") {
-                socketServer.envoyerMessageErreurNomPris("Le nom de la partie est déjà pris. Veuillez réessayer avec un autre nom.");
+                // socketServer.envoyerMessageErreurNomPris("Le nom de la partie est déjà pris. Veuillez réessayer avec un autre nom.");
             }
         });    }
 
