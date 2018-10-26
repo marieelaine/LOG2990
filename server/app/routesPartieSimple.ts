@@ -10,8 +10,7 @@ export class RoutesPartieSimple extends ServiceWeb {
 
     public readonly mainRoute: string = "/partieSimple";
 
-    public constructor(@inject(Types.PartieSimple)
-    private partieSimple: DBPartieSimple = new DBPartieSimple()) {
+    public constructor(@inject(Types.PartieSimple) private partieSimple: DBPartieSimple) {
         super();
     }
 
