@@ -16,6 +16,10 @@ img{
     filter: blur(1.5rem);
 }
 
+#divMessagesConsole {
+    text-align: center;
+}
+
 .title{
     text-align: center;
     margin-top: 0px;
