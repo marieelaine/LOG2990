@@ -6,7 +6,7 @@
   "scripts": {
     "start": "tsc && concurrently --kill-others \"tsc -w \" \"nodemon out/server/app/www.js\" ",
     "lint": "tslint --project tsconfig.json \"./app/**/*.ts\" --format stylish",
-    "test": "mocha -r ts-node/register app/**/*.spec.ts",
+    "test": "mocha -r ts-node/register app/**/*.spec.ts --timeout 100000",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "clean": "rimraf out node_modules",
@@ -42,7 +42,8 @@
     "sinon": "^6.3.4",
     "socket.io": "^2.1.1",
     "systemjs": "0.21.4",
-    "ts-node": "^7.0.1"
+    "ts-node": "^7.0.1",
+    "web-request": "^1.0.7"
   },
   "devDependencies": {
     "@types/body-parser": "1.17.0",
