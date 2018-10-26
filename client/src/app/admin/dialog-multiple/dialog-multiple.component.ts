@@ -17,6 +17,14 @@ export class DialogMultipleComponent extends DialogAbstrait {
 
   protected toggleClassButton: boolean = false;
 
+  public constructor(
+    dialogRef: MatDialogRef<DialogMultipleComponent>,
+    @Inject(MAT_DIALOG_DATA) data: DialogData,
+    http: HttpClient,
+    private partieMultipleService: PartieMultipleService) {
+      super(dialogRef, data, http);
+  }
+
   protected checkboxArray: Checkbox[] =  [
   {
     name: "Ajout",
@@ -43,14 +51,6 @@ export class DialogMultipleComponent extends DialogAbstrait {
     }
     this.data.typeModification = typeModif;
   }
-
-  public constructor(
-    dialogRef: MatDialogRef<DialogMultipleComponent>,
-    @Inject(MAT_DIALOG_DATA) data: DialogData,
-    http: HttpClient,
-    private partieMultipleService: PartieMultipleService) {
-      super(dialogRef, data, http);
-    }
 
     // sur le click ajouter, call close dialog if requ and on submit
   protected onClickAjouterPartie(): void {

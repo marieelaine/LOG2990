@@ -36,7 +36,7 @@ export class AdminComponent implements OnInit {
     this.socket = io("localhost:3000");
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.socket.on(event.ENVOYER_MESSAGE_BMPDIFF, (data) => {
       alert(data);
     });
@@ -44,7 +44,7 @@ export class AdminComponent implements OnInit {
     this.socket.on(event.ENVOYER_MESSAGE_NOM_PRIS, (data) => {
       alert(data);
     });
-}
+  }
 
   protected openDialogSimple(): void {
     this.gameName = "";

@@ -86,7 +86,13 @@ export class DialogSimpleComponent extends DialogAbstrait {
       setTimeout(() => {
           window.location.reload(); },
                  2500);
-    }
+  }
+
+  protected checkIfOutOfBoundNameLength(): Boolean {
+
+    return (this["data"].simpleGameName === "" || this["data"].simpleGameName === undefined
+    || this["data"].simpleGameName.length < 3 || this["data"].simpleGameName.length > 20);
+  }
 
   private afficherImageSurUploadClient() {
     const reader: FileReader = new FileReader();
@@ -102,12 +108,6 @@ export class DialogSimpleComponent extends DialogAbstrait {
 
   private arraybufferToBuffer(file: ArrayBuffer, i: number) {
     this.selectedFilesAsBuffers[i] = Buffer.Buffer.from(file);
-  }
-
-  protected checkIfOutOfBoundNameLength(): Boolean {
-
-    return (this["data"].simpleGameName === "" || this["data"].simpleGameName === undefined
-    || this["data"].simpleGameName.length < 3 || this["data"].simpleGameName.length > 20);
   }
 
   private setWrongImageSizeOrTypeMessage(imageInfo): void {
@@ -166,18 +166,5 @@ export class DialogSimpleComponent extends DialogAbstrait {
   //   this.outOfBoundNameLengthMessage = "" ;
 
   //   return false;
-  // }
-
-    // Pas utilise
-  // protected obtenirImageId(identifiant: string): Observable<PartieSimple> {
-  //   return this["http"].get<PartieSimple>(IMAGE_URL + identifiant);
-  // }
-
-  // protected obtenirImageName(imageName: string): Observable<PartieSimple> {
-  //   return this["http"].get<PartieSimple>(IMAGE_URL + imageName);
-  // }
-
-  // protected async creerNouvelleImage(image: PartieSimple): Promise<Object> {
-  //   return this["http"].post(URL_AJOUTER, image).toPromise();
   // }
 }
