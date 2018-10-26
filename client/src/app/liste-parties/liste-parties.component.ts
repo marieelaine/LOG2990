@@ -97,13 +97,7 @@ export class ListePartiesComponent {
   }
 
   protected getDisplayTime(minutes: number, secondes: number): String {
-    if (secondes < 10) {
-      return minutes + ":0" + secondes;
-
-    } else {
-
-    return minutes + ":" + secondes;
-    }
+    return (secondes < 10) ? (minutes + ":0" + secondes) : minutes + ":" + secondes;
   }
 
   protected getTitleFirstLetter(title: String): String {

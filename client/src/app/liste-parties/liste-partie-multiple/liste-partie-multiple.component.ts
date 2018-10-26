@@ -39,7 +39,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
   protected onCreerOuSupprimerClick(partieId: string): void {
       if (this.isListePartiesMode) {
-        // Naviguer vers partie-multiple
+        // Naviguer vers partie-multijoueur
       } else if (this.isAdminMode) {
         this.supprimerPartie(partieId);
       }
