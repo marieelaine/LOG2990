@@ -33,11 +33,11 @@ export abstract class DialogAbstrait {
          this.onSubmit();
          this.dialogRef.close();
        }
-     }
+    }
 
     protected surClickExterieurDialog(): void {
       this.dialogRef.close();
-  }
+    }
 
     protected genererTableauTempsAleatoires(): Array<number> {
         const arr: Array<number> = new Array<number>();
@@ -46,10 +46,10 @@ export abstract class DialogAbstrait {
         }
 
         return arr;
-      }
+    }
 
     private genererTempsAleatoire(): number {
         return Math.floor(Math.random() * 400) + 100;
-      }
+    }
 
 }

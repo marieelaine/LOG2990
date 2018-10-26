@@ -13,8 +13,8 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
   protected listeParties: PartieMultiple[];
 
-  constructor(public router: Router,
-              public listePartieService: ListePartieServiceService) {
+  public constructor(public router: Router,
+                     public listePartieService: ListePartieServiceService) {
     super(router, listePartieService);
   }
 
