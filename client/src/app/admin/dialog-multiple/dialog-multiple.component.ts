@@ -89,9 +89,9 @@ export class DialogMultipleComponent extends DialogAbstrait {
         (error) => {
           console.error(error);
         });
-      setTimeout(() => {
+    setTimeout(() => {
           window.location.reload(); },
-            2500);
+               2500);
   }
 
   protected onThemeClickButton(event: Event, theme: string): void {

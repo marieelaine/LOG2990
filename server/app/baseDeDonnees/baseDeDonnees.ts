@@ -11,7 +11,7 @@ export class BaseDeDonnees {
     public constructor() {
         this._mongoose = new Mongoose();
         this._mongoose.set("useCreateIndex", true);
-        this.seConnecter();
+        this.seConnecter().catch();
     }
 
     public async assurerConnection(): Promise<void> {
