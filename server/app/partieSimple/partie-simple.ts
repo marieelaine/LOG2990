@@ -10,6 +10,7 @@ import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
 import { socketServer } from "../www";
+import { ReadLine } from "readline";
 
 interface PartieSimpleInterface {
     _id: string;
@@ -125,7 +126,7 @@ export class DBPartieSimple {
         const imageMod: string = p.resolve("../Images/image3.bmp.txt");
         const diffArrays: Array<Array<string>> = new Array<Array<string>>();
         const input: fs.ReadStream = fs.createReadStream(imageMod);
-        const rl = require("readline").createInterface({
+        const rl: ReadLine = require("readline").createInterface({
             input: input,
             terminal: false
         });
@@ -316,4 +317,5 @@ export class DBPartieSimple {
     public async requeteVerifDiff(req: Request, res: Response): Promise<void> {
         // TODO : implementer verifDiff
     }
+// tslint:disable-next-line:max-file-line-count
 }
