@@ -57,7 +57,7 @@ export module DBUser {
         private async deleteUser(username: String, res: Response): Promise<Response> {
             const userId: String = await this.obtenirUserId(username);
             try {
-                await this.modelUser.findByIdAndDelete(userId);
+                this.modelUser.findByIdAndDelete(userId);
 
                 return res.status(201);
             } catch (err) {

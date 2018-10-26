@@ -103,7 +103,7 @@ export class DBPartieSimple {
 
     private async traiterMessageErreur(partie: PartieSimpleInterface, errorMsg: string): Promise<PartieSimpleInterface> {
         if (errorMsg === "") {
-            await this.getImageDiffAsArrays(partie);
+            this.getImageDiffAsArrays(partie);
         } else {
             socketServer.envoyerMessageErreurScript("Les images ne contiennent pas exactement 7 différences, veuillez réessayer.");
         }
@@ -134,10 +134,10 @@ export class DBPartieSimple {
         let i: number = 0;
         let arrayDiff: Array<string> = new Array<string>();
 
-        rl.on("line", (line: string) => {
+        rl.on("line", async (line: string) => {
             if (line.startsWith("END")) {
                 diffArrays.push(arrayDiff);
-                this.enregistrerPartieSimple(diffArrays, partie);
+                await this.enregistrerPartieSimple(diffArrays, partie);
             } else if (i === 0) {
                 arrayDiff = new Array<string>();
                 i++;
@@ -179,7 +179,7 @@ export class DBPartieSimple {
         const args: string[] = [imageOri1, imageOri2, imageMod];
         args.unshift(pyScript);
         const child: ChildProcess = spawn("python", args);
-        this.verifierErreurScript(child, partie);
+        await this.verifierErreurScript(child, partie);
     }
 
     private async makeImagesDirectory(): Promise<void> {
@@ -198,7 +198,7 @@ export class DBPartieSimple {
         const writeFilePromise: Function = util.promisify(fs.writeFile);
         let i: number = 1;
         for (const buf of buffers) {
-            await writeFilePromise("../Images/image" + i.toString() + ".bmp", new Buffer(buf));
+            await writeFilePromise("../Images/image" + i.toString() + ".bmp", Buffer.from(buf));
             i++;
         }
     }

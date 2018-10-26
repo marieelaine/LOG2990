@@ -91,17 +91,18 @@ export class DBPartieMultiple {
             partie._image2PV2 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_b_mod.bmp");
             const partieMultiple: Document = new this.modelPartie(partie);
 
-            await partieMultiple.save((err: Error) => {
+            await partieMultiple.save(async (err: Error) => {
                 if (err !== null && err.name === "ValidationError") {
                     // tslint:disable-next-line:no-console
                     console.log("server");
-                    socketServer.envoyerMessageErreurNomPris("Le nom de la partie est déjà pris. Veuillez réessayer avec un autre nom.");
+                    socketServer.envoyerMessageErreurNomPris
+                    ("Le nom de la partie est déjà pris. Veuillez réessayer avec un autre nom.");
                 }
             });
         } else {
             socketServer.envoyerMessageErreurScript("Les images ne contiennent pas exactement 14 différences, veuillez réessayer.");
         }
-        this.deleteImagesDirectory();
+        await this.deleteImagesDirectory();
 
         return partie;
     }
@@ -131,13 +132,12 @@ export class DBPartieMultiple {
     }
 
     private async genererScene(partie: PartieMultipleInterface, res: Response): Promise<void> {
-        // tslint:disable-next-line:no-console
         await this.makeDirectory("../Images");
         const script: string = p.resolve("app/genmulti/main.exe");
         const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, "../Images/" + partie._nomPartie];
 
         const child: ChildProcess = execFile(script, args);
-        this.verifierErreurScript(child, partie, res);
+        await this.verifierErreurScript(child, partie, res);
     }
 
     private async makeDirectory(name: string): Promise<void> {
