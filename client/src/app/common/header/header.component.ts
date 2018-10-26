@@ -19,10 +19,8 @@ export class HeaderComponent {
   protected onLogout(): void {
     const cookieUsername: string = this.cookieService.get("username");
     this.cookieService.deleteAll();
-    this.userService["delete"](cookieUsername)
-    .catch(() => ErrorHandler);
-    this.router.navigate(["/"])
-    .catch(() => ErrorHandler);
+    this.userService["delete"](cookieUsername);
+    this.router.navigate(["/"]);
   }
 
   protected OnHeaderTitleClick() {

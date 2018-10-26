@@ -8,7 +8,8 @@ img{
     margin: 0 auto;
 }
 
-canvas {
+.divImg{
+    min-width: 680px;
 }
 
 .blurImg{
@@ -37,6 +38,7 @@ canvas {
 }
 
 .card{
+    min-width: 680px;
     background-color: #f2eeee;
 }
 

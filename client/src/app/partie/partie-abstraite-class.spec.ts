@@ -3,7 +3,8 @@ import { PartieAbstraiteClass } from "./partie-abstraite-class";
 import { tick, fakeAsync } from '@angular/core/testing';
 
 class AbstractClassInstance extends PartieAbstraiteClass {
-
+  protected ajouterTemps(temps: number) {
+  }
 }
 
 describe('PartieAbstraiteComponent', () => {

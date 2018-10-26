@@ -1,23 +1,29 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { VueMultipleComponent } from './vue-multiple.component';
-import { ErrorHandler } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MatCardModule } from '@angular/material';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('VueMultipleComponent', () => {
   let component: VueMultipleComponent;
   let fixture: ComponentFixture<VueMultipleComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ VueMultipleComponent ]
-    })
-    .compileComponents()
-    .catch(() => ErrorHandler);
-  }));
-
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [ VueMultipleComponent ],
+      imports: [
+          MatCardModule,
+          HttpClientTestingModule,
+          RouterTestingModule
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+      ]
+    });
+
     fixture = TestBed.createComponent(VueMultipleComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

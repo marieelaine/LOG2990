@@ -15,7 +15,6 @@ export class PartieSimpleService {
     private readonly GETPARTIEMULTIPLE_URL: string = this.BASE_URL_MULTIPLE + "getPartieMultiple/";
     private readonly REINITIALISER_TEMPS_SIMPLE_URL: string = this.BASE_URL_SIMPLE + "reinitialiseTemps/";
 
-
     constructor(
         private http: HttpClient
     ) { }

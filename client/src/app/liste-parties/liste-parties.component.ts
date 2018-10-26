@@ -61,20 +61,6 @@ export class ListePartiesComponent {
     }
   }
 
-  private setToJouerAndCreer(): void {
-    this.isAdminMode = false;
-    this.isListePartiesMode = true;
-    this.jouerOuReinitialiser = "Jouer";
-    this.creerOuSupprimer = "Créer";
-  }
-
-  private setToReinitialiserAndSupprimer(): void {
-    this.isListePartiesMode = false;
-    this.isAdminMode = true;
-    this.jouerOuReinitialiser = "Réinitialiser";
-    this.creerOuSupprimer = "Supprimer";
-  }
-
   protected getSortedTimes(times: number[]): number[] {
       if (times) {
         return times.sort(function (a, b) {  return a - b;  });
@@ -149,5 +135,19 @@ export class ListePartiesComponent {
   protected reinitialiserTableauTemps(partie: PartieSimple) {
       partie["_tempsSolo"] = [];
       partie["_tempsUnContreUn"] = [];
+  }
+
+  private setToJouerAndCreer(): void {
+    this.isAdminMode = false;
+    this.isListePartiesMode = true;
+    this.jouerOuReinitialiser = "Jouer";
+    this.creerOuSupprimer = "Créer";
+  }
+
+  private setToReinitialiserAndSupprimer(): void {
+    this.isListePartiesMode = false;
+    this.isAdminMode = true;
+    this.jouerOuReinitialiser = "Réinitialiser";
+    this.creerOuSupprimer = "Supprimer";
   }
 }
