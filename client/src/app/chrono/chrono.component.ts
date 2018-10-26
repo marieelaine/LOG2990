@@ -13,11 +13,11 @@ export class ChronoComponent {
     public constructor() { }
 
     protected getSecondsSrtring(): string {
-        if (this.time % 60 < 10) { return "0" + this.time % 60; } else { return this.time % 60 + ""; }
+        return (this.time % 60 < 10) ? "0" + this.time % 60 : this.time % 60 + "";
     }
 
     protected getMinutesString(): string {
-        if (this.time / 60 < 10) { return "0" + Math.floor(this.time / 60); } else {return Math.floor(this.time / 60) + ""; }
+        return (this.time / 60 < 10) ? "0" + Math.floor(this.time / 60) : Math.floor(this.time / 60) + "";
     }
 
     protected reset(): void {
