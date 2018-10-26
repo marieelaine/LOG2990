@@ -1,7 +1,6 @@
 
 import { assert } from "chai";
 import { BaseDeDonnees } from "./baseDeDonnees";
-import * as sinon from "sinon";
 
 describe("BaseDeDonnees", () => {
     let db: BaseDeDonnees;
