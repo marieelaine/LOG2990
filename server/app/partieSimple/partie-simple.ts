@@ -35,11 +35,11 @@ export class DBPartieSimple {
 
         this.CreateSchemaArray();
         this.schemaArray.plugin(uniqueValidator);
-        this.modelPartieArray = this.baseDeDonnees.mongoose.model("parties-simples-array", this.schemaArray, "parties-simples");
+        this.modelPartieArray = this.baseDeDonnees["_mongoose"].model("parties-simples-array", this.schemaArray, "parties-simples");
 
         this.CreateSchemaBuffer();
         this.schemaBuffer.plugin(uniqueValidator);
-        this.modelPartieBuffer = this.baseDeDonnees.mongoose.model("parties-simples", this.schemaBuffer, "parties-simples");
+        this.modelPartieBuffer = this.baseDeDonnees["_mongoose"].model("parties-simples", this.schemaBuffer, "parties-simples");
     }
 
     private CreateSchemaArray(): void {
