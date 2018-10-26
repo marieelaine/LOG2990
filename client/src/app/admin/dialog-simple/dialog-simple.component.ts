@@ -30,6 +30,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
     dialogRef: MatDialogRef<DialogSimpleComponent>,
     @Inject(MAT_DIALOG_DATA) data: DialogData,
     http: HttpClient,
+
     private partieSimpleService: PartieSimpleService) {
       super(dialogRef, data, http);
       this.wrongImageSizeOrTypeMessage = "";
@@ -44,9 +45,11 @@ export class DialogSimpleComponent extends DialogAbstrait {
 
   protected onSubmit(): void {
     let imageQty: number = 0;
+
     this.selectedFiles.forEach((file) => {
       const reader: FileReader = new FileReader();
       reader.readAsArrayBuffer(file);
+
       reader.onload = () => {
         this.arraybufferToBuffer(reader.result as ArrayBuffer, imageQty);
         if (this.selectedFilesAsBuffers.length === 2) {
@@ -60,8 +63,8 @@ export class DialogSimpleComponent extends DialogAbstrait {
 
   protected verifierSiMessageErreur(): Boolean {
     return (this.outOfBoundNameLengthMessage !== ""
-    || this.wrongNumberOfImagesMessage !== ""
-    || this.wrongImageSizeOrTypeMessage !== "");
+            || this.wrongNumberOfImagesMessage !== ""
+            || this.wrongImageSizeOrTypeMessage !== "");
   }
 
   protected onUploadImage(event, i): void {
@@ -98,11 +101,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
     const reader: FileReader = new FileReader();
     reader.readAsDataURL(this.selectedFiles[this.currentImageNumber]);
     reader.onload = () => {
-        if (this.currentImageNumber) {
-          this.deuxiemeImage = reader.result as string;
-        } else {
-          this.premiereImage = reader.result as string;
-        }
+      (this.currentImageNumber) ? this.deuxiemeImage = reader.result as string : this.premiereImage = reader.result as string;
     };
   }
 
@@ -134,7 +133,6 @@ export class DialogSimpleComponent extends DialogAbstrait {
   }
 
   private checkIfWrongImageSize(imageInfo): Boolean {
-
     return (imageInfo["size"] !== 24 || imageInfo["width"] !== 640 || imageInfo["height"] !== 480);
   }
 
@@ -150,7 +148,6 @@ export class DialogSimpleComponent extends DialogAbstrait {
   }
 
   private checkIfWrongNumberOfImages(): Boolean {
-
     return (this.selectedFiles[0] === undefined || this.selectedFiles[0] === null
       || this.selectedFiles[1] === undefined || this.selectedFiles[1] === null);
   }

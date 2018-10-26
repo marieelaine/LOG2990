@@ -1,0 +1,19 @@
+Voici le patrons de conception utilisés:
+
+1. Polymorphisme: Plusieurs répétitions de code pour des classes très similaires avec les mêmes fonctionalités. 
+Nous avons par exemple fait des classes abstraites pour les dialogues de jeu simple et multiple, et les parties
+simples et multiples. Emplacement: client/src/app/admin/dialog-abstrait.ts et client/src/app/partie/partie-abstraite-class.ts
+
+2. Chaîne de responsabilité: Pour les requêtes à la base de données, nous avons utilisé ce patron, car il permet de faire passer les
+requête d'une méthode à une autre évitant un trop grand couplage. Tous nos fichiers de routes en contiennent: 
+server/app/routesBaseDeDonnees.ts, server/app/routesPartieMultiple.ts, server/app/routesPartieSimple.ts
+
+3. State: Nous avons utilisé ce patron pour appliquer les modifications dans notre exécutable genmulti, car nous devions faire différentes
+actions selon la modification : ajouter, supprimer, changer couleur. Emplacement: server/app/genmulti
+
+4. Observer: À quelques reprises, nous avions besoin d'attendre un événement ou la réception d'un objet pour afficher/déclencher des méthodes.
+Nous avons donc mis des observables. Par exemple, pour gérer la réception des listes de parties dans l'onglet liste-parties (ex: client/src/app/partie/partie-simple.service.ts)
+ou lors de la vérification du username (ex:client/src/app/vue-initiale/user.service.ts)
+
+5. Contrôleur: Nous avions besoin d'une classe pour gérer les messages d'erreurs lors de la création des parties simples et multiples. 
+Nous avons utilisé socketServer pour gérer celles-ci et on peut trouver son utilisation ici : server/app/partieSimple/partie-simple.ts
