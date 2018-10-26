@@ -4,8 +4,8 @@ import { assert } from "chai";
 describe("Partie Simple BD classe", () => {
     let dbPartieSimple: DBPartieSimple;
 
-    beforeEach(() => {
-        dbPartieSimple = new DBPartieSimple();
+    beforeEach(async () => {
+        dbPartieSimple = await new DBPartieSimple();
     });
 
     describe("Constructeur", () => {
@@ -17,7 +17,7 @@ describe("Partie Simple BD classe", () => {
         });
 
         it("Devrait definir l'attribut modelPartie", () => {
-            assert.isDefined(dbPartieSimple["modelPartie"]);
+            assert.isDefined(dbPartieSimple["modelPartieBuffer"]);
         });
 
         it("Devrait definir l'attribut modelPartieArray", () => {
@@ -29,7 +29,7 @@ describe("Partie Simple BD classe", () => {
         });
 
         it("Devrait definir l'attribut schema", () => {
-            assert.isDefined(dbPartieSimple["schema"]);
+            assert.isDefined(dbPartieSimple["schemaBuffer"]);
         });
     });
 });

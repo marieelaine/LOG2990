@@ -12,7 +12,7 @@ import { injectable } from "inversify";
 // import { socketServer } from "../www";
 import { ReadLine } from "readline";
 
-interface PartieSimpleInterface {
+export interface PartieSimpleInterface {
     _id: string;
     _nomPartie: string;
     _tempsSolo: Array<number>;
