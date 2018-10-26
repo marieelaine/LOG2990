@@ -6,8 +6,8 @@ import * as sinon from "sinon";
 describe("Partie Simple BD classe", () => {
     let dbPartieSimple: DBPartieSimple;
 
-    beforeEach(() => {
-        dbPartieSimple = new DBPartieSimple();
+    beforeEach(async () => {
+        dbPartieSimple = await new DBPartieSimple();
     });
 
     describe("Constructeur", () => {
