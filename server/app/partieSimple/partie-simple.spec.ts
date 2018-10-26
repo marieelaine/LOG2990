@@ -1,20 +1,23 @@
-import { assert } from "chai";
-import { DBPartieSimple } from "./partie-simple";
+// import * as assert from "assert";
+// import { DBPartieSimple } from "./partie-simple";
 
-describe("BaseDeDonnees", () => {
-    describe("Constructeur", () => {
-        let image: DBPartieSimple;
-        beforeEach(() => {
-            image = new DBPartieSimple();
-        });
+// describe("Partie Simple BD classe", () => {
+//     let dbPartieSimple: DBPartieSimple;
 
-        it ("should do nothing", () => {
-            assert(true);
-        });
+//     beforeEach(() => {
+//         dbPartieSimple = new DBPartieSimple();
+//     });
 
-        it ("should be defined", () => {
-            assert.isDefined(image);
-        });
-
-    });
-});
+//     describe("Constructeur", () => {
+//         it("Devrait etre defini", () => {
+//             assert(dbPartieSimple);
+//         });
+//         it("Devrait definir tous les attributs", () => {
+//             assert(dbPartieSimple["baseDeDonnees"]);
+//             assert(dbPartieSimple["schemaArray"]);
+//             assert(dbPartieSimple["modelPartieArray"]);
+//             assert(dbPartieSimple["schemaBuffer"]);
+//             assert(dbPartieSimple["modelPartieBuffer"]);
+//         });
+//     });
+// });
