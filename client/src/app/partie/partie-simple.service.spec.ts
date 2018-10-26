@@ -21,4 +21,5 @@ describe("PartieSimpleService", () => {
     it("should be created", () => {
         expect(service).toBeTruthy();
     });
+
 });
