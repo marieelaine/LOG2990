@@ -23,7 +23,7 @@ describe("BaseDeDonnees classe", () => {
 
     describe("Fonction assurerConnection", () => {
         it("Devrait appeller la fonction connect de Mongoose", () => {
-            db.assurerConnection();
+            db.assurerConnection().catch();
 
             assert(connectStub.calledOnce);
         });

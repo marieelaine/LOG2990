@@ -50,7 +50,7 @@ describe("Liste Partie Service Service", () => {
         it("Devrait faire une requete PUT", () => {
             const id: string = "12345abcde";
 
-            service.reinitialiserTempsPartie(id, new Array<number>(), new Array<number>());
+            service.reinitialiserTempsPartie(id, new Array<number>(), new Array<number>()).catch(() => ErrorHandler);
 
             const req = mockHttp.expectOne("http://localhost:3000/partieSimple/reinitialiseTemps/" + id);
             expect(req.request.method).toBe("PUT");

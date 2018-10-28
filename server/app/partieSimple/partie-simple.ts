@@ -9,10 +9,9 @@ import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
-// import { socketServer } from "../www";
 import { ReadLine } from "readline";
 
-interface PartieSimpleInterface {
+export interface PartieSimpleInterface {
     _id: string;
     _nomPartie: string;
     _tempsSolo: Array<number>;
@@ -105,7 +104,7 @@ export class DBPartieSimple {
         if (errorMsg === "") {
             this.getImageDiffAsArrays(partie);
         } else {
-            // socketServer.envoyerMessageErreurScript("Les images ne contiennent pas exactement 7 différences, veuillez réessayer.");
+            // res = "Les images ne contiennent pas exactement 7 différences, veuillez réessayer."
         }
 
         await this.deleteImagesDirectory();
@@ -113,16 +112,17 @@ export class DBPartieSimple {
         return partie;
     }
 
-    private async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
+    protected async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
         partie._imageDiff = diffArrays;
         const partieSimple: Document = new this.modelPartieBuffer(partie);
         await partieSimple.save((err: Error) => {
             if (err !== null && err.name === "ValidationError") {
-                // socketServer.envoyerMessageErreurNomPris("Le nom de la partie est déjà pris. Veuillez réessayer avec un autre nom.");
+                // res = Le nom de la partie est déjà pris. Veuillez réessayer avec un autre nom.";
             }
-        });    }
+        });
+    }
 
-    private getImageDiffAsArrays(partie: PartieSimpleInterface): void {
+    public getImageDiffAsArrays(partie: PartieSimpleInterface): void {
         const imageMod: string = p.resolve("../Images/image3.bmp.txt");
         const diffArrays: Array<Array<string>> = new Array<Array<string>>();
         const input: fs.ReadStream = fs.createReadStream(imageMod);

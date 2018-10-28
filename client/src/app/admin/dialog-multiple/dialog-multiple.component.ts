@@ -16,6 +16,9 @@ import { PartieMultipleService } from '../partie-multiple.service';
 export class DialogMultipleComponent extends DialogAbstrait {
 
   protected toggleClassButton: boolean = false;
+  protected outOfBoundNumberForms: string;
+  protected checkboxMessage: string;
+  protected themeButtonMessage: string;
 
   public constructor(
     dialogRef: MatDialogRef<DialogMultipleComponent>,
@@ -23,6 +26,11 @@ export class DialogMultipleComponent extends DialogAbstrait {
     http: HttpClient,
     private partieMultipleService: PartieMultipleService) {
       super(dialogRef, data, http);
+      this.outOfBoundNumberForms = "";
+      this.checkboxMessage = "";
+      this.themeButtonMessage = "";
+      this.data.theme = "";
+      this.data.typeModification = "";
   }
 
   protected checkboxArray: Checkbox[] =  [
@@ -55,6 +63,9 @@ export class DialogMultipleComponent extends DialogAbstrait {
     // sur le click ajouter, call close dialog if requ and on submit
   protected onClickAjouterPartie(): void {
       this.setOutOfBoundNameLengthMessage();
+      this.setOutOfBoundNumberFormsMessage();
+      this.setCheckboxMessage();
+      this.setThemeMessage();
       this.closeDialogIfRequirements();
     }
 
@@ -78,8 +89,10 @@ export class DialogMultipleComponent extends DialogAbstrait {
         },
         (error) => {
           console.error(error);
-        }
-      );
+        });
+    // setTimeout(() => {
+    //       window.location.reload(); },
+    //            2500);
   }
 
   protected onThemeClickButton(event: Event, theme: string): void {
@@ -88,11 +101,44 @@ export class DialogMultipleComponent extends DialogAbstrait {
   }
 
   protected verifierSiMessageErreur(): Boolean {
-    return (this.outOfBoundNameLengthMessage !== "");
+    return (this.outOfBoundNameLengthMessage !== ""
+            || this.outOfBoundNumberForms !== ""
+            || this.checkboxMessage !== ""
+            || this.themeButtonMessage !== "");
   }
 
   protected checkIfOutOfBoundNameLength(): Boolean {
     return (this["data"].multipleGameName === "" || this["data"].multipleGameName === undefined
     || this["data"].multipleGameName.length < 3 || this["data"].multipleGameName.length > 20);
+  }
+
+  protected checkIfOutOfBoundNumberForms(): Boolean {
+    return (this["data"].quantiteObjets < 10 || this["data"].quantiteObjets > 200);
+  }
+
+  protected checkAllCheckbox(): Boolean {
+    return (this["data"].typeModification === "");
+  }
+
+  protected checkThemeButton(): Boolean {
+    return (this.data.theme === "");
+  }
+
+  protected setOutOfBoundNumberFormsMessage(): void {
+    this.checkIfOutOfBoundNumberForms() ?
+      this.outOfBoundNumberForms = "*Le nombre de formes doit être entre 10 et 200." :
+      this.outOfBoundNumberForms = "" ;
+  }
+
+  protected setCheckboxMessage(): void {
+    this.checkAllCheckbox() ?
+      this.outOfBoundNumberForms = "*Une transformation doit etre selectionnee au minimum." :
+      this.outOfBoundNumberForms = "" ;
+  }
+
+  protected setThemeMessage(): void {
+    this.checkThemeButton() ?
+      this.themeButtonMessage = "*Un theme doit etre selectionne." :
+      this.themeButtonMessage = "" ;
   }
 }

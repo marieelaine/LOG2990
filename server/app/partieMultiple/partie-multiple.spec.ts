@@ -54,7 +54,7 @@ describe("Partie Multiple BD classe", () => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             const resultatAttendu: string = "../Images";
 
-            partieMultipleBD["deleteImagesDirectory"]();
+            partieMultipleBD["deleteImagesDirectory"]().catch();
 
             assert(stub.calledOnce);
             assert(stub.calledWith(resultatAttendu));
@@ -83,7 +83,7 @@ describe("Partie Multiple BD classe", () => {
                 _typeModification: "a",
             };
 
-            partieMultipleBD["enregistrerPartieMultiple"](unePartie, {} as Response, "erreur");
+            partieMultipleBD["enregistrerPartieMultiple"](unePartie, {} as Response, "erreur").catch();
 
             assert(spy.calledOnce);
             assert(stub.calledOnce);
