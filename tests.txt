@@ -1,0 +1,4 @@
+-attendre que le code pour faire reapparaite nouveau pixels soit la
+vue multiple component
+partie solo component
+partie multi component

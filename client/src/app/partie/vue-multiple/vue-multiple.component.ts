@@ -2,7 +2,7 @@ import {Component, ErrorHandler} from '@angular/core';
 import { PartieAbstraiteClass } from "../partie-abstraite-class";
 import { ActivatedRoute} from "@angular/router";
 import { PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
-import { PartieSimpleService} from "../partie-simple.service";
+import { PartieService} from "../partie.service";
 
 @Component({
   selector: 'app-vue-multiple',
@@ -12,7 +12,7 @@ import { PartieSimpleService} from "../partie-simple.service";
 export class VueMultipleComponent extends PartieAbstraiteClass {
 
     public constructor(private route: ActivatedRoute,
-                       protected partieSimpleService: PartieSimpleService
+                       protected partieService: PartieService
     ) {
       super();
       this.setID();
@@ -30,7 +30,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     }
 
     protected setPartie(): void {
-      this.partieSimpleService.getPartieMultiple(this.partieID).subscribe((res: PartieMultiple) => {
+      this.partieService.getPartieMultiple(this.partieID).subscribe((res: PartieMultiple) => {
         this.partie = res;
         this.setup();
       });
@@ -92,7 +92,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
 
     protected ajouterTemps(temps: number): void {
         this.partie["_tempsSolo"].push(temps);
-        this.partieSimpleService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
+        this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
             .catch(() => ErrorHandler);
     }
 }

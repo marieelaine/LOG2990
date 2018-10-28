@@ -7,11 +7,11 @@ import { PartieMultiple } from '../admin/dialog-multiple/partie-multiple';
 @Injectable({
     providedIn: 'root'
 })
-export class PartieSimpleService {
+export class PartieService {
 
     private readonly BASE_URL_SIMPLE: string = "http://localhost:3000/partieSimple/";
     private readonly GETPARTIESIMPLE_URL: string = this.BASE_URL_SIMPLE + "getPartieSimple/";
-    private readonly BASE_URL_MULTIPLE: string = "http://localhost:3000/partiemultiple/";
+    private readonly BASE_URL_MULTIPLE: string = "http://localhost:3000/partieMultiple/";
     private readonly GETPARTIEMULTIPLE_URL: string = this.BASE_URL_MULTIPLE + "getPartieMultiple/";
     private readonly REINITIALISER_TEMPS_SIMPLE_URL: string = this.BASE_URL_SIMPLE + "reinitialiseTemps/";
 

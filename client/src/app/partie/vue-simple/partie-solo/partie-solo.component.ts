@@ -2,13 +2,13 @@ import { Component, ErrorHandler } from '@angular/core';
 import { PartieAbstraiteClass } from '../../partie-abstraite-class';
 import { ActivatedRoute} from "@angular/router";
 import { PartieSimple} from "../../../admin/dialog-simple/partie-simple";
-import { PartieSimpleService} from "../../partie-simple.service";
+import { PartieService} from "../../partie.service";
 
 @Component({
     selector: 'app-partie-solo',
     templateUrl: './partie-solo.component.html',
     styleUrls: ['./partie-solo.component.css'],
-    providers: [PartieSimpleService]
+    providers: [PartieService]
 })
 
 export class PartieSoloComponent extends PartieAbstraiteClass {
@@ -18,7 +18,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
     protected partie: PartieSimple;
 
     public constructor(private route: ActivatedRoute,
-                       protected partieSimpleService: PartieSimpleService) {
+                       protected partieService: PartieService) {
         super();
         this.differenceRestantes = 7;
         this.setID();
@@ -31,7 +31,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
     }
 
     protected setPartie(): void {
-        this.partieSimpleService.getPartieSimple(this.partieID).subscribe((res: PartieSimple) => {
+        this.partieService.getPartieSimple(this.partieID).subscribe((res: PartieSimple) => {
             this.partie = res;
             this.setup();
         });
@@ -89,7 +89,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
 
     protected ajouterTemps(temps: number): void {
         this.partie["_tempsSolo"].push(temps);
-        this.partieSimpleService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
+        this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
         .catch(() => ErrorHandler);
     }
 

@@ -9,6 +9,7 @@ import { PartieSimple } from "src/app/admin/dialog-simple/partie-simple";
 import * as Buffer from "buffer";
 import { of } from "rxjs";
 import { PartieSoloComponent } from "src/app/partie/vue-simple/partie-solo/partie-solo.component";
+import { PartieMultijoueurComponent } from "src/app/partie/vue-simple/partie-multijoueur/partie-multijoueur.component";
 
 describe("Liste Partie Simple Component", () => {
     let mockListePartieService: jasmine.SpyObj<ListePartieServiceService>;
@@ -16,22 +17,31 @@ describe("Liste Partie Simple Component", () => {
     let component: ListePartieSimpleComponent;
     let fixture: ComponentFixture<ListePartieSimpleComponent>;
     let location: Location;
+    const partie: PartieSimple = new PartieSimple(
+        "partie1",
+        new Array<number>(),
+        new Array<number>(),
+        new Buffer.Buffer(new Array<number>()),
+        new Buffer.Buffer(new Array<number>()),
+        new Array<Array<string>>(),
+        "1");
+    const parties: PartieSimple[] = [partie];
 
     beforeEach(() => {
         mockListePartieService = jasmine.createSpyObj([
-            "getListePartieSimple",
-            "deletePartieSimple",
-            "reinitialiserTempsPartie"
+            "getListePartieSimple", "deletePartieSimple", "reinitialiserTempsPartie"
         ]);
 
         TestBed.configureTestingModule({
             declarations: [
                 ListePartieSimpleComponent,
                 PartieSoloComponent,
+                PartieMultijoueurComponent
             ],
             imports: [
                 RouterTestingModule.withRoutes([
                     { path: "partie-solo", component: PartieSoloComponent },
+                    { path: "partie-multi", component: PartieMultijoueurComponent }
                 ]),
                 HttpClientTestingModule
             ],
@@ -54,15 +64,6 @@ describe("Liste Partie Simple Component", () => {
 
     describe("fonction ngOnInit", () => {
         it("Devrait apeller la fonction getListeImageSimple du service", () => {
-            const partie: PartieSimple = new PartieSimple(
-                "partie1",
-                new Array<number>(),
-                new Array<number>(),
-                new Buffer.Buffer(new Array<number>()),
-                new Buffer.Buffer(new Array<number>()),
-                new Array<Array<string>>(),
-                "1");
-            const parties: PartieSimple[] = [partie];
             mockListePartieService['getListePartieSimple'].and.returnValue(of(parties));
 
             component.ngOnInit();
@@ -94,13 +95,26 @@ describe("Liste Partie Simple Component", () => {
         }));
     });
 
-    // it("should call onJouerOuReinitialiserClick when click on "Jouer" or "Reinitialiser" button", () => {
-    //   const button = fixture.debugElement.query(By.css("#boutonJouerOurReinitialiser")).nativeElement;
+    describe("fonction onCreerOuSupprimerClick", () => {
+        it("Devrait naviguer a la route '/partie-multi'", fakeAsync(() => {
+            component["isListePartiesMode"] = true;
+            const id: string = "";
 
-    //   spyOn(component, "onJouerOuReinitialiserClick");
-    //   button.dispatchEvent(new Event("click"));
+            component["onCreerOuSupprimerClick"](id);
+            tick();
 
-    //   expect(component.onJouerOuReinitialiserClick).toHaveBeenCalled();
-    // });
+            expect(location.path()).toBe("/partie-multi");
+        }));
+        it("Devrait rester a la route courante", fakeAsync(() => {
+            const pathAvant: string = location.path();
+            component["isListePartiesMode"] = false;
+            component["isAdminMode"] = false;
+
+            component["onCreerOuSupprimerClick"]("");
+            tick();
+
+            expect(location.path()).toBe(pathAvant);
+        }));
+    });
 
 });

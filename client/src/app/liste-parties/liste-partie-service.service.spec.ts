@@ -57,6 +57,37 @@ describe("Liste Partie Service Service", () => {
         });
     });
 
+    describe("Fonction getListeImageMultiple", () => {
+        it("Devrait faire une requete GET", fakeAsync(() => {
+            service.getListePartieMultiple().subscribe();
+
+            const req = mockHttp.expectOne("http://localhost:3000/partieMultiple/getListePartieMultiple");
+            expect(req.request.method).toBe("GET");
+        }));
+    });
+
+    describe("Fonction deletePartieMultiple", () => {
+        it("Devrait faire une requete DELETE", () => {
+            const id: string = "12345abcde";
+            service.deletePartieMultiple(id)
+            .catch(() => ErrorHandler);
+
+            const req = mockHttp.expectOne("http://localhost:3000/partieMultiple/delete/" + id);
+            expect(req.request.method).toBe("DELETE");
+        });
+    });
+
+    describe("Fonction reinitialiserTempsPartieMultiple", () => {
+        it("Devrait faire une requete PUT", () => {
+            const id: string = "12345abcde";
+
+            service.reinitialiserTempsPartieMultiple(id, new Array<number>(), new Array<number>());
+
+            const req = mockHttp.expectOne("http://localhost:3000/partieMultiple/reinitialiseTemps/" + id);
+            expect(req.request.method).toBe("PUT");
+        });
+    });
+
     afterEach(() => {
         mockHttp.verify();
     });
