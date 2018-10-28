@@ -2,7 +2,6 @@ import { Component } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
 import { ListePartieServiceService } from "./liste-partie-service.service";
 import T from "../admin/dialog-abstrait";
-import {PartieSimple} from "../admin/dialog-simple/partie-simple";
 
 @Component({
   selector: "app-liste-parties",
@@ -124,11 +123,6 @@ export class ListePartiesComponent {
     for (let i = 0 ; i < partie["_tempsUnContreUn"].length ; i++) {
       partie["_tempsUnContreUn"][i] = Math.floor(Math.random() * 400) + 100;
     }
-  }
-
-  protected reinitialiserTableauTemps(partie: PartieSimple) {
-      partie["_tempsSolo"] = [];
-      partie["_tempsUnContreUn"] = [];
   }
 
   private setToJouerAndCreer(): void {

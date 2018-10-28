@@ -3,11 +3,12 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ListePartiesComponent } from './liste-parties.component';
 import { MatCardModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-
+import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { ListePartieSimpleComponent } from './liste-partie-simple/liste-partie-simple.component';
 import { ListePartieMultipleComponent } from './liste-partie-multiple/liste-partie-multiple.component';
 import { PartieSoloComponent } from '../partie/vue-simple/partie-solo/partie-solo.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { By } from "@angular/platform-browser";
 
 describe('ListePartiesComponent', () => {
     let component: ListePartiesComponent;
@@ -19,6 +20,9 @@ describe('ListePartiesComponent', () => {
     const convertTimeTest: number = 547;
     const displaySecondsTest: number = 57;
     const displayMinutesTest: number = 9;
+    const partie1 = new PartieSimple("name", [1, 2], [1, 2], new Buffer(""), new Buffer(""), [[]]);
+    const partie2 = new PartieSimple("name2", [1, 2], [1, 2], new Buffer(""), new Buffer(""), [[]]);
+    const listeParties: PartieSimple[] = [partie1, partie2];
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -77,11 +81,6 @@ describe('ListePartiesComponent', () => {
         expect(component["getSortedTimes"](sortingTimesTest)).toEqual([0, 1, 5, 213, 643, 1465]);
     });
 
-    // Test remove first letter of title
-    it('should return title without first letter', () => {
-        expect(component["getTitleWithoutFirstLetter"](titleTest)).toBe("Success");
-    });
-
     // Test conversion en minutes et secondes
     it('should return array of sorted times', () => {
         expect(component["convertSecondsToMinutes"](convertTimeTest)).toBe("9:07");
@@ -90,5 +89,40 @@ describe('ListePartiesComponent', () => {
     // Test retour du temps a afficher
     it('should return array of sorted times', () => {
         expect(component["getDisplayTime"](displayMinutesTest, displaySecondsTest)).toBe("9:57");
+    });
+
+    // Test generer nouveaux tableaux des temps
+    it('should create new random array of sorted times', () => {
+        component["genererTableauTempsAleatoires"](partie1);
+        expect(partie1["_tempsSolo"]).not.toEqual([1, 2]);
+        expect(partie1["_tempsUnContreUn"]).not.toEqual([1, 2]);
+    });
+
+    // Test remove first letter of title
+    it('should return title without first letter', () => {
+        expect(component["getTitleWithoutFirstLetter"](titleTest)).toBe("Success");
+    });
+
+    // Test get first letter of title
+    it('should return title first letter', () => {
+        expect(component["getTitleFirstLetter"](titleTest)).toBe("N");
+    });
+
+    // Test setToJouerAndCreer
+    it('should change attribute modes', () => {
+        component["setToJouerAndCreer"]();
+        expect(component["isAdminMode"]).toBeFalsy();
+        expect(component["isListePartiesMode"]).toBeTruthy();
+        expect(component["jouerOuReinitialiser"]).toBe("Jouer");
+        expect(component["creerOuSupprimer"]).toBe("Créer");
+    });
+
+    // Test setToReinitialiserAndSupprimer
+    it('should change attribute modes', () => {
+        component["setToReinitialiserAndSupprimer"]();
+        expect(component["isAdminMode"]).toBeTruthy();
+        expect(component["isListePartiesMode"]).toBeFalsy();
+        expect(component["jouerOuReinitialiser"]).toBe("Réinitialiser");
+        expect(component["creerOuSupprimer"]).toBe("Supprimer");
     });
 });

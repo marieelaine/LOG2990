@@ -18,6 +18,11 @@ describe('PartieAbstraiteComponent', () => {
     expect(abstractClassInstance).toBeTruthy();
   });
 
+  it('partieCommence should be false and blur true', () => {
+    expect(abstractClassInstance["partieCommence"]).toBeFalsy();
+    expect(abstractClassInstance["blur"]).toBeTruthy();
+  });
+
   it('should return value 0', fakeAsync(() => {
     tick(1000);
     expect(abstractClassInstance["chrono"].getTime()).toBe(0);
