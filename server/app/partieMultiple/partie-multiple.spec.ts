@@ -16,7 +16,7 @@ describe("Partie Multiple BD classe", () => {
             assert.isDefined(partieMultipleBD);
         });
 
-        it("Devrait definir l'attribut basseDeDonnees", () => {
+        it("Devrait definir l'attribut baseDeDonnees", () => {
             assert.isDefined(partieMultipleBD["baseDeDonnees"]);
         });
 
@@ -37,6 +37,18 @@ describe("Partie Multiple BD classe", () => {
         });
     });
 
+    describe("Fonction makeDirectory", () => {
+        it("Devrait appeller la fonction makeDirectory", () => {
+            // tslint:disable-next-line:no-any
+            const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "makeDirectory");
+            const resultatAttendu: string = "../Images";
+
+            partieMultipleBD["makeDirectory"](resultatAttendu);
+
+            assert(spy.calledOnce);
+        });
+    });
+
     describe("Fonction deleteImagesDirectory", () => {
         it("Devrait appeller la fonction remove de fsx", () => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
@@ -50,7 +62,7 @@ describe("Partie Multiple BD classe", () => {
     });
 
     describe("Fonction enregistrerPartieMultiple", () => {
-        it("Devrait appeller la fonction dleteImagesDirectory", () => {
+        it("Devrait appeller la fonction deleteImagesDirectory", () => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "deleteImagesDirectory");
@@ -75,6 +87,33 @@ describe("Partie Multiple BD classe", () => {
 
             assert(spy.calledOnce);
             assert(stub.calledOnce);
+        });
+    });
+
+    describe("Fonction genererScene", () => {
+        it("Devrait appeller la fonction genererScene", () => {
+            // tslint:disable-next-line:no-any
+            const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "genererScene");
+
+            const unePartie: PartieMultipleInterface = {
+                _id: "1",
+                _nomPartie: "unePartie",
+                _tempsSolo: new Array<number>(),
+                _tempsUnContreUn: new Array<number>(),
+                _image1PV1: Buffer.alloc(1),
+                _image1PV2: Buffer.alloc(1),
+                _image2PV1: Buffer.alloc(1),
+                _image2PV2: Buffer.alloc(1),
+                _imageDiff1: Buffer.alloc(1),
+                _imageDiff2: Buffer.alloc(1),
+                _quantiteObjets: 1,
+                _theme: "theme",
+                _typeModification: "a",
+            };
+
+            partieMultipleBD["genererScene"](unePartie, {} as Response);
+
+            assert(spy.calledOnce);
         });
     });
 

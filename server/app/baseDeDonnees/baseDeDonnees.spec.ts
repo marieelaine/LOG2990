@@ -15,6 +15,10 @@ describe("BaseDeDonnees classe", () => {
         it("Devrait etre defini", () => {
             assert.isDefined(db);
         });
+        it("Devrait appeller la fonction seConnecter", () => {
+            db["seConnecter"]();
+            assert(connectStub.calledOnce);
+        });
     });
 
     describe("Fonction assurerConnection", () => {
