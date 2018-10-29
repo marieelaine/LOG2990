@@ -20,7 +20,7 @@
             <h4 class="scene">Scene 1</h4>
             <mat-card class="container-fluid card">
                 <div class="row">
-                    <img [ngClass]="{'blurImg': blur}" id="imageG1" (click)="testerPourDiff($event)" src="" alt="">
+                    <canvas [ngClass]="{'blurImg': blur}" (click)="testerPourDiff($event)" #canvasG1 id="canvasG1" width="640" height="480"></canvas>
                 </div>
             </mat-card>
         </div>
@@ -28,7 +28,7 @@
             <h4 class="scene">Scene2</h4>
             <mat-card class="container-fluid card">
                 <div class="row">
-                    <img [ngClass]="{'blurImg': blur}" id="imageD1" (click)="testerPourDiff($event)" src="" alt="">
+                    <canvas [ngClass]="{'blurImg': blur}" (click)="testerPourDiff($event)" #canvasD1 id="canvasD1" width="640" height="480"></canvas>
                 </div>
             </mat-card>
         </div>
@@ -39,7 +39,7 @@
             <h4 class="scene">Scene1</h4>
             <mat-card class="container-fluid card">
                 <div class="row">
-                    <img [ngClass]="{'blurImg': blur}" id="imageG2" (click)="testerPourDiff($event)" src="" alt="">
+                    <canvas [ngClass]="{'blurImg': blur}" (click)="testerPourDiff($event)" #canvasG2 id="canvasG2" width="640" height="480"></canvas>
                 </div>
             </mat-card>
         </div>
@@ -47,7 +47,7 @@
             <h4 class="scene">Scene2</h4>
             <mat-card class="container-fluid card">
                 <div class="row">
-                    <img [ngClass]="{'blurImg': blur}" id="imageD2" (click)="testerPourDiff($event)" src="" alt="">
+                    <canvas [ngClass]="{'blurImg': blur}" (click)="testerPourDiff($event)" #canvasD2 id="canvasD2" width="640" height="480"></canvas>
                 </div>
             </mat-card>
         </div>

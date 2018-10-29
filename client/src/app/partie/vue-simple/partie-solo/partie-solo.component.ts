@@ -1,4 +1,4 @@
-import { Component, ErrorHandler } from '@angular/core';
+import { Component, ErrorHandler, ViewChild, ElementRef } from '@angular/core';
 import { PartieAbstraiteClass } from '../../partie-abstraite-class';
 import { ActivatedRoute} from "@angular/router";
 import { PartieSimple} from "../../../admin/dialog-simple/partie-simple";
@@ -13,6 +13,8 @@ import { PartieService} from "../../partie.service";
 
 export class PartieSoloComponent extends PartieAbstraiteClass {
 
+    @ViewChild('canvasG') canvasG: ElementRef;
+    @ViewChild('canvasD') canvasD: ElementRef;
     protected partieID: string;
     protected nomPartie: string;
     protected partie: PartieSimple;
@@ -43,12 +45,12 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
         const data1: string = atob(String(this.partie["_image1"][0]));
         const data2: string = atob(String(this.partie["_image2"][0]));
 
-        this.ajusterSourceImage(data1, "imageG");
-        this.ajusterSourceImage(data2, "imageD");
+        this.ajusterSourceImage(data1, this.canvasG);
+        this.ajusterSourceImage(data2, this.canvasD);
 
     }
 
-    protected ajusterSourceImage(data: String, id: String): void {
+    protected ajusterSourceImage(data: String, canvas: ElementRef): void {
         let hex = 0x00;
         const result: Uint8Array = new Uint8Array(data.length);
 
@@ -57,8 +59,15 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
             result[i] = hex;
         }
         const blob = new Blob([result], {type: 'image/bmp'});
-        // @ts-ignore
-        document.getElementById(id).src = URL.createObjectURL(blob);
+
+        const context = canvas.nativeElement.getContext("2d");
+        const image = new Image();
+        image.src = URL.createObjectURL(blob);
+        image.onload = () => {
+            context.drawImage(image, 0, 0);
+            const imageData = context.getImageData(0, 0, 300, 311);
+            console.log(imageData);
+        };
     }
 
     protected testerPourDiff(event): void {
@@ -92,5 +101,9 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
         this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
         .catch(() => ErrorHandler);
     }
+
+    // protected updatePixelData(): void {
+
+    // }
 
 }
