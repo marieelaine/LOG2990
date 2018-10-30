@@ -43,7 +43,6 @@ def compare_images(settings, enlargePixels):
             px_two = pixels_two[i, j]
             if((not (px_one==px_two).all()) and visited[j,i] == False):
                 compteur+=1
-                print(compteur)
                 f.write("DIFFERENCE\n")
                 stack = []
                 stack.append((j,i))
