@@ -14,18 +14,18 @@ import { PartieSimpleService} from "../../partie-simple.service";
 export class PartieSoloComponent extends PartieAbstraiteClass {
 
     protected partieID: string;
-    protected nomPartie: string;
     protected partie: PartieSimple;
+    protected diffTrouvee: number[];
 
     public constructor(private route: ActivatedRoute,
                        protected partieSimpleService: PartieSimpleService) {
         super();
+        this.diffTrouvee = [];
         this.differenceRestantes = 7;
         this.setID();
         this.setPartie();
     }
 
-    protected diffTrouvee: number[] = [];
     protected setID(): void {
         this.partieID = this.route.snapshot.paramMap.get('idPartie') + "";
     }
@@ -38,14 +38,18 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
     }
 
     protected setup(): void {
-        this.nomPartie = this.partie["_nomPartie"].charAt(0).toUpperCase() + this.partie["_nomPartie"].slice(1);
+        this.addNomPartieToChat();
 
         const data1: string = atob(String(this.partie["_image1"][0]));
         const data2: string = atob(String(this.partie["_image2"][0]));
 
         this.ajusterSourceImage(data1, "imageG");
         this.ajusterSourceImage(data2, "imageD");
+    }
 
+    protected addNomPartieToChat() {
+        this.nomPartie = this.partie["_nomPartie"];
+        this.messagesChat.push("Bienvenue dans la partie " + this.nomPartie.charAt(0).toUpperCase() + this.partie["_nomPartie"].slice(1));
     }
 
     protected ajusterSourceImage(data: String, id: String): void {

@@ -9,7 +9,7 @@
 <div class="container-fluid ">
     <div>
         <h1 class="title">
-            {{message}}
+            {{ messageDifferences }}
         </h1>
     </div>
 
@@ -47,7 +47,9 @@
                             </div>
                         </div>
                     <div class="panel-body msg_container_base" id="divMessagesConsole">
-                        <p class="consoleMessages"> Bienvenue dans la partie {{ nomPartie }} </p>
+                        <div *ngFor="let message of messagesChat">
+                            <p class="consoleMessages"> {{ message }} </p>
+                        </div>
                         <div class="row msg_container base_sent">
                             <div class="col-md-10 col-xs-10">
                                 <!-- <div class="messages msg_sent">

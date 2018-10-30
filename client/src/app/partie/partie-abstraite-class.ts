@@ -3,21 +3,28 @@ import {ErrorHandler} from "@angular/core";
 
 export abstract class PartieAbstraiteClass {
 
-    protected blur: boolean = true;
-    protected chrono: ChronoComponent = new ChronoComponent();
-    protected message = "Cliquez pour commencer";
-    protected differencesTrouvees = 0;
-    protected partieCommence = false;
+    protected blur: boolean;
+    protected chrono: ChronoComponent;
+    protected messageDifferences: string;
+    protected differencesTrouvees: number;
+    protected partieCommence: boolean;
     protected audio = new Audio();
     protected differenceRestantes;
+    protected nomPartie: string;
+    protected messagesChat: string[];
 
     public constructor() {
-
+        this.blur = true;
+        this.partieCommence = false;
+        this.differencesTrouvees = 0;
+        this.chrono = new ChronoComponent();
+        this.messageDifferences = "Cliquez pour commencer";
+        this.messagesChat = new Array<string>();
     }
 
     protected start(): void {
         this.partieCommence = true;
-        this.message = `Vous avez trouvé ${this.differencesTrouvees} différences`;
+        this.messageDifferences = `Vous avez trouvé ${this.differencesTrouvees} différences`;
         this.blur = false;
         const button: HTMLElement = document.getElementById("StartButton") as HTMLElement;
         try {
@@ -27,10 +34,9 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected trouverDifference(): void {
-
         if (this.partieCommence) {
             this.differencesTrouvees ++;
-            this.message = `Vous avez trouvé ${this.differencesTrouvees} différences`;
+            this.messageDifferences = `Vous avez trouvé ${this.differencesTrouvees} différences`;
             this.audio.src = "../assets/diffTrouvee.mp3";
             this.audio.load();
             this.audio.play().catch(() => ErrorHandler);
@@ -43,18 +49,12 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected ajouterMessageDiffTrouvee() {
-        const div: HTMLElement = document.getElementById("divMessagesConsole") as HTMLElement;
-        const para = document.createElement("h");
-        const br = document.createElement("br");
-        const msg = document.createTextNode("Vous avez trouvé une différence!");
-        para.appendChild(msg);
-        div.appendChild(msg);
-        div.appendChild(br);
+        this.messagesChat.push("Vous avez trouvé une différence!");
     }
 
     protected terminerPartie(): void {
         this.chrono.stopTimer();
-        this.message = "FÉLICITATIONS!";
+        this.messageDifferences = "FÉLICITATIONS!";
         this.audio.src = "../assets/applause.mp3";
         this.audio.load();
         this.audio.play().catch(() => ErrorHandler);

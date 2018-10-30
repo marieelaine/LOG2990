@@ -182,9 +182,8 @@ img{
       bottom:0;
   }
 
-  .consoleMessages{
-      text-align: center;
-      margin-top: 2%;
+  .consoleMessages {
+      text-align: center;      
   }
 
   .chat{
