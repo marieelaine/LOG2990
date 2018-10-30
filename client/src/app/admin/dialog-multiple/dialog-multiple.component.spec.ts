@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { PartieMultipleService } from '../partie-multiple.service';
 import { of } from 'rxjs';
+import { By } from "@angular/platform-browser";
 import { PartieMultiple } from './partie-multiple';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
@@ -114,6 +115,54 @@ describe('DialogMultipleComponent', () => {
             expect(result).toBeTruthy();
         });
 
+        it("Devrait retourner vrai si la quantité de formes désirées est inférieur à 10", () => {
+            component["data"].quantiteObjets = 9;
+
+            const result: Boolean = component["checkIfOutOfBoundNumberForms"]();
+
+            expect(result).toBeTruthy();
+        });
+
+        it("Devrait retourner vrai si la quantité de formes désirées est supérieure à 200", () => {
+            component["data"].quantiteObjets = 201;
+
+            const result: Boolean = component["checkIfOutOfBoundNumberForms"]();
+
+            expect(result).toBeTruthy();
+        });
+
+        it("Devrait retourner vrai si le type de modifications est vide", () => {
+            component["data"].typeModification = "";
+
+            const result: Boolean = component["checkAllCheckbox"]();
+
+            expect(result).toBeTruthy();
+        });
+
+        it("Devrait retourner vrai si le thème n'est pas choisi", () => {
+            component["data"].theme = "";
+
+            const result: Boolean = component["checkThemeButton"]();
+
+            expect(result).toBeTruthy();
+        });
+
+        it("Devrait retourner faux si le thème est choisi", () => {
+            component["data"].theme = "geo";
+
+            const result: Boolean = component["checkThemeButton"]();
+
+            expect(result).toBeFalsy();
+        });
+
+        it("Devrait retourner faux si le type de modifications n'est pas vide", () => {
+            component["data"].typeModification = "acs";
+
+            const result: Boolean = component["checkAllCheckbox"]();
+
+            expect(result).toBeFalsy();
+        });
+
         it("Devrait retourner faux si le nom de partie multiple est valide", () => {
             component["data"].multipleGameName = "abcdefg";
 
@@ -121,20 +170,82 @@ describe('DialogMultipleComponent', () => {
 
             expect(result).toBeFalsy();
         });
+
+        it("Devrait retourner faux si la quantité de formes désirées est entre 10 et 200", () => {
+            component["data"].quantiteObjets = 57;
+
+            const result: Boolean = component["checkIfOutOfBoundNumberForms"]();
+
+            expect(result).toBeFalsy();
+        });
     });
 
     describe("Fonction onClickAjouterPartie", () => {
         it("Devrait appeller la fonction setOutOfBoundNameLengthMessage", () => {
-            // Arrange
+
             mockPartieMultipleService.register.and.returnValue(of({}));
             mockDialogRef.close.and.returnValue(true);
             // tslint:disable-next-line:no-any
             const spy: jasmine.Spy = spyOn<any>(component, "setOutOfBoundNameLengthMessage");
-
-            // Act
             component["onClickAjouterPartie"]();
+            expect(spy).toHaveBeenCalled();
+        });
 
-            // Assert
+        it("Devrait appeller la fonction setOutOfBoundNumberFormsMessage", () => {
+
+            mockPartieMultipleService.register.and.returnValue(of({}));
+            mockDialogRef.close.and.returnValue(true);
+            // tslint:disable-next-line:no-any
+            const spy: jasmine.Spy = spyOn<any>(component, "setOutOfBoundNumberFormsMessage");
+            component["onClickAjouterPartie"]();
+            expect(spy).toHaveBeenCalled();
+        });
+
+        it("Devrait appeller la fonction setCheckboxMessage", () => {
+
+            mockPartieMultipleService.register.and.returnValue(of({}));
+            mockDialogRef.close.and.returnValue(true);
+            // tslint:disable-next-line:no-any
+            const spy: jasmine.Spy = spyOn<any>(component, "setCheckboxMessage");
+            component["onClickAjouterPartie"]();
+            expect(spy).toHaveBeenCalled();
+        });
+
+        it("Devrait appeller la fonction setThemeMessage", () => {
+
+            mockPartieMultipleService.register.and.returnValue(of({}));
+            mockDialogRef.close.and.returnValue(true);
+            // tslint:disable-next-line:no-any
+            const spy: jasmine.Spy = spyOn<any>(component, "setThemeMessage");
+            component["onClickAjouterPartie"]();
+            expect(spy).toHaveBeenCalled();
+        });
+
+        it("Devrait appeller la fonction closeDialogIfRequirements", () => {
+
+            mockPartieMultipleService.register.and.returnValue(of({}));
+            mockDialogRef.close.and.returnValue(true);
+            // tslint:disable-next-line:no-any
+            const spy: jasmine.Spy = spyOn<any>(component, "closeDialogIfRequirements");
+            component["onClickAjouterPartie"]();
+            expect(spy).toHaveBeenCalled();
+        });
+
+        it("should close the dialog if cancel button is clicked", () => {
+            const onNoClickButton = fixture.debugElement.query(By.css("#onNoClickButton")).nativeElement;
+
+            // tslint:disable-next-line:no-any
+            const spy: jasmine.Spy = spyOn<any>(component, "surClickExterieurDialog");
+            onNoClickButton.dispatchEvent(new Event("click"));
+            expect(spy).toHaveBeenCalled();
+          });
+
+        it("should call onClickAjouterPartie when an add game button is clicked", () => {
+            const onAddClickButton = fixture.debugElement.query(By.css("#onAddClickButton")).nativeElement;
+
+            // tslint:disable-next-line:no-any
+            const spy: jasmine.Spy = spyOn<any>(component, "onClickAjouterPartie");
+            onAddClickButton.dispatchEvent(new Event("click"));
             expect(spy).toHaveBeenCalled();
         });
     });

@@ -26,6 +26,7 @@
     "angular-particle": "^1.0.4",
     "arraybuffer-to-buffer": "0.0.4",
     "buffer": "^5.2.1",
+    "chai": "^4.2.0",
     "core-js": "^2.5.4",
     "file-api": "^0.10.4",
     "image-type": "^3.0.0",

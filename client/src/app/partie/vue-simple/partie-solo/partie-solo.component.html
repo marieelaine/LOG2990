@@ -17,14 +17,14 @@
         <div class="col-sm-6 divImg">
             <mat-card class="container-fluid card">
                 <div class="row">
-                    <img [ngClass]="{'blurImg': blur}" id="imageG" (click)="testerPourDiff($event)" src="" alt="">
+                    <canvas [ngClass]="{'blurImg': blur}" (click)="testerPourDiff($event)" #canvasG id="canvasG" width="640" height="480"></canvas>
                 </div>
             </mat-card>
         </div>
         <div class="col-sm-6 divImg">
             <mat-card class="container-fluid card">
                 <div class="row">
-                    <img [ngClass]="{'blurImg': blur}" id="imageD" (click)="testerPourDiff($event)" src="" alt="">
+                    <canvas [ngClass]="{'blurImg': blur}" (click)="testerPourDiff($event)" #canvasD id="canvasD" width="640" height="480"></canvas>
                 </div>
             </mat-card>
         </div>

@@ -30,6 +30,7 @@ export class DialogMultipleComponent extends DialogAbstrait {
       this.checkboxMessage = "";
       this.themeButtonMessage = "";
       this.data.theme = "";
+      this.data.typeModification = "";
   }
 
   protected checkboxArray: Checkbox[] =  [
@@ -116,7 +117,7 @@ export class DialogMultipleComponent extends DialogAbstrait {
   }
 
   protected checkAllCheckbox(): Boolean {
-    return (!this.checkboxArray[0].checked && !this.checkboxArray[1].checked && !this.checkboxArray[2].checked);
+    return (this["data"].typeModification === "");
   }
 
   protected checkThemeButton(): Boolean {
