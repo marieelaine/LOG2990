@@ -82,6 +82,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
                 for (const pixel of diff) {
 
                     if (coords === pixel) {
+
                         this.differenceTrouver(i);
                         console.log(coords);
                     }
