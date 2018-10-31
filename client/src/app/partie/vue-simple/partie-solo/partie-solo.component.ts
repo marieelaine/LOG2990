@@ -29,7 +29,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
     }
 
     protected setID(): void {
-        this.partieID = this.route.snapshot.paramMap.get('idPartie') + "";
+        this.partieID = this.route.snapshot.params.idPartie;
     }
 
     protected setPartie(): void {
@@ -47,6 +47,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
 
         this.ajusterSourceImage(data1, this.canvasG);
         this.ajusterSourceImage(data2, this.canvasD);
+    }
 
     protected addNomPartieToChat() {
         this.nomPartie = this.partie["_nomPartie"];
@@ -68,16 +69,14 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
         image.src = URL.createObjectURL(blob);
         image.onload = () => {
             context.drawImage(image, 0, 0);
-            const imageData = context.getImageData(0, 0, 300, 311);
-            console.log(imageData);
+            const imageData = context.getImageData(0, 0, 640, 480);
         };
     }
 
-    protected testerPourDiff(event): void {
-
+    protected testerPourDiff(offsetX, offsetY): void {
         if (this.partieCommence) {
 
-            const coords = "[" + event.offsetX + ", " + event.offsetY + "]";
+            const coords = "[" + offsetX + ", " + offsetY + "]";
 
             let i: number = 0;
             for (const diff of this.partie["_imageDiff"]) {

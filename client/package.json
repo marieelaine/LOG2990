@@ -41,6 +41,7 @@
     "ngx-cookie-service": "^1.0.10",
     "npm": "^6.4.1",
     "rxjs": "^6.3.3",
+    "rxjs-compat": "^6.3.3",
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
     "v-modal-backdrop": "^1.0.3",
