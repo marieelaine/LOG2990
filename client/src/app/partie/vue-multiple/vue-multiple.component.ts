@@ -18,12 +18,20 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
       this.setID();
       this.setPartie();
       this.differenceRestantes = 14;
+      this.imageG1 = new Image();
+      this.imageD1 = new Image();
+      this.imageG2 = new Image();
+      this.imageD2 = new Image();
     }
 
     @ViewChild('canvasG1') canvasG1: ElementRef;
     @ViewChild('canvasD1') canvasD1: ElementRef;
     @ViewChild('canvasG2') canvasG2: ElementRef;
     @ViewChild('canvasD2') canvasD2: ElementRef;
+    protected imageG1: HTMLImageElement;
+    protected imageD1: HTMLImageElement;
+    protected imageG2: HTMLImageElement;
+    protected imageD2: HTMLImageElement;
     protected nomPartie: string;
     protected partieID: string;
     protected partie: PartieMultiple;
@@ -48,13 +56,13 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
       const data3: string = atob(String(this.partie["_image2PV1"][0]));
       const data4: string = atob(String(this.partie["_image2PV2"][0]));
 
-      this.ajusterSourceImage(data1, this.canvasG1);
-      this.ajusterSourceImage(data2, this.canvasD1);
-      this.ajusterSourceImage(data3, this.canvasG2);
-      this.ajusterSourceImage(data4, this.canvasD2);
+      this.ajusterSourceImage(data1, this.canvasG1, this.imageG1);
+      this.ajusterSourceImage(data2, this.canvasD1, this.imageD1);
+      this.ajusterSourceImage(data3, this.canvasG2, this.imageG2);
+      this.ajusterSourceImage(data4, this.canvasD2, this.imageD2);
     }
 
-    protected ajusterSourceImage(data: String, canvas: ElementRef): void {
+    protected ajusterSourceImage(data: String, canvas: ElementRef, image: HTMLImageElement): void {
         let hex = 0x00;
         const result: Uint8Array = new Uint8Array(data.length);
 
@@ -64,18 +72,14 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         }
         const blob = new Blob([result], {type: 'image/bmp'});
 
-        const context = canvas.nativeElement.getContext("2d");
-        const image = new Image();
+        const context: CanvasRenderingContext2D = canvas.nativeElement.getContext("2d");
         image.src = URL.createObjectURL(blob);
         image.onload = () => {
             context.drawImage(image, 0, 0);
-            const imageData = context.getImageData(0, 0, 300, 311);
-            console.log(imageData);
         };
     }
 
     protected testerPourDiff(event): void {
-
         if (this.partieCommence) {
 
             const coords = "[" + event.offsetX + ", " + event.offsetY + "]";
@@ -86,7 +90,11 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                 for (const pixel of diff) {
 
                     if (coords === pixel) {
-                        this.differenceTrouver(i);
+                        if (event.srcElement.id === "canvasD1") {
+                            this.differenceTrouver(i, true);
+                        } else if (event.srcElement.id === "canvasD2") {
+                            this.differenceTrouver(i, false);
+                        }
                     }
                 }
                 i++;
@@ -94,10 +102,32 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         }
     }
 
-    protected differenceTrouver(i): void {
+    protected differenceTrouver(i, bool): void {
         if (!this.diffTrouvee.includes(i)) {
             this.diffTrouvee.push(i);
             this.trouverDifference();
+
+            let contextG: CanvasRenderingContext2D;
+            let contextD: CanvasRenderingContext2D;
+
+            (bool) ? contextG = this.canvasG1.nativeElement.getContext("2d") : contextG = this.canvasG2.nativeElement.getContext("2d");
+            (bool) ? contextD = this.canvasD1.nativeElement.getContext("2d") : contextD = this.canvasD2.nativeElement.getContext("2d");
+
+            const imageDataG = contextG.getImageData(0, 0, 640, 480);
+            const dataG = imageDataG.data;
+            const imageDataD = contextD.getImageData(0, 0, 640, 480);
+            const dataD = imageDataD.data;
+
+            for (const pixel of this.partie["_imageDiff"][i]) {
+                const x: number = Number(pixel.split(",")[0]);
+                const y: number = Number(pixel.split(",")[1]);
+                const dim = (y * 640 * 4) + (x * 4);
+
+                dataD[dim] = dataG[dim];
+                dataD[dim + 1] = dataG[dim + 1];
+                dataD[dim + 2] = dataG[dim + 2];
+            }
+            contextD.putImageData(imageDataD, 0, 0);
         }
     }
 
