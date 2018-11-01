@@ -86,9 +86,6 @@ export class DialogSimpleComponent extends DialogAbstrait {
           (error) => {
             console.error(error);
           });
-      setTimeout(() => {
-          window.location.reload(); },
-                 2500);
   }
 
   protected checkIfOutOfBoundNameLength(): Boolean {
