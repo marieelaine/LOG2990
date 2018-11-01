@@ -76,7 +76,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
     protected testerPourDiff(offsetX, offsetY): void {
         if (this.partieCommence) {
 
-            const coords = event.offsetX + "," + event.offsetY;
+            const coords = offsetX + "," + offsetY;
             let i: number = 0;
             for (const diff of this.partie["_imageDiff"]) {
                 for (const pixel of diff) {

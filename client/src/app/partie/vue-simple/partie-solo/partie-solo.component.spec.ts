@@ -2,12 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PartieSoloComponent } from './partie-solo.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatCardModule } from '@angular/material';
-import { RouterTestingModule } from '@angular/router/testing';
 import { ErrorHandler } from '@angular/core';
 import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { ActivatedRoute, convertToParamMap, ActivatedRouteSnapshot, Params } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import 'rxjs/add/observable/from';
 // import { ChronoComponent } from '../../chrono/chrono.component';
 
@@ -69,10 +66,21 @@ describe('PartieSoloComponent', () => {
         it("devrait appeler differenceTrouver si le pixel se trouve dans imageDiff", () => {
             // tslint:disable-next-line:no-any
             spyOn<any>(component, "differenceTrouver");
+            component["partieCommence"] = true;
             component["partie"] = new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(), Buffer.from(new Array<number>()),
-                                                    Buffer.from(new Array<number>()), [["[1, 1]"]], "");
+                                                    Buffer.from(new Array<number>()), [["1,1"]], "");
             component["testerPourDiff"](1, 1);
             expect(component["differenceTrouver"]).toHaveBeenCalled();
+        });
+
+        it("ne devrait pas appeler differenceTrouver si le pixel se trouve dans imageDiff", () => {
+            // tslint:disable-next-line:no-any
+            spyOn<any>(component, "differenceTrouver");
+            component["partieCommence"] = true;
+            component["partie"] = new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(), Buffer.from(new Array<number>()),
+                                                    Buffer.from(new Array<number>()), [["1,2"]], "");
+            component["testerPourDiff"](1, 1);
+            expect(component["differenceTrouver"]).not.toHaveBeenCalled();
         });
     });
 });
