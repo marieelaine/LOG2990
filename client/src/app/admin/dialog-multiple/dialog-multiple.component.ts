@@ -80,7 +80,7 @@ export class DialogMultipleComponent extends DialogAbstrait {
     const result: PartieMultiple = new PartieMultiple(this["data"].multipleGameName, tempsSolo, temps1v1,
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
-                                                      Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
+                                                      new Array<Array<string>>(), new Array<Array<string>>(),
                                                       this["data"].quantiteObjets, this["data"].theme,
                                                       this["data"].typeModification);
     this.partieMultipleService.register(result)

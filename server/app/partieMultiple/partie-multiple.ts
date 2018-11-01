@@ -8,7 +8,7 @@ import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
-import { execFile, ChildProcess } from "child_process";
+import { execFile, ChildProcess, spawn } from "child_process";
 
 export interface PartieMultipleInterface {
     _id: string;
@@ -19,8 +19,8 @@ export interface PartieMultipleInterface {
     _image1PV2: Buffer;
     _image2PV1: Buffer;
     _image2PV2: Buffer;
-    _imageDiff1: Buffer;
-    _imageDiff2: Buffer;
+    _imageDiff1: Array<Array<string>>;
+    _imageDiff2: Array<Array<string>>;
     _quantiteObjets: number;
     _theme: string;
     _typeModification: string;
@@ -56,8 +56,8 @@ export class DBPartieMultiple {
                 _image1PV2: { type: Buffer, required: true, },
                 _image2PV1: { type: Buffer, required: true, },
                 _image2PV2: { type: Buffer, required: true, },
-                _imageDiff1: { type: Buffer },
-                _imageDiff2: {type: Buffer },
+                _imageDiff1: { type: Array },
+                _imageDiff2: {type: Array },
                 _quantiteObjets: { type: Number, required: true },
                 _typeModification: { type: String, required: true },
                 _theme: { type: String, required: true }
@@ -73,8 +73,8 @@ export class DBPartieMultiple {
             _image1PV2: { type: Array, required: true, },
             _image2PV1: { type: Array, required: true, },
             _image2PV2: { type: Array, required: true, },
-            _imageDiff1: { type: Buffer },
-            _imageDiff2: {type: Buffer },
+            _imageDiff1: { type: Array },
+            _imageDiff2: {type: Array },
             _quantiteObjets: { type: Number, required: true },
             _typeModification: { type: String, required: true },
             _theme: { type: String, required: true }
@@ -100,7 +100,7 @@ export class DBPartieMultiple {
         } else {
             // res = "Les images ne contiennent pas exactement 14 différences, veuillez réessayer."
         }
-        await this.deleteImagesDirectory();
+        // await this.deleteImagesDirectory();
 
         return partie;
     }
@@ -124,10 +124,10 @@ export class DBPartieMultiple {
         });
     }
 
-    private async deleteImagesDirectory(): Promise<void> {
-        const dir: string = "../Images";
-        await fsx.remove(dir);
-    }
+    // private async deleteImagesDirectory(): Promise<void> {
+    //     const dir: string = "../Images";
+    //     await fsx.remove(dir);
+    // }
 
     private async genererScene(partie: PartieMultipleInterface, res: Response): Promise<void> {
         await this.makeDirectory("../Images");
@@ -135,7 +135,21 @@ export class DBPartieMultiple {
         const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, "../Images/" + partie._nomPartie];
 
         const child: ChildProcess = execFile(script, args);
+        await this.genererDifferences(partie, res);
         await this.verifierErreurScript(child, partie, res);
+    }
+
+    private async genererDifferences(partie: PartieMultipleInterface, res: Response): Promise<void> {
+        const pyScript: string = p.resolve("app/PartieSimple/bmpdiff/bmpdiff.py");
+        const imageOri1: string = p.resolve("../Images/" + partie._nomPartie + "_a_ori.bmp");
+        // const imageOri2: string = p.resolve("../Images/" + partie._nomPartie + "_b_ori.bmp");
+        const imageMod1: string = p.resolve("../Images/" + partie._nomPartie + "_a_mod.bmp");
+        // const imageMod2: string = p.resolve("../Images/" + partie._nomPartie + "_b_mod.bmp");
+        const imageDiff1: string = p.resolve("../Images/" + partie._nomPartie + "_a_diff.bmp");
+        // const imageDiff2: string = p.resolve("../Images/" + partie._nomPartie + "_b_diff.bmp");
+        const args: string[] = [imageOri1, imageMod1, imageDiff1];
+        args.unshift(pyScript);
+        spawn("python", args);
     }
 
     private async makeDirectory(name: string): Promise<void> {

@@ -7,15 +7,15 @@ export class PartieMultiple {
     protected _image1PV2: Buffer;
     protected _image2PV1: Buffer;
     protected _image2PV2: Buffer;
-    protected _imageDiff1: Buffer;
-    protected _imageDiff2: Buffer;
+    protected _imageDiff1: Array<Array<string>>;
+    protected _imageDiff2: Array<Array<string>>;
     protected _quantiteObjets: number;
     protected _theme: string;
     protected _typeModification: string;
 
     public constructor( nomPartie: string, tempsSolo: Array<number>, tempsUnContreUn: Array<number>,
                         image1PV1: Buffer, image1PV2: Buffer, image2PV1: Buffer, image2PV2: Buffer,
-                        imageDiff1: Buffer, imageDiff2: Buffer, quantiteObjets: number, theme: string,
+                        imageDiff1: Array<Array<string>>, imageDiff2: Array<Array<string>>, quantiteObjets: number, theme: string,
                         typeModification: string,  id?: string) {
       this._nomPartie = nomPartie;
       this._tempsSolo = tempsSolo;
