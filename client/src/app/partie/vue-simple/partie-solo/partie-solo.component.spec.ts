@@ -6,7 +6,7 @@ import { ErrorHandler } from '@angular/core';
 import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import 'rxjs/add/observable/from';
-// import { ChronoComponent } from '../../chrono/chrono.component';
+import 'rxjs/add/observable/of';
 
 class ActivatedRouteMock extends ActivatedRoute {
     constructor() {
@@ -33,7 +33,7 @@ describe('PartieSoloComponent', () => {
                 {
                     provide: ActivatedRoute,
                     useClass: ActivatedRouteMock
-                }
+                },
             ]
         })
             .compileComponents()
@@ -44,6 +44,8 @@ describe('PartieSoloComponent', () => {
         fixture = TestBed.createComponent(PartieSoloComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+        component["partie"] = new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(), Buffer.from(new Array<number>()),
+                                                Buffer.from(new Array<number>()), new Array<Array<string>>(), "");
     });
 
     it('should create', () => {
@@ -51,8 +53,6 @@ describe('PartieSoloComponent', () => {
     });
 
     it("addNomPartieToChat devrait ajouter le nom de la partie au tableau de messages", () => {
-        component["partie"] = new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(), Buffer.from(new Array<number>()),
-                                                Buffer.from(new Array<number>()), new Array<Array<string>>(), "");
         component["addNomPartieToChat"]();
         expect(component["messagesChat"][0]).toEqual("Bienvenue dans la partie NomPartie");
     });
@@ -62,11 +62,20 @@ describe('PartieSoloComponent', () => {
         expect(component["partieID"]).toEqual("123");
     });
 
+    it("setPartie devrait appeler la fonction getPartieSimple de partieService", () => {
+        spyOn(component["partieService"], "getPartieSimple").and.callThrough();
+        component["setPartie"]();
+        expect(component["partieService"]["getPartieSimple"]).toHaveBeenCalled();
+    });
+
     describe("testerPourDiff", () => {
-        it("devrait appeler differenceTrouver si le pixel se trouve dans imageDiff", () => {
+        beforeEach(() => {
+            component["partieCommence"] = true;
             // tslint:disable-next-line:no-any
             spyOn<any>(component, "differenceTrouver");
-            component["partieCommence"] = true;
+        });
+
+        it("devrait appeler differenceTrouver si le pixel se trouve dans imageDiff", () => {
             component["partie"] = new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(), Buffer.from(new Array<number>()),
                                                     Buffer.from(new Array<number>()), [["1,1"]], "");
             component["testerPourDiff"](1, 1);
@@ -74,13 +83,33 @@ describe('PartieSoloComponent', () => {
         });
 
         it("ne devrait pas appeler differenceTrouver si le pixel se trouve dans imageDiff", () => {
-            // tslint:disable-next-line:no-any
-            spyOn<any>(component, "differenceTrouver");
-            component["partieCommence"] = true;
             component["partie"] = new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(), Buffer.from(new Array<number>()),
                                                     Buffer.from(new Array<number>()), [["1,2"]], "");
             component["testerPourDiff"](1, 1);
             expect(component["differenceTrouver"]).not.toHaveBeenCalled();
         });
     });
+
+    // describe("setup", () => {
+    //     beforeEach(() => {
+    //         const a1 = new Array<string>();
+    //         a1.push(window.btoa("Hello world"));
+    //         component["partie"]["_image1"] = Buffer.from(a1);
+    //         component["partie"]["_image2"] = Buffer.from(a1);
+    //     });
+
+    //     it("devrait appeler addNomPartieToChat", () => {
+    //         // tslint:disable-next-line:no-any
+    //         spyOn<any>(component, "addNomPartieToChat");
+    //         component["setup"]();
+    //         expect(component["addNomPartieToChat"]).toHaveBeenCalled();
+    //     });
+
+    //     it("devrait appeler ajusterSourceImage", () => {
+    //         // tslint:disable-next-line:no-any
+    //         spyOn<any>(component, "ajusterSourceImage");
+    //         component["setup"]();
+    //         expect(component["ajusterSourceImage"]).toHaveBeenCalled();
+    //     });
+    // });
 });
