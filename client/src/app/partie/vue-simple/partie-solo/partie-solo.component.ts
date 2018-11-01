@@ -51,6 +51,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
 
         this.ajusterSourceImage(data1, this.canvasG, this.imageG);
         this.ajusterSourceImage(data2, this.canvasD, this.imageD);
+    }
 
     protected addNomPartieToChat() {
         this.nomPartie = this.partie["_nomPartie"];
