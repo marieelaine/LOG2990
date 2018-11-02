@@ -18,12 +18,13 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
     protected imageG: HTMLImageElement;
     protected imageD: HTMLImageElement;
     protected partieID: string;
-    protected nomPartie: string;
     protected partie: PartieSimple;
+    protected diffTrouvee: number[];
 
     public constructor(private route: ActivatedRoute,
                        protected partieService: PartieService) {
         super();
+        this.diffTrouvee = [];
         this.differenceRestantes = 7;
         this.imageG = new Image();
         this.imageD = new Image();
@@ -31,9 +32,8 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
         this.setPartie();
     }
 
-    protected diffTrouvee: number[] = [];
     protected setID(): void {
-        this.partieID = this.route.snapshot.paramMap.get('idPartie') + "";
+        this.partieID = this.route.snapshot.params.idPartie;
     }
 
     protected setPartie(): void {
@@ -44,14 +44,18 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
     }
 
     protected setup(): void {
-        this.nomPartie = this.partie["_nomPartie"].charAt(0).toUpperCase() + this.partie["_nomPartie"].slice(1);
+        this.addNomPartieToChat();
 
         const data1: string = atob(String(this.partie["_image1"][0]));
         const data2: string = atob(String(this.partie["_image2"][0]));
 
         this.ajusterSourceImage(data1, this.canvasG, this.imageG);
         this.ajusterSourceImage(data2, this.canvasD, this.imageD);
+    }
 
+    protected addNomPartieToChat() {
+        this.nomPartie = this.partie["_nomPartie"];
+        this.messagesChat.push("Bienvenue dans la partie " + this.nomPartie.charAt(0).toUpperCase() + this.partie["_nomPartie"].slice(1));
     }
 
     protected ajusterSourceImage(data: String, canvas: ElementRef, image: HTMLImageElement): void {
@@ -71,12 +75,10 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
         };
     }
 
-    protected testerPourDiff(event): void {
-
+    protected testerPourDiff(offsetX, offsetY): void {
         if (this.partieCommence) {
 
-            const coords = event.offsetX + "," + event.offsetY;
-
+            const coords = offsetX + "," + offsetY;
             let i: number = 0;
             for (const diff of this.partie["_imageDiff"]) {
                 for (const pixel of diff) {
