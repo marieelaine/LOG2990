@@ -38,6 +38,7 @@
     "ng2-bootstrap": "^1.6.3",
     "ng2-toastr": "^4.1.2",
     "ng6-socket-io": "^1.0.3",
+    "ng6-toastr": "^6.0.0",
     "ngx-bootstrap": "^3.0.1",
     "ngx-cookie-service": "^1.0.10",
     "npm": "^6.4.1",

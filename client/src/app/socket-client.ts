@@ -19,5 +19,4 @@ export class SocketClient {
             alert(data);
         });
     }
-
 }

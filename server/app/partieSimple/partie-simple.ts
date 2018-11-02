@@ -8,8 +8,10 @@ import { Request, Response} from "express";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
-import { injectable } from "inversify";
 import { ReadLine } from "readline";
+import { injectable, inject } from "inversify";
+import { SocketServerService } from "../socket-io.service";
+import Types from "../types";
 
 export interface PartieSimpleInterface {
     _id: string;
@@ -30,7 +32,7 @@ export class DBPartieSimple {
     private schemaArray: Schema;
     private schemaBuffer: Schema;
 
-    public constructor() {
+    public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
         this.baseDeDonnees = new BaseDeDonnees();
 
         this.CreateSchemaArray();
@@ -104,7 +106,7 @@ export class DBPartieSimple {
         if (errorMsg === "") {
             this.getImageDiffAsArrays(partie);
         } else {
-            // res = "Les images ne contiennent pas exactement 7 différences, veuillez réessayer."
+            this.socket.envoyerMessageErreurDifferences("Erreur différences");
         }
 
         await this.deleteImagesDirectory();
@@ -117,7 +119,7 @@ export class DBPartieSimple {
         const partieSimple: Document = new this.modelPartieBuffer(partie);
         await partieSimple.save((err: Error) => {
             if (err !== null && err.name === "ValidationError") {
-                // res = Le nom de la partie est déjà pris. Veuillez réessayer avec un autre nom.";
+                this.socket.envoyerMessageErreurNom("Erreur nom");
             }
         });
     }
