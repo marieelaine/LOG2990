@@ -49,7 +49,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     }
 
     protected setup(): void {
-      this.nomPartie = this.partie["_nomPartie"].charAt(0).toUpperCase() + this.partie["_nomPartie"].slice(1);
+      this.addNomPartieToChat();
 
       const data1: string = atob(String(this.partie["_image1PV1"][0]));
       const data2: string = atob(String(this.partie["_image1PV2"][0]));
@@ -60,6 +60,11 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
       this.ajusterSourceImage(data2, this.canvasD1, this.imageD1);
       this.ajusterSourceImage(data3, this.canvasG2, this.imageG2);
       this.ajusterSourceImage(data4, this.canvasD2, this.imageD2);
+    }
+
+    protected addNomPartieToChat() {
+        this.nomPartie = this.partie["_nomPartie"];
+        this.messagesChat.push("Bienvenue dans la partie " + this.nomPartie.charAt(0).toUpperCase() + this.partie["_nomPartie"].slice(1));
     }
 
     protected ajusterSourceImage(data: String, canvas: ElementRef, image: HTMLImageElement): void {

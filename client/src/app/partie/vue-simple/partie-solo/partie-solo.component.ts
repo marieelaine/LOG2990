@@ -70,6 +70,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
 
         const context: CanvasRenderingContext2D = canvas.nativeElement.getContext("2d");
         image.src = URL.createObjectURL(blob);
+        console.log(image.src);
         image.onload = () => {
             context.drawImage(image, 0, 0);
         };
