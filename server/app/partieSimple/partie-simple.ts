@@ -24,6 +24,9 @@ export interface PartieSimpleInterface {
 }
 @injectable()
 export class DBPartieSimple {
+    private messageErreurNom: string;
+    private messageErreurDiff: string;
+
     private baseDeDonnees: BaseDeDonnees;
 
     private modelPartieBuffer: Model<Document>;
@@ -33,6 +36,8 @@ export class DBPartieSimple {
     private schemaBuffer: Schema;
 
     public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
+        this.messageErreurNom = "Le nom de la partie est déjà pris, veuillez réessayer.";
+        this.messageErreurDiff = "Les deux images doivent avoir exactement 7 différences, veuillez réessayer.";
         this.baseDeDonnees = new BaseDeDonnees();
 
         this.CreateSchemaArray();
@@ -106,7 +111,7 @@ export class DBPartieSimple {
         if (errorMsg === "") {
             this.getImageDiffAsArrays(partie);
         } else {
-            this.socket.envoyerMessageErreurDifferences("Erreur différences");
+            this.socket.envoyerMessageErreurDifferences(this.messageErreurDiff);
         }
 
         await this.deleteImagesDirectory();
@@ -119,7 +124,7 @@ export class DBPartieSimple {
         const partieSimple: Document = new this.modelPartieBuffer(partie);
         await partieSimple.save((err: Error) => {
             if (err !== null && err.name === "ValidationError") {
-                this.socket.envoyerMessageErreurNom("Erreur nom");
+                this.socket.envoyerMessageErreurNom(this.messageErreurNom);
             }
         });
     }

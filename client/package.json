@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^6.1.0",
+    "@angular/animations": "^6.1.10",
     "@angular/cdk": "^6.1.0",
     "@angular/common": "^6.1.0",
     "@angular/compiler": "^6.1.0",
@@ -41,6 +41,7 @@
     "ng6-toastr": "^6.0.0",
     "ngx-bootstrap": "^3.0.1",
     "ngx-cookie-service": "^1.0.10",
+    "ngx-toastr": "^9.1.1",
     "npm": "^6.4.1",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",

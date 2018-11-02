@@ -40,6 +40,7 @@ import { PartieSoloComponent } from "./partie/vue-simple/partie-solo/partie-solo
 import { PartieMultijoueurComponent } from './partie/vue-simple/partie-multijoueur/partie-multijoueur.component';
 import { VueMultipleComponent } from './partie/vue-multiple/vue-multiple.component';
 import { PartieMultipleService } from "./admin/partie-multiple.service";
+import { DialogErreurComponent } from './socket/dialog-erreur/dialog-erreur.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:4200', options: {} };
 
@@ -70,6 +71,7 @@ const appRoutes: Routes = [
     DialogMultipleComponent,
     PartieMultijoueurComponent,
     VueMultipleComponent,
+    DialogErreurComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -105,6 +107,7 @@ const appRoutes: Routes = [
   entryComponents: [
     DialogSimpleComponent,
     DialogMultipleComponent,
+    DialogErreurComponent
   ],
 })
 export class AppModule { }
