@@ -132,8 +132,8 @@ export class DialogMultipleComponent extends DialogAbstrait {
 
   protected setCheckboxMessage(): void {
     this.checkAllCheckbox() ?
-      this.outOfBoundNumberForms = "*Une transformation doit etre selectionnee au minimum." :
-      this.outOfBoundNumberForms = "" ;
+      this.checkboxMessage = "*Une transformation doit etre selectionnee au minimum." :
+      this.checkboxMessage = "" ;
   }
 
   protected setThemeMessage(): void {
