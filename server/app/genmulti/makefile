@@ -9,7 +9,7 @@ CXXFLAGS += $(shell pkg-config --cflags $(CONTEXT))
 LDFLAGS += -g
 LDFLAGS += $(shell pkg-config --libs glew)
 LDFLAGS += $(shell pkg-config --libs $(CONTEXT))
-LDFLAGS += -lfreeimage -lfreeimageplus
+LDFLAGS += -lfreeimage
 
 ifeq "$(shell uname)" "Darwin"
   LDFLAGS += -framework OpenGL
@@ -18,10 +18,9 @@ ifeq "$(shell uname)" "Darwin"
   endif
 endif
 
-TP="tp1"
-SRC=main
+SRC=genmulti
 
-exe : $(SRC).exe
+exe : $(SRC)
 run : exe
 	./$(SRC).exe
 $(SRC).exe : $(SRC).cpp *.h
