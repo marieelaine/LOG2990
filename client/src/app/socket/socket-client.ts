@@ -20,6 +20,10 @@ export class SocketClient {
         this.socket.on(event.ENVOYER_MESSAGE_NOM_PRIS, (data) => {
             this.openDialogWithData(data);
         });
+
+        this.socket.on(event.ENVOYER_PARTIE_SIMPLE, (data) => {
+            // TODO : ajouter data à listePartieSimple
+        });
     }
 
     private openDialogWithData(msg: string) {

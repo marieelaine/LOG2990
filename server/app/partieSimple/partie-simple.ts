@@ -22,8 +22,10 @@ export interface PartieSimpleInterface {
     _image2: Buffer;
     _imageDiff: Array<Array<string>>;
 }
+
 @injectable()
 export class DBPartieSimple {
+    private ajouterPartieFailed: boolean;
     private messageErreurNom: string;
     private messageErreurDiff: string;
 
@@ -107,7 +109,7 @@ export class DBPartieSimple {
         });
     }
 
-    private async traiterMessageErreur(partie: PartieSimpleInterface, errorMsg: string): Promise<PartieSimpleInterface> {
+    private async traiterMessageErreur(partie: PartieSimpleInterface, errorMsg: string): Promise<void> {
         if (errorMsg === "") {
             this.getImageDiffAsArrays(partie);
         } else {
@@ -115,16 +117,16 @@ export class DBPartieSimple {
         }
 
         await this.deleteImagesDirectory();
-
-        return partie;
     }
 
     protected async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
         partie._imageDiff = diffArrays;
         const partieSimple: Document = new this.modelPartieBuffer(partie);
-        await partieSimple.save((err: Error) => {
+        await partieSimple.save(async (err: Error, data: Document) => {
             if (err !== null && err.name === "ValidationError") {
                 this.socket.envoyerMessageErreurNom(this.messageErreurNom);
+            } else {
+                this.socket.envoyerPartieSimple(await this.getPartieSimpleByName(partie._nomPartie));
             }
         });
     }
@@ -259,7 +261,7 @@ export class DBPartieSimple {
             .catch(() => { throw new Error(); });
     }
 
-    private async getPartieSimple(partieID: String, res: Response): Promise<PartieSimpleInterface> {
+    private async getPartieSimple(partieID: String): Promise<PartieSimpleInterface> {
         const partieSimples: PartieSimpleInterface[] = [];
         await this.modelPartieArray.find()
             .then((parties: Document[]) => {
@@ -277,11 +279,31 @@ export class DBPartieSimple {
         return partieSimples[1];
     }
 
+    private async getPartieSimpleByName(nomPartie: String): Promise<PartieSimpleInterface> {
+        const partieSimples: PartieSimpleInterface[] = [];
+        await this.modelPartieArray.find()
+            .then((parties: Document[]) => {
+                for (const partie of parties) {
+                    partieSimples.push(partie.toJSON());
+                }
+            });
+
+        for (const partie of partieSimples) {
+            if (partie._nomPartie.toString() === nomPartie) {
+                return partie;
+            }
+        }
+
+        return partieSimples[1];
+    }
+
     public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
         try {
             await this.genererImageMod(req.body);
-            // res.status(201).json(partie);
-            res.status(201).json({});
+
+            if (!this.ajouterPartieFailed) {
+                res.send(await this.getPartieSimpleByName(req.params.nomPartie));
+            }
         } catch (err) {
             res.status(501).json(err);
         }
@@ -318,7 +340,7 @@ export class DBPartieSimple {
 
     public async requeteGetPartieSimple(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();
-        res.send(await this.getPartieSimple(req.params.id, res));
+        res.send(await this.getPartieSimple(req.params.id));
     }
 
     public async requeteVerifDiff(req: Request, res: Response): Promise<void> {

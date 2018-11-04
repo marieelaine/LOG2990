@@ -9,6 +9,7 @@ import { PartieSimple } from "../../admin/dialog-simple/partie-simple";
   templateUrl: "./liste-partie-simple.component.html",
   styleUrls: ["./liste-partie-simple.component.css"]
 })
+
 export class ListePartieSimpleComponent extends ListePartiesComponent implements OnInit {
 
   protected listeParties: PartieSimple[];
@@ -39,8 +40,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   protected onCreerOuSupprimerClick(partieId: string): void {
     if (this.isListePartiesMode) {
-        this.router.navigate(["/partie-multi/" + partieId])
-        .catch(() => ErrorHandler);
+      this.router.navigate(["/partie-multi/" + partieId])
+      .catch(() => ErrorHandler);
     } else if (this.isAdminMode) {
       this.supprimerPartie(partieId);
     }
