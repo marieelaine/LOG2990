@@ -20,7 +20,8 @@ export class DialogConfirmationComponent {
      }
 
   protected onConfirmationClick(): void {
-    this.listePartieService.deletePartieSimple(this.partieSimpleId);
+    console.log("allo");
+    // this.listePartieService.deletePartieSimple(this.partieSimpleId);
   }
 
 }

@@ -107,6 +107,7 @@ const appRoutes: Routes = [
   entryComponents: [
     DialogSimpleComponent,
     DialogMultipleComponent,
+    DialogConfirmationComponent
   ],
 })
 export class AppModule { }

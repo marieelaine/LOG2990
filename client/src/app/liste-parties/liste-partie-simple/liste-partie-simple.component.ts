@@ -53,16 +53,14 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     }
   }
 
-  private ouvrirDialog(partieId: string) {
+  private ouvrirDialog(partieId: string): void {
+    console.log("ouvrir dialog debut");
     this.dialog.open(DialogConfirmationComponent, {
       height: "190px",
       width: "600px",
       data: { id: partieId }
     });
-  }
-
-  private confirmationSupprimerPartie(): void {
-
+    console.log("ouvrir fin");
   }
 
   protected supprimerPartie(partieId: string): void {
