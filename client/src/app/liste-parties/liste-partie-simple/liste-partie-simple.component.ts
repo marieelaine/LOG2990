@@ -42,8 +42,13 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
         this.router.navigate(["/partie-multi/" + partieId])
         .catch(() => ErrorHandler);
     } else if (this.isAdminMode) {
+      // Fonction pour ouvrir un mat dialog
       this.supprimerPartie(partieId);
     }
+  }
+
+  private confirmationSupprimerPartie(): void {
+
   }
 
   protected supprimerPartie(partieId: string): void {
