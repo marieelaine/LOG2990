@@ -20,6 +20,15 @@ export class PartieMultijoueurComponent extends PartieAbstraiteClass {
         this.differenceRestantes = 7;
     }
 
+    protected setPartie(): void {
+        console.log(this.partieID);
+        this.partieService.getPartieSimple(this.partieID).subscribe((res: PartieSimple) => {
+            this.partie = res;
+            this.getImageData();
+            this.setup();
+        });
+    }
+
     protected getImageData(): void {
         this.imageData.push(atob(String(this.partie["_image1"][0])));
         this.imageData.push(atob(String(this.partie["_image2"][0])));
