@@ -10,6 +10,8 @@ import * as Buffer from "buffer";
 import { of } from "rxjs";
 import { PartieSoloComponent } from "src/app/partie/vue-simple/partie-solo/partie-solo.component";
 import { PartieMultijoueurComponent } from "src/app/partie/vue-simple/partie-multijoueur/partie-multijoueur.component";
+import { SocketClientService } from "src/app/socket/socket-client.service";
+import { MatDialogModule } from "@angular/material/dialog";
 
 describe("Liste Partie Simple Component", () => {
     let mockListePartieService: jasmine.SpyObj<ListePartieServiceService>;
@@ -27,29 +29,31 @@ describe("Liste Partie Simple Component", () => {
         "1");
     const parties: PartieSimple[] = [partie];
 
+    // tslint:disable-next-line:max-func-body-length
     beforeEach(() => {
         mockListePartieService = jasmine.createSpyObj([
             "getListePartieSimple", "deletePartieSimple", "reinitialiserTempsPartie"
         ]);
-
         TestBed.configureTestingModule({
             declarations: [
                 ListePartieSimpleComponent,
                 PartieSoloComponent,
-                PartieMultijoueurComponent
+                PartieMultijoueurComponent,
             ],
             imports: [
                 RouterTestingModule.withRoutes([
                     { path: "partie-solo", component: PartieSoloComponent },
                     { path: "partie-multi", component: PartieMultijoueurComponent }
                 ]),
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                MatDialogModule
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA
             ],
             providers: [
                 { provide: ListePartieServiceService, useValue: mockListePartieService },
+                SocketClientService,
             ]
         });
 
