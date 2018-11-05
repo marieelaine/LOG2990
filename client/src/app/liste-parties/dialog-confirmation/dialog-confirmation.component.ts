@@ -24,4 +24,8 @@ export class DialogConfirmationComponent {
     // this.listePartieService.deletePartieSimple(this.partieSimpleId);
   }
 
+  protected onDialogClose(): void {
+    this.dialogRef.close();
+  }
+
 }
