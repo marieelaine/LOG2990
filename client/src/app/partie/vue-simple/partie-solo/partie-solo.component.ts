@@ -15,9 +15,9 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
 
     protected partie: PartieSimple;
 
-    public constructor(protected route: ActivatedRoute,
-                       protected partieService: PartieService, ) {
-        super(route, partieService, 2);
+    protected constructor(protected route: ActivatedRoute,
+                          protected partieService: PartieService, ) {
+        super(route, partieService, 2); // TODO FIX MAGIC NUMBER
         this.differenceRestantes = 7;
     }
 

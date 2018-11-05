@@ -23,7 +23,7 @@ export abstract class PartieAbstraiteClass {
     protected diffTrouvee: number[] = [];
     protected imageData: Array<string> = [];
 
-    public constructor(protected route: ActivatedRoute, protected partieService: PartieService, protected nbImage: number) {
+    protected constructor(protected route: ActivatedRoute, protected partieService: PartieService, protected nbImage: number) {
         this.blur = true;
         this.partieCommence = false;
         this.differencesTrouvees = 0;

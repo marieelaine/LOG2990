@@ -12,13 +12,11 @@ import {PartieSimple} from "../../admin/dialog-simple/partie-simple";
 })
 export class VueMultipleComponent extends PartieAbstraiteClass {
 
-    protected nbImage: number = 4;
     protected partie: PartieMultiple;
 
-    public constructor(protected route: ActivatedRoute,
-                       protected partieService: PartieService
-    ) {
-        super(route, partieService, 4);
+    protected constructor(protected route: ActivatedRoute,
+                          protected partieService: PartieService) {
+        super(route, partieService, 4); // TODO FIX MAGIC NUMBER
         this.differenceRestantes = 14;
     }
 
