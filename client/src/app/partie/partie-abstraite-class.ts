@@ -1,5 +1,8 @@
 import { ChronoComponent } from "../chrono/chrono.component";
-import {ErrorHandler} from "@angular/core";
+import {ElementRef, ErrorHandler, QueryList, ViewChildren} from "@angular/core";
+import {PartieSimple} from "../admin/dialog-simple/partie-simple";
+import {ActivatedRoute} from "@angular/router";
+import {PartieService} from "./partie.service";
 
 export abstract class PartieAbstraiteClass {
 
@@ -13,13 +16,28 @@ export abstract class PartieAbstraiteClass {
     protected nomPartie: string;
     protected messagesChat: string[];
 
-    public constructor() {
+    protected partieID: string;
+    protected abstract partie;
+    @ViewChildren('canvas') canvas: QueryList<ElementRef>;
+    protected image: Array<HTMLImageElement>;
+    protected diffTrouvee: number[] = [];
+    protected imageData: Array<string> = [];
+
+    public constructor(protected route: ActivatedRoute, protected partieService: PartieService, protected nbImage: number) {
         this.blur = true;
         this.partieCommence = false;
         this.differencesTrouvees = 0;
         this.chrono = new ChronoComponent();
         this.messageDifferences = "Cliquez pour commencer";
-        this.messagesChat = new Array<string>();
+        this.messagesChat = []
+
+        this.image = [];
+        for (let i = 0; i < nbImage; i++) {
+            this.image.push(new Image());
+        }
+
+        this.setID();
+        this.setPartie();
     }
 
     protected start(): void {
@@ -31,6 +49,43 @@ export abstract class PartieAbstraiteClass {
             button.remove();
         } catch (e) {}
         this.chrono.startTimer();
+    }
+
+    protected setID(): void {
+        this.partieID = this.route.snapshot.params.idPartie;
+    }
+
+    protected abstract setPartie(): void;
+
+    protected abstract getImageData(): void;
+
+    protected setup(): void {
+        this.addNomPartieToChat();
+        for (let i = 0; i < this.nbImage; i++) {
+            this.ajusterSourceImage(this.imageData[i], this.canvas.toArray()[i], this.image[i]);
+        }
+    }
+
+    protected addNomPartieToChat() {
+        this.nomPartie = this.partie["_nomPartie"];
+        this.messagesChat.push("Bienvenue dans la partie " + this.nomPartie.charAt(0).toUpperCase() + this.partie["_nomPartie"].slice(1));
+    }
+
+    protected ajusterSourceImage(data: String, canvas: ElementRef, image: HTMLImageElement): void {
+        let hex = 0x00;
+        const result: Uint8Array = new Uint8Array(data.length);
+
+        for (let i  = 0; i < data.length; i++) {
+            hex = data.charCodeAt(i);
+            result[i] = hex;
+        }
+        const blob = new Blob([result], {type: 'image/bmp'});
+
+        const context: CanvasRenderingContext2D = canvas.nativeElement.getContext("2d");
+        image.src = URL.createObjectURL(blob);
+        image.onload = () => {
+            context.drawImage(image, 0, 0);
+        };
     }
 
     protected trouverDifference(): void {
@@ -61,7 +116,11 @@ export abstract class PartieAbstraiteClass {
         this.ajouterTemps(this.chrono.getTime());
     }
 
-    protected abstract ajouterTemps(temps: number);
+    protected ajouterTemps(temps: number): void {
+        this.partie["_tempsSolo"].push(temps);
+        this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
+            .catch(() => ErrorHandler);
+    }
 
     protected envoyerMessage(): void {
 
