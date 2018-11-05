@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ListePartieServiceService } from '../liste-partie-service.service';
 
 @Component({
   selector: 'app-dialog-confirmation',
@@ -9,6 +10,17 @@ import { MatDialogRef, MatDialog } from '@angular/material';
 
 export class DialogConfirmationComponent {
 
-  constructor(public dialog: MatDialog) {  }
+  private partieSimpleId: string;
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogConfirmationComponent>,
+    private listePartieService: ListePartieServiceService,
+    @Inject(MAT_DIALOG_DATA) data) {
+      this.partieSimpleId = data.id;
+     }
+
+  protected onConfirmationClick(): void {
+    this.listePartieService.deletePartieSimple(this.partieSimpleId);
+  }
 
 }

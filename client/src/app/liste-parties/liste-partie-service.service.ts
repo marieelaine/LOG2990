@@ -18,16 +18,28 @@ export class ListePartieServiceService {
   private readonly REINITIALISER_TEMPS_SIMPLE_URL: string = this.BASE_URL + this.SIMPLE + "reinitialiseTemps/";
   private readonly REINITIALISER_TEMPS_MULTIPLE_URL: string = this.BASE_URL + this.MULTIPLE + "reinitialiseTemps/";
 
+  public listePartieSimple: PartieSimple[];
+  public listePartieMultiple: Array<PartieMultiple>;
+
   constructor( private http: HttpClient ) {}
 
   public getListePartieSimple(): Observable<PartieSimple[]> {
 
+      // await this.http.get<PartieSimple[]>(this.GET_LISTE_SIMPLE_URL).subscribe((res: PartieSimple[]) => {
+      //   console.log("Res: ", res);
+      //   this.listePartieSimple = res;
+      // });
       return this.http.get<PartieSimple[]>(this.GET_LISTE_SIMPLE_URL);
   }
 
   public async deletePartieSimple(partieId: string): Promise<void> {
 
-      this.http.delete(this.DELETE_PARTIE_SIMPLE_URL + partieId).toPromise()
+    for (let i = 0 ; i < this.listePartieSimple.length ; i++) {
+      if (this.listePartieSimple[i]["_id"] === partieId) {
+        this.listePartieSimple.splice(i, 1);
+      }
+   }
+    this.http.delete(this.DELETE_PARTIE_SIMPLE_URL + partieId).toPromise()
       .catch(() => ErrorHandler);
   }
 

@@ -3,6 +3,8 @@ import { ListePartiesComponent } from "../liste-parties.component";
 import { Router } from "@angular/router";
 import { ListePartieServiceService } from "../liste-partie-service.service";
 import { PartieSimple } from "../../admin/dialog-simple/partie-simple";
+import { MatDialog } from "@angular/material";
+import { DialogConfirmationComponent } from "../dialog-confirmation/dialog-confirmation.component";
 
 @Component({
   selector: "app-liste-partie-simple",
@@ -14,14 +16,17 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   protected listeParties: PartieSimple[];
 
   constructor(public router: Router,
-              public listePartieService: ListePartieServiceService) {
+              public listePartieService: ListePartieServiceService,
+              private dialog: MatDialog) {
     super(router, listePartieService);
   }
 
-  public ngOnInit() {
+  public async ngOnInit() {
     this.listePartieService.getListePartieSimple().subscribe((res: PartieSimple[]) => {
       this.listeParties = res;
+      this.listePartieService.listePartieSimple = res;
     });
+    // this.listeParties = this.listePartieService.listePartieSimple;
   }
 
   protected afficherImage(id: string) {
@@ -43,8 +48,17 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
         .catch(() => ErrorHandler);
     } else if (this.isAdminMode) {
       // Fonction pour ouvrir un mat dialog
-      this.supprimerPartie(partieId);
+      this.ouvrirDialog(partieId);
+      // this.supprimerPartie(partieId);
     }
+  }
+
+  private ouvrirDialog(partieId: string) {
+    this.dialog.open(DialogConfirmationComponent, {
+      height: "190px",
+      width: "600px",
+      data: { id: partieId }
+    });
   }
 
   private confirmationSupprimerPartie(): void {
@@ -52,11 +66,11 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   }
 
   protected supprimerPartie(partieId: string): void {
-    for (let i = 0 ; i < this.listeParties.length ; i++) {
-      if (this.listeParties[i]["_id"] === partieId) {
-        this.listeParties.splice(i, 1);
-      }
-    }
+    // for (let i = 0 ; i < this.listeParties.length ; i++) {
+    //   if (this.listeParties[i]["_id"] === partieId) {
+    //     this.listeParties.splice(i, 1);
+    //   }
+    // }
     this.listePartieService.deletePartieSimple(partieId)
     .catch(() => ErrorHandler);
   }
