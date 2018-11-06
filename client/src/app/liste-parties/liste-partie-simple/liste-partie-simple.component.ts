@@ -24,7 +24,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   public async ngOnInit() {
     this.listePartieService.getListePartieSimple().subscribe((res: PartieSimple[]) => {
       this.listeParties = res;
-      this.listePartieService.listePartieSimple = res;
+      // this.listePartieService.listePartieSimple = res;
     });
     // this.listeParties = this.listePartieService.listePartieSimple;
   }
@@ -47,9 +47,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
         this.router.navigate(["/partie-multi/" + partieId])
         .catch(() => ErrorHandler);
     } else if (this.isAdminMode) {
-      // Fonction pour ouvrir un mat dialog
       this.ouvrirDialog(partieId);
-      // this.supprimerPartie(partieId);
     }
   }
 
@@ -58,19 +56,20 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     this.dialog.open(DialogConfirmationComponent, {
       height: "190px",
       width: "600px",
-      data: { id: partieId }
+      data: { id: partieId,
+              listeParties: this.listeParties}
     });
-    console.log("ouvrir fin");
+
   }
 
-  protected supprimerPartie(partieId: string): void {
-    // for (let i = 0 ; i < this.listeParties.length ; i++) {
-    //   if (this.listeParties[i]["_id"] === partieId) {
-    //     this.listeParties.splice(i, 1);
-    //   }
-    // }
-    this.listePartieService.deletePartieSimple(partieId)
-    .catch(() => ErrorHandler);
+  protected supprimerPartieDeLaffichage(partieId: string): void {
+    for (let i = 0 ; i < this.listeParties.length ; i++) {
+      if (this.listeParties[i]["_id"] === partieId) {
+        this.listeParties.splice(i, 1);
+      }
+    }
+    // this.listePartieService.deletePartieSimple(partieId)
+    // .catch(() => ErrorHandler);
   }
 
   protected reinitialiserTemps(partieId: string): void {
