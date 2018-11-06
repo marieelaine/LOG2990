@@ -59,14 +59,6 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     });
   }
 
-  // protected supprimerPartieDeLaffichage(partieId: string): void {
-  //   for (let i = 0 ; i < this.listeParties.length ; i++) {
-  //     if (this.listeParties[i]["_id"] === partieId) {
-  //       this.listeParties.splice(i, 1);
-  //     }
-  //   }
-  // }
-
   protected reinitialiserTemps(partieId: string): void {
     this.listeParties.forEach((partie: PartieSimple) => {
       if (partie["_id"] === partieId) {

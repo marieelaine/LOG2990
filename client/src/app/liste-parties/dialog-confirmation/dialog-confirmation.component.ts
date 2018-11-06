@@ -35,15 +35,15 @@ export class DialogConfirmationComponent {
 
   private supprimerPartieSimple(): void {
     this.listePartieService.deletePartieSimple(this.partieSimpleId);
-    for (let i = 0 ; i < this.listeParties.length ; i++) {
-      if (this.listeParties[i]["_id"]  === this.partieSimpleId) {
-        this.listeParties.splice(i, 1);
-      }
-    }
+    this.supprimerPartieDeLaffichage();
   }
 
   private supprimerPartieMultiple(): void {
     this.listePartieService.deletePartieMultiple(this.partieSimpleId);
+    this.supprimerPartieDeLaffichage();
+  }
+
+  private supprimerPartieDeLaffichage() {
     for (let i = 0 ; i < this.listeParties.length ; i++) {
       if (this.listeParties[i]["_id"]  === this.partieSimpleId) {
         this.listeParties.splice(i, 1);
