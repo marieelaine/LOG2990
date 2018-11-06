@@ -37,7 +37,6 @@ import { PartieSimpleService } from "./admin/partie-simple.service";
 import { ListePartieSimpleComponent } from "./liste-parties/liste-partie-simple/liste-partie-simple.component";
 import { ListePartieMultipleComponent } from "./liste-parties/liste-partie-multiple/liste-partie-multiple.component";
 import { PartieSoloComponent } from "./partie/vue-simple/partie-solo/partie-solo.component";
-import { PartieMultijoueurComponent } from './partie/vue-simple/partie-multijoueur/partie-multijoueur.component';
 import { VueMultipleComponent } from './partie/vue-multiple/vue-multiple.component';
 import { PartieMultipleService } from "./admin/partie-multiple.service";
 import { DialogConfirmationComponent } from "./liste-parties/dialog-confirmation/dialog-confirmation.component";
@@ -45,6 +44,7 @@ import { SocketClientService } from "./socket/socket-client.service";
 import { ListePartieServiceService } from "./liste-parties/liste-partie-service.service";
 import { DialogErreurComponent } from "./admin/dialog-erreur/dialog-erreur.component";
 import { DialogVueAttenteComponent } from './liste-parties/dialog-vue-attente/dialog-vue-attente.component';
+import { PartieSoloMultijoueurComponent } from "./partie/vue-simple/partie-solo-multijoueur/partie-solo-multijoueur.component";
 
 const config: SocketIoConfig = { url: 'http://localhost:4200', options: {} };
 
@@ -54,7 +54,7 @@ const appRoutes: Routes = [
   { path: "admin", component: AdminComponent },
   { path: "liste-parties", component: ListePartiesComponent },
   { path: "partie-solo/:idPartie", component: PartieSoloComponent },
-  { path: "partie-solo-multijoueur/:idPartie", component: PartieMultijoueurComponent },
+  { path: "partie-solo-multijoueur/:idPartie", component: PartieSoloMultijoueurComponent },
   { path: "partie-multiple/:idPartie", component: VueMultipleComponent },
 ];
 
@@ -72,7 +72,7 @@ const appRoutes: Routes = [
     ListePartieMultipleComponent,
     DialogSimpleComponent,
     DialogMultipleComponent,
-    PartieMultijoueurComponent,
+    PartieSoloMultijoueurComponent,
     VueMultipleComponent,
     DialogConfirmationComponent,
     DialogErreurComponent,

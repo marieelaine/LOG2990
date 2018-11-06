@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PartieMultijoueurComponent } from './partie-multijoueur.component';
+import { PartieSoloMultijoueurComponent } from './partie-solo-multijoueur.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatCardModule } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PartieMultijoueurComponent', () => {
-    let component: PartieMultijoueurComponent;
-    let fixture: ComponentFixture<PartieMultijoueurComponent>;
+    let component: PartieSoloMultijoueurComponent;
+    let fixture: ComponentFixture<PartieSoloMultijoueurComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [PartieMultijoueurComponent],
+            declarations: [PartieSoloMultijoueurComponent],
             imports: [
                 MatCardModule,
                 HttpClientTestingModule,
@@ -22,7 +22,7 @@ describe('PartieMultijoueurComponent', () => {
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
 
-        fixture = TestBed.createComponent(PartieMultijoueurComponent);
+        fixture = TestBed.createComponent(PartieSoloMultijoueurComponent);
         component = fixture.componentInstance;
     });
 

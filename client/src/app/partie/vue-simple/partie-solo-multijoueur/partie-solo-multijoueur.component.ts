@@ -5,13 +5,13 @@ import { PartieService} from "../../partie.service";
 import { PartieSoloComponent } from '../partie-solo/partie-solo.component';
 
 @Component({
-    selector: 'app-partie-multijoueur',
-    templateUrl: './partie-multijoueur.component.html',
-    styleUrls: ['./partie-multijoueur.component.css'],
+    selector: 'app-partie-solo-multijoueur',
+    templateUrl: './partie-solo-multijoueur.component.html',
+    styleUrls: ['./partie-solo-multijoueur.component.css'],
     providers: [PartieService]
 })
 
-export class PartieMultijoueurComponent extends PartieSoloComponent {
+export class PartieSoloMultijoueurComponent extends PartieSoloComponent {
     protected partie: PartieSimple;
 
     public constructor(protected route: ActivatedRoute,
