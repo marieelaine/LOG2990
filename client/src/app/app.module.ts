@@ -44,6 +44,7 @@ import { DialogConfirmationComponent } from "./liste-parties/dialog-confirmation
 import { SocketClientService } from "./socket/socket-client.service";
 import { ListePartieServiceService } from "./liste-parties/liste-partie-service.service";
 import { DialogErreurComponent } from "./admin/dialog-erreur/dialog-erreur.component";
+import { DialogVueAttenteComponent } from './liste-parties/dialog-vue-attente/dialog-vue-attente.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:4200', options: {} };
 
@@ -76,6 +77,7 @@ const appRoutes: Routes = [
     VueMultipleComponent,
     DialogConfirmationComponent,
     DialogErreurComponent,
+    DialogVueAttenteComponent,
   ],
   imports: [
     RouterModule.forRoot(
