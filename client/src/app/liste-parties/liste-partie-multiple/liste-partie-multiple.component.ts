@@ -3,6 +3,8 @@ import { ListePartiesComponent } from '../liste-parties.component';
 import { Router } from '@angular/router';
 import { ListePartieServiceService } from "../liste-partie-service.service";
 import { PartieMultiple } from 'src/app/admin/dialog-multiple/partie-multiple';
+import { DialogConfirmationComponent } from '../dialog-confirmation/dialog-confirmation.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-liste-partie-multiple',
@@ -14,7 +16,8 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
   protected listeParties: PartieMultiple[];
 
   public constructor(public router: Router,
-                     public listePartieService: ListePartieServiceService) {
+                     public listePartieService: ListePartieServiceService,
+                     private dialog: MatDialog) {
     super(router, listePartieService);
   }
 
@@ -41,8 +44,19 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
       if (this.isListePartiesMode) {
         // Naviguer vers partie-multijoueur
       } else if (this.isAdminMode) {
-        this.supprimerPartie(partieId);
+        this.ouvrirDialog(partieId);
+        // this.supprimerPartie(partieId);
       }
+    }
+
+  private ouvrirDialog(partieId: string): void {
+      this.dialog.open(DialogConfirmationComponent, {
+        height: "190px",
+        width: "600px",
+        data: { id: partieId,
+                listeParties: this.listeParties,
+                isSimple: false}
+      });
     }
 
   protected supprimerPartie(partieId: string): void {

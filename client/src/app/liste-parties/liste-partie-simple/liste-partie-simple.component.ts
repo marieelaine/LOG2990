@@ -24,9 +24,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   public async ngOnInit() {
     this.listePartieService.getListePartieSimple().subscribe((res: PartieSimple[]) => {
       this.listeParties = res;
-      // this.listePartieService.listePartieSimple = res;
     });
-    // this.listeParties = this.listePartieService.listePartieSimple;
   }
 
   protected afficherImage(id: string) {
@@ -52,25 +50,22 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   }
 
   private ouvrirDialog(partieId: string): void {
-    console.log("ouvrir dialog debut");
     this.dialog.open(DialogConfirmationComponent, {
       height: "190px",
       width: "600px",
       data: { id: partieId,
-              listeParties: this.listeParties}
+              listeParties: this.listeParties,
+              isSimple: true}
     });
-
   }
 
-  protected supprimerPartieDeLaffichage(partieId: string): void {
-    for (let i = 0 ; i < this.listeParties.length ; i++) {
-      if (this.listeParties[i]["_id"] === partieId) {
-        this.listeParties.splice(i, 1);
-      }
-    }
-    // this.listePartieService.deletePartieSimple(partieId)
-    // .catch(() => ErrorHandler);
-  }
+  // protected supprimerPartieDeLaffichage(partieId: string): void {
+  //   for (let i = 0 ; i < this.listeParties.length ; i++) {
+  //     if (this.listeParties[i]["_id"] === partieId) {
+  //       this.listeParties.splice(i, 1);
+  //     }
+  //   }
+  // }
 
   protected reinitialiserTemps(partieId: string): void {
     this.listeParties.forEach((partie: PartieSimple) => {

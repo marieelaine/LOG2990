@@ -120,6 +120,7 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
     }
 
     protected ajouterTemps(temps: number): void {
+        // If la partie a ete supprimee, rien faire
         this.partie["_tempsSolo"].push(temps);
         this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
         .catch(() => ErrorHandler);
