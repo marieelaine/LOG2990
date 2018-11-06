@@ -38,7 +38,7 @@ export class AdminComponent {
   protected openDialogSimple(): void {
     this.gameName = "";
     this.dialog.open(DialogSimpleComponent, {
-      height: "470px",
+      height: "490px",
       width: "600px",
       data: {name: this.gameName}
     });

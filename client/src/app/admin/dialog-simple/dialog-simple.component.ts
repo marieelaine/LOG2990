@@ -6,6 +6,7 @@ import { PartieSimple } from "./partie-simple";
 import { PartieSimpleService } from "../partie-simple.service";
 import { DialogAbstrait } from "../dialog-abstrait";
 import * as Buffer from "buffer";
+import { FormControl, Validators } from "@angular/forms";
 
 export const IMAGE_URL: string = "http://localhost:3000/images/";
 
@@ -25,6 +26,8 @@ export class DialogSimpleComponent extends DialogAbstrait {
   private selectedFiles: File[] = [];
   private selectedFilesAsBuffers: Buffer[] = [];
   private correctImageExtension: String = "image/bmp";
+  protected nameControl = new FormControl('', [
+    Validators.maxLength(20), Validators.minLength(30), Validators.required]);
 
   public constructor(
     dialogRef: MatDialogRef<DialogSimpleComponent>,

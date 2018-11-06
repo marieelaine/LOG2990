@@ -4,8 +4,8 @@
     <mat-card class='addGameCard mat-elevation-z10'>
         <div class='gameName'>
             <mat-form-field class='formField'>
-                <input matInput [(ngModel)]="data.simpleGameName" type='text' placeholder="Nom de la partie" class='gameNameInput'>
-                <!-- <mat-error *ngIf="checkIfOutOfBoundName(titrePartie)"> {{ outOfBoundNameLengthMessage }} </mat-error> -->
+                <input matInput [(ngModel)]="data.simpleGameName" type='text' placeholder="Nom de la partie" class='gameNameInput' [formControl]="nameControl" required>
+                <mat-error>Veuillez entrer un nom entre 3 et 20 caratères</mat-error>
             </mat-form-field>
         </div>
         <div class="firstImageContainer">
