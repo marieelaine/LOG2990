@@ -25,10 +25,6 @@ export class ListePartieServiceService {
 
   public getListePartieSimple(): Observable<PartieSimple[]> {
 
-      // await this.http.get<PartieSimple[]>(this.GET_LISTE_SIMPLE_URL).subscribe((res: PartieSimple[]) => {
-      //   console.log("Res: ", res);
-      //   this.listePartieSimple = res;
-      // });
       return this.http.get<PartieSimple[]>(this.GET_LISTE_SIMPLE_URL);
   }
 

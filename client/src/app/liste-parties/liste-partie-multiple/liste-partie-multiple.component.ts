@@ -45,7 +45,6 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
         // Naviguer vers partie-multijoueur
       } else if (this.isAdminMode) {
         this.ouvrirDialog(partieId);
-        // this.supprimerPartie(partieId);
       }
     }
 
