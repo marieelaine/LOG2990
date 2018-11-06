@@ -21,7 +21,6 @@ export class PartieSoloMultijoueurComponent extends PartieSoloComponent {
     }
 
     protected setPartie(): void {
-        console.log(this.partieID);
         this.partieService.getPartieSimple(this.partieID).subscribe((res: PartieSimple) => {
             this.partie = res;
             this.getImageData();

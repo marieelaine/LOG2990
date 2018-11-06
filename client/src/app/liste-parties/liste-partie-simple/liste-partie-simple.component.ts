@@ -51,7 +51,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   protected onCreerOuSupprimerClick(partieId: string): void {
     if (this.isListePartiesMode) {
       this.ouvrirDialogVueAttente();
-      this.router.navigate(["/partie-multijoueur/" + partieId])
+      this.router.navigate(["/partie-solo-multijoueur/" + partieId])
       .catch(() => ErrorHandler);
     } else if (this.isAdminMode) {
       this.ouvrirDialogConfirmation(partieId);
