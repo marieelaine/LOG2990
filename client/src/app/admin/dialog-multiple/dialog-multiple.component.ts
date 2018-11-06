@@ -23,9 +23,9 @@ export class DialogMultipleComponent extends DialogAbstrait {
   protected themeButtonMessage: string;
   protected qtyControl = new FormControl('', [
     Validators.max(200), Validators.min(10),
-    Validators.required, Validators.pattern("[0-9]")]);
+    Validators.required, Validators.pattern('[ 0-9 ]*')]);
   protected nameControl = new FormControl('', [
-    Validators.maxLength(20), Validators.minLength(30), Validators.required]);
+    Validators.maxLength(20), Validators.minLength(3), Validators.required]);
 
   public constructor(
     dialogRef: MatDialogRef<DialogMultipleComponent>,
