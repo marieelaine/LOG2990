@@ -14,4 +14,6 @@ export default  {
 
         RoutesPartieMultiple: Symbol("RoutesPartieMultiple"),
         PartieMultiple: Symbol("PartieMultiple"),
+
+        SocketServerService: Symbol("SocketServerService"),
 };

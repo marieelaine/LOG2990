@@ -1,4 +1,4 @@
-import {Component, ErrorHandler} from '@angular/core';
+import {Component, ElementRef, ErrorHandler} from '@angular/core';
 import { PartieAbstraiteClass } from '../../partie-abstraite-class';
 import { ActivatedRoute} from "@angular/router";
 import { PartieSimple} from "../../../admin/dialog-simple/partie-simple";
@@ -12,67 +12,38 @@ import { PartieService} from "../../partie.service";
 })
 
 export class PartieMultijoueurComponent extends PartieAbstraiteClass {
-
-    protected partieID: string;
-    protected nomPartie: string;
     protected partie: PartieSimple;
 
-    public constructor(private route: ActivatedRoute,
-                       protected partieService: PartieService) {
-        super();
+    public constructor(protected route: ActivatedRoute,
+                       protected partieService: PartieService, ) {
+        super(route, partieService, 2); // TODO FIX MAGIC NUMBER
         this.differenceRestantes = 7;
-        this.setID();
-        this.setPartie();
-    }
-
-    protected diffTrouvee: number[] = [];
-    protected setID(): void {
-        this.partieID = this.route.snapshot.paramMap.get('idPartie') + "";
     }
 
     protected setPartie(): void {
+        console.log(this.partieID);
         this.partieService.getPartieSimple(this.partieID).subscribe((res: PartieSimple) => {
             this.partie = res;
+            this.getImageData();
             this.setup();
         });
     }
 
-    protected setup(): void {
-        this.nomPartie = this.partie["_nomPartie"].charAt(0).toUpperCase() + this.partie["_nomPartie"].slice(1);
-
-        const data1: string = atob(String(this.partie["_image1"][0]));
-        const data2: string = atob(String(this.partie["_image2"][0]));
-
-        this.ajusterSourceImage(data1, "imageG");
-        this.ajusterSourceImage(data2, "imageD");
-
+    protected getImageData(): void {
+        this.imageData.push(atob(String(this.partie["_image1"][0])));
+        this.imageData.push(atob(String(this.partie["_image2"][0])));
     }
 
-    protected ajusterSourceImage(data: String, id: String): void {
-        let hex = 0x00;
-        const result: Uint8Array = new Uint8Array(data.length);
-
-        for (let i  = 0; i < data.length; i++) {
-            hex = data.charCodeAt(i);
-            result[i] = hex;
-        }
-        const blob = new Blob([result], {type: 'image/bmp'});
-        // @ts-ignore
-        document.getElementById(id).src = URL.createObjectURL(blob);
-    }
-
-    protected testerPourDiff(event): void {
-
+    protected testerPourDiff(offsetX, offsetY): void {
         if (this.partieCommence) {
 
-            const coords = "[" + event.offsetX + ", " + event.offsetY + "]";
-            console.log(coords);
-
+            const coords = offsetX + "," + offsetY;
             let i: number = 0;
             for (const diff of this.partie["_imageDiff"]) {
                 for (const pixel of diff) {
 
                     if (coords === pixel) {
+
                         this.differenceTrouver(i);
                     }
                 }
@@ -85,12 +56,25 @@ export class PartieMultijoueurComponent extends PartieAbstraiteClass {
         if (!this.diffTrouvee.includes(i)) {
             this.diffTrouvee.push(i);
             this.trouverDifference();
-        }
-    }
 
-    protected ajouterTemps(temps: number): void {
-        this.partie["_tempsSolo"].push(temps);
-        this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
-            .catch(() => ErrorHandler);
+            const contextG = this.canvas.toArray()[0].nativeElement.getContext("2d");
+            const imageDataG = contextG.getImageData(0, 0, 640, 480);
+            const dataG = imageDataG.data;
+
+            const contextD = this.canvas.toArray()[1].nativeElement.getContext("2d");
+            const imageDataD = contextD.getImageData(0, 0, 640, 480);
+            const dataD = imageDataD.data;
+
+            for (const pixel of this.partie["_imageDiff"][i]) {
+                const x: number = Number(pixel.split(",")[0]);
+                const y: number = Number(pixel.split(",")[1]);
+                const dim = (y * 640 * 4) + (x * 4);
+
+                dataD[dim] = dataG[dim];
+                dataD[dim + 1] = dataG[dim + 1];
+                dataD[dim + 2] = dataG[dim + 2];
+            }
+            contextD.putImageData(imageDataD, 0, 0);
+        }
     }
 }

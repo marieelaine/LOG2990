@@ -3,18 +3,23 @@ import { ListePartiesComponent } from "../liste-parties.component";
 import { Router } from "@angular/router";
 import { ListePartieServiceService } from "../liste-partie-service.service";
 import { PartieSimple } from "../../admin/dialog-simple/partie-simple";
+import { SocketClientService } from "src/app/socket/socket-client.service";
+import * as event from "../../../../../common/communication/evenementsSocket";
 
 @Component({
   selector: "app-liste-partie-simple",
   templateUrl: "./liste-partie-simple.component.html",
-  styleUrls: ["./liste-partie-simple.component.css"]
+  styleUrls: ["./liste-partie-simple.component.css"],
+  providers: [SocketClientService]
 })
+
 export class ListePartieSimpleComponent extends ListePartiesComponent implements OnInit {
 
   protected listeParties: PartieSimple[];
 
   constructor(public router: Router,
-              public listePartieService: ListePartieServiceService) {
+              public listePartieService: ListePartieServiceService,
+              public socketClientService: SocketClientService) {
     super(router, listePartieService);
   }
 
@@ -22,6 +27,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     this.listePartieService.getListePartieSimple().subscribe((res: PartieSimple[]) => {
       this.listeParties = res;
     });
+    this.ajouterPartieSurSocketEvent();
+
   }
 
   protected afficherImage(id: string) {
@@ -39,8 +46,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   protected onCreerOuSupprimerClick(partieId: string): void {
     if (this.isListePartiesMode) {
-        this.router.navigate(["/partie-multi/" + partieId])
-        .catch(() => ErrorHandler);
+      this.router.navigate(["/partie-multi/" + partieId])
+      .catch(() => ErrorHandler);
     } else if (this.isAdminMode) {
       this.supprimerPartie(partieId);
     }
@@ -63,6 +70,12 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
        this.listePartieService.reinitialiserTempsPartie(partieId, partie["_tempsSolo"], partie["_tempsUnContreUn"])
        .catch(() => ErrorHandler);
       }
+    });
+  }
+
+  private ajouterPartieSurSocketEvent() {
+    this.socketClientService.socket.on(event.ENVOYER_PARTIE_SIMPLE, (data) => {
+      this.listeParties.push(data);
     });
   }
 }

@@ -1,8 +1,9 @@
-import {Component, ErrorHandler, ViewChild, ElementRef} from '@angular/core';
+import {Component, ErrorHandler, ViewChildren, ElementRef, QueryList} from '@angular/core';
 import { PartieAbstraiteClass } from "../partie-abstraite-class";
 import { ActivatedRoute} from "@angular/router";
 import { PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
 import { PartieService} from "../partie.service";
+import {PartieSimple} from "../../admin/dialog-simple/partie-simple";
 
 @Component({
   selector: 'app-vue-multiple',
@@ -11,79 +12,35 @@ import { PartieService} from "../partie.service";
 })
 export class VueMultipleComponent extends PartieAbstraiteClass {
 
-    public constructor(private route: ActivatedRoute,
-                       protected partieService: PartieService
-    ) {
-      super();
-      this.setID();
-      this.setPartie();
-      this.differenceRestantes = 14;
-      this.imageG1 = new Image();
-      this.imageD1 = new Image();
-      this.imageG2 = new Image();
-      this.imageD2 = new Image();
-    }
-
-    @ViewChild('canvasG1') canvasG1: ElementRef;
-    @ViewChild('canvasD1') canvasD1: ElementRef;
-    @ViewChild('canvasG2') canvasG2: ElementRef;
-    @ViewChild('canvasD2') canvasD2: ElementRef;
-    protected imageG1: HTMLImageElement;
-    protected imageD1: HTMLImageElement;
-    protected imageG2: HTMLImageElement;
-    protected imageD2: HTMLImageElement;
-    protected nomPartie: string;
-    protected partieID: string;
     protected partie: PartieMultiple;
-    protected diffTrouvee: number[] = [];
 
-    protected setID(): void {
-    this.partieID = this.route.snapshot.paramMap.get('idPartie') + "";
+    public constructor(protected route: ActivatedRoute,
+                       protected partieService: PartieService) {
+        super(route, partieService, 4); // TODO FIX MAGIC NUMBER
+        this.differenceRestantes = 14;
     }
 
     protected setPartie(): void {
-      this.partieService.getPartieMultiple(this.partieID).subscribe((res: PartieMultiple) => {
-        this.partie = res;
-        this.setup();
-      });
+        console.log(this.partieID);
+        this.partieService.getPartieMultiple(this.partieID).subscribe((res: PartieMultiple) => {
+            this.partie = res;
+            this.getImageData();
+            this.setup();
+        });
     }
 
-    protected setup(): void {
-      this.nomPartie = this.partie["_nomPartie"].charAt(0).toUpperCase() + this.partie["_nomPartie"].slice(1);
-
-      const data1: string = atob(String(this.partie["_image1PV1"][0]));
-      const data2: string = atob(String(this.partie["_image1PV2"][0]));
-      const data3: string = atob(String(this.partie["_image2PV1"][0]));
-      const data4: string = atob(String(this.partie["_image2PV2"][0]));
-
-      this.ajusterSourceImage(data1, this.canvasG1, this.imageG1);
-      this.ajusterSourceImage(data2, this.canvasD1, this.imageD1);
-      this.ajusterSourceImage(data3, this.canvasG2, this.imageG2);
-      this.ajusterSourceImage(data4, this.canvasD2, this.imageD2);
-    }
-
-    protected ajusterSourceImage(data: String, canvas: ElementRef, image: HTMLImageElement): void {
-        let hex = 0x00;
-        const result: Uint8Array = new Uint8Array(data.length);
-
-        for (let i  = 0; i < data.length; i++) {
-            hex = data.charCodeAt(i);
-            result[i] = hex;
-        }
-        const blob = new Blob([result], {type: 'image/bmp'});
-
-        const context: CanvasRenderingContext2D = canvas.nativeElement.getContext("2d");
-        image.src = URL.createObjectURL(blob);
-        image.onload = () => {
-            context.drawImage(image, 0, 0);
-        };
+    protected getImageData(): void {
+        console.log(this.partie)
+        this.imageData.push(atob(String(this.partie["_image1PV1"][0])));
+        this.imageData.push(atob(String(this.partie["_image1PV2"][0])));
+        this.imageData.push(atob(String(this.partie["_image2PV1"][0])));
+        this.imageData.push(atob(String(this.partie["_image2PV2"][0])));
     }
 
     protected testerPourDiff(event): void {
         if (this.partieCommence) {
 
             const coords = "[" + event.offsetX + ", " + event.offsetY + "]";
-            console.log(coords);
 
             let i: number = 0;
             for (const diff of this.partie["_imageDiff"]) {
@@ -110,8 +67,10 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
             let contextG: CanvasRenderingContext2D;
             let contextD: CanvasRenderingContext2D;
 
-            (bool) ? contextG = this.canvasG1.nativeElement.getContext("2d") : contextG = this.canvasG2.nativeElement.getContext("2d");
-            (bool) ? contextD = this.canvasD1.nativeElement.getContext("2d") : contextD = this.canvasD2.nativeElement.getContext("2d");
+            (bool) ? contextG = this.canvas.toArray()[0].nativeElement.getContext("2d") : contextG =
+                this.canvas.toArray()[2].nativeElement.getContext("2d");
+            (bool) ? contextD = this.canvas.toArray()[1].nativeElement.getContext("2d") : contextD =
+                this.canvas.toArray()[3].nativeElement.getContext("2d");
 
             const imageDataG = contextG.getImageData(0, 0, 640, 480);
             const dataG = imageDataG.data;
@@ -129,11 +88,5 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
             }
             contextD.putImageData(imageDataD, 0, 0);
         }
-    }
-
-    protected ajouterTemps(temps: number): void {
-        this.partie["_tempsSolo"].push(temps);
-        this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
-            .catch(() => ErrorHandler);
     }
 }

@@ -46,6 +46,7 @@ describe('PartieSoloComponent', () => {
         fixture.detectChanges();
         component["partie"] = new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(), Buffer.from(new Array<number>()),
                                                 Buffer.from(new Array<number>()), new Array<Array<string>>(), "");
+        // component["imageG"] = new HTMLImageElement();
     });
 
     it('should create', () => {
@@ -90,26 +91,24 @@ describe('PartieSoloComponent', () => {
         });
     });
 
-    // describe("setup", () => {
-    //     beforeEach(() => {
-    //         const a1 = new Array<string>();
-    //         a1.push(window.btoa("Hello world"));
-    //         component["partie"]["_image1"] = Buffer.from(a1);
-    //         component["partie"]["_image2"] = Buffer.from(a1);
-    //     });
+    describe("setup", () => {
+        beforeEach(() => {
+            component["partie"]["_image1"] = Buffer.from("Hello World");
+            component["partie"]["_image2"] = Buffer.from("Hello World");
+        });
 
-    //     it("devrait appeler addNomPartieToChat", () => {
-    //         // tslint:disable-next-line:no-any
-    //         spyOn<any>(component, "addNomPartieToChat");
-    //         component["setup"]();
-    //         expect(component["addNomPartieToChat"]).toHaveBeenCalled();
-    //     });
+        it("devrait appeler addNomPartieToChat", () => {
+            // tslint:disable-next-line:no-any
+            spyOn<any>(component, "addNomPartieToChat");
+            component["setup"]();
+            expect(component["addNomPartieToChat"]).toHaveBeenCalled();
+        });
 
-    //     it("devrait appeler ajusterSourceImage", () => {
-    //         // tslint:disable-next-line:no-any
-    //         spyOn<any>(component, "ajusterSourceImage");
-    //         component["setup"]();
-    //         expect(component["ajusterSourceImage"]).toHaveBeenCalled();
-    //     });
-    // });
+        it("devrait appeler ajusterSourceImage", () => {
+            // tslint:disable-next-line:no-any
+            spyOn<any>(component, "ajusterSourceImage");
+            component["setup"]();
+            expect(component["ajusterSourceImage"]).toHaveBeenCalled();
+        });
+    });
 });
