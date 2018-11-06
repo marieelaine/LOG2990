@@ -19,8 +19,8 @@ export interface PartieMultipleInterface {
     _image1PV2: Buffer;
     _image2PV1: Buffer;
     _image2PV2: Buffer;
-    _imageDiff1: Buffer;
-    _imageDiff2: Buffer;
+    _imageDiff1: Array<Array<string>>;
+    _imageDiff2: Array<Array<string>>;
     _quantiteObjets: number;
     _theme: string;
     _typeModification: string;
@@ -56,8 +56,8 @@ export class DBPartieMultiple {
                 _image1PV2: { type: Buffer, required: true, },
                 _image2PV1: { type: Buffer, required: true, },
                 _image2PV2: { type: Buffer, required: true, },
-                _imageDiff1: { type: Buffer },
-                _imageDiff2: {type: Buffer },
+                _imageDiff1: { type: Array },
+                _imageDiff2: {type: Array },
                 _quantiteObjets: { type: Number, required: true },
                 _typeModification: { type: String, required: true },
                 _theme: { type: String, required: true }
@@ -73,8 +73,8 @@ export class DBPartieMultiple {
             _image1PV2: { type: Array, required: true, },
             _image2PV1: { type: Array, required: true, },
             _image2PV2: { type: Array, required: true, },
-            _imageDiff1: { type: Buffer },
-            _imageDiff2: {type: Buffer },
+            _imageDiff1: { type: Array },
+            _imageDiff2: {type: Array },
             _quantiteObjets: { type: Number, required: true },
             _typeModification: { type: String, required: true },
             _theme: { type: String, required: true }
