@@ -9,6 +9,7 @@ import { VueMultipleComponent } from "../../partie/vue-multiple/vue-multiple.com
 import * as Buffer from "buffer";
 import { of } from "rxjs";
 import { Location } from "@angular/common";
+import { SocketClientService } from 'src/app/socket/socket-client.service';
 
 describe('PartieMultipleComponent', () => {
     let mockListePartieService: jasmine.SpyObj<ListePartieServiceService>;
@@ -38,7 +39,6 @@ describe('PartieMultipleComponent', () => {
             "deletePartieMultiple",
             "reinitialiserTempsPartieMultiple"
         ]);
-
         TestBed.configureTestingModule({
             declarations: [
                 ListePartieMultipleComponent,
@@ -55,6 +55,7 @@ describe('PartieMultipleComponent', () => {
             ],
             providers: [
                 { provide: ListePartieServiceService, useValue: mockListePartieService },
+                SocketClientService
             ]
         });
 

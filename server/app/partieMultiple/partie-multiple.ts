@@ -6,9 +6,11 @@ import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
-import { injectable } from "inversify";
+import { injectable, inject } from "inversify";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import { execFile, ChildProcess } from "child_process";
+import { SocketServerService } from "../socket-io.service";
+import Types from "../types";
 
 export interface PartieMultipleInterface {
     _id: string;
@@ -29,13 +31,19 @@ export interface PartieMultipleInterface {
 @injectable()
 export class DBPartieMultiple {
 
+    private messageErreurNom: string;
+    private messageErreurDiff: string;
+
     private baseDeDonnees: BaseDeDonnees;
     private modelPartie: Model<Document>;
     private modelPartieArray: Model<Document>;
     private schema: Schema;
     private schemaArray: Schema;
 
-    public constructor() {
+    public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
+        this.messageErreurNom = "Le nom de la partie est déjà pris, veuillez réessayer.";
+        this.messageErreurDiff = "Les deux images doivent avoir exactement 14 différences, veuillez réessayer.";
+
         this.baseDeDonnees = new BaseDeDonnees();
         this.CreateSchema();
         this.CreateSchemaArray();
@@ -92,13 +100,13 @@ export class DBPartieMultiple {
 
             await partieMultiple.save(async (err: Error) => {
                 if (err !== null && err.name === "ValidationError") {
-                    // tslint:disable-next-line:no-console
-                    console.log("server");
-                    // res = "Le nom de la partie est déjà pris. Veuillez réessayer avec un autre nom."
+                    this.socket.envoyerMessageErreurNom(this.messageErreurNom);
+                } else {
+                    this.socket.envoyerPartieMultiple(await this.getPartieMultipleByName(partie._nomPartie));
                 }
             });
         } else {
-            // res = "Les images ne contiennent pas exactement 14 différences, veuillez réessayer."
+            this.socket.envoyerMessageErreurDifferences(this.messageErreurDiff);
         }
         await this.deleteImagesDirectory();
 
@@ -204,6 +212,24 @@ export class DBPartieMultiple {
 
         for (const partie of partieMultiple) {
             if (partie._id.toString() === partieID) {
+                return partie;
+            }
+        }
+
+        return partieMultiple[1];
+    }
+
+    private async getPartieMultipleByName(nomPartie: String): Promise<PartieMultipleInterface> {
+        const partieMultiple: PartieMultipleInterface[] = [];
+        await this.modelPartieArray.find()
+            .then((parties: Document[]) => {
+                for (const partie of parties) {
+                    partieMultiple.push(partie.toJSON());
+                }
+            });
+
+        for (const partie of partieMultiple) {
+            if (partie._nomPartie.toString() === nomPartie) {
                 return partie;
             }
         }

@@ -3,6 +3,7 @@ import * as socket from "socket.io";
 import * as event from "../../common/communication/evenementsSocket";
 import { injectable } from "inversify";
 import { PartieSimpleInterface } from "./partieSimple/partie-simple";
+import { PartieMultipleInterface } from "./partieMultiple/partie-multiple";
 
 @injectable()
 export class SocketServerService {
@@ -27,5 +28,9 @@ export class SocketServerService {
 
     public envoyerPartieSimple(partieSimple: PartieSimpleInterface): void {
         this.io.emit(event.ENVOYER_PARTIE_SIMPLE, partieSimple);
+    }
+
+    public envoyerPartieMultiple(partieMultiple: PartieMultipleInterface): void {
+        this.io.emit(event.ENVOYER_PARTIE_MULTIPLE, partieMultiple);
     }
 }
