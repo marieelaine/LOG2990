@@ -2,12 +2,12 @@ import { PartieAbstraiteClass } from "./partie-abstraite-class";
 
 import { tick, fakeAsync } from '@angular/core/testing';
 
-class AbstractClassInstance extends PartieAbstraiteClass {
-  protected ajouterTemps(temps: number) {
-  }
-}
-
-describe('PartieAbstraiteComponent', () => {
+// class AbstractClassInstance extends PartieAbstraiteClass {
+//   protected ajouterTemps(temps: number) {
+//   }
+// }
+//
+// describe('PartieAbstraiteComponent', () => {
 //  let abstractClassInstance: AbstractClassInstance;
 //
 //  beforeEach(() => {
@@ -34,4 +34,4 @@ describe('PartieAbstraiteComponent', () => {
 //     abstractClassInstance["terminerPartie"]();
 //     expect(abstractClassInstance["chrono"].getTime()).toBe(2);
 //  }));
-});
+// });

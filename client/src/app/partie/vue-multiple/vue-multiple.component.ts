@@ -21,7 +21,6 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     }
 
     protected setPartie(): void {
-        console.log(this.partieID);
         this.partieService.getPartieMultiple(this.partieID).subscribe((res: PartieMultiple) => {
             this.partie = res;
             this.getImageData();
@@ -30,7 +29,6 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     }
 
     protected getImageData(): void {
-        console.log(this.partie)
         this.imageData.push(atob(String(this.partie["_image1PV1"][0])));
         this.imageData.push(atob(String(this.partie["_image1PV2"][0])));
         this.imageData.push(atob(String(this.partie["_image2PV1"][0])));
