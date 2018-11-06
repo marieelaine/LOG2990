@@ -3,7 +3,7 @@
     margin:1%;
     background-color: #dadada;
     border-radius: 20px;
-    height: 320px;
+    height: 340px;
     padding: 20px;
 }
 
@@ -33,8 +33,9 @@
     margin-right:2%;
 }
 
-#geometricThemeButton {
+#themeButtonGeo, #themeButtonOcean {
     float:left;
+    margin-top: 1%;
 }
 
 .clicked {

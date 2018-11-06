@@ -32,4 +32,5 @@ export class PartieService {
         this.http.put(this.REINITIALISER_TEMPS_SIMPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise()
             .catch(() => ErrorHandler);
     }
+
 }

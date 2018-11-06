@@ -15,7 +15,8 @@ import { PartieMultipleService } from '../partie-multiple.service';
 
 export class DialogMultipleComponent extends DialogAbstrait {
 
-  protected toggleClassButton: boolean = false;
+  protected toggleClassButtonGeo: boolean = false;
+  protected toggleClassButtonOcean: boolean = false;
   protected outOfBoundNumberForms: string;
   protected checkboxMessage: string;
   protected themeButtonMessage: string;
@@ -95,8 +96,15 @@ export class DialogMultipleComponent extends DialogAbstrait {
     //            2500);
   }
 
+  protected onGeoClickButton(event: Event, theme: string): void {
+    this.toggleClassButtonGeo = !this.toggleClassButtonGeo;
+    this.toggleClassButtonOcean = false;
+    this.data.theme = theme;
+  }
+
   protected onThemeClickButton(event: Event, theme: string): void {
-    this.toggleClassButton = !this.toggleClassButton;
+    this.toggleClassButtonOcean = !this.toggleClassButtonOcean;
+    this.toggleClassButtonGeo = false;
     this.data.theme = theme;
   }
 

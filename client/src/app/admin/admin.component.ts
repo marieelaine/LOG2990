@@ -47,7 +47,7 @@ export class AdminComponent {
   protected openDialogMultiple(): void {
     this.gameName = "";
     this.dialog.open(DialogMultipleComponent, {
-      height: "520px",
+      height: "540px",
       width: "600px",
       data: {name: this.gameName}
     });
