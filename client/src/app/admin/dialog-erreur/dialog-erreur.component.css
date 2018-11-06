@@ -1,0 +1,13 @@
+.dialog .mat-dialog-container {
+    background-color: red;
+    overflow: hidden;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.dialogButtons
+{
+    float:right;
+    margin-right:2%;
+    margin-bottom: 2%;
+}

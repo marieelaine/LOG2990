@@ -13,6 +13,7 @@ import { RoutesPartieMultiple } from "./routesPartieMultiple";
 import { BaseDeDonnees } from "./baseDeDonnees/baseDeDonnees";
 import { DBPartieSimple } from "./partieSimple/partie-simple";
 import { DBPartieMultiple } from "./partieMultiple/partie-multiple";
+import { SocketServerService } from "./socket-io.service";
 
 const container: Container = new Container();
 
@@ -32,5 +33,7 @@ container.bind(Types.PartieSimple).to(DBPartieSimple);
 
 container.bind(Types.RoutesPartieMultiple).to(RoutesPartieMultiple);
 container.bind(Types.PartieMultiple).to(DBPartieMultiple);
+
+container.bind(Types.SocketServerService).to(SocketServerService).inSingletonScope();
 
 export { container };
