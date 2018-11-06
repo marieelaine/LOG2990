@@ -32,7 +32,7 @@ export interface PartieMultipleInterface {
 export class DBPartieMultiple {
 
     private messageErreurNom: string;
-    private messageErreurDiff: string;
+    private messageScene: string;
 
     private baseDeDonnees: BaseDeDonnees;
     private modelPartie: Model<Document>;
@@ -42,7 +42,7 @@ export class DBPartieMultiple {
 
     public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
         this.messageErreurNom = "Le nom de la partie est déjà pris, veuillez réessayer.";
-        this.messageErreurDiff = "Les deux images doivent avoir exactement 14 différences, veuillez réessayer.";
+        this.messageScene = "La scène ne s'est pas générée correctement, veuillez réessayer.";
 
         this.baseDeDonnees = new BaseDeDonnees();
         this.CreateSchema();
@@ -106,7 +106,7 @@ export class DBPartieMultiple {
                 }
             });
         } else {
-            this.socket.envoyerMessageErreurDifferences(this.messageErreurDiff);
+            this.socket.envoyerMessageErreurDifferences(this.messageScene);
         }
         await this.deleteImagesDirectory();
 
