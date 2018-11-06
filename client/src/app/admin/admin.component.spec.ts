@@ -8,6 +8,7 @@ import { By } from "@angular/platform-browser";
 import { ListePartieMultipleComponent } from "../liste-parties/liste-partie-multiple/liste-partie-multiple.component";
 import { ListePartieSimpleComponent } from "../liste-parties/liste-partie-simple/liste-partie-simple.component";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { SocketClientService } from "../socket/socket-client.service";
 
 describe("AdminComponent", () => {
     let component: AdminComponent;
@@ -25,6 +26,9 @@ describe("AdminComponent", () => {
                 NoopAnimationsModule,
                 HttpClientTestingModule
             ],
+            providers : [
+                SocketClientService
+            ]
         });
 
         fixture = TestBed.createComponent(AdminComponent);

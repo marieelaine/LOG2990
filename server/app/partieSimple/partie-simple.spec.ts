@@ -2,12 +2,14 @@ import { DBPartieSimple, PartieSimpleInterface } from "./partie-simple";
 import { assert } from "chai";
 import * as fsx from "fs-extra";
 import * as sinon from "sinon";
+import { SocketServerService } from "../socket-io.service";
 
 describe("Partie Simple BD classe", () => {
     let dbPartieSimple: DBPartieSimple;
+    const socket: SocketServerService = new SocketServerService();
 
     beforeEach(async () => {
-        dbPartieSimple = await new DBPartieSimple();
+        dbPartieSimple = await new DBPartieSimple(socket);
     });
 
     describe("Constructeur", () => {
