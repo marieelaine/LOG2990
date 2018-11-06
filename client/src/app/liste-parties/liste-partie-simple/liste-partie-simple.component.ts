@@ -7,6 +7,7 @@ import { MatDialog } from "@angular/material";
 import { DialogConfirmationComponent } from "../dialog-confirmation/dialog-confirmation.component";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
+import { DialogVueAttenteComponent } from "../dialog-vue-attente/dialog-vue-attente.component";
 
 @Component({
   selector: "app-liste-partie-simple",
@@ -49,14 +50,22 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   protected onCreerOuSupprimerClick(partieId: string): void {
     if (this.isListePartiesMode) {
-      this.router.navigate(["/partie-multi/" + partieId])
+      this.ouvrirDialogVueAttente();
+      this.router.navigate(["/partie-multijoueur/" + partieId])
       .catch(() => ErrorHandler);
     } else if (this.isAdminMode) {
-      this.ouvrirDialog(partieId);
+      this.ouvrirDialogConfirmation(partieId);
     }
   }
 
-  private ouvrirDialog(partieId: string): void {
+  private ouvrirDialogVueAttente() {
+    this.dialog.open(DialogVueAttenteComponent, {
+      height: "220px",
+      width: "600px"
+    });
+  }
+
+  private ouvrirDialogConfirmation(partieId: string): void {
     this.dialog.open(DialogConfirmationComponent, {
       height: "190px",
       width: "600px",

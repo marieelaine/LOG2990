@@ -53,9 +53,8 @@ const appRoutes: Routes = [
   { path: "header", component: HeaderComponent },
   { path: "admin", component: AdminComponent },
   { path: "liste-parties", component: ListePartiesComponent },
-  { path: "chrono", component: ChronoComponent },
   { path: "partie-solo/:idPartie", component: PartieSoloComponent },
-  { path: "partie-multi/:idPartie", component: PartieMultijoueurComponent },
+  { path: "partie-solo-multijoueur/:idPartie", component: PartieMultijoueurComponent },
   { path: "partie-multiple/:idPartie", component: VueMultipleComponent },
 ];
 
@@ -116,7 +115,8 @@ const appRoutes: Routes = [
     DialogSimpleComponent,
     DialogMultipleComponent,
     DialogConfirmationComponent,
-    DialogErreurComponent
+    DialogErreurComponent,
+    DialogVueAttenteComponent
   ],
 })
 export class AppModule { }

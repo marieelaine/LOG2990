@@ -1,8 +1,8 @@
-import {Component, ElementRef, ErrorHandler} from '@angular/core';
-import { PartieAbstraiteClass } from '../../partie-abstraite-class';
+import { Component } from '@angular/core';
 import { ActivatedRoute} from "@angular/router";
 import { PartieSimple} from "../../../admin/dialog-simple/partie-simple";
 import { PartieService} from "../../partie.service";
+import { PartieSoloComponent } from '../partie-solo/partie-solo.component';
 
 @Component({
     selector: 'app-partie-multijoueur',
@@ -11,12 +11,12 @@ import { PartieService} from "../../partie.service";
     providers: [PartieService]
 })
 
-export class PartieMultijoueurComponent extends PartieAbstraiteClass {
+export class PartieMultijoueurComponent extends PartieSoloComponent {
     protected partie: PartieSimple;
 
     public constructor(protected route: ActivatedRoute,
                        protected partieService: PartieService, ) {
-        super(route, partieService, 2); // TODO FIX MAGIC NUMBER
+        super(route, partieService); // TODO FIX MAGIC NUMBER
         this.differenceRestantes = 7;
     }
 
