@@ -3,7 +3,7 @@
     margin:1%;
     background-color: #dadada;
     border-radius: 20px;
-    height: 340px;
+    height: 400px;
     padding: 20px;
 }
 
@@ -21,7 +21,8 @@
 
 .formField
 {
-    margin: 0;
+    margin-top: 2%;
+    margin-bottom: 1%;
     width: 50%;
 }
 
@@ -39,7 +40,7 @@
 }
 
 .clicked {
-    background-color: #64b664;
+    background-color: #ff4081;
     font-size: 0.8em;
     padding:0;
     margin-top:2px;

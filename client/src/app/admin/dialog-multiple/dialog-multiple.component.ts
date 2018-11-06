@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { PartieMultiple } from './partie-multiple';
 import * as Buffer from "buffer";
 import { PartieMultipleService } from '../partie-multiple.service';
+import { FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-dialog-multiple',
@@ -20,6 +21,11 @@ export class DialogMultipleComponent extends DialogAbstrait {
   protected outOfBoundNumberForms: string;
   protected checkboxMessage: string;
   protected themeButtonMessage: string;
+  protected qtyControl = new FormControl('', [
+    Validators.max(200), Validators.min(10),
+    Validators.required, Validators.pattern("[0-9]")]);
+  protected nameControl = new FormControl('', [
+    Validators.maxLength(20), Validators.minLength(30), Validators.required]);
 
   public constructor(
     dialogRef: MatDialogRef<DialogMultipleComponent>,
