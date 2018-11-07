@@ -3,8 +3,11 @@
 #define GLM_ENABLE_EXPERIMENTAL 
 #include <glm/gtx/component_wise.hpp>
 #include <vector>
+#include <iostream>
 #include <fstream>
 #include <sstream>
+#include <math.h>
+#include "FreeImage.h"
 
 using namespace std;
 
@@ -26,10 +29,42 @@ struct themeObject
     string type;
     vector<Vertex> model;
     int colorR; int colorG; int colorB;
-    int angle; int rotX; int rotY; int rotZ;
-    int transX; int transY; int transZ;
-    int size;
+    int angle; double rotX; double rotY; double rotZ;
+    double transX; double transY; double transZ;
+    double size;
 };
+
+// diverses variables d'état
+struct Etat
+{
+   string theme;
+   int nombreFormes;
+   string modifications;
+   string filename;
+   string capture1;
+   string capture2;
+   string capture3;
+   string capture4;
+} etat = {};
+
+int callRandomColor()
+{
+   int min = 0;
+   int max = 255;
+   return rand()%((max - min) + 1) + min;
+}
+
+int callRandomAngle(int start)
+{
+   int vMin = min(0, start - 45);
+   int vMax = start + 45;
+   return rand()%((vMax - vMin) + 1) + vMin;
+}
+
+double callRandom()
+{
+   return (double)rand()/(RAND_MAX);
+}
 
 // based on:
 // https://stackoverflow.com/questions/14887012/object-loader-in-opengl
@@ -180,11 +215,11 @@ void display()
     double h = 480;
     double ar = w / h;
     glTranslatef( curTrans.x / w * 2, curTrans.y / h * 2, 0 );
-    gluPerspective( 60, ar, 0.1, 100 );
+    gluPerspective( 60, ar, 4, 100 );
 
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
-    glTranslatef( 0, 0, -10 );
+    glTranslatef( 0, -2, -20 );
 
     for(vector<themeObject>::iterator vec = globalVec.begin(); vec != globalVec.end(); ++vec){
         glPushMatrix();
@@ -238,14 +273,14 @@ void CenterAndScale( Vec* pts, size_t stride, size_t count, const typename Vec::
         pt = ( ( pt - center ) * factor );
     }    
 }
-void createThemeObject(string type, vector <Vertex> model, int size) {
+void createThemeObject(string type, vector <Vertex> model, double size) {
     themeObject object = {};
     if (type == "shark") { 
         object = {
             type,
             model,
             242, 226, 0,
-            270, 1, 0, 0,
+            callRandomAngle(270), callRandom(), 0, 0,
             0, 5, 0,
             size
         };
@@ -264,9 +299,9 @@ void createThemeObject(string type, vector <Vertex> model, int size) {
         object = {
             type,
             model,
-            242, 226, 0,
+            71, 55, 10,
             0, 0, 0, 0,
-            0, 0, -3,
+            -7, -1.05, -7,  //can be random en z entre (7,-7)
             size
         };
     }
@@ -274,7 +309,7 @@ void createThemeObject(string type, vector <Vertex> model, int size) {
         object = {
             type,
             model,
-            242, 226, 0,
+            callRandomColor(), callRandomColor(), callRandomColor(),
             0, 0, 0, 0,
             0, 0, 5,
             size
@@ -284,8 +319,8 @@ void createThemeObject(string type, vector <Vertex> model, int size) {
         object = {
             type,
             model,
-            242, 226, 0,
-            270, 1, 0, 0,
+            callRandomColor(), callRandomColor(), callRandomColor(),
+            callRandomAngle(270), callRandom(), 0, 0,
             1, 0, 1,
             size
         };
@@ -294,9 +329,9 @@ void createThemeObject(string type, vector <Vertex> model, int size) {
         object = {
             type,
             model,
-            242, 226, 0,
-            0, 0, 0, 0,
-            0, 0, 2,
+            226, 57, 31,
+            callRandomAngle(270), callRandom(), 0, 0,
+            6, 0, 6,
             size
         };
     }
@@ -304,29 +339,29 @@ void createThemeObject(string type, vector <Vertex> model, int size) {
         object = {
             type,
             model,
-            242, 226, 0,
-            0, 0, 0, 0,
-            0, 5, 2,
+            52, 118, 163, //bleu
+            callRandomAngle(300), callRandom(), callRandom(), callRandom(), //cna be random
+            -6, 5, 2, //can be random 
             size
         };
     }
-    else if (type == "whaletub") { 
+    else if (type == "starfish") { 
         object = {
             type,
             model,
-            242, 226, 0,
-            0, 0, 0, 0,
-            0, 0, -3,
+            209, 156, 33, //or
+            callRandomAngle(270), callRandom(), callRandom(), callRandom(),
+            3, 1.9, 0.9,
             size
         };
     }
-    else if (type == "bottle") { 
+    else if (type == "seashell") { 
         object = {
             type,
             model,
-            242, 226, 0,
+            callRandomColor(), callRandomColor(), callRandomColor(),
             0, 0, 0, 0,
-            2, 0, 0,
+            6, -0.5, -6,
             size
         };
     }
@@ -334,9 +369,9 @@ void createThemeObject(string type, vector <Vertex> model, int size) {
         object = {
             type,
             model,
-            242, 226, 0,
+            144, 144, 144,
             0, 0, 0, 0,
-            0, 0, 3,
+            -2, -0.25, 5.5, //x could be random
             size
         };
     }
@@ -344,8 +379,8 @@ void createThemeObject(string type, vector <Vertex> model, int size) {
         object = {
             type,
             model,
-            242, 226, 0,
-            0, 0, 0, 0,
+            67, 27, 91,
+            callRandomAngle(30), callRandom(), callRandom(), callRandom(), //random call
             0, 4, -3,
             size
         };
@@ -354,9 +389,19 @@ void createThemeObject(string type, vector <Vertex> model, int size) {
         object = {
             type,
             model,
-            242, 226, 0,
-            0, 0, 0, 0,
-            0, 5, -2,
+            232, 127, 16,
+            callRandomAngle(270), callRandom(), 0, 0,
+            -5, 5, 6,  //random between x z y
+            size
+        };
+    }
+    else if (type == "goldfish") { 
+        object = {
+            type,
+            model,
+            0, 127, 16,
+            callRandomAngle(270), callRandom(), 0, 0,
+            -2, 5, 6,  //random between x z y
             size
         };
     }
@@ -364,9 +409,9 @@ void createThemeObject(string type, vector <Vertex> model, int size) {
         object = {
             type,
             model,
-            242, 226, 0,
-            0, 0, 0, 0,
-            0, 3, 3,
+            46, 45, 56,
+            callRandomAngle(90), callRandom(), 0, 0,
+            0, 7, 3,        //random x and z between -7 and 7
             size
         };
     }
@@ -374,9 +419,9 @@ void createThemeObject(string type, vector <Vertex> model, int size) {
         object = {
             type,
             model,
-            242, 226, 0,
+            25, 23, 40,
             0, 0, 0, 0,
-            0, 0, 0,
+            0, 0, 0, // random all
             size
         };
     }
@@ -384,9 +429,9 @@ void createThemeObject(string type, vector <Vertex> model, int size) {
         object = {
             type,
             model,
-            242, 226, 0,
-            0, 0, 0, 0,
-            0, 0, -2,
+            46, 45, 56,
+            270, 1, 0, 0,
+            -6, -0.1, -6, // random between -6 and 6
             size
         };
     }
@@ -400,47 +445,85 @@ void importObject(string file, string type, int size){
     createThemeObject(type, model, size);
 }
 
-int main( int argc, char **argv )
+void creerEtat(char* argv[], Etat& etat){
+
+    etat.theme =  argv[1];
+    etat.nombreFormes = atoi(argv[2]);
+    etat.modifications = argv[3];
+    etat.filename = argv[4];
+
+    string capture1 = string(etat.filename + string("_a_ori.bmp"));
+    string capture2 = string(etat.filename + string("_b_ori.bmp"));
+    string capture3 = string(etat.filename + string("_a_mod.bmp"));
+    string capture4 = string(etat.filename + string("_b_mod.bmp"));
+
+    etat.capture1 = capture1;
+    etat.capture2 = capture2; 
+    etat.capture3 = capture3;
+    etat.capture4 = capture4;
+}
+
+int main( int argc, char *argv[] )
 {   
-    glutInit( &argc, argv );
-    glutInitDisplayMode( GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE );
-    glutInitWindowSize( 640, 480 );
-    glutCreateWindow( "LOG2990 - AQUALAND" );
+    if (argc != 5 )
+        {
+            cerr << "Erreur: Nombre invalid de parametres!\n";
+            cerr << "Template: main.exe theme 15 as nomFicher\n";
+            return 1;
+	    }
+    else {
+        creerEtat(argv, etat);
+        if (etat.theme == "theme"){
+            if(etat.nombreFormes >= 10 && etat.nombreFormes <= 200){
+                srand(time(NULL));
+                glutInit( &argc, argv );
+                glutInitDisplayMode( GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE );
+                glutInitWindowSize( 640, 480 );
+                glutCreateWindow( "LOG2990 - AQUALAND" );
 
-    importObject("data/obj/island.obj", "island", 15);
-    importObject("data/obj/chest.obj", "chest", 2);
-    importObject("data/obj/shark.obj", "shark", 3);
-    importObject("data/obj/coral.obj", "coral", 1);
-    importObject("data/obj/coral2.obj", "coral2", 1);
-    importObject("data/obj/bottle.obj", "bottle", 0.5);
-    importObject("data/obj/bluewhale.obj", "bluewhale", 4);
-    importObject("data/obj/crab.obj", "crab", 3);
-    importObject("data/obj/fish.obj", "fish", 3);
-    importObject("data/obj/rocks.obj", "rocks", 3);
-    importObject("data/obj/squid.obj", "squid", 3);
-    importObject("data/obj/submarine.obj", "submarine", 3);
-    importObject("data/obj/urchin.obj", "urchin", 1);
-    importObject("data/obj/whaletub.obj", "whaletub", 3);
-    importObject("data/obj/seadiver.obj", "seadiver", 3);
+                importObject("data/obj/island.obj", "island", 20);
+                importObject("data/obj/chest.obj", "chest", 2);
+                importObject("data/obj/shark.obj", "shark", 3);
+                importObject("data/obj/coral.obj", "coral", 1);
+                importObject("data/obj/coral2.obj", "coral2", 1);
+                importObject("data/obj/starfish.obj", "starfish", 1);
+                importObject("data/obj/bluewhale.obj", "bluewhale", 4);
+                importObject("data/obj/crab.obj", "crab", 1);
+                importObject("data/obj/fish.obj", "fish", 1);
+                importObject("data/obj/rocks.obj", "rocks", 4);
+                importObject("data/obj/squid.obj", "squid", 2);
+                importObject("data/obj/submarine.obj", "submarine", 5);
+                importObject("data/obj/urchin.obj", "urchin", 1);
+                importObject("data/obj/seashell.obj", "seashell", 1);
+                importObject("data/obj/seadiver.obj", "seadiver", 3);
+                importObject("data/obj/goldfish.obj", "goldfish", 2);
 
-    glutDisplayFunc( display );
-    glutMouseFunc( mouse );
-    glutMotionFunc( motion );
+                glutDisplayFunc( display );
+                glutMouseFunc( mouse );
+                glutMotionFunc( motion );
 
-    glEnable( GL_DEPTH_TEST );
+                glEnable( GL_DEPTH_TEST );
 
-    // set up "headlamp"-like light
-    glShadeModel( GL_SMOOTH );
-    glEnable( GL_COLOR_MATERIAL );
-    glColorMaterial( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE ) ;
-    glEnable( GL_LIGHTING );
-    glEnable( GL_LIGHT0 );
-    glMatrixMode( GL_MODELVIEW );
-    glLoadIdentity();
-    GLfloat position[] = { 0, 0, 1, 0 };
-    glLightfv( GL_LIGHT0, GL_POSITION, position );
-    glPolygonMode( GL_FRONT, GL_FILL );
-    glPolygonMode( GL_BACK, GL_LINE );
-    glutMainLoop();
+                // set up "headlamp"-like light
+                glShadeModel( GL_SMOOTH );
+                glEnable( GL_COLOR_MATERIAL );
+                glColorMaterial( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE ) ;
+                glEnable( GL_LIGHTING );
+                glEnable( GL_LIGHT0 );
+                glMatrixMode( GL_MODELVIEW );
+                glLoadIdentity();
+                GLfloat position[] = { 0, 0, 1, 0 };
+                glLightfv( GL_LIGHT0, GL_POSITION, position );
+                glPolygonMode( GL_FRONT, GL_FILL );
+                glPolygonMode( GL_BACK, GL_LINE );
+                glutMainLoop();
+                }
+            else {
+                cerr << "Erreur: Il faut choisir entre 10 et 200 formes thematiques.\n";
+                return 1;
+            }
+        }
+    }
+    
     return 0;
 }
