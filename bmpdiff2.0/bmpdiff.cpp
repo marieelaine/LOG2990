@@ -2,12 +2,13 @@
 #include <fstream>
 #include <stdio.h>
 #include <string>
+#include <fstream>      // std::ifstream
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
+//
+//#include "./opencv2/core/core.hpp"
+//#include "./opencv2/highgui/highgui.hpp"
 
 using namespace std;
-using namespace cv;
 
 // diverses variables d'état
 struct Etat
@@ -64,6 +65,19 @@ void creerEtat(const char* argv[], const int argc, Etat& etat){
     etat.image_s = argv[argc-1];
 }
 
+void lireImage(uint8_t* r, uint8_t* g, uint8_t* b, ifstream stream) {
+    char header[54];
+    stream.read(header, 54);
+    char tmp[3];
+    for (int i = 0; i < 480*640; i++){
+        stream.read(tmp, 3);
+        b[i] = tmp[0];
+        g[i] = tmp[1];
+        r[i] = tmp[2];
+    }
+}
+
+
 int main(int argc, const char* argv[]) {
     if ( argc < 4 || argc > 5 )
         {
@@ -74,5 +88,19 @@ int main(int argc, const char* argv[]) {
     else {
         creerEtat(argv, argc, etat);
     }
+
+    ifstream stream1;
+    ifstream stream2;
+
+    stream1.open(etat.image_o);
+    stream2.open(etat.image_m);
+
+    char r1[480*640];
+    char g1[480*640];
+    char b1[480*640];
+    char r2[480*640];
+    char g2[480*640];
+    char b2[480*640];
+
 
 }
