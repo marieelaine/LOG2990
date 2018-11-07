@@ -1,6 +1,5 @@
 import { ChronoComponent } from "../chrono/chrono.component";
 import {ElementRef, ErrorHandler, QueryList, ViewChildren} from "@angular/core";
-import {PartieSimple} from "../admin/dialog-simple/partie-simple";
 import {ActivatedRoute} from "@angular/router";
 import {PartieService} from "./partie.service";
 
@@ -120,9 +119,5 @@ export abstract class PartieAbstraiteClass {
         this.partie["_tempsSolo"].push(temps);
         this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
             .catch(() => ErrorHandler);
-    }
-
-    protected envoyerMessage(): void {
-
     }
 }
