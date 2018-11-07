@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { By } from "@angular/platform-browser";
 import { DialogErreurComponent } from './dialog-erreur.component';
 import { MatDialogModule, MatDividerModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -33,5 +33,15 @@ describe('DialogErreurComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it("should close the dialog if cancel button is clicked", () => {
+    const onNoClickButton = fixture.debugElement.query(By.css(".dialogButtons")).nativeElement;
+
+    // tslint:disable-next-line:no-any
+    const spy: jasmine.Spy = spyOn<any>(component, "fermerDialog");
+    onNoClickButton.dispatchEvent(new Event("click"));
+
+    expect(spy).toHaveBeenCalled();
   });
 });
