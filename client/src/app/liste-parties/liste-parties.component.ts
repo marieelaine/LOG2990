@@ -17,6 +17,7 @@ export class ListePartiesComponent {
   protected isListePartiesMode: boolean;
   protected isAdminMode: boolean;
   protected isElevatedActive: boolean;
+  protected listePartiesEnAttente: Array<string>;
 
   public constructor(public router: Router,
                      public listePartieService: ListePartieServiceService) {
@@ -24,6 +25,7 @@ export class ListePartiesComponent {
     this.creerOuSupprimer = "";
     this.isListePartiesMode = false;
     this.isAdminMode = false;
+    this.listePartiesEnAttente = new Array<string>();
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         this.setjouerOuReinitialiserAndcreerOuSupprimer(val.url);
@@ -46,6 +48,7 @@ export class ListePartiesComponent {
             result[i] = hex;
         }
         const blob = new Blob([result], {type: 'image/bmp'});
+        // TODO changer le get element by id
         // @ts-ignore
         document.getElementById(id).src = URL.createObjectURL(blob);
       }
@@ -126,6 +129,7 @@ export class ListePartiesComponent {
   }
 
   private setToJouerAndCreer(): void {
+    // Si la partie est deja creee, mettre le bouton a joindre
     this.isAdminMode = false;
     this.isListePartiesMode = true;
     this.jouerOuReinitialiser = "Jouer";
@@ -139,7 +143,7 @@ export class ListePartiesComponent {
     this.creerOuSupprimer = "Supprimer";
   }
 
-  private setToJoindre(): void {
+  protected setToJoindre() {
     this.creerOuSupprimer = "Joindre";
   }
 }

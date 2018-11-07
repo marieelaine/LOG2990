@@ -37,7 +37,7 @@
                         <p> {{ getBestTime(partieSimple._tempsUnContreUn) }} </p> 
                         <p> {{ getSecondBestTime(partieSimple._tempsUnContreUn) }} </p> 
                         <p> {{ getThirdBestTime(partieSimple._tempsUnContreUn) }} </p>
-                        <button mat-button (click) = "onCreerOuSupprimerClick(partieSimple._id)" class='mat-elevation-z6'> {{creerOuSupprimer}} </button>
+                        <button mat-button (click) = "onCreerOuSupprimerClick(partieSimple._id)" class='mat-elevation-z6'> {{listePartiesEnAttente.includes(partieSimple._id) ? "Joindre" : creerOuSupprimer}} </button>
                     </div>
                 </div>
             </div>

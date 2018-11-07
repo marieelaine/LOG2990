@@ -51,11 +51,12 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   protected onCreerOuSupprimerClick(partieId: string): void {
     if (this.isListePartiesMode) {
       this.ouvrirDialogVueAttente();
+      this.listePartiesEnAttente.push(partieId);
+      this.setToJoindre();
       this.router.navigate(["/partie-simple-multijoueur/" + partieId])
       .catch(() => ErrorHandler);
     } else if (this.isAdminMode) {
       this.ouvrirDialogConfirmation(partieId);
-      // TODO changer le bouton creer pour join
     }
   }
 
