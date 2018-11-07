@@ -8,8 +8,8 @@ describe("Partie Simple BD classe", () => {
     let dbPartieSimple: DBPartieSimple;
     const socket: SocketServerService = new SocketServerService();
 
-    beforeEach(async () => {
-        dbPartieSimple = await new DBPartieSimple(socket);
+    beforeEach(() => {
+        dbPartieSimple = new DBPartieSimple(socket);
     });
 
     describe("Constructeur", () => {
