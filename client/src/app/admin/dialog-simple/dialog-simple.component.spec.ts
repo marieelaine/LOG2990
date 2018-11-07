@@ -6,12 +6,12 @@ import {
     MAT_DIALOG_DATA, MatInputModule, MatCheckboxModule
 } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { createMockImageFile } from "../../../testing/file-creator";
 import { By } from "@angular/platform-browser";
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
 
 describe("DialogSimpleComponent", () => {
     let component: DialogSimpleComponent;
@@ -29,14 +29,16 @@ describe("DialogSimpleComponent", () => {
                 MatInputModule,
                 BrowserAnimationsModule,
                 HttpClientTestingModule,
-                MatCheckboxModule
+                MatCheckboxModule,
+                ReactiveFormsModule
             ],
             providers: [
                 { provide: MatDialogRef, useValue: {} },
-                { provide: MAT_DIALOG_DATA, useValue: {} }
+                { provide: MAT_DIALOG_DATA, useValue: {} },
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA,
+                NO_ERRORS_SCHEMA
             ]
         });
 
