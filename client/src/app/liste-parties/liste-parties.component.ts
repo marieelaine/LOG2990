@@ -138,4 +138,8 @@ export class ListePartiesComponent {
     this.jouerOuReinitialiser = "Réinitialiser";
     this.creerOuSupprimer = "Supprimer";
   }
+
+  private setToJoindre(): void {
+    this.creerOuSupprimer = "Joindre";
+  }
 }

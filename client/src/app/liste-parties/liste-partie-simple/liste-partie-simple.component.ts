@@ -41,7 +41,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   protected onJouerOuReinitialiserClick(partieId: string): void {
     if (this.isListePartiesMode) {
-      this.router.navigate(["/partie-solo/" + partieId])
+      this.router.navigate(["/partie-simple-solo/" + partieId])
       .catch(() => ErrorHandler);
     } else if (this.isAdminMode) {
       this.reinitialiserTemps(partieId);
@@ -51,10 +51,11 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   protected onCreerOuSupprimerClick(partieId: string): void {
     if (this.isListePartiesMode) {
       this.ouvrirDialogVueAttente();
-      this.router.navigate(["/partie-solo-multijoueur/" + partieId])
+      this.router.navigate(["/partie-simple-multijoueur/" + partieId])
       .catch(() => ErrorHandler);
     } else if (this.isAdminMode) {
       this.ouvrirDialogConfirmation(partieId);
+      // TODO changer le bouton creer pour join
     }
   }
 
