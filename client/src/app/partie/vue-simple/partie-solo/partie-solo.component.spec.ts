@@ -97,12 +97,12 @@ describe('PartieSoloComponent', () => {
             component["partie"]["_image2"] = Buffer.from("Hello World");
         });
 
-        it("devrait appeler addNomPartieToChat", () => {
-            // tslint:disable-next-line:no-any
-            spyOn<any>(component, "addNomPartieToChat");
-            component["setup"]();
-            expect(component["addNomPartieToChat"]).toHaveBeenCalled();
-        });
+        // it("devrait appeler addNomPartieToChat", () => {
+        //     // tslint:disable-next-line:no-any
+        //     spyOn<any>(component, "addNomPartieToChat");
+        //     component["setup"]();
+        //     expect(component["addNomPartieToChat"]).toHaveBeenCalled();
+        // });
 
         it("devrait appeler ajusterSourceImage", () => {
             // tslint:disable-next-line:no-any
