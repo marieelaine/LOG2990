@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
 import { ListePartieServiceService } from "./liste-partie-service.service";
 import T from "../admin/dialog-abstrait";
@@ -10,7 +10,7 @@ import T from "../admin/dialog-abstrait";
   providers: [ListePartieServiceService]
 })
 
-export class ListePartiesComponent {
+export class ListePartiesComponent implements OnInit {
 
   protected jouerOuReinitialiser: string;
   protected creerOuSupprimer: string;
@@ -31,6 +31,13 @@ export class ListePartiesComponent {
         this.setjouerOuReinitialiserAndcreerOuSupprimer(val.url);
       }
     });
+  }
+
+  public async ngOnInit() {
+    this.listePartieService.getListePartiesEnAttente().subscribe((res: Array<string>) => {
+      this.listePartiesEnAttente = res;
+    });
+
   }
 
   protected ajusterImage(id: String, listeParties: T[], isPartieSimple: Boolean): void {
