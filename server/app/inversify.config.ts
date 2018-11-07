@@ -5,15 +5,15 @@ import { Application } from "./app";
 import { Route } from "./routes/index";
 import { Routes } from "./routes";
 
-import { RoutesUser } from "./routesUser";
-import { DBUser } from "./User/user";
+import { RoutesUser } from "./User/routes-user";
+import { DBUser } from "./User/DB-user";
 
-import { RoutesPartieSimple } from "./routesPartieSimple";
-import { RoutesPartieMultiple } from "./routesPartieMultiple";
+import { RoutesPartieMultiple } from "./partieMultiple/routes-partie-multiple/route-partie-multiple";
 import { BaseDeDonnees } from "./baseDeDonnees/baseDeDonnees";
-import { DBPartieSimple } from "./partieSimple/partie-simple";
-import { DBPartieMultiple } from "./partieMultiple/partie-multiple";
+import { DBPartieMultiple } from "./partieMultiple/DB-partie-multiple/DB-partie-multiple";
 import { SocketServerService } from "./socket-io.service";
+import { DBPartieSimple } from "./partieSimple/DB-partie-simple/DB-partie-simple";
+import { RoutesPartieSimple } from "./partieSimple/routes-partie-simples/routes-partie-simple";
 
 const container: Container = new Container();
 

@@ -1,8 +1,8 @@
 import { injectable, inject } from "inversify";
 import { Router, Request, Response } from "express";
-import { ServiceWeb } from "./serviceWeb";
-import Types from "./types";
-import { DBPartieMultiple } from "./partieMultiple/partie-multiple";
+import { ServiceWeb } from "../../serviceWeb";
+import Types from "../../types";
+import { DBPartieMultiple } from "../DB-partie-multiple/DB-partie-multiple";
 
 @injectable()
 export class RoutesPartieMultiple extends ServiceWeb {

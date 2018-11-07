@@ -1,5 +1,5 @@
 import { assert } from "chai";
-import { DBUser } from "./user";
+import { DBUser } from "./DB-user";
 
 describe("BaseDeDonneesUsager classe", () => {
     describe("Constructeur", () => {

@@ -1,4 +1,4 @@
-import { PartieMultipleInterface, DBPartieMultiple } from "./partie-multiple";
+import { PartieMultipleInterface, DBPartieMultiple } from "./DB-partie-multiple";
 import { assert } from "chai";
 import * as fsx from "fs-extra";
 import * as sinon from "sinon";

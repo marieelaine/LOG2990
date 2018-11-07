@@ -2,7 +2,7 @@ import * as http from "http";
 import * as socket from "socket.io";
 import * as event from "../../common/communication/evenementsSocket";
 import { injectable } from "inversify";
-import { PartieSimpleInterface } from "./partieSimple/partie-simple";
+import { PartieSimpleInterface } from "./partieSimple/DB-partie-simple/DB-partie-simple";
 
 @injectable()
 export class SocketServerService {

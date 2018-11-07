@@ -1,4 +1,4 @@
-import { PartieMultipleInterface } from "./partie-multiple";
+import { PartieMultipleInterface } from "../DB-partie-multiple/DB-partie-multiple";
 import * as WebRequest from "web-request";
 import * as assert from "assert";
 

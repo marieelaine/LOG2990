@@ -1,9 +1,9 @@
 import { injectable, inject } from "inversify";
 import { Router, Request, Response } from "express";
 
-import { ServiceWeb } from "./serviceWeb";
-import Types from "./types";
-import { DBUser } from "./User/user";
+import { ServiceWeb } from "../serviceWeb";
+import Types from "../types";
+import { DBUser } from "./DB-user";
 
 @injectable()
 export class RoutesUser extends ServiceWeb {

@@ -5,13 +5,13 @@ import * as fsx from "fs-extra";
 import { spawn, ChildProcess } from "child_process";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
-import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
+import { BaseDeDonnees } from "../../baseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { ReadLine } from "readline";
 import { injectable, inject } from "inversify";
-import { SocketServerService } from "../socket-io.service";
-import Types from "../types";
+import { SocketServerService } from "../../socket-io.service";
+import Types from "../../types";
 
 export interface PartieSimpleInterface {
     _id: string;

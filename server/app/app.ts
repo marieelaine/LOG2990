@@ -9,9 +9,9 @@ import { injectable, inject } from "inversify";
 
 import { ServiceWeb } from "./serviceWeb";
 import { Routes } from "./routes";
-import { RoutesUser } from "./routesUser";
-import { RoutesPartieSimple } from "./routesPartieSimple";
-import { RoutesPartieMultiple } from "./routesPartieMultiple";
+import { RoutesUser } from "./User/routes-user";
+import { RoutesPartieMultiple } from "./partieMultiple/routes-partie-multiple/route-partie-multiple";
+import { RoutesPartieSimple } from "./partieSimple/routes-partie-simples/routes-partie-simple";
 
 @injectable()
 export class Application {

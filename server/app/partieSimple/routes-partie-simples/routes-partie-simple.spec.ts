@@ -1,6 +1,6 @@
 import * as WebRequest from "web-request";
-import { PartieSimpleInterface } from "./partie-simple";
 import * as assert from "assert";
+import { PartieSimpleInterface } from "../DB-partie-simple/DB-partie-simple";
 
 const URL_BASE: string = "http://localhost:3000/partieSimple";
 

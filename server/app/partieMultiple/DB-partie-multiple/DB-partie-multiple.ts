@@ -7,7 +7,7 @@ import { Request, Response} from "express";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable } from "inversify";
-import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
+import { BaseDeDonnees } from "../../baseDeDonnees/baseDeDonnees";
 import { execFile, ChildProcess } from "child_process";
 
 export interface PartieMultipleInterface {
