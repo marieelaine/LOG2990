@@ -1,4 +1,4 @@
-import { injectable, inject } from "inversify";
+import { injectable } from "inversify";
 import { ServiceWeb } from "../../serviceWeb";
 import { Router, Request, Response } from "express";
 
