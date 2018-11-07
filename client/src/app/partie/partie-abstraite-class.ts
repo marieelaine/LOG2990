@@ -19,8 +19,8 @@ export abstract class PartieAbstraiteClass {
     protected abstract partie;
     @ViewChildren('canvas') canvas: QueryList<ElementRef>;
     protected image: Array<HTMLImageElement>;
-    protected diffTrouvee: number[] = [];
-    protected imageData: Array<string> = [];
+    protected diffTrouvee: number[];
+    protected imageData: Array<string>;
 
     protected constructor(protected route: ActivatedRoute, protected partieService: PartieService, protected nbImage: number) {
         this.blur = true;
@@ -29,6 +29,8 @@ export abstract class PartieAbstraiteClass {
         this.chrono = new ChronoComponent();
         this.messageDifferences = "Cliquez pour commencer";
         this.messagesChat = [];
+        this.imageData = [];
+        this.diffTrouvee = [];
 
         this.image = [];
         for (let i = 0; i < nbImage; i++) {
