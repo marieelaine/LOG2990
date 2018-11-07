@@ -17,7 +17,9 @@ export class ListePartieServiceService {
   private readonly DELETE_PARTIE_MULTIPLE_URL: string = this.BASE_URL + this.MULTIPLE + "delete/";
   private readonly REINITIALISER_TEMPS_SIMPLE_URL: string = this.BASE_URL + this.SIMPLE + "reinitialiseTemps/";
   private readonly REINITIALISER_TEMPS_MULTIPLE_URL: string = this.BASE_URL + this.MULTIPLE + "reinitialiseTemps/";
-  private readonly GET_PARTIES_ATTENTE: string = this.BASE_URL + "getPartieEnAttente";
+  private readonly GET_PARTIES_SIMPLE_ATTENTE: string = this.BASE_URL + "getPartieSimpleEnAttente";
+  private readonly ADD_PARTIES_SIMPLE_ATTENTE: string = this.BASE_URL + "addPartieSimpleEnAttente";
+  private readonly DELETE_PARTIES_SIMPLE_ATTENTE: string = this.BASE_URL + "deletePartieSimpleEnAttente";
 
   constructor( private http: HttpClient ) {}
 
@@ -55,8 +57,18 @@ export class ListePartieServiceService {
     .catch(() => ErrorHandler);
   }
 
-  public async getListePartieEnAttente(): Observable<string[]> {
+  public async getListePartieSimpleEnAttente(): Promise<string[]> {
 
-    return this.http.get<string[]>(this.GET_PARTIES_ATTENTE);
+    return this.http.get<string[]>(this.GET_PARTIES_SIMPLE_ATTENTE).toPromise();
+  }
+
+  public async addPartieSimpleEnAttente(partieId: string): Promise<void> {
+
+    this.http.post(this.ADD_PARTIES_SIMPLE_ATTENTE, partieId);
+  }
+
+  public async deletePartieSimpleEnAttente(partieId: string): Promise<void> {
+
+    this.http.delete(this.DELETE_PARTIES_SIMPLE_ATTENTE + partieId);
   }
 }
