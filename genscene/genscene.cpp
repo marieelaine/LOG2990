@@ -6,6 +6,8 @@
 #include <fstream>
 #include <sstream>
 
+using namespace std;
+
 struct Vertex
 {
     glm::vec3 position;
@@ -19,18 +21,30 @@ struct VertRef
     int v, vt, vn;
 };
 
-std::vector< Vertex > LoadOBJ( std::istream& in )
+struct themeObject
 {
-    std::vector< Vertex > verts;
+    string type;
+    vector<Vertex> model;
+    int colorR; int colorG; int colorB;
+    int angle; int rotX; int rotY; int rotZ;
+    int transX; int transY; int transZ;
+    int size;
+};
 
-    std::vector< glm::vec4 > positions( 1, glm::vec4( 0, 0, 0, 0 ) );
-    std::vector< glm::vec3 > texcoords( 1, glm::vec3( 0, 0, 0 ) );
-    std::vector< glm::vec3 > normals( 1, glm::vec3( 0, 0, 0 ) );
-    std::string lineStr;
-    while( std::getline( in, lineStr ) )
+// based on:
+// https://stackoverflow.com/questions/14887012/object-loader-in-opengl
+vector< Vertex > LoadOBJ( istream& in )
+{
+    vector< Vertex > verts;
+
+    vector< glm::vec4 > positions( 1, glm::vec4( 0, 0, 0, 0 ) );
+    vector< glm::vec3 > texcoords( 1, glm::vec3( 0, 0, 0 ) );
+    vector< glm::vec3 > normals( 1, glm::vec3( 0, 0, 0 ) );
+    string lineStr;
+    while( getline( in, lineStr ) )
     {
-        std::istringstream lineSS( lineStr );
-        std::string lineType;
+        istringstream lineSS( lineStr );
+        string lineType;
         lineSS >> lineType;
 
         // vertex
@@ -60,15 +74,15 @@ std::vector< Vertex > LoadOBJ( std::istream& in )
         // polygon
         if( lineType == "f" )
         {
-            std::vector< VertRef > refs;
-            std::string refStr;
+            vector< VertRef > refs;
+            string refStr;
             while( lineSS >> refStr )
             {
-                std::istringstream ref( refStr );
-                std::string vStr, vtStr, vnStr;
-                std::getline( ref, vStr, '/' );
-                std::getline( ref, vtStr, '/' );
-                std::getline( ref, vnStr, '/' );
+                istringstream ref( refStr );
+                string vStr, vtStr, vnStr;
+                getline( ref, vStr, '/' );
+                getline( ref, vtStr, '/' );
+                getline( ref, vnStr, '/' );
                 int v = atoi( vStr.c_str() );
                 int vt = atoi( vtStr.c_str() );
                 int vn = atoi( vnStr.c_str() );
@@ -83,7 +97,6 @@ std::vector< Vertex > LoadOBJ( std::istream& in )
             {
                 const VertRef* p[3] = { &refs[0], &refs[i], &refs[i+1] };
 
-                // http://www.opengl.org/wiki/Calculating_a_Surface_Normal
                 glm::vec3 U( positions[ p[1]->v ] - positions[ p[0]->v ] );
                 glm::vec3 V( positions[ p[2]->v ] - positions[ p[0]->v ] );
                 glm::vec3 faceNormal = glm::normalize( glm::cross( U, V ) );
@@ -137,7 +150,25 @@ void motion( int x, int y )
     glutPostRedisplay();
 }
 
-std::vector< Vertex > model;
+void bindModel(themeObject objet) {
+    glTranslatef( objet.transX, objet.transY, objet.transZ );
+    glRotatef( objet.angle, objet.rotX, objet.rotY, objet.rotZ );
+    glColor3ub( objet.colorR, objet.colorG, objet.colorB );
+    glEnableClientState( GL_VERTEX_ARRAY );
+    glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+    glEnableClientState( GL_NORMAL_ARRAY );
+    glVertexPointer( 3, GL_FLOAT, sizeof(Vertex), &objet.model[0].position );
+    glTexCoordPointer( 2, GL_FLOAT, sizeof(Vertex), &objet.model[0].texcoord );
+    glNormalPointer( GL_FLOAT, sizeof(Vertex), &objet.model[0].normal );
+    glDrawArrays( GL_TRIANGLES, 0, objet.model.size() );
+    glDisableClientState( GL_VERTEX_ARRAY );
+    glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+    glDisableClientState( GL_NORMAL_ARRAY );
+}
+
+vector< Vertex > sand;
+vector< Vertex > chest;
+vector < themeObject > globalVec;
 void display()
 {
     glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
@@ -145,8 +176,8 @@ void display()
 
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
-    double w = glutGet( GLUT_WINDOW_WIDTH );
-    double h = glutGet( GLUT_WINDOW_HEIGHT );
+    double w = 640;
+    double h = 480;
     double ar = w / h;
     glTranslatef( curTrans.x / w * 2, curTrans.y / h * 2, 0 );
     gluPerspective( 60, ar, 0.1, 100 );
@@ -155,38 +186,23 @@ void display()
     glLoadIdentity();
     glTranslatef( 0, 0, -10 );
 
-    glPushMatrix();
-    {
-        glRotatef( curRot.x % 360, 0, 1, 0 );
-        glRotatef( -curRot.y % 360, 1, 0, 0 );
+    for(vector<themeObject>::iterator vec = globalVec.begin(); vec != globalVec.end(); ++vec){
+        glPushMatrix();
+        {
+            glRotatef( curRot.x % 360, 0, 1, 0 );
+            glRotatef( -curRot.y % 360, 1, 0, 0 );
 
-        // object
-        glColor3ub( 230, 40, 0 );
-        glEnableClientState( GL_VERTEX_ARRAY );
-        glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-        glEnableClientState( GL_NORMAL_ARRAY );
-        glVertexPointer( 3, GL_FLOAT, sizeof(Vertex), &model[0].position );
-        glTexCoordPointer( 2, GL_FLOAT, sizeof(Vertex), &model[0].texcoord );
-        glNormalPointer( GL_FLOAT, sizeof(Vertex), &model[0].normal );
-        glDrawArrays( GL_TRIANGLES, 0, model.size() );
-        glDisableClientState( GL_VERTEX_ARRAY );
-        glDisableClientState( GL_TEXTURE_COORD_ARRAY );
-        glDisableClientState( GL_NORMAL_ARRAY );
-
-        // bounding cube
-        glDisable( GL_LIGHTING );
-        glColor3ub( 255, 255, 255 );
-        glutWireCube( 7 );
-        glEnable( GL_LIGHTING );
+            bindModel(*vec);
+        }
+        glPopMatrix();
     }
-    glPopMatrix();
 
     glutSwapBuffers();
 }
 
 // return the min/max points of pts
 template< typename Vec >
-std::pair< Vec, Vec > GetExtents( const Vec* pts, size_t stride, size_t count )
+pair< Vec, Vec > GetExtents( const Vec* pts, size_t stride, size_t count )
 {
     unsigned char* base = (unsigned char*)pts;
     Vec pmin( *(Vec*)base );
@@ -198,7 +214,7 @@ std::pair< Vec, Vec > GetExtents( const Vec* pts, size_t stride, size_t count )
         pmax = glm::max( pmax, pt );
     }
 
-    return std::make_pair( pmin, pmax );
+    return make_pair( pmin, pmax );
 }
 
 // centers geometry around the origin
@@ -209,7 +225,7 @@ void CenterAndScale( Vec* pts, size_t stride, size_t count, const typename Vec::
     typedef typename Vec::value_type Scalar;
 
     // get min/max extents
-    std::pair< Vec, Vec > exts = GetExtents( pts, stride, count );
+    pair< Vec, Vec > exts = GetExtents( pts, stride, count );
 
     // center and scale 
     const Vec center = ( exts.first * Scalar( 0.5 ) ) + ( exts.second * Scalar( 0.5f ) );
@@ -222,17 +238,191 @@ void CenterAndScale( Vec* pts, size_t stride, size_t count, const typename Vec::
         pt = ( ( pt - center ) * factor );
     }    
 }
+void createThemeObject(string type, vector <Vertex> model, int size) {
+    themeObject object = {};
+    if (type == "shark") { 
+        object = {
+            type,
+            model,
+            242, 226, 0,
+            270, 1, 0, 0,
+            0, 5, 0,
+            size
+        };
+    }
+    else if (type == "island") { 
+        object = {
+            type,
+            model,
+            194, 178, 128,
+            0, 0, 0, 0,
+            0, 0, 0,
+            size
+        };
+    }
+    else if (type == "chest") { 
+        object = {
+            type,
+            model,
+            242, 226, 0,
+            0, 0, 0, 0,
+            0, 0, -3,
+            size
+        };
+    }
+    else if (type == "coral") { 
+        object = {
+            type,
+            model,
+            242, 226, 0,
+            0, 0, 0, 0,
+            0, 0, 5,
+            size
+        };
+    }
+    else if (type == "coral2") { 
+        object = {
+            type,
+            model,
+            242, 226, 0,
+            270, 1, 0, 0,
+            1, 0, 1,
+            size
+        };
+    }
+    else if (type == "crab") { 
+        object = {
+            type,
+            model,
+            242, 226, 0,
+            0, 0, 0, 0,
+            0, 0, 2,
+            size
+        };
+    }
+    else if (type == "bluewhale") { 
+        object = {
+            type,
+            model,
+            242, 226, 0,
+            0, 0, 0, 0,
+            0, 5, 2,
+            size
+        };
+    }
+    else if (type == "whaletub") { 
+        object = {
+            type,
+            model,
+            242, 226, 0,
+            0, 0, 0, 0,
+            0, 0, -3,
+            size
+        };
+    }
+    else if (type == "bottle") { 
+        object = {
+            type,
+            model,
+            242, 226, 0,
+            0, 0, 0, 0,
+            2, 0, 0,
+            size
+        };
+    }
+    else if (type == "rocks") { 
+        object = {
+            type,
+            model,
+            242, 226, 0,
+            0, 0, 0, 0,
+            0, 0, 3,
+            size
+        };
+    }
+    else if (type == "squid") { 
+        object = {
+            type,
+            model,
+            242, 226, 0,
+            0, 0, 0, 0,
+            0, 4, -3,
+            size
+        };
+    }
+    else if (type == "fish") { 
+        object = {
+            type,
+            model,
+            242, 226, 0,
+            0, 0, 0, 0,
+            0, 5, -2,
+            size
+        };
+    }
+    else if (type == "submarine") { 
+        object = {
+            type,
+            model,
+            242, 226, 0,
+            0, 0, 0, 0,
+            0, 3, 3,
+            size
+        };
+    }
+    else if (type == "urchin") { 
+        object = {
+            type,
+            model,
+            242, 226, 0,
+            0, 0, 0, 0,
+            0, 0, 0,
+            size
+        };
+    }
+    else if (type == "seadiver") { 
+        object = {
+            type,
+            model,
+            242, 226, 0,
+            0, 0, 0, 0,
+            0, 0, -2,
+            size
+        };
+    }
+    globalVec.push_back(object);
+}
+
+void importObject(string file, string type, int size){
+    ifstream filestream( file );
+    vector<Vertex> model = LoadOBJ( filestream );
+    CenterAndScale( &model[0].position, sizeof( Vertex ), model.size(), size );
+    createThemeObject(type, model, size);
+}
 
 int main( int argc, char **argv )
-{
-    std::ifstream ifile( "data/obj/island.obj" );
-    model = LoadOBJ( ifile );
-    CenterAndScale( &model[0].position, sizeof( Vertex ), model.size(), 7 );
-
+{   
     glutInit( &argc, argv );
     glutInitDisplayMode( GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE );
     glutInitWindowSize( 640, 480 );
-    glutCreateWindow( "OBJ" );
+    glutCreateWindow( "LOG2990 - AQUALAND" );
+
+    importObject("data/obj/island.obj", "island", 15);
+    importObject("data/obj/chest.obj", "chest", 2);
+    importObject("data/obj/shark.obj", "shark", 3);
+    importObject("data/obj/coral.obj", "coral", 1);
+    importObject("data/obj/coral2.obj", "coral2", 1);
+    importObject("data/obj/bottle.obj", "bottle", 0.5);
+    importObject("data/obj/bluewhale.obj", "bluewhale", 4);
+    importObject("data/obj/crab.obj", "crab", 3);
+    importObject("data/obj/fish.obj", "fish", 3);
+    importObject("data/obj/rocks.obj", "rocks", 3);
+    importObject("data/obj/squid.obj", "squid", 3);
+    importObject("data/obj/submarine.obj", "submarine", 3);
+    importObject("data/obj/urchin.obj", "urchin", 1);
+    importObject("data/obj/whaletub.obj", "whaletub", 3);
+    importObject("data/obj/seadiver.obj", "seadiver", 3);
+
     glutDisplayFunc( display );
     glutMouseFunc( mouse );
     glutMotionFunc( motion );
@@ -249,7 +439,6 @@ int main( int argc, char **argv )
     glLoadIdentity();
     GLfloat position[] = { 0, 0, 1, 0 };
     glLightfv( GL_LIGHT0, GL_POSITION, position );
-
     glPolygonMode( GL_FRONT, GL_FILL );
     glPolygonMode( GL_BACK, GL_LINE );
     glutMainLoop();
