@@ -1,17 +1,17 @@
-import {Component, ErrorHandler} from '@angular/core';
+import {Component, ErrorHandler } from '@angular/core';
 import { PartieAbstraiteClass } from '../../partie-abstraite-class';
-import { ActivatedRoute} from "@angular/router";
-import { PartieSimple} from "../../../admin/dialog-simple/partie-simple";
-import { PartieService} from "../../partie.service";
+import { ActivatedRoute } from "@angular/router";
+import { PartieSimple } from "../../../admin/dialog-simple/partie-simple";
+import { PartieService } from "../../partie.service";
 
 @Component({
-    selector: 'app-partie-solo',
-    templateUrl: './partie-solo.component.html',
-    styleUrls: ['./partie-solo.component.css'],
+    selector: 'app-partie-simple-solo',
+    templateUrl: './partie-simple-solo.component.html',
+    styleUrls: ['./partie-simple-solo.component.css'],
     providers: [PartieService]
 })
 
-export class PartieSoloComponent extends PartieAbstraiteClass {
+export class PartieSimpleSoloComponent extends PartieAbstraiteClass {
 
     protected partie: PartieSimple;
 

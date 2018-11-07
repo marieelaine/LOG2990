@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { PartieSoloComponent } from './partie-solo.component';
+import { PartieSimpleSoloComponent } from './partie-simple-solo.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatCardModule } from '@angular/material';
 import { ErrorHandler } from '@angular/core';
@@ -18,13 +18,13 @@ class ActivatedRouteMock extends ActivatedRoute {
     }
 }
 
-describe('PartieSoloComponent', () => {
-    let component: PartieSoloComponent;
-    let fixture: ComponentFixture<PartieSoloComponent>;
+describe('PartieSimpleSoloComponent', () => {
+    let component: PartieSimpleSoloComponent;
+    let fixture: ComponentFixture<PartieSimpleSoloComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [PartieSoloComponent],
+            declarations: [PartieSimpleSoloComponent],
             imports: [
                 HttpClientTestingModule,
                 MatCardModule
@@ -41,7 +41,7 @@ describe('PartieSoloComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(PartieSoloComponent);
+        fixture = TestBed.createComponent(PartieSimpleSoloComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
         component["partie"] = new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(), Buffer.from(new Array<number>()),

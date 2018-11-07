@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { ActivatedRoute} from "@angular/router";
 import { PartieSimple} from "../../../admin/dialog-simple/partie-simple";
 import { PartieService} from "../../partie.service";
-import { PartieSoloComponent } from '../partie-solo/partie-solo.component';
+import { PartieSimpleSoloComponent } from '../partie-simple-solo/partie-simple-solo.component';
 
 @Component({
-    selector: 'app-partie-solo-multijoueur',
-    templateUrl: './partie-solo-multijoueur.component.html',
-    styleUrls: ['./partie-solo-multijoueur.component.css'],
+    selector: 'app-partie-simple-multijoueur',
+    templateUrl: './partie-simple-multijoueur.component.html',
+    styleUrls: ['./partie-simple-multijoueur.component.css'],
     providers: [PartieService]
 })
 
-export class PartieSoloMultijoueurComponent extends PartieSoloComponent {
+export class PartieSimpleMultijoueurComponent extends PartieSimpleSoloComponent {
     protected partie: PartieSimple;
 
     public constructor(protected route: ActivatedRoute,
