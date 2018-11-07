@@ -56,14 +56,19 @@ int callRandomColor()
 
 int callRandomAngle(int start)
 {
-   int vMin = min(0, start - 45);
-   int vMax = start + 45;
+   int vMin = max(0, start - 45);
+   int vMax = min(360, start + 45);
    return rand()%((vMax - vMin) + 1) + vMin;
 }
 
 double callRandom()
 {
    return (double)rand()/(RAND_MAX);
+}
+
+double callRandomPosition(int minPos, int maxPos)
+{
+   return rand()%((maxPos - minPos) + 1) + minPos;
 }
 
 // based on:
@@ -280,8 +285,8 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             type,
             model,
             242, 226, 0,
-            callRandomAngle(270), callRandom(), 0, 0,
-            0, 5, 0,
+            callRandomAngle(320), callRandom(), 0, 0,
+            callRandomPosition(-3,3), 5, callRandomPosition(-3,3),
             size
         };
     }
@@ -301,7 +306,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             71, 55, 10,
             0, 0, 0, 0,
-            -7, -1.05, -7,  //can be random en z entre (7,-7)
+            -7, -1.05, callRandomPosition(-7,7),
             size
         };
     }
@@ -311,7 +316,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             callRandomColor(), callRandomColor(), callRandomColor(),
             0, 0, 0, 0,
-            0, 0, 5,
+            -1, 0.1, callRandomPosition(-7,7),
             size
         };
     }
@@ -321,7 +326,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             callRandomColor(), callRandomColor(), callRandomColor(),
             callRandomAngle(270), callRandom(), 0, 0,
-            1, 0, 1,
+            -1, 0.1, callRandomPosition(-7,7),
             size
         };
     }
@@ -331,7 +336,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             226, 57, 31,
             callRandomAngle(270), callRandom(), 0, 0,
-            6, 0, 6,
+            callRandomPosition(-7,7), 2, callRandomPosition(-7,7),
             size
         };
     }
@@ -339,9 +344,9 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            52, 118, 163, //bleu
-            callRandomAngle(300), callRandom(), callRandom(), callRandom(), //cna be random
-            -6, 5, 2, //can be random 
+            52, 118, 163,
+            callRandomAngle(300), callRandom(), callRandom(), callRandom(),
+            callRandomPosition(-7,7), 5, callRandomPosition(-7,7), 
             size
         };
     }
@@ -351,7 +356,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             209, 156, 33, //or
             callRandomAngle(270), callRandom(), callRandom(), callRandom(),
-            3, 1.9, 0.9,
+            callRandomPosition(-7,7), callRandomPosition(2,7), callRandomPosition(-7,7),
             size
         };
     }
@@ -361,7 +366,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             callRandomColor(), callRandomColor(), callRandomColor(),
             0, 0, 0, 0,
-            6, -0.5, -6,
+            6, -0.5, callRandomPosition(-7,-6),
             size
         };
     }
@@ -371,7 +376,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             144, 144, 144,
             0, 0, 0, 0,
-            -2, -0.25, 5.5, //x could be random
+            callRandomPosition(-7,7), -0.25, 5.5,
             size
         };
     }
@@ -380,8 +385,8 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             type,
             model,
             67, 27, 91,
-            callRandomAngle(30), callRandom(), callRandom(), callRandom(), //random call
-            0, 4, -3,
+            callRandomAngle(30), callRandom(), callRandom(), callRandom(),
+            callRandomPosition(-7,7), callRandomPosition(2,7), callRandomPosition(-7,7),
             size
         };
     }
@@ -391,7 +396,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             232, 127, 16,
             callRandomAngle(270), callRandom(), 0, 0,
-            -5, 5, 6,  //random between x z y
+            callRandomPosition(-7,7), callRandomPosition(2,7), callRandomPosition(-7,7),
             size
         };
     }
@@ -401,7 +406,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             0, 127, 16,
             callRandomAngle(270), callRandom(), 0, 0,
-            -2, 5, 6,  //random between x z y
+            callRandomPosition(-7,7), callRandomPosition(2,7), callRandomPosition(-7,7),
             size
         };
     }
@@ -411,7 +416,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             46, 45, 56,
             callRandomAngle(90), callRandom(), 0, 0,
-            0, 7, 3,        //random x and z between -7 and 7
+            callRandomPosition(-7,7), 8, callRandomPosition(-7,7),
             size
         };
     }
@@ -421,7 +426,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             25, 23, 40,
             0, 0, 0, 0,
-            0, 0, 0, // random all
+            callRandomPosition(-7,7), 0, callRandomPosition(-7,7),
             size
         };
     }
@@ -431,7 +436,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             46, 45, 56,
             270, 1, 0, 0,
-            -6, -0.1, -6, // random between -6 and 6
+            -6, -0.1, callRandomPosition(-7, 7),
             size
         };
     }
