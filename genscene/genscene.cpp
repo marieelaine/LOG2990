@@ -259,11 +259,11 @@ void display()
     glutSwapBuffers();
 }
 
-void displayPOV2(int flag)
+void displayPOV2()
 {
     glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    
+
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
     double w = 640;
@@ -274,8 +274,20 @@ void displayPOV2(int flag)
 
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
+    glTranslatef( 0, -2, -20 );
+
     glRotatef( 180, 0, 1, 0 );
-    glutPostRedisplay();
+    for(vector<vector<themeObject>>::iterator vec = globalVec.begin(); vec != globalVec.end(); ++vec){
+        for(vector<themeObject>::iterator object = vec->begin(); object != vec->end(); ++object){
+            glPushMatrix();
+            { 
+                bindModel(*object);
+            }
+            glPopMatrix();
+        }
+    }
+
+    glutSwapBuffers();
 }
 
 // return the min/max points of pts
@@ -603,11 +615,51 @@ void creerEtat(char* argv[], Etat& etat){
     etat.capture4 = capture4;
 }
 
-void timer(int)
+void capturerScene(string filepath)
 {
-    glutPostRedisplay();
-    glutTimerFunc(1000.0/60.0, timer, 0);
+    // Make the BYTE array, factor of 3 because it's RBG.
+    int width = 640;
+    int height = 480; 
+    char charArray[100];  
+    strcpy(charArray, filepath.c_str());  
+
+    BYTE* pixels = new BYTE[3 * width * height];
+
+    glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+
+    // Convert to FreeImage format & save to file
+    FIBITMAP* image = FreeImage_ConvertFromRawBits(pixels, width, height, 3 * width, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
+    FreeImage_Save(FIF_BMP, image, charArray, 0);
+
+    // Free resources
+    FreeImage_Unload(image);
+    delete [] pixels;
 }
+
+void Timer(int value)
+{
+   if (value == 0) // passed in in main
+   {
+      glutDisplayFunc(display);
+      glutIdleFunc(display);
+      capturerScene(etat.capture1);
+      // Change to a new display function in 2 seconds
+      glutTimerFunc(2000, Timer, 1);
+   }
+   else if(value==1)
+   {
+     glutDisplayFunc(displayPOV2);
+     glutIdleFunc(displayPOV2);
+     glutTimerFunc(2000, Timer, 2);
+   }
+   else if(value==2)
+   {
+    capturerScene(etat.capture2);
+    glutDestroyWindow(glutGetWindow());
+   }
+
+}
+
 int main( int argc, char *argv[] )
 {   
     if (argc != 5 )
@@ -631,7 +683,8 @@ int main( int argc, char *argv[] )
                 glutDisplayFunc( display );
                 glutMouseFunc( mouse );
                 glutMotionFunc( motion );
-
+                glutIdleFunc( display );
+                glutTimerFunc(2000, Timer, 0);
                 glEnable( GL_DEPTH_TEST );
 
                 // set up "headlamp"-like light
@@ -646,9 +699,7 @@ int main( int argc, char *argv[] )
                 glLightfv( GL_LIGHT0, GL_POSITION, position );
                 glPolygonMode( GL_FRONT, GL_FILL );
                 glPolygonMode( GL_BACK, GL_LINE );
-                glutTimerFunc(5000, displayPOV2, 0);
                 glutMainLoop();
-                //glutDestroyWindow(glutGetWindow());
                 }
             else {
                 cerr << "Erreur: Il faut choisir entre 10 et 200 formes thematiques.\n";
