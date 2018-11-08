@@ -7,6 +7,8 @@
 #include <fstream>
 #include <sstream>
 #include <math.h>
+#include <thread>
+#include <chrono>
 #include "FreeImage.h"
 
 using namespace std;
@@ -70,6 +72,24 @@ double callRandomPosition(int minPos, int maxPos)
 {
    return rand()%((maxPos - minPos) + 1) + minPos;
 }
+
+vector < vector < themeObject > > globalVec;
+vector < themeObject > vecIsland;
+vector < themeObject > vecFish;
+vector < themeObject > vecBluewhale;
+vector < themeObject > vecSeashell;
+vector < themeObject > vecSeadiver;
+vector < themeObject > vecSubmarine;
+vector < themeObject > vecRocks;
+vector < themeObject > vecSquid;
+vector < themeObject > vecShark;
+vector < themeObject > vecStarfish;
+vector < themeObject > vecCoral;
+vector < themeObject > vecCoral2;
+vector < themeObject > vecUrchin;
+vector < themeObject > vecGoldfish;
+vector < themeObject > vecCrab;
+vector < themeObject > vecChest;
 
 // based on:
 // https://stackoverflow.com/questions/14887012/object-loader-in-opengl
@@ -191,6 +211,7 @@ void motion( int x, int y )
 }
 
 void bindModel(themeObject objet) {
+    //glLoadIdentity();
     glTranslatef( objet.transX, objet.transY, objet.transZ );
     glRotatef( objet.angle, objet.rotX, objet.rotY, objet.rotZ );
     glColor3ub( objet.colorR, objet.colorG, objet.colorB );
@@ -206,9 +227,6 @@ void bindModel(themeObject objet) {
     glDisableClientState( GL_NORMAL_ARRAY );
 }
 
-vector< Vertex > sand;
-vector< Vertex > chest;
-vector < themeObject > globalVec;
 void display()
 {
     glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
@@ -226,18 +244,38 @@ void display()
     glLoadIdentity();
     glTranslatef( 0, -2, -20 );
 
-    for(vector<themeObject>::iterator vec = globalVec.begin(); vec != globalVec.end(); ++vec){
-        glPushMatrix();
-        {
-            glRotatef( curRot.x % 360, 0, 1, 0 );
-            glRotatef( -curRot.y % 360, 1, 0, 0 );
-
-            bindModel(*vec);
+    glRotatef( curRot.x % 360, 0, 1, 0 );
+    glRotatef( -curRot.y % 360, 1, 0, 0 );
+    for(vector<vector<themeObject>>::iterator vec = globalVec.begin(); vec != globalVec.end(); ++vec){
+        for(vector<themeObject>::iterator object = vec->begin(); object != vec->end(); ++object){
+            glPushMatrix();
+            { 
+                bindModel(*object);
+            }
+            glPopMatrix();
         }
-        glPopMatrix();
     }
 
     glutSwapBuffers();
+}
+
+void displayPOV2(int flag)
+{
+    glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
+    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+    
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+    double w = 640;
+    double h = 480;
+    double ar = w / h;
+    glTranslatef( curTrans.x / w * 2, curTrans.y / h * 2, 0 );
+    gluPerspective( 60, ar, 4, 100 );
+
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity();
+    glRotatef( 180, 0, 1, 0 );
+    glutPostRedisplay();
 }
 
 // return the min/max points of pts
@@ -289,6 +327,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             callRandomPosition(-3,3), 5, callRandomPosition(-3,3),
             size
         };
+        vecShark.push_back(object);
     }
     else if (type == "island") { 
         object = {
@@ -299,6 +338,8 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             0, 0, 0,
             size
         };
+        vecIsland.push_back(object);
+        globalVec.push_back(vecIsland);
     }
     else if (type == "chest") { 
         object = {
@@ -309,6 +350,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             -7, -1.05, callRandomPosition(-7,7),
             size
         };
+        vecChest.push_back(object);
     }
     else if (type == "coral") { 
         object = {
@@ -319,6 +361,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             -1, 0.1, callRandomPosition(-7,7),
             size
         };
+        vecCoral.push_back(object);
     }
     else if (type == "coral2") { 
         object = {
@@ -329,6 +372,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             -1, 0.1, callRandomPosition(-7,7),
             size
         };
+        vecCoral2.push_back(object);
     }
     else if (type == "crab") { 
         object = {
@@ -339,6 +383,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             callRandomPosition(-7,7), 2, callRandomPosition(-7,7),
             size
         };
+        vecCrab.push_back(object);
     }
     else if (type == "bluewhale") { 
         object = {
@@ -349,6 +394,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             callRandomPosition(-7,7), 5, callRandomPosition(-7,7), 
             size
         };
+        vecBluewhale.push_back(object);
     }
     else if (type == "starfish") { 
         object = {
@@ -359,6 +405,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             callRandomPosition(-7,7), callRandomPosition(2,7), callRandomPosition(-7,7),
             size
         };
+        vecStarfish.push_back(object);
     }
     else if (type == "seashell") { 
         object = {
@@ -369,6 +416,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             6, -0.5, callRandomPosition(-7,-6),
             size
         };
+        vecSeashell.push_back(object);
     }
     else if (type == "rocks") { 
         object = {
@@ -379,6 +427,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             callRandomPosition(-7,7), -0.25, 5.5,
             size
         };
+        vecRocks.push_back(object);
     }
     else if (type == "squid") { 
         object = {
@@ -389,6 +438,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             callRandomPosition(-7,7), callRandomPosition(2,7), callRandomPosition(-7,7),
             size
         };
+        vecSquid.push_back(object);
     }
     else if (type == "fish") { 
         object = {
@@ -399,6 +449,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             callRandomPosition(-7,7), callRandomPosition(2,7), callRandomPosition(-7,7),
             size
         };
+        vecFish.push_back(object);
     }
     else if (type == "goldfish") { 
         object = {
@@ -409,6 +460,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             callRandomPosition(-7,7), callRandomPosition(2,7), callRandomPosition(-7,7),
             size
         };
+        vecGoldfish.push_back(object);
     }
     else if (type == "submarine") { 
         object = {
@@ -416,9 +468,10 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             46, 45, 56,
             callRandomAngle(90), callRandom(), 0, 0,
-            callRandomPosition(-7,7), 8, callRandomPosition(-7,7),
+            callRandomPosition(-7,7), callRandomPosition(5,8), callRandomPosition(-7,7),
             size
         };
+        vecSubmarine.push_back(object);
     }
     else if (type == "urchin") { 
         object = {
@@ -429,6 +482,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             callRandomPosition(-7,7), 0, callRandomPosition(-7,7),
             size
         };
+        vecUrchin.push_back(object);
     }
     else if (type == "seadiver") { 
         object = {
@@ -439,15 +493,96 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             -6, -0.1, callRandomPosition(-7, 7),
             size
         };
+        vecSeadiver.push_back(object);
     }
-    globalVec.push_back(object);
 }
 
-void importObject(string file, string type, int size){
+void importObject(string file, string type, int size, int number){
     ifstream filestream( file );
     vector<Vertex> model = LoadOBJ( filestream );
     CenterAndScale( &model[0].position, sizeof( Vertex ), model.size(), size );
-    createThemeObject(type, model, size);
+    for(int i = 0; i < number; i++)
+        createThemeObject(type, model, size);
+}
+
+void makeScene(){
+    importObject("data/obj/island.obj", "island", 20, 1);
+
+    int nombre = etat.nombreFormes;
+    int temp = callRandomPosition(0, nombre/2);
+    importObject("data/obj/goldfish.obj", "goldfish", 2, temp);
+    nombre = nombre - temp;
+    globalVec.push_back(vecCoral);
+
+    temp = callRandomPosition(0, nombre/2);
+    importObject("data/obj/squid.obj", "squid", 2, temp);
+    nombre = nombre - temp;
+    globalVec.push_back(vecCoral2);
+
+    temp = callRandomPosition(0, nombre/2);
+    importObject("data/obj/submarine.obj", "submarine", 5, temp);
+    nombre = nombre - temp;
+    globalVec.push_back(vecGoldfish);
+
+    temp = callRandomPosition(0, nombre/2);
+    importObject("data/obj/urchin.obj", "urchin", 1, temp);
+    nombre = nombre - temp;
+    globalVec.push_back(vecUrchin);
+
+    temp = callRandomPosition(0, nombre/2);
+    importObject("data/obj/starfish.obj", "starfish", 1, temp);
+    nombre = nombre - temp;
+    globalVec.push_back(vecStarfish);
+
+    temp = callRandomPosition(0, nombre/2);
+    importObject("data/obj/crab.obj", "crab", 1, temp);
+    nombre = nombre - temp;
+    globalVec.push_back(vecCrab);
+
+    temp = callRandomPosition(0, nombre/2);
+    importObject("data/obj/fish.obj", "fish", 1, temp);
+    nombre = nombre - temp;
+    globalVec.push_back(vecFish);
+    
+    temp = callRandomPosition(0, nombre/2);
+    importObject("data/obj/coral.obj", "coral", 1, temp);
+    nombre = nombre - temp;
+    globalVec.push_back(vecSquid);
+
+    temp = callRandomPosition(0, nombre/2);
+    importObject("data/obj/shark.obj", "shark", 3, temp);
+    nombre = nombre - temp;
+    globalVec.push_back(vecShark);
+
+    temp = callRandomPosition(0, nombre/2);
+    importObject("data/obj/bluewhale.obj", "bluewhale", 4, temp);
+    nombre = nombre - temp;
+    globalVec.push_back(vecBluewhale);
+
+    temp = callRandomPosition(0, nombre/2);
+    importObject("data/obj/coral.obj", "coral", 5, temp);
+    nombre = nombre - temp;
+    globalVec.push_back(vecSubmarine);
+    
+    temp = callRandomPosition(0, nombre/2);
+    importObject("data/obj/chest.obj", "chest", 2, temp);
+    nombre = nombre - temp;
+    globalVec.push_back(vecChest);
+
+    temp = callRandomPosition(0, nombre/2);
+    importObject("data/obj/seadiver.obj", "seadiver", 3, temp);
+    nombre = nombre - temp;
+    globalVec.push_back(vecSeadiver);
+
+    temp = callRandomPosition(0, nombre/2);
+    importObject("data/obj/rocks.obj", "rocks", 4, temp);
+    nombre = nombre - temp;
+    globalVec.push_back(vecRocks);
+    
+    temp = callRandomPosition(0, nombre/2);
+    importObject("data/obj/seashell.obj", "seashell", 1, temp);
+    globalVec.push_back(vecSeashell);
+
 }
 
 void creerEtat(char* argv[], Etat& etat){
@@ -468,6 +603,11 @@ void creerEtat(char* argv[], Etat& etat){
     etat.capture4 = capture4;
 }
 
+void timer(int)
+{
+    glutPostRedisplay();
+    glutTimerFunc(1000.0/60.0, timer, 0);
+}
 int main( int argc, char *argv[] )
 {   
     if (argc != 5 )
@@ -486,22 +626,7 @@ int main( int argc, char *argv[] )
                 glutInitWindowSize( 640, 480 );
                 glutCreateWindow( "LOG2990 - AQUALAND" );
 
-                importObject("data/obj/island.obj", "island", 20);
-                importObject("data/obj/chest.obj", "chest", 2);
-                importObject("data/obj/shark.obj", "shark", 3);
-                importObject("data/obj/coral.obj", "coral", 1);
-                importObject("data/obj/coral2.obj", "coral2", 1);
-                importObject("data/obj/starfish.obj", "starfish", 1);
-                importObject("data/obj/bluewhale.obj", "bluewhale", 4);
-                importObject("data/obj/crab.obj", "crab", 1);
-                importObject("data/obj/fish.obj", "fish", 1);
-                importObject("data/obj/rocks.obj", "rocks", 4);
-                importObject("data/obj/squid.obj", "squid", 2);
-                importObject("data/obj/submarine.obj", "submarine", 5);
-                importObject("data/obj/urchin.obj", "urchin", 1);
-                importObject("data/obj/seashell.obj", "seashell", 1);
-                importObject("data/obj/seadiver.obj", "seadiver", 3);
-                importObject("data/obj/goldfish.obj", "goldfish", 2);
+                makeScene();
 
                 glutDisplayFunc( display );
                 glutMouseFunc( mouse );
@@ -521,7 +646,9 @@ int main( int argc, char *argv[] )
                 glLightfv( GL_LIGHT0, GL_POSITION, position );
                 glPolygonMode( GL_FRONT, GL_FILL );
                 glPolygonMode( GL_BACK, GL_LINE );
+                glutTimerFunc(5000, displayPOV2, 0);
                 glutMainLoop();
+                //glutDestroyWindow(glutGetWindow());
                 }
             else {
                 cerr << "Erreur: Il faut choisir entre 10 et 200 formes thematiques.\n";
