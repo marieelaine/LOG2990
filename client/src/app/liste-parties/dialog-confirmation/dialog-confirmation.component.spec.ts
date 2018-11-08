@@ -5,6 +5,7 @@ import { MatDividerModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/materi
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
+import { PartieMultiple } from 'src/app/admin/dialog-multiple/partie-multiple';
 
 describe('DialogConfirmationComponent', () => {
     const dialogMock = {
@@ -129,10 +130,13 @@ describe('DialogConfirmationComponent', () => {
     });
 
     describe("supprimerPartieSimpleDeLaffichage", () => {
-        it("devrait enlever la partie de la liste si elle existe", () => {
+        beforeEach(() => {
             component["listePartiesSimples"] = [ new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(),
                                                                    Buffer.from(new Array<number>()),
                                                                    Buffer.from(new Array<number>()), [["1,2"]], "123")];
+        });
+        it("devrait enlever la partie de la liste si elle existe", () => {
+
             component["partieId"] = "123";
 
             component["supprimerPartieSimpleDeLaffichage"]();
@@ -140,9 +144,7 @@ describe('DialogConfirmationComponent', () => {
             expect(component["listePartiesSimples"]).toEqual([]);
         });
         it("ne devrait pas enlever la partie de la liste si elle n'existe pas", () => {
-            component["listePartiesSimples"] = [ new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(),
-                                                                   Buffer.from(new Array<number>()),
-                                                                   Buffer.from(new Array<number>()), [["1,2"]], "123")];
+
             component["partieId"] = "1";
 
             const expectedArray: Array<PartieSimple> = component["listePartiesSimples"];
@@ -150,6 +152,61 @@ describe('DialogConfirmationComponent', () => {
             component["supprimerPartieSimpleDeLaffichage"]();
 
             expect(component["listePartiesSimples"]).toEqual(expectedArray);
+        });
+    });
+
+    describe("supprimerPartieMultipleDeLaffichage", () => {
+        beforeEach(() => {
+            component["listePartiesMultiples"] = [ new PartieMultiple("", new Array<number>(), new Array<number>(),
+                                                                      Buffer.from(new Array()), Buffer.from(new Array()),
+                                                                      Buffer.from(new Array()), Buffer.from(new Array()),
+                                                                      Buffer.from(new Array()), Buffer.from(new Array()),
+                                                                      10, "", "123") ];
+        });
+        it("devrait enlever la partie de la liste si elle existe", () => {
+
+            component["partieId"] = "123";
+
+            component["supprimerPartieMultipleDeLaffichage"]();
+
+            expect(component["listePartiesSimples"]).toEqual([]);
+        });
+        it("ne devrait pas enlever la partie de la liste si elle n'existe pas", () => {
+
+            component["partieId"] = "1";
+
+            const expectedArray: Array<PartieSimple> = component["listePartiesMultiple"];
+
+            component["supprimerPartieMultipleDeLaffichage"]();
+
+            expect(component["listePartiesMultiple"]).toEqual(expectedArray);
+        });
+    });
+
+    describe("setListeParties", () => {
+        it("devrait assigner la listePartie de data à ListePartieSimple si isSimple == true", () => {
+            const data = { listeParties: [ new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(),
+                                                             Buffer.from(new Array<number>()),
+                                                             Buffer.from(new Array<number>()), [["1,2"]], "123")] };
+            component["isSimple"] = true;
+
+            component["setListeParties"](data);
+
+            expect(component["listePartiesSimples"]).toEqual(data.listeParties);
+            expect(component["listePartiesMultiples"]).toEqual([]);
+        });
+        it("devrait assigner la listePartie de data à ListePartieMultiple si isSimple == false", () => {
+            const data = { listeParties: [ new PartieMultiple("", new Array<number>(), new Array<number>(),
+                                                              Buffer.from(new Array()), Buffer.from(new Array()),
+                                                              Buffer.from(new Array()), Buffer.from(new Array()),
+                                                              Buffer.from(new Array()), Buffer.from(new Array()),
+                                                              10, "", "123") ] };
+            component["isSimple"] = false;
+
+            component["setListeParties"](data);
+
+            expect(component["listePartiesMultiples"]).toEqual(data.listeParties);
+            expect(component["listePartiesSimples"]).toEqual([]);
         });
     });
 });
