@@ -14,6 +14,7 @@ import { DBPartieMultiple } from "./partieMultiple/DB-partie-multiple/DB-partie-
 import { SocketServerService } from "./socket-io.service";
 import { DBPartieSimple } from "./partieSimple/DB-partie-simple/DB-partie-simple";
 import { RoutesPartieSimple } from "./partieSimple/routes-partie-simples/routes-partie-simple";
+import { RoutesPartieSimpleAttente } from "./partieSimple/partie-simple-attente/partie-simple-attente";
 
 const container: Container = new Container();
 
@@ -29,6 +30,7 @@ container.bind(Types.RoutesUser).to(RoutesUser);
 container.bind(Types.User).to(DBUser.User);
 
 container.bind(Types.RoutesPartieSimple).to(RoutesPartieSimple);
+container.bind(Types.RoutesPartieSimpleAttente).to(RoutesPartieSimpleAttente);
 container.bind(Types.PartieSimple).to(DBPartieSimple);
 
 container.bind(Types.RoutesPartieMultiple).to(RoutesPartieMultiple);
