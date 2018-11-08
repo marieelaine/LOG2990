@@ -365,7 +365,7 @@ void genererSpheres()
          afficherSphere();
       }
       matrModel.PopMatrix(); glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
-   }
+   }nombre = nombre - nombreSpheres;
 }
 
 void genererCubes()
@@ -469,8 +469,6 @@ void creerModifications()
 
         if (modif == 'a') {
             addForm(callRandomNumber(4));
-            cout << "ajout" << endl;
-            
         }
         else if (modif == 's') {
             bool notChanged = true;
@@ -502,7 +500,6 @@ void creerModifications()
                     notChanged = false;
                 }    
             }
-            cout << "supression" << endl;
 
         }
         else if (modif == 'c') {
@@ -550,7 +547,6 @@ void creerModifications()
                     notChanged = false;
                 }    
             }
-            cout << "couleur" << endl;
 
         }
         glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
