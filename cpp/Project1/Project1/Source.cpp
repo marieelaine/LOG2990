@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <string>
 #include <fstream>
+#include <stdlib.h>     /* abs */
+
 
 using namespace std;
 
@@ -60,7 +62,7 @@ void creerEtat(const char* argv[], const int argc, Etat& etat) {
 	etat.image_s = argv[argc - 1];
 }
 
-void lireImage(char* r, char* g, char* b, string file) {
+void lireImage(uint8_t* r, uint8_t* g, uint8_t* b, string file) {
 	ifstream bmpIn(file, ios::in | ios::binary);
 
 	char info[54];
@@ -71,36 +73,64 @@ void lireImage(char* r, char* g, char* b, string file) {
 	char tmp[3];
 	for (int i = 0; i < 480 * 640; i++) {
 		bmpIn.read(tmp, 3);
-		b[i] = tmp[0];
-		g[i] = tmp[1];
-		r[i] = tmp[2];
+		b[i] = (uint8_t)tmp[0];
+		g[i] = (uint8_t)tmp[1];
+		r[i] = (uint8_t)tmp[2];
+	}
+
+	bmpIn.close();
+}
+
+void genImageDiff(uint8_t* r1, uint8_t* r2, uint8_t* g1, uint8_t* g2, uint8_t* b1, uint8_t* b2, uint8_t* diff) {
+	for (int i = 0; i < 480 * 640; i++)
+		diff[i] = 0;
+
+
+	for (int y = 0; y < 480; y++) {
+		for (int x = 0; x < 640; x++)
+			if (r1[x + 640 * y] == r2[x + 640 * y] && g1[x + 640 * y] == g2[x + 640 * y] && b1[x + 640 * y] == b2[x + 640 * y])
+				if (etat.partiel)
+					for (int j = -3; j < 4; j++)
+						for (int k = -3; k < 4; k++)
+							if (!((abs(k) > 1 && abs(j) == 3) || (abs(j) > 1 && abs(k) == 3)))
+								if (x + j < 480 && x + j >= 0 && y + k < 640 && y + k >= 0)
+									diff[x + j + 640 * (y + k)] = 1;
+				else
+					diff[x+640*y] = 1;
+
 	}
 }
 
 
 int main(int argc, const char* argv[]) {
 
-	cout << "lhdkj";
-	cout << "test";
-//	if (argc < 4 || argc > 5)
-//	{
-//		cerr << "Erreur: Nombre invalide de parametres!\n";
-//		cerr << "Usage: ./bmpdiff [- partiel] image_originale.bmp image_modifiee.bmp image_sortie.bmp\n";
-//		return 1;
-//	}
-//	else {
-//		creerEtat(argv, argc, etat);
-//	}
 
-	char r1[480 * 640];
-	char g1[480 * 640];
-	char b1[480 * 640];
-	char r2[480 * 640];
-	char g2[480 * 640];
-	char b2[480 * 640];
+	//if (argc < 4 || argc > 5)
+	//{
+	//	cerr << "Erreur: Nombre invalide de parametres!\n";
+	//	cerr << "Usage: ./bmpdiff [- partiel] image_originale.bmp image_modifiee.bmp image_sortie.bmp\n";
+	//}
+	//else {
+	//	creerEtat(argv, argc, etat);
+	//}
 
-//	lireImage(r1, g1, b1, etat.image_o);
-//	lireImage(r1, g1, b1, etat.image_m);
+	etat.image_o = "2.bmp";
+	etat.image_m = "1.bmp";
+	etat.image_s = "3.bmp";
+
+	uint8_t* r1 = new uint8_t[480 * 640];
+	uint8_t* g1 = new uint8_t[480 * 640];
+	uint8_t* b1 = new uint8_t[480 * 640];
+	uint8_t* r2 = new uint8_t[480 * 640];
+	uint8_t* g2 = new uint8_t[480 * 640];
+	uint8_t* b2 = new uint8_t[480 * 640];
+
+	lireImage(r1, g1, b1, etat.image_o);
+	lireImage(r2, g2, b2, etat.image_m);
+
+	uint8_t* diff = new uint8_t[480 * 640];
+
+	genImageDiff(r1, r2, g1, g2, b1, b2, diff);
 
 	cout << r1[1];
 

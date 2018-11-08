@@ -1,7 +1,2 @@
 ﻿  Source.cpp
-c:\users\bernard\desktop\log2990\cpp\project1\project1\source.cpp(102): warning C4101: 'b2': unreferenced local variable
-c:\users\bernard\desktop\log2990\cpp\project1\project1\source.cpp(100): warning C4101: 'r2': unreferenced local variable
-c:\users\bernard\desktop\log2990\cpp\project1\project1\source.cpp(101): warning C4101: 'g2': unreferenced local variable
-c:\users\bernard\desktop\log2990\cpp\project1\project1\source.cpp(98): warning C4101: 'g1': unreferenced local variable
-c:\users\bernard\desktop\log2990\cpp\project1\project1\source.cpp(99): warning C4101: 'b1': unreferenced local variable
   Project1.vcxproj -> C:\Users\BERNARD\Desktop\LOG2990\cpp\Project1\Debug\Project1.exe
