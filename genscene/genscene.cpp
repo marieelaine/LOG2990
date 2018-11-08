@@ -73,7 +73,6 @@ double callRandomPosition(int minPos, int maxPos)
    return rand()%((maxPos - minPos) + 1) + minPos;
 }
 
-vector < vector < themeObject > > globalVec;
 vector < themeObject > vecIsland;
 vector < themeObject > vecFish;
 vector < themeObject > vecBluewhale;
@@ -91,6 +90,49 @@ vector < themeObject > vecGoldfish;
 vector < themeObject > vecCrab;
 vector < themeObject > vecChest;
 
+vector<vector<themeObject>> createGlobalVec(){
+    vector <vector<themeObject>> globalVec;
+
+    globalVec.push_back(vecIsland);
+    globalVec.push_back(vecCoral);
+    globalVec.push_back(vecCoral2);
+    globalVec.push_back(vecGoldfish);
+    globalVec.push_back(vecUrchin);
+    globalVec.push_back(vecStarfish);
+    globalVec.push_back(vecCrab);
+    globalVec.push_back(vecFish);
+    globalVec.push_back(vecSquid);
+    globalVec.push_back(vecShark);
+    globalVec.push_back(vecBluewhale);
+    globalVec.push_back(vecSubmarine);
+    globalVec.push_back(vecChest);
+    globalVec.push_back(vecSeadiver);
+    globalVec.push_back(vecRocks);
+    globalVec.push_back(vecSeashell);
+
+    return globalVec;
+}
+// TODO
+// void deleteGlobalVec(vector<vector<themeObject>> *vector){
+//     vector.pop_back(vecIsland);
+//     vector.pop_back(vecCoral);
+//     vector.pop_back(vecCoral2);
+//     vector.pop_back(vecGoldfish);
+//     vector.pop_back(vecUrchin);
+//     vector.pop_back(vecStarfish);
+//     vector.pop_back(vecCrab);
+//     vector.pop_back(vecFish);
+//     vector.pop_back(vecSquid);
+//     vector.pop_back(vecShark);
+//     vector.pop_back(vecBluewhale);
+//     vector.pop_back(vecSubmarine);
+//     vector.pop_back(vecChest);
+//     vector.pop_back(vecSeadiver);
+//     vector.pop_back(vecRocks);
+//     vector.pop_back(vecSeashell);
+//     vector.clear();
+//     delete vector;
+// }
 // based on:
 // https://stackoverflow.com/questions/14887012/object-loader-in-opengl
 vector< Vertex > LoadOBJ( istream& in )
@@ -246,6 +288,8 @@ void display()
 
     glRotatef( curRot.x % 360, 0, 1, 0 );
     glRotatef( -curRot.y % 360, 1, 0, 0 );
+    vector<vector<themeObject>> globalVec = createGlobalVec();
+
     for(vector<vector<themeObject>>::iterator vec = globalVec.begin(); vec != globalVec.end(); ++vec){
         for(vector<themeObject>::iterator object = vec->begin(); object != vec->end(); ++object){
             glPushMatrix();
@@ -257,6 +301,7 @@ void display()
     }
 
     glutSwapBuffers();
+    //deleteGlobalVec(globalVec);
 }
 
 void displayPOV2()
@@ -277,6 +322,8 @@ void displayPOV2()
     glTranslatef( 0, -2, -20 );
 
     glRotatef( 180, 0, 1, 0 );
+    vector<vector<themeObject>> globalVec = createGlobalVec();
+
     for(vector<vector<themeObject>>::iterator vec = globalVec.begin(); vec != globalVec.end(); ++vec){
         for(vector<themeObject>::iterator object = vec->begin(); object != vec->end(); ++object){
             glPushMatrix();
@@ -288,6 +335,7 @@ void displayPOV2()
     }
 
     glutSwapBuffers();
+    //deleteGlobalVec(globalVec);
 }
 
 // return the min/max points of pts
@@ -351,7 +399,6 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             size
         };
         vecIsland.push_back(object);
-        globalVec.push_back(vecIsland);
     }
     else if (type == "chest") { 
         object = {
@@ -524,77 +571,126 @@ void makeScene(){
     int temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/goldfish.obj", "goldfish", 2, temp);
     nombre = nombre - temp;
-    globalVec.push_back(vecCoral);
 
     temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/squid.obj", "squid", 2, temp);
     nombre = nombre - temp;
-    globalVec.push_back(vecCoral2);
 
     temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/submarine.obj", "submarine", 5, temp);
     nombre = nombre - temp;
-    globalVec.push_back(vecGoldfish);
 
     temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/urchin.obj", "urchin", 1, temp);
     nombre = nombre - temp;
-    globalVec.push_back(vecUrchin);
 
     temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/starfish.obj", "starfish", 1, temp);
     nombre = nombre - temp;
-    globalVec.push_back(vecStarfish);
 
     temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/crab.obj", "crab", 1, temp);
     nombre = nombre - temp;
-    globalVec.push_back(vecCrab);
 
     temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/fish.obj", "fish", 1, temp);
     nombre = nombre - temp;
-    globalVec.push_back(vecFish);
     
     temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/coral.obj", "coral", 1, temp);
     nombre = nombre - temp;
-    globalVec.push_back(vecSquid);
 
     temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/shark.obj", "shark", 3, temp);
     nombre = nombre - temp;
-    globalVec.push_back(vecShark);
 
     temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/bluewhale.obj", "bluewhale", 4, temp);
     nombre = nombre - temp;
-    globalVec.push_back(vecBluewhale);
 
     temp = callRandomPosition(0, nombre/2);
-    importObject("data/obj/coral.obj", "coral", 5, temp);
+    importObject("data/obj/coral2.obj", "coral2", 1, temp);
     nombre = nombre - temp;
-    globalVec.push_back(vecSubmarine);
     
     temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/chest.obj", "chest", 2, temp);
     nombre = nombre - temp;
-    globalVec.push_back(vecChest);
 
     temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/seadiver.obj", "seadiver", 3, temp);
     nombre = nombre - temp;
-    globalVec.push_back(vecSeadiver);
 
     temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/rocks.obj", "rocks", 4, temp);
     nombre = nombre - temp;
-    globalVec.push_back(vecRocks);
     
     temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/seashell.obj", "seashell", 1, temp);
-    globalVec.push_back(vecSeashell);
+}
 
+void addThemeObjet(int position){
+    switch (position){
+        case 0 :
+            importObject("data/obj/goldfish.obj", "goldfish", 2, 1);
+            cout << "goldfish" << endl;
+            break;
+        case 1 : 
+            importObject("data/obj/squid.obj", "squid", 2, 1);
+            cout << "squid" << endl;
+            break;
+        case 2 : 
+            importObject("data/obj/submarine.obj", "submarine", 5, 1);
+            cout << "submarine" << endl;
+            break;
+        case 3 : 
+            importObject("data/obj/urchin.obj", "urchin", 1, 1);
+            cout << "urchin" << endl;
+            break;
+        case 4 : 
+            importObject("data/obj/starfish.obj", "starfish", 1, 1);
+            cout << "starfish" << endl;
+            break;
+        case 5 : 
+            importObject("data/obj/crab.obj", "crab", 1, 1);
+            cout << "crab" << endl;
+            break;
+        case 6 : 
+            importObject("data/obj/fish.obj", "fish", 1, 1);
+            cout << "fish" << endl;
+            break;
+        case 7 : 
+            importObject("data/obj/coral.obj", "coral", 1, 1);
+            cout << "coral" << endl;
+            break;
+        case 8 : 
+            importObject("data/obj/shark.obj", "shark", 3, 1);
+            cout << "shark" << endl;
+            break;
+        case 9 : 
+            importObject("data/obj/bluewhale.obj", "bluewhale", 4, 1);
+            cout << "bluewhale" << endl;
+            break;
+        case 10 : 
+            importObject("data/obj/coral2.obj", "coral2", 1, 1);
+            cout << "coral2" << endl;
+            break;
+        case 11 : 
+            importObject("data/obj/chest.obj", "chest", 2, 1);
+            cout << "chest" << endl;
+            break;
+        case 12 : 
+            importObject("data/obj/seadiver.obj", "seadiver", 3, 1);
+            cout << "seadiver" << endl;
+            break;
+        case 13 : 
+            importObject("data/obj/rocks.obj", "rocks", 5, 1);
+            cout << "rocks" << endl;
+            break;
+        case 14 : 
+            importObject("data/obj/seashell.obj", "seashell", 1, 1);
+            cout << "seashell" << endl;
+            break;
+    }
 }
 
 void creerEtat(char* argv[], Etat& etat){
@@ -613,6 +709,103 @@ void creerEtat(char* argv[], Etat& etat){
     etat.capture2 = capture2; 
     etat.capture3 = capture3;
     etat.capture4 = capture4;
+}
+
+void creerModifications()
+{
+    int compteur = 0;
+    while (compteur < 7){
+        int randomIndex = callRandomPosition(0, etat.modifications.length() - 1);
+        char modif = etat.modifications[randomIndex];
+
+        if (modif == 'a') {
+            addThemeObjet(callRandomPosition(0, 14));
+            
+        }
+        // else if (modif == 's') {
+        //     bool notChanged = true;
+        //     while (notChanged) {
+        //         int random = callRandomNumber(4);
+        //         if (random == 0 && !vecSphere.empty()){
+        //             swap(vecSphere.front(), vecSphere.back());
+        //             vecSphere.pop_back();
+        //             notChanged = false;
+        //         }
+        //         else if (random == 1 && !vecCube.empty()){
+        //             swap(vecCube.front(), vecCube.back());
+        //             vecCube.pop_back();
+        //             notChanged = false;
+        //         }
+        //         else if (random == 2 && !vecCone.empty()){
+        //             swap(vecCone.front(), vecCone.back());
+        //             vecCone.pop_back();
+        //             notChanged = false;
+        //         }
+        //         else if (random == 3 &&!vecCylindre.empty()){
+        //             swap(vecCylindre.front(), vecCylindre.back());
+        //             vecCylindre.pop_back();
+        //             notChanged = false;
+        //         }
+        //         else if (random == 4 &&!vecPyramide.empty()){
+        //             swap(vecPyramide.front(), vecPyramide.back());
+        //             vecPyramide.pop_back();
+        //             notChanged = false;
+        //         }    
+        //     }
+        //     cout << "supression" << endl;
+
+        // }
+        // else if (modif == 'c') {
+        //     bool notChanged = true;
+        //     while (notChanged) {
+        //         int random = callRandomNumber(4);
+        //         if (random == 0 && !vecSphere.empty()){
+        //             StructSphere form = vecSphere.front();
+        //             swap(vecSphere.front(), vecSphere.back());
+        //             vecSphere.pop_back();
+        //             form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+        //             vecSphere.push_back(form);
+        //             notChanged = false;
+        //         }
+        //         if (random == 1 && !vecCube.empty()){
+        //             StructCube form = vecCube.front();
+        //             swap(vecCube.front(), vecCube.back());
+        //             vecCube.pop_back();
+        //             form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+        //             vecCube.push_back(form);
+        //             notChanged = false;
+        //         }
+        //         if (random == 2 && !vecCone.empty()){
+        //             StructCone form = vecCone.front();
+        //             swap(vecCone.front(), vecCone.back());
+        //             vecCone.pop_back();
+        //             form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+        //             vecCone.push_back(form);
+        //             notChanged = false;
+        //         }
+        //         if (random == 3 && !vecCylindre.empty()){
+        //             StructCylindre form = vecCylindre.front();
+        //             swap(vecCylindre.front(), vecCylindre.back());
+        //             vecCylindre.pop_back();
+        //             form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+        //             vecCylindre.push_back(form);
+        //             notChanged = false;
+        //         }
+        //         if (random == 4 && !vecPyramide.empty()){
+        //             StructPyramide form = vecPyramide.front();
+        //             swap(vecPyramide.front(), vecPyramide.back());
+        //             vecPyramide.pop_back();
+        //             form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+        //             vecPyramide.push_back(form);
+        //             notChanged = false;
+        //         }    
+        //     }
+        //     cout << "couleur" << endl;
+
+        //}
+        //glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
+        compteur++;
+    }
 }
 
 void capturerScene(string filepath)
@@ -654,7 +847,27 @@ void Timer(int value)
    }
    else if(value==2)
    {
-    capturerScene(etat.capture2);
+     capturerScene(etat.capture2);
+     creerModifications();
+     glutDisplayFunc(display);
+     glutIdleFunc(display);
+     glutTimerFunc(2000, Timer, 3);
+   }
+   else if(value==3)
+   {
+     capturerScene(etat.capture3);
+     creerModifications();
+     glutDisplayFunc(displayPOV2);
+     glutIdleFunc(displayPOV2);
+     glutTimerFunc(2000, Timer, 4);
+   }
+   else if(value==4)
+   {
+    capturerScene(etat.capture4);
+    glutTimerFunc(2000, Timer, 5);
+   }
+   else if(value==5)
+   {
     glutDestroyWindow(glutGetWindow());
    }
 
