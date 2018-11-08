@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ListePartieServiceService } from '../liste-partie-service.service';
 import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
+import { PartieMultiple } from 'src/app/admin/dialog-multiple/partie-multiple';
 
 @Component({
   selector: 'app-dialog-confirmation',
@@ -11,48 +12,62 @@ import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
 
 export class DialogConfirmationComponent {
 
-  private partieSimpleId: string;
-  private listeParties: PartieSimple[];
+  private partieId: string;
+  private listePartiesSimples: PartieSimple[];
+  private listePartiesMultiples: PartieMultiple[];
   private isSimple: boolean;
 
   constructor(
-    public dialogRef: MatDialogRef<DialogConfirmationComponent>,
+    private dialogRef: MatDialogRef<DialogConfirmationComponent>,
     private listePartieService: ListePartieServiceService,
     @Inject(MAT_DIALOG_DATA) data) {
-      this.partieSimpleId = data.id;
-      this.listeParties = data.listeParties;
+      this.partieId = data.id;
       this.isSimple = data.isSimple;
-     }
+      this.setListeParties(data);
+  }
 
   protected onConfirmationClick(): void {
-    if (this.isSimple) {
-      this.supprimerPartieSimple();
-    } else {
-      this.supprimerPartieMultiple();
-    }
+    this.isSimple ? this.supprimerPartieSimple() : this.supprimerPartieMultiple();
     this.dialogRef.close();
-  }
-
-  private supprimerPartieSimple(): void {
-    this.listePartieService.deletePartieSimple(this.partieSimpleId);
-    this.supprimerPartieDeLaffichage();
-  }
-
-  private supprimerPartieMultiple(): void {
-    this.listePartieService.deletePartieMultiple(this.partieSimpleId);
-    this.supprimerPartieDeLaffichage();
-  }
-
-  private supprimerPartieDeLaffichage() {
-    for (let i = 0 ; i < this.listeParties.length ; i++) {
-      if (this.listeParties[i]["_id"]  === this.partieSimpleId) {
-        this.listeParties.splice(i, 1);
-      }
-    }
   }
 
   protected onDialogClose(): void {
     this.dialogRef.close();
   }
 
+  private setListeParties(data): void {
+    if (this.isSimple) {
+      this.listePartiesSimples = data.listeParties;
+      this.listePartiesMultiples = [];
+    } else {
+      this.listePartiesMultiples = data.listeParties;
+      this.listePartiesSimples = [];
+    }
+  }
+
+  private supprimerPartieSimple(): void {
+    this.listePartieService.deletePartieSimple(this.partieId);
+    this.supprimerPartieSimpleDeLaffichage();
+  }
+
+  private supprimerPartieMultiple(): void {
+    this.listePartieService.deletePartieMultiple(this.partieId);
+    this.supprimerPartieMultipleDeLaffichage();
+  }
+
+  private supprimerPartieSimpleDeLaffichage() {
+    for (let i = 0 ; i < this.listePartiesSimples.length ; i++) {
+      if (this.listePartiesSimples[i]["_id"]  === this.partieId) {
+        this.listePartiesSimples.splice(i, 1);
+      }
+    }
+  }
+
+  private supprimerPartieMultipleDeLaffichage() {
+    for (let i = 0 ; i < this.listePartiesMultiples.length ; i++) {
+      if (this.listePartiesMultiples[i]["_id"]  === this.partieId) {
+        this.listePartiesMultiples.splice(i, 1);
+      }
+    }
+  }
 }
