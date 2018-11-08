@@ -81,6 +81,4 @@ describe('PartieAbstraiteComponent', () => {
     tick(1000);
     expect(component["chrono"].getTime()).toBe(0);
     }));
-
-
 });
