@@ -2,8 +2,12 @@ import { ChronoComponent } from "../chrono/chrono.component";
 import {ElementRef, ErrorHandler, QueryList, ViewChildren} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {PartieService} from "./partie.service";
+import { PartieSimple } from "../admin/dialog-simple/partie-simple";
+import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 
 export abstract class PartieAbstraiteClass {
+
+    @ViewChildren('canvas') canvas: QueryList<ElementRef>;
 
     protected blur: boolean;
     protected chrono: ChronoComponent;
@@ -16,13 +20,12 @@ export abstract class PartieAbstraiteClass {
     protected messagesChat: string[];
 
     protected partieID: string;
-    protected abstract partie;
-    @ViewChildren('canvas') canvas: QueryList<ElementRef>;
+    protected abstract partie: PartieSimple | PartieMultiple;
     protected image: Array<HTMLImageElement>;
     protected diffTrouvee: number[];
     protected imageData: Array<string>;
 
-    protected constructor(protected route: ActivatedRoute, protected partieService: PartieService, protected nbImage: number) {
+    public constructor(protected route: ActivatedRoute, protected partieService: PartieService, protected nbImage: number) {
         this.blur = true;
         this.partieCommence = false;
         this.differencesTrouvees = 0;
@@ -32,14 +35,14 @@ export abstract class PartieAbstraiteClass {
         this.imageData = [];
         this.diffTrouvee = [];
 
-        this.image = [];
-        for (let i = 0; i < nbImage; i++) {
-            this.image.push(new Image());
-        }
-
+        this.setImage(nbImage);
         this.setID();
         this.setPartie();
     }
+
+    protected abstract setPartie(): void;
+
+    protected abstract getImageData(): void;
 
     protected start(): void {
         this.partieCommence = true;
@@ -55,10 +58,6 @@ export abstract class PartieAbstraiteClass {
     protected setID(): void {
         this.partieID = this.route.snapshot.params.idPartie;
     }
-
-    protected abstract setPartie(): void;
-
-    protected abstract getImageData(): void;
 
     protected setup(): void {
         this.addNomPartieToChat();
@@ -121,5 +120,12 @@ export abstract class PartieAbstraiteClass {
         this.partie["_tempsSolo"].push(temps);
         this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
             .catch(() => ErrorHandler);
+    }
+
+    private setImage(nbImage: number): void {
+        this.image = [];
+        for (let i = 0; i < nbImage; i++) {
+            this.image.push(new Image());
+        }
     }
 }

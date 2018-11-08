@@ -4,19 +4,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatCardModule } from '@angular/material';
 import { ErrorHandler } from '@angular/core';
 import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { By } from "@angular/platform-browser";
+import { ActivatedRouteMock } from 'src/testing/mocks';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
-
-class ActivatedRouteMock extends ActivatedRoute {
-    constructor() {
-        super();
-        this.snapshot = new ActivatedRouteSnapshot();
-        this.snapshot.params = {
-            ["idPartie"]: "123"
-        };
-    }
-}
 
 describe('PartieSoloComponent', () => {
     let component: PartieSoloComponent;
@@ -56,11 +48,6 @@ describe('PartieSoloComponent', () => {
     it("addNomPartieToChat devrait ajouter le nom de la partie au tableau de messages", () => {
         component["addNomPartieToChat"]();
         expect(component["messagesChat"][0]).toEqual("Bienvenue dans la partie NomPartie");
-    });
-
-    it("setID devrait setter le ID correctement", () => {
-        component["setID"]();
-        expect(component["partieID"]).toEqual("123");
     });
 
     it("setPartie devrait appeler la fonction getPartieSimple de partieService", () => {
