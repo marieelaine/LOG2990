@@ -46,18 +46,18 @@ export class ListePartieServiceService {
     .catch(() => ErrorHandler);
   }
 
-  public async getListePartieSimpleEnAttente(): Promise<string[]> {
+  public getListePartieSimpleEnAttente(): Observable<string[]> {
 
-    return this.http.get<string[]>(route.GET_PARTIES_SIMPLE_ATTENTE).toPromise();
+    return this.http.get<string[]>(route.GET_PARTIE_SIMPLE_ATTENTE);
   }
 
   public async addPartieSimpleEnAttente(partieId: string): Promise<void> {
 
-    this.http.post(route.ADD_PARTIES_SIMPLE_ATTENTE, partieId);
+    this.http.post(route.ADD_PARTIE_SIMPLE_ATTENTE, partieId);
   }
 
   public async deletePartieSimpleEnAttente(partieId: string): Promise<void> {
 
-    this.http.delete(route.DELETE_PARTIES_SIMPLE_ATTENTE + partieId);
+    this.http.delete(route.DELETE_PARTIE_SIMPLE_ATTENTE + partieId);
   }
 }

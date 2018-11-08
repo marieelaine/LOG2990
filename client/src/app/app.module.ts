@@ -44,7 +44,6 @@ import { ListePartieServiceService } from "./liste-parties/liste-partie-service.
 import { DialogErreurComponent } from "./admin/dialog-erreur/dialog-erreur.component";
 import { DialogVueAttenteComponent } from './liste-parties/dialog-vue-attente/dialog-vue-attente.component';
 import { PartieSimpleSoloComponent } from "./partie/vue-simple/partie-simple-solo/partie-simple-solo.component";
-import { PartieSimpleMultijoueurComponent } from "./partie/vue-simple/partie-simple-multijoueur/partie-simple-multijoueur.component";
 
 const config: SocketIoConfig = { url: 'http://localhost:4200', options: {} };
 
@@ -54,7 +53,7 @@ const appRoutes: Routes = [
   { path: "admin", component: AdminComponent },
   { path: "liste-parties", component: ListePartiesComponent },
   { path: "partie-simple-solo/:idPartie", component: PartieSimpleSoloComponent },
-  { path: "partie-simple-multijoueur/:idPartie", component: PartieSimpleMultijoueurComponent },
+  // { path: "partie-simple-multijoueur/:idPartie", component: PartieSimpleMultijoueurComponent },
   { path: "partie-multiple/:idPartie", component: VueMultipleComponent },
 ];
 
@@ -72,7 +71,6 @@ const appRoutes: Routes = [
     ListePartieMultipleComponent,
     DialogSimpleComponent,
     DialogMultipleComponent,
-    PartieSimpleMultijoueurComponent,
     VueMultipleComponent,
     DialogConfirmationComponent,
     DialogErreurComponent,
