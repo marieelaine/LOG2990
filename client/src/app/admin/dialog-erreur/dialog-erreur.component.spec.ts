@@ -35,7 +35,7 @@ describe('DialogErreurComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("should close the dialog if cancel button is clicked", () => {
+  it("devrait fermer le dialog si l'utilisateur appuie sur le bouton pour fermer", () => {
     const onNoClickButton = fixture.debugElement.query(By.css(".dialogButtons")).nativeElement;
 
     // tslint:disable-next-line:no-any
