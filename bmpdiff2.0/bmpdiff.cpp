@@ -1,16 +1,13 @@
 #include <iostream>
 #include <fstream>
-#include <string.h>
 #include <stdio.h>
-
-#include <fstream>
-#include <iostream>
 #include <string>
-#include <array>
-#include <vector>
-#include <iterator>
+
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 using namespace std;
+using namespace cv;
 
 // diverses variables d'état
 struct Etat
