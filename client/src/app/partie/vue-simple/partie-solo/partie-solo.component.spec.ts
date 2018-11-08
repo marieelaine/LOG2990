@@ -5,10 +5,10 @@ import { MatCardModule } from '@angular/material';
 import { ErrorHandler } from '@angular/core';
 import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
 import { ActivatedRoute } from '@angular/router';
-import { By } from "@angular/platform-browser";
 import { ActivatedRouteMock } from 'src/testing/mocks';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
+import { ChatComponent } from 'src/app/chat/chat.component';
 
 describe('PartieSoloComponent', () => {
     let component: PartieSoloComponent;
@@ -16,7 +16,7 @@ describe('PartieSoloComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [PartieSoloComponent],
+            declarations: [PartieSoloComponent, ChatComponent],
             imports: [
                 HttpClientTestingModule,
                 MatCardModule
@@ -43,11 +43,6 @@ describe('PartieSoloComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
-    });
-
-    it("addNomPartieToChat devrait ajouter le nom de la partie au tableau de messages", () => {
-        component["addNomPartieToChat"]();
-        expect(component["messagesChat"][0]).toEqual("Bienvenue dans la partie NomPartie");
     });
 
     it("setPartie devrait appeler la fonction getPartieSimple de partieService", () => {

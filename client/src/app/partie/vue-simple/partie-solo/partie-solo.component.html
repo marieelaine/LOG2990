@@ -36,49 +36,6 @@
         {{chrono.getMinutesString()}}:{{chrono.getSecondsSrtring()}}
     </div>
 
-    <div class="container chat">
-        <div class="row">                                                                         
-            <div class="col-sm-12">
-                <div class="chatbody">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading top-bar">
-                            <div class="col-md-8 col-xs-8">
-                                <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> Chat </h3>
-                            </div>
-                        </div>
-                    <div class="panel-body msg_container_base" id="divMessagesConsole">
-                        <div *ngFor="let message of messagesChat">
-                            <p class="consoleMessages"> {{ message }} </p>
-                        </div>
-                        <div class="row msg_container base_sent">
-                            <div class="col-md-10 col-xs-10">
-                                <!-- <div class="messages msg_sent">
-                                </div> -->
-                            </div>
-                            <div class="col-md-2 col-xs-2 avatar">
-                            </div>
-                        </div>
-                        <div class="row msg_container base_receive">
-                            <div class="col-md-2 col-xs-2 avatar">
-                            </div>
-                            <div class="col-md-10 col-xs-10" id="MessagesRecus">
-                        <!-- <div class="messages msg_receive">
-                            faslfal
-                        </div> -->
-                            </div>
-                        </div>
-                        </div>
-                        <div class="panel-footer">
-                            <div class="input-group">
-                                <input id="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Ecrire un message" />
-                                <span class="input-group-btn">
-                                <button class="btn btn-primary btn-sm" id="btn-chat"> Envoyer </button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                 </div>
-             </div>
-        </div>
-    </div>
+    <app-chat></app-chat>
+
 </div>

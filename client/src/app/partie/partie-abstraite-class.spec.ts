@@ -57,7 +57,15 @@ describe('PartieAbstraiteComponent', () => {
         expect(component["partieID"]).toEqual("123");
     });
 
-    it('chrono devrait retourner 2 lorsque la partie dure 2 secondes', fakeAsync(() => {
+    it("addNomPartieToChat devrait appeler chat.addMessageToMessagesChat", () => {
+        // tslint:disable-next-line:no-any
+        const spy: jasmine.Spy = spyOn<any>(component["chat"], "addMessageToMessagesChat");
+        component["addNomPartieToChat"]();
+
+        expect(spy).toHaveBeenCalled();
+    });
+
+    it('chrono.getTime devrait retourner 2 lorsque la partie dure 2 secondes', fakeAsync(() => {
         component["start"]();
         tick(2000);
         component["terminerPartie"]();

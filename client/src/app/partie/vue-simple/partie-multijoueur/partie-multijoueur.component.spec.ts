@@ -5,6 +5,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatCardModule } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ChatComponent } from 'src/app/chat/chat.component';
 
 describe('PartieMultijoueurComponent', () => {
     let component: PartieMultijoueurComponent;
@@ -12,7 +13,7 @@ describe('PartieMultijoueurComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [PartieMultijoueurComponent],
+            declarations: [PartieMultijoueurComponent, ChatComponent],
             imports: [
                 MatCardModule,
                 HttpClientTestingModule,

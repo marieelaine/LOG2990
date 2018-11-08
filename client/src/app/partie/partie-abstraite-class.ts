@@ -1,13 +1,15 @@
 import { ChronoComponent } from "../chrono/chrono.component";
-import {ElementRef, ErrorHandler, QueryList, ViewChildren} from "@angular/core";
+import {ElementRef, ErrorHandler, QueryList, ViewChildren, ViewChild} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {PartieService} from "./partie.service";
 import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
+import { ChatComponent } from "../chat/chat.component";
 
 export abstract class PartieAbstraiteClass {
 
     @ViewChildren('canvas') canvas: QueryList<ElementRef>;
+    @ViewChild(ChatComponent) chat: ChatComponent;
 
     protected blur: boolean;
     protected chrono: ChronoComponent;
@@ -17,7 +19,6 @@ export abstract class PartieAbstraiteClass {
     protected audio = new Audio();
     protected differenceRestantes;
     protected nomPartie: string;
-    protected messagesChat: string[];
 
     protected partieID: string;
     protected abstract partie: PartieSimple | PartieMultiple;
@@ -31,7 +32,7 @@ export abstract class PartieAbstraiteClass {
         this.differencesTrouvees = 0;
         this.chrono = new ChronoComponent();
         this.messageDifferences = "Cliquez pour commencer";
-        this.messagesChat = [];
+        this.chat = new ChatComponent();
         this.imageData = [];
         this.diffTrouvee = [];
 
@@ -68,7 +69,9 @@ export abstract class PartieAbstraiteClass {
 
     protected addNomPartieToChat() {
         this.nomPartie = this.partie["_nomPartie"];
-        this.messagesChat.push("Bienvenue dans la partie " + this.nomPartie.charAt(0).toUpperCase() + this.partie["_nomPartie"].slice(1));
+        const msg = ("Bienvenue dans la partie " + this.nomPartie.charAt(0).toUpperCase()
+                                     + this.partie["_nomPartie"].slice(1));
+        this.chat.addMessageToMessagesChat(msg);
     }
 
     protected ajusterSourceImage(data: String, canvas: ElementRef, image: HTMLImageElement): void {
@@ -104,7 +107,7 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected ajouterMessageDiffTrouvee() {
-        this.messagesChat.push("Vous avez trouvé une différence!");
+        this.chat.messagesChat.push("Vous avez trouvé une différence!");
     }
 
     protected terminerPartie(): void {
