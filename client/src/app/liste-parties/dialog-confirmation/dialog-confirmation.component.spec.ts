@@ -1,12 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from "@angular/platform-browser";
 import { DialogConfirmationComponent } from './dialog-confirmation.component';
 import { MatDividerModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { UserService } from 'src/app/vue-initiale/user.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
 
 describe('DialogConfirmationComponent', () => {
+    const dialogMock = {
+        close: () => { }
+    };
     let component: DialogConfirmationComponent;
     let fixture: ComponentFixture<DialogConfirmationComponent>;
 
@@ -19,7 +22,7 @@ describe('DialogConfirmationComponent', () => {
                 RouterTestingModule,
             ],
             providers: [
-                { provide: MatDialogRef, useValue: {} },
+                { provide: MatDialogRef, useValue: dialogMock },
                 { provide: MAT_DIALOG_DATA, useValue: {} },
             ]
         });
@@ -30,5 +33,123 @@ describe('DialogConfirmationComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it("devrait fermer le dialog si l'utilisateur appuie sur le bouton pour fermer", () => {
+        const onNoClickButton = fixture.debugElement.query(By.css("#onConfirmationButtonYes")).nativeElement;
+
+        // tslint:disable-next-line:no-any
+        const spy: jasmine.Spy = spyOn<any>(component, "onDialogClose");
+        onNoClickButton.dispatchEvent(new Event("click"));
+
+        expect(spy).toHaveBeenCalled();
+    });
+
+    it("devrait appeler onConfirmationClick lorsque l'utiliateur click sur Yes", () => {
+        const onNoClickButton = fixture.debugElement.query(By.css("#onConfirmationButtonNo")).nativeElement;
+
+        // tslint:disable-next-line:no-any
+        const spy: jasmine.Spy = spyOn<any>(component, "onConfirmationClick");
+        onNoClickButton.dispatchEvent(new Event("click"));
+
+        expect(spy).toHaveBeenCalled();
+    });
+
+    describe("onConfirmationClick", () => {
+        it("devrait appeler supprimerPartieSimple si isSimple == true;", () => {
+            component["listeParties"] = [];
+            component["isSimple"] = true;
+
+            // tslint:disable-next-line:no-any
+            const spy: jasmine.Spy = spyOn<any>(component, "supprimerPartieSimple");
+
+            component["onConfirmationClick"]();
+
+            expect(spy).toHaveBeenCalled();
+        });
+        it("devrait appeler supprimerPartieMultiple si isSimple == false;", () => {
+            component["listeParties"] = [];
+            component["isSimple"] = false;
+
+            // tslint:disable-next-line:no-any
+            const spy: jasmine.Spy = spyOn<any>(component, "supprimerPartieMultiple");
+
+            component["onConfirmationClick"]();
+
+            expect(spy).toHaveBeenCalled();
+        });
+    });
+
+    describe("supprimerPartieSimple", () => {
+        beforeEach(() => {
+            component["listePartiesSimple"] = [];
+        });
+        it("devrait appeler listePartieService.deletePartieSimple", () => {
+
+            // tslint:disable-next-line:no-any
+            const spy: jasmine.Spy = spyOn<any>(component["listePartieService"], "deletePartieSimple");
+
+            component["supprimerPartieSimple"]();
+
+            expect(spy).toHaveBeenCalled();
+        });
+        it("devrait appeler supprimerPartieDeLaffichage", () => {
+
+            // tslint:disable-next-line:no-any
+            const spy: jasmine.Spy = spyOn<any>(component, "supprimerPartieSimpleDeLaffichage");
+
+            component["supprimerPartieSimple"]();
+
+            expect(spy).toHaveBeenCalled();
+        });
+    });
+
+    describe("supprimerPartieMultiple", () => {
+        beforeEach(() => {
+            component["listePartiesMultiples"] = [];
+        });
+        it("devrait appeler listePartieService.deletePartieMultiple", () => {
+
+            // tslint:disable-next-line:no-any
+            const spy: jasmine.Spy = spyOn<any>(component["listePartieService"], "deletePartieMultiple");
+
+            component["supprimerPartieMultiple"]();
+
+            expect(spy).toHaveBeenCalled();
+        });
+        it("devrait appeler supprimerPartieDeLaffichage", () => {
+
+            // tslint:disable-next-line:no-any
+            const spy: jasmine.Spy = spyOn<any>(component, "supprimerPartieMultipleDeLaffichage");
+
+            component["supprimerPartieMultiple"]();
+
+            expect(spy).toHaveBeenCalled();
+        });
+    });
+
+    describe("supprimerPartieSimpleDeLaffichage", () => {
+        it("devrait enlever la partie de la liste si elle existe", () => {
+            component["listePartiesSimples"] = [ new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(),
+                                                                   Buffer.from(new Array<number>()),
+                                                                   Buffer.from(new Array<number>()), [["1,2"]], "123")];
+            component["partieId"] = "123";
+
+            component["supprimerPartieSimpleDeLaffichage"]();
+
+            expect(component["listePartiesSimples"]).toEqual([]);
+        });
+        it("ne devrait pas enlever la partie de la liste si elle n'existe pas", () => {
+            component["listePartiesSimples"] = [ new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(),
+                                                                   Buffer.from(new Array<number>()),
+                                                                   Buffer.from(new Array<number>()), [["1,2"]], "123")];
+            component["partieId"] = "1";
+
+            const expectedArray: Array<PartieSimple> = component["listePartiesSimples"];
+
+            component["supprimerPartieSimpleDeLaffichage"]();
+
+            expect(component["listePartiesSimples"]).toEqual(expectedArray);
+        });
     });
 });
