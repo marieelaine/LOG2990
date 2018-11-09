@@ -3,7 +3,9 @@
 #include <stdio.h>
 #include <string>
 #include <fstream>
-#include <stdlib.h>     /* abs */
+#include <stdlib.h>
+#include <vector>
+
 
 
 using namespace std;
@@ -15,6 +17,9 @@ struct Etat
 	string image_m;
 	string image_s;
 	char* fichierTxt;
+	uint8_t* imageDiff;
+	bool* visited;
+	ofstream outFile;
 } etat = {};
 
 const int BMP_HEADER_LENGTH = 54;
@@ -81,25 +86,77 @@ void lireImage(uint8_t* r, uint8_t* g, uint8_t* b, string file) {
 	bmpIn.close();
 }
 
-void genImageDiff(uint8_t* r1, uint8_t* r2, uint8_t* g1, uint8_t* g2, uint8_t* b1, uint8_t* b2, uint8_t* diff) {
-	for (int i = 0; i < 480 * 640; i++)
-		diff[i] = 0;
+void genImageDiff(uint8_t* r1, uint8_t* r2, uint8_t* g1, uint8_t* g2, uint8_t* b1, uint8_t* b2) {
+	for (int i = 0; i < 480 * 640; i++) {
+		etat.imageDiff[i] = 0;
+		etat.visited[i] = false;
+	}
 
+	int diffCounter = 0;
 
 	for (int y = 0; y < 480; y++) {
 		for (int x = 0; x < 640; x++)
-			if (r1[x + 640 * y] == r2[x + 640 * y] && g1[x + 640 * y] == g2[x + 640 * y] && b1[x + 640 * y] == b2[x + 640 * y])
-				if (etat.partiel)
-					for (int j = -3; j < 4; j++)
-						for (int k = -3; k < 4; k++)
-							if (!((abs(k) > 1 && abs(j) == 3) || (abs(j) > 1 && abs(k) == 3)))
-								if (x + j < 480 && x + j >= 0 && y + k < 640 && y + k >= 0)
-									diff[x + j + 640 * (y + k)] = 1;
-				else
-					diff[x+640*y] = 1;
+			if ((r1[x + 640 * y] != r2[x + 640 * y] || g1[x + 640 * y] != g2[x + 640 * y] || b1[x + 640 * y] != b2[x + 640 * y]) && etat.visited[x + 640 * y] == false) {
+				diffCounter += 1;
+				etat.visited[x + 640 * y] = true;
+				vector<int> stackX;
+				vector<int> stackY;
+				stackX.push_back(x);
+				stackY.push_back(y);
+				etat.outFile << "DIFFERENCE" << endl;
+				while (!stackX.empty()) {
+					etat.outFile << to_string(stackX.back()) << "," << to_string(stackY.back()) << endl;
+					stackX.pop_back();
+					stackY.pop_back();
+					if (etat.partiel) {
+						//enlarge pixel
 
+						for (int j = -3; j < 4; j++) {
+							for (int k = -3; k < 4; k++) {
+								if (!((abs(k) > 1 && abs(j) == 3) || (abs(j) > 1 && abs(k) == 3)))
+									if (x + j < 480 && x + j >= 0 && y + k < 640 && y + k >= 0 && etat.visited[x + j + 640 * (y + k)] == false) {
+										etat.visited[x + j + 640 * (y + k)] = true;
+										etat.imageDiff[x + j + 640 * (y + k)] = 1;
+										if ((r1[x + j + 640 * (y + k)] != r2[x + j + 640 * (y + k)] || g1[x + j + 640 * (y + k)] != g2[x + j + 640 * (y + k)] || b1[x + j + 640 * (y + k)] != b2[x + j + 640 * (y + k)]) && etat.visited[x + j + 640 * (y + k)] == false) {
+											stackX.push_back(x + j);
+											stackY.push_back(y + k);
+
+										}
+									}
+							}
+						}
+					}
+					else {
+						//add adjacent au stacks
+						etat.imageDiff[x + 640 * y] = 1;
+						if ((r1[x + 1 + 640 * y] != r2[x + 1 + 640 * y] || g1[x + 1 + 640 * y] != g2[x + 1 + 640 * y] || b1[x + 1 + 640 * y] != b2[x + 1 + 640 * y]) && etat.visited[x + 1 + 640 * y] == false) {
+							stackX.push_back(x + 1);
+							stackY.push_back(y);
+							etat.visited[x + 1 + 640 * y] = true;
+						}
+						if ((r1[x - 1 + 640 * y] != r2[x - 1 + 640 * y] || g1[x - 1 + 640 * y] != g2[x - 1 + 640 * y] || b1[x - 1 + 640 * y] != b2[x - 1 + 640 * y]) && etat.visited[x - 1 + 640 * y] == false) {
+							stackX.push_back(x - 1);
+							stackY.push_back(y);
+							etat.visited[x - 1 + 640 * y] = true;
+						}
+						if ((r1[x + 640 * (y+1)] != r2[x + 640 * (y + 1)] || g1[x + 640 * (y + 1)] != g2[x + 640 * (y + 1)] || b1[x + 640 * (y + 1)] != b2[x + 640 * (y + 1)]) && etat.visited[x + 640 * (y + 1)] == false) {
+							stackX.push_back(x);
+							stackY.push_back((y + 1));
+							etat.visited[x + 640 * (y + 1)] = true;
+						}
+						if ((r1[x + 640 * (y - 1)] != r2[x + 640 * (y - 1)] || g1[x + 640 * (y - 1)] != g2[x + 640 * (y - 1)] || b1[x + 640 * (y - 1)] != b2[x + 640 * (y - 1)]) && etat.visited[x + 640 * (y - 1)] == false) {
+							stackX.push_back(x);
+							stackY.push_back((y - 1));
+							etat.visited[x + 640 * (y - 1)] = true;
+
+						}
+							
+					}
+				}
+			}
 	}
 }
+
 
 
 int main(int argc, const char* argv[]) {
@@ -117,6 +174,9 @@ int main(int argc, const char* argv[]) {
 	etat.image_o = "2.bmp";
 	etat.image_m = "1.bmp";
 	etat.image_s = "3.bmp";
+	etat.partiel = true;
+
+	etat.outFile.open("diff.txt", ofstream::out);
 
 	uint8_t* r1 = new uint8_t[480 * 640];
 	uint8_t* g1 = new uint8_t[480 * 640];
@@ -128,10 +188,9 @@ int main(int argc, const char* argv[]) {
 	lireImage(r1, g1, b1, etat.image_o);
 	lireImage(r2, g2, b2, etat.image_m);
 
-	uint8_t* diff = new uint8_t[480 * 640];
+	etat.imageDiff = new uint8_t[480 * 640];
+	etat.visited = new bool[480 * 640]; 
 
-	genImageDiff(r1, r2, g1, g2, b1, b2, diff);
-
-	cout << r1[1];
+	genImageDiff(r1, r2, g1, g2, b1, b2);
 
 }
