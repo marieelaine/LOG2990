@@ -26,8 +26,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
   private selectedFiles: File[] = [];
   private selectedFilesAsBuffers: Buffer[] = [];
   private correctImageExtension: String = "image/bmp";
-  protected nameControl = new FormControl('', [
-    Validators.maxLength(20), Validators.minLength(30), Validators.required]);
+  protected nameControl: FormControl;
 
   public constructor(
     dialogRef: MatDialogRef<DialogSimpleComponent>,
@@ -38,6 +37,8 @@ export class DialogSimpleComponent extends DialogAbstrait {
       super(dialogRef, data, http);
       this.wrongImageSizeOrTypeMessage = "";
       this.wrongNumberOfImagesMessage = "";
+      this.nameControl = new FormControl('', [
+        Validators.minLength(3), Validators.maxLength(20), Validators.required]);
     }
 
   protected onClickAjouterPartie(): void {
