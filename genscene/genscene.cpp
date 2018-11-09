@@ -537,7 +537,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             40, 23, 25,
             0, 0, 0, 0,
-            callRandomPosition(-7,7), 0, callRandomPosition(-7,7),
+            callRandomPosition(-7,0), 0, callRandomPosition(-7,7),
             size
         };
         vecUrchin.push_back(object);
@@ -571,27 +571,27 @@ void makeScene(){
     importObject("data/obj/goldfish.obj", "goldfish", 2, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre/3);
+    temp = callRandomPosition(0, nombre/4);
     importObject("data/obj/squid.obj", "squid", 2, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre/3);
+    temp = callRandomPosition(0, nombre/4);
     importObject("data/obj/submarine.obj", "submarine", 5, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre/3);
+    temp = callRandomPosition(0, nombre/4);
     importObject("data/obj/urchin.obj", "urchin", 1, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre/2);
+    temp = callRandomPosition(0, nombre/4);
     importObject("data/obj/starfish.obj", "starfish", 1, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre/2);
+    temp = callRandomPosition(0, nombre/3);
     importObject("data/obj/crab.obj", "crab", 1, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre/2);
+    temp = callRandomPosition(0, nombre/3);
     importObject("data/obj/fish.obj", "fish", 1, temp);
     nombre = nombre - temp;
     
@@ -599,15 +599,15 @@ void makeScene(){
     importObject("data/obj/coral.obj", "coral", 1, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre);
+    temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/shark.obj", "shark", 3, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre);
+    temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/bluewhale.obj", "bluewhale", 4, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre);
+    temp = callRandomPosition(0, nombre/2);
     importObject("data/obj/coral2.obj", "coral2", 1, temp);
     nombre = nombre - temp;
     
@@ -616,14 +616,14 @@ void makeScene(){
     nombre = nombre - temp;
 
     temp = callRandomPosition(0, nombre);
-    importObject("data/obj/seadiver.obj", "seadiver", 3, temp);
+    importObject("data/obj/seashell.obj", "seashell", 1, temp);
     nombre = nombre - temp;
 
     temp = callRandomPosition(0, nombre);
-    importObject("data/obj/rocks.obj", "rocks", 4, temp);
+    importObject("data/obj/seadiver.obj", "seadiver", 3, temp);
     nombre = nombre - temp;
     
-    importObject("data/obj/seashell.obj", "seashell", 1, nombre);
+    importObject("data/obj/rocks.obj", "rocks", 4, nombre);
 }
 
 void addThemeObjet(int position){
