@@ -105,7 +105,9 @@ void genImageDiff(uint8_t* r1, uint8_t* r2, uint8_t* g1, uint8_t* g2, uint8_t* b
 				stackY.push_back(y);
 				etat.outFile << "DIFFERENCE" << endl;
 				while (!stackX.empty()) {
-					etat.outFile << to_string(stackX.back()) << "," << to_string(stackY.back()) << endl;
+					int currX = stackX.back();
+					int currY = stackY.back();
+					etat.outFile << to_string(currX) << "," << to_string(currY) << endl;
 					stackX.pop_back();
 					stackY.pop_back();
 					if (etat.partiel) {
@@ -114,14 +116,16 @@ void genImageDiff(uint8_t* r1, uint8_t* r2, uint8_t* g1, uint8_t* g2, uint8_t* b
 						for (int j = -3; j < 4; j++) {
 							for (int k = -3; k < 4; k++) {
 								if (!((abs(k) > 1 && abs(j) == 3) || (abs(j) > 1 && abs(k) == 3)))
-									if (x + j < 480 && x + j >= 0 && y + k < 640 && y + k >= 0 && etat.visited[x + j + 640 * (y + k)] == false) {
-										etat.visited[x + j + 640 * (y + k)] = true;
-										etat.imageDiff[x + j + 640 * (y + k)] = 1;
-										if ((r1[x + j + 640 * (y + k)] != r2[x + j + 640 * (y + k)] || g1[x + j + 640 * (y + k)] != g2[x + j + 640 * (y + k)] || b1[x + j + 640 * (y + k)] != b2[x + j + 640 * (y + k)]) && etat.visited[x + j + 640 * (y + k)] == false) {
-											stackX.push_back(x + j);
-											stackY.push_back(y + k);
-
+									if (currX + j < 480 && currX + j >= 0 && currY + k < 640 && currY + k >= 0 && etat.visited[currX + j + 640 * (currY + k)] == false) {
+										etat.imageDiff[currX + j + 640 * (currY + k)] = 1;
+										if ((r1[currX + j + 640 * (currY + k)] != r2[currX + j + 640 * (currY + k)] || g1[currX + j + 640 * (currY + k)] != g2[currX + j + 640 * (currY + k)] || b1[currX + j + 640 * (currY + k)] != b2[currX + j + 640 * (currY + k)]) && etat.visited[currX + j + 640 * (currY + k)] == false) {
+											stackX.push_back(currX + j);
+											stackY.push_back(currY + k);
 										}
+										else {
+											etat.outFile << to_string(currX + j) << "," << to_string(currY + k) << endl;
+										}
+										etat.visited[currX + j + 640 * (currY + k)] = true;
 									}
 							}
 						}

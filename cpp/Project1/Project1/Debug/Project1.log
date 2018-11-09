@@ -1,5 +1,2 @@
 ﻿  Source.cpp
-c:\users\bernard\desktop\log2990\cpp\project1\project1\source.cpp(113): error C2065: 'j': undeclared identifier
-c:\users\bernard\desktop\log2990\cpp\project1\project1\source.cpp(113): error C2065: 'k': undeclared identifier
-c:\users\bernard\desktop\log2990\cpp\project1\project1\source.cpp(114): error C2065: 'j': undeclared identifier
-c:\users\bernard\desktop\log2990\cpp\project1\project1\source.cpp(115): error C2065: 'k': undeclared identifier
+  Project1.vcxproj -> C:\Users\jeans\Desktop\LOG2990\cpp\Project1\Debug\Project1.exe
