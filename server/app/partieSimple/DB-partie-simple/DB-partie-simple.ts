@@ -313,7 +313,9 @@ export class DBPartieSimple {
     public async requeteDeletePartieSimple(req: Request, res: Response): Promise<void> {
         try {
             await this.deletePartieSimple(req.params.id, res);
-
+            this.socket.supprimerPartieSimple(req.params.id);
+            // TODO : delete la partie de la liste dattente
+            // deletePartieSimpleEnAttente(req.params.id).subscribe();
             res.status(201);
         } catch (err) {
             res.status(501).json(err);

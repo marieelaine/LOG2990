@@ -41,4 +41,8 @@ export class SocketServerService {
     public envoyerPartieMultiple(partieMultiple: PartieMultipleInterface): void {
         this.io.emit(event.ENVOYER_PARTIE_MULTIPLE, partieMultiple);
     }
+
+    public supprimerPartieSimple(partieId: string): void {
+        this.io.emit(event.DELETE_PARTIE_SIMPLE, partieId);
+    }
 }

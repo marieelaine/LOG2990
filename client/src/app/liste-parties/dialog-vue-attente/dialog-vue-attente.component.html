@@ -1,6 +1,6 @@
-<h1 mat-dialog-title>En attente d'un adversaire</h1>
+<h1 mat-dialog-title> {{ message }} </h1>
 
 <div mat-dialog-content>
-  <div class="loading"></div>
+  <div [ngClass]="isEnAttente ? 'loading' : 'erreur'"></div>
   <button mat-button id="buttonAnnuler"  (click)='onDialogClose()' class='dialogButtons mat-elevation-z6'>Annuler</button>
 </div>
