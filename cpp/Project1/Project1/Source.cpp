@@ -17,7 +17,7 @@ struct Etat
 	string image_m;
 	string image_s;
 	char* fichierTxt;
-	uint8_t* imageDiff;
+	// uint8_t* imageDiff;
 	bool* visited;
 	ofstream outFile;
 } etat = {};
@@ -28,21 +28,11 @@ const int BMP_HEADER_IMAGE_HEIGHT = 22;
 const int BMP_REQ_WIDTH = 640;
 const int BMP_REQ_HEIGHT = 480;
 const int ARRAY_SIZE = 3 * BMP_REQ_WIDTH * BMP_REQ_HEIGHT;
-/*
-bool estBonneTaille(unsigned char* header) {
-	return *(int*)&header[18] == BMP_REQ_WIDTH && *(int*)&header[22] == BMP_REQ_HEIGHT;
+
+bool estBonneTaille(char* header) {
+	return header[18] == BMP_REQ_WIDTH && header[22] == BMP_REQ_HEIGHT;
 }
 
-void comparerImages(unsigned char* image1, unsigned char* image2, unsigned char* image3) {
-	FILE* fichierSortie = fopen(etat.fichierTxt, "w");
-
-	for (int i = 0; i < ARRAY_SIZE; i++) {
-		image3[i] = image1[i] xor image2[i];
-	}
-
-
-}
-*/
 void creerEtat(const char* argv[], const int argc, Etat& etat) {
 	ifstream infile1(argv[argc - 3]);
 	ifstream infile2(argv[argc - 2]);
@@ -72,6 +62,7 @@ void lireImage(uint8_t* r, uint8_t* g, uint8_t* b, string file) {
 
 	char info[54];
 	bmpIn.read(info, 54);
+	if (estBonneTaille(*info)) cerr << "Erreur, image de taille 640x480 demandees." << endl;
 	int offset = *(int*)&info[10];
 	bmpIn.seekg(offset);
 
@@ -88,7 +79,7 @@ void lireImage(uint8_t* r, uint8_t* g, uint8_t* b, string file) {
 
 void genImageDiff(uint8_t* r1, uint8_t* r2, uint8_t* g1, uint8_t* g2, uint8_t* b1, uint8_t* b2) {
 	for (int i = 0; i < 480 * 640; i++) {
-		etat.imageDiff[i] = 0;
+		// etat.imageDiff[i] = 0;
 		etat.visited[i] = false;
 	}
 
@@ -110,14 +101,14 @@ void genImageDiff(uint8_t* r1, uint8_t* r2, uint8_t* g1, uint8_t* g2, uint8_t* b
 					etat.outFile << to_string(currX) << "," << to_string(currY) << endl;
 					stackX.pop_back();
 					stackY.pop_back();
-					if (etat.partiel) {
+					if (!etat.partiel) {
 						//enlarge pixel
 
 						for (int j = -3; j < 4; j++) {
 							for (int k = -3; k < 4; k++) {
 								if (!((abs(k) > 1 && abs(j) == 3) || (abs(j) > 1 && abs(k) == 3)))
 									if (currX + j < 480 && currX + j >= 0 && currY + k < 640 && currY + k >= 0 && etat.visited[currX + j + 640 * (currY + k)] == false) {
-										etat.imageDiff[currX + j + 640 * (currY + k)] = 1;
+										// etat.imageDiff[currX + j + 640 * (currY + k)] = 1;
 										if ((r1[currX + j + 640 * (currY + k)] != r2[currX + j + 640 * (currY + k)] || g1[currX + j + 640 * (currY + k)] != g2[currX + j + 640 * (currY + k)] || b1[currX + j + 640 * (currY + k)] != b2[currX + j + 640 * (currY + k)]) && etat.visited[currX + j + 640 * (currY + k)] == false) {
 											stackX.push_back(currX + j);
 											stackY.push_back(currY + k);
@@ -132,26 +123,26 @@ void genImageDiff(uint8_t* r1, uint8_t* r2, uint8_t* g1, uint8_t* g2, uint8_t* b
 					}
 					else {
 						//add adjacent au stacks
-						etat.imageDiff[x + 640 * y] = 1;
-						if ((r1[x + 1 + 640 * y] != r2[x + 1 + 640 * y] || g1[x + 1 + 640 * y] != g2[x + 1 + 640 * y] || b1[x + 1 + 640 * y] != b2[x + 1 + 640 * y]) && etat.visited[x + 1 + 640 * y] == false) {
-							stackX.push_back(x + 1);
-							stackY.push_back(y);
-							etat.visited[x + 1 + 640 * y] = true;
+						// etat.imageDiff[currX + 640 * currY] = 1;
+						if ((r1[currX + 1 + 640 * currY] != r2[currX + 1 + 640 * currY] || g1[currX + 1 + 640 * currY] != g2[currX + 1 + 640 * currY] || b1[currX + 1 + 640 * currY] != b2[currX + 1 + 640 * currY]) && etat.visited[currX + 1 + 640 * currY] == false) {
+							stackX.push_back(currX + 1);
+							stackY.push_back(currY);
+							etat.visited[currX + 1 + 640 * currY] = true;
 						}
-						if ((r1[x - 1 + 640 * y] != r2[x - 1 + 640 * y] || g1[x - 1 + 640 * y] != g2[x - 1 + 640 * y] || b1[x - 1 + 640 * y] != b2[x - 1 + 640 * y]) && etat.visited[x - 1 + 640 * y] == false) {
-							stackX.push_back(x - 1);
-							stackY.push_back(y);
-							etat.visited[x - 1 + 640 * y] = true;
+						if ((r1[currX - 1 + 640 * currY] != r2[currX - 1 + 640 * currY] || g1[currX - 1 + 640 * currY] != g2[currX - 1 + 640 * currY] || b1[currX - 1 + 640 * currY] != b2[currX - 1 + 640 * currY]) && etat.visited[currX - 1 + 640 * currY] == false) {
+							stackX.push_back(currX - 1);
+							stackY.push_back(currY);
+							etat.visited[currX - 1 + 640 * currY] = true;
 						}
-						if ((r1[x + 640 * (y+1)] != r2[x + 640 * (y + 1)] || g1[x + 640 * (y + 1)] != g2[x + 640 * (y + 1)] || b1[x + 640 * (y + 1)] != b2[x + 640 * (y + 1)]) && etat.visited[x + 640 * (y + 1)] == false) {
-							stackX.push_back(x);
-							stackY.push_back((y + 1));
-							etat.visited[x + 640 * (y + 1)] = true;
+						if ((r1[currX + 640 * (currY+1)] != r2[currX + 640 * (currY + 1)] || g1[currX + 640 * (currY + 1)] != g2[currX + 640 * (currY + 1)] || b1[currX + 640 * (currY + 1)] != b2[currX + 640 * (currY + 1)]) && etat.visited[currX + 640 * (currY + 1)] == false) {
+							stackX.push_back(currX);
+							stackY.push_back((currY + 1));
+							etat.visited[currX + 640 * (currY + 1)] = true;
 						}
-						if ((r1[x + 640 * (y - 1)] != r2[x + 640 * (y - 1)] || g1[x + 640 * (y - 1)] != g2[x + 640 * (y - 1)] || b1[x + 640 * (y - 1)] != b2[x + 640 * (y - 1)]) && etat.visited[x + 640 * (y - 1)] == false) {
-							stackX.push_back(x);
-							stackY.push_back((y - 1));
-							etat.visited[x + 640 * (y - 1)] = true;
+						if ((r1[currX + 640 * (currY - 1)] != r2[currX + 640 * (currY - 1)] || g1[currX + 640 * (currY - 1)] != g2[currX + 640 * (currY - 1)] || b1[currX + 640 * (currY - 1)] != b2[currX + 640 * (currY - 1)]) && etat.visited[currX + 640 * (currY - 1)] == false) {
+							stackX.push_back(currX);
+							stackY.push_back((currY - 1));
+							etat.visited[currX + 640 * (currY - 1)] = true;
 
 						}
 							
@@ -166,21 +157,16 @@ void genImageDiff(uint8_t* r1, uint8_t* r2, uint8_t* g1, uint8_t* g2, uint8_t* b
 int main(int argc, const char* argv[]) {
 
 
-	//if (argc < 4 || argc > 5)
-	//{
-	//	cerr << "Erreur: Nombre invalide de parametres!\n";
-	//	cerr << "Usage: ./bmpdiff [- partiel] image_originale.bmp image_modifiee.bmp image_sortie.bmp\n";
-	//}
-	//else {
-	//	creerEtat(argv, argc, etat);
-	//}
+	if (argc < 4 || argc > 5)
+	{
+		cerr << "Erreur: Nombre invalide de parametres!\n";
+		cerr << "Usage: ./bmpdiff [- partiel] image_originale.bmp image_modifiee.bmp image_sortie.bmp\n";
+	}
+	else {
+		creerEtat(argv, argc, etat);
+	}
 
-	etat.image_o = "2.bmp";
-	etat.image_m = "1.bmp";
-	etat.image_s = "3.bmp";
-	etat.partiel = true;
-
-	etat.outFile.open("diff.txt", ofstream::out);
+	etat.outFile.open("3.bmp.txt", ofstream::out);
 
 	uint8_t* r1 = new uint8_t[480 * 640];
 	uint8_t* g1 = new uint8_t[480 * 640];
@@ -192,7 +178,7 @@ int main(int argc, const char* argv[]) {
 	lireImage(r1, g1, b1, etat.image_o);
 	lireImage(r2, g2, b2, etat.image_m);
 
-	etat.imageDiff = new uint8_t[480 * 640];
+	// etat.imageDiff = new uint8_t[480 * 640];
 	etat.visited = new bool[480 * 640]; 
 
 	genImageDiff(r1, r2, g1, g2, b1, b2);
