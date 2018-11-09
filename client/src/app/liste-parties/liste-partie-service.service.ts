@@ -51,13 +51,15 @@ export class ListePartieServiceService {
     return this.http.get<string[]>(route.GET_PARTIE_SIMPLE_ATTENTE);
   }
 
-  public async addPartieSimpleEnAttente(partieId: string): Promise<void> {
+  // tslint:disable-next-line:no-any
+  public addPartieSimpleEnAttente(partieId: string): Observable<any> {
 
-    this.http.post(route.ADD_PARTIE_SIMPLE_ATTENTE, partieId);
+    return this.http.post(route.ADD_PARTIE_SIMPLE_ATTENTE, { partieId });
   }
 
-  public async deletePartieSimpleEnAttente(partieId: string): Promise<void> {
+  // tslint:disable-next-line:no-any
+  public deletePartieSimpleEnAttente(partieId: string): Observable<any> {
 
-    this.http.delete(route.DELETE_PARTIE_SIMPLE_ATTENTE + partieId);
+    return this.http.delete(route.DELETE_PARTIE_SIMPLE_ATTENTE + partieId);
   }
 }
