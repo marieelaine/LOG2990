@@ -19,6 +19,7 @@ import { DialogVueAttenteComponent } from "../dialog-vue-attente/dialog-vue-atte
 export class ListePartieSimpleComponent extends ListePartiesComponent implements OnInit {
 
   protected listeParties: PartieSimple[];
+  protected listePartieEnAttente: string[];
 
   constructor(public router: Router,
               public listePartieService: ListePartieServiceService,
@@ -30,6 +31,10 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   public async ngOnInit() {
     this.listePartieService.getListePartieSimple().subscribe((res: PartieSimple[]) => {
       this.listeParties = res;
+    });
+    this.listePartieService.getListePartieSimpleEnAttente().subscribe((res: string[]) => {
+      this.listePartieEnAttente = res;
+      console.log(this.listePartieEnAttente);
     });
     this.ajouterPartieSurSocketEvent();
 
@@ -43,27 +48,30 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     if (this.isListePartiesMode) {
       this.router.navigate(["/partie-simple-solo/" + partieId])
       .catch(() => ErrorHandler);
+
     } else if (this.isAdminMode) {
       this.reinitialiserTemps(partieId);
     }
   }
 
-  protected onCreerOuSupprimerClick(partieId: string): void {
+  protected async onCreerOuSupprimerClick(partieId: string): Promise<void> {
     if (this.isListePartiesMode) {
-      this.ouvrirDialogVueAttente();
-      this.listePartiesEnAttente.push(partieId);
-      this.setToJoindre();
-      this.router.navigate(["/partie-simple-multijoueur/" + partieId])
-      .catch(() => ErrorHandler);
+      await this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe((res) => {
+        this.ouvrirDialogVueAttente(partieId);
+        this.router.navigate(["/partie-simple-solo/" + partieId])
+        .catch(() => ErrorHandler);
+      });
+
     } else if (this.isAdminMode) {
       this.ouvrirDialogConfirmation(partieId);
     }
   }
 
-  private ouvrirDialogVueAttente() {
+  private ouvrirDialogVueAttente(partieId: string) {
     this.dialog.open(DialogVueAttenteComponent, {
       height: "220px",
-      width: "600px"
+      width: "600px",
+      data : { id: partieId }
     });
   }
 
@@ -91,5 +99,15 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     this.socketClientService.socket.on(event.ENVOYER_PARTIE_SIMPLE, (data) => {
       this.listeParties.push(data);
     });
+    this.socketClientService.socket.on(event.ENVOYER_PARTIE_SIMPLE_ATTENTE, (data) => {
+        this.listePartieEnAttente.push(data);
+    });
+    this.socketClientService.socket.on(event.DELETE_PARTIE_SIMPLE_ATTENTE, (data) => {
+      for (let i: number = 0 ; i < this.listePartieEnAttente.length ; i++) {
+        if (this.listePartieEnAttente[i] === data) {
+            this.listePartieEnAttente.splice(i, 1);
+        }
+      }
+  });
   }
 }
