@@ -510,7 +510,7 @@ void creerModifications()
                     StructSphere form = vecSphere.front();
                     swap(vecSphere.front(), vecSphere.back());
                     vecSphere.pop_back();
-                    form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+                    form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
                     vecSphere.push_back(form);
                     notChanged = false;
                 }
@@ -518,7 +518,7 @@ void creerModifications()
                     StructCube form = vecCube.front();
                     swap(vecCube.front(), vecCube.back());
                     vecCube.pop_back();
-                    form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+                    form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
                     vecCube.push_back(form);
                     notChanged = false;
                 }
@@ -526,7 +526,7 @@ void creerModifications()
                     StructCone form = vecCone.front();
                     swap(vecCone.front(), vecCone.back());
                     vecCone.pop_back();
-                    form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+                    form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
                     vecCone.push_back(form);
                     notChanged = false;
                 }
@@ -534,7 +534,7 @@ void creerModifications()
                     StructCylindre form = vecCylindre.front();
                     swap(vecCylindre.front(), vecCylindre.back());
                     vecCylindre.pop_back();
-                    form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+                    form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
                     vecCylindre.push_back(form);
                     notChanged = false;
                 }
@@ -542,7 +542,7 @@ void creerModifications()
                     StructPyramide form = vecPyramide.front();
                     swap(vecPyramide.front(), vecPyramide.back());
                     vecPyramide.pop_back();
-                    form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+                    form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
                     vecPyramide.push_back(form);
                     notChanged = false;
                 }    
