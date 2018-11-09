@@ -253,7 +253,6 @@ void motion( int x, int y )
 }
 
 void bindModel(themeObject objet) {
-    //glLoadIdentity();
     glTranslatef( objet.transX, objet.transY, objet.transZ );
     glRotatef( objet.angle, objet.rotX, objet.rotY, objet.rotZ );
     glColor3ub( objet.colorR, objet.colorG, objet.colorB );
@@ -384,7 +383,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             242, 226, 0,
             callRandomAngle(320), callRandom(), 0, 0,
-            callRandomPosition(-3,3), 5, callRandomPosition(-3,3),
+            callRandomPosition(-4,3), callRandomPosition(3,6), callRandomPosition(-3,4),
             size
         };
         vecShark.push_back(object);
@@ -527,7 +526,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             56, 45, 46,
             callRandomAngle(90), callRandom(), 0, 0,
-            callRandomPosition(-7,7), callRandomPosition(5,8), callRandomPosition(-7,7),
+            callRandomPosition(-7,7), callRandomPosition(5,7.5), callRandomPosition(-7,7),
             size
         };
         vecSubmarine.push_back(object);
@@ -568,19 +567,19 @@ void makeScene(){
     importObject("data/obj/island.obj", "island", 20, 1);
 
     int nombre = etat.nombreFormes;
-    int temp = callRandomPosition(0, nombre/2);
+    int temp = callRandomPosition(0, nombre/4);
     importObject("data/obj/goldfish.obj", "goldfish", 2, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre/2);
+    temp = callRandomPosition(0, nombre/3);
     importObject("data/obj/squid.obj", "squid", 2, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre/2);
+    temp = callRandomPosition(0, nombre/3);
     importObject("data/obj/submarine.obj", "submarine", 5, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre/2);
+    temp = callRandomPosition(0, nombre/3);
     importObject("data/obj/urchin.obj", "urchin", 1, temp);
     nombre = nombre - temp;
 
@@ -600,95 +599,79 @@ void makeScene(){
     importObject("data/obj/coral.obj", "coral", 1, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre/2);
+    temp = callRandomPosition(0, nombre);
     importObject("data/obj/shark.obj", "shark", 3, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre/2);
+    temp = callRandomPosition(0, nombre);
     importObject("data/obj/bluewhale.obj", "bluewhale", 4, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre/2);
+    temp = callRandomPosition(0, nombre);
     importObject("data/obj/coral2.obj", "coral2", 1, temp);
     nombre = nombre - temp;
     
-    temp = callRandomPosition(0, nombre/2);
+    temp = callRandomPosition(0, nombre);
     importObject("data/obj/chest.obj", "chest", 2, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre/2);
+    temp = callRandomPosition(0, nombre);
     importObject("data/obj/seadiver.obj", "seadiver", 3, temp);
     nombre = nombre - temp;
 
-    temp = callRandomPosition(0, nombre/2);
+    temp = callRandomPosition(0, nombre);
     importObject("data/obj/rocks.obj", "rocks", 4, temp);
     nombre = nombre - temp;
     
-    temp = callRandomPosition(0, nombre/2);
-    importObject("data/obj/seashell.obj", "seashell", 1, temp);
+    importObject("data/obj/seashell.obj", "seashell", 1, nombre);
 }
 
 void addThemeObjet(int position){
     switch (position){
         case 0 :
             importObject("data/obj/goldfish.obj", "goldfish", 2, 1);
-            cout << "goldfish" << endl;
             break;
         case 1 : 
             importObject("data/obj/squid.obj", "squid", 2, 1);
-            cout << "squid" << endl;
             break;
         case 2 : 
             importObject("data/obj/submarine.obj", "submarine", 5, 1);
-            cout << "submarine" << endl;
             break;
         case 3 : 
             importObject("data/obj/urchin.obj", "urchin", 1, 1);
-            cout << "urchin" << endl;
             break;
         case 4 : 
             importObject("data/obj/starfish.obj", "starfish", 1, 1);
-            cout << "starfish" << endl;
             break;
         case 5 : 
             importObject("data/obj/crab.obj", "crab", 1, 1);
-            cout << "crab" << endl;
             break;
         case 6 : 
             importObject("data/obj/fish.obj", "fish", 1, 1);
-            cout << "fish" << endl;
             break;
         case 7 : 
             importObject("data/obj/coral.obj", "coral", 1, 1);
-            cout << "coral" << endl;
             break;
         case 8 : 
             importObject("data/obj/shark.obj", "shark", 3, 1);
-            cout << "shark" << endl;
             break;
         case 9 : 
             importObject("data/obj/bluewhale.obj", "bluewhale", 4, 1);
-            cout << "bluewhale" << endl;
             break;
         case 10 : 
             importObject("data/obj/coral2.obj", "coral2", 1, 1);
-            cout << "coral2" << endl;
             break;
         case 11 : 
             importObject("data/obj/chest.obj", "chest", 2, 1);
-            cout << "chest" << endl;
             break;
         case 12 : 
             importObject("data/obj/seadiver.obj", "seadiver", 3, 1);
-            cout << "seadiver" << endl;
             break;
         case 13 : 
             importObject("data/obj/rocks.obj", "rocks", 5, 1);
-            cout << "rocks" << endl;
             break;
         case 14 : 
             importObject("data/obj/seashell.obj", "seashell", 1, 1);
-            cout << "seashell" << endl;
             break;
     }
 }
@@ -711,6 +694,19 @@ void creerEtat(char* argv[], Etat& etat){
     etat.capture4 = capture4;
 }
 
+void changeColor(vector<themeObject>& vector){
+    themeObject object = vector.front();
+    swap(vector.front(), vector.back());
+    vector.pop_back();
+    object.colorR = callRandomColor(); object.colorG = callRandomColor(); object.colorB = callRandomColor();
+    vector.push_back(object);
+} 
+
+void deleteObject(vector<themeObject>& vec){
+    swap(vec.front(), vec.back());
+    vec.pop_back();
+} 
+
 void creerModifications()
 {
     int compteur = 0;
@@ -727,134 +723,133 @@ void creerModifications()
             while (notChanged) {
                 int random = callRandomPosition(0, 14);
                 if (random == 0 && !vecGoldfish.empty()){
-                    swap(vecGoldfish.front(), vecGoldfish.back());
-                    vecGoldfish.pop_back();
+                    deleteObject(vecGoldfish);
                     notChanged = false;
                 }
                 else if (random == 1 && !vecSquid.empty()){
-                    swap(vecSquid.front(), vecSquid.back());
-                    vecSquid.pop_back();
+                    deleteObject(vecSquid);
                     notChanged = false;
                 }
                 else if (random == 2 && !vecSubmarine.empty()){
-                    swap(vecSubmarine.front(), vecSubmarine.back());
-                    vecSubmarine.pop_back();
+                    deleteObject(vecSubmarine);
                     notChanged = false;
                 }
-                else if (random == 3 &&!vecUrchin.empty()){
-                    swap(vecUrchin.front(), vecUrchin.back());
-                    vecUrchin.pop_back();
+                else if (random == 3 && !vecUrchin.empty()){
+                    deleteObject(vecUrchin);
                     notChanged = false;
                 }
-                else if (random == 4 &&!vecStarfish.empty()){
-                    swap(vecStarfish.front(), vecStarfish.back());
-                    vecStarfish.pop_back();
+                else if (random == 4 && !vecStarfish.empty()){
+                    deleteObject(vecStarfish);
                     notChanged = false;
                 }
-                else if (random == 5 &&!vecCrab.empty()){
-                    swap(vecCrab.front(), vecCrab.back());
-                    vecCrab.pop_back();
+                else if (random == 5 && !vecCrab.empty()){
+                    deleteObject(vecCrab);
                     notChanged = false;
                 }
-                else if (random == 6 &&!vecFish.empty()){
-                    swap(vecFish.front(), vecFish.back());
-                    vecFish.pop_back();
+                else if (random == 6 && !vecFish.empty()){
+                    deleteObject(vecFish);
                     notChanged = false;
                 }    
-                else if (random == 7 &&!vecCoral.empty()){
-                    swap(vecCoral.front(), vecCoral.back());
-                    vecCoral.pop_back();
+                else if (random == 7 && !vecCoral.empty()){
+                    deleteObject(vecCoral);;
                     notChanged = false;
                 }    
-                else if (random == 8 &&!vecShark.empty()){
-                    swap(vecShark.front(), vecShark.back());
-                    vecShark.pop_back();
+                else if (random == 8 && !vecShark.empty()){
+                    deleteObject(vecShark);
                     notChanged = false;
                 }    
-                else if (random == 9 &&!vecBluewhale.empty()){
-                    swap(vecBluewhale.front(), vecBluewhale.back());
-                    vecBluewhale.pop_back();
+                else if (random == 9 && !vecBluewhale.empty()){
+                    deleteObject(vecBluewhale);
                     notChanged = false;
                 }    
-                else if (random == 10 &&!vecCoral2.empty()){
-                    swap(vecCoral2.front(), vecCoral2.back());
-                    vecCoral2.pop_back();
+                else if (random == 10 && !vecCoral2.empty()){
+                    deleteObject(vecCoral2);
                     notChanged = false;
                 }    
-                else if (random == 11 &&!vecChest.empty()){
-                    swap(vecChest.front(), vecChest.back());
-                    vecChest.pop_back();
+                else if (random == 11 && !vecChest.empty()){
+                   deleteObject(vecChest);
                     notChanged = false;
                 }    
-                else if (random == 12 &&!vecSeadiver.empty()){
-                    swap(vecSeadiver.front(), vecSeadiver.back());
-                    vecSeadiver.pop_back();
+                else if (random == 12 && !vecSeadiver.empty()){
+                    deleteObject(vecSeadiver);
                     notChanged = false;
                 }    
-                else if (random == 13 &&!vecRocks.empty()){
-                    swap(vecRocks.front(), vecRocks.back());
-                    vecRocks.pop_back();
+                else if (random == 13 && !vecRocks.empty()){
+                    deleteObject(vecRocks);
                     notChanged = false;
                 }    
-                else if (random == 14 &&!vecSeashell.empty()){
-                    swap(vecSeashell.front(), vecSeashell.back());
-                    vecSeashell.pop_back();
+                else if (random == 14 && !vecSeashell.empty()){
+                    deleteObject(vecSeashell);
                     notChanged = false;
                 }
             }
-            cout << "supression" << endl;
         }
-
-        // }
-        // else if (modif == 'c') {
-        //     bool notChanged = true;
-        //     while (notChanged) {
-        //         int random = callRandomNumber(4);
-        //         if (random == 0 && !vecSphere.empty()){
-        //             StructSphere form = vecSphere.front();
-        //             swap(vecSphere.front(), vecSphere.back());
-        //             vecSphere.pop_back();
-        //             form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
-        //             vecSphere.push_back(form);
-        //             notChanged = false;
-        //         }
-        //         if (random == 1 && !vecCube.empty()){
-        //             StructCube form = vecCube.front();
-        //             swap(vecCube.front(), vecCube.back());
-        //             vecCube.pop_back();
-        //             form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
-        //             vecCube.push_back(form);
-        //             notChanged = false;
-        //         }
-        //         if (random == 2 && !vecCone.empty()){
-        //             StructCone form = vecCone.front();
-        //             swap(vecCone.front(), vecCone.back());
-        //             vecCone.pop_back();
-        //             form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
-        //             vecCone.push_back(form);
-        //             notChanged = false;
-        //         }
-        //         if (random == 3 && !vecCylindre.empty()){
-        //             StructCylindre form = vecCylindre.front();
-        //             swap(vecCylindre.front(), vecCylindre.back());
-        //             vecCylindre.pop_back();
-        //             form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
-        //             vecCylindre.push_back(form);
-        //             notChanged = false;
-        //         }
-        //         if (random == 4 && !vecPyramide.empty()){
-        //             StructPyramide form = vecPyramide.front();
-        //             swap(vecPyramide.front(), vecPyramide.back());
-        //             vecPyramide.pop_back();
-        //             form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
-        //             vecPyramide.push_back(form);
-        //             notChanged = false;
-        //         }    
-        //     }
-        //     cout << "couleur" << endl;
-
-        //}
-        //glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
+        else if (modif == 'c') {
+            bool notChanged = true;
+            while (notChanged) {
+                int random = callRandomPosition(0, 14);
+                if (random == 0 && !vecGoldfish.empty()){
+                    changeColor(vecGoldfish);
+                    notChanged = false;
+                }
+                if (random == 1 && !vecSquid.empty()){
+                    changeColor(vecSquid);
+                    notChanged = false;
+                }
+                if (random == 2 && !vecSubmarine.empty()){
+                    changeColor(vecSubmarine);
+                    notChanged = false;
+                }
+                if (random == 3 && !vecUrchin.empty()){
+                    changeColor(vecUrchin);
+                    notChanged = false;
+                }
+                if (random == 4 && !vecStarfish.empty()){
+                    changeColor(vecStarfish);
+                    notChanged = false;
+                } 
+                if (random == 5 && !vecCrab.empty()){
+                    changeColor(vecCrab);
+                    notChanged = false;
+                }
+                if (random == 6 && !vecFish.empty()){
+                    changeColor(vecFish);
+                    notChanged = false;
+                }
+                if (random == 7 && !vecCoral.empty()){
+                    changeColor(vecCoral);
+                    notChanged = false;
+                }
+                if (random == 8 && !vecShark.empty()){
+                    changeColor(vecShark);
+                    notChanged = false;
+                }
+                if (random == 9 && !vecBluewhale.empty()){
+                    changeColor(vecBluewhale);
+                    notChanged = false;
+                }
+                if (random == 10 && !vecCoral2.empty()){
+                    changeColor(vecCoral2);
+                    notChanged = false;
+                }
+                if (random == 11 && !vecChest.empty()){
+                    changeColor(vecChest);
+                    notChanged = false;
+                }
+                if (random == 12 && !vecSeadiver.empty()){
+                    changeColor(vecSeadiver);
+                    notChanged = false;
+                }
+                if (random == 13 && !vecRocks.empty()){
+                    changeColor(vecRocks);
+                    notChanged = false;
+                }
+                if (random == 14 && !vecSeashell.empty()){
+                    changeColor(vecSeashell);
+                    notChanged = false;
+                }
+            }
+        }
         compteur++;
     }
 }
@@ -915,7 +910,7 @@ void Timer(int value)
    else if(value==4)
    {
     capturerScene(etat.capture4);
-    glutTimerFunc(2000, Timer, 5);
+    glutTimerFunc(100, Timer, 5);
    }
    else if(value==5)
    {
@@ -948,7 +943,7 @@ int main( int argc, char *argv[] )
                 glutMouseFunc( mouse );
                 glutMotionFunc( motion );
                 glutIdleFunc( display );
-                glutTimerFunc(2000, Timer, 0);
+                glutTimerFunc(500, Timer, 0);
                 glEnable( GL_DEPTH_TEST );
 
                 // set up "headlamp"-like light
