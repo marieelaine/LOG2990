@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
     providers: [PartieService]
 })
 
-export class PartieMultijoueurComponent extends VueSimpleComponent {
+export class PartieSimpleMultijoueurComponent extends VueSimpleComponent {
 
     constructor(protected route: ActivatedRoute,
                 protected partieService: PartieService) {

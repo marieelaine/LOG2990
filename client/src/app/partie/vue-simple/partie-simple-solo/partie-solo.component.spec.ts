@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { PartieSoloComponent } from './partie-solo.component';
+import { PartieSimpleSoloComponent } from './partie-solo.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatCardModule } from '@angular/material';
 import { ErrorHandler } from '@angular/core';
@@ -8,12 +8,12 @@ import { ActivatedRouteMock } from 'src/testing/mocks';
 import { ChatComponent } from 'src/app/chat/chat.component';
 
 describe('PartieSoloComponent', () => {
-    let component: PartieSoloComponent;
-    let fixture: ComponentFixture<PartieSoloComponent>;
+    let component: PartieSimpleSoloComponent;
+    let fixture: ComponentFixture<PartieSimpleSoloComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [PartieSoloComponent, ChatComponent],
+            declarations: [PartieSimpleSoloComponent, ChatComponent],
             imports: [
                 HttpClientTestingModule,
                 MatCardModule
@@ -30,7 +30,7 @@ describe('PartieSoloComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(PartieSoloComponent);
+        fixture = TestBed.createComponent(PartieSimpleSoloComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

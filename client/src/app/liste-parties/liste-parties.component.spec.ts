@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { ListePartieSimpleComponent } from './liste-partie-simple/liste-partie-simple.component';
 import { ListePartieMultipleComponent } from './liste-partie-multiple/liste-partie-multiple.component';
-import { PartieSoloComponent } from '../partie/vue-simple/partie-solo/partie-solo.component';
+import { PartieSimpleSoloComponent } from '../partie/vue-simple/partie-simple-solo/partie-solo.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from "@angular/platform-browser";
 
@@ -30,7 +30,7 @@ describe('ListePartiesComponent', () => {
                 ListePartiesComponent,
                 ListePartieSimpleComponent,
                 ListePartieMultipleComponent,
-                PartieSoloComponent
+                PartieSimpleSoloComponent
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA
@@ -39,8 +39,8 @@ describe('ListePartiesComponent', () => {
                 MatCardModule,
                 RouterTestingModule.withRoutes([
                     { path: "liste-parties", component: ListePartiesComponent },
-                    { path: "partie-solo", component: PartieSoloComponent },
-                    { path: "admin", component: PartieSoloComponent },
+                    { path: "partie-solo", component: PartieSimpleSoloComponent },
+                    { path: "admin", component: PartieSimpleSoloComponent },
                 ]),
                 HttpClientTestingModule,
                 MatDialogModule

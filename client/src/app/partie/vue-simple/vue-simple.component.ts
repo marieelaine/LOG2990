@@ -15,7 +15,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
   public constructor(protected route: ActivatedRoute,
                      protected partieService: PartieService) {
-      super(route, partieService, true); // TODO FIX MAGIC NUMBER
+      super(route, partieService, true);
       this.differenceRestantes = 7;
   }
 

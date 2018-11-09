@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PartieMultijoueurComponent } from './partie-multijoueur.component';
+import { PartieSimpleMultijoueurComponent } from './partie-multijoueur.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatCardModule } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -8,12 +8,12 @@ import { ActivatedRoute } from '@angular/router';
 import { ActivatedRouteMock } from 'src/testing/mocks';
 
 describe('PartieMultijoueurComponent', () => {
-    let component: PartieMultijoueurComponent;
-    let fixture: ComponentFixture<PartieMultijoueurComponent>;
+    let component: PartieSimpleMultijoueurComponent;
+    let fixture: ComponentFixture<PartieSimpleMultijoueurComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [PartieMultijoueurComponent, ChatComponent],
+            declarations: [PartieSimpleMultijoueurComponent, ChatComponent],
             imports: [
                 HttpClientTestingModule,
                 MatCardModule
@@ -27,7 +27,7 @@ describe('PartieMultijoueurComponent', () => {
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
 
-        fixture = TestBed.createComponent(PartieMultijoueurComponent);
+        fixture = TestBed.createComponent(PartieSimpleMultijoueurComponent);
         component = fixture.componentInstance;
     });
 
