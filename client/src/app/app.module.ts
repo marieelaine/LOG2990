@@ -45,6 +45,7 @@ import { SocketClientService } from "./socket/socket-client.service";
 import { ListePartieServiceService } from "./liste-parties/liste-partie-service.service";
 import { DialogErreurComponent } from "./admin/dialog-erreur/dialog-erreur.component";
 import { ChatComponent } from './chat/chat.component';
+import { VueSimpleComponent } from './partie/vue-simple/vue-simple.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:4200', options: {} };
 
@@ -78,6 +79,7 @@ const appRoutes: Routes = [
     DialogConfirmationComponent,
     DialogErreurComponent,
     ChatComponent,
+    VueSimpleComponent,
   ],
   imports: [
     RouterModule.forRoot(

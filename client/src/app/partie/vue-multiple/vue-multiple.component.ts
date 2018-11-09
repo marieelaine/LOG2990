@@ -16,7 +16,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
 
     public constructor(protected route: ActivatedRoute,
                        protected partieService: PartieService) {
-        super(route, partieService, 4); // TODO FIX MAGIC NUMBER
+        super(route, partieService, false); // TODO FIX MAGIC NUMBER
         this.differenceRestantes = 14;
     }
 

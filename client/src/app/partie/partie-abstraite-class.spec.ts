@@ -25,7 +25,7 @@ describe('PartieAbstraiteComponent', () => {
     let component: AbstractClassInstance;
 
     beforeEach(() => {
-    component = new AbstractClassInstance(new ActivatedRouteMock(), new PartieServiceMock(), 1);
+    component = new AbstractClassInstance(new ActivatedRouteMock(), new PartieServiceMock(), true);
     component["partie"] = new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(), Buffer.from(new Array<number>()),
                                             Buffer.from(new Array<number>()), new Array<Array<string>>(), "");
     });

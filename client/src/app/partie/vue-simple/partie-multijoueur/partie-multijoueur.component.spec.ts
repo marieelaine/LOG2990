@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PartieMultijoueurComponent } from './partie-multijoueur.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatCardModule } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { RouterTestingModule } from '@angular/router/testing';
 import { ChatComponent } from 'src/app/chat/chat.component';
+import { ActivatedRoute } from '@angular/router';
+import { ActivatedRouteMock } from 'src/testing/mocks';
 
 describe('PartieMultijoueurComponent', () => {
     let component: PartieMultijoueurComponent;
@@ -15,11 +15,15 @@ describe('PartieMultijoueurComponent', () => {
         TestBed.configureTestingModule({
             declarations: [PartieMultijoueurComponent, ChatComponent],
             imports: [
-                MatCardModule,
                 HttpClientTestingModule,
-                RouterTestingModule,
+                MatCardModule
             ],
-            providers: [],
+            providers: [
+                {
+                    provide: ActivatedRoute,
+                    useClass: ActivatedRouteMock
+                },
+            ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
 
