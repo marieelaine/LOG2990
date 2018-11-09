@@ -1,6 +1,5 @@
 import { ChronoComponent } from "../chrono/chrono.component";
 import {ElementRef, ErrorHandler, QueryList, ViewChildren} from "@angular/core";
-import {PartieSimple} from "../admin/dialog-simple/partie-simple";
 import {ActivatedRoute} from "@angular/router";
 import {PartieService} from "./partie.service";
 
