@@ -8,7 +8,7 @@ import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable, inject } from "inversify";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
-import { execFile, ChildProcess } from "child_process";
+import { execFile, ChildProcess, spawn } from "child_process";
 import { SocketServerService } from "../socket-io.service";
 import Types from "../types";
 
@@ -283,7 +283,6 @@ export class DBPartieMultiple {
         await this.baseDeDonnees.assurerConnection();
         res.send(await this.getPartieMultiple(req.params.id, res));
     }
-
     public async requeteReinitialiserTemps(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();
         try {
@@ -293,10 +292,8 @@ export class DBPartieMultiple {
             res.status(501).json(err);
         }
     }
-
     private async reinitialiserTemps(idPartie: String, tempsSolo: Array<number>, tempsUnContreUn: Array<number>): Promise<void> {
         await this.modelPartie.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
             .catch(() => { throw new Error(); });
     }
-
 }

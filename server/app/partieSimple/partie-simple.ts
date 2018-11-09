@@ -258,6 +258,7 @@ export class DBPartieSimple {
 
     protected async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
         partie._imageDiff = diffArrays;
+        console.log(partie);
         const partieSimple: Document = new this.modelPartieBuffer(partie);
         await partieSimple.save(async (err: Error, data: Document) => {
             if (err !== null && err.name === "ValidationError") {
@@ -302,6 +303,7 @@ export class DBPartieSimple {
             await this.genererImageMod(req.body);
             res.status(201).json(await this.getPartieSimpleByName(req.params.nomPartie));
         } catch (err) {
+            console.log("Erreur : ", err);
             res.status(501).json(err);
         }
     }

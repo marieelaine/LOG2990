@@ -183,7 +183,7 @@ int main(int argc, const char* argv[]) {
 	etat.visited = new bool[480 * 640]; 
 
 	genImageDiff(r1, r2, g1, g2, b1, b2);
-
+	etat.outFile << "END" << endl;
 	cout << "Image de differences generee avec succes!" << endl;
 	etat.outFile.close();
 	
