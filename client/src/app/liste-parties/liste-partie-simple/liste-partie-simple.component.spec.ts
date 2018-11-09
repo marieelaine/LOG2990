@@ -31,7 +31,7 @@ describe("Liste Partie Simple Component", () => {
     // tslint:disable-next-line:max-func-body-length
     beforeEach(() => {
         mockListePartieService = jasmine.createSpyObj([
-            "getListePartieSimple", "deletePartieSimple", "reinitialiserTempsPartie"
+            "getListePartieSimple", "deletePartieSimple", "reinitialiserTempsPartie", "addPartieSimpleEnAttente"
         ]);
         TestBed.configureTestingModule({
             declarations: [
@@ -75,14 +75,14 @@ describe("Liste Partie Simple Component", () => {
     });
 
     describe("fonction onJouerOuReinitialiserClick", () => {
-        it("Devrait naviguer a la route '/partie-solo/'", fakeAsync(() => {
+        it("Devrait naviguer a la route '/partie-simple-solo/'", fakeAsync(() => {
             component["isListePartiesMode"] = true;
             const id: string = "";
 
             component["onJouerOuReinitialiserClick"](id);
             tick();
 
-            expect(location.path()).toBe("/partie-simple-solo/");
+            expect(location.path()).toBe("partie-simple-solo/");
         }));
         it("Devrait rester a la route courante", fakeAsync(() => {
             const pathAvant: string = location.path();
@@ -97,14 +97,14 @@ describe("Liste Partie Simple Component", () => {
     });
 
     describe("fonction onCreerOuSupprimerClick", () => {
-        it("Devrait naviguer a la route '/partie-solo'", fakeAsync(() => {
+        it("Devrait naviguer a la route '/partie-simple-solo/'", fakeAsync(() => {
             component["isListePartiesMode"] = true;
             const id: string = "";
-
+            mockListePartieService.addPartieSimpleEnAttente.and.returnValue(of());
             component["onCreerOuSupprimerClick"](id);
             tick();
 
-            expect(location.path()).toBe("/partie-solo");
+            expect(location.path()).toBe("partie-simple-solo/");
         }));
         it("Devrait rester a la route courante", fakeAsync(() => {
             const pathAvant: string = location.path();

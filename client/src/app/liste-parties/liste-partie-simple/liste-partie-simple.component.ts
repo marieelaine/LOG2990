@@ -56,7 +56,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   protected async onCreerOuSupprimerClick(partieId: string): Promise<void> {
     if (this.isListePartiesMode) {
-      await this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe((res) => {
+      await this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
         this.ouvrirDialogVueAttente(partieId);
         this.router.navigate(["/partie-simple-solo/" + partieId])
         .catch(() => ErrorHandler);
