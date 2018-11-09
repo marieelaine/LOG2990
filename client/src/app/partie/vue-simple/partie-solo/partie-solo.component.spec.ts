@@ -4,19 +4,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatCardModule } from '@angular/material';
 import { ErrorHandler } from '@angular/core';
 import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { ActivatedRouteMock } from 'src/testing/mocks';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
-
-class ActivatedRouteMock extends ActivatedRoute {
-    constructor() {
-        super();
-        this.snapshot = new ActivatedRouteSnapshot();
-        this.snapshot.params = {
-            ["idPartie"]: "123"
-        };
-    }
-}
+import { ChatComponent } from 'src/app/chat/chat.component';
 
 describe('PartieSoloComponent', () => {
     let component: PartieSoloComponent;
@@ -24,7 +16,7 @@ describe('PartieSoloComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [PartieSoloComponent],
+            declarations: [PartieSoloComponent, ChatComponent],
             imports: [
                 HttpClientTestingModule,
                 MatCardModule
@@ -51,16 +43,6 @@ describe('PartieSoloComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
-    });
-
-    it("addNomPartieToChat devrait ajouter le nom de la partie au tableau de messages", () => {
-        component["addNomPartieToChat"]();
-        expect(component["messagesChat"][0]).toEqual("Bienvenue dans la partie NomPartie");
-    });
-
-    it("setID devrait setter le ID correctement", () => {
-        component["setID"]();
-        expect(component["partieID"]).toEqual("123");
     });
 
     it("setPartie devrait appeler la fonction getPartieSimple de partieService", () => {
@@ -95,6 +77,8 @@ describe('PartieSoloComponent', () => {
         beforeEach(() => {
             component["partie"]["_image1"] = Buffer.from("Hello World");
             component["partie"]["_image2"] = Buffer.from("Hello World");
+            component["imageData"] = ["Hello World"];
+            component["nbImage"] = 1;
         });
 
         it("devrait appeler addNomPartieToChat", () => {

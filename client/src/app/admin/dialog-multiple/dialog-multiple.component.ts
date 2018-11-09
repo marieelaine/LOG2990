@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { PartieMultiple } from './partie-multiple';
 import * as Buffer from "buffer";
 import { PartieMultipleService } from '../partie-multiple.service';
+import { FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-dialog-multiple',
@@ -15,10 +16,16 @@ import { PartieMultipleService } from '../partie-multiple.service';
 
 export class DialogMultipleComponent extends DialogAbstrait {
 
-  protected toggleClassButton: boolean = false;
+  protected toggleClassButtonGeo: boolean = false;
+  protected toggleClassButtonOcean: boolean = false;
   protected outOfBoundNumberForms: string;
   protected checkboxMessage: string;
   protected themeButtonMessage: string;
+  protected qtyControl = new FormControl('', [
+    Validators.max(200), Validators.min(10),
+    Validators.required, Validators.pattern('[ 0-9 ]*')]);
+  protected nameControl = new FormControl('', [
+    Validators.maxLength(20), Validators.minLength(3), Validators.required]);
 
   public constructor(
     dialogRef: MatDialogRef<DialogMultipleComponent>,
@@ -90,13 +97,17 @@ export class DialogMultipleComponent extends DialogAbstrait {
         (error) => {
           console.error(error);
         });
-    // setTimeout(() => {
-    //       window.location.reload(); },
-    //            2500);
+  }
+
+  protected onGeoClickButton(event: Event, theme: string): void {
+    this.toggleClassButtonGeo = !this.toggleClassButtonGeo;
+    this.toggleClassButtonOcean = false;
+    this.data.theme = theme;
   }
 
   protected onThemeClickButton(event: Event, theme: string): void {
-    this.toggleClassButton = !this.toggleClassButton;
+    this.toggleClassButtonOcean = !this.toggleClassButtonOcean;
+    this.toggleClassButtonGeo = false;
     this.data.theme = theme;
   }
 

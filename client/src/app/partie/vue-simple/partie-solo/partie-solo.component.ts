@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ErrorHandler} from '@angular/core';
 import { PartieAbstraiteClass } from '../../partie-abstraite-class';
 import { ActivatedRoute} from "@angular/router";
 import { PartieSimple} from "../../../admin/dialog-simple/partie-simple";
@@ -22,7 +22,6 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
     }
 
     protected setPartie(): void {
-        console.log(this.partieID);
         this.partieService.getPartieSimple(this.partieID).subscribe((res: PartieSimple) => {
             this.partie = res;
             this.getImageData();
@@ -78,4 +77,18 @@ export class PartieSoloComponent extends PartieAbstraiteClass {
             contextD.putImageData(imageDataD, 0, 0);
         }
     }
+
+    protected ajouterTemps(temps: number): void {
+        if (this.isPartieExiste()) {
+            this.partie["_tempsSolo"].push(temps);
+            this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
+            .catch(() => ErrorHandler);
+        }
+    }
+
+    private isPartieExiste(): boolean {
+        // TODO
+        return true;
+    }
+
 }

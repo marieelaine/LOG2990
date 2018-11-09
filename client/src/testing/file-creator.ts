@@ -1,7 +1,6 @@
 export function createMockImageFile(isBMP: Boolean) {
     const content = "Test image";
-    var data: Blob;
-    data = new Blob([content]);
+    const data: Blob = new Blob([content]);
     const arrayOfBlob = new Array<Blob>();
     arrayOfBlob.push(data);
 

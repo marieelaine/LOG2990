@@ -9,6 +9,8 @@ import { VueMultipleComponent } from "../../partie/vue-multiple/vue-multiple.com
 import * as Buffer from "buffer";
 import { of } from "rxjs";
 import { Location } from "@angular/common";
+import { SocketClientService } from 'src/app/socket/socket-client.service';
+import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material';
 
 describe('PartieMultipleComponent', () => {
     let mockListePartieService: jasmine.SpyObj<ListePartieServiceService>;
@@ -32,13 +34,13 @@ describe('PartieMultipleComponent', () => {
         "1");
     const parties: PartieMultiple[] = [partie];
 
+    // tslint:disable-next-line:max-func-body-length
     beforeEach(() => {
         mockListePartieService = jasmine.createSpyObj([
             "getListePartieMultiple",
             "deletePartieMultiple",
             "reinitialiserTempsPartieMultiple"
         ]);
-
         TestBed.configureTestingModule({
             declarations: [
                 ListePartieMultipleComponent,
@@ -48,13 +50,16 @@ describe('PartieMultipleComponent', () => {
                 RouterTestingModule.withRoutes([
                     { path: "partie-multiple", component: VueMultipleComponent },
                 ]),
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                MatDialogModule,
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA
             ],
             providers: [
                 { provide: ListePartieServiceService, useValue: mockListePartieService },
+                { provide: MAT_DIALOG_DATA, useValue: {} },
+                SocketClientService
             ]
         });
 

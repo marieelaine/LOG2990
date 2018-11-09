@@ -3,6 +3,8 @@ import { ListePartiesComponent } from "../liste-parties.component";
 import { Router } from "@angular/router";
 import { ListePartieServiceService } from "../liste-partie-service.service";
 import { PartieSimple } from "../../admin/dialog-simple/partie-simple";
+import { MatDialog } from "@angular/material";
+import { DialogConfirmationComponent } from "../dialog-confirmation/dialog-confirmation.component";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
 
@@ -19,11 +21,12 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   constructor(public router: Router,
               public listePartieService: ListePartieServiceService,
+              private dialog: MatDialog,
               public socketClientService: SocketClientService) {
     super(router, listePartieService);
   }
 
-  public ngOnInit() {
+  public async ngOnInit() {
     this.listePartieService.getListePartieSimple().subscribe((res: PartieSimple[]) => {
       this.listeParties = res;
     });
@@ -49,18 +52,18 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
       this.router.navigate(["/partie-multi/" + partieId])
       .catch(() => ErrorHandler);
     } else if (this.isAdminMode) {
-      this.supprimerPartie(partieId);
+      this.ouvrirDialog(partieId);
     }
   }
 
-  protected supprimerPartie(partieId: string): void {
-    for (let i = 0 ; i < this.listeParties.length ; i++) {
-      if (this.listeParties[i]["_id"] === partieId) {
-        this.listeParties.splice(i, 1);
-      }
-    }
-    this.listePartieService.deletePartieSimple(partieId)
-    .catch(() => ErrorHandler);
+  private ouvrirDialog(partieId: string): void {
+    this.dialog.open(DialogConfirmationComponent, {
+      height: "190px",
+      width: "600px",
+      data: { id: partieId,
+              listeParties: this.listeParties,
+              isSimple: true}
+    });
   }
 
   protected reinitialiserTemps(partieId: string): void {
