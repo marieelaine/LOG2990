@@ -28,4 +28,12 @@ export class SocketServerService {
     public envoyerPartieSimple(partieSimple: PartieSimpleInterface): void {
         this.io.emit(event.ENVOYER_PARTIE_SIMPLE, partieSimple);
     }
+
+    public envoyerPartieSimpleAttente(partieId: string): void {
+        this.io.emit(event.ENVOYER_PARTIE_SIMPLE_ATTENTE, partieId);
+    }
+
+    public supprimerPartieSimpleAttente(partieId: string): void {
+        this.io.emit(event.DELETE_PARTIE_SIMPLE_ATTENTE, partieId);
+    }
 }

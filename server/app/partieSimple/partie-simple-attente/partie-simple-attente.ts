@@ -1,14 +1,16 @@
-import { injectable } from "inversify";
+import { injectable, inject } from "inversify";
 import { ServiceWeb } from "../../serviceWeb";
 import { Router, Request, Response } from "express";
+import Types from "../../types";
+import { SocketServerService } from "../../socket-io.service";
 
 @injectable()
-export class RoutesPartieSimple extends ServiceWeb {
+export class RoutesPartieSimpleAttente extends ServiceWeb {
 
-    public readonly mainRoute: string = "";
-    private partieSimpleAttente: Array<string>;
+    private partieSimpleAttente: string[];
+    public readonly mainRoute: string = "/";
 
-    public constructor() {
+    public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
         super();
         this.partieSimpleAttente = [];
     }
@@ -21,15 +23,19 @@ export class RoutesPartieSimple extends ServiceWeb {
         });
 
         router.post("/addPartieSimpleEnAttente", async (req: Request, res: Response) => {
-            this.partieSimpleAttente.push(req.body);
+            this.partieSimpleAttente.push(req.body.partieId);
+            this.socket.envoyerPartieSimpleAttente(req.body.partieId);
+            res.send();
         });
 
-        router.delete("/deletePartieSimpleEnAttente", async (req: Request, res: Response) => {
+        router.delete("/deletePartieSimpleEnAttente/:id", async (req: Request, res: Response) => {
             for (let i: number = 0 ; i < this.partieSimpleAttente.length ; i++) {
-                if (this.partieSimpleAttente[i] === req.body) {
+                if (this.partieSimpleAttente[i] === req.params.id) {
                     this.partieSimpleAttente.splice(i, 1);
                 }
             }
+            this.socket.supprimerPartieSimpleAttente(req.params.id);
+            res.send();
         });
 
         return router;
