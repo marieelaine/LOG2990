@@ -14,6 +14,7 @@ export class ListePartiesComponent {
 
   protected jouerOuReinitialiser: string;
   protected creerOuSupprimer: string;
+  protected joindreOuSupprimer: string;
   protected isListePartiesMode: boolean;
   protected isAdminMode: boolean;
   protected isElevatedActive: boolean;
@@ -134,6 +135,7 @@ export class ListePartiesComponent {
     this.isListePartiesMode = true;
     this.jouerOuReinitialiser = "Jouer";
     this.creerOuSupprimer = "Créer";
+    this.joindreOuSupprimer = "Joindre";
   }
 
   private setToReinitialiserAndSupprimer(): void {
@@ -141,6 +143,7 @@ export class ListePartiesComponent {
     this.isAdminMode = true;
     this.jouerOuReinitialiser = "Réinitialiser";
     this.creerOuSupprimer = "Supprimer";
+    this.joindreOuSupprimer = "Supprimer";
   }
 
 }
