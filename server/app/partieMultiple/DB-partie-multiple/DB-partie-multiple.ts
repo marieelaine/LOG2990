@@ -9,8 +9,8 @@ import "reflect-metadata";
 import { injectable, inject } from "inversify";
 import { BaseDeDonnees } from "../../baseDeDonnees/baseDeDonnees";
 import { execFile, ChildProcess } from "child_process";
-import { SocketServerService } from "../socket-io.service";
-import Types from "../types";
+import { SocketServerService } from "../../socket-io.service";
+import Types from "../../types";
 
 export interface PartieMultipleInterface {
     _id: string;
