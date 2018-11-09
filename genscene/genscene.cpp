@@ -393,7 +393,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            194, 178, 128,
+            128, 178, 194,
             0, 0, 0, 0,
             0, 0, 0,
             size
@@ -404,7 +404,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            71, 55, 10,
+            10, 55, 71,
             0, 0, 0, 0,
             -7, -1.05, callRandomPosition(-7,7),
             size
@@ -437,7 +437,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            226, 57, 31,
+            31, 57, 226,
             callRandomAngle(270), callRandom(), 0, 0,
             callRandomPosition(-7,7), 2, callRandomPosition(-7,7),
             size
@@ -448,7 +448,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            52, 118, 163,
+            163, 118, 52,
             callRandomAngle(300), callRandom(), callRandom(), callRandom(),
             callRandomPosition(-7,7), 5, callRandomPosition(-7,7), 
             size
@@ -459,7 +459,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            209, 156, 33, //or
+            33, 156, 209,
             callRandomAngle(270), callRandom(), callRandom(), callRandom(),
             callRandomPosition(-7,7), callRandomPosition(2,7), callRandomPosition(-7,7),
             size
@@ -492,7 +492,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            67, 27, 91,
+            91, 27, 67,
             callRandomAngle(30), callRandom(), callRandom(), callRandom(),
             callRandomPosition(-7,7), callRandomPosition(2,7), callRandomPosition(-7,7),
             size
@@ -503,7 +503,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            232, 127, 16,
+            16, 127, 232,
             callRandomAngle(270), callRandom(), 0, 0,
             callRandomPosition(-7,7), callRandomPosition(2,7), callRandomPosition(-7,7),
             size
@@ -525,7 +525,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            46, 45, 56,
+            56, 45, 46,
             callRandomAngle(90), callRandom(), 0, 0,
             callRandomPosition(-7,7), callRandomPosition(5,8), callRandomPosition(-7,7),
             size
@@ -536,7 +536,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            25, 23, 40,
+            40, 23, 25,
             0, 0, 0, 0,
             callRandomPosition(-7,7), 0, callRandomPosition(-7,7),
             size
@@ -547,7 +547,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            46, 45, 56,
+            56, 45, 46,
             270, 1, 0, 0,
             -6, -0.1, callRandomPosition(-7, 7),
             size
@@ -722,37 +722,88 @@ void creerModifications()
             addThemeObjet(callRandomPosition(0, 14));
             
         }
-        // else if (modif == 's') {
-        //     bool notChanged = true;
-        //     while (notChanged) {
-        //         int random = callRandomNumber(4);
-        //         if (random == 0 && !vecSphere.empty()){
-        //             swap(vecSphere.front(), vecSphere.back());
-        //             vecSphere.pop_back();
-        //             notChanged = false;
-        //         }
-        //         else if (random == 1 && !vecCube.empty()){
-        //             swap(vecCube.front(), vecCube.back());
-        //             vecCube.pop_back();
-        //             notChanged = false;
-        //         }
-        //         else if (random == 2 && !vecCone.empty()){
-        //             swap(vecCone.front(), vecCone.back());
-        //             vecCone.pop_back();
-        //             notChanged = false;
-        //         }
-        //         else if (random == 3 &&!vecCylindre.empty()){
-        //             swap(vecCylindre.front(), vecCylindre.back());
-        //             vecCylindre.pop_back();
-        //             notChanged = false;
-        //         }
-        //         else if (random == 4 &&!vecPyramide.empty()){
-        //             swap(vecPyramide.front(), vecPyramide.back());
-        //             vecPyramide.pop_back();
-        //             notChanged = false;
-        //         }    
-        //     }
-        //     cout << "supression" << endl;
+        else if (modif == 's') {
+            bool notChanged = true;
+            while (notChanged) {
+                int random = callRandomPosition(0, 14);
+                if (random == 0 && !vecGoldfish.empty()){
+                    swap(vecGoldfish.front(), vecGoldfish.back());
+                    vecGoldfish.pop_back();
+                    notChanged = false;
+                }
+                else if (random == 1 && !vecSquid.empty()){
+                    swap(vecSquid.front(), vecSquid.back());
+                    vecSquid.pop_back();
+                    notChanged = false;
+                }
+                else if (random == 2 && !vecSubmarine.empty()){
+                    swap(vecSubmarine.front(), vecSubmarine.back());
+                    vecSubmarine.pop_back();
+                    notChanged = false;
+                }
+                else if (random == 3 &&!vecUrchin.empty()){
+                    swap(vecUrchin.front(), vecUrchin.back());
+                    vecUrchin.pop_back();
+                    notChanged = false;
+                }
+                else if (random == 4 &&!vecStarfish.empty()){
+                    swap(vecStarfish.front(), vecStarfish.back());
+                    vecStarfish.pop_back();
+                    notChanged = false;
+                }
+                else if (random == 5 &&!vecCrab.empty()){
+                    swap(vecCrab.front(), vecCrab.back());
+                    vecCrab.pop_back();
+                    notChanged = false;
+                }
+                else if (random == 6 &&!vecFish.empty()){
+                    swap(vecFish.front(), vecFish.back());
+                    vecFish.pop_back();
+                    notChanged = false;
+                }    
+                else if (random == 7 &&!vecCoral.empty()){
+                    swap(vecCoral.front(), vecCoral.back());
+                    vecCoral.pop_back();
+                    notChanged = false;
+                }    
+                else if (random == 8 &&!vecShark.empty()){
+                    swap(vecShark.front(), vecShark.back());
+                    vecShark.pop_back();
+                    notChanged = false;
+                }    
+                else if (random == 9 &&!vecBluewhale.empty()){
+                    swap(vecBluewhale.front(), vecBluewhale.back());
+                    vecBluewhale.pop_back();
+                    notChanged = false;
+                }    
+                else if (random == 10 &&!vecCoral2.empty()){
+                    swap(vecCoral2.front(), vecCoral2.back());
+                    vecCoral2.pop_back();
+                    notChanged = false;
+                }    
+                else if (random == 11 &&!vecChest.empty()){
+                    swap(vecChest.front(), vecChest.back());
+                    vecChest.pop_back();
+                    notChanged = false;
+                }    
+                else if (random == 12 &&!vecSeadiver.empty()){
+                    swap(vecSeadiver.front(), vecSeadiver.back());
+                    vecSeadiver.pop_back();
+                    notChanged = false;
+                }    
+                else if (random == 13 &&!vecRocks.empty()){
+                    swap(vecRocks.front(), vecRocks.back());
+                    vecRocks.pop_back();
+                    notChanged = false;
+                }    
+                else if (random == 14 &&!vecSeashell.empty()){
+                    swap(vecSeashell.front(), vecSeashell.back());
+                    vecSeashell.pop_back();
+                    notChanged = false;
+                }
+            }
+            cout << "supression" << endl;
+        }
 
         // }
         // else if (modif == 'c') {
