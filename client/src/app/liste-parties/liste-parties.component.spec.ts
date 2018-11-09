@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ListePartiesComponent } from './liste-parties.component';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { ListePartieSimpleComponent } from './liste-partie-simple/liste-partie-simple.component';
@@ -27,7 +27,12 @@ describe('ListePartiesComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [ListePartiesComponent, ListePartieSimpleComponent, ListePartieMultipleComponent, PartieSimpleSoloComponent],
+            declarations: [
+                ListePartiesComponent,
+                ListePartieSimpleComponent,
+                ListePartieMultipleComponent,
+                PartieSimpleSoloComponent
+            ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA
             ],
@@ -38,7 +43,11 @@ describe('ListePartiesComponent', () => {
                     { path: "partie-solo", component: PartieSimpleSoloComponent },
                     { path: "admin", component: AdminComponent },
                 ]),
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                MatDialogModule
+            ],
+            providers: [
+                { provide: MAT_DIALOG_DATA, useValue: {} },
             ]
         });
 

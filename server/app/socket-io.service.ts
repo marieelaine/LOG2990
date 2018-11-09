@@ -3,6 +3,7 @@ import * as socket from "socket.io";
 import * as event from "../../common/communication/evenementsSocket";
 import { injectable } from "inversify";
 import { PartieSimpleInterface } from "./partieSimple/DB-partie-simple/DB-partie-simple";
+import { PartieMultipleInterface } from "./partieMultiple/DB-partie-multiple/DB-partie-multiple";
 
 @injectable()
 export class SocketServerService {
@@ -35,5 +36,9 @@ export class SocketServerService {
 
     public supprimerPartieSimpleAttente(partieId: string): void {
         this.io.emit(event.DELETE_PARTIE_SIMPLE_ATTENTE, partieId);
+    }
+
+    public envoyerPartieMultiple(partieMultiple: PartieMultipleInterface): void {
+        this.io.emit(event.ENVOYER_PARTIE_MULTIPLE, partieMultiple);
     }
 }

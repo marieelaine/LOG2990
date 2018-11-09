@@ -1,13 +1,3 @@
-img{
-    max-width: 640px;
-    max-height:480px;
-    min-width: 640px;
-    min-height: 480px;
-    border-radius: 35px;
-    display: block;
-    margin: 0 auto;
-}
-
 canvas{
     max-width: 640px;
     max-height:480px;
@@ -18,25 +8,16 @@ canvas{
     margin: 0 auto;
 }
 
-
-.divL{
+.divImg{
     min-width: 680px;
-}
-
-.vue{
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.scene{
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 .blurImg{
     filter: blur(1.5rem);
+}
+
+#divMessagesConsole {
+    text-align: center;
 }
 
 .title{
@@ -61,5 +42,6 @@ canvas{
 }
 
 .card{
+    min-width: 680px;
     background-color: #f2eeee;
 }

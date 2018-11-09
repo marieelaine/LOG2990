@@ -40,7 +40,7 @@ describe("Liste Partie Simple Component", () => {
             ],
             imports: [
                 RouterTestingModule.withRoutes([
-                    { path: "partie-solo", component: PartieSimpleSoloComponent },
+                    { path: "partie-simple-solo/", component: PartieSimpleSoloComponent },
                 ]),
                 HttpClientTestingModule,
                 MatDialogModule
@@ -82,7 +82,7 @@ describe("Liste Partie Simple Component", () => {
             component["onJouerOuReinitialiserClick"](id);
             tick();
 
-            expect(location.path()).toBe("/partie-solo");
+            expect(location.path()).toBe("/partie-simple-solo/");
         }));
         it("Devrait rester a la route courante", fakeAsync(() => {
             const pathAvant: string = location.path();
@@ -97,14 +97,14 @@ describe("Liste Partie Simple Component", () => {
     });
 
     describe("fonction onCreerOuSupprimerClick", () => {
-        it("Devrait naviguer a la route '/partie-multi'", fakeAsync(() => {
+        it("Devrait naviguer a la route '/partie-solo'", fakeAsync(() => {
             component["isListePartiesMode"] = true;
             const id: string = "";
 
             component["onCreerOuSupprimerClick"](id);
             tick();
 
-            expect(location.path()).toBe("/partie-multi");
+            expect(location.path()).toBe("/partie-solo");
         }));
         it("Devrait rester a la route courante", fakeAsync(() => {
             const pathAvant: string = location.path();

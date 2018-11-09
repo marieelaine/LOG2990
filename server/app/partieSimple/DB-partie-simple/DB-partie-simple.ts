@@ -25,7 +25,6 @@ export interface PartieSimpleInterface {
 
 @injectable()
 export class DBPartieSimple {
-    private ajouterPartieFailed: boolean;
     private messageErreurNom: string;
     private messageErreurDiff: string;
 
@@ -40,6 +39,7 @@ export class DBPartieSimple {
     public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
         this.messageErreurNom = "Le nom de la partie est déjà pris, veuillez réessayer.";
         this.messageErreurDiff = "Les deux images doivent avoir exactement 7 différences, veuillez réessayer.";
+
         this.baseDeDonnees = new BaseDeDonnees();
 
         this.CreateSchemaArray();
@@ -122,7 +122,7 @@ export class DBPartieSimple {
     protected async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
         partie._imageDiff = diffArrays;
         const partieSimple: Document = new this.modelPartieBuffer(partie);
-        await partieSimple.save(async (err: Error, data: Document) => {
+        await partieSimple.save(async (err: Error) => {
             if (err !== null && err.name === "ValidationError") {
                 this.socket.envoyerMessageErreurNom(this.messageErreurNom);
             } else {
@@ -300,10 +300,7 @@ export class DBPartieSimple {
     public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
         try {
             await this.genererImageMod(req.body);
-
-            if (!this.ajouterPartieFailed) {
-                res.send(await this.getPartieSimpleByName(req.params.nomPartie));
-            }
+            res.status(201).json(await this.getPartieSimpleByName(req.params.nomPartie));
         } catch (err) {
             res.status(501).json(err);
         }

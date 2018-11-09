@@ -4,13 +4,13 @@ import { VueSimpleComponent } from '../vue-simple.component';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'app-partie-solo',
+    selector: 'app-partie-multijoueur',
     templateUrl: '../vue-simple.component.html',
     styleUrls: ['../vue-simple.component.css'],
     providers: [PartieService]
 })
 
-export class PartieSimpleSoloComponent extends VueSimpleComponent {
+export class PartieSimpleMultijoueurComponent extends VueSimpleComponent {
 
     constructor(protected route: ActivatedRoute,
                 protected partieService: PartieService) {
