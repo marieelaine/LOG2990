@@ -36,9 +36,9 @@ export class DialogMultipleComponent extends DialogAbstrait {
       this.data.theme = "";
       this.data.typeModification = "";
       this.nameControl = new FormControl('', [
-        Validators.maxLength(20), Validators.minLength(3), Validators.required]);
+        Validators.minLength(3), Validators.maxLength(20), Validators.required]);
       this.qtyControl = new FormControl('', [
-        Validators.max(200), Validators.min(10),
+        Validators.min(10), Validators.max(200),
         Validators.required, Validators.pattern('[ 0-9 ]*')]);
   }
 
