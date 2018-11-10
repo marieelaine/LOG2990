@@ -8,6 +8,11 @@ import { ListePartieServiceService } from "../liste-partie-service.service";
 import { PartieSimple } from "src/app/admin/dialog-simple/partie-simple";
 import * as Buffer from "buffer";
 import { of } from "rxjs";
+<<<<<<< HEAD
+=======
+import { PartieSimpleSoloComponent } from "src/app/partie/vue-simple/partie-simple-solo/partie-solo.component";
+import { PartieSimpleMultijoueurComponent } from "src/app/partie/vue-simple/partie-simple-multijoueur/partie-multijoueur.component";
+>>>>>>> origin/master
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import { MatDialogModule } from "@angular/material/dialog";
 import { PartieSimpleSoloComponent } from "src/app/partie/vue-simple/partie-simple-solo/partie-simple-solo.component";
@@ -37,10 +42,12 @@ describe("Liste Partie Simple Component", () => {
             declarations: [
                 ListePartieSimpleComponent,
                 PartieSimpleSoloComponent,
+                PartieSimpleMultijoueurComponent,
             ],
             imports: [
                 RouterTestingModule.withRoutes([
-                    { path: "partie-simple-solo/", component: PartieSimpleSoloComponent },
+                    { path: "partie-solo", component: PartieSimpleSoloComponent },
+                    { path: "partie-multi", component: PartieSimpleMultijoueurComponent }
                 ]),
                 HttpClientTestingModule,
                 MatDialogModule

@@ -36,6 +36,7 @@ import { UserService } from "./vue-initiale/user.service";
 import { PartieSimpleService } from "./admin/partie-simple.service";
 import { ListePartieSimpleComponent } from "./liste-parties/liste-partie-simple/liste-partie-simple.component";
 import { ListePartieMultipleComponent } from "./liste-parties/liste-partie-multiple/liste-partie-multiple.component";
+import { PartieSimpleMultijoueurComponent } from './partie/vue-simple/partie-simple-multijoueur/partie-multijoueur.component';
 import { VueMultipleComponent } from './partie/vue-multiple/vue-multiple.component';
 import { PartieMultipleService } from "./admin/partie-multiple.service";
 import { DialogConfirmationComponent } from "./liste-parties/dialog-confirmation/dialog-confirmation.component";
@@ -46,7 +47,9 @@ import { DialogVueAttenteComponent } from './liste-parties/dialog-vue-attente/di
 import { PartieSimpleSoloComponent } from "./partie/vue-simple/partie-simple-solo/partie-simple-solo.component";
 import { ChatComponent } from './chat/chat.component';
 import { VueSimpleComponent } from './partie/vue-simple/vue-simple.component';
-import { PartieSimpleMultijoueurComponent } from "./partie/vue-simple/partie-multijoueur/partie-multijoueur.component";
+import { PartieMultipleSoloComponent } from './partie/vue-multiple/partie-multiple-solo/partie-multiple-solo.component';
+// tslint:disable-next-line:max-line-length
+import { PartieMultipleMultijoueurComponent } from './partie/vue-multiple/partie-multiple-multijoueur/partie-multiple-multijoueur.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:4200', options: {} };
 
@@ -55,8 +58,9 @@ const appRoutes: Routes = [
   { path: "header", component: HeaderComponent },
   { path: "admin", component: AdminComponent },
   { path: "liste-parties", component: ListePartiesComponent },
-  { path: "partie-simple-solo/:idPartie", component: PartieSimpleSoloComponent },
-  // { path: "partie-simple-multijoueur/:idPartie", component: PartieSimpleMultijoueurComponent },
+  { path: "chrono", component: ChronoComponent },
+  { path: "partie-solo/:idPartie", component: PartieSimpleSoloComponent },
+  { path: "partie-multi/:idPartie", component: PartieSimpleMultijoueurComponent },
   { path: "partie-multiple/:idPartie", component: VueMultipleComponent },
 ];
 
@@ -74,13 +78,14 @@ const appRoutes: Routes = [
     ListePartieMultipleComponent,
     DialogSimpleComponent,
     DialogMultipleComponent,
+    PartieSimpleMultijoueurComponent,
     VueMultipleComponent,
     DialogConfirmationComponent,
     DialogErreurComponent,
     ChatComponent,
     VueSimpleComponent,
-    DialogVueAttenteComponent,
-    PartieSimpleMultijoueurComponent
+    PartieMultipleSoloComponent,
+    PartieMultipleMultijoueurComponent,
   ],
   imports: [
     RouterModule.forRoot(
