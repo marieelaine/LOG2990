@@ -34,7 +34,6 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     });
     this.listePartieService.getListePartieSimpleEnAttente().subscribe((res: string[]) => {
       this.listePartieEnAttente = res;
-      console.log(this.listePartieEnAttente);
     });
     this.ajouterPartieSurSocketEvent();
 

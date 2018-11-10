@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
 import { ListePartieServiceService } from "./liste-partie-service.service";
-import T from "../admin/dialog-abstrait";
+import T, { TempsUser } from "../admin/dialog-abstrait";
 
 @Component({
   selector: "app-liste-parties",
@@ -19,6 +19,7 @@ export class ListePartiesComponent {
   protected isAdminMode: boolean;
   protected isElevatedActive: boolean;
   protected listePartiesEnAttente: Array<string>;
+  protected username: string = "username";
 
   public constructor(public router: Router,
                      public listePartieService: ListePartieServiceService) {
@@ -64,43 +65,53 @@ export class ListePartiesComponent {
     }
   }
 
-  protected getSortedTimes(times: number[]): number[] {
+  protected getSortedTimes(times: Array<TempsUser>): Array<TempsUser> {
       if (times) {
-        return times.sort(function (a, b) {  return a - b;  });
-      }
+        times.sort((t1: TempsUser, t2: TempsUser) => {
+          const time1: number = t1["_temps"];
+          const time2: number = t2["_temps"];
+          if (time1 > time2) { return 1; }
+          if (time1 < time2) { return -1; }
 
-      return [];
+          return 0;
+        });
+      }
+      // console.log(times);
+
+      return times;
   }
 
-  protected getBestTime(times: number[]): String {
-    const sortedTimes = this.getSortedTimes(times);
-    if (sortedTimes[0] == null) {
+  protected getBestTime(times: Array<TempsUser>): String {
+    const sortedTimes: Array<TempsUser> = this.getSortedTimes(times);
+    if (sortedTimes[0]["_temps"] == null) {
       return "-";
     }
 
     return this.convertSecondsToMinutes(sortedTimes[0]);
   }
 
-  protected getSecondBestTime(times: number[]): String {
-    const sortedTimes = this.getSortedTimes(times);
-    if (sortedTimes[1] == null) {
+  protected getSecondBestTime(times: Array<TempsUser>): String {
+    const sortedTimes: Array<TempsUser> = this.getSortedTimes(times);
+    if (sortedTimes[1]["_temps"] == null) {
       return "-";
   }
 
     return this.convertSecondsToMinutes(sortedTimes[1]);
   }
 
-  protected getThirdBestTime(times: number[]): String {
-    const sortedTimes = this.getSortedTimes(times);
-    if (sortedTimes[2] == null) {
+  protected getThirdBestTime(times: Array<TempsUser>): String {
+    const sortedTimes: Array<TempsUser> = this.getSortedTimes(times);
+    if (sortedTimes[2]["_temps"] == null) {
       return "-";
   }
 
     return this.convertSecondsToMinutes(sortedTimes[2]);
   }
 
-  protected getDisplayTime(minutes: number, secondes: number): String {
-    return (secondes < 10) ? (minutes + ":0" + secondes) : minutes + ":" + secondes;
+  protected getDisplayTime(minutes: number, secondes: number, user: string): string {
+    const temps: string = (secondes < 10) ? (minutes + ":0" + secondes) : minutes + ":" + secondes;
+
+    return user + " : " + temps;
   }
 
   protected getTitleFirstLetter(title: String): String {
@@ -113,21 +124,24 @@ export class ListePartiesComponent {
     return title.substr(1, title.length - 1);
   }
 
-  protected convertSecondsToMinutes(time: number): String {
-      const minutes = Math.floor(time / 60);
-      const secondes = time - minutes * 60;
+  protected convertSecondsToMinutes(time: TempsUser): String {
+      const minutes = Math.floor(time["_temps"] / 60);
+      const secondes = time["_temps"] - minutes * 60;
 
-      return this.getDisplayTime(minutes, secondes);
+      return this.getDisplayTime(minutes, secondes, time["_user"]);
   }
 
   protected genererTableauTempsAleatoires(partie: T): void {
-    for (let i = 0 ; i < partie["_tempsSolo"].length ; i++) {
-      partie["_tempsSolo"][i] = Math.floor(Math.random() * 400) + 100;
+    for (let i: number = 1; i < partie["_tempsSolo"].length + 1 ; i++) {
+      partie["_tempsSolo"].push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
+      partie["_tempsUnContreUn"].push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
     }
-    for (let i = 0 ; i < partie["_tempsUnContreUn"].length ; i++) {
-      partie["_tempsUnContreUn"][i] = Math.floor(Math.random() * 400) + 100;
-    }
-  }
+    console.log(partie["_tempsSolo"]);
+}
+
+  private genererTempsAleatoire(): number {
+    return Math.floor(Math.random() * 400) + 100;
+}
 
   private setToJouerAndCreer(): void {
     // Si la partie est deja creee, mettre le bouton a joindre

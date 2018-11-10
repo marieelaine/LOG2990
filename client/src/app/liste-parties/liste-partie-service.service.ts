@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
 import { PartieMultiple } from '../admin/dialog-multiple/partie-multiple';
 import * as route from '../constantes';
+import { TempsUser } from '../admin/dialog-abstrait';
 
 @Injectable({
   providedIn: 'root'
@@ -34,15 +35,16 @@ export class ListePartieServiceService {
     .catch(() => ErrorHandler);
   }
 
-  public async reinitialiserTempsPartie(partieId: string, tempsSolo: Array<number>, tempsUnContreUn: Array<number>): Promise<void> {
+  public async reinitialiserTempsPartie(partieId: string, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
 
-    this.http.put(route.REINITIALISER_TEMPS_SIMPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise()
+    this.http.put(route.REINITIALISER_TEMPS_SIMPLE_URL + partieId, { tempsSolo, tempsUnContreUn }).toPromise()
     .catch(() => ErrorHandler);
   }
 
-  public async reinitialiserTempsPartieMultiple(partieId: string, tempsSolo: Array<number>, tempsUnContreUn: Array<number>): Promise<void> {
+  public async reinitialiserTempsPartieMultiple(partieId: string, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>):
+    Promise<void> {
 
-    this.http.put(route.REINITIALISER_TEMPS_MULTIPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise()
+    this.http.put(route.REINITIALISER_TEMPS_MULTIPLE_URL + partieId, { tempsSolo, tempsUnContreUn }).toPromise()
     .catch(() => ErrorHandler);
   }
 
