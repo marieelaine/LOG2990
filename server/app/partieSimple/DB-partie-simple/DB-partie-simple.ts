@@ -16,11 +16,16 @@ import Types from "../../types";
 export interface PartieSimpleInterface {
     _id: string;
     _nomPartie: string;
-    _tempsSolo: Array<number>;
-    _tempsUnContreUn: Array<number>;
+    _tempsSolo: Array<TempsUser>;
+    _tempsUnContreUn: Array<TempsUser>;
     _image1: Buffer;
     _image2: Buffer;
     _imageDiff: Array<Array<string>>;
+}
+
+export interface TempsUser {
+    _user: string;
+    _temps: string;
 }
 
 @injectable()
@@ -53,59 +58,23 @@ export class DBPartieSimple {
 
     private CreateSchemaArray(): void {
             this.schemaArray = new Schema({
-                _nomPartie: {
-                    type: String,
-                    required: true,
-                    unique: true,
-                },
-                _tempsSolo: {
-                    type: Array,
-                    required: true,
-                },
-                _tempsUnContreUn: {
-                    type: Array,
-                    required: true,
-                },
-                _image1: {
-                    type: Array,
-                    required: true,
-                },
-                _image2: {
-                    type: Array,
-                    required: true,
-                },
-                _imageDiff: {
-                    type: Array,
-                }
+                _nomPartie: { type: String, required: true, unique: true },
+                _tempsSolo: { type: Array, required: true },
+                _tempsUnContreUn: { type: Array, required: true },
+                _image1: { type: Array, required: true },
+                _image2: { type: Array, required: true },
+                _imageDiff: { type: Array }
             });
         }
 
     private CreateSchemaBuffer(): void {
         this.schemaBuffer = new Schema({
-            _nomPartie: {
-                type: String,
-                required: true,
-                unique: true,
-            },
-            _tempsSolo: {
-                type: Array,
-                required: true,
-            },
-            _tempsUnContreUn: {
-                type: Array,
-                required: true,
-            },
-            _image1: {
-                type: Buffer,
-                required: true,
-            },
-            _image2: {
-                type: Buffer,
-                required: true,
-            },
-            _imageDiff: {
-                type: Array,
-            }
+            _nomPartie: { type: String, required: true, unique: true },
+            _tempsSolo: { type: Array, required: true },
+            _tempsUnContreUn: { type: Array, required: true },
+            _image1: { type: Buffer, required: true },
+            _image2: { type: Buffer, required: true },
+            _imageDiff: { type: Array }
         });
     }
 
@@ -256,7 +225,7 @@ export class DBPartieSimple {
         return listeParties;
     }
 
-    private async reinitialiserTemps(idPartie: String, tempsSolo: Array<number>, tempsUnContreUn: Array<number>): Promise<void> {
+    private async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
         await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
             .catch(() => { throw new Error(); });
     }

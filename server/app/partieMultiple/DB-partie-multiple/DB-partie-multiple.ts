@@ -11,12 +11,13 @@ import { BaseDeDonnees } from "../../baseDeDonnees/baseDeDonnees";
 import { execFile, ChildProcess } from "child_process";
 import { SocketServerService } from "../../socket-io.service";
 import Types from "../../types";
+import { TempsUser } from "../../partieSimple/DB-partie-simple/DB-partie-simple";
 
 export interface PartieMultipleInterface {
     _id: string;
     _nomPartie: string;
-    _tempsSolo: Array<number>;
-    _tempsUnContreUn: Array<number>;
+    _tempsSolo: Array<TempsUser>;
+    _tempsUnContreUn: Array<TempsUser>;
     _image1PV1: Buffer;
     _image1PV2: Buffer;
     _image2PV1: Buffer;
@@ -280,7 +281,7 @@ export class DBPartieMultiple {
         }
     }
 
-    private async reinitialiserTemps(idPartie: String, tempsSolo: Array<number>, tempsUnContreUn: Array<number>): Promise<void> {
+    private async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
         await this.modelPartie.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
             .catch(() => { throw new Error(); });
     }
