@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { DialogAbstrait } from '../dialog-abstrait';
+import { DialogAbstrait, TempsUser } from '../dialog-abstrait';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DialogData, Checkbox } from '../admin.component';
 import { HttpClient } from '@angular/common/http';
@@ -83,8 +83,8 @@ export class DialogMultipleComponent extends DialogAbstrait {
   }
 
   protected ajouterPartie() {
-    const tempsSolo: Array<number> = this.genererTableauTempsAleatoires();
-    const temps1v1: Array<number> = this.genererTableauTempsAleatoires();
+    const tempsSolo: Array<TempsUser> = this.genererTableauTempsAleatoires();
+    const temps1v1: Array<TempsUser> = this.genererTableauTempsAleatoires();
 
     const result: PartieMultiple = new PartieMultiple(this["data"].multipleGameName, tempsSolo, temps1v1,
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),

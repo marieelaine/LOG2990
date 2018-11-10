@@ -81,8 +81,9 @@ export class DialogSimpleComponent extends DialogAbstrait {
   protected async ajouterPartie(): Promise<void> {
       const result: PartieSimple = new PartieSimple(this["data"].simpleGameName, this.genererTableauTempsAleatoires(),
                                                     this.genererTableauTempsAleatoires(), this.selectedFilesAsBuffers[0],
-                                                    this.selectedFilesAsBuffers[1],
-                                                    new Array<Array<string>>());
+                                                    this.selectedFilesAsBuffers[1], new Array<Array<string>>());
+      console.log("ajouter partie de dialog simple");
+      console.log(result);
       this.partieSimpleService.register(result)
         .subscribe(
           (data) => {
