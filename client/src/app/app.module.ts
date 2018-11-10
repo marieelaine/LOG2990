@@ -82,6 +82,7 @@ const appRoutes: Routes = [
     VueMultipleComponent,
     DialogConfirmationComponent,
     DialogErreurComponent,
+    DialogVueAttenteComponent,
     ChatComponent,
     VueSimpleComponent,
     PartieMultipleSoloComponent,

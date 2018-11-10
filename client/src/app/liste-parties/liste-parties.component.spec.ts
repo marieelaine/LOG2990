@@ -1,18 +1,18 @@
 // TODO ARRANGER LES TESTS
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-// import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-// import { ListePartiesComponent } from './liste-parties.component';
-// import { MatCardModule, MAT_DIALOG_DATA, MatDialogModule, MatMenuTrigger, MatMenuModule } from '@angular/material';
-// import { RouterTestingModule } from '@angular/router/testing';
-// import { PartieSimple } from "../admin/dialog-simple/partie-simple";
-// import { ListePartieSimpleComponent } from './liste-partie-simple/liste-partie-simple.component';
-// import { ListePartieMultipleComponent } from './liste-partie-multiple/liste-partie-multiple.component';
-// import { HttpClientTestingModule } from '@angular/common/http/testing';
-// import { By } from "@angular/platform-browser";
-// import { PartieSimpleSoloComponent } from '../partie/vue-simple/partie-simple-solo/partie-simple-solo.component';
-// import { AdminComponent } from '../admin/admin.component';
-// import { TempsUser } from '../admin/dialog-abstrait';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ListePartiesComponent } from './liste-parties.component';
+import { MatCardModule, MAT_DIALOG_DATA, MatDialogModule, MatMenuTrigger, MatMenuModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
+import { PartieSimple } from "../admin/dialog-simple/partie-simple";
+import { ListePartieSimpleComponent } from './liste-partie-simple/liste-partie-simple.component';
+import { ListePartieMultipleComponent } from './liste-partie-multiple/liste-partie-multiple.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { By } from "@angular/platform-browser";
+import { PartieSimpleSoloComponent } from '../partie/vue-simple/partie-simple-solo/partie-simple-solo.component';
+import { AdminComponent } from '../admin/admin.component';
+import { TempsUser } from '../admin/dialog-abstrait';
 
 // describe('ListePartiesComponent', () => {
 //     let component: ListePartiesComponent;
