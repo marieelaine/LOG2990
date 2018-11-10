@@ -46,13 +46,22 @@ mat-card-header
 }
 
 .topThreeHeaders
-{
+{   
+    padding: 0 0 5% 25%;
     margin-top:-17px;
     width:100%;
     text-align: center;
     font-size:200%;
     color:black;
     /* text-shadow: -2px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
+}
+
+.headers{
+    margin-top:-17px;
+    width:100%;
+    text-align: center;
+    font-size:200%;
+    color:black;
 }
 
 .topThreeNumbersColumn
@@ -74,4 +83,26 @@ mat-card-header
     width:15%;
     float:top;
     padding-bottom:5%;
+}
+
+.temps {
+    font-size: 0.85em;
+    margin: 2% 0;
+    text-align: center;
+}
+
+mat-badge{
+    margin: auto;
+}
+
+.col-2{
+    margin:auto;
+}
+
+.boutons{
+    margin: 0 0 0 56%;
+}
+
+.mat-button{
+    margin: 2% 0 2% 5%;
 }

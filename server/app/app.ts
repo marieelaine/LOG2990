@@ -9,9 +9,10 @@ import { injectable, inject } from "inversify";
 
 import { ServiceWeb } from "./serviceWeb";
 import { Routes } from "./routes";
-import { RoutesUser } from "./routesUser";
-import { RoutesPartieSimple } from "./routesPartieSimple";
-import { RoutesPartieMultiple } from "./routesPartieMultiple";
+import { RoutesUser } from "./User/routes-user";
+import { RoutesPartieMultiple } from "./partieMultiple/routes-partie-multiple/route-partie-multiple";
+import { RoutesPartieSimple } from "./partieSimple/routes-partie-simples/routes-partie-simple";
+import { RoutesPartieSimpleAttente } from "./partieSimple/partie-simple-attente/partie-simple-attente";
 
 @injectable()
 export class Application {
@@ -22,7 +23,8 @@ export class Application {
     public constructor(@inject(Types.Routes) private index: Routes,
                        @inject(Types.RoutesUser) private user: RoutesUser,
                        @inject(Types.RoutesPartieSimple) private partieSimple: RoutesPartieSimple,
-                       @inject(Types.RoutesPartieMultiple) private partieMultiple: RoutesPartieMultiple) {
+                       @inject(Types.RoutesPartieMultiple) private partieMultiple: RoutesPartieMultiple,
+                       @inject(Types.RoutesPartieSimpleAttente) private partieSimpleAttente: RoutesPartieSimpleAttente) {
         this.app = express();
 
         this.config();
@@ -46,6 +48,7 @@ export class Application {
         this.ajouterService(this.user);
         this.ajouterService(this.partieSimple);
         this.ajouterService(this.partieMultiple);
+        this.ajouterService(this.partieSimpleAttente);
 
         this.errorHandeling();
     }

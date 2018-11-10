@@ -3,6 +3,7 @@ import { PartieAbstraiteClass } from '../partie-abstraite-class';
 import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
 import { ActivatedRoute } from '@angular/router';
 import { PartieService } from '../partie.service';
+import { TempsUser } from 'src/app/admin/dialog-abstrait';
 
 @Component({
   selector: 'app-vue-simple',
@@ -77,7 +78,8 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
   }
 
   protected ajouterTemps(temps: number): void {
-      this.partie["_tempsSolo"].push(temps);
+      const tempsUser: TempsUser =  new TempsUser("usernameTest", temps);
+      this.partie["_tempsSolo"].push(tempsUser);
       this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
       .catch(() => ErrorHandler);
   }

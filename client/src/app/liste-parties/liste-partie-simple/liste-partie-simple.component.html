@@ -15,33 +15,62 @@
                 [class.mat-elevation-z10]="!!partieSimple.isElevatedActive">
             </div> 
             <div class='col-sm-6'>
-                <div class='row'>
-                    <div class='col-sm-12 top'>
-                        <h2 class='topThreeHeaders'>Top <img class='bronzeMedal' src="assets/bronze-medal.png"></h2>
+                <div class="container">
+                    <div class="col-2"></div>
+                    <div class="col">
+                        <h2 class='topThreeHeaders text-center'>Top <img class='bronzeMedal' src="assets/bronze-medal.png"></h2>
                     </div>
-                    <div class='col-sm-1 text-center topThreeNumbersColumn'>
-                        <span matBadge="1" matBadgeOverlap="true" matBadgeColor="warn"></span> <br>
-                        <span matBadge="2" matBadgeOverlap="true" matBadgeColor="warn"></span> <br>
-                        <span matBadge="3" matBadgeOverlap="true" matBadgeColor="warn"></span> <br>
-                    </div>  
-                    <div class='col-sm-4 text-center'>
-                        <h2 class='topThreeHeaders'> Solo </h2>
-                        <p> {{ getBestTime(partieSimple._tempsSolo) }} </p> 
-                        <p> {{ getSecondBestTime(partieSimple._tempsSolo) }} </p> 
-                        <p> {{ getThirdBestTime(partieSimple._tempsSolo) }} </p>
-                        <button mat-button (click) = "onJouerOuReinitialiserClick(partieSimple._id)" class='mat-elevation-z6'> {{jouerOuReinitialiser}} </button>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col">
+                            <h2 class='headers'> Solo </h2>
+                        </div>
+                        <div class="col">
+                            <h2 class='headers'> 1v1 </h2> 
+                        </div>
                     </div>
-                    <div class='col-sm-2'></div>
-                    <div class='col-sm-4 text-center'>
-                        <h2 class='topThreeHeaders'> 1v1 </h2> 
-                        <p> {{ getBestTime(partieSimple._tempsUnContreUn) }} </p> 
-                        <p> {{ getSecondBestTime(partieSimple._tempsUnContreUn) }} </p> 
-                        <p> {{ getThirdBestTime(partieSimple._tempsUnContreUn) }} </p>
-                        <button mat-button (click) = "onCreerOuSupprimerClick(partieSimple._id)" class='mat-elevation-z6'> {{creerOuSupprimer}} </button>
+                    <div class="row">
+                        <div class="col-2">
+                            <span matBadge="1" matBadgeOverlap="true" matBadgeColor="warn"></span>
+                        </div>
+                        <div class="col temps">
+                            {{ getBestTime(partieSimple._tempsSolo) }}
+                        </div>
+                        <div class="col temps">
+                            {{ getBestTime(partieSimple._tempsUnContreUn) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <span matBadge="2" matBadgeOverlap="true" matBadgeColor="warn"></span>
+                        </div>
+                        <div class="col temps">
+                            {{ getSecondBestTime(partieSimple._tempsSolo) }}
+                        </div>
+                        <div class="col temps">
+                            {{ getSecondBestTime(partieSimple._tempsUnContreUn) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <span matBadge="3" matBadgeOverlap="true" matBadgeColor="warn"></span>
+                        </div>
+                        <div class="col temps">
+                            {{ getThirdBestTime(partieSimple._tempsSolo) }}
+                        </div>
+                        <div class="col temps">
+                            {{ getThirdBestTime(partieSimple._tempsUnContreUn) }} 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row">
+                <div class="col boutons d-flex flex-row-reverse bd-highlight">
+                    <button class="p-2 bd-highlight" mat-button (click) = "onJouerOuReinitialiserClick(partieSimple._id)" class='mat-elevation-z6'> {{jouerOuReinitialiser}} </button>
+                    <button class="p-2 bd-highlight" mat-button (click) = "onCreerOuSupprimerClick(partieSimple._id)" class='mat-elevation-z6'> {{listePartieEnAttente.includes(partieSimple._id) ? joindreOuSupprimer : creerOuSupprimer}} </button>
+                </div>
+            </div>
     </mat-card>  
     <br>
     {{this.afficherImage(partieSimple["_id"])}}

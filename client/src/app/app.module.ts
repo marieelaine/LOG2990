@@ -36,7 +36,6 @@ import { UserService } from "./vue-initiale/user.service";
 import { PartieSimpleService } from "./admin/partie-simple.service";
 import { ListePartieSimpleComponent } from "./liste-parties/liste-partie-simple/liste-partie-simple.component";
 import { ListePartieMultipleComponent } from "./liste-parties/liste-partie-multiple/liste-partie-multiple.component";
-import { PartieSimpleSoloComponent } from "./partie/vue-simple/partie-simple-solo/partie-solo.component";
 import { PartieSimpleMultijoueurComponent } from './partie/vue-simple/partie-simple-multijoueur/partie-multijoueur.component';
 import { VueMultipleComponent } from './partie/vue-multiple/vue-multiple.component';
 import { PartieMultipleService } from "./admin/partie-multiple.service";
@@ -44,6 +43,8 @@ import { DialogConfirmationComponent } from "./liste-parties/dialog-confirmation
 import { SocketClientService } from "./socket/socket-client.service";
 import { ListePartieServiceService } from "./liste-parties/liste-partie-service.service";
 import { DialogErreurComponent } from "./admin/dialog-erreur/dialog-erreur.component";
+import { DialogVueAttenteComponent } from './liste-parties/dialog-vue-attente/dialog-vue-attente.component';
+import { PartieSimpleSoloComponent } from "./partie/vue-simple/partie-simple-solo/partie-simple-solo.component";
 import { ChatComponent } from './chat/chat.component';
 import { VueSimpleComponent } from './partie/vue-simple/vue-simple.component';
 import { PartieMultipleSoloComponent } from './partie/vue-multiple/partie-multiple-solo/partie-multiple-solo.component';
@@ -81,6 +82,7 @@ const appRoutes: Routes = [
     VueMultipleComponent,
     DialogConfirmationComponent,
     DialogErreurComponent,
+    DialogVueAttenteComponent,
     ChatComponent,
     VueSimpleComponent,
     PartieMultipleSoloComponent,
@@ -123,7 +125,8 @@ const appRoutes: Routes = [
     DialogSimpleComponent,
     DialogMultipleComponent,
     DialogConfirmationComponent,
-    DialogErreurComponent
+    DialogErreurComponent,
+    DialogVueAttenteComponent
   ],
 })
 export class AppModule { }

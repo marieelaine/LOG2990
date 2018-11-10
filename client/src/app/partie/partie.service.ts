@@ -1,8 +1,9 @@
-import {ErrorHandler, Injectable} from '@angular/core';
+import { ErrorHandler, Injectable } from '@angular/core';
 import { PartieSimple } from '../admin/dialog-simple/partie-simple';
 import { HttpClient } from "@angular/common/http";
-import {Observable} from "rxjs";
+import { Observable } from "rxjs";
 import { PartieMultiple } from '../admin/dialog-multiple/partie-multiple';
+import { TempsUser } from '../admin/dialog-abstrait';
 
 @Injectable({
     providedIn: 'root'
@@ -27,7 +28,7 @@ export class PartieService {
         return this.http.get<PartieMultiple>(this.GETPARTIEMULTIPLE_URL + partieID);
     }
 
-    public async reinitialiserTempsPartie(partieId: string, tempsSolo: Array<number>, tempsUnContreUn: Array<number>): Promise<void> {
+    public async reinitialiserTempsPartie(partieId: string, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
 
         this.http.put(this.REINITIALISER_TEMPS_SIMPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise()
             .catch(() => ErrorHandler);
