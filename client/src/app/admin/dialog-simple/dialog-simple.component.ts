@@ -151,17 +151,4 @@ export class DialogSimpleComponent extends DialogAbstrait {
     return (this.selectedFiles[0] === undefined || this.selectedFiles[0] === null
       || this.selectedFiles[1] === undefined || this.selectedFiles[1] === null);
   }
-
-  // TODO : implementer le mat-error dans le html
-  // public checkIfOutOfBoundName(bla: String): boolean {
-  //   if (bla === "" || bla === undefined
-  //   || bla.length < 3 || bla.length > 20) {
-  //     this.outOfBoundNameLengthMessage = "*Le nom du jeu doit être entre 3 et 20 charactères.";
-
-  //     return true;
-  //   }
-  //   this.outOfBoundNameLengthMessage = "" ;
-
-  //   return false;
-  // }
 }
