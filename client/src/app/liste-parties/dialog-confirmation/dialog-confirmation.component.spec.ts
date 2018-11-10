@@ -6,6 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
 import { PartieMultiple } from 'src/app/admin/dialog-multiple/partie-multiple';
+import { TempsUser } from 'src/app/admin/dialog-abstrait';
 
 describe('DialogConfirmationComponent', () => {
     const dialogMock = {
@@ -131,7 +132,7 @@ describe('DialogConfirmationComponent', () => {
 
     describe("supprimerPartieSimpleDeLaffichage", () => {
         beforeEach(() => {
-            component["listePartiesSimples"] = [ new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(),
+            component["listePartiesSimples"] = [ new PartieSimple ("nomPartie", new Array<TempsUser>(), new Array<TempsUser>(),
                                                                    Buffer.from(new Array<number>()),
                                                                    Buffer.from(new Array<number>()), [["1,2"]], "123")];
         });
@@ -157,7 +158,7 @@ describe('DialogConfirmationComponent', () => {
 
     describe("supprimerPartieMultipleDeLaffichage", () => {
         beforeEach(() => {
-            component["listePartiesMultiples"] = [ new PartieMultiple("", new Array<number>(), new Array<number>(),
+            component["listePartiesMultiples"] = [ new PartieMultiple("", new Array<TempsUser>(), new Array<TempsUser>(),
                                                                       Buffer.from(new Array()), Buffer.from(new Array()),
                                                                       Buffer.from(new Array()), Buffer.from(new Array()),
                                                                       Buffer.from(new Array()), Buffer.from(new Array()),
@@ -185,7 +186,7 @@ describe('DialogConfirmationComponent', () => {
 
     describe("setListeParties", () => {
         it("devrait assigner la listePartie de data à ListePartieSimple si isSimple == true", () => {
-            const data = { listeParties: [ new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(),
+            const data = { listeParties: [ new PartieSimple ("nomPartie", new Array<TempsUser>(), new Array<TempsUser>(),
                                                              Buffer.from(new Array<number>()),
                                                              Buffer.from(new Array<number>()), [["1,2"]], "123")] };
             component["isSimple"] = true;
@@ -196,7 +197,7 @@ describe('DialogConfirmationComponent', () => {
             expect(component["listePartiesMultiples"]).toEqual([]);
         });
         it("devrait assigner la listePartie de data à ListePartieMultiple si isSimple == false", () => {
-            const data = { listeParties: [ new PartieMultiple("", new Array<number>(), new Array<number>(),
+            const data = { listeParties: [ new PartieMultiple("", new Array<TempsUser>(), new Array<TempsUser>(),
                                                               Buffer.from(new Array()), Buffer.from(new Array()),
                                                               Buffer.from(new Array()), Buffer.from(new Array()),
                                                               Buffer.from(new Array()), Buffer.from(new Array()),

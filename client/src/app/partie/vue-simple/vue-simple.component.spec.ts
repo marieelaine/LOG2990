@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ChatComponent } from 'src/app/chat/chat.component';
+import { TempsUser } from 'src/app/admin/dialog-abstrait';
 
 describe('VueSimpleComponent', () => {
   let component: VueSimpleComponent;
@@ -26,7 +27,7 @@ describe('VueSimpleComponent', () => {
     fixture = TestBed.createComponent(VueSimpleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    component["partie"] = new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(), Buffer.from(new Array<number>()),
+    component["partie"] = new PartieSimple ("nomPartie", new Array<TempsUser>(), new Array<TempsUser>(), Buffer.from(new Array<number>()),
                                             Buffer.from(new Array<number>()), new Array<Array<string>>(), "");
   });
 

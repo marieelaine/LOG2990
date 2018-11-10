@@ -4,6 +4,7 @@ import * as fsx from "fs-extra";
 import * as sinon from "sinon";
 import { Response } from "express";
 import { SocketServerService } from "../../socket-io.service";
+import { TempsUser } from "../../partieSimple/DB-partie-simple/DB-partie-simple";
 
 describe("Partie Multiple BD classe", () => {
     let partieMultipleBD: DBPartieMultiple;
@@ -72,8 +73,8 @@ describe("Partie Multiple BD classe", () => {
             const unePartie: PartieMultipleInterface = {
                 _id: "1",
                 _nomPartie: "unePartie",
-                _tempsSolo: new Array<number>(),
-                _tempsUnContreUn: new Array<number>(),
+                _tempsSolo: new Array<TempsUser>(),
+                _tempsUnContreUn: new Array<TempsUser>(),
                 _image1PV1: Buffer.alloc(1),
                 _image1PV2: Buffer.alloc(1),
                 _image2PV1: Buffer.alloc(1),
@@ -100,8 +101,8 @@ describe("Partie Multiple BD classe", () => {
             const unePartie: PartieMultipleInterface = {
                 _id: "1",
                 _nomPartie: "unePartie",
-                _tempsSolo: new Array<number>(),
-                _tempsUnContreUn: new Array<number>(),
+                _tempsSolo: new Array<TempsUser>(),
+                _tempsUnContreUn: new Array<TempsUser>(),
                 _image1PV1: Buffer.alloc(1),
                 _image1PV2: Buffer.alloc(1),
                 _image2PV1: Buffer.alloc(1),

@@ -1,4 +1,4 @@
-import { DBPartieSimple, PartieSimpleInterface } from "./DB-partie-simple";
+import { DBPartieSimple, PartieSimpleInterface, TempsUser } from "./DB-partie-simple";
 import { assert } from "chai";
 import * as fsx from "fs-extra";
 import * as sinon from "sinon";
@@ -58,8 +58,8 @@ describe("Partie Simple BD classe", () => {
             const unePartie: PartieSimpleInterface = {
                 _id: "1",
                 _nomPartie: "unePartie",
-                _tempsSolo: new Array<number>(),
-                _tempsUnContreUn: new Array<number>(),
+                _tempsSolo: new Array<TempsUser>(),
+                _tempsUnContreUn: new Array<TempsUser>(),
                 _image1: Buffer.alloc(1),
                 _image2: Buffer.alloc(1),
                 _imageDiff: new Array<Array<string>>(),

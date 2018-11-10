@@ -3,6 +3,7 @@ import { DialogVueAttenteComponent } from './dialog-vue-attente.component';
 import { MatDividerModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { SocketClientService } from 'src/app/socket/socket-client.service';
 
 describe('DialogVueAttenteComponent', () => {
   const dialogMock = {
@@ -23,6 +24,7 @@ describe('DialogVueAttenteComponent', () => {
       providers: [
         { provide: MatDialogRef, useValue: dialogMock },
         { provide: MAT_DIALOG_DATA, useValue: {} },
+        SocketClientService
     ]
     })
     .compileComponents();
