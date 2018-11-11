@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Poiret+One');
+@import url('https://fonts.googleapis.com/css?family=Handlee');
 
 .gameListContainer
 {
@@ -8,9 +9,9 @@
 .simpleAndMultipleGamesHeader
 {
     text-align: center;
-    font-style: italic;
-    font-family: 'Poiret One', cursive;
-    font-weight: bold;
+    /* font-style: italic; */
+    font-family: 'Handlee', cursive;
+    /* font-weight: bold; */
 }
 
 hr
