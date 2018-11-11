@@ -62,6 +62,13 @@ GLfloat callRandomSize(GLfloat taille)
 double callRandomTranslate()
 {
    int min = -etat.dimBoite;
+   int max = etat.dimBoite/4;
+   return rand()%((max - min) + 1) + min;
+}
+
+double callRandomTranslateZ()
+{
+   int min = -etat.dimBoite;
    int max = etat.dimBoite;
    return rand()%((max - min) + 1) + min;
 }
@@ -135,7 +142,7 @@ void makeCones(int nombreFormes){
     for(int i = 0; i < nombreFormes; i++){
         StructCone cone = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
-                                callRandomTranslate(), callRandomTranslate(), callRandomTranslate(),
+                                callRandomTranslate(), callRandomTranslate(), callRandomTranslateZ(),
                                 callRandom(), callRandom(), callRandom()
                                 };
         vecCone.push_back(cone);
@@ -146,7 +153,7 @@ void makeCylindres(int nombreFormes){
     for(int i = 0; i < nombreFormes; i++){
         StructCylindre cylindre = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
-                                callRandomTranslate(), callRandomTranslate(), callRandomTranslate(),
+                                callRandomTranslate(), callRandomTranslate(), callRandomTranslateZ(),
                                 callRandom(), callRandom(), callRandom()
                                 };
         vecCylindre.push_back(cylindre);
@@ -157,7 +164,7 @@ void makeSpheres(int nombreFormes){
     for(int i = 0; i < nombreFormes; i++){
         StructSphere sphere = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
-                                callRandomTranslate(), callRandomTranslate(), callRandomTranslate(),
+                                callRandomTranslate(), callRandomTranslate(), callRandomTranslateZ(),
                                 callRandom(), callRandom(), callRandom()
                                 };
         vecSphere.push_back(sphere);
@@ -168,7 +175,7 @@ void makeCubes(int nombreFormes){
     for(int i = 0; i < nombreFormes; i++){
         StructCube cube = { callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
-                                callRandomTranslate(), callRandomTranslate(), callRandomTranslate(),
+                                callRandomTranslate(), callRandomTranslate(), callRandomTranslateZ(),
                                 callRandom(), callRandom(), callRandom()
                                 };
         vecCube.push_back(cube);
@@ -179,7 +186,7 @@ void makePyramides(int nombreFormes){
     for(int i = 0; i < nombreFormes; i++){
         StructPyramide pyramide = { callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
-                                callRandomTranslate(), callRandomTranslate(), callRandomTranslate(),
+                                callRandomTranslate(), callRandomTranslate(), callRandomTranslateZ(),
                                 callRandom(), callRandom(), callRandom()
                                 };
         vecPyramide.push_back(pyramide);
@@ -731,7 +738,6 @@ int main( int argc, const char* argv[] )
                 fenetre.afficherScene(index); 
                 fenetre.swap();
 
-                creerModifications();
                 //this_thread::sleep_for(chrono::seconds(1));
                 camera.modeLookAt = !camera.modeLookAt;
                 fenetre.afficherScene(index); 
