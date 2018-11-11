@@ -5,6 +5,10 @@
 #include <fstream>
 #include <stdlib.h>
 #include <vector>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 
 
@@ -162,6 +166,7 @@ int main(int argc, const char* argv[]) {
 	{
 		cerr << "Erreur: Nombre invalide de parametres!\n";
 		cerr << "Usage: ./bmpdiff [- partiel] image_originale.bmp image_modifiee.bmp image_sortie.bmp\n";
+		exit(1);
 	}
 	else {
 		creerEtat(argv, argc, etat);
@@ -182,7 +187,7 @@ int main(int argc, const char* argv[]) {
 	// etat.imageDiff = new uint8_t[480 * 640];
 	etat.visited = new bool[480 * 640]; 
 
-	genImageDiff(r1, r2, g1, g2, b1, b2);
+    genImageDiff(r1, r2, g1, g2, b1, b2);
 	etat.outFile << "END" << endl;
 	cout << "Image de differences generee avec succes!" << endl;
 	etat.outFile.close();
