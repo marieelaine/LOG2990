@@ -4,6 +4,7 @@ import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
 import { ActivatedRoute } from '@angular/router';
 import { PartieService } from '../partie.service';
 import { TempsUser } from 'src/app/admin/dialog-abstrait';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-vue-simple',
@@ -15,7 +16,8 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
   protected partie: PartieSimple;
 
   public constructor(protected route: ActivatedRoute,
-                     protected partieService: PartieService) {
+                     protected partieService: PartieService,
+                     protected cookieService: CookieService) {
       super(route, partieService, true);
       this.differenceRestantes = 7;
   }
@@ -78,7 +80,8 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
   }
 
   protected ajouterTemps(temps: number): void {
-      const tempsUser: TempsUser =  new TempsUser("usernameTest", temps);
+      const joueur: string = this.cookieService.get("username");
+      const tempsUser: TempsUser =  new TempsUser(joueur, temps);
       this.partie["_tempsSolo"].push(tempsUser);
       this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
       .catch(() => ErrorHandler);

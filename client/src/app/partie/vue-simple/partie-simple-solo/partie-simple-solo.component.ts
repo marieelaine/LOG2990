@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { PartieService} from "../../partie.service";
 import { VueSimpleComponent } from '../vue-simple.component';
 import { ActivatedRoute } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
     selector: 'app-partie-solo',
@@ -13,8 +14,9 @@ import { ActivatedRoute } from '@angular/router';
 export class PartieSimpleSoloComponent extends VueSimpleComponent {
 
     constructor(protected route: ActivatedRoute,
-                protected partieService: PartieService) {
+                protected partieService: PartieService,
+                protected cookieService: CookieService) {
 
-        super(route, partieService);
+        super(route, partieService, cookieService);
     }
 }
