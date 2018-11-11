@@ -703,16 +703,14 @@ void FenetreTP::sourisMolette( int x, int y )
    else if ( camera.dist > 70.0 ) camera.dist = 70.0;
 }
 
-int main( int argc, const char* argv[] )
-{
+void genScene(int argc, const char* argv[]){
     if (argc != 5 )
-        {
-            cerr << "Erreur: Nombre invalid de parametres!\n";
-            cerr << "Template: main.exe geo 15 as nomFicher\n";
-            return 1;
-	    }
+    {
+        cerr << "Erreur: Nombre invalid de parametres!\n";
+        cerr << "Template: main.exe geo 15 as nomFicher\n";
+        exit(1);
+    }
     else {
-        creerEtat(argv, etat);
         if (etat.theme == "geo"){
             if(etat.nombreFormes >= 10 && etat.nombreFormes <= 200){
                 srand(time(NULL));
@@ -725,37 +723,58 @@ int main( int argc, const char* argv[] )
 
                 fenetre.afficherScene(index);
                 fenetre.swap();
-                
+
                 //this_thread::sleep_for(chrono::seconds(1));
                 camera.modeLookAt = !camera.modeLookAt;
-                fenetre.afficherScene(index); 
+                fenetre.afficherScene(index);
                 fenetre.swap();
                 index = 0;
                 creerModifications();
 
                 //this_thread::sleep_for(chrono::seconds(1));
                 camera.modeLookAt = !camera.modeLookAt;
-                fenetre.afficherScene(index); 
+                fenetre.afficherScene(index);
                 fenetre.swap();
 
                 //this_thread::sleep_for(chrono::seconds(1));
                 camera.modeLookAt = !camera.modeLookAt;
-                fenetre.afficherScene(index); 
+                fenetre.afficherScene(index);
                 fenetre.swap();
-                
+
                 //this_thread::sleep_for(chrono::seconds(1));
                 fenetre.conclure();
             }
             else {
                 cerr << "Erreur: Il faut choisir entre 10 et 200 formes geometriques.\n";
-                return 1;
-        }
+                exit(1);
+            }
         }
         else if (etat.theme == "theme"){
             cerr << "Erreur: L'executable ne peut creer de themes pour l'instant! Essayez plutot geo.\n";
-            return 1;
+            exit(1);
+        }
+    }
+}
+
+int main( int argc, const char* argv[] ) {
+    creerEtat(argv, etat);
+
+    for (int i = 0; i < 4; i++){
+        genScene(argc, argv);
+
+        string paramA = "../partieSimple/bmpdiff/bmpdiff " + etat.capture1 + " " + etat.capture3 + " " + etat.filename + "_a_diff.txt";
+        string paramB = "../partieSimple/bmpdiff/bmpdiff " + etat.capture2 + " " + etat.capture4 + " " + etat.filename + "_b_diff.txt";
+
+        int outputA = system(paramA.c_str());
+        int outputB = system(paramB.c_str());
+
+        if (outputA == 0 && outputB == 0){
+            cout << "Les différences sont bien généré";
+            return 0;
+        } else{
+            cout << "Essaie numero " << i+1 << " Erreur!";
         }
     }
 
-   return 0;
+    return 1;
 }
