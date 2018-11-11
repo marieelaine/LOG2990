@@ -17,7 +17,10 @@ describe("PartieSoloComponent", () => {
         mockCookieService = jasmine.createSpyObj([""]);
 
         TestBed.configureTestingModule({
-            declarations: [PartieSimpleSoloComponent, ChatComponent],
+            declarations: [
+                PartieSimpleSoloComponent,
+                ChatComponent
+            ],
             imports: [
                 HttpClientTestingModule,
                 MatCardModule
