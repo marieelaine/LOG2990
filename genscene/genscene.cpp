@@ -1,7 +1,3 @@
-#include <GL/glut.h>
-#include <glm/glm.hpp>
-#define GLM_ENABLE_EXPERIMENTAL 
-#include <glm/gtx/component_wise.hpp>
 #include <vector>
 #include <iostream>
 #include <fstream>
@@ -9,9 +5,17 @@
 #include <math.h>
 #include <thread>
 #include <chrono>
+
 #include "FreeImage.h"
+#include "include/scene.h"
+#include "include/shader.h"
+#include "include/skybox.h"
 
 using namespace std;
+
+// window size
+const GLint windowWidth = 640;
+const GLint windowHeight = 480;
 
 struct Vertex
 {
@@ -135,6 +139,12 @@ vector<vector<themeObject>> createGlobalVec(){
 // }
 // based on:
 // https://stackoverflow.com/questions/14887012/object-loader-in-opengl
+
+// shader program
+Shader *skyboxShader;
+
+Skybox *skybox;
+
 vector< Vertex > LoadOBJ( istream& in )
 {
     vector< Vertex > verts;
@@ -218,40 +228,6 @@ vector< Vertex > LoadOBJ( istream& in )
     return verts;
 }
 
-int btn;
-glm::ivec2 startMouse;
-glm::ivec2 startRot, curRot;
-glm::ivec2 startTrans, curTrans;
-void mouse(int button, int state, int x, int y )
-{
-    if( button == GLUT_LEFT_BUTTON && state == GLUT_DOWN )
-    {
-        btn = button;
-        startMouse = glm::ivec2( x, glutGet( GLUT_WINDOW_HEIGHT ) - y );
-        startRot = curRot;
-    }
-    if( button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN )
-    {
-        btn = button;
-        startMouse = glm::ivec2( x, glutGet( GLUT_WINDOW_HEIGHT ) - y );
-        startTrans = curTrans;
-    }
-}
-
-void motion( int x, int y )
-{
-    glm::ivec2 curMouse( x, glutGet( GLUT_WINDOW_HEIGHT ) - y );
-    if( btn == GLUT_LEFT_BUTTON )
-    {
-        curRot = startRot + ( curMouse - startMouse );
-    }
-    else if( btn == GLUT_RIGHT_BUTTON )
-    {
-        curTrans = startTrans + ( curMouse - startMouse );
-    }
-    glutPostRedisplay();
-}
-
 void bindModel(themeObject objet) {
     glTranslatef( objet.transX, objet.transY, objet.transZ );
     glRotatef( objet.angle, objet.rotX, objet.rotY, objet.rotZ );
@@ -275,18 +251,15 @@ void display()
 
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
-    double w = 640;
-    double h = 480;
+    double w = windowHeight;
+    double h = windowHeight;
     double ar = w / h;
-    glTranslatef( curTrans.x / w * 2, curTrans.y / h * 2, 0 );
     gluPerspective( 60, ar, 4, 100 );
 
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
     glTranslatef( 0, -2, -20 );
 
-    glRotatef( curRot.x % 360, 0, 1, 0 );
-    glRotatef( -curRot.y % 360, 1, 0, 0 );
     vector<vector<themeObject>> globalVec = createGlobalVec();
 
     for(vector<vector<themeObject>>::iterator vec = globalVec.begin(); vec != globalVec.end(); ++vec){
@@ -310,10 +283,9 @@ void displayPOV2()
 
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
-    double w = 640;
-    double h = 480;
+    double w = windowWidth;
+    double h = windowHeight;
     double ar = w / h;
-    glTranslatef( curTrans.x / w * 2, curTrans.y / h * 2, 0 );
     gluPerspective( 60, ar, 4, 100 );
 
     glMatrixMode( GL_MODELVIEW );
@@ -416,7 +388,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             callRandomColor(), callRandomColor(), callRandomColor(),
             0, 0, 0, 0,
-            -1, 0.1, callRandomPosition(-7,7),
+            callRandomPosition(-3, -1), 0.1, callRandomPosition(-7,7),
             size
         };
         vecCoral.push_back(object);
@@ -427,7 +399,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             callRandomColor(), callRandomColor(), callRandomColor(),
             callRandomAngle(270), callRandom(), 0, 0,
-            -1, 0.1, callRandomPosition(-7,7),
+            callRandomPosition(-3, -1), 0.1, callRandomPosition(-7,7),
             size
         };
         vecCoral2.push_back(object);
@@ -857,8 +829,8 @@ void creerModifications()
 void capturerScene(string filepath)
 {
     // Make the BYTE array, factor of 3 because it's RBG.
-    int width = 640;
-    int height = 480; 
+    int width = windowWidth;
+    int height = windowHeight; 
     char charArray[100];  
     strcpy(charArray, filepath.c_str());  
 
@@ -919,6 +891,17 @@ void Timer(int value)
 
 }
 
+void init(void)
+{
+    // turn on depth test
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    
+    skybox->setup();
+
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+}
+
 int main( int argc, char *argv[] )
 {   
     if (argc != 5 )
@@ -934,14 +917,16 @@ int main( int argc, char *argv[] )
                 srand(time(NULL));
                 glutInit( &argc, argv );
                 glutInitDisplayMode( GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE );
-                glutInitWindowSize( 640, 480 );
+                glutInitWindowSize( windowWidth, windowHeight );
                 glutCreateWindow( "LOG2990 - AQUALAND" );
 
+                skyboxShader = new Shader("./shader/skybox.vs", "./shader/skybox.frag");
+                skybox = new Skybox();
+                init();
                 makeScene();
+                
 
                 glutDisplayFunc( display );
-                glutMouseFunc( mouse );
-                glutMotionFunc( motion );
                 glutIdleFunc( display );
                 glutTimerFunc(500, Timer, 0);
                 glEnable( GL_DEPTH_TEST );
@@ -966,6 +951,7 @@ int main( int argc, char *argv[] )
             }
         }
     }
-    
+    delete skyboxShader;
+    delete skybox;
     return 0;
 }
