@@ -116,7 +116,7 @@ void genImageDiff(uint8_t* r1, uint8_t* r2, uint8_t* g1, uint8_t* g2, uint8_t* b
 											stackX.push_back(currX + j);
 											stackY.push_back(currY + k);
 										}
-										etat.outFile << to_string(currX + j) << "," << to_string(currY + k) << endl;
+										etat.outFile << to_string(currX + j) << "," << to_string(480 - (currY + k)) << endl;
 										etat.visited[currX + j + 640 * (currY + k)] = true;
 									}
 							}
