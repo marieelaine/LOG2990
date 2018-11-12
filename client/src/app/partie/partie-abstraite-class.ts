@@ -25,8 +25,9 @@ export abstract class PartieAbstraiteClass {
     protected image: Array<HTMLImageElement>;
     protected diffTrouvee: number[];
     protected imageData: Array<string>;
+    private nbImages: number;
 
-    public constructor(protected route: ActivatedRoute, protected partieService: PartieService, protected nbImage: number) {
+    public constructor(protected route: ActivatedRoute, protected partieService: PartieService, isSimple: boolean) {
         this.blur = true;
         this.partieCommence = false;
         this.differencesTrouvees = 0;
@@ -36,7 +37,7 @@ export abstract class PartieAbstraiteClass {
         this.imageData = [];
         this.diffTrouvee = [];
 
-        this.setImage(nbImage);
+        this.setImage(isSimple);
         this.setID();
         this.setPartie();
     }
@@ -62,7 +63,7 @@ export abstract class PartieAbstraiteClass {
 
     protected setup(): void {
         this.addNomPartieToChat();
-        for (let i = 0; i < this.nbImage; i++) {
+        for (let i = 0; i < this.nbImages; i++) {
             this.ajusterSourceImage(this.imageData[i], this.canvas.toArray()[i], this.image[i]);
         }
     }
@@ -125,9 +126,10 @@ export abstract class PartieAbstraiteClass {
             .catch(() => ErrorHandler);
     }
 
-    private setImage(nbImage: number): void {
+    private setImage(isSimple: boolean): void {
+        this.nbImages = isSimple ? 2 : 4;
         this.image = [];
-        for (let i = 0; i < nbImage; i++) {
+        for (let i = 0; i < this.nbImages; i++) {
             this.image.push(new Image());
         }
     }

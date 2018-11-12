@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { DialogAbstrait } from '../dialog-abstrait';
+import { DialogAbstrait, TempsUser } from '../dialog-abstrait';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DialogData, Checkbox } from '../admin.component';
 import { HttpClient } from '@angular/common/http';
@@ -21,11 +21,8 @@ export class DialogMultipleComponent extends DialogAbstrait {
   protected outOfBoundNumberForms: string;
   protected checkboxMessage: string;
   protected themeButtonMessage: string;
-  protected qtyControl = new FormControl('', [
-    Validators.max(200), Validators.min(10),
-    Validators.required, Validators.pattern('[ 0-9 ]*')]);
-  protected nameControl = new FormControl('', [
-    Validators.maxLength(20), Validators.minLength(3), Validators.required]);
+  protected qtyControl: FormControl;
+  protected nameControl: FormControl;
 
   public constructor(
     dialogRef: MatDialogRef<DialogMultipleComponent>,
@@ -38,6 +35,11 @@ export class DialogMultipleComponent extends DialogAbstrait {
       this.themeButtonMessage = "";
       this.data.theme = "";
       this.data.typeModification = "";
+      this.nameControl = new FormControl('', [
+        Validators.minLength(3), Validators.maxLength(20), Validators.required]);
+      this.qtyControl = new FormControl('', [
+        Validators.min(10), Validators.max(200),
+        Validators.required, Validators.pattern('[ 0-9 ]*')]);
   }
 
   protected checkboxArray: Checkbox[] =  [
@@ -81,8 +83,8 @@ export class DialogMultipleComponent extends DialogAbstrait {
   }
 
   protected ajouterPartie() {
-    const tempsSolo: Array<number> = this.genererTableauTempsAleatoires();
-    const temps1v1: Array<number> = this.genererTableauTempsAleatoires();
+    const tempsSolo: Array<TempsUser> = this.genererTableauTempsAleatoires();
+    const temps1v1: Array<TempsUser> = this.genererTableauTempsAleatoires();
 
     const result: PartieMultiple = new PartieMultiple(this["data"].multipleGameName, tempsSolo, temps1v1,
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),

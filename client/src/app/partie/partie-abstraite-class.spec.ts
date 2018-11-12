@@ -5,6 +5,7 @@ import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 import { PartieService } from "./partie.service";
 import { HttpClient } from "@angular/common/http";
 import { HttpHandlerMock, ActivatedRouteMock } from "src/testing/mocks";
+import { TempsUser } from "../admin/dialog-abstrait";
 
 class PartieServiceMock extends PartieService {
     constructor() {
@@ -25,8 +26,8 @@ describe('PartieAbstraiteComponent', () => {
     let component: AbstractClassInstance;
 
     beforeEach(() => {
-    component = new AbstractClassInstance(new ActivatedRouteMock(), new PartieServiceMock(), 1);
-    component["partie"] = new PartieSimple ("nomPartie", new Array<number>(), new Array<number>(), Buffer.from(new Array<number>()),
+    component = new AbstractClassInstance(new ActivatedRouteMock(), new PartieServiceMock(), true);
+    component["partie"] = new PartieSimple ("nomPartie", new Array<TempsUser>(), new Array<TempsUser>(), Buffer.from(new Array<number>()),
                                             Buffer.from(new Array<number>()), new Array<Array<string>>(), "");
     });
 

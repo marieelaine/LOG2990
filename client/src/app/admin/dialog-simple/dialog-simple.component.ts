@@ -26,8 +26,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
   private selectedFiles: File[] = [];
   private selectedFilesAsBuffers: Buffer[] = [];
   private correctImageExtension: String = "image/bmp";
-  protected nameControl = new FormControl('', [
-    Validators.maxLength(20), Validators.minLength(30), Validators.required]);
+  protected nameControl: FormControl;
 
   public constructor(
     dialogRef: MatDialogRef<DialogSimpleComponent>,
@@ -38,6 +37,8 @@ export class DialogSimpleComponent extends DialogAbstrait {
       super(dialogRef, data, http);
       this.wrongImageSizeOrTypeMessage = "";
       this.wrongNumberOfImagesMessage = "";
+      this.nameControl = new FormControl('', [
+        Validators.minLength(3), Validators.maxLength(20), Validators.required]);
     }
 
   protected onClickAjouterPartie(): void {
@@ -80,8 +81,9 @@ export class DialogSimpleComponent extends DialogAbstrait {
   protected async ajouterPartie(): Promise<void> {
       const result: PartieSimple = new PartieSimple(this["data"].simpleGameName, this.genererTableauTempsAleatoires(),
                                                     this.genererTableauTempsAleatoires(), this.selectedFilesAsBuffers[0],
-                                                    this.selectedFilesAsBuffers[1],
-                                                    new Array<Array<string>>());
+                                                    this.selectedFilesAsBuffers[1], new Array<Array<string>>());
+      console.log("ajouter partie de dialog simple");
+      console.log(result);
       this.partieSimpleService.register(result)
         .subscribe(
           (data) => {
@@ -151,17 +153,4 @@ export class DialogSimpleComponent extends DialogAbstrait {
     return (this.selectedFiles[0] === undefined || this.selectedFiles[0] === null
       || this.selectedFiles[1] === undefined || this.selectedFiles[1] === null);
   }
-
-  // TODO : implementer le mat-error dans le html
-  // public checkIfOutOfBoundName(bla: String): boolean {
-  //   if (bla === "" || bla === undefined
-  //   || bla.length < 3 || bla.length > 20) {
-  //     this.outOfBoundNameLengthMessage = "*Le nom du jeu doit être entre 3 et 20 charactères.";
-
-  //     return true;
-  //   }
-  //   this.outOfBoundNameLengthMessage = "" ;
-
-  //   return false;
-  // }
 }

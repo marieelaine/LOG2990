@@ -3,6 +3,7 @@ import { TestBed, fakeAsync } from "@angular/core/testing";
 import { ListePartieServiceService } from "./liste-partie-service.service";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { ErrorHandler } from "@angular/core";
+import { TempsUser } from "../admin/dialog-abstrait";
 
 describe("Liste Partie Service Service", () => {
     let service: ListePartieServiceService;
@@ -50,7 +51,7 @@ describe("Liste Partie Service Service", () => {
         it("Devrait faire une requete PUT", () => {
             const id: string = "12345abcde";
 
-            service.reinitialiserTempsPartie(id, new Array<number>(), new Array<number>()).catch(() => ErrorHandler);
+            service.reinitialiserTempsPartie(id, new Array<TempsUser>(), new Array<TempsUser>()).catch(() => ErrorHandler);
 
             const req = mockHttp.expectOne("http://localhost:3000/partieSimple/reinitialiseTemps/" + id);
             expect(req.request.method).toBe("PUT");
@@ -81,7 +82,7 @@ describe("Liste Partie Service Service", () => {
         it("Devrait faire une requete PUT", () => {
             const id: string = "12345abcde";
 
-            service.reinitialiserTempsPartieMultiple(id, new Array<number>(), new Array<number>());
+            service.reinitialiserTempsPartieMultiple(id, new Array<TempsUser>(), new Array<TempsUser>());
 
             const req = mockHttp.expectOne("http://localhost:3000/partieMultiple/reinitialiseTemps/" + id);
             expect(req.request.method).toBe("PUT");

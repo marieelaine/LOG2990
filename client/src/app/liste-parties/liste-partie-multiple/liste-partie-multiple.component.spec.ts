@@ -11,6 +11,7 @@ import { of } from "rxjs";
 import { Location } from "@angular/common";
 import { SocketClientService } from 'src/app/socket/socket-client.service';
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material';
+import { TempsUser } from 'src/app/admin/dialog-abstrait';
 
 describe('PartieMultipleComponent', () => {
     let mockListePartieService: jasmine.SpyObj<ListePartieServiceService>;
@@ -20,8 +21,8 @@ describe('PartieMultipleComponent', () => {
     let location: Location;
     const partie: PartieMultiple = new PartieMultiple(
         "partie1",
-        new Array<number>(),
-        new Array<number>(),
+        new Array<TempsUser>(),
+        new Array<TempsUser>(),
         new Buffer.Buffer(new Array<number>()),
         new Buffer.Buffer(new Array<number>()),
         new Buffer.Buffer(new Array<number>()),

@@ -3,6 +3,7 @@ import { By } from "@angular/platform-browser";
 import { DialogErreurComponent } from './dialog-erreur.component';
 import { MatDialogModule, MatDividerModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { SocketClientService } from 'src/app/socket/socket-client.service';
 
 describe('DialogErreurComponent', () => {
   let component: DialogErreurComponent;
