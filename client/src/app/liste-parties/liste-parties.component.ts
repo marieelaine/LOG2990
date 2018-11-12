@@ -19,7 +19,6 @@ export class ListePartiesComponent {
   protected isAdminMode: boolean;
   protected isElevatedActive: boolean;
   protected listePartiesEnAttente: Array<string>;
-  protected username: string = "username";
 
   public constructor(public router: Router,
                      public listePartieService: ListePartieServiceService) {
@@ -76,7 +75,6 @@ export class ListePartiesComponent {
           return 0;
         });
       }
-      // console.log(times);
 
       return times;
   }
@@ -136,7 +134,6 @@ export class ListePartiesComponent {
       partie["_tempsSolo"].push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
       partie["_tempsUnContreUn"].push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
     }
-    console.log(partie["_tempsSolo"]);
 }
 
   private genererTempsAleatoire(): number {
@@ -144,7 +141,6 @@ export class ListePartiesComponent {
 }
 
   private setToJouerAndCreer(): void {
-    // Si la partie est deja creee, mettre le bouton a joindre
     this.isAdminMode = false;
     this.isListePartiesMode = true;
     this.jouerOuReinitialiser = "Jouer";

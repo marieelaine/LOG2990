@@ -1,5 +1,3 @@
-// TODO ARRANGER LES TESTS
-
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ListePartiesComponent } from './liste-parties.component';
@@ -12,7 +10,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from "@angular/platform-browser";
 import { PartieSimpleSoloComponent } from '../partie/vue-simple/partie-simple-solo/partie-simple-solo.component';
 import { AdminComponent } from '../admin/admin.component';
-import { TempsUser } from '../admin/dialog-abstrait';
+// import { TempsUser } from '../admin/dialog-abstrait';
 
 // describe('ListePartiesComponent', () => {
 //     let component: ListePartiesComponent;
@@ -21,7 +19,7 @@ import { TempsUser } from '../admin/dialog-abstrait';
 //     const user1: TempsUser = new TempsUser("user1", 1);
 //     const user2: TempsUser = new TempsUser("user2", 2);
 //     const bestTimesTest: TempsUser[] = [user1, user2];
-//     const sortingTimesTest: TempsUser[] = [643, 5, 213, 1465, 1, 0];
+//     const sortingTimesTest: TempsUser[] = [user1, user2];
 //     const titleTest: String = "NSuccess";
 //     const convertTimeTest: number = 547;
 //     const displaySecondsTest: number = 57;
@@ -74,7 +72,7 @@ import { TempsUser } from '../admin/dialog-abstrait';
 
 //     it('should change jouerOuReinitialiser and creerOuSupprimer to "Reinitialiser" and "Supprimer" when url is /admin', () => {
 //         component["setjouerOuReinitialiserAndcreerOuSupprimer"]('/admin');
-//         expect(component["jouerOuReinitialiser"]).toBe('Réinitialiser');
+        // expect(component["jouerOuReinitialiser"]).toBe('Réinitialiser');
 //         expect(component["creerOuSupprimer"]).toBe('Supprimer');
 //         expect(component["isAdminMode"]).toBe(true);
 //     });

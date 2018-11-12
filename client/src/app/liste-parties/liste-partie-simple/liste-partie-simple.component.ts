@@ -8,6 +8,7 @@ import { DialogConfirmationComponent } from "../dialog-confirmation/dialog-confi
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { DialogVueAttenteComponent } from "../dialog-vue-attente/dialog-vue-attente.component";
+import { TempsUser } from "src/app/admin/dialog-abstrait";
 
 @Component({
   selector: "app-liste-partie-simple",
@@ -36,7 +37,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
       this.listePartieEnAttente = res;
     });
     this.ajouterPartieSurSocketEvent();
-
+    this.sortTableauxTemps();
   }
 
   protected afficherImage(id: string) {
@@ -63,6 +64,13 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
     } else if (this.isAdminMode) {
       this.ouvrirDialogConfirmation(partieId);
+    }
+  }
+
+  private sortTableauxTemps(): void {
+    for (const partie of this.listeParties) {
+      partie["_tempsSolo"] = this.getSortedTimes(partie["_tempsSolo"]);
+      partie["_tempsUnContreUn"] = this.getSortedTimes(partie["_tempsUnContreUn"]);
     }
   }
 
