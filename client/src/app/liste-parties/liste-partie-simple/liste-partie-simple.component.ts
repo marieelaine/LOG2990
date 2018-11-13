@@ -8,7 +8,6 @@ import { DialogConfirmationComponent } from "../dialog-confirmation/dialog-confi
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { DialogVueAttenteComponent } from "../dialog-vue-attente/dialog-vue-attente.component";
-import { TempsUser } from "src/app/admin/dialog-abstrait";
 
 @Component({
   selector: "app-liste-partie-simple",
@@ -32,8 +31,6 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   public async ngOnInit() {
     this.listePartieService.getListePartieSimple().subscribe((res: PartieSimple[]) => {
       this.listeParties = res;
-      console.log("la liste des parties");
-      console.log(this.listeParties);
     });
     this.listePartieService.getListePartieSimpleEnAttente().subscribe((res: string[]) => {
       this.listePartieEnAttente = res;

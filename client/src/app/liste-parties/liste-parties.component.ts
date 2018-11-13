@@ -74,17 +74,11 @@ export class ListePartiesComponent {
     return title.substr(1, title.length - 1);
   }
 
-  private getDisplayTime(minutes: number, secondes: number, user: string): string {
-    const temps: string = (secondes < 10) ? (minutes + ":0" + secondes) : minutes + ":" + secondes;
+  protected getDisplayTime(temps: TempsUser): string {
+    const minutes = Math.floor(temps["_temps"] / 60);
+    const secondes = temps["_temps"] - minutes * 60;
 
-    return user + " : " + temps;
-  }
-
-  private convertSecondsToMinutes(time: TempsUser): String {
-      const minutes = Math.floor(time["_temps"] / 60);
-      const secondes = time["_temps"] - minutes * 60;
-
-      return this.getDisplayTime(minutes, secondes, time["_user"]);
+    return (secondes < 10) ? (minutes + ":0" + secondes) : minutes + ":" + secondes;
   }
 
   protected genererTableauTempsAleatoires(partie: T): void {

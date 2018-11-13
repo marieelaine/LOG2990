@@ -111,3 +111,13 @@ mat-badge{
     overflow:hidden;
     text-align:center;
 }
+
+col-1{
+    display: flex;
+    padding: 3%;
+}
+
+.badge-pill {
+    padding: .3em .6em;
+    margin-left:2%;
+}

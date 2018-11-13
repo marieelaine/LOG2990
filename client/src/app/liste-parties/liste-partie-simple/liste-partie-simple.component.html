@@ -34,9 +34,20 @@
                         <h2 class='headers'> 1v1 </h2> 
                     </div>
                  </div>
-                 <div class=row *ngFor="let temps of partieSimple['_tempsSolo']">
+                 <div class=row *ngFor="let tempsSolo of partieSimple['_tempsSolo']; let i = index">
                      <!-- ngfor -->
-                     {{ temps['_user'] }}
+                     <div class="col-1">
+                        <span class="badge badge-pill badge-danger">{{i+1}}</span>
+                     </div>
+                     <div class="col-5"><span>{{ getDisplayTime(tempsSolo) }}</span> : 
+                        <span>{{ tempsSolo['_user'] }}</span></div>
+                     <div class="col-1">
+                            <span class="badge badge-pill badge-danger">{{i+1}}</span>
+                    </div>
+                    <div class="col-5">
+                        <!-- <span> {{ partieSimple['_tempsUnContreUn'][i]['_user'] }} </span> : -->
+                        <!-- <span> {{ getDisplayTime(partieSimple['_tempsUnContreUn'][i]) }} </span> -->
+                        </div> 
                  </div>
             </div>
             <div class='col-sm-5'>

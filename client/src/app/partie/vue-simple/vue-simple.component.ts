@@ -86,7 +86,10 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
   }
 
   private updateTableauTemps(temps: number) {
-    const joueur: string = this.cookieService.get("username");
+    let joueur: string = this.cookieService.get("username");
+    if (joueur == null) {
+        joueur = "Anonyme";
+    }
     const tempsUser: TempsUser =  new TempsUser(joueur, temps);
     this.partie["_tempsSolo"].splice(-1, 1);
     this.partie["_tempsSolo"].push(tempsUser);
