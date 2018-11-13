@@ -47,11 +47,11 @@ export class DialogVueAttenteComponent implements OnDestroy {
     });
   }
 
-  private setMessageErreur() {
+  private setMessageErreur(): void {
     this.message = "Erreur : cette partie n'existe plus!";
   }
 
-  private ajouterPartieSurSocket() {
+  private ajouterPartieSurSocket(): void {
     this.socketClientService.socket.on(event.DELETE_PARTIE_SIMPLE, (data: string) => {
       if (this.partieId === data) {
         this.isEnAttente = false;

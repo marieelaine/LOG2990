@@ -22,11 +22,12 @@ export class DialogSimpleComponent extends DialogAbstrait {
   protected deuxiemeImage: string;
   protected wrongNumberOfImagesMessage: string;
   protected wrongImageSizeOrTypeMessage: string;
-  private currentImageNumber: number;
-  private selectedFiles: File[] = [];
-  private selectedFilesAsBuffers: Buffer[] = [];
-  private correctImageExtension: String = "image/bmp";
   protected nameControl: FormControl;
+
+  private currentImageNumber: number;
+  private selectedFiles: File[];
+  private selectedFilesAsBuffers: Buffer[];
+  private correctImageExtension: String;
 
   public constructor(
     dialogRef: MatDialogRef<DialogSimpleComponent>,
@@ -35,6 +36,9 @@ export class DialogSimpleComponent extends DialogAbstrait {
 
     private partieSimpleService: PartieSimpleService) {
       super(dialogRef, data, http);
+      this.selectedFiles = [];
+      this.selectedFilesAsBuffers = [];
+      this.correctImageExtension = "image/bmp";
       this.wrongImageSizeOrTypeMessage = "";
       this.wrongNumberOfImagesMessage = "";
       this.nameControl = new FormControl('', [

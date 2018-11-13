@@ -23,6 +23,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
                      public socketClientService: SocketClientService,
                      private dialog: MatDialog) {
     super(router, listePartieService);
+    this.listeParties = [];
   }
 
   public ngOnInit() {
@@ -53,16 +54,6 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
       }
     }
 
-  private ouvrirDialog(partieId: string): void {
-      this.dialog.open(DialogConfirmationComponent, {
-        height: "190px",
-        width: "600px",
-        data: { id: partieId,
-                listeParties: this.listeParties,
-                isSimple: false}
-      });
-    }
-
   protected supprimerPartie(partieId: string): void {
     for (let i = 0 ; i < this.listeParties.length ; i++) {
       if (this.listeParties[i]["_id"]  === partieId) {
@@ -86,6 +77,16 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
   private ajouterPartieSurSocketEvent() {
     this.socketClientService.socket.on(event.ENVOYER_PARTIE_MULTIPLE, (data) => {
       this.listeParties.push(data);
+    });
+  }
+
+  private ouvrirDialog(partieId: string): void {
+    this.dialog.open(DialogConfirmationComponent, {
+      height: "190px",
+      width: "600px",
+      data: { id: partieId,
+              listeParties: this.listeParties,
+              isSimple: false}
     });
   }
 }

@@ -1,7 +1,9 @@
 import { Component } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
 import { ListePartieServiceService } from "./liste-partie-service.service";
-import T, { TempsUser } from "../admin/dialog-abstrait";
+import { TempsUser } from "../admin/dialog-abstrait";
+import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
+import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 
 @Component({
   selector: "app-liste-parties",
@@ -19,24 +21,21 @@ export class ListePartiesComponent {
   protected isAdminMode: boolean;
   protected isElevatedActive: boolean;
   protected listePartiesEnAttente: Array<string>;
-  protected username: string = "username";
+  protected username: string;
 
   public constructor(public router: Router,
                      public listePartieService: ListePartieServiceService) {
+    this.username = "username";
     this.jouerOuReinitialiser = "";
     this.creerOuSupprimer = "";
     this.joindreOuSupprimer = "";
     this.isListePartiesMode = false;
     this.isAdminMode = false;
     this.listePartiesEnAttente = new Array<string>();
-    router.events.subscribe((val) => {
-      if (val instanceof NavigationEnd) {
-        this.setjouerOuReinitialiserAndcreerOuSupprimer(val.url);
-      }
-    });
+    this.changerBoutonSelonRouter(router);
   }
 
-  protected ajusterImage(id: String, listeParties: T[], isPartieSimple: Boolean): void {
+  protected ajusterImage(id: string, listeParties: Array<PartieSimple | PartieMultiple>, isPartieSimple: Boolean): void {
     for (const partie of listeParties) {
       if (partie["_id"] === id) {
         let data: string = "";
@@ -51,9 +50,8 @@ export class ListePartiesComponent {
             result[i] = hex;
         }
         const blob = new Blob([result], {type: 'image/bmp'});
-        // TODO changer le get element by id
-        // @ts-ignore
-        document.getElementById(id).src = URL.createObjectURL(blob);
+        const element: HTMLImageElement = document.getElementById(id) as HTMLImageElement;
+        element.src = URL.createObjectURL(blob);
       }
     }
   }
@@ -81,7 +79,7 @@ export class ListePartiesComponent {
       return times;
   }
 
-  protected getBestTime(times: Array<TempsUser>): String {
+  protected getBestTime(times: Array<TempsUser>): string {
     const sortedTimes: Array<TempsUser> = this.getSortedTimes(times);
     if (sortedTimes[0]["_temps"] == null) {
       return "-";
@@ -90,7 +88,7 @@ export class ListePartiesComponent {
     return this.convertSecondsToMinutes(sortedTimes[0]);
   }
 
-  protected getSecondBestTime(times: Array<TempsUser>): String {
+  protected getSecondBestTime(times: Array<TempsUser>): string {
     const sortedTimes: Array<TempsUser> = this.getSortedTimes(times);
     if (sortedTimes[1]["_temps"] == null) {
       return "-";
@@ -99,7 +97,7 @@ export class ListePartiesComponent {
     return this.convertSecondsToMinutes(sortedTimes[1]);
   }
 
-  protected getThirdBestTime(times: Array<TempsUser>): String {
+  protected getThirdBestTime(times: Array<TempsUser>): string {
     const sortedTimes: Array<TempsUser> = this.getSortedTimes(times);
     if (sortedTimes[2]["_temps"] == null) {
       return "-";
@@ -114,29 +112,28 @@ export class ListePartiesComponent {
     return user + " : " + temps;
   }
 
-  protected getTitleFirstLetter(title: String): String {
+  protected getTitleFirstLetter(title: string): string {
 
     return title.substr(0, 1);
   }
 
-  protected getTitleWithoutFirstLetter(title: String): String {
+  protected getTitleWithoutFirstLetter(title: string): string {
 
     return title.substr(1, title.length - 1);
   }
 
-  protected convertSecondsToMinutes(time: TempsUser): String {
+  protected convertSecondsToMinutes(time: TempsUser): string {
       const minutes = Math.floor(time["_temps"] / 60);
       const secondes = time["_temps"] - minutes * 60;
 
       return this.getDisplayTime(minutes, secondes, time["_user"]);
   }
 
-  protected genererTableauTempsAleatoires(partie: T): void {
+  protected genererTableauTempsAleatoires(partie: PartieSimple | PartieMultiple): void {
     for (let i: number = 1; i < partie["_tempsSolo"].length + 1 ; i++) {
       partie["_tempsSolo"].push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
       partie["_tempsUnContreUn"].push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
     }
-    console.log(partie["_tempsSolo"]);
   }
 
   private genererTempsAleatoire(): number {
@@ -157,6 +154,14 @@ export class ListePartiesComponent {
     this.jouerOuReinitialiser = "Réinitialiser";
     this.creerOuSupprimer = "Supprimer";
     this.joindreOuSupprimer = "Supprimer";
+  }
+
+  private changerBoutonSelonRouter(router: Router): void {
+    router.events.subscribe((val) => {
+      if (val instanceof NavigationEnd) {
+        this.setjouerOuReinitialiserAndcreerOuSupprimer(val.url);
+      }
+    });
   }
 
 }

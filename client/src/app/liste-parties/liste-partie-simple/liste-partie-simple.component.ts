@@ -26,9 +26,11 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
               private dialog: MatDialog,
               public socketClientService: SocketClientService) {
     super(router, listePartieService);
+    this.listeParties = [];
+    this.listePartieEnAttente = [];
   }
 
-  public async ngOnInit() {
+  public ngOnInit() {
     this.listePartieService.getListePartieSimple().subscribe((res: PartieSimple[]) => {
       this.listeParties = res;
     });
@@ -39,7 +41,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   }
 
-  protected afficherImage(id: string) {
+  protected afficherImage(id: string): void {
     this.ajusterImage(id, this.listeParties, true);
   }
 
@@ -73,7 +75,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     }
   }
 
-  private ouvrirDialogVueAttente(partieId: string) {
+  private ouvrirDialogVueAttente(partieId: string): void {
     this.dialog.open(DialogVueAttenteComponent, {
       height: "220px",
       width: "600px",
@@ -101,7 +103,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     });
   }
 
-  private ajouterPartieSurSocketEvent() {
+  private ajouterPartieSurSocketEvent(): void {
     this.socketClientService.socket.on(event.ENVOYER_PARTIE_SIMPLE, (data) => {
       this.listeParties.push(data);
     });
