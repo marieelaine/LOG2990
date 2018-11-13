@@ -46,7 +46,6 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     if (this.isListePartiesMode) {
       this.router.navigate(["/partie-simple-solo/" + partieId])
       .catch(() => ErrorHandler);
-
     } else if (this.isAdminMode) {
       this.reinitialiserTemps(partieId);
     }
@@ -106,6 +105,6 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
             this.listePartieEnAttente.splice(i, 1);
         }
       }
-  });
+    });
   }
 }
