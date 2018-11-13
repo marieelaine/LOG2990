@@ -86,7 +86,7 @@ describe("Partie Multiple BD classe", () => {
                 _typeModification: "a",
             };
 
-            partieMultipleBD["enregistrerPartieMultiple"](unePartie, {} as Response, "erreur").catch();
+            partieMultipleBD["enregistrerPartieMultiple"](unePartie).catch();
 
             assert(spy.calledOnce);
             assert(stub.calledOnce);

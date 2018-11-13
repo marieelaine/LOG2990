@@ -89,7 +89,7 @@ export class DialogMultipleComponent extends DialogAbstrait {
     const result: PartieMultiple = new PartieMultiple(this["data"].multipleGameName, tempsSolo, temps1v1,
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
-                                                      Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
+                                                      new Array<Array<string>>(), new Array<Array<string>>(),
                                                       this["data"].quantiteObjets, this["data"].theme,
                                                       this["data"].typeModification);
     this.partieMultipleService.register(result)
@@ -145,8 +145,8 @@ export class DialogMultipleComponent extends DialogAbstrait {
 
   protected setCheckboxMessage(): void {
     this.checkAllCheckbox() ?
-      this.outOfBoundNumberForms = "*Une transformation doit etre selectionnee au minimum." :
-      this.outOfBoundNumberForms = "" ;
+      this.checkboxMessage = "*Une transformation doit etre selectionnee au minimum." :
+      this.checkboxMessage = "" ;
   }
 
   protected setThemeMessage(): void {
