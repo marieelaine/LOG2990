@@ -42,7 +42,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
           for (const diff of this.partie["_imageDiff"]) {
               for (const pixel of diff) {
                   if (coords === pixel) {
-                      if (!this.diffTrouvee.includes(i)) {
+                      if (!this.diffTrouvee[0].includes(i)) {
                           this.differenceTrouver(i);
 
                           return;
@@ -56,7 +56,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
   }
 
   protected differenceTrouver(i): void {
-      this.diffTrouvee.push(i);
+      this.diffTrouvee[0].push(i);
       this.trouverDifference();
 
       const contextG = this.canvas.toArray()[0].nativeElement.getContext("2d");

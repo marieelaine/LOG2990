@@ -24,7 +24,7 @@ export abstract class PartieAbstraiteClass {
     protected partieID: string;
     protected abstract partie: PartieSimple | PartieMultiple;
     protected image: Array<HTMLImageElement>;
-    protected diffTrouvee: number[];
+    protected diffTrouvee: number[][];
     protected imageData: Array<string>;
     protected penaliteEtat: boolean = false;
     private nbImages: number;
@@ -40,7 +40,7 @@ export abstract class PartieAbstraiteClass {
         this.messageDifferences = "Cliquez pour commencer";
         this.chat = new ChatComponent();
         this.imageData = [];
-        this.diffTrouvee = [];
+        this.diffTrouvee = [[], []];
         this.audio = new Audio();
 
         this.setImage(isSimple);

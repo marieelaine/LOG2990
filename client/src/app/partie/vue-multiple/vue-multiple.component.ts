@@ -38,9 +38,9 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     }
 
     protected testerPourDiff(event): void {
-        if (this.partieCommence) {
+        if (this.partieCommence && !this.penaliteEtat) {
 
-            const coords = "[" + event.offsetX + ", " + event.offsetY + "]";
+            const coords = event.offsetX + "," + event.offsetY;
             const source: string = event.srcElement.id === "canvasG1" || event.srcElement.id === "canvasD1"
                 ? "_imageDiff1"
                 : "_imageDiff2";
@@ -49,7 +49,8 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
             for (const diff of this.partie[source]) {
                 for (const pixel of diff) {
                     if (coords === pixel) {
-                        if (!this.diffTrouvee.includes(i)) {
+                        if (!this.diffTrouvee[0].includes(i) && source === "_imageDiff1"
+                            || !this.diffTrouvee[1].includes(i) && source === "_imageDiff2") {
                             this.differenceTrouver(i, source);
 
                             return;
@@ -63,7 +64,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     }
 
     protected differenceTrouver(i: number, src: string): void {
-        this.diffTrouvee.push(i);
+        src === "_imageDiff1" ? this.diffTrouvee[0].push(i) : this.diffTrouvee[1].push(i);
         this.trouverDifference();
 
         let contextG: CanvasRenderingContext2D;
