@@ -706,7 +706,7 @@ void FenetreTP::sourisMolette( int x, int y )
 void genScene(int argc, const char* argv[]){
     if (argc != 5 )
     {
-        cerr << "Erreur: Nombre invalid de parametres!\n";
+        cerr << "Erreur: Nombre invalide de parametres!\n";
         cerr << "Template: main.exe geo 15 as nomFicher\n";
         exit(1);
     }
