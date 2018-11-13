@@ -622,6 +622,12 @@ void FenetreTP::afficherScene(int index)
 }
 
 void creerEtat(const char* argv[], Etat& etat){
+    if (argc != 5 )
+    {
+        cerr << "Erreur: Nombre invalide de parametres!\n";
+        cerr << "Template: main.exe geo 15 as nomFicher\n";
+        exit(1);
+    }
 
     etat.dimBoite = 17.5;
     etat.theme =  argv[1];
@@ -635,7 +641,7 @@ void creerEtat(const char* argv[], Etat& etat){
     string capture4 = string(etat.filename + string("_b_mod.bmp"));
 
     etat.capture1 = capture1;
-    etat.capture2 = capture2; 
+    etat.capture2 = capture2;
     etat.capture3 = capture3;
     etat.capture4 = capture4;
 }
@@ -704,56 +710,50 @@ void FenetreTP::sourisMolette( int x, int y )
 }
 
 void genScene(int argc, const char* argv[]){
-    if (argc != 5 )
-    {
-        cerr << "Erreur: Nombre invalide de parametres!\n";
-        cerr << "Template: main.exe geo 15 as nomFicher\n";
-        exit(1);
-    }
-    else {
-        if (etat.theme == "geo"){
-            if(etat.nombreFormes >= 10 && etat.nombreFormes <= 200){
-                srand(time(NULL));
-                int index = 1;
 
-                FenetreTP fenetre( "INF2990" );
-                fenetre.initialiser();
+    if (etat.theme == "geo"){
+        if(etat.nombreFormes >= 10 && etat.nombreFormes <= 200){
+            srand(time(NULL));
+            int index = 1;
 
-                makeFormesGeometriques();
+            FenetreTP fenetre( "INF2990" );
+            fenetre.initialiser();
 
-                fenetre.afficherScene(index);
-                fenetre.swap();
+            makeFormesGeometriques();
 
-                //this_thread::sleep_for(chrono::seconds(1));
-                camera.modeLookAt = !camera.modeLookAt;
-                fenetre.afficherScene(index);
-                fenetre.swap();
-                index = 0;
-                creerModifications();
+            fenetre.afficherScene(index);
+            fenetre.swap();
 
-                //this_thread::sleep_for(chrono::seconds(1));
-                camera.modeLookAt = !camera.modeLookAt;
-                fenetre.afficherScene(index);
-                fenetre.swap();
+            //this_thread::sleep_for(chrono::seconds(1));
+            camera.modeLookAt = !camera.modeLookAt;
+            fenetre.afficherScene(index);
+            fenetre.swap();
+            index = 0;
+            creerModifications();
 
-                //this_thread::sleep_for(chrono::seconds(1));
-                camera.modeLookAt = !camera.modeLookAt;
-                fenetre.afficherScene(index);
-                fenetre.swap();
+            //this_thread::sleep_for(chrono::seconds(1));
+            camera.modeLookAt = !camera.modeLookAt;
+            fenetre.afficherScene(index);
+            fenetre.swap();
 
-                //this_thread::sleep_for(chrono::seconds(1));
-                fenetre.conclure();
-            }
-            else {
-                cerr << "Erreur: Il faut choisir entre 10 et 200 formes geometriques.\n";
-                exit(1);
-            }
+            //this_thread::sleep_for(chrono::seconds(1));
+            camera.modeLookAt = !camera.modeLookAt;
+            fenetre.afficherScene(index);
+            fenetre.swap();
+
+            //this_thread::sleep_for(chrono::seconds(1));
+            fenetre.conclure();
         }
-        else if (etat.theme == "theme"){
-            cerr << "Erreur: L'executable ne peut creer de themes pour l'instant! Essayez plutot geo.\n";
+        else {
+            cerr << "Erreur: Il faut choisir entre 10 et 200 formes geometriques.\n";
             exit(1);
         }
     }
+    else if (etat.theme == "theme"){
+        cerr << "Erreur: L'executable ne peut creer de themes pour l'instant! Essayez plutot geo.\n";
+        exit(1);
+    }
+
 }
 
 int main( int argc, const char* argv[] ) {
