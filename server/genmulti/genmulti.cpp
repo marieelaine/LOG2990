@@ -773,8 +773,8 @@ int main( int argc, const char* argv[] ) {
     for (int i = 0; i < 40; i++){
         genScene(argc, argv);
         
-        string paramA = "./bmpdiff/bmpdiff " + etat.capture1 + " " + etat.capture3 + " " + etat.filename + "_a_diff.txt ";
-        string paramB = "./bmpdiff/bmpdiff " + etat.capture2 + " " + etat.capture4 + " " + etat.filename + "_b_diff.txt ";
+        string paramA = "./bmpdiff/bmpdiff " + etat.capture1 + " " + etat.capture3 + " " + etat.filename + "_a_diff.bmp ";
+        string paramB = "./bmpdiff/bmpdiff " + etat.capture2 + " " + etat.capture4 + " " + etat.filename + "_b_diff.bmp ";
 
         int outputA = system(paramA.c_str());
         int outputB = system(paramB.c_str());
