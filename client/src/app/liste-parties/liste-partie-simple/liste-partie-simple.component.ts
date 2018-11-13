@@ -26,9 +26,11 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
               private dialog: MatDialog,
               public socketClientService: SocketClientService) {
     super(router, listePartieService);
+    this.listeParties = [];
+    this.listePartieEnAttente = [];
   }
 
-  public async ngOnInit() {
+  public ngOnInit() {
     this.listePartieService.getListePartieSimple().subscribe((res: PartieSimple[]) => {
       this.listeParties = res;
     });
@@ -39,7 +41,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   }
 
-  protected afficherImage(id: string) {
+  protected afficherImage(id: string): void {
     this.ajusterImage(id, this.listeParties, true);
   }
 
@@ -53,20 +55,27 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     }
   }
 
-  protected async onCreerOuSupprimerClick(partieId: string): Promise<void> {
+  protected onCreerOuSupprimerClick(partieId: string): void {
     if (this.isListePartiesMode) {
-      await this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
-        this.ouvrirDialogVueAttente(partieId);
-        this.router.navigate(["/partie-simple-solo/" + partieId])
-        .catch(() => ErrorHandler);
-      });
-
+      this.checkJoindreOuSupprimer(partieId);
     } else if (this.isAdminMode) {
       this.ouvrirDialogConfirmation(partieId);
     }
   }
 
-  private ouvrirDialogVueAttente(partieId: string) {
+  private checkJoindreOuSupprimer(partieId: string): void {
+    if (this.listePartieEnAttente.includes(partieId)) {
+      this.router.navigate(["/partie-simple-solo/" + partieId]);
+    } else {
+      this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
+        this.ouvrirDialogVueAttente(partieId);
+        this.router.navigate(["/partie-simple-solo/" + partieId])
+        .catch(() => ErrorHandler);
+      });
+    }
+  }
+
+  private ouvrirDialogVueAttente(partieId: string): void {
     this.dialog.open(DialogVueAttenteComponent, {
       height: "220px",
       width: "600px",
@@ -94,7 +103,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     });
   }
 
-  private ajouterPartieSurSocketEvent() {
+  private ajouterPartieSurSocketEvent(): void {
     this.socketClientService.socket.on(event.ENVOYER_PARTIE_SIMPLE, (data) => {
       this.listeParties.push(data);
     });
@@ -107,6 +116,10 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
             this.listePartieEnAttente.splice(i, 1);
         }
       }
-  });
+    });
+    this.socketClientService.socket.on(event.DIALOG_ATTENTE_FERME, () => {
+      this.joindreOuSupprimer = "Créer";
+      this.creerOuSupprimer = "Créer";
+    });
   }
 }

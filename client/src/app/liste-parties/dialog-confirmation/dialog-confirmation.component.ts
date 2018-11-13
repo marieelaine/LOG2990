@@ -21,6 +21,7 @@ export class DialogConfirmationComponent {
     private dialogRef: MatDialogRef<DialogConfirmationComponent>,
     private listePartieService: ListePartieServiceService,
     @Inject(MAT_DIALOG_DATA) data) {
+
       this.partieId = data.id;
       this.isSimple = data.isSimple;
       this.setListeParties(data);
@@ -55,7 +56,7 @@ export class DialogConfirmationComponent {
     this.supprimerPartieMultipleDeLaffichage();
   }
 
-  private supprimerPartieSimpleDeLaffichage() {
+  private supprimerPartieSimpleDeLaffichage(): void {
     for (let i = 0 ; i < this.listePartiesSimples.length ; i++) {
       if (this.listePartiesSimples[i]["_id"]  === this.partieId) {
         this.listePartiesSimples.splice(i, 1);
@@ -63,7 +64,7 @@ export class DialogConfirmationComponent {
     }
   }
 
-  private supprimerPartieMultipleDeLaffichage() {
+  private supprimerPartieMultipleDeLaffichage(): void {
     for (let i = 0 ; i < this.listePartiesMultiples.length ; i++) {
       if (this.listePartiesMultiples[i]["_id"]  === this.partieId) {
         this.listePartiesMultiples.splice(i, 1);

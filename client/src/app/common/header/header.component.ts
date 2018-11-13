@@ -23,7 +23,7 @@ export class HeaderComponent {
     this.router.navigate(["/"]);
   }
 
-  protected OnHeaderTitleClick() {
+  protected OnHeaderTitleClick(): void {
     this.router.navigateByUrl("/liste-parties")
     .catch(() => ErrorHandler);
   }

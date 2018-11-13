@@ -1,0 +1,10 @@
+export const IMAGES_DIRECTORY: string = "../Images";
+export const INSIDE_IMAGES_DIRECTORY: string = "../Images/";
+export const ERREUR_NOM_PRIS: string = "Le nom de la partie est déjà pris, veuillez réessayer.";
+export const ERREUR_SCENE: string = "La scène ne s'est pas générée correctement, veuillez réessayer.";
+export const ERREUR_DIFFERENCES: string = "Les deux images doivent avoir exactement 7 différences, veuillez réessayer.";
+export const ENDFILE: string = "END";
+export const NOUVELLE_DIFFERENCE: string = "DIFF";
+export const ERREUR_UNIQUE: string = "ValidationError";
+export const BMPIFF_PATH: string = "app/PartieSimple/bmpdiff/bmpdiff.py";
+export const GENMULTI_PATH: string = "app/genmulti/main.exe";

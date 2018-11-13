@@ -2,6 +2,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { Inject } from "@angular/core";
 import { DialogData } from "./admin.component";
 import { HttpClient } from "@angular/common/http";
+import { DialogSimpleComponent } from "./dialog-simple/dialog-simple.component";
+import { DialogMultipleComponent } from "./dialog-multiple/dialog-multiple.component";
 
 export default class T {}
 
@@ -19,7 +21,7 @@ export abstract class DialogAbstrait {
 
     protected outOfBoundNameLengthMessage: string;
 
-    public constructor (private dialogRef: MatDialogRef<T>,
+    public constructor (private dialogRef: MatDialogRef<DialogSimpleComponent | DialogMultipleComponent>,
                         @Inject(MAT_DIALOG_DATA) protected data: DialogData,
                         protected http: HttpClient) {
       this.outOfBoundNameLengthMessage = "";

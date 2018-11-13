@@ -16,7 +16,7 @@ export class DialogErreurComponent {
     this.messageErreur = data.message;
   }
 
-  public fermerDialog() {
+  protected fermerDialog() {
     this.dialogRef.close();
   }
 }

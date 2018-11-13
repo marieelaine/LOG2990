@@ -28,7 +28,7 @@ export interface Checkbox {
 
 export class AdminComponent {
 
-  gameName: string;
+  protected gameName: string;
   @ViewChild("menuTrigger") menuTrigger: MatMenuTrigger;
 
   public constructor(public dialog: MatDialog, public socketClientService: SocketClientService) {
@@ -53,7 +53,7 @@ export class AdminComponent {
     });
   }
 
-  private openDialogWithData(msg: string) {
+  private openDialogWithData(msg: string): void {
     this.dialog.open(DialogErreurComponent, {
         height: "190px",
         width: "600px",
@@ -62,7 +62,7 @@ export class AdminComponent {
     });
   }
 
-  private initSocket() {
+  private initSocket(): void {
     this.socketClientService.socket.on(event.ENVOYER_MESSAGE_BMPDIFF, (data) => {
       this.openDialogWithData(data);
     });

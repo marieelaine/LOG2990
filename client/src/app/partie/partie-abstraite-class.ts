@@ -18,15 +18,15 @@ export abstract class PartieAbstraiteClass {
     protected messageDifferences: string;
     protected differencesTrouvees: number;
     protected partieCommence: boolean;
-    protected audio = new Audio();
+    protected audio: HTMLAudioElement;
     protected differenceRestantes;
     protected nomPartie: string;
-
     protected partieID: string;
     protected abstract partie: PartieSimple | PartieMultiple;
     protected image: Array<HTMLImageElement>;
     protected diffTrouvee: number[];
     protected imageData: Array<string>;
+
     private nbImages: number;
 
     public constructor(protected route: ActivatedRoute,
@@ -41,6 +41,7 @@ export abstract class PartieAbstraiteClass {
         this.chat = new ChatComponent();
         this.imageData = [];
         this.diffTrouvee = [];
+        this.audio = new Audio();
 
         this.setImage(isSimple);
         this.setID();
