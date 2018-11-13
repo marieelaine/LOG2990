@@ -53,16 +53,23 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     }
   }
 
-  protected async onCreerOuSupprimerClick(partieId: string): Promise<void> {
+  protected onCreerOuSupprimerClick(partieId: string): void {
     if (this.isListePartiesMode) {
-      await this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
+      this.checkJoindreOuSupprimer(partieId);
+    } else if (this.isAdminMode) {
+      this.ouvrirDialogConfirmation(partieId);
+    }
+  }
+
+  private checkJoindreOuSupprimer(partieId: string): void {
+    if (this.listePartieEnAttente.includes(partieId)) {
+      this.router.navigate(["/partie-simple-solo/" + partieId]);
+    } else {
+      this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
         this.ouvrirDialogVueAttente(partieId);
         this.router.navigate(["/partie-simple-solo/" + partieId])
         .catch(() => ErrorHandler);
       });
-
-    } else if (this.isAdminMode) {
-      this.ouvrirDialogConfirmation(partieId);
     }
   }
 
@@ -107,6 +114,10 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
             this.listePartieEnAttente.splice(i, 1);
         }
       }
-  });
+    });
+    this.socketClientService.socket.on(event.DIALOG_ATTENTE_FERME, () => {
+      this.joindreOuSupprimer = "Créer";
+      this.creerOuSupprimer = "Créer";
+    });
   }
 }

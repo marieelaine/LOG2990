@@ -41,8 +41,8 @@ export class ListePartieServiceService {
     .catch(() => ErrorHandler);
   }
 
-  public async reinitialiserTempsPartieMultiple(partieId: string, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>):
-    Promise<void> {
+  public async reinitialiserTempsPartieMultiple(partieId: string, tempsSolo: Array<TempsUser>,
+                                                tempsUnContreUn: Array<TempsUser>): Promise<void> {
 
     this.http.put(route.REINITIALISER_TEMPS_MULTIPLE_URL + partieId, { tempsSolo, tempsUnContreUn }).toPromise()
     .catch(() => ErrorHandler);

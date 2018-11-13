@@ -25,6 +25,7 @@ export class ListePartiesComponent {
                      public listePartieService: ListePartieServiceService) {
     this.jouerOuReinitialiser = "";
     this.creerOuSupprimer = "";
+    this.joindreOuSupprimer = "";
     this.isListePartiesMode = false;
     this.isAdminMode = false;
     this.listePartiesEnAttente = new Array<string>();
@@ -76,7 +77,6 @@ export class ListePartiesComponent {
           return 0;
         });
       }
-      // console.log(times);
 
       return times;
   }
@@ -137,14 +137,13 @@ export class ListePartiesComponent {
       partie["_tempsUnContreUn"].push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
     }
     console.log(partie["_tempsSolo"]);
-}
+  }
 
   private genererTempsAleatoire(): number {
     return Math.floor(Math.random() * 400) + 100;
-}
+  }
 
   private setToJouerAndCreer(): void {
-    // Si la partie est deja creee, mettre le bouton a joindre
     this.isAdminMode = false;
     this.isListePartiesMode = true;
     this.jouerOuReinitialiser = "Jouer";
