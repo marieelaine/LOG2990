@@ -633,30 +633,22 @@ void FenetreTP::afficherScene(int index)
 
 }
 
-void creerEtat(const char* argv[], int argc, Etat& etat){
-    if (argc != 5 )
-        {
-            cerr << "Erreur: Nombre invalide de parametres!\n";
-            cerr << "Template: main.exe geo 15 as nomFicher\n";
-            exit(1);
-    }
-    else {
-        etat.dimBoite = 17.5;
-        etat.theme =  argv[1];
-        etat.nombreFormes = atoi(argv[2]);
-        etat.modifications = argv[3];
-        etat.filename = argv[4];
+void creerEtat(const char* argv[], Etat& etat){
+    etat.dimBoite = 17.5;
+    etat.theme =  argv[1];
+    etat.nombreFormes = atoi(argv[2]);
+    etat.modifications = argv[3];
+    etat.filename = argv[4];
 
-        string capture1 = string(etat.filename + string("_a_ori.bmp"));
-        string capture2 = string(etat.filename + string("_b_ori.bmp"));
-        string capture3 = string(etat.filename + string("_a_mod.bmp"));
-        string capture4 = string(etat.filename + string("_b_mod.bmp"));
+    string capture1 = string(etat.filename + string("_a_ori.bmp"));
+    string capture2 = string(etat.filename + string("_b_ori.bmp"));
+    string capture3 = string(etat.filename + string("_a_mod.bmp"));
+    string capture4 = string(etat.filename + string("_b_mod.bmp"));
 
-        etat.capture1 = capture1;
-        etat.capture2 = capture2; 
-        etat.capture3 = capture3;
-        etat.capture4 = capture4;
-    }
+    etat.capture1 = capture1;
+    etat.capture2 = capture2;
+    etat.capture3 = capture3;
+    etat.capture4 = capture4;
 }
 
 void FenetreTP::redimensionner( GLsizei w, GLsizei h )
@@ -766,11 +758,17 @@ void genScene(int argc, const char* argv[]){
         cerr << "Erreur: L'executable ne peut creer de themes pour l'instant! Essayez plutot geo.\n";
         exit(1);
     }
-    
+
 }
 
 int main( int argc, const char* argv[] ) {
-    creerEtat(argv, argc, etat);
+    if (argc != 5 )
+    {
+        cerr << "Erreur: Nombre invalide de parametres!\n";
+        cerr << "Template: main.exe geo 15 as nomFicher\n";
+        exit(1);
+    }
+    creerEtat(argv, etat);
 
     for (int i = 0; i < 40; i++){
         genScene(argc, argv);
