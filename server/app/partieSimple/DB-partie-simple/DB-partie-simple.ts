@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as util from "util";
 import * as p from "path";
 import * as fsx from "fs-extra";
-import { spawn, ChildProcess } from "child_process";
+import { ChildProcess, spawn } from "child_process";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
 import { BaseDeDonnees } from "../../baseDeDonnees/baseDeDonnees";
@@ -12,6 +12,7 @@ import { ReadLine } from "readline";
 import { injectable, inject } from "inversify";
 import { SocketServerService } from "../../socket-io.service";
 import Types from "../../types";
+import * as constantes from "../../constantes";
 
 export interface PartieSimpleInterface {
     _id: string;
@@ -30,8 +31,6 @@ export interface TempsUser {
 
 @injectable()
 export class DBPartieSimple {
-    private messageErreurNom: string;
-    private messageErreurDiff: string;
 
     private baseDeDonnees: BaseDeDonnees;
 
@@ -42,8 +41,6 @@ export class DBPartieSimple {
     private schemaBuffer: Schema;
 
     public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
-        this.messageErreurNom = "Le nom de la partie est déjà pris, veuillez réessayer.";
-        this.messageErreurDiff = "Les deux images doivent avoir exactement 7 différences, veuillez réessayer.";
 
         this.baseDeDonnees = new BaseDeDonnees();
 
@@ -57,15 +54,15 @@ export class DBPartieSimple {
     }
 
     private CreateSchemaArray(): void {
-            this.schemaArray = new Schema({
-                _nomPartie: { type: String, required: true, unique: true },
-                _tempsSolo: { type: Array, required: true },
-                _tempsUnContreUn: { type: Array, required: true },
-                _image1: { type: Array, required: true },
-                _image2: { type: Array, required: true },
-                _imageDiff: { type: Array }
-            });
-        }
+        this.schemaArray = new Schema({
+            _nomPartie: { type: String, required: true, unique: true },
+            _tempsSolo: { type: Array, required: true },
+            _tempsUnContreUn: { type: Array, required: true },
+            _image1: { type: Array, required: true },
+            _image2: { type: Array, required: true },
+            _imageDiff: { type: Array }
+        });
+    }
 
     private CreateSchemaBuffer(): void {
         this.schemaBuffer = new Schema({
@@ -82,55 +79,14 @@ export class DBPartieSimple {
         if (errorMsg === "") {
             this.getImageDiffAsArrays(partie);
         } else {
-            this.socket.envoyerMessageErreurDifferences(this.messageErreurDiff);
+            this.socket.envoyerMessageErreurDifferences(constantes.ERREUR_DIFFERENCES);
         }
 
         await this.deleteImagesDirectory();
     }
 
-    protected async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
-        partie._imageDiff = diffArrays;
-        const partieSimple: Document = new this.modelPartieBuffer(partie);
-        await partieSimple.save(async (err: Error) => {
-            if (err !== null && err.name === "ValidationError") {
-                this.socket.envoyerMessageErreurNom(this.messageErreurNom);
-            } else {
-                this.socket.envoyerPartieSimple(await this.getPartieSimpleByName(partie._nomPartie));
-            }
-        });
-    }
-
-    public getImageDiffAsArrays(partie: PartieSimpleInterface): void {
-        const imageMod: string = p.resolve("../Images/image3.bmp.txt");
-        const diffArrays: Array<Array<string>> = new Array<Array<string>>();
-        const input: fs.ReadStream = fs.createReadStream(imageMod);
-        const rl: ReadLine = require("readline").createInterface({
-            input: input,
-            terminal: false
-        });
-
-        let i: number = 0;
-        let arrayDiff: Array<string> = new Array<string>();
-
-        rl.on("line", async (line: string) => {
-            if (line.startsWith("END")) {
-                diffArrays.push(arrayDiff);
-                await this.enregistrerPartieSimple(diffArrays, partie);
-            } else if (i === 0) {
-                arrayDiff = new Array<string>();
-                i++;
-            } else if (line.startsWith("DIFF")) {
-                diffArrays.push(arrayDiff);
-                arrayDiff = new Array<string>();
-                i++;
-            } else {
-                arrayDiff.push(line.toString());
-            }
-        });
-    }
-
     private async deleteImagesDirectory(): Promise<void> {
-        const dir: string = "../Images";
+        const dir: string = constantes.IMAGES_DIRECTORY;
         await fsx.remove(dir);
     }
 
@@ -150,18 +106,18 @@ export class DBPartieSimple {
         const buffers: Array<Buffer> = [partie._image1, partie._image2];
         await this.addImagesToDirectory(buffers);
 
-        const pyScript: string = p.resolve("app/PartieSimple/bmpdiff/bmpdiff.py");
+        const script: string = p.resolve("bmpdiff/bmpdiff");
         const imageOri1: string = p.resolve("../Images/image1.bmp");
         const imageOri2: string = p.resolve("../Images/image2.bmp");
         const imageMod: string = p.resolve("../Images/image3.bmp");
         const args: string[] = [imageOri1, imageOri2, imageMod];
-        args.unshift(pyScript);
-        const child: ChildProcess = spawn("python", args);
+
+        const child: ChildProcess = spawn(script, args);
         await this.verifierErreurScript(child, partie);
     }
 
     private async makeImagesDirectory(): Promise<void> {
-        const dir: string = "../Images";
+        const dir: string = constantes.IMAGES_DIRECTORY;
         const mkdirPromise: Function = util.promisify(fs.mkdir);
         const existsPromise: Function = util.promisify(fs.exists);
         if (await existsPromise(dir)) {
@@ -176,7 +132,7 @@ export class DBPartieSimple {
         const writeFilePromise: Function = util.promisify(fs.writeFile);
         let i: number = 1;
         for (const buf of buffers) {
-            await writeFilePromise("../Images/image" + i.toString() + ".bmp", Buffer.from(buf));
+            await writeFilePromise(constantes.IMAGES_DIRECTORY + "/image" + i.toString() + ".bmp", Buffer.from(buf));
             i++;
         }
     }
@@ -266,6 +222,47 @@ export class DBPartieSimple {
         return partieSimples[1];
     }
 
+    protected async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
+        partie._imageDiff = diffArrays;
+        const partieSimple: Document = new this.modelPartieBuffer(partie);
+        await partieSimple.save(async (err: Error, data: Document) => {
+            if (err !== null && err.name === "ValidationError") {
+                this.socket.envoyerMessageErreurNom(constantes.ERREUR_NOM_PRIS);
+            } else {
+                this.socket.envoyerPartieSimple(await this.getPartieSimpleByName(partie._nomPartie));
+            }
+        });
+    }
+
+    public getImageDiffAsArrays(partie: PartieSimpleInterface): void {
+        const imageMod: string = p.resolve("../Images/image3.bmp.txt");
+        const diffArrays: Array<Array<string>> = new Array<Array<string>>();
+        const input: fs.ReadStream = fs.createReadStream(imageMod);
+        const rl: ReadLine = require("readline").createInterface({
+            input: input,
+            terminal: false
+        });
+
+        let i: number = 0;
+        let arrayDiff: Array<string> = new Array<string>();
+
+        rl.on("line", async (line: string) => {
+            if (line.startsWith("END")) {
+                diffArrays.push(arrayDiff);
+                await this.enregistrerPartieSimple(diffArrays, partie);
+            } else if (i === 0) {
+                arrayDiff = new Array<string>();
+                i++;
+            } else if (line.startsWith("DIFF")) {
+                diffArrays.push(arrayDiff);
+                arrayDiff = new Array<string>();
+                i++;
+            } else {
+                arrayDiff.push(line.toString());
+            }
+        });
+    }
+
     public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
         try {
             await this.genererImageMod(req.body);
@@ -283,8 +280,6 @@ export class DBPartieSimple {
         try {
             await this.deletePartieSimple(req.params.id, res);
             this.socket.supprimerPartieSimple(req.params.id);
-            // TODO : delete la partie de la liste dattente
-            // deletePartieSimpleEnAttente(req.params.id).subscribe();
             res.status(201);
         } catch (err) {
             res.status(501).json(err);
@@ -309,10 +304,6 @@ export class DBPartieSimple {
     public async requeteGetPartieSimple(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();
         res.send(await this.getPartieSimple(req.params.id));
-    }
-
-    public async requeteVerifDiff(req: Request, res: Response): Promise<void> {
-        // TODO : implementer verifDiff
     }
 // tslint:disable-next-line:max-file-line-count
 }

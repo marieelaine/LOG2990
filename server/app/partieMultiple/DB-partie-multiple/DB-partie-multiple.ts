@@ -2,6 +2,7 @@ import * as p from "path";
 import * as fs from "fs";
 import * as util from "util";
 import * as fsx from "fs-extra";
+import * as constantes from "../../constantes";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
 import uniqueValidator = require("mongoose-unique-validator");
@@ -12,6 +13,7 @@ import { execFile, ChildProcess } from "child_process";
 import { SocketServerService } from "../../socket-io.service";
 import Types from "../../types";
 import { TempsUser } from "../../partieSimple/DB-partie-simple/DB-partie-simple";
+import { ReadLine } from "readline";
 
 export interface PartieMultipleInterface {
     _id: string;
@@ -32,9 +34,6 @@ export interface PartieMultipleInterface {
 @injectable()
 export class DBPartieMultiple {
 
-    private messageErreurNom: string;
-    private messageScene: string;
-
     private baseDeDonnees: BaseDeDonnees;
     private modelPartie: Model<Document>;
     private modelPartieArray: Model<Document>;
@@ -42,8 +41,6 @@ export class DBPartieMultiple {
     private schemaArray: Schema;
 
     public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
-        this.messageErreurNom = "Le nom de la partie est déjà pris, veuillez réessayer.";
-        this.messageScene = "La scène ne s'est pas générée correctement, veuillez réessayer.";
 
         this.baseDeDonnees = new BaseDeDonnees();
         this.CreateSchema();
@@ -90,28 +87,66 @@ export class DBPartieMultiple {
         });
     }
 
-    private async enregistrerPartieMultiple(partie: PartieMultipleInterface, res: Response, errorMsg: string):
-    Promise<PartieMultipleInterface> {
+    private async ajouterImagesPartieMultiple(partie: PartieMultipleInterface, res: Response, errorMsg: string):
+    Promise<void> {
         if (errorMsg === "") {
             partie._image1PV1 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_a_ori.bmp");
             partie._image2PV1 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_b_ori.bmp");
             partie._image1PV2 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_a_mod.bmp");
             partie._image2PV2 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_b_mod.bmp");
-            const partieMultiple: Document = new this.modelPartie(partie);
+            await this.getImageDiffAsArray("../Images/" + partie._nomPartie + "_a_diff.bmp.txt", partie, 1);
 
-            await partieMultiple.save(async (err: Error) => {
-                if (err !== null && err.name === "ValidationError") {
-                    this.socket.envoyerMessageErreurNom(this.messageErreurNom);
-                } else {
-                    this.socket.envoyerPartieMultiple(await this.getPartieMultipleByName(partie._nomPartie));
-                }
-            });
         } else {
-            this.socket.envoyerMessageErreurDifferences(this.messageScene);
+            this.socket.envoyerMessageErreurDifferences(constantes.ERREUR_SCENE);
         }
-        await this.deleteImagesDirectory();
+    }
 
-        return partie;
+    private async setImageDiff(diffArrays: Array<Array<string>>, partie: PartieMultipleInterface, imgNumber: number): Promise<void> {
+        if (imgNumber === 1) {
+            partie._imageDiff1 = diffArrays;
+            await this.getImageDiffAsArray("../Images/" + partie._nomPartie + "_b_diff.bmp.txt", partie, 2);
+        } else {
+            partie._imageDiff2 = diffArrays;
+            await this.enregistrerPartieMultiple(partie);
+        }
+    }
+    private async enregistrerPartieMultiple(partie: PartieMultipleInterface): Promise<void> {
+        const partieMultiple: Document = new this.modelPartie(partie);
+        await partieMultiple.save(async (err: Error) => {
+            if (err !== null && err.name === "ValidationError") {
+                this.socket.envoyerMessageErreurNom(constantes.ERREUR_NOM_PRIS);
+            } else {
+                this.socket.envoyerPartieMultiple(await this.getPartieMultipleByName(partie._nomPartie));
+            }
+        });
+        await this.deleteImagesDirectory();
+    }
+
+    private getImageDiffAsArray(nomFichier: string, partie: PartieMultipleInterface, imgNumber: number): void {
+        const imageMod: string = p.resolve(nomFichier);
+        const diffArrays: Array<Array<string>> = new Array<Array<string>>();
+        const input: fs.ReadStream = fs.createReadStream(imageMod);
+        const rl: ReadLine = require("readline").createInterface({
+            input: input,
+            terminal: false
+        });
+        let i: number = 0;
+        let arrayDiff: Array<string> = new Array<string>();
+        rl.on("line", async (line: string) => {
+            if (line.startsWith("END")) {
+                diffArrays.push(arrayDiff);
+                await this.setImageDiff(diffArrays, partie, imgNumber);
+            } else if (i === 0) {
+                arrayDiff = new Array<string>();
+                i++;
+            } else if (line.startsWith("DIFF")) {
+                diffArrays.push(arrayDiff);
+                arrayDiff = new Array<string>();
+                i++;
+            } else {
+                arrayDiff.push(line.toString());
+            }
+        });
     }
 
     private async getImageDiffAsBuffer(filename: string): Promise<Buffer> {
@@ -125,24 +160,27 @@ export class DBPartieMultiple {
         let errorMsg: string = "";
 
         child.stderr.on("data", async (data: string) => {
-            errorMsg = `${data}`;
-            await this.enregistrerPartieMultiple(partie, res, errorMsg);
+            if (data === "Erreur\n") {
+                errorMsg = `${data}`;
+                await this.ajouterImagesPartieMultiple(partie, res, errorMsg);
+            }
         });
         child.stdout.on("data", async (data: string) => {
-            await this.enregistrerPartieMultiple(partie, res, errorMsg);
+            if (data === "Succes\n") {
+                await this.ajouterImagesPartieMultiple(partie, res, errorMsg);
+            }
         });
     }
 
     private async deleteImagesDirectory(): Promise<void> {
-        const dir: string = "../Images";
+        const dir: string = constantes.IMAGES_DIRECTORY;
         await fsx.remove(dir);
     }
 
     private async genererScene(partie: PartieMultipleInterface, res: Response): Promise<void> {
         await this.makeDirectory("../Images");
-        const script: string = p.resolve("app/genmulti/main.exe");
+        const script: string = p.resolve("genmulti/genmulti");
         const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, "../Images/" + partie._nomPartie];
-
         const child: ChildProcess = execFile(script, args);
         await this.verifierErreurScript(child, partie, res);
     }
@@ -238,6 +276,11 @@ export class DBPartieMultiple {
         return partieMultiple[1];
     }
 
+    private async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
+        await this.modelPartie.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
+            .catch(() => { throw new Error(); });
+    }
+
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> {
         try {
             await this.genererScene(req.body, res);
@@ -279,11 +322,6 @@ export class DBPartieMultiple {
         } catch (err) {
             res.status(501).json(err);
         }
-    }
-
-    private async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
-        await this.modelPartie.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
-            .catch(() => { throw new Error(); });
     }
 
 }
