@@ -6,6 +6,7 @@ import { PartieService } from "./partie.service";
 import { HttpClient } from "@angular/common/http";
 import { HttpHandlerMock, ActivatedRouteMock } from "src/testing/mocks";
 import { TempsUser } from "../admin/dialog-abstrait";
+import {CookieService} from "ngx-cookie-service";
 
 class PartieServiceMock extends PartieService {
     constructor() {
@@ -14,6 +15,13 @@ class PartieServiceMock extends PartieService {
         super(httpClient);
     }
 }
+
+class CookieServiceMock extends CookieService {
+       constructor() {
+           const doc = document;
+           super(doc);
+       }
+   }
 
 class AbstractClassInstance extends PartieAbstraiteClass {
     protected partie: PartieSimple | PartieMultiple;
@@ -26,7 +34,7 @@ describe('PartieAbstraiteComponent', () => {
     let component: AbstractClassInstance;
 
     beforeEach(() => {
-    component = new AbstractClassInstance(new ActivatedRouteMock(), new PartieServiceMock(), true);
+    component = new AbstractClassInstance(new ActivatedRouteMock(), new PartieServiceMock(), new CookieServiceMock(), true);
     component["partie"] = new PartieSimple ("nomPartie", new Array<TempsUser>(), new Array<TempsUser>(), Buffer.from(new Array<number>()),
                                             Buffer.from(new Array<number>()), new Array<Array<string>>(), "");
     });
