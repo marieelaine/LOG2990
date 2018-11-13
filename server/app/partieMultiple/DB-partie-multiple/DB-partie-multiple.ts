@@ -110,18 +110,16 @@ export class DBPartieMultiple {
             await this.enregistrerPartieMultiple(partie);
         }
     }
-    private async enregistrerPartieMultiple(partie: PartieMultipleInterface): Promise<PartieMultipleInterface> {
+    private async enregistrerPartieMultiple(partie: PartieMultipleInterface): Promise<void> {
         const partieMultiple: Document = new this.modelPartie(partie);
         await partieMultiple.save(async (err: Error) => {
             if (err !== null && err.name === "ValidationError") {
-                this.socket.envoyerMessageErreurNom(this.messageErreurNom);
+                this.socket.envoyerMessageErreurNom(constantes.ERREUR_NOM_PRIS);
             } else {
                 this.socket.envoyerPartieMultiple(await this.getPartieMultipleByName(partie._nomPartie));
             }
         });
         await this.deleteImagesDirectory();
-
-        return partie;
     }
 
     private getImageDiffAsArray(nomFichier: string, partie: PartieMultipleInterface, imgNumber: number): void {

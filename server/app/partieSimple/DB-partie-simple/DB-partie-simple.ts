@@ -12,6 +12,7 @@ import { ReadLine } from "readline";
 import { injectable, inject } from "inversify";
 import { SocketServerService } from "../../socket-io.service";
 import Types from "../../types";
+import * as constantes from "../../constantes";
 
 export interface PartieSimpleInterface {
     _id: string;
@@ -226,7 +227,7 @@ export class DBPartieSimple {
         const partieSimple: Document = new this.modelPartieBuffer(partie);
         await partieSimple.save(async (err: Error, data: Document) => {
             if (err !== null && err.name === "ValidationError") {
-                this.socket.envoyerMessageErreurNom(this.messageErreurNom);
+                this.socket.envoyerMessageErreurNom(constantes.ERREUR_NOM_PRIS);
             } else {
                 this.socket.envoyerPartieSimple(await this.getPartieSimpleByName(partie._nomPartie));
             }
