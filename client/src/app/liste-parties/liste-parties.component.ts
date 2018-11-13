@@ -86,24 +86,22 @@ export class ListePartiesComponent {
       partie["_tempsSolo"].push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
       partie["_tempsUnContreUn"].push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
     }
-    this.getSortedTimes(partie["_tempsSolo"]);
-    this.getSortedTimes(partie["_tempsUnContreUn"]);
 }
 
-  private getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {
-    if (arr) {
-      arr.sort((t1: TempsUser, t2: TempsUser) => {
-        const time1: number = t1["_temps"];
-        const time2: number = t2["_temps"];
-        if (time1 > time2) { return 1; }
-        if (time1 < time2) { return -1; }
+//   private getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {
+//     if (arr) {
+//       arr.sort((t1: TempsUser, t2: TempsUser) => {
+//         const time1: number = t1["_temps"];
+//         const time2: number = t2["_temps"];
+//         if (time1 > time2) { return 1; }
+//         if (time1 < time2) { return -1; }
 
-        return 0;
-      });
-    }
+//         return 0;
+//       });
+//     }
 
-    return arr;
-}
+//     return arr;
+// }
 
   private genererTempsAleatoire(): number {
     return Math.floor(Math.random() * 400) + 100;

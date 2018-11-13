@@ -25,7 +25,7 @@ export interface PartieSimpleInterface {
 
 export interface TempsUser {
     _user: string;
-    _temps: string;
+    _temps: number;
 }
 
 @injectable()
@@ -91,6 +91,8 @@ export class DBPartieSimple {
     protected async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
         partie._imageDiff = diffArrays;
         const partieSimple: Document = new this.modelPartieBuffer(partie);
+        partieSimple["_tempsSolo"] = this.getSortedTimes(partieSimple["_tempsSolo"]);
+        partieSimple["_tempsUnContreUn"] = this.getSortedTimes(partieSimple["_tempsUnContreUn"]);
         await partieSimple.save(async (err: Error) => {
             if (err !== null && err.name === "ValidationError") {
                 this.socket.envoyerMessageErreurNom(this.messageErreurNom);
@@ -226,6 +228,8 @@ export class DBPartieSimple {
     }
 
     private async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
+        tempsSolo = this.getSortedTimes(tempsSolo);
+        tempsUnContreUn = this.getSortedTimes(tempsUnContreUn);
         await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
             .catch(() => { throw new Error(); });
     }
@@ -264,6 +268,25 @@ export class DBPartieSimple {
         }
 
         return partieSimples[1];
+    }
+
+    private getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {
+        if (arr) {
+          arr.sort((t1: TempsUser, t2: TempsUser) => {
+            const time1: number = t1["_temps"];
+            const time2: number = t2["_temps"];
+            if (time1 > time2) { return 1; }
+            if (time1 < time2) { return -1; }
+
+            return 0;
+          });
+        }
+        // tslint:disable-next-line:no-console
+        console.log("called");
+        // tslint:disable-next-line:no-console
+        console.log(arr);
+
+        return arr;
     }
 
     public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
