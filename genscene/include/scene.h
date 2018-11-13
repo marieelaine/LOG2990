@@ -10,6 +10,4 @@
 
 #define GLM_ENABLE_EXPERIMENTAL 
 #include <glm/gtx/component_wise.hpp>
-#include "../dep/soil/include/SOIL.h"
-
 #endif
