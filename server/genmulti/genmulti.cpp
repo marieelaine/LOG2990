@@ -50,7 +50,7 @@ struct Geometrie
 {
    GLfloat tailleReference;           
    GLfloat angleReference;       
-} geo = { 4.0, 50 };
+} geo = { 3.0, 50 };
 
 GLfloat callRandomSize(GLfloat taille)
 {
@@ -61,22 +61,22 @@ GLfloat callRandomSize(GLfloat taille)
 
 double callRandomTranslateY()
 {
-   int min = -1.1*etat.dimBoite;
-   int max = 0.9*etat.dimBoite;
+   int min = -etat.dimBoite;
+   int max = etat.dimBoite;
    return rand()%((max - min) + 1) + min;
 }
 
 double callRandomTranslateX()
 {
-   int min = -etat.dimBoite/2;
+   int min = -etat.dimBoite;
    int max = etat.dimBoite;
    return rand()%((max - min) + 1) + min;
 }
 
 double callRandomTranslateZ()
 {
-   int min = -etat.dimBoite;
-   int max = etat.dimBoite/2;
+   int min = -etat.dimBoite/2;
+   int max = 1.5*etat.dimBoite;
    return rand()%((max - min) + 1) + min;
 }
 
@@ -201,7 +201,7 @@ void makePyramides(int nombreFormes){
 }
 
 // variables pour définir le point de vue
-const GLdouble thetaInit = 30.0, phiInit = 80.0, distInit = 65.;
+const GLdouble thetaInit = 28.0, phiInit = 75.0, distInit = 65.;
 class Camera
 {
 public:
@@ -211,13 +211,13 @@ public:
         {
             matrVisu.LookAt( dist*cos(glm::radians(theta))*sin(glm::radians(phi)),
                             dist*sin(glm::radians(theta))*sin(glm::radians(phi)),
-                            dist*cos(glm::radians(phi)) + 5.,
-                            0., 0., 5.,
+                            dist*cos(glm::radians(phi))+5,
+                            1., 0., 5.,
                             0., 0., 1. );
         }
         else
         {   
-            const GLdouble theta2Init = 50., phi2Init = 80., dist2Init = 65.;
+            const GLdouble theta2Init = 28., phi2Init = 75., dist2Init = -65.;
             matrVisu.LoadIdentity( );
             matrVisu.LookAt( dist2Init*cos(glm::radians(theta2Init))*sin(glm::radians(phi2Init)),
                     dist2Init*sin(glm::radians(theta2Init))*sin(glm::radians(phi2Init)),
@@ -443,6 +443,11 @@ void makeFormesGeometriques()
     nombre = nombre - nombreCones;
 
     makeCylindres(nombre);
+    cout << nombreSpheres << endl;
+    cout << nombreCubes << endl;
+    cout << nombrePyramides << endl;
+    cout << nombreCones << endl;
+    cout << nombre << endl;
 }
 
 void afficherFormesGeometriques()
@@ -584,7 +589,7 @@ void capturerScene(string filepath)
 
     BYTE* pixels = new BYTE[3 * width * height];
 
-    glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+    glReadPixels(110, 80, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
 
     // Convert to FreeImage format & save to file
     FIBITMAP* image = FreeImage_ConvertFromRawBits(pixels, width, height, 3 * width, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
@@ -702,11 +707,11 @@ int main( int argc, const char* argv[] ) {
     }
     creerEtat(argv, etat);
 
-    for (int i = 0; i < 40; i++){
+    for (int i = 0; i < 1; i++){
         genScene(argc, argv);
         
-        string paramA = "./bmpdiff/bmpdiff " + etat.capture1 + " " + etat.capture3 + " " + etat.filename + "_a_diff.bmp ";
-        string paramB = "./bmpdiff/bmpdiff " + etat.capture2 + " " + etat.capture4 + " " + etat.filename + "_b_diff.bmp ";
+        string paramA = "../bmpdiff/bmpdiff " + etat.capture1 + " " + etat.capture3 + " " + etat.filename + "_a_diff.bmp ";
+        string paramB = "../bmpdiff/bmpdiff " + etat.capture2 + " " + etat.capture4 + " " + etat.filename + "_b_diff.bmp ";
 
         int outputA = system(paramA.c_str());
         int outputB = system(paramB.c_str());
