@@ -323,5 +323,5 @@ export class DBPartieMultiple {
             res.status(501).json(err);
         }
     }
-
+// tslint:disable-next-line:max-file-line-count
 }

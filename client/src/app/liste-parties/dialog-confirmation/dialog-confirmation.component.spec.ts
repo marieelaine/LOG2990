@@ -161,7 +161,7 @@ describe('DialogConfirmationComponent', () => {
             component["listePartiesMultiples"] = [ new PartieMultiple("", new Array<TempsUser>(), new Array<TempsUser>(),
                                                                       Buffer.from(new Array()), Buffer.from(new Array()),
                                                                       Buffer.from(new Array()), Buffer.from(new Array()),
-                                                                      Buffer.from(new Array()), Buffer.from(new Array()),
+                                                                      new Array<Array<string>>(), new Array<Array<string>>(),
                                                                       10, "", "123") ];
         });
         it("devrait enlever la partie de la liste si elle existe", () => {
@@ -200,7 +200,7 @@ describe('DialogConfirmationComponent', () => {
             const data = { listeParties: [ new PartieMultiple("", new Array<TempsUser>(), new Array<TempsUser>(),
                                                               Buffer.from(new Array()), Buffer.from(new Array()),
                                                               Buffer.from(new Array()), Buffer.from(new Array()),
-                                                              Buffer.from(new Array()), Buffer.from(new Array()),
+                                                              new Array<Array<string>>(), new Array<Array<string>>(),
                                                               10, "", "123") ] };
             component["isSimple"] = false;
 
