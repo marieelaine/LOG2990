@@ -8,8 +8,6 @@
 
 #include "FreeImage.h"
 #include "include/scene.h"
-#include "include/shader.h"
-#include "include/skybox.h"
 
 using namespace std;
 
@@ -116,34 +114,25 @@ vector<vector<themeObject>> createGlobalVec(){
 
     return globalVec;
 }
-// TODO
-// void deleteGlobalVec(vector<vector<themeObject>> *vector){
-//     vector.pop_back(vecIsland);
-//     vector.pop_back(vecCoral);
-//     vector.pop_back(vecCoral2);
-//     vector.pop_back(vecGoldfish);
-//     vector.pop_back(vecUrchin);
-//     vector.pop_back(vecStarfish);
-//     vector.pop_back(vecCrab);
-//     vector.pop_back(vecFish);
-//     vector.pop_back(vecSquid);
-//     vector.pop_back(vecShark);
-//     vector.pop_back(vecBluewhale);
-//     vector.pop_back(vecSubmarine);
-//     vector.pop_back(vecChest);
-//     vector.pop_back(vecSeadiver);
-//     vector.pop_back(vecRocks);
-//     vector.pop_back(vecSeashell);
-//     vector.clear();
-//     delete vector;
-// }
-// based on:
-// https://stackoverflow.com/questions/14887012/object-loader-in-opengl
 
-// shader program
-Shader *skyboxShader;
-
-Skybox *skybox;
+void deleteGlobalVec(){
+    vecIsland.clear();
+    vecCoral.clear();
+    vecCoral2.clear();
+    vecGoldfish.clear();
+    vecUrchin.clear();
+    vecStarfish.clear();
+    vecCrab.clear();
+    vecFish.clear();
+    vecSquid.clear();
+    vecShark.clear();
+    vecBluewhale.clear();
+    vecSubmarine.clear();
+    vecChest.clear();
+    vecSeadiver.clear();
+    vecRocks.clear();
+    vecSeashell.clear();
+}
 
 vector< Vertex > LoadOBJ( istream& in )
 {
@@ -273,7 +262,6 @@ void display()
     }
 
     glutSwapBuffers();
-    //deleteGlobalVec(globalVec);
 }
 
 void displayPOV2()
@@ -306,7 +294,6 @@ void displayPOV2()
     }
 
     glutSwapBuffers();
-    //deleteGlobalVec(globalVec);
 }
 
 // return the min/max points of pts
@@ -874,7 +861,6 @@ void Timer(int value)
    else if(value==3)
    {
      capturerScene(etat.capture3);
-     creerModifications();
      glutDisplayFunc(displayPOV2);
      glutIdleFunc(displayPOV2);
      glutTimerFunc(2000, Timer, 4);
@@ -887,6 +873,7 @@ void Timer(int value)
    else if(value==5)
    {
     glutDestroyWindow(glutGetWindow());
+    deleteGlobalVec();
    }
 
 }
@@ -896,8 +883,6 @@ void init(void)
     // turn on depth test
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
-    
-    skybox->setup();
 
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 }
@@ -920,8 +905,6 @@ int main( int argc, char *argv[] )
                 glutInitWindowSize( windowWidth, windowHeight );
                 glutCreateWindow( "LOG2990 - AQUALAND" );
 
-                skyboxShader = new Shader("./shader/skybox.vs", "./shader/skybox.frag");
-                skybox = new Skybox();
                 init();
                 makeScene();
                 
@@ -951,7 +934,5 @@ int main( int argc, char *argv[] )
             }
         }
     }
-    delete skyboxShader;
-    delete skybox;
     return 0;
 }
