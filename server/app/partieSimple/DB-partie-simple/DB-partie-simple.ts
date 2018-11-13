@@ -30,8 +30,6 @@ export interface TempsUser {
 
 @injectable()
 export class DBPartieSimple {
-    private messageErreurNom: string;
-    private messageErreurDiff: string;
 
     private baseDeDonnees: BaseDeDonnees;
 
@@ -42,8 +40,6 @@ export class DBPartieSimple {
     private schemaBuffer: Schema;
 
     public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
-        this.messageErreurNom = "Le nom de la partie est déjà pris, veuillez réessayer.";
-        this.messageErreurDiff = "Les deux images doivent avoir exactement 7 différences, veuillez réessayer.";
 
         this.baseDeDonnees = new BaseDeDonnees();
 
@@ -57,15 +53,15 @@ export class DBPartieSimple {
     }
 
     private CreateSchemaArray(): void {
-            this.schemaArray = new Schema({
-                _nomPartie: { type: String, required: true, unique: true },
-                _tempsSolo: { type: Array, required: true },
-                _tempsUnContreUn: { type: Array, required: true },
-                _image1: { type: Array, required: true },
-                _image2: { type: Array, required: true },
-                _imageDiff: { type: Array }
-            });
-        }
+        this.schemaArray = new Schema({
+            _nomPartie: { type: String, required: true, unique: true },
+            _tempsSolo: { type: Array, required: true },
+            _tempsUnContreUn: { type: Array, required: true },
+            _image1: { type: Array, required: true },
+            _image2: { type: Array, required: true },
+            _imageDiff: { type: Array }
+        });
+    }
 
     private CreateSchemaBuffer(): void {
         this.schemaBuffer = new Schema({
@@ -82,14 +78,14 @@ export class DBPartieSimple {
         if (errorMsg === "") {
             this.getImageDiffAsArrays(partie);
         } else {
-            this.socket.envoyerMessageErreurDifferences(this.messageErreurDiff);
+            this.socket.envoyerMessageErreurDifferences(constantes.ERREUR_DIFFERENCES);
         }
 
         await this.deleteImagesDirectory();
     }
 
     private async deleteImagesDirectory(): Promise<void> {
-        const dir: string = "../Images";
+        const dir: string = constantes.IMAGES_DIRECTORY;
         await fsx.remove(dir);
     }
 
@@ -120,7 +116,7 @@ export class DBPartieSimple {
     }
 
     private async makeImagesDirectory(): Promise<void> {
-        const dir: string = "../Images";
+        const dir: string = constantes.IMAGES_DIRECTORY;
         const mkdirPromise: Function = util.promisify(fs.mkdir);
         const existsPromise: Function = util.promisify(fs.exists);
         if (await existsPromise(dir)) {
@@ -135,7 +131,7 @@ export class DBPartieSimple {
         const writeFilePromise: Function = util.promisify(fs.writeFile);
         let i: number = 1;
         for (const buf of buffers) {
-            await writeFilePromise("../Images/image" + i.toString() + ".bmp", Buffer.from(buf));
+            await writeFilePromise(constantes.IMAGES_DIRECTORY + "/image" + i.toString() + ".bmp", Buffer.from(buf));
             i++;
         }
     }
@@ -283,8 +279,6 @@ export class DBPartieSimple {
         try {
             await this.deletePartieSimple(req.params.id, res);
             this.socket.supprimerPartieSimple(req.params.id);
-            // TODO : delete la partie de la liste dattente
-            // deletePartieSimpleEnAttente(req.params.id).subscribe();
             res.status(201);
         } catch (err) {
             res.status(501).json(err);

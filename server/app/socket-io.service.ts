@@ -16,6 +16,14 @@ export class SocketServerService {
 
     public init(server: http.Server): void {
         this.io = socket(server);
+        this.setOnEvents();
+    }
+
+    private setOnEvents(): void {
+        this.io.on(event.DIALOG_ATTENTE_FERME, () => {
+            this.io.emit(event.DIALOG_ATTENTE_FERME);
+        });
+
     }
 
     public envoyerMessageErreurNom(msg: string): void {

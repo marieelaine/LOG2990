@@ -2,6 +2,7 @@ import * as p from "path";
 import * as fs from "fs";
 import * as util from "util";
 import * as fsx from "fs-extra";
+import * as constantes from "../../constantes";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
 import uniqueValidator = require("mongoose-unique-validator");
@@ -33,9 +34,6 @@ export interface PartieMultipleInterface {
 @injectable()
 export class DBPartieMultiple {
 
-    private messageErreurNom: string;
-    private messageScene: string;
-
     private baseDeDonnees: BaseDeDonnees;
     private modelPartie: Model<Document>;
     private modelPartieArray: Model<Document>;
@@ -43,8 +41,6 @@ export class DBPartieMultiple {
     private schemaArray: Schema;
 
     public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
-        this.messageErreurNom = "Le nom de la partie est déjà pris, veuillez réessayer.";
-        this.messageScene = "La scène ne s'est pas générée correctement, veuillez réessayer.";
 
         this.baseDeDonnees = new BaseDeDonnees();
         this.CreateSchema();
@@ -101,7 +97,7 @@ export class DBPartieMultiple {
             await this.getImageDiffAsArray("../Images/" + partie._nomPartie + "_a_diff.bmp.txt", partie, 1);
 
         } else {
-            this.socket.envoyerMessageErreurDifferences(this.messageScene);
+            this.socket.envoyerMessageErreurDifferences(constantes.ERREUR_SCENE);
         }
     }
 
@@ -179,7 +175,7 @@ export class DBPartieMultiple {
     }
 
     private async deleteImagesDirectory(): Promise<void> {
-        const dir: string = "../Images";
+        const dir: string = constantes.IMAGES_DIRECTORY;
         await fsx.remove(dir);
     }
 
@@ -282,6 +278,11 @@ export class DBPartieMultiple {
         return partieMultiple[1];
     }
 
+    private async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
+        await this.modelPartie.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
+            .catch(() => { throw new Error(); });
+    }
+
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> {
         try {
             await this.genererScene(req.body, res);
@@ -323,11 +324,6 @@ export class DBPartieMultiple {
         } catch (err) {
             res.status(501).json(err);
         }
-    }
-
-    private async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
-        await this.modelPartie.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
-            .catch(() => { throw new Error(); });
     }
 
 }
