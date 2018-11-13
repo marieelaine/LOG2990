@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, Inject, OnDestroy, HostListener } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
 import { ListePartieServiceService } from "../liste-partie-service.service";
@@ -35,13 +35,15 @@ export class DialogVueAttenteComponent implements OnDestroy {
     this.listePartieService.deletePartieSimpleEnAttente(this.partieId).subscribe((res) => {
       this.router.navigate(["/liste-parties/"]);
       this.dialogRef.close();
-     });
+      this.socketClientService.socket.emit(event.DIALOG_ATTENTE_FERME);
+    });
   }
 
   protected onDialogClose(): void {
     this.listePartieService.deletePartieSimpleEnAttente(this.partieId).subscribe((res) => {
       this.router.navigate(["/liste-parties/"]);
       this.dialogRef.close();
+      this.socketClientService.socket.emit(event.DIALOG_ATTENTE_FERME);
     });
   }
 
@@ -50,7 +52,7 @@ export class DialogVueAttenteComponent implements OnDestroy {
   }
 
   private ajouterPartieSurSocket() {
-    this.socketClientService.socket.on(event.DELETE_PARTIE_SIMPLE, (data) => {
+    this.socketClientService.socket.on(event.DELETE_PARTIE_SIMPLE, (data: string) => {
       if (this.partieId === data) {
         this.isEnAttente = false;
         this.setMessageErreur();
