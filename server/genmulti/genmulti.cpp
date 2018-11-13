@@ -664,25 +664,17 @@ void genScene(int argc, const char* argv[]){
             makeFormesGeometriques();
 
             fenetre.afficherScene(index);
-            //this_thread::sleep_for(chrono::seconds(1));
-            //fenetre.swap();
 
             camera.modeLookAt = !camera.modeLookAt;
             fenetre.afficherScene(index);
-            //this_thread::sleep_for(chrono::seconds(1));
-            //fenetre.swap();
             index = 0;
             creerModifications();
 
             camera.modeLookAt = !camera.modeLookAt;
             fenetre.afficherScene(index);
-            //this_thread::sleep_for(chrono::seconds(1));
-            //fenetre.swap();
-
+            
             camera.modeLookAt = !camera.modeLookAt;
             fenetre.afficherScene(index);
-            //this_thread::sleep_for(chrono::seconds(1));
-            //fenetre.swap();
 
             fenetre.conclure();
         }
