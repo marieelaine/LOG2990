@@ -88,21 +88,6 @@ export class ListePartiesComponent {
     }
 }
 
-//   private getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {
-//     if (arr) {
-//       arr.sort((t1: TempsUser, t2: TempsUser) => {
-//         const time1: number = t1["_temps"];
-//         const time2: number = t2["_temps"];
-//         if (time1 > time2) { return 1; }
-//         if (time1 < time2) { return -1; }
-
-//         return 0;
-//       });
-//     }
-
-//     return arr;
-// }
-
   private genererTempsAleatoire(): number {
     return Math.floor(Math.random() * 400) + 100;
 }

@@ -14,17 +14,6 @@
                 </div>
         </mat-card-header>
         <div class='row'>
-            <!-- <div class="col-sm-1">
-                <div class="row">
-                    <span matBadge="1" matBadgeOverlap="true" matBadgeColor="warn"></span>
-                </div>
-                <div class="row">
-                        <span matBadge="2" matBadgeOverlap="true" matBadgeColor="warn"></span>
-                </div>
-                <div class="row">
-                    <span matBadge="3" matBadgeOverlap="true" matBadgeColor="warn"></span>
-                </div>
-            </div> -->
             <div class='col-sm-7'>
                 <div class="row">
                     <div class="col">
@@ -35,7 +24,6 @@
                     </div>
                  </div>
                  <div class=row *ngFor="let tempsSolo of partieSimple['_tempsSolo']; let i = index">
-                     <!-- ngfor -->
                      <div class="col-1">
                         <span class="badge badge-pill badge-danger">{{i+1}}</span>
                      </div>
@@ -55,39 +43,6 @@
                     [class.mat-elevation-z6]="!partieSimple.isElevatedActive"
                     [class.mat-elevation-z10]="!!partieSimple.isElevatedActive">
             </div> 
-                            <!-- <div class="row">
-                                <div class="col-2">
-                                    <span matBadge="1" matBadgeOverlap="true" matBadgeColor="warn"></span>
-                                </div>
-                                <div class="col temps">
-                                    {{ getBestTime(partieSimple._tempsSolo) }}
-                                </div>
-                                <div class="col temps">
-                                    {{ getBestTime(partieSimple._tempsUnContreUn) }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-2">
-                                    <span matBadge="2" matBadgeOverlap="true" matBadgeColor="warn"></span>
-                                </div>
-                                <div class="col temps">
-                                    {{ getSecondBestTime(partieSimple._tempsSolo) }}
-                                </div>
-                                <div class="col temps">
-                                    {{ getSecondBestTime(partieSimple._tempsUnContreUn) }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-2">
-                                    <span matBadge="3" matBadgeOverlap="true" matBadgeColor="warn"></span>
-                                </div>
-                                <div class="col temps">
-                                    {{ getThirdBestTime(partieSimple._tempsSolo) }}
-                                </div>
-                                <div class="col temps">
-                                    {{ getThirdBestTime(partieSimple._tempsUnContreUn) }} 
-                                </div>
-                            </div> -->
         </div>
 
         <div class="row">
