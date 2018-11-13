@@ -12,6 +12,7 @@ import { execFile, ChildProcess } from "child_process";
 import { SocketServerService } from "../../socket-io.service";
 import Types from "../../types";
 import { TempsUser } from "../../partieSimple/DB-partie-simple/DB-partie-simple";
+import { ReadLine } from "readline";
 
 export interface PartieMultipleInterface {
     _id: string;
@@ -97,6 +98,8 @@ export class DBPartieMultiple {
             partie._image2PV1 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_b_ori.bmp");
             partie._image1PV2 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_a_mod.bmp");
             partie._image2PV2 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_b_mod.bmp");
+            partie._imageDiff1 = await this.getImageDiffAsArray("../Images/" + partie._nomPartie + "_a_diff.bmp.txt");
+            partie._imageDiff2 = await this.getImageDiffAsArray("../Images/" + partie._nomPartie + "_b_diff.bmp.txt");
             const partieMultiple: Document = new this.modelPartie(partie);
 
             await partieMultiple.save(async (err: Error) => {
@@ -109,9 +112,37 @@ export class DBPartieMultiple {
         } else {
             this.socket.envoyerMessageErreurDifferences(this.messageScene);
         }
-        await this.deleteImagesDirectory();
+        // await this.deleteImagesDirectory();
 
         return partie;
+    }
+
+    public getImageDiffAsArray(nomFichier: string): Array<Array<string>> {
+        const imageMod: string = p.resolve(nomFichier);
+        const diffArrays: Array<Array<string>> = new Array<Array<string>>();
+        const input: fs.ReadStream = fs.createReadStream(imageMod);
+        const rl: ReadLine = require("readline").createInterface({
+            input: input,
+            terminal: false
+        });
+
+        let i: number = 0;
+        let arrayDiff: Array<string> = new Array<string>();
+
+        rl.on("line", async (line: string) => {
+            if (i === 0) {
+                arrayDiff = new Array<string>();
+                i++;
+            } else if (line.startsWith("DIFF")) {
+                diffArrays.push(arrayDiff);
+                arrayDiff = new Array<string>();
+                i++;
+            } else {
+                arrayDiff.push(line.toString());
+            }
+        });
+
+        return diffArrays;
     }
 
     private async getImageDiffAsBuffer(filename: string): Promise<Buffer> {
@@ -126,23 +157,23 @@ export class DBPartieMultiple {
 
         child.stderr.on("data", async (data: string) => {
             errorMsg = `${data}`;
-            await this.enregistrerPartieMultiple(partie, res, errorMsg);
+            // await this.enregistrerPartieMultiple(partie, res, errorMsg);
         });
         child.stdout.on("data", async (data: string) => {
-            await this.enregistrerPartieMultiple(partie, res, errorMsg);
+            // await this.enregistrerPartieMultiple(partie, res, errorMsg);
         });
     }
 
-    private async deleteImagesDirectory(): Promise<void> {
-        const dir: string = "../Images";
-        await fsx.remove(dir);
-    }
+    // private async deleteImagesDirectory(): Promise<void> {
+    //     const dir: string = "../Images";
+    //     await fsx.remove(dir);
+    // }
 
     private async genererScene(partie: PartieMultipleInterface, res: Response): Promise<void> {
         await this.makeDirectory("../Images");
-        const script: string = p.resolve("app/genmulti/main.exe");
+        const script: string = p.resolve("genmulti/genmulti");
         const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, "../Images/" + partie._nomPartie];
-
+        console.log("Exec genmulti");
         const child: ChildProcess = execFile(script, args);
         await this.verifierErreurScript(child, partie, res);
     }

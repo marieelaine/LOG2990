@@ -109,7 +109,7 @@ export class DBPartieSimple {
         const buffers: Array<Buffer> = [partie._image1, partie._image2];
         await this.addImagesToDirectory(buffers);
 
-        const script: string = p.resolve("app/partieSimple/bmpdiff/bmpdiff");
+        const script: string = p.resolve("bmpdiff/bmpdiff");
         const imageOri1: string = p.resolve("../Images/image1.bmp");
         const imageOri2: string = p.resolve("../Images/image2.bmp");
         const imageMod: string = p.resolve("../Images/image3.bmp");

@@ -22,7 +22,7 @@ SRC=genmulti
 
 exe : $(SRC)
 run : exe
-	./$(SRC).exe
+	./$(SRC)
 $(SRC).exe : $(SRC).cpp *.h
 	$(CXX) $(CXXFLAGS) -o$@ $(SRC).cpp $(LDFLAGS)
 
