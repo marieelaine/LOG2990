@@ -59,7 +59,14 @@ GLfloat callRandomSize(GLfloat taille)
    return rand()%((max - min) + 1) + min; 
 }
 
-double callRandomTranslate()
+double callRandomTranslateY()
+{
+   int min = -etat.dimBoite*1.5;
+   int max = etat.dimBoite*1.5/4;
+   return rand()%((max - min) + 1) + min;
+}
+
+double callRandomTranslateX()
 {
    int min = -etat.dimBoite;
    int max = etat.dimBoite/4;
@@ -142,7 +149,7 @@ void makeCones(int nombreFormes){
     for(int i = 0; i < nombreFormes; i++){
         StructCone cone = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
-                                callRandomTranslate(), callRandomTranslate(), callRandomTranslateZ(),
+                                callRandomTranslateX(), callRandomTranslateY(), callRandomTranslateZ(),
                                 callRandom(), callRandom(), callRandom()
                                 };
         vecCone.push_back(cone);
@@ -153,7 +160,7 @@ void makeCylindres(int nombreFormes){
     for(int i = 0; i < nombreFormes; i++){
         StructCylindre cylindre = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
-                                callRandomTranslate(), callRandomTranslate(), callRandomTranslateZ(),
+                                callRandomTranslateX(), callRandomTranslateY(), callRandomTranslateZ(),
                                 callRandom(), callRandom(), callRandom()
                                 };
         vecCylindre.push_back(cylindre);
@@ -164,7 +171,7 @@ void makeSpheres(int nombreFormes){
     for(int i = 0; i < nombreFormes; i++){
         StructSphere sphere = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
-                                callRandomTranslate(), callRandomTranslate(), callRandomTranslateZ(),
+                                callRandomTranslateX(), callRandomTranslateY(), callRandomTranslateZ(),
                                 callRandom(), callRandom(), callRandom()
                                 };
         vecSphere.push_back(sphere);
@@ -175,7 +182,7 @@ void makeCubes(int nombreFormes){
     for(int i = 0; i < nombreFormes; i++){
         StructCube cube = { callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
-                                callRandomTranslate(), callRandomTranslate(), callRandomTranslateZ(),
+                                callRandomTranslateX(), callRandomTranslateY(), callRandomTranslateZ(),
                                 callRandom(), callRandom(), callRandom()
                                 };
         vecCube.push_back(cube);
@@ -186,7 +193,7 @@ void makePyramides(int nombreFormes){
     for(int i = 0; i < nombreFormes; i++){
         StructPyramide pyramide = { callRandomSize(geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
-                                callRandomTranslate(), callRandomTranslate(), callRandomTranslateZ(),
+                                callRandomTranslateX(), callRandomTranslateY(), callRandomTranslateZ(),
                                 callRandom(), callRandom(), callRandom()
                                 };
         vecPyramide.push_back(pyramide);
@@ -284,6 +291,11 @@ void FenetreTP::initialiser()
 
 void FenetreTP::conclure()
 {
+   vecSphere.clear();
+   vecCube.clear();
+   vecCylindre.clear();
+   vecCone.clear();
+   vecPyramide.clear();
    delete cube;
    delete sphere;
    delete cylindre;
@@ -476,7 +488,7 @@ void creerModifications()
 
         if (modif == 'a') {
             addForm(callRandomNumber(4));
-            cout << "ajout" << endl;
+            // cout << "ajout" << endl;
             
         }
         else if (modif == 's') {
@@ -509,7 +521,7 @@ void creerModifications()
                     notChanged = false;
                 }    
             }
-            cout << "supression" << endl;
+            // cout << "supression" << endl;
 
         }
         else if (modif == 'c') {
@@ -557,7 +569,7 @@ void creerModifications()
                     notChanged = false;
                 }    
             }
-            cout << "couleur" << endl;
+            // cout << "couleur" << endl;
 
         }
         glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
@@ -621,23 +633,30 @@ void FenetreTP::afficherScene(int index)
 
 }
 
-void creerEtat(const char* argv[], Etat& etat){
+void creerEtat(const char* argv[], int argc, Etat& etat){
+    if (argc != 5 )
+        {
+            cerr << "Erreur: Nombre invalide de parametres!\n";
+            cerr << "Template: main.exe geo 15 as nomFicher\n";
+            exit(1);
+    }
+    else {
+        etat.dimBoite = 17.5;
+        etat.theme =  argv[1];
+        etat.nombreFormes = atoi(argv[2]);
+        etat.modifications = argv[3];
+        etat.filename = argv[4];
 
-    etat.dimBoite = 17.5;
-    etat.theme =  argv[1];
-    etat.nombreFormes = atoi(argv[2]);
-    etat.modifications = argv[3];
-    etat.filename = argv[4];
+        string capture1 = string(etat.filename + string("_a_ori.bmp"));
+        string capture2 = string(etat.filename + string("_b_ori.bmp"));
+        string capture3 = string(etat.filename + string("_a_mod.bmp"));
+        string capture4 = string(etat.filename + string("_b_mod.bmp"));
 
-    string capture1 = string(etat.filename + string("_a_ori.bmp"));
-    string capture2 = string(etat.filename + string("_b_ori.bmp"));
-    string capture3 = string(etat.filename + string("_a_mod.bmp"));
-    string capture4 = string(etat.filename + string("_b_mod.bmp"));
-
-    etat.capture1 = capture1;
-    etat.capture2 = capture2; 
-    etat.capture3 = capture3;
-    etat.capture4 = capture4;
+        etat.capture1 = capture1;
+        etat.capture2 = capture2; 
+        etat.capture3 = capture3;
+        etat.capture4 = capture4;
+    }
 }
 
 void FenetreTP::redimensionner( GLsizei w, GLsizei h )
@@ -704,77 +723,71 @@ void FenetreTP::sourisMolette( int x, int y )
 }
 
 void genScene(int argc, const char* argv[]){
-    if (argc != 5 )
-    {
-        cerr << "Erreur: Nombre invalide de parametres!\n";
-        cerr << "Template: main.exe geo 15 as nomFicher\n";
-        exit(1);
-    }
-    else {
-        if (etat.theme == "geo"){
-            if(etat.nombreFormes >= 10 && etat.nombreFormes <= 200){
-                srand(time(NULL));
-                int index = 1;
 
-                FenetreTP fenetre( "INF2990" );
-                fenetre.initialiser();
+    if (etat.theme == "geo"){
+        if(etat.nombreFormes >= 10 && etat.nombreFormes <= 200){
+            srand(time(NULL));
+            int index = 1;
 
-                makeFormesGeometriques();
+            FenetreTP fenetre( "INF2990" );
+            fenetre.initialiser();
 
-                fenetre.afficherScene(index);
-                fenetre.swap();
+            makeFormesGeometriques();
 
-                //this_thread::sleep_for(chrono::seconds(1));
-                camera.modeLookAt = !camera.modeLookAt;
-                fenetre.afficherScene(index);
-                fenetre.swap();
-                index = 0;
-                creerModifications();
+            fenetre.afficherScene(index);
+            fenetre.swap();
 
-                //this_thread::sleep_for(chrono::seconds(1));
-                camera.modeLookAt = !camera.modeLookAt;
-                fenetre.afficherScene(index);
-                fenetre.swap();
+            //this_thread::sleep_for(chrono::seconds(1));
+            camera.modeLookAt = !camera.modeLookAt;
+            fenetre.afficherScene(index);
+            fenetre.swap();
+            index = 0;
+            creerModifications();
 
-                //this_thread::sleep_for(chrono::seconds(1));
-                camera.modeLookAt = !camera.modeLookAt;
-                fenetre.afficherScene(index);
-                fenetre.swap();
+            //this_thread::sleep_for(chrono::seconds(1));
+            camera.modeLookAt = !camera.modeLookAt;
+            fenetre.afficherScene(index);
+            fenetre.swap();
 
-                //this_thread::sleep_for(chrono::seconds(1));
-                fenetre.conclure();
-            }
-            else {
-                cerr << "Erreur: Il faut choisir entre 10 et 200 formes geometriques.\n";
-                exit(1);
-            }
+            //this_thread::sleep_for(chrono::seconds(1));
+            camera.modeLookAt = !camera.modeLookAt;
+            fenetre.afficherScene(index);
+            fenetre.swap();
+
+            //this_thread::sleep_for(chrono::seconds(1));
+            fenetre.conclure();
         }
-        else if (etat.theme == "theme"){
-            cerr << "Erreur: L'executable ne peut creer de themes pour l'instant! Essayez plutot geo.\n";
+        else {
+            cerr << "Erreur: Il faut choisir entre 10 et 200 formes geometriques.\n";
             exit(1);
         }
     }
+    else if (etat.theme == "theme"){
+        cerr << "Erreur: L'executable ne peut creer de themes pour l'instant! Essayez plutot geo.\n";
+        exit(1);
+    }
+    
 }
 
 int main( int argc, const char* argv[] ) {
-    creerEtat(argv, etat);
+    creerEtat(argv, argc, etat);
 
-    for (int i = 0; i < 4; i++){
+    for (int i = 0; i < 40; i++){
         genScene(argc, argv);
-
-        string paramA = "../bmpdiff/bmpdiff " + etat.capture1 + " " + etat.capture3 + " " + etat.filename + "_a_diff.txt";
-        string paramB = "../bmpdiff/bmpdiff " + etat.capture2 + " " + etat.capture4 + " " + etat.filename + "_b_diff.txt";
+        
+        string paramA = "./bmpdiff/bmpdiff " + etat.capture1 + " " + etat.capture3 + " " + etat.filename + "_a_diff.txt ";
+        string paramB = "./bmpdiff/bmpdiff " + etat.capture2 + " " + etat.capture4 + " " + etat.filename + "_b_diff.txt ";
 
         int outputA = system(paramA.c_str());
         int outputB = system(paramB.c_str());
 
         if (outputA == 0 && outputB == 0){
-            cout << "Les différences sont bien généré";
-            return 0;
+            cout << "Succes\n";
+            exit(0);
         } else{
-            cout << "Essaie numero " << i+1 << " Erreur!";
+            // cerr << "Essaie numero " << i+1 << " Erreur!";
         }
     }
-
+    cerr << "Erreur\n";
     exit(1);
 }

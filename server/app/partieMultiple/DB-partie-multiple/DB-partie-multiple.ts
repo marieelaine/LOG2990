@@ -156,11 +156,17 @@ export class DBPartieMultiple {
         let errorMsg: string = "";
 
         child.stderr.on("data", async (data: string) => {
-            errorMsg = `${data}`;
-            // await this.enregistrerPartieMultiple(partie, res, errorMsg);
+            if (data === "Erreur\n") {
+                errorMsg = `${data}`;
+                console.log("Erreur: ", data);
+                await this.enregistrerPartieMultiple(partie, res, errorMsg);
+            }
         });
         child.stdout.on("data", async (data: string) => {
-            // await this.enregistrerPartieMultiple(partie, res, errorMsg);
+            if (data === "Succes\n") {
+                console.log("Succes: ", data);
+                await this.enregistrerPartieMultiple(partie, res, errorMsg);
+            }
         });
     }
 
@@ -173,7 +179,6 @@ export class DBPartieMultiple {
         await this.makeDirectory("../Images");
         const script: string = p.resolve("genmulti/genmulti");
         const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, "../Images/" + partie._nomPartie];
-        console.log("Exec genmulti");
         const child: ChildProcess = execFile(script, args);
         await this.verifierErreurScript(child, partie, res);
     }

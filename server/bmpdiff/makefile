@@ -7,7 +7,7 @@ SRC=bmpdiff
 
 exe : $(SRC)
 run : exe
-	./$(SRC).exe
+	./$(SRC)
 $(SRC).exe : $(SRC).cpp *.h -o$@ $(SRC).cpp $(LDFLAGS)
 
 clean :

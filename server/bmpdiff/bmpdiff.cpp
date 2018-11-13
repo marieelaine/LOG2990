@@ -21,7 +21,6 @@ struct Etat
 	string image_m;
 	string image_s;
 	char* fichierTxt;
-	// uint8_t* imageDiff;
 	bool* visited;
 	ofstream outFile;
 } etat = {};
@@ -152,6 +151,7 @@ void genImageDiff(uint8_t* r1, uint8_t* r2, uint8_t* g1, uint8_t* g2, uint8_t* b
 			}
 	}
 	if(diffCounter != 7){
+		cout << etat.image_o << endl;
 		cerr << "Erreur: Il faut exactement 7 differences entre les deux images" << endl;
 		exit(1);
 	}
