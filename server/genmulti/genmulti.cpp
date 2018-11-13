@@ -622,13 +622,6 @@ void FenetreTP::afficherScene(int index)
 }
 
 void creerEtat(const char* argv[], Etat& etat){
-    if (argc != 5 )
-    {
-        cerr << "Erreur: Nombre invalide de parametres!\n";
-        cerr << "Template: main.exe geo 15 as nomFicher\n";
-        exit(1);
-    }
-
     etat.dimBoite = 17.5;
     etat.theme =  argv[1];
     etat.nombreFormes = atoi(argv[2]);
@@ -757,6 +750,12 @@ void genScene(int argc, const char* argv[]){
 }
 
 int main( int argc, const char* argv[] ) {
+    if (argc != 5 )
+    {
+        cerr << "Erreur: Nombre invalide de parametres!\n";
+        cerr << "Template: main.exe geo 15 as nomFicher\n";
+        exit(1);
+    }
     creerEtat(argv, etat);
 
     for (int i = 0; i < 4; i++){
