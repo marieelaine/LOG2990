@@ -5,6 +5,8 @@ import {PartieService} from "./partie.service";
 import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 import { ChatComponent } from "../chat/chat.component";
+import {TempsUser} from "../admin/dialog-abstrait";
+import {CookieService} from "ngx-cookie-service";
 
 export abstract class PartieAbstraiteClass {
 
@@ -27,7 +29,10 @@ export abstract class PartieAbstraiteClass {
     protected imageData: Array<string>;
     private nbImages: number;
 
-    public constructor(protected route: ActivatedRoute, protected partieService: PartieService, isSimple: boolean) {
+    public constructor(protected route: ActivatedRoute,
+                       protected partieService: PartieService,
+                       protected cookieService: CookieService,
+                       isSimple: boolean) {
         this.blur = true;
         this.partieCommence = false;
         this.differencesTrouvees = 0;
@@ -121,7 +126,9 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected ajouterTemps(temps: number): void {
-        this.partie["_tempsSolo"].push(temps);
+        const joueur: string = this.cookieService.get("username");
+        const tempsUser: TempsUser =  new TempsUser(joueur, temps);
+        this.partie["_tempsSolo"].push(tempsUser);
         this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
             .catch(() => ErrorHandler);
     }

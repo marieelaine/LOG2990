@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material';
 import { ChatComponent } from 'src/app/chat/chat.component';
 import { ActivatedRoute } from '@angular/router';
 import { ActivatedRouteMock } from 'src/testing/mocks';
+import {CookieService} from "ngx-cookie-service";
 
 describe('PartieMultipleMultijoueurComponent', () => {
   let component: PartieMultipleMultijoueurComponent;
@@ -23,6 +24,7 @@ describe('PartieMultipleMultijoueurComponent', () => {
             provide: ActivatedRoute,
             useClass: ActivatedRouteMock
         },
+        CookieService
       ],
     })
     .compileComponents();

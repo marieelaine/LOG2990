@@ -4,6 +4,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatCardModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import {CookieService} from "ngx-cookie-service";
 
 describe('VueMultipleComponent', () => {
   let component: VueMultipleComponent;
@@ -15,10 +16,13 @@ describe('VueMultipleComponent', () => {
       imports: [
           MatCardModule,
           HttpClientTestingModule,
-          RouterTestingModule
+          RouterTestingModule,
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
+      ],
+      providers: [
+          CookieService
       ]
     });
 

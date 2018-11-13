@@ -18,7 +18,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
   public constructor(protected route: ActivatedRoute,
                      protected partieService: PartieService,
                      protected cookieService: CookieService) {
-      super(route, partieService, true);
+      super(route, partieService, cookieService, true);
       this.differenceRestantes = 7;
   }
 
@@ -42,9 +42,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
           let i: number = 0;
           for (const diff of this.partie["_imageDiff"]) {
               for (const pixel of diff) {
-
                   if (coords === pixel) {
-
                       this.differenceTrouver(i);
                   }
               }
@@ -78,13 +76,4 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
           contextD.putImageData(imageDataD, 0, 0);
       }
   }
-
-  protected ajouterTemps(temps: number): void {
-      const joueur: string = this.cookieService.get("username");
-      const tempsUser: TempsUser =  new TempsUser(joueur, temps);
-      this.partie["_tempsSolo"].push(tempsUser);
-      this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
-      .catch(() => ErrorHandler);
-  }
-
 }

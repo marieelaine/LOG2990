@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material';
 import { ChatComponent } from 'src/app/chat/chat.component';
 import { ActivatedRoute } from '@angular/router';
 import { ActivatedRouteMock } from 'src/testing/mocks';
+import {CookieService} from "ngx-cookie-service";
 
 describe('PartieMultipleSoloComponent', () => {
   let component: PartieMultipleSoloComponent;
@@ -21,8 +22,9 @@ describe('PartieMultipleSoloComponent', () => {
       providers: [
         {
             provide: ActivatedRoute,
-            useClass: ActivatedRouteMock
+            useClass: ActivatedRouteMock,
         },
+        CookieService
       ],
     })
     .compileComponents();
