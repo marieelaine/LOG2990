@@ -45,7 +45,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
                   if (coords === pixel) {
 
-                      this.differenceTrouver(i);
+                      this.differenceTrouvee(i);
                   }
               }
               i++;
@@ -53,7 +53,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
       }
   }
 
-  protected differenceTrouver(i): void {
+  protected differenceTrouvee(i): void {
       if (!this.diffTrouvee.includes(i)) {
           this.diffTrouvee.push(i);
           this.trouverDifference();
@@ -80,11 +80,16 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
   }
 
   protected ajouterTemps(temps: number): void {
-      const joueur: string = this.cookieService.get("username");
-      const tempsUser: TempsUser =  new TempsUser(joueur, temps);
-      this.partie["_tempsSolo"].push(tempsUser);
+      this.updateTableauTemps(temps);
       this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
       .catch(() => ErrorHandler);
+  }
+
+  private updateTableauTemps(temps: number) {
+    const joueur: string = this.cookieService.get("username");
+    const tempsUser: TempsUser =  new TempsUser(joueur, temps);
+    this.partie["_tempsSolo"].splice(-1, 1);
+    this.partie["_tempsSolo"].push(tempsUser);
   }
 
 }

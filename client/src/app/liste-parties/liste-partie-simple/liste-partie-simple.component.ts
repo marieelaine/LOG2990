@@ -32,12 +32,13 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   public async ngOnInit() {
     this.listePartieService.getListePartieSimple().subscribe((res: PartieSimple[]) => {
       this.listeParties = res;
+      console.log("la liste des parties");
+      console.log(this.listeParties);
     });
     this.listePartieService.getListePartieSimpleEnAttente().subscribe((res: string[]) => {
       this.listePartieEnAttente = res;
     });
     this.ajouterPartieSurSocketEvent();
-    this.sortTableauxTemps();
   }
 
   protected afficherImage(id: string) {
@@ -64,13 +65,6 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
     } else if (this.isAdminMode) {
       this.ouvrirDialogConfirmation(partieId);
-    }
-  }
-
-  private sortTableauxTemps(): void {
-    for (const partie of this.listeParties) {
-      partie["_tempsSolo"] = this.getSortedTimes(partie["_tempsSolo"]);
-      partie["_tempsUnContreUn"] = this.getSortedTimes(partie["_tempsUnContreUn"]);
     }
   }
 

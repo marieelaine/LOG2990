@@ -64,54 +64,6 @@ export class ListePartiesComponent {
     }
   }
 
-  protected getSortedTimes(times: Array<TempsUser>): Array<TempsUser> {
-      if (times) {
-        times.sort((t1: TempsUser, t2: TempsUser) => {
-          const time1: number = t1["_temps"];
-          const time2: number = t2["_temps"];
-          if (time1 > time2) { return 1; }
-          if (time1 < time2) { return -1; }
-
-          return 0;
-        });
-      }
-
-      return times;
-  }
-
-  protected getBestTime(times: Array<TempsUser>): String {
-    const sortedTimes: Array<TempsUser> = this.getSortedTimes(times);
-    if (sortedTimes[0]["_temps"] == null) {
-      return "-";
-    }
-
-    return this.convertSecondsToMinutes(sortedTimes[0]);
-  }
-
-  protected getSecondBestTime(times: Array<TempsUser>): String {
-    const sortedTimes: Array<TempsUser> = this.getSortedTimes(times);
-    if (sortedTimes[1]["_temps"] == null) {
-      return "-";
-  }
-
-    return this.convertSecondsToMinutes(sortedTimes[1]);
-  }
-
-  protected getThirdBestTime(times: Array<TempsUser>): String {
-    const sortedTimes: Array<TempsUser> = this.getSortedTimes(times);
-    if (sortedTimes[2]["_temps"] == null) {
-      return "-";
-  }
-
-    return this.convertSecondsToMinutes(sortedTimes[2]);
-  }
-
-  protected getDisplayTime(minutes: number, secondes: number, user: string): string {
-    const temps: string = (secondes < 10) ? (minutes + ":0" + secondes) : minutes + ":" + secondes;
-
-    return user + " : " + temps;
-  }
-
   protected getTitleFirstLetter(title: String): String {
 
     return title.substr(0, 1);
@@ -122,7 +74,13 @@ export class ListePartiesComponent {
     return title.substr(1, title.length - 1);
   }
 
-  protected convertSecondsToMinutes(time: TempsUser): String {
+  private getDisplayTime(minutes: number, secondes: number, user: string): string {
+    const temps: string = (secondes < 10) ? (minutes + ":0" + secondes) : minutes + ":" + secondes;
+
+    return user + " : " + temps;
+  }
+
+  private convertSecondsToMinutes(time: TempsUser): String {
       const minutes = Math.floor(time["_temps"] / 60);
       const secondes = time["_temps"] - minutes * 60;
 
@@ -134,6 +92,23 @@ export class ListePartiesComponent {
       partie["_tempsSolo"].push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
       partie["_tempsUnContreUn"].push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
     }
+    this.getSortedTimes(partie["_tempsSolo"]);
+    this.getSortedTimes(partie["_tempsUnContreUn"]);
+}
+
+  private getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {
+    if (arr) {
+      arr.sort((t1: TempsUser, t2: TempsUser) => {
+        const time1: number = t1["_temps"];
+        const time2: number = t2["_temps"];
+        if (time1 > time2) { return 1; }
+        if (time1 < time2) { return -1; }
+
+        return 0;
+      });
+    }
+
+    return arr;
 }
 
   private genererTempsAleatoire(): number {

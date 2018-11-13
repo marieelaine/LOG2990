@@ -12,8 +12,9 @@ mat-card
 
 mat-card-header
 {
-    justify-content: center;
+    justify-content: right;
     margin-bottom:2%;
+    /* padding-right:10%; */
 }
 
 .top 
@@ -29,7 +30,8 @@ mat-card-header
     /* text-shadow: -2px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
     /* font-style:italic; */
     margin-top:0;
-    font-size:250%;
+    font-size:300%;
+
 }
 
 .titleFirstLetter{
@@ -43,13 +45,12 @@ mat-card-header
     max-height: 200px;
     display: block;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: 0;
 }
 
 .topThreeHeaders
 {   
-    padding: 0 0 5% 25%;
-    margin-top:-17px;
+    padding: 1% 10% 0 0;
     width:100%;
     text-align: center;
     font-size:200%;
@@ -81,9 +82,8 @@ mat-card-header
 }
 
 .bronzeMedal{
-    width:15%;
+    width:10%;
     float:top;
-    padding-bottom:5%;
 }
 
 .temps {
@@ -96,11 +96,18 @@ mat-badge{
     margin: auto;
 }
 
-.col-2{
-    margin:auto;
-}
-
 
 .mat-button{
     margin: 4% 0 2% 5%;
+}
+
+/* .row{
+    margin-right: 0;
+    margin-left: 0;
+    display:grid;
+} */
+
+.title{
+    overflow:hidden;
+    text-align:center;
 }
