@@ -50,7 +50,7 @@ struct Geometrie
 {
    GLfloat tailleReference;           
    GLfloat angleReference;       
-} geo = { 3.0, 50 };
+} geo = { 2.5, 50 };
 
 GLfloat callRandomSize(GLfloat taille)
 {
@@ -75,7 +75,7 @@ double callRandomTranslateX()
 
 double callRandomTranslateZ()
 {
-   int min = -etat.dimBoite/2;
+   int min = -0.75*etat.dimBoite;
    int max = 1.5*etat.dimBoite;
    return rand()%((max - min) + 1) + min;
 }
@@ -169,7 +169,7 @@ void makeCylindres(int nombreFormes){
 
 void makeSpheres(int nombreFormes){
     for(int i = 0; i < nombreFormes; i++){
-        StructSphere sphere = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
+        StructSphere sphere = { callRandomSize(1.5*geo.tailleReference), callRandomSize(1.5*geo.tailleReference), callRandomSize(1.5*geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
                                 callRandomTranslateX(), callRandomTranslateY(), callRandomTranslateZ(),
                                 callRandom(), callRandom(), callRandom()
@@ -443,11 +443,11 @@ void makeFormesGeometriques()
     nombre = nombre - nombreCones;
 
     makeCylindres(nombre);
-    cout << nombreSpheres << endl;
-    cout << nombreCubes << endl;
-    cout << nombrePyramides << endl;
-    cout << nombreCones << endl;
-    cout << nombre << endl;
+    // cout << nombreSpheres << endl;
+    // cout << nombreCubes << endl;
+    // cout << nombrePyramides << endl;
+    // cout << nombreCones << endl;
+    // cout << nombre << endl;
 }
 
 void afficherFormesGeometriques()
@@ -664,26 +664,18 @@ void genScene(int argc, const char* argv[]){
             makeFormesGeometriques();
 
             fenetre.afficherScene(index);
-            fenetre.swap();
 
-            //this_thread::sleep_for(chrono::seconds(1));
             camera.modeLookAt = !camera.modeLookAt;
             fenetre.afficherScene(index);
-            fenetre.swap();
             index = 0;
             creerModifications();
 
-            //this_thread::sleep_for(chrono::seconds(1));
             camera.modeLookAt = !camera.modeLookAt;
             fenetre.afficherScene(index);
-            fenetre.swap();
 
-            //this_thread::sleep_for(chrono::seconds(1));
             camera.modeLookAt = !camera.modeLookAt;
             fenetre.afficherScene(index);
-            fenetre.swap();
 
-            //this_thread::sleep_for(chrono::seconds(1));
             fenetre.conclure();
         }
         else {
@@ -707,7 +699,7 @@ int main( int argc, const char* argv[] ) {
     }
     creerEtat(argv, etat);
 
-    for (int i = 0; i < 1; i++){
+    for (int i = 0; i < 4; i++){
         genScene(argc, argv);
         
         string paramA = "../bmpdiff/bmpdiff " + etat.capture1 + " " + etat.capture3 + " " + etat.filename + "_a_diff.bmp ";
