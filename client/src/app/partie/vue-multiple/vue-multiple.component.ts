@@ -38,9 +38,9 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     }
 
     protected testerPourDiff(event): void {
-        if (this.partieCommence) {
+        if (this.partieCommence && !this.penaliteEtat) {
 
-            const coords = "[" + event.offsetX + ", " + event.offsetY + "]";
+            const coords = event.offsetX + "," + event.offsetY;
             const source: string = event.srcElement.id === "canvasG1" || event.srcElement.id === "canvasD1"
                 ? "_imageDiff1"
                 : "_imageDiff2";
@@ -49,42 +49,46 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
             for (const diff of this.partie[source]) {
                 for (const pixel of diff) {
                     if (coords === pixel) {
-                        this.differenceTrouver(i, source);
+                        if (!this.diffTrouvee[0].includes(i) && source === "_imageDiff1"
+                            || !this.diffTrouvee[1].includes(i) && source === "_imageDiff2") {
+                            this.differenceTrouver(i, source);
+
+                            return;
+                        }
                     }
                 }
                 i++;
             }
+            this.penalite(event.offsetX, event.offsetY);
         }
     }
 
     protected differenceTrouver(i: number, src: string): void {
-        if (!this.diffTrouvee.includes(i)) {
-            this.diffTrouvee.push(i);
-            this.trouverDifference();
+        src === "_imageDiff1" ? this.diffTrouvee[0].push(i) : this.diffTrouvee[1].push(i);
+        this.trouverDifference();
 
-            let contextG: CanvasRenderingContext2D;
-            let contextD: CanvasRenderingContext2D;
-            if (src === "_imageDiff1") {
-                contextG = this.canvas.toArray()[0].nativeElement.getContext("2d");
-                contextD = this.canvas.toArray()[1].nativeElement.getContext("2d");
-            } else {
-                contextG = this.canvas.toArray()[2].nativeElement.getContext("2d");
-                contextD = this.canvas.toArray()[3].nativeElement.getContext("2d");
-            }
-            const imageDataG = contextG.getImageData(0, 0, 640, 480);
-            const dataG = imageDataG.data;
-            const imageDataD = contextD.getImageData(0, 0, 640, 480);
-            const dataD = imageDataD.data;
-
-            for (const pixel of this.partie[src][i]) {
-                const x: number = Number(pixel.split(",")[0]);
-                const y: number = Number(pixel.split(",")[1]);
-                const dim = (y * 640 * 4) + (x * 4);
-                dataD[dim] = dataG[dim];
-                dataD[dim + 1] = dataG[dim + 1];
-                dataD[dim + 2] = dataG[dim + 2];
-            }
-            contextD.putImageData(imageDataD, 0, 0);
+        let contextG: CanvasRenderingContext2D;
+        let contextD: CanvasRenderingContext2D;
+        if (src === "_imageDiff1") {
+            contextG = this.canvas.toArray()[0].nativeElement.getContext("2d");
+            contextD = this.canvas.toArray()[1].nativeElement.getContext("2d");
+        } else {
+            contextG = this.canvas.toArray()[2].nativeElement.getContext("2d");
+            contextD = this.canvas.toArray()[3].nativeElement.getContext("2d");
         }
+        const imageDataG = contextG.getImageData(0, 0, 640, 480);
+        const dataG = imageDataG.data;
+        const imageDataD = contextD.getImageData(0, 0, 640, 480);
+        const dataD = imageDataD.data;
+
+        for (const pixel of this.partie[src][i]) {
+            const x: number = Number(pixel.split(",")[0]);
+            const y: number = Number(pixel.split(",")[1]);
+            const dim = (y * 640 * 4) + (x * 4);
+            dataD[dim] = dataG[dim];
+            dataD[dim + 1] = dataG[dim + 1];
+            dataD[dim + 2] = dataG[dim + 2];
+        }
+        contextD.putImageData(imageDataD, 0, 0);
     }
 }

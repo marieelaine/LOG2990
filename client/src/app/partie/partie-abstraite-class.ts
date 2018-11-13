@@ -24,9 +24,9 @@ export abstract class PartieAbstraiteClass {
     protected partieID: string;
     protected abstract partie: PartieSimple | PartieMultiple;
     protected image: Array<HTMLImageElement>;
-    protected diffTrouvee: number[];
+    protected diffTrouvee: number[][];
     protected imageData: Array<string>;
-
+    protected penaliteEtat: boolean = false;
     private nbImages: number;
 
     public constructor(protected route: ActivatedRoute,
@@ -40,7 +40,7 @@ export abstract class PartieAbstraiteClass {
         this.messageDifferences = "Cliquez pour commencer";
         this.chat = new ChatComponent();
         this.imageData = [];
-        this.diffTrouvee = [];
+        this.diffTrouvee = [[], []];
         this.audio = new Audio();
 
         this.setImage(isSimple);
@@ -102,7 +102,7 @@ export abstract class PartieAbstraiteClass {
         if (this.partieCommence) {
             this.differencesTrouvees ++;
             this.messageDifferences = `Vous avez trouvé ${this.differencesTrouvees} différences`;
-            this.audio.src = "../assets/diffTrouvee.mp3";
+            this.audio.src = "../assets/yes.wav";
             this.audio.load();
             this.audio.play().catch(() => ErrorHandler);
             this.ajouterMessageDiffTrouvee();
@@ -128,10 +128,21 @@ export abstract class PartieAbstraiteClass {
 
     protected ajouterTemps(temps: number): void {
         const joueur: string = this.cookieService.get("username");
-        const tempsUser: TempsUser =  new TempsUser(joueur, temps);
+        const tempsUser: TempsUser = new TempsUser(joueur, temps);
         this.partie["_tempsSolo"].push(tempsUser);
         this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
             .catch(() => ErrorHandler);
+    }
+
+    protected penalite(offsetX, offsetY): void {
+        this.penaliteEtat = true;
+        this.audio.src = "../assets/no.mp3";
+        this.audio.load();
+        this.audio.play().catch(() => ErrorHandler);
+
+        setTimeout(() => {
+            this.penaliteEtat = false;
+        },         1000);
     }
 
     private setImage(isSimple: boolean): void {

@@ -63,3 +63,5 @@ canvas{
 .card{
     background-color: #f2eeee;
 }
+
+.not-allowed { cursor: not-allowed; }
