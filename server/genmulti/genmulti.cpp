@@ -50,7 +50,7 @@ struct Geometrie
 {
    GLfloat tailleReference;           
    GLfloat angleReference;       
-} geo = { 4.0, 50 };
+} geo = { 2.5, 50 };
 
 GLfloat callRandomSize(GLfloat taille)
 {
@@ -61,22 +61,22 @@ GLfloat callRandomSize(GLfloat taille)
 
 double callRandomTranslateY()
 {
-   int min = -etat.dimBoite*1.5;
-   int max = etat.dimBoite*1.5/4;
+   int min = -etat.dimBoite;
+   int max = etat.dimBoite;
    return rand()%((max - min) + 1) + min;
 }
 
 double callRandomTranslateX()
 {
    int min = -etat.dimBoite;
-   int max = etat.dimBoite/4;
+   int max = etat.dimBoite;
    return rand()%((max - min) + 1) + min;
 }
 
 double callRandomTranslateZ()
 {
-   int min = -etat.dimBoite;
-   int max = etat.dimBoite;
+   int min = -0.75*etat.dimBoite;
+   int max = 1.5*etat.dimBoite;
    return rand()%((max - min) + 1) + min;
 }
 
@@ -169,7 +169,7 @@ void makeCylindres(int nombreFormes){
 
 void makeSpheres(int nombreFormes){
     for(int i = 0; i < nombreFormes; i++){
-        StructSphere sphere = { callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference), callRandomSize(geo.tailleReference),
+        StructSphere sphere = { callRandomSize(1.5*geo.tailleReference), callRandomSize(1.5*geo.tailleReference), callRandomSize(1.5*geo.tailleReference),
                                 callRandomAngle(), callRandomAngle(), callRandomAngle(),
                                 callRandomTranslateX(), callRandomTranslateY(), callRandomTranslateZ(),
                                 callRandom(), callRandom(), callRandom()
@@ -201,7 +201,7 @@ void makePyramides(int nombreFormes){
 }
 
 // variables pour définir le point de vue
-const GLdouble thetaInit = 0.0, phiInit = 80.0, distInit = 65.;
+const GLdouble thetaInit = 28.0, phiInit = 75.0, distInit = 65.;
 class Camera
 {
 public:
@@ -211,13 +211,13 @@ public:
         {
             matrVisu.LookAt( dist*cos(glm::radians(theta))*sin(glm::radians(phi)),
                             dist*sin(glm::radians(theta))*sin(glm::radians(phi)),
-                            dist*cos(glm::radians(phi)) + 5.,
-                            0., 0., 5.,
+                            dist*cos(glm::radians(phi))+5,
+                            1., 0., 5.,
                             0., 0., 1. );
         }
         else
         {   
-            const GLdouble theta2Init = 30., phi2Init = 90., dist2Init = 65.;
+            const GLdouble theta2Init = 28., phi2Init = 75., dist2Init = -65.;
             matrVisu.LoadIdentity( );
             matrVisu.LookAt( dist2Init*cos(glm::radians(theta2Init))*sin(glm::radians(phi2Init)),
                     dist2Init*sin(glm::radians(theta2Init))*sin(glm::radians(phi2Init)),
@@ -273,7 +273,7 @@ void chargerNuanceurs()
 void FenetreTP::initialiser()
 {
    // donner la couleur de fond
-   glClearColor( 0.27, 0.42, 0.77, 1.0 );
+   glClearColor( 0,0,0,0 );
 
    // activer les etats openGL
    glEnable( GL_DEPTH_TEST );
@@ -443,6 +443,11 @@ void makeFormesGeometriques()
     nombre = nombre - nombreCones;
 
     makeCylindres(nombre);
+    // cout << nombreSpheres << endl;
+    // cout << nombreCubes << endl;
+    // cout << nombrePyramides << endl;
+    // cout << nombreCones << endl;
+    // cout << nombre << endl;
 }
 
 void afficherFormesGeometriques()
@@ -488,7 +493,6 @@ void creerModifications()
 
         if (modif == 'a') {
             addForm(callRandomNumber(4));
-            // cout << "ajout" << endl;
             
         }
         else if (modif == 's') {
@@ -521,7 +525,6 @@ void creerModifications()
                     notChanged = false;
                 }    
             }
-            // cout << "supression" << endl;
 
         }
         else if (modif == 'c') {
@@ -532,7 +535,7 @@ void creerModifications()
                     StructSphere form = vecSphere.front();
                     swap(vecSphere.front(), vecSphere.back());
                     vecSphere.pop_back();
-                    form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+                    form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
                     vecSphere.push_back(form);
                     notChanged = false;
                 }
@@ -540,7 +543,7 @@ void creerModifications()
                     StructCube form = vecCube.front();
                     swap(vecCube.front(), vecCube.back());
                     vecCube.pop_back();
-                    form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+                    form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
                     vecCube.push_back(form);
                     notChanged = false;
                 }
@@ -548,7 +551,7 @@ void creerModifications()
                     StructCone form = vecCone.front();
                     swap(vecCone.front(), vecCone.back());
                     vecCone.pop_back();
-                    form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+                    form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
                     vecCone.push_back(form);
                     notChanged = false;
                 }
@@ -556,7 +559,7 @@ void creerModifications()
                     StructCylindre form = vecCylindre.front();
                     swap(vecCylindre.front(), vecCylindre.back());
                     vecCylindre.pop_back();
-                    form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+                    form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
                     vecCylindre.push_back(form);
                     notChanged = false;
                 }
@@ -564,12 +567,11 @@ void creerModifications()
                     StructPyramide form = vecPyramide.front();
                     swap(vecPyramide.front(), vecPyramide.back());
                     vecPyramide.pop_back();
-                    form.colorR = 1.0; form.colorG = 0.0; form.colorB = 0.0;
+                    form.colorR = callRandom(); form.colorG = callRandom(); form.colorB = callRandom();
                     vecPyramide.push_back(form);
                     notChanged = false;
                 }    
             }
-            // cout << "couleur" << endl;
 
         }
         glUniformMatrix4fv( locmatrModel, 1, GL_FALSE, matrModel );
@@ -587,7 +589,7 @@ void capturerScene(string filepath)
 
     BYTE* pixels = new BYTE[3 * width * height];
 
-    glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+    glReadPixels(110, 80, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
 
     // Convert to FreeImage format & save to file
     FIBITMAP* image = FreeImage_ConvertFromRawBits(pixels, width, height, 3 * width, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
@@ -606,7 +608,7 @@ void FenetreTP::afficherScene(int index)
    glUseProgram( progBase );
 
    // définir le pipeline graphique
-   matrProj.Perspective( 40.0, (GLdouble) largeur_ / (GLdouble) hauteur_, 0.1, 90.0 );
+   matrProj.Perspective( 45.0, (GLdouble) largeur_ / (GLdouble) hauteur_, 1, 100.0 );
    glUniformMatrix4fv( locmatrProj, 1, GL_FALSE, matrProj ); // informer la carte graphique des changements faits à la matrice
 
    camera.definir();
@@ -629,12 +631,10 @@ void FenetreTP::afficherScene(int index)
     }
     else capturerScene(etat.capture4);   
    }
-
-
 }
 
 void creerEtat(const char* argv[], Etat& etat){
-    etat.dimBoite = 17.5;
+    etat.dimBoite = 15.0;
     etat.theme =  argv[1];
     etat.nombreFormes = atoi(argv[2]);
     etat.modifications = argv[3];
@@ -651,69 +651,6 @@ void creerEtat(const char* argv[], Etat& etat){
     etat.capture4 = capture4;
 }
 
-void FenetreTP::redimensionner( GLsizei w, GLsizei h )
-{
-   glViewport( 0, 0, w, h );
-}
-
-void FenetreTP::clavier( TP_touche touche )
-{
-   switch ( touche )
-   {
-   case TP_ECHAP:
-   case TP_q: // Quitter l'application
-      quit();
-      break;
-
-   case TP_i: // Réinitiliaser le point de vue
-      camera.phi = phiInit; camera.theta = thetaInit; camera.dist = distInit;
-      break;
-
-   case TP_l: // Utiliser LookAt ou Translate+Rotate pour placer la caméra
-      camera.modeLookAt = !camera.modeLookAt;
-      cout << " camera.modeLookAt=" << camera.modeLookAt << endl;
-      break;
-
-   case TP_SOULIGNE:
-   case TP_MOINS: // Reculer la caméra
-      camera.dist += 0.1;
-      break;
-   case TP_PLUS: // Avancer la caméra
-   case TP_EGAL:
-      if ( camera.dist > 1.0 ) camera.dist -= 0.1;
-      break;
-
-   default:
-      cout << " touche inconnue : " << (char) touche << endl;
-      imprimerTouches();
-      break;
-   }
-}
-
-glm::ivec2 sourisPosPrec(0,0);
-static bool pressed = false;
-void FenetreTP::sourisClic( int button, int state, int x, int y )
-{
-   // button est un parmi { TP_BOUTON_GAUCHE, TP_BOUTON_MILIEU, TP_BOUTON_DROIT }
-   // state  est un parmi { TP_PRESSE, DL_RELEASED }
-   pressed = ( state == TP_PRESSE );
-   switch ( button )
-   {
-   case TP_BOUTON_GAUCHE: // Déplacer (modifier angles) la caméra
-      sourisPosPrec.x = x;
-      sourisPosPrec.y = y;
-      break;
-   }
-}
-
-void FenetreTP::sourisMolette( int x, int y )
-{
-   const int sens = +1;
-   camera.dist -= 0.2 * sens*y;
-   if ( camera.dist < 15.0 ) camera.dist = 15.0;
-   else if ( camera.dist > 70.0 ) camera.dist = 70.0;
-}
-
 void genScene(int argc, const char* argv[]){
 
     if (etat.theme == "geo"){
@@ -727,26 +664,18 @@ void genScene(int argc, const char* argv[]){
             makeFormesGeometriques();
 
             fenetre.afficherScene(index);
-            fenetre.swap();
 
-            //this_thread::sleep_for(chrono::seconds(1));
             camera.modeLookAt = !camera.modeLookAt;
             fenetre.afficherScene(index);
-            fenetre.swap();
             index = 0;
             creerModifications();
 
-            //this_thread::sleep_for(chrono::seconds(1));
             camera.modeLookAt = !camera.modeLookAt;
             fenetre.afficherScene(index);
-            fenetre.swap();
 
-            //this_thread::sleep_for(chrono::seconds(1));
             camera.modeLookAt = !camera.modeLookAt;
             fenetre.afficherScene(index);
-            fenetre.swap();
 
-            //this_thread::sleep_for(chrono::seconds(1));
             fenetre.conclure();
         }
         else {
@@ -770,11 +699,11 @@ int main( int argc, const char* argv[] ) {
     }
     creerEtat(argv, etat);
 
-    for (int i = 0; i < 40; i++){
+    for (int i = 0; i < 4; i++){
         genScene(argc, argv);
         
-        string paramA = "./bmpdiff/bmpdiff " + etat.capture1 + " " + etat.capture3 + " " + etat.filename + "_a_diff.bmp ";
-        string paramB = "./bmpdiff/bmpdiff " + etat.capture2 + " " + etat.capture4 + " " + etat.filename + "_b_diff.bmp ";
+        string paramA = "../bmpdiff/bmpdiff " + etat.capture1 + " " + etat.capture3 + " " + etat.filename + "_a_diff.bmp ";
+        string paramB = "../bmpdiff/bmpdiff " + etat.capture2 + " " + etat.capture4 + " " + etat.filename + "_b_diff.bmp ";
 
         int outputA = system(paramA.c_str());
         int outputB = system(paramB.c_str());
