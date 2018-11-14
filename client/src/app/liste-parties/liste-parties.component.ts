@@ -84,7 +84,7 @@ export class ListePartiesComponent {
   protected genererTableauTempsAleatoires(): Array<TempsUser> {
     const arr: Array<TempsUser> = [];
     for (let i: number = 1; i < 4; i++) {
-      arr.push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
+      arr.push(new TempsUser("Joueur " + i, this.genererTempsAleatoire()));
     }
     this.getSortedTimes(arr);
 
