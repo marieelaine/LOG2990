@@ -23,6 +23,8 @@ struct Etat
 	char* fichierTxt;
 	bool* visited;
 	ofstream outFile;
+	char header[54];
+	uint8_t* imageDiff;
 } etat = {};
 
 const int BMP_HEADER_LENGTH = 54;
@@ -63,10 +65,10 @@ void creerEtat(const char* argv[], const int argc, Etat& etat) {
 void lireImage(uint8_t* r, uint8_t* g, uint8_t* b, string file) {
 	ifstream bmpIn(file, ios::in | ios::binary);
 
-	char info[54];
-	bmpIn.read(info, 54);
-	if (estBonneTaille(info)) cerr << "Erreur, image de taille 640x480 demandees." << endl;
-	int offset = *(int*)&info[10];
+	etat.header[54];
+	bmpIn.read(etat.header, 54);
+	if (estBonneTaille(etat.header)) cerr << "Erreur, image de taille 640x480 demandees." << endl;
+	int offset = *(int*)&etat.header[10];
 	bmpIn.seekg(offset);
 
 	char tmp[3];
@@ -80,9 +82,31 @@ void lireImage(uint8_t* r, uint8_t* g, uint8_t* b, string file) {
 	bmpIn.close();
 }
 
+void ecrireImageDiff(uint8_t* r1, uint8_t* r2, uint8_t* g1, uint8_t* g2, uint8_t* b1, uint8_t* b2) {
+    ofstream image;
+    image.open(etat.image_s, ofstream::out);
+    for (int i = 0; i < 54; i++){
+        image << etat.header[i];
+    }
+    char noir = 0x00;
+    char blanc = 0xff;
+    for (int i = 0; i < 480 * 640; i++){
+        if (etat.imageDiff[i] == 1){
+            image.write(&noir, 1);
+            image.write(&noir, 1);
+            image.write(&noir, 1);
+        } else{
+            image.write(&blanc, 1);
+            image.write(&blanc, 1);
+            image.write(&blanc, 1);
+        }
+    }
+    image.close();
+}
+
 void genImageDiff(uint8_t* r1, uint8_t* r2, uint8_t* g1, uint8_t* g2, uint8_t* b1, uint8_t* b2) {
 	for (int i = 0; i < 480 * 640; i++) {
-		// etat.imageDiff[i] = 0;
+		etat.imageDiff[i] = 0;
 		etat.visited[i] = false;
 	}
 
@@ -93,6 +117,8 @@ void genImageDiff(uint8_t* r1, uint8_t* r2, uint8_t* g1, uint8_t* g2, uint8_t* b
 			if ((r1[x + 640 * y] != r2[x + 640 * y] || g1[x + 640 * y] != g2[x + 640 * y] || b1[x + 640 * y] != b2[x + 640 * y]) && etat.visited[x + 640 * y] == false) {
 				diffCounter += 1;
 				etat.visited[x + 640 * y] = true;
+                etat.imageDiff[x + 640 * y] = 1;
+                etat.outFile << to_string(x) << "," << to_string(480 - y) << endl;
 				vector<int> stackX;
 				vector<int> stackY;
 				stackX.push_back(x);
@@ -110,20 +136,20 @@ void genImageDiff(uint8_t* r1, uint8_t* r2, uint8_t* g1, uint8_t* g2, uint8_t* b
 							for (int k = -3; k < 4; k++) {
 								if (!((abs(k) > 1 && abs(j) == 3) || (abs(j) > 1 && abs(k) == 3)))
 									if (currX + j < 640 && currX + j >= 0 && currY + k < 480 && currY + k >= 0 && etat.visited[currX + j + 640 * (currY + k)] == false) {
-										// etat.imageDiff[currX + j + 640 * (currY + k)] = 1;
 										if ((r1[currX + j + 640 * (currY + k)] != r2[currX + j + 640 * (currY + k)] || g1[currX + j + 640 * (currY + k)] != g2[currX + j + 640 * (currY + k)] || b1[currX + j + 640 * (currY + k)] != b2[currX + j + 640 * (currY + k)]) && etat.visited[currX + j + 640 * (currY + k)] == false) {
-											stackX.push_back(currX + j);
-											stackY.push_back(currY + k);
-										}
-										etat.outFile << to_string(currX + j) << "," << to_string(480 - (currY + k)) << endl;
-										etat.visited[currX + j + 640 * (currY + k)] = true;
+                                            stackX.push_back(currX + j);
+                                            stackY.push_back(currY + k);
+                                        }
+                                        etat.imageDiff[currX + j + 640 * (currY + k)] = 1;
+                                        etat.outFile << to_string(currX + j) << "," << to_string(480 - (currY + k)) << endl;
+                                        etat.visited[currX + j + 640 * (currY + k)] = true;
 									}
 							}
 						}
 					}
 					else {
 						//add adjacent au stacks
-						// etat.imageDiff[currX + 640 * currY] = 1;
+						 etat.imageDiff[currX + 640 * currY] = 1;
 						if ((r1[currX + 1 + 640 * currY] != r2[currX + 1 + 640 * currY] || g1[currX + 1 + 640 * currY] != g2[currX + 1 + 640 * currY] || b1[currX + 1 + 640 * currY] != b2[currX + 1 + 640 * currY]) && etat.visited[currX + 1 + 640 * currY] == false) {
 							stackX.push_back(currX + 1);
 							stackY.push_back(currY);
@@ -150,6 +176,8 @@ void genImageDiff(uint8_t* r1, uint8_t* r2, uint8_t* g1, uint8_t* g2, uint8_t* b
 				}
 			}
 	}
+	ecrireImageDiff(r1, r2, g1, g2, b1, b2);
+
 	if(diffCounter != 7){
 		cout << etat.image_o << endl;
 		cerr << "Erreur: Il faut exactement 7 differences entre les deux images" << endl;
@@ -184,7 +212,7 @@ int main(int argc, const char* argv[]) {
 	lireImage(r1, g1, b1, etat.image_o);
 	lireImage(r2, g2, b2, etat.image_m);
 
-	// etat.imageDiff = new uint8_t[480 * 640];
+	etat.imageDiff = new uint8_t[480 * 640];
 	etat.visited = new bool[480 * 640]; 
 
     genImageDiff(r1, r2, g1, g2, b1, b2);
