@@ -86,11 +86,6 @@ mat-card-header
     float:top;
 }
 
-.temps {
-    font-size: 0.85em;
-    margin: 2% 0;
-    text-align: center;
-}
 
 mat-badge{
     margin: auto;
@@ -101,11 +96,9 @@ mat-badge{
     margin: 4% 0 2% 5%;
 }
 
-/* .row{
-    margin-right: 0;
-    margin-left: 0;
-    display:grid;
-} */
+.temps{
+    padding-top: 5%;
+} 
 
 .title{
     overflow:hidden;

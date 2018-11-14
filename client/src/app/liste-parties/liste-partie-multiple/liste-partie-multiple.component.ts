@@ -84,7 +84,8 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
   protected reinitialiserTemps(partieId: string): void {
     this.listeParties.forEach((partie: PartieMultiple) => {
       if (partie["_id"] === partieId) {
-        this.genererTableauTempsAleatoires(partie);
+        partie["_tempsSolo"] = this.genererTableauTempsAleatoires();
+        partie["_tempsUnContreUn"] = this.genererTableauTempsAleatoires();
         this.listePartieService.reinitialiserTempsPartieMultiple(partieId, partie["_tempsSolo"], partie["_tempsUnContreUn"])
         .catch(() => ErrorHandler);
       }

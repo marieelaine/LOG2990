@@ -81,16 +81,34 @@ export class ListePartiesComponent {
     return (secondes < 10) ? (minutes + ":0" + secondes) : minutes + ":" + secondes;
   }
 
-  protected genererTableauTempsAleatoires(partie: T): void {
-    for (let i: number = 1; i < partie["_tempsSolo"].length + 1 ; i++) {
-      partie["_tempsSolo"].push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
-      partie["_tempsUnContreUn"].push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
+  protected genererTableauTempsAleatoires(): Array<TempsUser> {
+    const arr: Array<TempsUser> = [];
+    for (let i: number = 1; i < 4; i++) {
+      arr.push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
     }
+    this.getSortedTimes(arr);
+
+    return arr;
 }
 
   private genererTempsAleatoire(): number {
     return Math.floor(Math.random() * 400) + 100;
 }
+
+  private getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {
+    if (arr) {
+      arr.sort((t1: TempsUser, t2: TempsUser) => {
+        const time1: number = t1["_temps"];
+        const time2: number = t2["_temps"];
+        if (time1 > time2) { return 1; }
+        if (time1 < time2) { return -1; }
+
+        return 0;
+      });
+    }
+
+    return arr;
+  }
 
   private setToJouerAndCreer(): void {
     this.isAdminMode = false;
