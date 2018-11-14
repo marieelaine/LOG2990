@@ -5,14 +5,14 @@ import {
     MatDividerModule, MatFormFieldModule, MatCardModule, MatDialogModule, MatDialogRef,
     MAT_DIALOG_DATA, MatInputModule, MatRadioModule, MatCheckboxModule
 } from '@angular/material';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { PartieMultipleService } from '../partie-multiple.service';
 import { of } from 'rxjs';
 import { By } from "@angular/platform-browser";
 import { PartieMultiple } from './partie-multiple';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('DialogMultipleComponent', () => {
     let mockPartieMultipleService: jasmine.SpyObj<PartieMultipleService>;
@@ -37,7 +37,8 @@ describe('DialogMultipleComponent', () => {
                 MatCheckboxModule,
                 BrowserAnimationsModule,
                 MatRadioModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                ReactiveFormsModule
             ],
             providers: [
                 { provide: MatDialogRef, useValue: mockDialogRef },
@@ -45,7 +46,7 @@ describe('DialogMultipleComponent', () => {
                 { provide: PartieMultipleService, useValue: mockPartieMultipleService },
             ],
             schemas: [
-                CUSTOM_ELEMENTS_SCHEMA,
+                NO_ERRORS_SCHEMA
             ]
         });
 

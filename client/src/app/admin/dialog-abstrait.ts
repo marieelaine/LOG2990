@@ -2,14 +2,26 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { Inject } from "@angular/core";
 import { DialogData } from "./admin.component";
 import { HttpClient } from "@angular/common/http";
+import { DialogSimpleComponent } from "./dialog-simple/dialog-simple.component";
+import { DialogMultipleComponent } from "./dialog-multiple/dialog-multiple.component";
 
 export default class T {}
+
+export class TempsUser {
+  private _user: string;
+  private _temps: number;
+
+  constructor(user: string, temps: number) {
+    this._user = user;
+    this._temps = temps;
+  }
+}
 
 export abstract class DialogAbstrait {
 
     protected outOfBoundNameLengthMessage: string;
 
-    public constructor (private dialogRef: MatDialogRef<T>,
+    public constructor (private dialogRef: MatDialogRef<DialogSimpleComponent | DialogMultipleComponent>,
                         @Inject(MAT_DIALOG_DATA) protected data: DialogData,
                         protected http: HttpClient) {
       this.outOfBoundNameLengthMessage = "";
@@ -38,10 +50,10 @@ export abstract class DialogAbstrait {
       this.dialogRef.close();
     }
 
-    protected genererTableauTempsAleatoires(): Array<number> {
-        const arr: Array<number> = new Array<number>();
-        for (let i: number = 0; i < 6; i++) {
-          arr[i] = this.genererTempsAleatoire();
+    protected genererTableauTempsAleatoires(): Array<TempsUser> {
+        const arr: Array<TempsUser> = [];
+        for (let i: number = 1; i < 4; i++) {
+          arr.push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
         }
 
         return arr;

@@ -6,11 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./chrono.component.css']
 })
 export class ChronoComponent {
-    time: number = 0;
-    interval;
-    running = false;
+    protected time: number;
+    protected interval: NodeJS.Timer;
+    protected running: boolean;
 
-    public constructor() { }
+    public constructor() {
+        this.time = 0;
+        this.running = false;
+    }
 
     protected getSecondsSrtring(): string {
         return (this.time % 60 < 10) ? "0" + this.time % 60 : this.time % 60 + "";

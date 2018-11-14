@@ -1,6 +1,7 @@
 import { TestBed } from "@angular/core/testing";
 import { PartieService } from "./partie.service";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { TempsUser } from "../admin/dialog-abstrait";
 
 describe("PartieService", () => {
     let service: PartieService;
@@ -65,7 +66,7 @@ describe("PartieService", () => {
         it("Devrait faire une requete PUT", () => {
             const id: string = "12345abcde";
 
-            service.reinitialiserTempsPartie(id, new Array<number>(), new Array<number>());
+            service.reinitialiserTempsPartie(id, new Array<TempsUser>(), new Array<TempsUser>());
 
             const req = http.expectOne("http://localhost:3000/partieSimple/reinitialiseTemps/" + id);
             expect(req.request.method).toBe("PUT");

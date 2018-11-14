@@ -10,8 +10,11 @@ export default  {
         User: Symbol("User"),
 
         RoutesPartieSimple: Symbol("RoutesPartieSimple"),
+        RoutesPartieSimpleAttente: Symbol("RoutesPartieSimpleAttente"),
         PartieSimple: Symbol("PartieSimple"),
 
         RoutesPartieMultiple: Symbol("RoutesPartieMultiple"),
         PartieMultiple: Symbol("PartieMultiple"),
+
+        SocketServerService: Symbol("SocketServerService"),
 };

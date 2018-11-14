@@ -6,6 +6,7 @@ import { PartieSimple } from "./partie-simple";
 import { PartieSimpleService } from "../partie-simple.service";
 import { DialogAbstrait } from "../dialog-abstrait";
 import * as Buffer from "buffer";
+import { FormControl, Validators } from "@angular/forms";
 
 export const IMAGE_URL: string = "http://localhost:3000/images/";
 
@@ -21,10 +22,12 @@ export class DialogSimpleComponent extends DialogAbstrait {
   protected deuxiemeImage: string;
   protected wrongNumberOfImagesMessage: string;
   protected wrongImageSizeOrTypeMessage: string;
+  protected nameControl: FormControl;
+
   private currentImageNumber: number;
-  private selectedFiles: File[] = [];
-  private selectedFilesAsBuffers: Buffer[] = [];
-  private correctImageExtension: String = "image/bmp";
+  private selectedFiles: File[];
+  private selectedFilesAsBuffers: Buffer[];
+  private correctImageExtension: String;
 
   public constructor(
     dialogRef: MatDialogRef<DialogSimpleComponent>,
@@ -33,8 +36,13 @@ export class DialogSimpleComponent extends DialogAbstrait {
 
     private partieSimpleService: PartieSimpleService) {
       super(dialogRef, data, http);
+      this.selectedFiles = [];
+      this.selectedFilesAsBuffers = [];
+      this.correctImageExtension = "image/bmp";
       this.wrongImageSizeOrTypeMessage = "";
       this.wrongNumberOfImagesMessage = "";
+      this.nameControl = new FormControl('', [
+        Validators.minLength(3), Validators.maxLength(20), Validators.required]);
     }
 
   protected onClickAjouterPartie(): void {
@@ -77,8 +85,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
   protected async ajouterPartie(): Promise<void> {
       const result: PartieSimple = new PartieSimple(this["data"].simpleGameName, this.genererTableauTempsAleatoires(),
                                                     this.genererTableauTempsAleatoires(), this.selectedFilesAsBuffers[0],
-                                                    this.selectedFilesAsBuffers[1],
-                                                    new Array<Array<string>>());
+                                                    this.selectedFilesAsBuffers[1], new Array<Array<string>>());
       this.partieSimpleService.register(result)
         .subscribe(
           (data) => {
@@ -148,17 +155,4 @@ export class DialogSimpleComponent extends DialogAbstrait {
     return (this.selectedFiles[0] === undefined || this.selectedFiles[0] === null
       || this.selectedFiles[1] === undefined || this.selectedFiles[1] === null);
   }
-
-  // TODO : implementer le mat-error dans le html
-  // public checkIfOutOfBoundName(bla: String): boolean {
-  //   if (bla === "" || bla === undefined
-  //   || bla.length < 3 || bla.length > 20) {
-  //     this.outOfBoundNameLengthMessage = "*Le nom du jeu doit être entre 3 et 20 charactères.";
-
-  //     return true;
-  //   }
-  //   this.outOfBoundNameLengthMessage = "" ;
-
-  //   return false;
-  // }
 }
