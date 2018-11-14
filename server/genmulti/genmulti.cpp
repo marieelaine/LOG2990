@@ -4,6 +4,7 @@
 #include "inf2705-nuanceur.h"
 #include "inf2705-fenetre.h"
 #include "inf2705-forme.h"
+#include "FreeImage.h"
 #include <thread>
 #include <chrono>
 #include <vector>
@@ -11,9 +12,6 @@
 #include <bits/stdc++.h> 
   
 using namespace std; 
-typedef int LONG;
-typedef unsigned short WORD;
-typedef unsigned int DWORD;
 
 // variables pour l'utilisation des nuanceurs
 GLuint progBase;  // le programme de nuanceurs de base
@@ -32,28 +30,6 @@ FormeSphere *sphere = NULL;
 FormeCylindre *cylindre = NULL;
 FormeCylindre *cone = NULL;
 FormePyramideBaseCarree *pyramide = NULL;
-
-struct BITMAPFILEHEADER {
-    WORD bfType;
-    DWORD bfSize;
-    WORD bfReserved1;
-    WORD bfReserved2;
-    DWORD bfOffBits;
-};
-
-struct BITMAPINFOHEADER {
-  DWORD biSize;
-  LONG  biWidth;
-  LONG  biHeight;
-  WORD  biPlanes;
-  WORD  biBitCount;
-  DWORD biCompression;
-  DWORD biSizeImage;
-  LONG  biXPelsPerMeter;
-  LONG  biYPelsPerMeter;
-  DWORD biClrUsed;
-  DWORD biClrImportant;
-};
 
 // diverses variables d'état
 struct Etat
@@ -609,52 +585,19 @@ void capturerScene(string filepath)
     int width = 640;
     int height = 480; 
     char charArray[100];  
-    BITMAPFILEHEADER bf;
-    BITMAPINFOHEADER bi;
-
     strcpy(charArray, filepath.c_str());  
-    unsigned char *image = (unsigned char*)malloc(sizeof(unsigned char)*width*height*3);
-    FILE *file = fopen(charArray, "wb");
 
-    if( image!=NULL )
-    {
-        if( file!=NULL )
-        {
-            glReadPixels( 0, 0, width, height, GL_BGR_EXT, GL_UNSIGNED_BYTE, image );
+    BYTE* pixels = new BYTE[3 * width * height];
 
-            memset( &bf, 0, sizeof( bf ) );
-            memset( &bi, 0, sizeof( bi ) );
-
-            bf.bfType = 'MB';
-            bf.bfSize = sizeof(bf)+sizeof(bi)+width*height*3;
-            bf.bfOffBits = sizeof(bf)+sizeof(bi);
-            bi.biSize = sizeof(bi);
-            bi.biWidth = width;
-            bi.biHeight = height;
-            bi.biPlanes = 1;
-            bi.biBitCount = 24;
-            bi.biSizeImage = width*height*3;
-
-            fwrite( &bf, sizeof(bf), 1, file );
-            fwrite( &bi, sizeof(bi), 1, file );
-            fwrite( image, sizeof(unsigned char), height*width*3, file );
-
-            fclose( file );
-        }
-        free( image );
-    }
-
-    //BYTE* pixels = new BYTE[3 * width * height];
-
-    //glReadPixels(110, 80, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+    glReadPixels(110, 80, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
 
     // Convert to FreeImage format & save to file
-    //FIBITMAP* image = FreeImage_ConvertFromRawBits(pixels, width, height, 3 * width, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
-    //FreeImage_Save(FIF_BMP, image, charArray, 0);
+    FIBITMAP* image = FreeImage_ConvertFromRawBits(pixels, width, height, 3 * width, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
+    FreeImage_Save(FIF_BMP, image, charArray, 0);
 
     // Free resources
-    //FreeImage_Unload(image);
-    //delete [] pixels;
+    FreeImage_Unload(image);
+    delete [] pixels;
 }
 
 void FenetreTP::afficherScene(int index)
@@ -729,7 +672,7 @@ void genScene(int argc, const char* argv[]){
 
             camera.modeLookAt = !camera.modeLookAt;
             fenetre.afficherScene(index);
-
+            
             camera.modeLookAt = !camera.modeLookAt;
             fenetre.afficherScene(index);
 
