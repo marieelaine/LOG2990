@@ -5,8 +5,6 @@
 #include "inf2705-fenetre.h"
 #include "inf2705-forme.h"
 #include "FreeImage.h"
-#include <thread>
-#include <chrono>
 #include <vector>
 #include <string>
 #include <bits/stdc++.h> 
@@ -30,6 +28,11 @@ FormeSphere *sphere = NULL;
 FormeCylindre *cylindre = NULL;
 FormeCylindre *cone = NULL;
 FormePyramideBaseCarree *pyramide = NULL;
+
+
+// window size
+const GLint windowWidth = 640;
+const GLint windowHeight = 480;
 
 // diverses variables d'état
 struct Etat
@@ -484,7 +487,7 @@ void addForm(int index){
     }
 }
 
-void creerModifications()
+void creerModificationsSceneGeo()
 {
     int compteur = 0;
     while (compteur < 7){
@@ -579,20 +582,18 @@ void creerModifications()
     }
 }
 
-void capturerScene(string filepath)
+void capturerScene(string filepath, int x, int y)
 {
-    // Make the BYTE array, factor of 3 because it's RBG.
-    int width = 640;
-    int height = 480; 
+    // Make the BYTE array, factor of 3 because it's RBG. 
     char charArray[100];  
     strcpy(charArray, filepath.c_str());  
 
-    BYTE* pixels = new BYTE[3 * width * height];
+    BYTE* pixels = new BYTE[3 * windowWidth * windowHeight];
 
-    glReadPixels(110, 80, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+    glReadPixels(x, y, windowWidth, windowHeight, GL_RGB, GL_UNSIGNED_BYTE, pixels);
 
     // Convert to FreeImage format & save to file
-    FIBITMAP* image = FreeImage_ConvertFromRawBits(pixels, width, height, 3 * width, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
+    FIBITMAP* image = FreeImage_ConvertFromRawBits(pixels, windowWidth, windowHeight, 3 * windowWidth, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
     FreeImage_Save(FIF_BMP, image, charArray, 0);
 
     // Free resources
@@ -621,19 +622,19 @@ void FenetreTP::afficherScene(int index)
    
    if (index){
     if (camera.modeLookAt)
-        capturerScene(etat.capture1);
-    else capturerScene(etat.capture2);   
+        capturerScene(etat.capture1, 110, 80);
+    else capturerScene(etat.capture2, 110, 80);   
    }
 
    else if (!index){
     if (camera.modeLookAt){
-        capturerScene(etat.capture3);
+        capturerScene(etat.capture3, 110, 80);
     }
-    else capturerScene(etat.capture4);   
+    else capturerScene(etat.capture4, 110, 80);   
    }
 }
 
-void creerEtat(const char* argv[], Etat& etat){
+void creerEtat(char* argv[], Etat& etat){
     etat.dimBoite = 15.0;
     etat.theme =  argv[1];
     etat.nombreFormes = atoi(argv[2]);
@@ -651,11 +652,10 @@ void creerEtat(const char* argv[], Etat& etat){
     etat.capture4 = capture4;
 }
 
-void genScene(int argc, const char* argv[]){
+void genScene(int argc, char* argv[]){
 
-    if (etat.theme == "geo"){
-        if(etat.nombreFormes >= 10 && etat.nombreFormes <= 200){
-            srand(time(NULL));
+     if(etat.nombreFormes >= 10 && etat.nombreFormes <= 200){
+        if(etat.theme == "geo"){
             int index = 1;
 
             FenetreTP fenetre( "INF2990" );
@@ -668,7 +668,7 @@ void genScene(int argc, const char* argv[]){
             camera.modeLookAt = !camera.modeLookAt;
             fenetre.afficherScene(index);
             index = 0;
-            creerModifications();
+            creerModificationsSceneGeo();
 
             camera.modeLookAt = !camera.modeLookAt;
             fenetre.afficherScene(index);
@@ -678,19 +678,19 @@ void genScene(int argc, const char* argv[]){
 
             fenetre.conclure();
         }
-        else {
-            cerr << "Erreur: Il faut choisir entre 10 et 200 formes geometriques.\n";
-            exit(1);
+        else if (etat.theme == "theme"){
+            string paramGenScene = "./genScene/genScene " + etat.theme + " " + to_string(etat.nombreFormes) + " " + etat.modifications + " " + etat.filename;
+            system(paramGenScene.c_str());
         }
     }
-    else if (etat.theme == "theme"){
-        cerr << "Erreur: L'executable ne peut creer de themes pour l'instant! Essayez plutot geo.\n";
-        exit(1);
+    else {
+            cerr << "Erreur: Il faut choisir entre 10 et 200 formes geometriques.\n";
+            exit(1);
     }
 
 }
 
-int main( int argc, const char* argv[] ) {
+int main( int argc, char* argv[] ) {
     if (argc != 5 )
     {
         cerr << "Erreur: Nombre invalide de parametres!\n";
@@ -698,12 +698,13 @@ int main( int argc, const char* argv[] ) {
         exit(1);
     }
     creerEtat(argv, etat);
+    srand(time(NULL));
 
     for (int i = 0; i < 4; i++){
         genScene(argc, argv);
         
-        string paramA = "../bmpdiff/bmpdiff " + etat.capture1 + " " + etat.capture3 + " " + etat.filename + "_a_diff.bmp ";
-        string paramB = "../bmpdiff/bmpdiff " + etat.capture2 + " " + etat.capture4 + " " + etat.filename + "_b_diff.bmp ";
+        string paramA = "./bmpdiff/bmpdiff " + etat.capture1 + " " + etat.capture3 + " " + etat.filename + "_a_diff.bmp ";
+        string paramB = "./bmpdiff/bmpdiff " + etat.capture2 + " " + etat.capture4 + " " + etat.filename + "_b_diff.bmp ";
 
         int outputA = system(paramA.c_str());
         int outputB = system(paramB.c_str());
