@@ -5,8 +5,7 @@
 #include <math.h>
 #include <thread>
 #include <chrono>
-
-#include "FreeImage.h"
+#include "include/bitmap_image.hpp"
 #include "include/scene.h"
 
 using namespace std;
@@ -813,25 +812,24 @@ void creerModifications()
     }
 }
 
-void capturerScene(string filepath)
+void capturerScene(string filepath, int x, int y)
 {
     // Make the BYTE array, factor of 3 because it's RBG.
-    int width = windowWidth;
-    int height = windowHeight; 
-    char charArray[100];  
-    strcpy(charArray, filepath.c_str());  
+    bitmap_image screenshot(windowWidth, windowHeight);
+    unsigned char image[windowHeight*windowWidth*3];
+    glReadPixels(x, y, windowWidth, windowHeight, GL_RGB, GL_UNSIGNED_BYTE, &image);
+    int compteur = 0;
+    for (unsigned int x = 0; x < windowWidth; ++x)
+    {
+      for (unsigned int y = 0; y < windowHeight; ++y)
+      {
+        int dim = ((windowHeight - y - 1) * 640 * 3) + (x * 3);
+        compteur += 3;
+        screenshot.set_pixel(x, y, image[dim], image[dim+1], image[dim+2]);
+      }
+    }
 
-    BYTE* pixels = new BYTE[3 * width * height];
-
-    glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-
-    // Convert to FreeImage format & save to file
-    FIBITMAP* image = FreeImage_ConvertFromRawBits(pixels, width, height, 3 * width, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
-    FreeImage_Save(FIF_BMP, image, charArray, 0);
-
-    // Free resources
-    FreeImage_Unload(image);
-    delete [] pixels;
+    screenshot.save_image(filepath);
 }
 
 void Timer(int value)
@@ -840,34 +838,34 @@ void Timer(int value)
    {
       glutDisplayFunc(display);
       glutIdleFunc(display);
-      capturerScene(etat.capture1);
+      capturerScene(etat.capture1,0 ,0);
       // Change to a new display function in 2 seconds
-      glutTimerFunc(2000, Timer, 1);
+      glutTimerFunc(100, Timer, 1);
    }
    else if(value==1)
    {
      glutDisplayFunc(displayPOV2);
      glutIdleFunc(displayPOV2);
-     glutTimerFunc(2000, Timer, 2);
+     glutTimerFunc(100, Timer, 2);
    }
    else if(value==2)
    {
-     capturerScene(etat.capture2);
+     capturerScene(etat.capture2, 0, 0);
      creerModifications();
      glutDisplayFunc(display);
      glutIdleFunc(display);
-     glutTimerFunc(2000, Timer, 3);
+     glutTimerFunc(100, Timer, 3);
    }
    else if(value==3)
    {
-     capturerScene(etat.capture3);
+     capturerScene(etat.capture3, 0, 0);
      glutDisplayFunc(displayPOV2);
      glutIdleFunc(displayPOV2);
-     glutTimerFunc(2000, Timer, 4);
+     glutTimerFunc(100, Timer, 4);
    }
    else if(value==4)
    {
-    capturerScene(etat.capture4);
+    capturerScene(etat.capture4, 0, 0);
     glutTimerFunc(100, Timer, 5);
    }
    else if(value==5)
