@@ -135,7 +135,6 @@ export abstract class PartieAbstraiteClass {
 
     private updateTableauTemps(temps: number) {
       let joueur: string = this.cookieService.get("username");
-      console.log(joueur);
       if (joueur === "") {
           joueur = "Anonyme";
       }
