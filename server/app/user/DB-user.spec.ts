@@ -3,10 +3,10 @@ import { DBUser } from "./DB-user";
 
 describe("BaseDeDonneesUsager classe", () => {
     describe("Constructeur", () => {
-        let user: DBUser.User;
+        let user: DBUser;
 
         beforeEach(() => {
-            user = new DBUser.User();
+            user = new DBUser();
         });
 
         describe("Constructeur", () => {

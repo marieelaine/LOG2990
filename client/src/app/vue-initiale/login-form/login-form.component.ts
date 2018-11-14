@@ -45,7 +45,6 @@ export class LoginFormComponent implements OnInit {
 
     protected onSubmit(): void {
         const username = this.loginForm.value.username;
-        console.log(username);
         const result: User = new User(username);
         this.userService.register(result)
             .subscribe(
@@ -56,7 +55,6 @@ export class LoginFormComponent implements OnInit {
                     .catch(() => ErrorHandler);
                 },
                 (error) => {
-                    console.error(error);
                     this.usernameTaken = true;
                 });
     }
