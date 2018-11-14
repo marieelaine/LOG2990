@@ -281,10 +281,6 @@ export class DBPartieSimple {
             return 0;
           });
         }
-        // tslint:disable-next-line:no-console
-        console.log("called");
-        // tslint:disable-next-line:no-console
-        console.log(arr);
 
         return arr;
     }
