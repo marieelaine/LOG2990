@@ -52,7 +52,7 @@ export abstract class PartieAbstraiteClass {
 
     protected abstract getImageData(): void;
 
-    protected start(): void {
+    protected commencerPartie(): void {
         this.partieCommence = true;
         this.messageDifferences = `Vous avez trouvé ${this.differencesTrouvees} différences`;
         this.blur = false;
@@ -72,6 +72,7 @@ export abstract class PartieAbstraiteClass {
         for (let i = 0; i < this.nbImages; i++) {
             this.ajusterSourceImage(this.imageData[i], this.canvas.toArray()[i], this.image[i]);
         }
+        this.commencerPartie();
     }
 
     protected addNomPartieToChat() {
@@ -134,13 +135,24 @@ export abstract class PartieAbstraiteClass {
             .catch(() => ErrorHandler);
     }
 
-    protected penalite(offsetX, offsetY): void {
+    protected penalite(event): void {
         this.penaliteEtat = true;
+        const canvas = event.srcElement;
+        const ctx = canvas.getContext("2d");
+        const imageSaved: ImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        ctx.font = "600 28px Arial";
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#ff0000";
+        ctx.fillText('ERREUR', event.offsetX, event.offsetY + 10);
+        ctx.lineWidth = 1.5;
+        ctx.fillStyle = "black";
+        ctx.strokeText("ERREUR", event.offsetX, event.offsetY + 10);
         this.audio.src = "../assets/no.mp3";
         this.audio.load();
         this.audio.play().catch(() => ErrorHandler);
 
         setTimeout(() => {
+            ctx.putImageData(imageSaved, 0, 0);
             this.penaliteEtat = false;
         },         1000);
     }

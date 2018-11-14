@@ -59,7 +59,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                 }
                 i++;
             }
-            this.penalite(event.offsetX, event.offsetY);
+            this.penalite(event);
         }
     }
 

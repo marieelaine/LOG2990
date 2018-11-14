@@ -34,10 +34,9 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
       this.imageData.push(atob(String(this.partie["_image2"][0])));
   }
 
-  protected testerPourDiff(offsetX, offsetY): void {
+  protected testerPourDiff(event): void {
       if (this.partieCommence && !this.penaliteEtat) {
-
-          const coords = offsetX + "," + offsetY;
+          const coords = event.offsetX + "," + event.offsetY;
           let i: number = 0;
           for (const diff of this.partie["_imageDiff"]) {
               for (const pixel of diff) {
@@ -51,7 +50,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
               }
               i++;
           }
-          this.penalite(offsetX, offsetY);
+          this.penalite(event);
       }
   }
 
