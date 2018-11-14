@@ -63,14 +63,14 @@ describe('VueSimpleComponent', () => {
             component["partie"]["_imageDiff"] = [["1,1"]];
 
             component["testerPourDiff"](1, 1);
-            expect(component["differenceTrouver"]).toHaveBeenCalled();
+            expect(component["differenceTrouvee"]).toHaveBeenCalled();
         });
 
         it("ne devrait pas appeler differenceTrouver si le pixel se trouve dans imageDiff", () => {
             component["partie"]["_imageDiff"] = [["1,2"]];
 
             component["testerPourDiff"](1, 1);
-            expect(component["differenceTrouver"]).not.toHaveBeenCalled();
+            expect(component["differenceTrouvee"]).not.toHaveBeenCalled();
         });
     });
 

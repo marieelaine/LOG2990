@@ -38,7 +38,6 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
       this.listePartieEnAttente = res;
     });
     this.ajouterPartieSurSocketEvent();
-
   }
 
   protected afficherImage(id: string): void {
@@ -49,7 +48,6 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     if (this.isListePartiesMode) {
       this.router.navigate(["/partie-simple-solo/" + partieId])
       .catch(() => ErrorHandler);
-
     } else if (this.isAdminMode) {
       this.reinitialiserTemps(partieId);
     }
@@ -96,7 +94,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   protected reinitialiserTemps(partieId: string): void {
     this.listeParties.forEach((partie: PartieSimple) => {
       if (partie["_id"] === partieId) {
-       this.genererTableauTempsAleatoires(partie);
+       partie["_tempsSolo"] = this.genererTableauTempsAleatoires();
+       partie["_tempsUnContreUn"] = this.genererTableauTempsAleatoires();
        this.listePartieService.reinitialiserTempsPartie(partieId, partie["_tempsSolo"], partie["_tempsUnContreUn"])
        .catch(() => ErrorHandler);
       }

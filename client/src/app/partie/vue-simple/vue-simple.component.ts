@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ErrorHandler } from '@angular/core';
 import { PartieAbstraiteClass } from '../partie-abstraite-class';
 import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
 import { ActivatedRoute } from '@angular/router';
 import { PartieService } from '../partie.service';
 import { CookieService } from 'ngx-cookie-service';
+import { TempsUser } from 'src/app/admin/dialog-abstrait';
 
 @Component({
   selector: 'app-vue-simple',
@@ -77,4 +78,21 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
       }
       contextD.putImageData(imageDataD, 0, 0);
   }
+
+  protected ajouterTemps(temps: number): void {
+      this.updateTableauTemps(temps);
+      this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
+      .catch(() => ErrorHandler);
+  }
+
+  private updateTableauTemps(temps: number) {
+    let joueur: string = this.cookieService.get("username");
+    if (joueur == null) {
+        joueur = "Anonyme";
+    }
+    const tempsUser: TempsUser =  new TempsUser(joueur, temps);
+    this.partie["_tempsSolo"].splice(-1, 1);
+    this.partie["_tempsSolo"].push(tempsUser);
+  }
+
 }

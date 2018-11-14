@@ -1,78 +1,57 @@
 <div *ngFor="let partieMultiple of listeParties">
-  <mat-card class='container-fluid' 
-  [class.mat-elevation-z6]="!partieMultiple.isElevatedActive"
-  [class.mat-elevation-z10]="!!partieMultiple.isElevatedActive"
-  (mouseenter)="partieMultiple.isElevatedActive = !partieMultiple.isElevatedActive"
-  (mouseleave)="partieMultiple.isElevatedActive = !partieMultiple.isElevatedActive">
-      <mat-card-header>
-            <h2 class='gameNameHeader titleFirstLetter'>{{getTitleFirstLetter(partieMultiple._nomPartie)|uppercase}}</h2> 
-            <h2 class='gameNameHeader'>{{getTitleWithoutFirstLetter(partieMultiple._nomPartie)}}</h2> 
-      </mat-card-header>
-      <div class='row'>
-          <div class='col-sm-6'>
-              <img src='' id="{{partieMultiple['_id']}}" class='gameImage img-responsive mat-elevation-z6 center'
-              [class.mat-elevation-z6]="!partieMultiple.isElevatedActive"
-              [class.mat-elevation-z10]="!!partieMultiple.isElevatedActive">
-          </div> 
-          <div class='col-sm-6'>
-                <div class="container">
-                    <div class="col-2"></div>
-                    <div class="col">
+        <mat-card class='container-fluid' 
+        [class.mat-elevation-z6]="!partieMultiple.isElevatedActive"
+        [class.mat-elevation-z10]="!!partieMultiple.isElevatedActive"
+        (mouseenter)="partieMultiple.isElevatedActive = !partieMultiple.isElevatedActive"
+        (mouseleave)="partieMultiple.isElevatedActive = !partieMultiple.isElevatedActive">
+            <mat-card-header>
+                    <div class=col-sm-7>
                         <h2 class='topThreeHeaders text-center'>Top <img class='bronzeMedal' src="assets/bronze-medal.png"></h2>
                     </div>
+                    <div class="col-sm-5 title">
+                        <span class='gameNameHeader titleFirstLetter'>{{getTitleFirstLetter(partieMultiple._nomPartie)|uppercase}}</span>
+                        <span class='gameNameHeader'>{{getTitleWithoutFirstLetter(partieMultiple._nomPartie)}}</span>
+                    </div>
+            </mat-card-header>
+            <div class='row'>
+                <div class='col-sm-7'>
                     <div class="row">
-                        <div class="col-2"></div>
                         <div class="col">
                             <h2 class='headers'> Solo </h2>
                         </div>
                         <div class="col">
                             <h2 class='headers'> 1v1 </h2> 
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-2">
-                            <span matBadge="1" matBadgeOverlap="true" matBadgeColor="warn"></span>
+                     </div>
+                     <div class="row temps"  *ngFor="let tempsSolo of partieMultiple['_tempsSolo']; let i = index">
+                         <div class="col-1">
+                            <span class="badge badge-pill badge-danger">{{i+1}}</span>
+                         </div>
+                         <div class="col-5"><span>{{ getDisplayTime(tempsSolo) }}</span> : 
+                            <span>{{ tempsSolo['_user'] }}</span></div>
+                         <div class="col-1">
+                                <span class="badge badge-pill badge-danger">{{i+1}}</span>
                         </div>
-                        <div class="col temps">
-                            {{ getBestTime(partieMultiple._tempsSolo) }}
-                        </div>
-                        <div class="col temps">
-                            {{ getBestTime(partieMultiple._tempsUnContreUn) }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-2">
-                            <span matBadge="2" matBadgeOverlap="true" matBadgeColor="warn"></span>
-                        </div>
-                        <div class="col temps">
-                            {{ getSecondBestTime(partieMultiple._tempsSolo) }}
-                        </div>
-                        <div class="col temps">
-                            {{ getSecondBestTime(partieMultiple._tempsUnContreUn) }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-2">
-                            <span matBadge="3" matBadgeOverlap="true" matBadgeColor="warn"></span>
-                        </div>
-                        <div class="col temps">
-                            {{ getThirdBestTime(partieMultiple._tempsSolo) }}
-                        </div>
-                        <div class="col temps">
-                            {{ getThirdBestTime(partieMultiple._tempsUnContreUn) }} 
-                        </div>
+                        <div class="col-5">
+                            <span> {{ getDisplayTime(partieMultiple['_tempsUnContreUn'][i]) }} </span> :
+                            <span>  {{ partieMultiple['_tempsUnContreUn'][i]['_user'] }}  </span>
+                            </div> 
+                     </div>
+                </div>
+                <div class='col-sm-5'>
+                    <img src='' id="{{partieMultiple['_id']}}" class='gameImage img-responsive mat-elevation-z6 center'
+                        [class.mat-elevation-z6]="!partieMultiple.isElevatedActive"
+                        [class.mat-elevation-z10]="!!partieMultiple.isElevatedActive">
+                </div> 
+            </div>
+    
+            <div class="row">
+                    <div class="col boutons d-flex flex-row bd-highlight justify-content-end">
+                        <button class="p-2 bd-highlight" mat-button (click) = "onJouerOuReinitialiserClick(partieMultiple._id)" class='mat-elevation-z6'> {{jouerOuReinitialiser}} </button>
+                        <button class="p-2 bd-highlight" mat-button (click) = "onCreerOuSupprimerClick(partieMultiple._id)" class='mat-elevation-z6'> {{listePartieEnAttente.includes(partieMultiple._id) ? joindreOuSupprimer : creerOuSupprimer}} </button>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-                <div class="col boutons d-flex flex-row bd-highlight justify-content-end">
-                    <button class="p-2 bd-highlight" mat-button (click) = "onJouerOuReinitialiserClick(partieMultiple._id)" class='mat-elevation-z6'> {{jouerOuReinitialiser}} </button>
-                    <button class="p-2 bd-highlight" mat-button (click) = "onCreerOuSupprimerClick(partieMultiple._id)" class='mat-elevation-z6'> {{ creerOuSupprimer }} </button>
-                </div>
-            </div>
-    </mat-card> 
-  <br> 
-  {{this.afficherImage(partieMultiple["_id"])}}
-</div>
-
+        </mat-card>  
+        <br>
+        {{this.afficherImage(partieMultiple["_id"])}}
+    </div>
