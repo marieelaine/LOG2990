@@ -12,10 +12,6 @@ canvas{
     min-width: 680px;
 }
 
-.blurImg{
-    filter: blur(1.5rem);
-}
-
 #divMessagesConsole {
     text-align: center;
 }

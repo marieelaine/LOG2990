@@ -44,11 +44,10 @@ describe('PartieAbstraiteComponent', () => {
     });
 
     describe("start", () => {
-        it("devrait initialiser correctement les attributs partieCommence, messageDifferences, et blur", () => {
+        it("devrait initialiser correctement les attributs partieCommence, messageDifferences", () => {
             component["commencerPartie"]();
             expect(component["partieCommence"]).toEqual(true);
             expect(component["messageDifferences"]).toEqual("Vous avez trouvé 0 différences");
-            expect(component["blur"]).toEqual(false);
         });
 
         it("devrait appeler chrono.startTimer", () => {
@@ -81,9 +80,8 @@ describe('PartieAbstraiteComponent', () => {
         expect(component["chrono"].getTime()).toBe(2);
     }));
 
-    it('partieCommence should be false and blur true', () => {
+    it('partieCommence should be false true', () => {
     expect(component["partieCommence"]).toBeFalsy();
-    expect(component["blur"]).toBeTruthy();
     });
 
     it('should return value 0', fakeAsync(() => {

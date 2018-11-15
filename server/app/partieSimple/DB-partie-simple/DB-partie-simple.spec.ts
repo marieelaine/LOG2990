@@ -50,7 +50,7 @@ describe("Partie Simple BD classe", () => {
     });
 
     describe("Fonction traiterMessageErreur", () => {
-        it("Devrait appeller la fonction dleteImagesDirectory si errorMsg n'est pas nul", () => {
+        it("Devrait appeller la fonction deleteImagesDirectory si errorMsg n'est pas nul", () => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(dbPartieSimple, "deleteImagesDirectory");
