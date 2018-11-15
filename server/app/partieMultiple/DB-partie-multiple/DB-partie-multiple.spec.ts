@@ -3,7 +3,7 @@ import { assert } from "chai";
 import * as fsx from "fs-extra";
 import * as sinon from "sinon";
 import { SocketServerService } from "../../socket-io.service";
-import { TempsUser } from "../../partieSimple/DB-partie-simple/DB-partie-simple";
+import { TempsUser } from "../../partie-DB/DB-partie-abstract";
 
 describe("Partie Multiple BD classe", () => {
     let partieMultipleBD: DBPartieMultiple;

@@ -1,8 +1,9 @@
-import { DBPartieSimple, PartieSimpleInterface, TempsUser } from "./DB-partie-simple";
+import { DBPartieSimple, PartieSimpleInterface } from "./DB-partie-simple";
 import { assert } from "chai";
 import * as fsx from "fs-extra";
 import * as sinon from "sinon";
 import { SocketServerService } from "../../socket-io.service";
+import { TempsUser } from "../../partie-DB/DB-partie-abstract";
 
 describe("Partie Simple BD classe", () => {
     let dbPartieSimple: DBPartieSimple;
