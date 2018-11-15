@@ -14,6 +14,8 @@ mat-card-header
 {
     justify-content: right;
     margin-bottom:2%;
+    border-bottom:2px solid #e6e5e5;
+
 }
 
 .gameNameHeader
@@ -81,12 +83,14 @@ mat-badge{
 
 
 .mat-button{
-    margin: 4% 0 2% 5%;
+    margin: 0 0 2% 5%;
 }
 
 .title{
     overflow:hidden;
     text-align:center;
+    background: #e6e5e5;
+    border-radius: 10px 10px 0 0;
 }
 
 col-1{
