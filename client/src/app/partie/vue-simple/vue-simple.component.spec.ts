@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { VueSimpleComponent } from './vue-simple.component';
 import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
 import { MatCardModule } from '@angular/material';
