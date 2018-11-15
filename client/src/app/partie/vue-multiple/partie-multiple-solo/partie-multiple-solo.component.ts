@@ -1,4 +1,4 @@
-import { Component, ErrorHandler } from '@angular/core';
+import { Component } from '@angular/core';
 import { VueMultipleComponent } from '../vue-multiple.component';
 import { ActivatedRoute } from '@angular/router';
 import { PartieService } from '../../partie.service';

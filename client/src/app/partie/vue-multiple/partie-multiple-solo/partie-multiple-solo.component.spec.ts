@@ -6,6 +6,7 @@ import {ChatComponent} from 'src/app/chat/chat.component';
 import {ActivatedRoute} from '@angular/router';
 import {ActivatedRouteMock} from 'src/testing/mocks';
 import {CookieService} from "ngx-cookie-service";
+import {ErrorHandler} from "@angular/core";
 
 describe('PartieMultipleSoloComponent', () => {
     let component: PartieMultipleSoloComponent;
@@ -26,7 +27,8 @@ describe('PartieMultipleSoloComponent', () => {
                 CookieService
             ],
         })
-            .compileComponents();
+            .compileComponents()
+            .catch(() => ErrorHandler);
     }));
 
     beforeEach(() => {
