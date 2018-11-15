@@ -17,3 +17,6 @@ export const REINITIALISER_TEMPS_MULTIPLE_URL: string = BASE_URL + MULTIPLE + "r
 export const GET_PARTIE_MULTIPLE_ATTENTE: string = BASE_URL + "getPartieSimpleEnAttente/";
 export const ADD_PARTIE_MULTIPLE_ATTENTE: string = BASE_URL + "addPartieSimpleEnAttente/";
 export const DELETE_PARTIE_MULTIPLE_ATTENTE: string = BASE_URL + "deletePartieSimpleEnAttente/";
+
+export const GET_PARTIE_SIMPLE: string = BASE_URL + SIMPLE + "getPartieSimple/";
+export const GET_PARTIE_MULTIPLE: string = BASE_URL + MULTIPLE + "getPartieMultiple/";

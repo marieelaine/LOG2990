@@ -10,7 +10,7 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "clean": "rimraf out node_modules",
-    "preinstall": "pip3 install --user -r ./requirements.txt",
+    "preinstall": "make -C ./bmpdiff | make -C ./genmulti | pip3 install --user -r ./requirements.txt",
     "postinstall": "rimraf false"
   },
   "dependencies": {

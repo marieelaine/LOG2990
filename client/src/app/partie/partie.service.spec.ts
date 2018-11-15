@@ -66,7 +66,7 @@ describe("PartieService", () => {
         it("Devrait faire une requete PUT", () => {
             const id: string = "12345abcde";
 
-            service.reinitialiserTempsPartie(id, new Array<TempsUser>(), new Array<TempsUser>());
+            service.reinitialiserTempsPartieSimple(id, new Array<TempsUser>(), new Array<TempsUser>());
 
             const req = http.expectOne("http://localhost:3000/partieSimple/reinitialiseTemps/" + id);
             expect(req.request.method).toBe("PUT");

@@ -22,6 +22,13 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         this.differenceRestantes = 14;
     }
 
+    // TODO
+    protected ajouterTemps(temps: number): void {
+        this.updateTableauTempsSolo(temps);
+        this.partieService.reinitialiserTempsPartieMultiple(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
+        .catch(() => ErrorHandler);
+    }
+
     protected setPartie(): void {
         this.partieService.getPartieMultiple(this.partieID).subscribe((res: PartieMultiple) => {
             this.partie = res;
