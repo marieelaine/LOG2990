@@ -34,13 +34,13 @@ it('should create', () => {
 });
 
 it('form invalid when empty', () => {
-    expect(component.loginForm.valid).toBeFalsy();
+    expect(component["loginForm"].valid).toBeFalsy();
 });
 
 // tslint:disable-next-line:max-func-body-length
 it('username field validity', () => {
     let errors = {};
-    const username = component.loginForm.controls['username'];
+    const username = component["loginForm"].controls['username'];
     expect(username.valid).toBeFalsy();
 
     // username field is required

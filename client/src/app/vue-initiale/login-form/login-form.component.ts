@@ -17,8 +17,9 @@ export const USER_URL: string = "http://localhost:3000/users/";
 
 export class LoginFormComponent implements OnInit {
 
-    public loginForm: FormGroup;
-    public usernameTaken: Boolean;
+    protected loginForm: FormGroup;
+    protected usernameTaken: Boolean;
+    protected username: string;
 
     // Paramètres de particles background
     myStyle: object = {};
@@ -43,9 +44,9 @@ export class LoginFormComponent implements OnInit {
     }
 
     protected onSubmit(): void {
-        const username: string = this.loginForm.value.username;
+        const username = this.loginForm.value.username;
         const result: User = new User(username);
-        this.userService["register"](result)
+        this.userService.register(result)
             .subscribe(
                 (data) => {
                     this.usernameTaken = false;
@@ -54,7 +55,6 @@ export class LoginFormComponent implements OnInit {
                     .catch(() => ErrorHandler);
                 },
                 (error) => {
-                    console.error(error);
                     this.usernameTaken = true;
                 });
     }

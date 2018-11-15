@@ -128,11 +128,19 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected ajouterTemps(temps: number): void {
-        const joueur: string = this.cookieService.get("username");
-        const tempsUser: TempsUser = new TempsUser(joueur, temps);
-        this.partie["_tempsSolo"].push(tempsUser);
+        this.updateTableauTemps(temps);
         this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
-            .catch(() => ErrorHandler);
+        .catch(() => ErrorHandler);
+    }
+
+    private updateTableauTemps(temps: number) {
+      let joueur: string = this.cookieService.get("username");
+      if (joueur === "") {
+          joueur = "Anonyme";
+      }
+      const tempsUser: TempsUser =  new TempsUser(joueur, temps);
+      this.partie["_tempsSolo"].splice(-1, 1);
+      this.partie["_tempsSolo"].push(tempsUser);
     }
 
     protected penalite(event): void {

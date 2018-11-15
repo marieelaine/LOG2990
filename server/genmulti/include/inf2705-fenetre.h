@@ -15,7 +15,7 @@
 #if defined(FENETRE_glfw3)
 # include <GLFW/glfw3.h>
 #else
-# include <SDL/SDL.h>
+# include <SDL.h>
 #endif
 #include <string.h>
 #include <stdlib.h>
