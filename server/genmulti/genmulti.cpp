@@ -1571,8 +1571,6 @@ int main( int argc, char* argv[] ) {
         if (outputA == 0 && outputB == 0){
             cout << "Succes\n";
             exit(0);
-        } else{
-            // cerr << "Essaie numero " << i+1 << " Erreur!";
         }
     }
     cerr << "Erreur\n";
