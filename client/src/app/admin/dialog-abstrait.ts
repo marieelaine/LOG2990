@@ -5,8 +5,6 @@ import { HttpClient } from "@angular/common/http";
 import { DialogSimpleComponent } from "./dialog-simple/dialog-simple.component";
 import { DialogMultipleComponent } from "./dialog-multiple/dialog-multiple.component";
 
-export default class T {}
-
 export class TempsUser {
   private _user: string;
   private _temps: number;

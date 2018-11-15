@@ -12,7 +12,7 @@ import { PartieMultipleService } from '../partie-multiple.service';
 import { of } from 'rxjs';
 import { By } from "@angular/platform-browser";
 import { PartieMultiple } from './partie-multiple';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('DialogMultipleComponent', () => {
     let mockPartieMultipleService: jasmine.SpyObj<PartieMultipleService>;

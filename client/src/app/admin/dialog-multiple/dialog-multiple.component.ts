@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { PartieMultiple } from './partie-multiple';
 import * as Buffer from "buffer";
 import { PartieMultipleService } from '../partie-multiple.service';
-import { FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dialog-multiple',

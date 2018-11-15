@@ -1,42 +1,41 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { PartieMultipleSoloComponent } from './partie-multiple-solo.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatCardModule } from '@angular/material';
-import { ChatComponent } from 'src/app/chat/chat.component';
-import { ActivatedRoute } from '@angular/router';
-import { ActivatedRouteMock } from 'src/testing/mocks';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {PartieMultipleSoloComponent} from './partie-multiple-solo.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {MatCardModule} from '@angular/material';
+import {ChatComponent} from 'src/app/chat/chat.component';
+import {ActivatedRoute} from '@angular/router';
+import {ActivatedRouteMock} from 'src/testing/mocks';
 import {CookieService} from "ngx-cookie-service";
 
 describe('PartieMultipleSoloComponent', () => {
-  let component: PartieMultipleSoloComponent;
-  let fixture: ComponentFixture<PartieMultipleSoloComponent>;
+    let component: PartieMultipleSoloComponent;
+    let fixture: ComponentFixture<PartieMultipleSoloComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ PartieMultipleSoloComponent, ChatComponent ],
-      imports: [
-        HttpClientTestingModule,
-        MatCardModule
-      ],
-      providers: [
-        {
-            provide: ActivatedRoute,
-            useClass: ActivatedRouteMock,
-        },
-        CookieService
-      ],
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [PartieMultipleSoloComponent, ChatComponent],
+            imports: [
+                HttpClientTestingModule,
+                MatCardModule
+            ],
+            providers: [
+                {
+                    provide: ActivatedRoute,
+                    useClass: ActivatedRouteMock,
+                },
+                CookieService
+            ],
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(PartieMultipleSoloComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(PartieMultipleSoloComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

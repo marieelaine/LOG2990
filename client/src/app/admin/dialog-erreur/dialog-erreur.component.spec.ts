@@ -2,8 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from "@angular/platform-browser";
 import { DialogErreurComponent } from './dialog-erreur.component';
 import { MatDialogModule, MatDividerModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { SocketClientService } from 'src/app/socket/socket-client.service';
+import {CUSTOM_ELEMENTS_SCHEMA, ErrorHandler} from '@angular/core';
 
 describe('DialogErreurComponent', () => {
   let component: DialogErreurComponent;
@@ -23,7 +22,7 @@ describe('DialogErreurComponent', () => {
         CUSTOM_ELEMENTS_SCHEMA,
     ]
     })
-    .compileComponents();
+    .compileComponents().catch(() => ErrorHandler);
   }));
 
   beforeEach(() => {
