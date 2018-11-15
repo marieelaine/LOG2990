@@ -39,9 +39,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
         super();
 
         this.modelPartieBuffer = this.baseDeDonnees.mongoose.model("parties-multiples", this.schemaBuffer, "parties-multiples");
-
         this.modelPartieArray = this.baseDeDonnees.mongoose.model("parties-multiples-array", this.schemaArray, "parties-multiples");
-
     }
 
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> {
@@ -141,6 +139,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
 
     protected async obtenirPartieId(nomPartie: String): Promise<string> {
         const partieMultiple: PartieMultipleInterface[] = [];
+        
         await this.modelPartieBuffer.find()
             .then((res: Document[]) => {
                 for (const partie of res) {
@@ -159,6 +158,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
 
     protected async getPartieById(partieID: String): Promise<PartieMultipleInterface> {
         const partieMultiple: PartieMultipleInterface[] = [];
+        
         await this.modelPartieArray.find()
             .then((parties: Document[]) => {
                 for (const partie of parties) {
@@ -177,6 +177,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
 
     protected async getPartieByName(nomPartie: String): Promise<PartieMultipleInterface> {
         const partieMultiple: PartieMultipleInterface[] = [];
+        
         await this.modelPartieArray.find()
             .then((parties: Document[]) => {
                 for (const partie of parties) {
@@ -241,6 +242,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
 
     private async enregistrerPartieMultiple(partie: PartieMultipleInterface): Promise<void> {
         const partieMultiple: Document = new this.modelPartieBuffer(partie);
+
         await partieMultiple.save(async (err: Error) => {
             if (err !== null && err.name === constantes.ERREUR_UNIQUE) {
                 this.socket.envoyerMessageErreurNom(constantes.ERREUR_NOM_PRIS);
@@ -261,6 +263,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
         });
         let i: number = 0;
         let arrayDiff: Array<string> = new Array<string>();
+        
         rl.on("line", async (line: string) => {
             if (line.startsWith("END")) {
                 diffArrays.push(arrayDiff);

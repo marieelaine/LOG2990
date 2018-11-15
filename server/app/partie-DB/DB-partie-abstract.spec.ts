@@ -79,7 +79,6 @@ class DBPartie extends DBPartieAbstract {
 }
 
 describe("DBPartieAbstract", () => {
-
     let dbPartie: DBPartie;
 
     beforeEach(() => {
@@ -115,15 +114,12 @@ describe("DBPartieAbstract", () => {
     });
 
     it("getSortedTimes devrait sort un array de TempsUser", () => {
-
         const user1: TempsUser = { _user: "", _temps: 1 };
         const user2: TempsUser = { _user: "", _temps: 2 };
-
         let array: Array<TempsUser> = [user2, user1];
-
-        array = dbPartie["getSortedTimes"](array);
-
         const expectedArray: Array<TempsUser> = [user1, user2];
+        
+        array = dbPartie["getSortedTimes"](array);
 
         assert.equal(expectedArray.length, array.length);
         assert.equal(expectedArray[0], array[0]);
