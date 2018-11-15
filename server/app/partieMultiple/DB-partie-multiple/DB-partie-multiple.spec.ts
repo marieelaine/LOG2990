@@ -2,7 +2,6 @@ import { PartieMultipleInterface, DBPartieMultiple } from "./DB-partie-multiple"
 import { assert } from "chai";
 import * as fsx from "fs-extra";
 import * as sinon from "sinon";
-import { Response } from "express";
 import { SocketServerService } from "../../socket-io.service";
 import { TempsUser } from "../../partieSimple/DB-partie-simple/DB-partie-simple";
 
@@ -114,7 +113,7 @@ describe("Partie Multiple BD classe", () => {
                 _typeModification: "a",
             };
 
-            partieMultipleBD["genererScene"](unePartie, {} as Response);
+            partieMultipleBD["genererScene"](unePartie);
 
             assert(spy.calledOnce);
         });
@@ -141,7 +140,7 @@ describe("Partie Multiple BD classe", () => {
                 _typeModification: "a",
             };
 
-            partieMultipleBD["ajouterImagesPartieMultiple"](unePartie, {} as Response, "");
+            partieMultipleBD["ajouterImagesPartieMultiple"](unePartie, "");
 
             assert(spy.calledOnce);
         });

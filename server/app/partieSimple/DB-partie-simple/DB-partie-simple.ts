@@ -1,11 +1,9 @@
 import * as fs from "fs";
 import * as util from "util";
 import * as p from "path";
-import * as fsx from "fs-extra";
 import { ChildProcess, execFile } from "child_process";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
-import { BaseDeDonnees } from "../../baseDeDonnees/baseDeDonnees";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { ReadLine } from "readline";
@@ -84,7 +82,7 @@ export class DBPartieSimple extends DBPartieAbstract {
         await this.deleteImagesDirectory();
     }
 
-    private async verifierErreurScript(child: ChildProcess, partie: PartieSimpleInterface): Promise<void> {
+    protected async verifierErreurScript(child: ChildProcess, partie: PartieSimpleInterface): Promise<void> {
         let errorMsg: string = "";
 
         child.stderr.on("data", async (data: string) => {

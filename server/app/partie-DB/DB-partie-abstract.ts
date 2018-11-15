@@ -39,7 +39,6 @@ export abstract class DBPartieAbstract {
     protected abstract async verifierErreurScript(child: ChildProcess,
                                                   partie: PartieSimpleInterface | PartieMultipleInterface): Promise<void>;
 
-
     protected getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {
         if (arr) {
           arr.sort((t1: TempsUser, t2: TempsUser) => {

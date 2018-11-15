@@ -1,14 +1,12 @@
 import * as p from "path";
 import * as fs from "fs";
 import * as util from "util";
-import * as fsx from "fs-extra";
 import * as constantes from "../../constantes";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { injectable, inject } from "inversify";
-import { BaseDeDonnees } from "../../baseDeDonnees/baseDeDonnees";
 import { execFile, ChildProcess } from "child_process";
 import { SocketServerService } from "../../socket-io.service";
 import Types from "../../types";
@@ -119,7 +117,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
         return await readFilePromise(imageMod) as Buffer;
     }
 
-    private async verifierErreurScript(child: ChildProcess, partie: PartieMultipleInterface): Promise<void> {
+    protected async verifierErreurScript(child: ChildProcess, partie: PartieMultipleInterface): Promise<void> {
         let errorMsg: string = "";
 
         child.stderr.on("data", async (data: string) => {
