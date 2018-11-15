@@ -5,8 +5,8 @@ import {PartieService} from "./partie.service";
 import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 import { ChatComponent } from "../chat/chat.component";
-import {TempsUser} from "../admin/dialog-abstrait";
 import {CookieService} from "ngx-cookie-service";
+import { TempsUser } from "../admin/temps-user";
 
 export abstract class PartieAbstraiteClass {
 
