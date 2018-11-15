@@ -4,7 +4,7 @@ import * as assert from "assert";
 
 const URL_LISTMULTIPLE: string = "http://localhost:3000/partieMultiple/getListePartieMultiple";
 // id doit exister dans bd, n'est pas un mock
-const URL_ID_PARTIE: string = "http://localhost:3000/partieMultiple/getPartieMultiple/5be184c8d88298134bf6ba81";
+const URL_ID_PARTIE: string = "http://localhost:3000/partieMultiple/getPartieMultiple/5bedbb0dcd7e8a0f51044106";
 const URL_ID: string = "http://localhost:3000/partieMultiple/:id";
 
 describe("Route Partie Multiple classe", () => {

@@ -27,8 +27,7 @@ export abstract class PartieAbstraiteClass {
     protected image: Array<HTMLImageElement>;
     protected diffTrouvee: number[][];
     protected imageData: Array<string>;
-    // TODO: init dans le constructeur
-    protected penaliteEtat: boolean = false;
+    protected penaliteEtat: boolean;
     private nbImages: number;
 
     public constructor(protected route: ActivatedRoute,
@@ -44,6 +43,7 @@ export abstract class PartieAbstraiteClass {
         this.imageData = [];
         this.diffTrouvee = [[], []];
         this.audio = new Audio();
+        this.penaliteEtat = false;
 
         this.setImage(isSimple);
         this.setID();
