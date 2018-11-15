@@ -33,7 +33,7 @@
       140
     ],
     "member-access": [
-      false,
+      true,
       "check-accessor",
       "check-constructor",
       "check-parameter-property"
@@ -52,7 +52,7 @@
     "no-arg": true,
     "no-bitwise": true,
     "no-console": [
-      false,
+      true,
       "debug",
       "info",
       "time",
@@ -77,7 +77,7 @@
     "no-unnecessary-initializer": true,
     "no-unused-expression": true,
     "no-use-before-declare": true,
-    "no-var-keyword": false,
+    "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "one-line": [
       true,
@@ -88,7 +88,7 @@
     ],
     "prefer-const": true,
     "quotemark": [
-      false,
+      true,
       "double",
       "avoid-escape"
     ],
@@ -134,7 +134,7 @@
     "no-output-rename": true,
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
-    "component-class-suffix": false,
+    "component-class-suffix": true,
     "directive-class-suffix": true,
     "no-sparse-arrays": true,
     "no-irregular-whitespace": true,
@@ -144,7 +144,7 @@
     ],
     "max-classes-per-file": [
       true,
-      3
+      2
     ],
     "no-unsafe-finally": true,
     "no-unused-variable": true,
@@ -158,8 +158,8 @@
     ],
     "arrow-parens": true,
     "no-any": true,
-    "no-magic-numbers": false,
-    "only-arrow-functions": false,
+    "no-magic-numbers": true,
+    "only-arrow-functions": true,
     "adjacent-overload-signatures": true,
     "max-file-line-count": [
       true,
@@ -199,7 +199,9 @@
     ],
     "switch-default": true,
     "typedef": [
-      false,
+      true,
+      "call-signature",
+      "parameter",
       "member-variable-declaration",
       "property-declaration",
       "variable-declaration"
@@ -213,7 +215,7 @@
       }
     ],
     "no-constant-condition": true,
-    "no-suspicious-comment": false,
+    "no-suspicious-comment": true,
     "no-unnecessary-local-variable": true,
     "no-useless-files": true
   }

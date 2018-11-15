@@ -16,7 +16,7 @@ export class UserService {
         return this._http.post<User>(this.AJOUTER_URL, user, {
             observe: "body",
             headers: new HttpHeaders().append("Content-Type", "application/json")
-        })
+        });
     }
 
     public async delete(username: string): Promise<string> {
