@@ -28,15 +28,14 @@
 
 .dialogButtons
 {
-    margin-top:3%;
-    margin-bottom:3%;
+    margin:3% 2% 0 2%;;
     float:right;
-    margin-right:2%;
 }
 
 #themeButtonGeo, #themeButtonOcean {
     float:left;
     margin-top: 1%;
+    width: 45%;
 }
 
 .clicked {
