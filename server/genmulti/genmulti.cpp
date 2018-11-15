@@ -854,7 +854,7 @@ void bindModel(themeObject objet) {
 
 void display()
 {
-    glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
+    glClearColor( 0.051f, 0.21f, 0.32f, 1.0f );
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
     glMatrixMode( GL_PROJECTION );
@@ -866,7 +866,8 @@ void display()
 
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
-    glTranslatef( 0, -2, -20 );
+    glTranslatef( 0, -2.0, -22 );
+    glRotatef( 30, 1, 0, 0);
 
     vector<vector<themeObject>> globalVec = createGlobalVec();
 
@@ -885,7 +886,8 @@ void display()
 
 void displayPOV2()
 {
-    glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
+    //glClearColor( 0.76f, 0.70f, 0.95f, 1.0f );
+    glClearColor( 0.89f, 0.82f, 0.59f, 1.0f );
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
     glMatrixMode( GL_PROJECTION );
@@ -897,9 +899,9 @@ void displayPOV2()
 
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
-    glTranslatef( 0, -2, -20 );
+    glTranslatef( 0, 0, -17 );
 
-    glRotatef( 180, 0, 1, 0 );
+    glRotatef( 90, 1, 0, 0 );
     vector<vector<themeObject>> globalVec = createGlobalVec();
 
     for(vector<vector<themeObject>>::iterator vec = globalVec.begin(); vec != globalVec.end(); ++vec){
@@ -959,7 +961,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            242, 226, 0,
+            0, 226, 242,
             callRandomAngleBounded(320), callRandom(), 0, 0,
             callRandomPosition(-4,3), callRandomPosition(3,6), callRandomPosition(-3,4),
             size
@@ -970,7 +972,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            128, 178, 194,
+            194, 178, 128,
             0, 0, 0, 0,
             0, 0, 0,
             size
@@ -981,9 +983,9 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            10, 55, 71,
+            71, 55, 10,
             0, 0, 0, 0,
-            -7, -1.05, callRandomPosition(-7,7),
+            -7, -0.2, callRandomPosition(-6,6),
             size
         };
         vecChest.push_back(object);
@@ -994,7 +996,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             callRandomColor(), callRandomColor(), callRandomColor(),
             0, 0, 0, 0,
-            callRandomPosition(-3, -1), 0.1, callRandomPosition(-7,7),
+            callRandomPosition(-5, -1), 0.5, callRandomPosition(-6,6),
             size
         };
         vecCoral.push_back(object);
@@ -1005,7 +1007,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             callRandomColor(), callRandomColor(), callRandomColor(),
             callRandomAngleBounded(270), callRandom(), 0, 0,
-            callRandomPosition(-3, -1), 0.1, callRandomPosition(-7,7),
+            callRandomPosition(-5, -1), 0.1, callRandomPosition(-6,6),
             size
         };
         vecCoral2.push_back(object);
@@ -1014,9 +1016,9 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            31, 57, 226,
+            226, 57, 31,
             callRandomAngleBounded(270), callRandom(), 0, 0,
-            callRandomPosition(-7,7), 2, callRandomPosition(-7,7),
+            callRandomPosition(-7,7), 2, callRandomPosition(-6,6),
             size
         };
         vecCrab.push_back(object);
@@ -1027,7 +1029,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             163, 118, 52,
             callRandomAngleBounded(300), callRandom(), callRandom(), callRandom(),
-            callRandomPosition(-7,7), 5, callRandomPosition(-7,7), 
+            callRandomPosition(-7,7), 3, callRandomPosition(-5,5), 
             size
         };
         vecBluewhale.push_back(object);
@@ -1036,9 +1038,9 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            33, 156, 209,
+            209, 156, 33,
             callRandomAngleBounded(270), callRandom(), callRandom(), callRandom(),
-            callRandomPosition(-7,7), callRandomPosition(2,7), callRandomPosition(-7,7),
+            callRandomPosition(-7,7), callRandomPosition(2,6), callRandomPosition(-6,6),
             size
         };
         vecStarfish.push_back(object);
@@ -1049,7 +1051,7 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
             model,
             callRandomColor(), callRandomColor(), callRandomColor(),
             0, 0, 0, 0,
-            6, -0.5, callRandomPosition(-7,-6),
+            callRandomPosition(6, 7), -0.5, callRandomPosition(-7,-6),
             size
         };
         vecSeashell.push_back(object);
@@ -1069,9 +1071,9 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            91, 27, 67,
+            67, 27, 91,
             callRandomAngleBounded(30), callRandom(), callRandom(), callRandom(),
-            callRandomPosition(-7,7), callRandomPosition(2,7), callRandomPosition(-7,7),
+            callRandomPosition(-7,7), callRandomPosition(2,6), callRandomPosition(-6,6),
             size
         };
         vecSquid.push_back(object);
@@ -1080,9 +1082,9 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            16, 127, 232,
+            232, 127, 16,
             callRandomAngleBounded(270), callRandom(), 0, 0,
-            callRandomPosition(-7,7), callRandomPosition(2,7), callRandomPosition(-7,7),
+            callRandomPosition(-7,7), callRandomPosition(2,6), callRandomPosition(-6,6),
             size
         };
         vecFish.push_back(object);
@@ -1091,9 +1093,9 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            0, 127, 16,
+            16, 127, 0,
             callRandomAngleBounded(270), callRandom(), 0, 0,
-            callRandomPosition(-7,7), callRandomPosition(2,7), callRandomPosition(-7,7),
+            callRandomPosition(-7,7), callRandomPosition(2,6), callRandomPosition(-6,6),
             size
         };
         vecGoldfish.push_back(object);
@@ -1102,9 +1104,9 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            56, 45, 46,
+            46, 45, 56,
             callRandomAngleBounded(90), callRandom(), 0, 0,
-            callRandomPosition(-7,7), callRandomPosition(5,7.5), callRandomPosition(-7,7),
+            callRandomPosition(-7,7), callRandomPosition(5, 6.0), callRandomPosition(-5.5, 5.5),
             size
         };
         vecSubmarine.push_back(object);
@@ -1113,9 +1115,9 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            40, 23, 25,
+            25, 23, 40,
             0, 0, 0, 0,
-            callRandomPosition(-7,0), 0, callRandomPosition(-7,7),
+            callRandomPosition(-7,0), 0, callRandomPosition(-6,6),
             size
         };
         vecUrchin.push_back(object);
@@ -1124,9 +1126,9 @@ void createThemeObject(string type, vector <Vertex> model, double size) {
         object = {
             type,
             model,
-            56, 45, 46,
+            46, 45, 56,
             270, 1, 0, 0,
-            -6, -0.1, callRandomPosition(-7, 7),
+            -6, -0.1, callRandomPosition(-6, 6),
             size
         };
         vecSeadiver.push_back(object);
@@ -1146,7 +1148,7 @@ void makeSceneThematique(){
 
     int nombre = etat.nombreFormes;
     int temp = callRandomPosition(0, nombre/4);
-    importObject("./genmulti/data/obj/goldfish.obj", "goldfish", 2, temp);
+    importObject("./genmulti/data/obj/goldfish.obj", "goldfish", 1, temp);
     nombre = nombre - temp;
 
     temp = callRandomPosition(0, nombre/4);
@@ -1154,7 +1156,7 @@ void makeSceneThematique(){
     nombre = nombre - temp;
 
     temp = callRandomPosition(0, nombre/4);
-    importObject("./genmulti/data/obj/submarine.obj", "submarine", 5, temp);
+    importObject("./genmulti/data/obj/submarine.obj", "submarine", 3, temp);
     nombre = nombre - temp;
 
     temp = callRandomPosition(0, nombre/4);
@@ -1178,11 +1180,11 @@ void makeSceneThematique(){
     nombre = nombre - temp;
 
     temp = callRandomPosition(0, nombre/2);
-    importObject("./genmulti/data/obj/shark.obj", "shark", 3, temp);
+    importObject("./genmulti/data/obj/shark.obj", "shark", 2, temp);
     nombre = nombre - temp;
 
     temp = callRandomPosition(0, nombre/2);
-    importObject("./genmulti/data/obj/bluewhale.obj", "bluewhale", 4, temp);
+    importObject("./genmulti/data/obj/bluewhale.obj", "bluewhale", 2, temp);
     nombre = nombre - temp;
 
     temp = callRandomPosition(0, nombre/2);
@@ -1422,13 +1424,13 @@ void Timer(int value)
       glutIdleFunc(display);
       capturerScene(etat.capture1, true, 0 ,0);
       // Change to a new display function in 2 seconds
-      glutTimerFunc(10, Timer, 1);
+      glutTimerFunc(500, Timer, 1);
    }
    else if(value==1)
    {
      glutDisplayFunc(displayPOV2);
      glutIdleFunc(displayPOV2);
-     glutTimerFunc(10, Timer, 2);
+     glutTimerFunc(500, Timer, 2);
    }
    else if(value==2)
    {
@@ -1436,19 +1438,19 @@ void Timer(int value)
      creerModificationsThematique();
      glutDisplayFunc(display);
      glutIdleFunc(display);
-     glutTimerFunc(10, Timer, 3);
+     glutTimerFunc(500, Timer, 3);
    }
    else if(value==3)
    {
      capturerScene(etat.capture3, true, 0, 0);
      glutDisplayFunc(displayPOV2);
      glutIdleFunc(displayPOV2);
-     glutTimerFunc(10, Timer, 4);
+     glutTimerFunc(500, Timer, 4);
    }
    else if(value==4)
    {
     capturerScene(etat.capture4, true, 0, 0);
-    glutTimerFunc(10, Timer, 5);
+    glutTimerFunc(500, Timer, 5);
    }
    else if(value==5)
    {
@@ -1522,7 +1524,7 @@ void genScene(int argc, char* argv[]){
 
             glutDisplayFunc( display );
             glutIdleFunc( display );
-            glutTimerFunc(10, Timer, 0);
+            glutTimerFunc(500, Timer, 0);
             glEnable( GL_DEPTH_TEST );
 
             // // set up "headlamp"-like light
@@ -1570,8 +1572,6 @@ int main( int argc, char* argv[] ) {
         if (outputA == 0 && outputB == 0){
             cout << "Succes\n";
             exit(0);
-        } else{
-            // cerr << "Essaie numero " << i+1 << " Erreur!";
         }
     }
     cerr << "Erreur\n";
