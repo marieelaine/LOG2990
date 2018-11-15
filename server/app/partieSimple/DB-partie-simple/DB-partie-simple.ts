@@ -13,6 +13,7 @@ import { injectable, inject } from "inversify";
 import { SocketServerService } from "../../socket-io.service";
 import Types from "../../types";
 import * as constantes from "../../constantes";
+import { DBPartieAbstract } from "../../partie-DB/DB-partie-abstract";
 
 export interface PartieSimpleInterface {
     _id: string;
@@ -30,9 +31,7 @@ export interface TempsUser {
 }
 
 @injectable()
-export class DBPartieSimple {
-
-    private baseDeDonnees: BaseDeDonnees;
+export class DBPartieSimple extends DBPartieAbstract {
 
     private modelPartieBuffer: Model<Document>;
     private modelPartieArray: Model<Document>;
@@ -42,7 +41,7 @@ export class DBPartieSimple {
 
     public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
 
-        this.baseDeDonnees = new BaseDeDonnees();
+        super();
 
         this.CreateSchemaArray();
         this.schemaArray.plugin(uniqueValidator);
@@ -85,11 +84,6 @@ export class DBPartieSimple {
         await this.deleteImagesDirectory();
     }
 
-    private async deleteImagesDirectory(): Promise<void> {
-        const dir: string = constantes.IMAGES_DIRECTORY;
-        await fsx.remove(dir);
-    }
-
     private async verifierErreurScript(child: ChildProcess, partie: PartieSimpleInterface): Promise<void> {
         let errorMsg: string = "";
 
@@ -116,17 +110,6 @@ export class DBPartieSimple {
         await this.verifierErreurScript(child, partie);
     }
 
-    private async makeImagesDirectory(): Promise<void> {
-        const dir: string = constantes.IMAGES_DIRECTORY;
-        const mkdirPromise: Function = util.promisify(fs.mkdir);
-        const existsPromise: Function = util.promisify(fs.exists);
-        if (await existsPromise(dir)) {
-            await fsx.remove(dir);
-        }
-
-        await mkdirPromise(dir);
-    }
-
     private async addImagesToDirectory(buffers: Array<Buffer>): Promise<void> {
         await this.makeImagesDirectory();
         const writeFilePromise: Function = util.promisify(fs.writeFile);
@@ -137,7 +120,7 @@ export class DBPartieSimple {
         }
     }
 
-    private async deletePartieSimple(idPartie: String, res: Response): Promise<Response> {
+    protected async deletePartie(idPartie: string, res: Response): Promise<Response> {
         try {
             await this.modelPartieBuffer.findOneAndRemove(this.modelPartieBuffer.findById(idPartie)).catch(() => {
                 throw new Error();
@@ -150,7 +133,20 @@ export class DBPartieSimple {
         }
     }
 
-    private async obtenirPartieSimpleId(nomPartie: String): Promise<string> {
+    protected async getListePartie(): Promise<PartieSimpleInterface[]> {
+        const listeParties: PartieSimpleInterface[] = [];
+
+        await this.modelPartieArray.find()
+            .then((res: Document[]) => {
+                for (const partie of res) {
+                    listeParties.push(partie.toJSON());
+                }
+            });
+
+        return listeParties;
+    }
+
+    protected async obtenirPartieId(nomPartie: String): Promise<string> {
         const partieSimples: PartieSimpleInterface[] = [];
         await this.modelPartieBuffer.find()
             .then((res: Document[]) => {
@@ -168,27 +164,7 @@ export class DBPartieSimple {
         return partieSimples[0]._id;
     }
 
-    private async getListePartie(): Promise<PartieSimpleInterface[]> {
-        const listeParties: PartieSimpleInterface[] = [];
-
-        await this.modelPartieArray.find()
-            .then((res: Document[]) => {
-                for (const partie of res) {
-                    listeParties.push(partie.toJSON());
-                }
-            });
-
-        return listeParties;
-    }
-
-    private async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
-        tempsSolo = this.getSortedTimes(tempsSolo);
-        tempsUnContreUn = this.getSortedTimes(tempsUnContreUn);
-        await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
-            .catch(() => { throw new Error(); });
-    }
-
-    private async getPartieSimple(partieID: String): Promise<PartieSimpleInterface> {
+    protected async getPartieById(partieID: String): Promise<PartieSimpleInterface> {
         const partieSimples: PartieSimpleInterface[] = [];
         await this.modelPartieArray.find()
             .then((parties: Document[]) => {
@@ -235,7 +211,7 @@ export class DBPartieSimple {
         });
     }
 
-    private async getPartieSimpleByName(nomPartie: String): Promise<PartieSimpleInterface> {
+    protected async getPartieByName(nomPartie: String): Promise<PartieSimpleInterface> {
         const partieSimples: PartieSimpleInterface[] = [];
         await this.modelPartieArray.find()
             .then((parties: Document[]) => {
@@ -253,22 +229,7 @@ export class DBPartieSimple {
         return partieSimples[1];
     }
 
-    private getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {
-        if (arr) {
-          arr.sort((t1: TempsUser, t2: TempsUser) => {
-            const time1: number = t1["_temps"];
-            const time2: number = t2["_temps"];
-            if (time1 > time2) { return 1; }
-            if (time1 < time2) { return -1; }
-
-            return 0;
-          });
-        }
-
-        return arr;
-    }
-
-    protected async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
+    private async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
         partie._imageDiff = diffArrays;
         const partieSimple: Document = new this.modelPartieBuffer(partie);
         partieSimple["_tempsSolo"] = this.getSortedTimes(partieSimple["_tempsSolo"]);
@@ -277,52 +238,34 @@ export class DBPartieSimple {
             if (err !== null && err.name === "ValidationError") {
                 this.socket.envoyerMessageErreurNom(constantes.ERREUR_NOM_PRIS);
             } else {
-                this.socket.envoyerPartieSimple(await this.getPartieSimpleByName(partie._nomPartie));
+                this.socket.envoyerPartieSimple(await this.getPartieByName(partie._nomPartie));
             }
         });
     }
 
-    public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
+    protected async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
+        tempsSolo = this.getSortedTimes(tempsSolo);
+        tempsUnContreUn = this.getSortedTimes(tempsUnContreUn);
+        await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
+            .catch(() => { throw new Error(); });
+    }
+
+    public async requeteAjouterPartie(req: Request, res: Response): Promise<void> {
         try {
             await this.genererImageMod(req.body);
-            res.status(201).json(await this.getPartieSimpleByName(req.params.nomPartie));
+            res.status(201).json(await this.getPartieByName(req.params.nomPartie));
         } catch (err) {
             res.status(501).json(err);
         }
     }
 
-    public async requetePartieSimpleId(req: Request, res: Response): Promise<void> {
-        res.send(await this.obtenirPartieSimpleId(req.params.id));
-    }
-
-    public async requeteDeletePartieSimple(req: Request, res: Response): Promise<void> {
+    public async requeteDeletePartie(req: Request, res: Response): Promise<void> {
         try {
-            await this.deletePartieSimple(req.params.id, res);
+            await this.deletePartie(req.params.id, res);
             this.socket.supprimerPartieSimple(req.params.id);
             res.status(201);
         } catch (err) {
             res.status(501).json(err);
         }
     }
-
-    public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
-        await this.baseDeDonnees.assurerConnection();
-        res.send(await this.getListePartie());
-    }
-
-    public async requeteReinitialiserTemps(req: Request, res: Response): Promise<void> {
-        await this.baseDeDonnees.assurerConnection();
-        try {
-            await this.reinitialiserTemps(req.params.id, req.body.tempsSolo, req.body.tempsUnContreUn);
-            res.status(201);
-        } catch (err) {
-            res.status(501).json(err);
-        }
-    }
-
-    public async requeteGetPartieSimple(req: Request, res: Response): Promise<void> {
-        await this.baseDeDonnees.assurerConnection();
-        res.send(await this.getPartieSimple(req.params.id));
-    }
-// tslint:disable-next-line:max-file-line-count
 }
