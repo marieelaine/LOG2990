@@ -14,13 +14,12 @@ export abstract class PartieAbstraiteClass {
     @ViewChild(ChatComponent) chat: ChatComponent;
 
     // TODO : too many parameters
-    protected blur: boolean;
     protected chrono: ChronoComponent;
     protected messageDifferences: string;
     protected differencesTrouvees: number;
     protected partieCommence: boolean;
     protected audio: HTMLAudioElement;
-    protected differenceRestantes;
+    protected differenceRestantes: number;
     protected nomPartie: string;
     protected partieID: string;
     protected abstract partie: PartieSimple | PartieMultiple;
@@ -34,11 +33,10 @@ export abstract class PartieAbstraiteClass {
                        protected partieService: PartieService,
                        protected cookieService: CookieService,
                        isSimple: boolean) {
-        this.blur = true;
         this.partieCommence = false;
         this.differencesTrouvees = 0;
         this.chrono = new ChronoComponent();
-        this.messageDifferences = "Cliquez pour commencer";
+        this.messageDifferences = "Chargement des images";
         this.chat = new ChatComponent();
         this.imageData = [];
         this.diffTrouvee = [[], []];
@@ -59,11 +57,7 @@ export abstract class PartieAbstraiteClass {
     protected commencerPartie(): void {
         this.partieCommence = true;
         this.messageDifferences = `Vous avez trouvé ${this.differencesTrouvees} différences`;
-        this.blur = false;
-        const button: HTMLElement = document.getElementById("StartButton") as HTMLElement;
-        try {
-            button.remove();
-        } catch (e) {}
+
         this.chrono.startTimer();
     }
 

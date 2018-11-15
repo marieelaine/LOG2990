@@ -35,9 +35,6 @@ canvas{
     margin-bottom: 10px;
 }
 
-.blurImg{
-    filter: blur(1.5rem);
-}
 
 .title{
     text-align: center;

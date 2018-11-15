@@ -39,7 +39,7 @@
                  </div>
             </div>
             <div class='col-sm-5'>
-                <img src='' id="{{partieSimple['_id']}}" class='gameImage img-responsive mat-elevation-z6 center'
+                <img #image src='' id="{{partieSimple['_id']}}" class='gameImage img-responsive mat-elevation-z6 center'
                     [class.mat-elevation-z6]="!partieSimple.isElevatedActive"
                     [class.mat-elevation-z10]="!!partieSimple.isElevatedActive">
             </div> 
