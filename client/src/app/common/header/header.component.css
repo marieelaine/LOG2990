@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Poiret+One');
+@import url('https://fonts.googleapis.com/css?family=Handlee');
 
 mat-toolbar{
     margin-bottom: 20px;
@@ -7,7 +7,7 @@ mat-toolbar{
 }
 
 #login-box .logo .logo-caption {
-	font-family: 'Poiret One', cursive;
+	font-family: 'Handlee', cursive;
 	color: white;
 	text-align: center;
     margin-bottom: 0px;
