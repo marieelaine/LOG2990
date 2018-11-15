@@ -2,7 +2,6 @@ import { Container } from "inversify";
 import Types from "./types";
 import { Server } from "./server";
 import { Application } from "./app";
-import { Route } from "./routes/index";
 
 import { RoutesPartieMultiple } from "./partieMultiple/routes-partie-multiple/route-partie-multiple";
 import { BaseDeDonnees } from "./baseDeDonnees/baseDeDonnees";
@@ -18,8 +17,6 @@ const container: Container = new Container();
 
 container.bind(Types.Server).to(Server);
 container.bind(Types.Application).to(Application);
-
-container.bind(Types.Index).to(Route.Index);
 
 container.bind(Types.BaseDeDonnees).to(BaseDeDonnees);
 
