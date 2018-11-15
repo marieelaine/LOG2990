@@ -26,7 +26,7 @@ export interface PartieSimpleInterface {
 
 export interface TempsUser {
     _user: string;
-    _temps: string;
+    _temps: number;
 }
 
 @injectable()
@@ -182,6 +182,8 @@ export class DBPartieSimple {
     }
 
     private async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
+        tempsSolo = this.getSortedTimes(tempsSolo);
+        tempsUnContreUn = this.getSortedTimes(tempsUnContreUn);
         await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
             .catch(() => { throw new Error(); });
     }
@@ -204,37 +206,7 @@ export class DBPartieSimple {
         return partieSimples[1];
     }
 
-    private async getPartieSimpleByName(nomPartie: String): Promise<PartieSimpleInterface> {
-        const partieSimples: PartieSimpleInterface[] = [];
-        await this.modelPartieArray.find()
-            .then((parties: Document[]) => {
-                for (const partie of parties) {
-                    partieSimples.push(partie.toJSON());
-                }
-            });
-
-        for (const partie of partieSimples) {
-            if (partie._nomPartie.toString() === nomPartie) {
-                return partie;
-            }
-        }
-
-        return partieSimples[1];
-    }
-
-    protected async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
-        partie._imageDiff = diffArrays;
-        const partieSimple: Document = new this.modelPartieBuffer(partie);
-        await partieSimple.save(async (err: Error, data: Document) => {
-            if (err !== null && err.name === "ValidationError") {
-                this.socket.envoyerMessageErreurNom(constantes.ERREUR_NOM_PRIS);
-            } else {
-                this.socket.envoyerPartieSimple(await this.getPartieSimpleByName(partie._nomPartie));
-            }
-        });
-    }
-
-    public getImageDiffAsArrays(partie: PartieSimpleInterface): void {
+    private getImageDiffAsArrays(partie: PartieSimpleInterface): void {
         const imageMod: string = p.resolve("../Images/image3.bmp.txt");
         const diffArrays: Array<Array<string>> = new Array<Array<string>>();
         const input: fs.ReadStream = fs.createReadStream(imageMod);
@@ -259,6 +231,53 @@ export class DBPartieSimple {
                 i++;
             } else {
                 arrayDiff.push(line.toString());
+            }
+        });
+    }
+
+    private async getPartieSimpleByName(nomPartie: String): Promise<PartieSimpleInterface> {
+        const partieSimples: PartieSimpleInterface[] = [];
+        await this.modelPartieArray.find()
+            .then((parties: Document[]) => {
+                for (const partie of parties) {
+                    partieSimples.push(partie.toJSON());
+                }
+            });
+
+        for (const partie of partieSimples) {
+            if (partie._nomPartie.toString() === nomPartie) {
+                return partie;
+            }
+        }
+
+        return partieSimples[1];
+    }
+
+    private getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {
+        if (arr) {
+          arr.sort((t1: TempsUser, t2: TempsUser) => {
+            const time1: number = t1["_temps"];
+            const time2: number = t2["_temps"];
+            if (time1 > time2) { return 1; }
+            if (time1 < time2) { return -1; }
+
+            return 0;
+          });
+        }
+
+        return arr;
+    }
+
+    protected async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
+        partie._imageDiff = diffArrays;
+        const partieSimple: Document = new this.modelPartieBuffer(partie);
+        partieSimple["_tempsSolo"] = this.getSortedTimes(partieSimple["_tempsSolo"]);
+        partieSimple["_tempsUnContreUn"] = this.getSortedTimes(partieSimple["_tempsUnContreUn"]);
+        await partieSimple.save(async (err: Error, data: Document) => {
+            if (err !== null && err.name === "ValidationError") {
+                this.socket.envoyerMessageErreurNom(constantes.ERREUR_NOM_PRIS);
+            } else {
+                this.socket.envoyerPartieSimple(await this.getPartieSimpleByName(partie._nomPartie));
             }
         });
     }

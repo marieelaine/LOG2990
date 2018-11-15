@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ErrorHandler } from '@angular/core';
 import { PartieAbstraiteClass } from '../partie-abstraite-class';
 import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
 import { ActivatedRoute } from '@angular/router';
 import { PartieService } from '../partie.service';
 import { CookieService } from 'ngx-cookie-service';
+import { TempsUser } from 'src/app/admin/dialog-abstrait';
 
 @Component({
   selector: 'app-vue-simple',
@@ -35,6 +36,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
   }
 
   protected testerPourDiff(event): void {
+      console.log(event.offsetX, event.offsetY);
       if (this.partieCommence && !this.penaliteEtat) {
           const coords = event.offsetX + "," + event.offsetY;
           let i: number = 0;
@@ -77,4 +79,5 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
       }
       contextD.putImageData(imageDataD, 0, 0);
   }
+
 }

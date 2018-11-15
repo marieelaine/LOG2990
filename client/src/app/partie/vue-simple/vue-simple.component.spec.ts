@@ -8,6 +8,26 @@ import { ChatComponent } from 'src/app/chat/chat.component';
 import { TempsUser } from 'src/app/admin/dialog-abstrait';
 import { CookieService } from 'ngx-cookie-service';
 
+export class MockEvent {
+    private offsetX: number;
+    private offsetY: number;
+    public srcElement: MockCanvas;
+    constructor(offsetX, offsetY, srcElement) {
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+        this.srcElement = srcElement;
+    }
+}
+
+export class MockCanvas {
+    constructor() {
+    }
+
+    public getContext(context: string): CanvasRenderingContext2D {
+        return new CanvasRenderingContext2D();
+    }
+}
+
 describe('VueSimpleComponent', () => {
     let mockCookieService: jasmine.SpyObj<CookieService>;
 
@@ -61,16 +81,10 @@ describe('VueSimpleComponent', () => {
 
         it("devrait appeler differenceTrouver si le pixel se trouve dans imageDiff", () => {
             component["partie"]["_imageDiff"] = [["1,1"]];
+            const event = new MockEvent(1, 1, new MockCanvas());
 
-            component["testerPourDiff"](1, 1);
+            component["testerPourDiff"](event);
             expect(component["differenceTrouver"]).toHaveBeenCalled();
-        });
-
-        it("ne devrait pas appeler differenceTrouver si le pixel se trouve dans imageDiff", () => {
-            component["partie"]["_imageDiff"] = [["1,2"]];
-
-            component["testerPourDiff"](1, 1);
-            expect(component["differenceTrouver"]).not.toHaveBeenCalled();
         });
     });
 

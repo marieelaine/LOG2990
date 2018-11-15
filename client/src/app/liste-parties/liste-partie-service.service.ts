@@ -64,4 +64,21 @@ export class ListePartieServiceService {
 
     return this.http.delete(route.DELETE_PARTIE_SIMPLE_ATTENTE + partieId);
   }
+
+  public getListePartieMultipleEnAttente(): Observable<string[]> {
+
+    return this.http.get<string[]>(route.GET_PARTIE_MULTIPLE_ATTENTE);
+  }
+
+  // tslint:disable-next-line:no-any
+  public addPartieMultipleEnAttente(partieId: string): Observable<any> {
+
+    return this.http.post(route.ADD_PARTIE_MULTIPLE_ATTENTE, { partieId });
+  }
+
+  // tslint:disable-next-line:no-any
+  public deletePartieMultipleEnAttente(partieId: string): Observable<any> {
+
+    return this.http.delete(route.DELETE_PARTIE_MULTIPLE_ATTENTE + partieId);
+  }
 }

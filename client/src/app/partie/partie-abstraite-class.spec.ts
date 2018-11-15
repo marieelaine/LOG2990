@@ -44,17 +44,17 @@ describe('PartieAbstraiteComponent', () => {
     });
 
     describe("start", () => {
-        it("start devrait initialiser correctement les attributs partieCommence, messageDifferences, et blur", () => {
-            component["start"]();
+        it("devrait initialiser correctement les attributs partieCommence, messageDifferences, et blur", () => {
+            component["commencerPartie"]();
             expect(component["partieCommence"]).toEqual(true);
             expect(component["messageDifferences"]).toEqual("Vous avez trouvé 0 différences");
             expect(component["blur"]).toEqual(false);
         });
 
-        it("start devrait appeler chrono.startTimer", () => {
+        it("devrait appeler chrono.startTimer", () => {
             const spy: jasmine.Spy = spyOn(component["chrono"], "startTimer");
 
-            component["start"]();
+            component["commencerPartie"]();
             expect(spy).toHaveBeenCalled();
         });
 
@@ -75,7 +75,7 @@ describe('PartieAbstraiteComponent', () => {
     });
 
     it('chrono.getTime devrait retourner 2 lorsque la partie dure 2 secondes', fakeAsync(() => {
-        component["start"]();
+        component["commencerPartie"]();
         tick(2000);
         component["terminerPartie"]();
         expect(component["chrono"].getTime()).toBe(2);

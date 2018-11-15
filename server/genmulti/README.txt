@@ -1,6 +1,8 @@
-EXECUTABLE LINUX - A ROULER DANS L4712:
-$ ./genmulti {geo | theme} <quantité> <modification> <sortie>
-ex: $ ./genmulti/genmulti theme 15 s sortie
+L'éxécutable doit être roulé sur Fedora/L-4712. 
+La commande à utiliser pour tester l'exécutable doit être fait à partir du dossier ./server.
+Les images générées se retrouvent dans le dossier ./server.
 
-Use this command line to compile project:
-gcc -o genmulti -I./include genmulti.cpp -lfreeimage -lstdc++ -lm -lglut -lGLEW -lGLU -lGL -lSDL2 -lSDL2main
+$ ./genmulti/genmulti {geo | theme} -quantité -modifications -fichierSortie
+
+RUN COMMAND TO CREATE EXECUTABLE IN ./genmulti
+make
