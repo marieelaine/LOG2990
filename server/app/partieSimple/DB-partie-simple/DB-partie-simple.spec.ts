@@ -39,11 +39,11 @@ describe("Partie Simple BD classe", () => {
     });
 
     describe("Fonction deleteImagesDirectory", () => {
-        it("Devrait appeller la fonction remove de fsx", () => {
+        it("Devrait appeller la fonction remove de fsx", async () => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             const resultatAttendu: string = "../Images";
 
-            dbPartieSimple["deleteImagesDirectory"]();
+            await dbPartieSimple["deleteImagesDirectory"]();
 
             assert(stub.calledOnce);
             assert(stub.calledWith(resultatAttendu));
@@ -51,7 +51,7 @@ describe("Partie Simple BD classe", () => {
     });
 
     describe("Fonction traiterMessageErreur", () => {
-        it("Devrait appeller la fonction deleteImagesDirectory si errorMsg n'est pas nul", () => {
+        it("Devrait appeller la fonction deleteImagesDirectory si errorMsg n'est pas nul", async() => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(dbPartieSimple, "deleteImagesDirectory");
@@ -66,7 +66,7 @@ describe("Partie Simple BD classe", () => {
                 _imageDiff: new Array<Array<string>>(),
             };
 
-            dbPartieSimple["traiterMessageErreur"](unePartie, "erreur");
+            await dbPartieSimple["traiterMessageErreur"](unePartie, "erreur");
 
             assert(spy.calledOnce);
             assert(stub.calledOnce);

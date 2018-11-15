@@ -93,7 +93,7 @@ describe("Partie Multiple BD classe", () => {
     });
 
     describe("Fonction genererScene", () => {
-        it("Devrait appeller la fonction genererScene", () => {
+        it("Devrait appeller la fonction genererScene", async() => {
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "genererScene");
 
@@ -113,14 +113,14 @@ describe("Partie Multiple BD classe", () => {
                 _typeModification: "a",
             };
 
-            partieMultipleBD["genererScene"](unePartie);
+            await partieMultipleBD["genererScene"](unePartie);
 
             assert(spy.calledOnce);
         });
     });
 
     describe("Fonction ajouterImagesPartieMultiple", () => {
-        it("Devrait appeller la fonction getImageDiffAsArray", () => {
+        it("Devrait appeller la fonction getImageDiffAsArray", async() => {
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "getImageDiffAsArray");
 
@@ -140,7 +140,7 @@ describe("Partie Multiple BD classe", () => {
                 _typeModification: "a",
             };
 
-            partieMultipleBD["ajouterImagesPartieMultiple"](unePartie, "");
+            await partieMultipleBD["ajouterImagesPartieMultiple"](unePartie, "");
 
             assert(spy.calledOnce);
         });

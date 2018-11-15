@@ -15,8 +15,8 @@ describe("BaseDeDonnees classe", () => {
         it("Devrait etre defini", () => {
             assert.isDefined(db);
         });
-        it("Devrait appeller la fonction seConnecter", () => {
-            db["seConnecter"]();
+        it("Devrait appeller la fonction seConnecter", async() => {
+            await db["seConnecter"]();
             assert(connectStub.calledOnce);
         });
     });
