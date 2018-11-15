@@ -2,6 +2,11 @@ import { injectable } from "inversify";
 import "reflect-metadata";
 import { Mongoose } from "mongoose";
 
+enum ReadyState {
+    Deconnecte = 0,
+    Connecte
+}
+
 @injectable()
 export class BaseDeDonnees {
 
@@ -15,7 +20,7 @@ export class BaseDeDonnees {
     }
 
     public async assurerConnection(): Promise<void> {
-        if (this._mongoose.connection.readyState !== 1) {
+        if (this._mongoose.connection.readyState === ReadyState.Deconnecte) {
             await this.seConnecter();
         }
     }

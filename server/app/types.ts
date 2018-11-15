@@ -1,7 +1,6 @@
 export default  {
         Server: Symbol("Server"),
         Application: Symbol("Application"),
-        Index: Symbol("Index"),
 
         BaseDeDonnees: Symbol("BaseDeDonnees"),
 

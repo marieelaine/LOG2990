@@ -1,5 +1,5 @@
 import { PartieAbstraiteClass } from "./partie-abstraite-class";
-import { tick, fakeAsync } from '@angular/core/testing';
+import { tick, fakeAsync } from "@angular/core/testing";
 import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 import { PartieService } from "./partie.service";
@@ -30,7 +30,7 @@ class AbstractClassInstance extends PartieAbstraiteClass {
     protected getImageData(): void {}
 }
 
-describe('PartieAbstraiteComponent', () => {
+describe("PartieAbstraiteComponent", () => {
     let component: AbstractClassInstance;
 
     beforeEach(() => {
@@ -39,7 +39,7 @@ describe('PartieAbstraiteComponent', () => {
                                             Buffer.from(new Array<number>()), new Array<Array<string>>(), "");
     });
 
-    it('should create', () => {
+    it("should create", () => {
     expect(component).toBeTruthy();
     });
 
@@ -73,18 +73,18 @@ describe('PartieAbstraiteComponent', () => {
         expect(spy).toHaveBeenCalled();
     });
 
-    it('chrono.getTime devrait retourner 2 lorsque la partie dure 2 secondes', fakeAsync(() => {
+    it("chrono.getTime devrait retourner 2 lorsque la partie dure 2 secondes", fakeAsync(() => {
         component["commencerPartie"]();
         tick(2000);
         component["terminerPartie"]();
         expect(component["chrono"].getTime()).toBe(2);
     }));
 
-    it('partieCommence should be false true', () => {
+    it("partieCommence should be false true", () => {
     expect(component["partieCommence"]).toBeFalsy();
     });
 
-    it('should return value 0', fakeAsync(() => {
+    it("should return value 0", fakeAsync(() => {
     tick(1000);
     expect(component["chrono"].getTime()).toBe(0);
     }));
