@@ -31,8 +31,6 @@ export class DBUser {
     }
 
     public async requeteAjouterUser(req: Request, res: Response): Promise<void> {
-        // tslint:disable-next-line:no-console
-        console.log(req.body);
         res.send(await this.ajouterUser(req.body, res));
     }
 
