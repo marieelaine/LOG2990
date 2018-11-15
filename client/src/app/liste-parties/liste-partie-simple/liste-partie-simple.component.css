@@ -57,6 +57,11 @@ mat-card-header
     color:black;
 }
 
+.row-header{
+    padding-top:5%;
+
+}
+
 .mat-button{
     border-radius: 2px;
 }
@@ -90,6 +95,18 @@ col-1{
 }
 
 .badge-pill {
-    padding: .3em .6em;
+    padding: .6em .9em;
     margin-left:2%;
+}
+
+/* CSS pour les cartes */
+
+.card-body{
+    padding:0;
+    text-align: center;
+}
+
+.card{
+    background-color: transparent;
+    border:none;
 }
