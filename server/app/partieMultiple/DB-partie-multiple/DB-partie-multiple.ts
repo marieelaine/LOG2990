@@ -204,7 +204,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
             partie._image2PV1 = await this.getImageDiffAsBuffer("../Images/n_b_ori.bmp");
             partie._image1PV2 = await this.getImageDiffAsBuffer("../Images/n_a_mod.bmp");
             partie._image2PV2 = await this.getImageDiffAsBuffer("../Images/n_b_mod.bmp");
-            await this.getImageDiffTextFile("../Images/n_a_diff.bmp.txt", partie, 1);
+            this.getImageDiffTextFile("../Images/n_a_diff.bmp.txt", partie, 1);
 
         } else {
             this.socket.envoyerMessageErreurDifferences(constantes.ERREUR_SCENE);
@@ -214,7 +214,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
     private async setImageDiff(diffArrays: Array<Array<string>>, partie: PartieMultipleInterface, imgNumber: number): Promise<void> {
         if (imgNumber === 1) {
             partie._imageDiff1 = diffArrays;
-            await this.getImageDiffTextFile("../Images/n_b_diff.bmp.txt", partie, 2);
+            this.getImageDiffTextFile("../Images/n_b_diff.bmp.txt", partie, 2);
         } else {
             partie._imageDiff2 = diffArrays;
             await this.enregistrerPartieMultiple(partie);
