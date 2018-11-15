@@ -854,7 +854,7 @@ void bindModel(themeObject objet) {
 
 void display()
 {
-    glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
+    glClearColor( 0.051f, 0.21f, 0.32f, 1.0f );
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
     glMatrixMode( GL_PROJECTION );
@@ -885,7 +885,7 @@ void display()
 
 void displayPOV2()
 {
-    glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
+    glClearColor( 0.051f, 0.21f, 0.32f, 1.0f );
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
     glMatrixMode( GL_PROJECTION );
@@ -1557,7 +1557,7 @@ int main( int argc, char* argv[] ) {
     creerEtat(argv, etat);
     srand(time(NULL));
 
-    for (int i = 0; i < 4; i++){
+    for (int i = 0; i < 1; i++){
         genScene(argc, argv);
         
         string paramA = "./bmpdiff/bmpdiff " + etat.capture1 + " " + etat.capture3 + " " + etat.filename + "_a_diff.bmp ";
