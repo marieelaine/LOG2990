@@ -10,7 +10,6 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "clean": "rimraf out node_modules",
-    "preinstall": "make -C ./bmpdiff | make -C ./genmulti",
     "postinstall": "rimraf false"
   },
   "dependencies": {
