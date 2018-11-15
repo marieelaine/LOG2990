@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ListePartieMultipleComponent } from './liste-partie-multiple.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, ErrorHandler} from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ListePartieServiceService } from '../liste-partie-service.service';
@@ -115,10 +115,9 @@ describe('ListePartieMultipleComponent', () => {
     describe("fonction onCreerOuSupprimerClick", () => {
         it("Devrait naviguer a la route '/'", fakeAsync(() => {
             component["isListePartiesMode"] = true;
-            const id: string = "";
             mockListePartieService["addPartieMultipleEnAttente"].and.returnValue({ subscribe: () => {} });
 
-            component["onCreerOuSupprimerClick"](partie["_id"]);
+            component["onCreerOuSupprimerClick"](partie["_id"]).catch(() => ErrorHandler);
             tick();
 
             expect(location.path()).toBe("");
@@ -128,7 +127,7 @@ describe('ListePartieMultipleComponent', () => {
             component["isListePartiesMode"] = false;
             component["isAdminMode"] = false;
 
-            component["onCreerOuSupprimerClick"]("");
+            component["onCreerOuSupprimerClick"]("").catch(() => ErrorHandler);
             tick();
 
             expect(location.path()).toBe(pathAvant);

@@ -3,8 +3,8 @@ import { PartieSimple } from '../admin/dialog-simple/partie-simple';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { PartieMultiple } from '../admin/dialog-multiple/partie-multiple';
-import { TempsUser } from '../admin/dialog-abstrait';
 import * as route from '../constantes';
+import { TempsUser } from '../admin/temps-user';
 
 @Injectable({
     providedIn: 'root'

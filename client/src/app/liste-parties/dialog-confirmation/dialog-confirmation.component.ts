@@ -1,4 +1,4 @@
-import { Component, Inject, InjectionToken } from '@angular/core';
+import { Component, Inject, ErrorHandler} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ListePartieServiceService } from '../liste-partie-service.service';
 import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
@@ -47,12 +47,12 @@ export class DialogConfirmationComponent {
   }
 
   private supprimerPartieSimple(): void {
-    this.listePartieService.deletePartieSimple(this.partieId);
+    this.listePartieService.deletePartieSimple(this.partieId).catch(() => ErrorHandler);
     this.supprimerPartieSimpleDeLaffichage();
   }
 
   private supprimerPartieMultiple(): void {
-    this.listePartieService.deletePartieMultiple(this.partieId);
+    this.listePartieService.deletePartieMultiple(this.partieId).catch(() => ErrorHandler);
     this.supprimerPartieMultipleDeLaffichage();
   }
 

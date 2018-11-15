@@ -2,11 +2,12 @@ import { TestBed } from "@angular/core/testing";
 import { PartieService } from "./partie.service";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { TempsUser } from "../admin/dialog-abstrait";
+import {ErrorHandler} from "@angular/core";
 
 describe("PartieService", () => {
     let service: PartieService;
     let http: HttpTestingController;
-    const responseForm = '<form />';
+    const responseForm = "<form />";
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -27,7 +28,7 @@ describe("PartieService", () => {
     });
 
     describe("Fonction getPartieSimple", () => {
-        it('GET request should be called with proper arguments', () => {
+        it("GET request should be called with proper arguments", () => {
             let partieResponse;
             const id: string = "12345abcde";
 
@@ -37,7 +38,7 @@ describe("PartieService", () => {
 
             http.expectOne({
             url: "http://localhost:3000/partieSimple/getPartieSimple/" + id,
-            method: 'GET'
+            method: "GET"
             }).flush(responseForm);
 
             expect(partieResponse).toEqual(responseForm);
@@ -45,7 +46,7 @@ describe("PartieService", () => {
     });
 
     describe("Fonction getPartieMultiple", () => {
-        it('GET request should be called with proper arguments', () => {
+        it("GET request should be called with proper arguments", () => {
             let partieResponse;
             const id: string = "12345abcde";
 
@@ -55,7 +56,7 @@ describe("PartieService", () => {
 
             http.expectOne({
             url: "http://localhost:3000/partieMultiple/getPartieMultiple/" + id,
-            method: 'GET'
+            method: "GET"
             }).flush(responseForm);
 
             expect(partieResponse).toEqual(responseForm);
@@ -66,7 +67,8 @@ describe("PartieService", () => {
         it("Devrait faire une requete PUT", () => {
             const id: string = "12345abcde";
 
-            service.reinitialiserTempsPartieSimple(id, new Array<TempsUser>(), new Array<TempsUser>());
+            service.reinitialiserTempsPartieSimple(id, new Array<TempsUser>(), new Array<TempsUser>())
+                .catch(() => ErrorHandler);
 
             const req = http.expectOne("http://localhost:3000/partieSimple/reinitialiseTemps/" + id);
             expect(req.request.method).toBe("PUT");

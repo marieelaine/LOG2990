@@ -4,7 +4,6 @@ import {PartieSimple} from 'src/app/admin/dialog-simple/partie-simple';
 import {ActivatedRoute} from '@angular/router';
 import {PartieService} from '../partie.service';
 import {CookieService} from 'ngx-cookie-service';
-import {TempsUser} from 'src/app/admin/dialog-abstrait';
 
 @Component({
     selector: 'app-vue-simple',
@@ -21,7 +20,6 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         this.differenceRestantes = 7;
     }
 
-    // TODO
     protected ajouterTemps(temps: number): void {
         this.updateTableauTempsSolo(temps);
         this.partieService.reinitialiserTempsPartieSimple(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
@@ -42,7 +40,6 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
     }
 
     protected testerPourDiff(event): void {
-        console.log(event.offsetX, event.offsetY);
         if (this.partieCommence && !this.penaliteEtat) {
             const coords = event.offsetX + "," + event.offsetY;
             let i: number = 0;

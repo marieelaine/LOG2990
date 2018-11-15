@@ -64,7 +64,7 @@ describe("Partie Multiple BD classe", () => {
     });
 
     describe("Fonction enregistrerPartieMultiple", () => {
-        it("Devrait appeller la fonction deleteImagesDirectory", () => {
+        it("Devrait appeller la fonction deleteImagesDirectory", async () => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "deleteImagesDirectory");
@@ -85,7 +85,7 @@ describe("Partie Multiple BD classe", () => {
                 _typeModification: "a",
             };
 
-            partieMultipleBD["enregistrerPartieMultiple"](unePartie).catch();
+            await partieMultipleBD["enregistrerPartieMultiple"](unePartie);
 
             assert(spy.calledOnce);
             assert(stub.calledOnce);
@@ -113,14 +113,14 @@ describe("Partie Multiple BD classe", () => {
                 _typeModification: "a",
             };
 
-            await partieMultipleBD["genererScene"](unePartie);
+            partieMultipleBD["genererScene"](unePartie);
 
             assert(spy.calledOnce);
         });
     });
 
     describe("Fonction ajouterImagesPartieMultiple", () => {
-        it("Devrait appeller la fonction getImageDiffAsArray", async() => {
+        it("Devrait appeller la fonction getImageDiffAsArray", () => {
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "getImageDiffAsArray");
 
@@ -140,7 +140,7 @@ describe("Partie Multiple BD classe", () => {
                 _typeModification: "a",
             };
 
-            await partieMultipleBD["ajouterImagesPartieMultiple"](unePartie, "");
+            partieMultipleBD["ajouterImagesPartieMultiple"](unePartie, "");
 
             assert(spy.calledOnce);
         });

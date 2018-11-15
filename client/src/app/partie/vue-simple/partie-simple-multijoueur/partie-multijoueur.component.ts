@@ -1,4 +1,4 @@
-import { Component, ErrorHandler } from '@angular/core';
+import { Component } from '@angular/core';
 import { PartieService} from "../../partie.service";
 import { VueSimpleComponent } from '../vue-simple.component';
 import { ActivatedRoute } from '@angular/router';
@@ -18,4 +18,5 @@ export class PartieSimpleMultijoueurComponent extends VueSimpleComponent {
                 protected cookieService: CookieService) {
         super(route, partieService, cookieService);
     }
+    // TODO partie multijoueur pour le sprint 4
 }

@@ -6,7 +6,7 @@ import {PartieSimple} from "./dialog-simple/partie-simple";
 describe("Partie Simple Service", () => {
     let service: PartieSimpleService;
     let http: HttpTestingController;
-    const responseForm = '<form />';
+    const responseForm = "<form />";
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -22,7 +22,7 @@ describe("Partie Simple Service", () => {
         expect(true).toBeTruthy();
     });
 
-    it('POST request should be called with proper arguments', () => {
+    it("POST request should be called with proper arguments", () => {
         let partieResponse;
         const partie = new PartieSimple("name", [], [], new Buffer(""), new Buffer(""), [[]]);
 
@@ -31,8 +31,8 @@ describe("Partie Simple Service", () => {
         });
 
         http.expectOne({
-          url: 'http://127.0.0.1:3000/partieSimple/ajouter',
-          method: 'POST'
+          url: "http://127.0.0.1:3000/partieSimple/ajouter",
+          method: "POST"
         }).flush(responseForm);
 
         expect(partieResponse).toEqual(responseForm);
