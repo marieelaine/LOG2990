@@ -5,7 +5,6 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import { ListePartieServiceService } from "../liste-partie-service.service";
-import { DELETE_PARTIE_SIMPLE } from "../../../../../common/communication/evenementsSocket";
 
 describe("DialogVueAttenteComponent", () => {
     const dialogMock = {
