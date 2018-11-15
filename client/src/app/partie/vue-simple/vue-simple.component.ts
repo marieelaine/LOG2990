@@ -36,6 +36,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
   }
 
   protected testerPourDiff(event): void {
+      console.log(event.offsetX, event.offsetY);
       if (this.partieCommence && !this.penaliteEtat) {
           const coords = event.offsetX + "," + event.offsetY;
           let i: number = 0;
