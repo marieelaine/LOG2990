@@ -1,20 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { DialogMultipleComponent } from './dialog-multiple.component';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import {
     MatDividerModule, MatFormFieldModule, MatCardModule, MatDialogModule, MatDialogRef,
     MAT_DIALOG_DATA, MatInputModule, MatRadioModule, MatCheckboxModule
-} from '@angular/material';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { PartieMultipleService } from '../partie-multiple.service';
-import { of } from 'rxjs';
+} from "@angular/material";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { By } from "@angular/platform-browser";
-import { PartieMultiple } from './partie-multiple';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from "@angular/core";
+import { of } from "rxjs";
+import { PartieMultipleService } from "../partie-multiple.service";
+import { DialogMultipleComponent } from "./dialog-multiple.component";
+import { PartieMultiple } from "./partie-multiple";
 
-describe('DialogMultipleComponent', () => {
+describe("DialogMultipleComponent", () => {
     let mockPartieMultipleService: jasmine.SpyObj<PartieMultipleService>;
     let mockDialogRef: jasmine.SpyObj<MatDialogRef<DialogMultipleComponent>>;
     let component: DialogMultipleComponent;
@@ -54,7 +53,7 @@ describe('DialogMultipleComponent', () => {
         component = fixture.componentInstance;
     });
 
-    it('Composant devrait être créé', () => {
+    it("Composant devrait être créé", () => {
         expect(component).toBeTruthy();
     });
 
@@ -74,7 +73,7 @@ describe('DialogMultipleComponent', () => {
     });
 
     describe("fonction verifierSiMessageErreur", () => {
-        it("Devrait retourner vrai si le message n\'est pas vide", () => {
+        it("Devrait retourner vrai si le message n\"est pas vide", () => {
             component["outOfBoundNameLengthMessage"] = "Erreur";
 
             const result: Boolean = component["verifierSiMessageErreur"]();
