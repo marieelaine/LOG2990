@@ -28,7 +28,7 @@ describe("PartieMultipleService", () => {
                                           new Array<Array<string>>(), new Array<Array<string>>(), 10, "geo", "acs", "123");
 
         service.register(partie).subscribe((response) => {
-          partieResponse = response;
+            partieResponse = response;
         });
 
         http.expectOne({
@@ -37,6 +37,6 @@ describe("PartieMultipleService", () => {
         }).flush(responseForm);
 
         expect(partieResponse).toEqual(responseForm);
-      });
+    });
 
 });

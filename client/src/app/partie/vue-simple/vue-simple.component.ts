@@ -4,7 +4,6 @@ import {PartieSimple} from 'src/app/admin/dialog-simple/partie-simple';
 import {ActivatedRoute} from '@angular/router';
 import {PartieService} from '../partie.service';
 import {CookieService} from 'ngx-cookie-service';
-import {TempsUser} from 'src/app/admin/dialog-abstrait';
 
 @Component({
     selector: 'app-vue-simple',
