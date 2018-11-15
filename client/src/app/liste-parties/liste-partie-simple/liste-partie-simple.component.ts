@@ -67,8 +67,6 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     } else {
       this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
         this.ouvrirDialogVueAttente(partieId);
-        this.router.navigate(["/partie-simple-solo/" + partieId])
-        .catch(() => ErrorHandler);
       });
     }
   }
