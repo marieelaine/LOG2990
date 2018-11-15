@@ -90,11 +90,11 @@ export class DBPartieMultiple {
     private async ajouterImagesPartieMultiple(partie: PartieMultipleInterface, res: Response, errorMsg: string):
     Promise<void> {
         if (errorMsg === "") {
-            partie._image1PV1 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_a_ori.bmp");
-            partie._image2PV1 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_b_ori.bmp");
-            partie._image1PV2 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_a_mod.bmp");
-            partie._image2PV2 = await this.getImageDiffAsBuffer("../Images/" + partie._nomPartie + "_b_mod.bmp");
-            await this.getImageDiffAsArray("../Images/" + partie._nomPartie + "_a_diff.bmp.txt", partie, 1);
+            partie._image1PV1 = await this.getImageDiffAsBuffer("../Images/n_a_ori.bmp");
+            partie._image2PV1 = await this.getImageDiffAsBuffer("../Images/n_b_ori.bmp");
+            partie._image1PV2 = await this.getImageDiffAsBuffer("../Images/n_a_mod.bmp");
+            partie._image2PV2 = await this.getImageDiffAsBuffer("../Images/n_b_mod.bmp");
+            await this.getImageDiffAsArray("../Images/n_a_diff.bmp.txt", partie, 1);
 
         } else {
             this.socket.envoyerMessageErreurDifferences(constantes.ERREUR_SCENE);
@@ -104,12 +104,13 @@ export class DBPartieMultiple {
     private async setImageDiff(diffArrays: Array<Array<string>>, partie: PartieMultipleInterface, imgNumber: number): Promise<void> {
         if (imgNumber === 1) {
             partie._imageDiff1 = diffArrays;
-            await this.getImageDiffAsArray("../Images/" + partie._nomPartie + "_b_diff.bmp.txt", partie, 2);
+            await this.getImageDiffAsArray("../Images/n_b_diff.bmp.txt", partie, 2);
         } else {
             partie._imageDiff2 = diffArrays;
             await this.enregistrerPartieMultiple(partie);
         }
     }
+
     private async enregistrerPartieMultiple(partie: PartieMultipleInterface): Promise<void> {
         const partieMultiple: Document = new this.modelPartie(partie);
         await partieMultiple.save(async (err: Error) => {
@@ -180,7 +181,7 @@ export class DBPartieMultiple {
     private async genererScene(partie: PartieMultipleInterface, res: Response): Promise<void> {
         await this.makeDirectory("../Images");
         const script: string = p.resolve("./genmulti/genmulti");
-        const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, "../Images/" + partie._nomPartie];
+        const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, "../Images/n"];
         const child: ChildProcess = execFile(script, args);
         await this.verifierErreurScript(child, partie, res);
     }

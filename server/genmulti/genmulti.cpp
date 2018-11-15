@@ -99,8 +99,8 @@ double callRandomTranslateY()
 
 double callRandomTranslateX()
 {
-   int min = -etat.dimBoite;
-   int max = etat.dimBoite;
+   int min = -etat.dimBoite*2;
+   int max = etat.dimBoite*2;
    return rand()%((max - min) + 1) + min;
 }
 
@@ -1562,7 +1562,8 @@ int main( int argc, char* argv[] ) {
         
         string paramA = "./bmpdiff/bmpdiff " + etat.capture1 + " " + etat.capture3 + " " + etat.filename + "_a_diff.bmp ";
         string paramB = "./bmpdiff/bmpdiff " + etat.capture2 + " " + etat.capture4 + " " + etat.filename + "_b_diff.bmp ";
-
+        cout << paramA << endl;
+        cout << paramB << endl;
         int outputA = system(paramA.c_str());
         int outputB = system(paramB.c_str());
 
