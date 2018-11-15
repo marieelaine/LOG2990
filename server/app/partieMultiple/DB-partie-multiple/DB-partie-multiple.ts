@@ -179,7 +179,7 @@ export class DBPartieMultiple {
 
     private async genererScene(partie: PartieMultipleInterface, res: Response): Promise<void> {
         await this.makeDirectory("../Images");
-        const script: string = p.resolve("genmulti/genmulti");
+        const script: string = p.resolve("./genmulti/genmulti");
         const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, "../Images/" + partie._nomPartie];
         const child: ChildProcess = execFile(script, args);
         await this.verifierErreurScript(child, partie, res);

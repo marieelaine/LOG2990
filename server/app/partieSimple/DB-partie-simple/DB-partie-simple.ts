@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as util from "util";
 import * as p from "path";
 import * as fsx from "fs-extra";
-import { ChildProcess, spawn } from "child_process";
+import { ChildProcess, execFile } from "child_process";
 import { Schema, Model, Document } from "mongoose";
 import { Request, Response} from "express";
 import { BaseDeDonnees } from "../../baseDeDonnees/baseDeDonnees";
@@ -106,13 +106,13 @@ export class DBPartieSimple {
         const buffers: Array<Buffer> = [partie._image1, partie._image2];
         await this.addImagesToDirectory(buffers);
 
-        const script: string = p.resolve("bmpdiff/bmpdiff");
+        const script: string = p.resolve("./bmpdiff/bmpdiff");
         const imageOri1: string = p.resolve("../Images/image1.bmp");
         const imageOri2: string = p.resolve("../Images/image2.bmp");
         const imageMod: string = p.resolve("../Images/image3.bmp");
         const args: string[] = [imageOri1, imageOri2, imageMod];
 
-        const child: ChildProcess = spawn(script, args);
+        const child: ChildProcess = execFile(script, args);
         await this.verifierErreurScript(child, partie);
     }
 
