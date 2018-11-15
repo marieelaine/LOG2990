@@ -18,5 +18,5 @@ export const GET_PARTIE_MULTIPLE_ATTENTE: string = BASE_URL + "getPartieSimpleEn
 export const ADD_PARTIE_MULTIPLE_ATTENTE: string = BASE_URL + "addPartieSimpleEnAttente/";
 export const DELETE_PARTIE_MULTIPLE_ATTENTE: string = BASE_URL + "deletePartieSimpleEnAttente/";
 
-export const GETPARTIESIMPLE_URL: string = BASE_URL + SIMPLE + "getPartieSimple/";
-export const GETPARTIEMULTIPLE_URL: string = BASE_URL + MULTIPLE + "getPartieMultiple/";
+export const GET_PARTIE_SIMPLE: string = BASE_URL + SIMPLE + "getPartieSimple/";
+export const GET_PARTIE_MULTIPLE: string = BASE_URL + MULTIPLE + "getPartieMultiple/";
