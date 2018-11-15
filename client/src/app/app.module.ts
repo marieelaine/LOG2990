@@ -109,7 +109,6 @@ const appRoutes: Routes = [
         ParticlesModule,
         SocketIoModule.forRoot(config),
     ],
-    providers: [BasicService,
     providers: [
         BasicService,
         CookieService,
