@@ -53,16 +53,14 @@ export class ListePartieServiceService {
     return this.http.get<string[]>(route.GET_PARTIE_SIMPLE_ATTENTE);
   }
 
-  // tslint:disable-next-line:no-any
-  public addPartieSimpleEnAttente(partieId: string): Observable<any> {
+  public addPartieSimpleEnAttente(partieId: string): Observable<string> {
 
-    return this.http.post(route.ADD_PARTIE_SIMPLE_ATTENTE, { partieId });
+    return this.http.post<string>(route.ADD_PARTIE_SIMPLE_ATTENTE, { partieId });
   }
 
-  // tslint:disable-next-line:no-any
-  public deletePartieSimpleEnAttente(partieId: string): Observable<any> {
+  public deletePartieSimpleEnAttente(partieId: string): Observable<string> {
 
-    return this.http.delete(route.DELETE_PARTIE_SIMPLE_ATTENTE + partieId);
+    return this.http.delete<string>(route.DELETE_PARTIE_SIMPLE_ATTENTE + partieId);
   }
 
   public getListePartieMultipleEnAttente(): Observable<string[]> {
@@ -70,15 +68,13 @@ export class ListePartieServiceService {
     return this.http.get<string[]>(route.GET_PARTIE_MULTIPLE_ATTENTE);
   }
 
-  // tslint:disable-next-line:no-any
-  public addPartieMultipleEnAttente(partieId: string): Observable<any> {
+  public addPartieMultipleEnAttente(partieId: string): Observable<string> {
 
-    return this.http.post(route.ADD_PARTIE_MULTIPLE_ATTENTE, { partieId });
+    return this.http.post<string>(route.ADD_PARTIE_MULTIPLE_ATTENTE, { partieId });
   }
 
-  // tslint:disable-next-line:no-any
-  public deletePartieMultipleEnAttente(partieId: string): Observable<any> {
+  public deletePartieMultipleEnAttente(partieId: string): Observable<string> {
 
-    return this.http.delete(route.DELETE_PARTIE_MULTIPLE_ATTENTE + partieId);
+    return this.http.delete<string>(route.DELETE_PARTIE_MULTIPLE_ATTENTE + partieId);
   }
 }
