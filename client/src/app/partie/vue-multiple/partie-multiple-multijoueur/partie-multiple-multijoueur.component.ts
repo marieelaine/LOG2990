@@ -16,5 +16,5 @@ export class PartieMultipleMultijoueurComponent extends VueMultipleComponent {
                 protected cookieService: CookieService) {
         super(route, partieService, cookieService);
     }
-
+    // TODO : multijoueur pour le sprint 4
 }

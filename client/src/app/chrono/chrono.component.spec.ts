@@ -1,46 +1,70 @@
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from "@angular/core/testing";
-
+import { ComponentFixture, TestBed, tick, fakeAsync } from "@angular/core/testing";
 import { ChronoComponent } from "./chrono.component";
-import { ErrorHandler } from "@angular/core";
 
 describe("ChronoComponent", () => {
-  let component: ChronoComponent;
-  let fixture: ComponentFixture<ChronoComponent>;
+    let component: ChronoComponent;
+    let fixture: ComponentFixture<ChronoComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ChronoComponent ]
-    })
-    .compileComponents()
-    .catch(() => ErrorHandler);
-  }));
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                ChronoComponent
+            ]
+        });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ChronoComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+        fixture = TestBed.createComponent(ChronoComponent);
+        component = fixture.componentInstance;
+    });
 
-  it("should create", () => {
-    expect(component).toBeTruthy();
-  });
+    describe("Constructeur", () => {
+        it("Devrait créer", () => {
+            expect(component).toBeTruthy();
+        });
 
-  it ("should return value 0", () => {
-    expect(component.getTime()).toBe(0);
-  });
+        it("Devrait initialiser l'attribut time a 0", () => {
+            expect(component["time"]).toEqual(0);
+        });
 
-  it ("should return value 5", fakeAsync(() => {
-    component.startTimer();
-    tick(5000);
-    component.stopTimer();
-    expect(component.getTime()).toBe(5);
-  }));
+        it("Devrait initialiser l'attribut running a faux", () => {
+            expect(component["running"]).toBeFalsy();
+        });
+    });
 
-  it ("should return string \'05\' for minute and second", fakeAsync(() => {
-    component.startTimer();
-    tick(305000);
-    expect(component["getSecondsSrtring"]()).toBe("05");
-    expect(component["getMinutesString"]()).toBe("05");
-    component.stopTimer();
-  }));
+    describe("Fonction getTime", () => {
+        it("Devrait retourner 0", () => {
+            expect(component.getTime()).toBe(0);
+        });
+    });
+
+    describe("Fonction reset", () => {
+        it("Devrait remettre l'attribut time a 0 et l'attribut running a false", () => {
+            // Arrange
+            component["time"] = 10;
+            component["running"] = true;
+
+            // Act
+            component["reset"]();
+
+            // Assert
+            expect(component["time"]).toEqual(0);
+            expect(component["running"]).toBeFalsy();
+        });
+    });
+
+    describe("Calcul de bon temps", () => {
+        it("Devrait retourner 5", fakeAsync(() => {
+            component.startTimer();
+            tick(5000);
+            component.stopTimer();
+            expect(component.getTime()).toBe(5);
+        }));
+
+        it("Devrait retourner \'05\' pour minute et second", fakeAsync(() => {
+            component.startTimer();
+            tick(305000);
+            expect(component["getSecondsSrtring"]()).toBe("05");
+            expect(component["getMinutesString"]()).toBe("05");
+            component.stopTimer();
+        }));
+    });
 });

@@ -6,9 +6,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ListePartieSimpleComponent } from './liste-partie-simple/liste-partie-simple.component';
 import { ListePartieMultipleComponent } from './liste-partie-multiple/liste-partie-multiple.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { PartieSimpleSoloComponent } from '../partie/vue-simple/partie-simple-solo/partie-simple-solo.component';
 import { AdminComponent } from '../admin/admin.component';
 import { TempsUser } from '../admin/dialog-abstrait';
+import { VueSimpleComponent } from '../partie/vue-simple/vue-simple.component';
 
 describe('ListePartiesComponent', () => {
     let component: ListePartiesComponent;
@@ -20,8 +20,8 @@ describe('ListePartiesComponent', () => {
             declarations: [
                 ListePartiesComponent,
                 ListePartieSimpleComponent,
+                VueSimpleComponent,
                 ListePartieMultipleComponent,
-                PartieSimpleSoloComponent,
                 AdminComponent
             ],
             schemas: [
@@ -31,7 +31,7 @@ describe('ListePartiesComponent', () => {
                 MatCardModule,
                 RouterTestingModule.withRoutes([
                     { path: "liste-parties", component: ListePartiesComponent },
-                    { path: "partie-solo", component: PartieSimpleSoloComponent },
+                    { path: "partie-solo", component: VueSimpleComponent },
                     { path: "admin", component: AdminComponent },
                 ]),
                 HttpClientTestingModule,
