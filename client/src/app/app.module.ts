@@ -110,6 +110,8 @@ const appRoutes: Routes = [
         SocketIoModule.forRoot(config),
     ],
     providers: [BasicService,
+    providers: [
+        BasicService,
         CookieService,
         UserService,
         PartieSimpleService,
