@@ -36,11 +36,11 @@ describe("AdminComponent", () => {
         fixture.detectChanges();
     });
 
-    it("should create", () => {
+    it("Devrait être créé", () => {
         expect(component).toBeTruthy();
     });
 
-    it("should have a menu with 2 options (native click), one simple dialog window and one multiple dialog window", async () => {
+    it("Devrait avoir un menu avec 2 options (native click), un simple dialog window et un multiple dialog window", async () => {
         const elem = fixture.debugElement;
         const button = elem.query((e) => e.name === "button");
         expect(!!button).toBe(true);
@@ -66,5 +66,4 @@ describe("AdminComponent", () => {
         fixture.detectChanges();
         expect(spyMultiple).toHaveBeenCalled();
     });
-
 });
