@@ -4,7 +4,7 @@
 mat-card
 {
     background-color: #dadada;
-    border-radius:20px;
+    border-radius:5px;
     margin-bottom:2%;
     height:75%;
     width:90%;
@@ -14,6 +14,7 @@ mat-card-header
 {
     justify-content: right;
     margin-bottom:2%;
+    border-bottom:2px solid #e6e5e5;
 }
 
 .gameNameHeader
@@ -32,7 +33,7 @@ mat-card-header
 
 .gameImage
 {
-    border-radius:20px;
+    border-radius:5px;
     max-width: 100%;
     max-height: 200px;
     display: block;
@@ -57,8 +58,13 @@ mat-card-header
     color:black;
 }
 
+.row-header{
+    padding-top:5%;
+
+}
+
 .mat-button{
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .bronzeMedal{
@@ -76,12 +82,14 @@ mat-badge{
 
 
 .mat-button{
-    margin: 4% 0 2% 5%;
+    margin: 0 0 2% 5%;
 }
 
 .title{
     overflow:hidden;
     text-align:center;
+    background: #e6e5e5;
+    border-radius: 10px 10px 0 0;
 }
 
 col-1{
@@ -90,6 +98,23 @@ col-1{
 }
 
 .badge-pill {
-    padding: .3em .6em;
+    padding: .6em .9em;
     margin-left:2%;
+}
+
+
+/* CSS pour les cartes */
+
+.card-body{
+    padding:0;
+    text-align: center;
+}
+
+.card{
+    background-color: transparent;
+    border:none;
+}
+
+.card-subtitle{
+    text-transform: capitalize
 }
