@@ -19,7 +19,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                        protected partieService: PartieService,
                        protected cookieService: CookieService) {
         super(route, partieService, cookieService, false);
-        this.differenceRestantes = constantes.DIFF_PARTIE_SIMPLE;
+        this.differenceRestantes = constantes.DIFF_PARTIE_MULTIPLE;
     }
 
     protected ajouterTemps(temps: number): void {
