@@ -3,7 +3,6 @@ import { PartieAbstraiteClass } from "../partie-abstraite-class";
 import { ActivatedRoute} from "@angular/router";
 import { PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
 import { PartieService} from "../partie.service";
-import {TempsUser} from "../../admin/dialog-abstrait";
 import {CookieService} from "ngx-cookie-service";
 
 @Component({

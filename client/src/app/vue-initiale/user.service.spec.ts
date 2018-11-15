@@ -1,12 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HttpRequest } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserService } from "../vue-initiale/user.service";
-import { User } from "./login-form/user";
-import { Form } from '@angular/forms';
+
 
 describe("UserService", () => {
-  const responseForm = '<form />';
 
   beforeEach(() => {
     TestBed.configureTestingModule({

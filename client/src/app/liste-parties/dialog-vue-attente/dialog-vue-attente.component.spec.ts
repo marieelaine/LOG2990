@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { DialogVueAttenteComponent } from "./dialog-vue-attente.component";
 import { MatDividerModule, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { HttpClientTestingModule } from "@angular/common/http/testing";

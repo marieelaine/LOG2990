@@ -20,7 +20,7 @@ export class HeaderComponent {
     const cookieUsername: string = this.cookieService.get("username");
     this.cookieService.deleteAll();
     this.userService["delete"](cookieUsername);
-    this.router.navigate(["/"]);
+    this.router.navigate(["/"]).catch(() => ErrorHandler);
   }
 
   protected OnHeaderTitleClick(): void {
