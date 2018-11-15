@@ -20,7 +20,6 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         this.differenceRestantes = 7;
     }
 
-    // TODO
     protected ajouterTemps(temps: number): void {
         this.updateTableauTempsSolo(temps);
         this.partieService.reinitialiserTempsPartieSimple(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
@@ -41,7 +40,6 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
     }
 
     protected testerPourDiff(event): void {
-        console.log(event.offsetX, event.offsetY);
         if (this.partieCommence && !this.penaliteEtat) {
             const coords = event.offsetX + "," + event.offsetY;
             let i: number = 0;

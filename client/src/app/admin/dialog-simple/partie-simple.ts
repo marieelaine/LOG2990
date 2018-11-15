@@ -1,4 +1,4 @@
-import { TempsUser } from "../dialog-abstrait";
+import { TempsUser } from "../temps-user";
 
 export class PartieSimple {
     protected _id: string;

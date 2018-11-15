@@ -4,16 +4,7 @@ import { DialogData } from "./admin.component";
 import { HttpClient } from "@angular/common/http";
 import { DialogSimpleComponent } from "./dialog-simple/dialog-simple.component";
 import { DialogMultipleComponent } from "./dialog-multiple/dialog-multiple.component";
-
-export class TempsUser {
-  private _user: string;
-  private _temps: number;
-
-  constructor(user: string, temps: number) {
-    this._user = user;
-    this._temps = temps;
-  }
-}
+import { TempsUser } from "./temps-user";
 
 export abstract class DialogAbstrait {
 

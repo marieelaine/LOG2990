@@ -20,7 +20,7 @@ export class BaseDeDonnees {
     }
 
     public async assurerConnection(): Promise<void> {
-        if (this._mongoose.connection.readyState === ReadyState.Deconnecte) {
+        if (this._mongoose.connection.readyState !== ReadyState.Connecte) {
             await this.seConnecter();
         }
     }

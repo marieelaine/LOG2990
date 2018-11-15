@@ -57,7 +57,7 @@ const appRoutes: Routes = [
     { path: "admin", component: AdminComponent },
     { path: "liste-parties", component: ListePartiesComponent },
     { path: "chrono", component: ChronoComponent },
-    { path: "partie-simple-solo/:idPartie", component: VueMultipleComponent },
+    { path: "partie-simple-solo/:idPartie", component: VueSimpleComponent },
     { path: "partie-multi/:idPartie", component: PartieSimpleMultijoueurComponent },
     { path: "partie-multiple/:idPartie", component: VueMultipleComponent },
 ];
