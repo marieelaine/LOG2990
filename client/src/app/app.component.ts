@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Message } from "../../../common/communication/message";
 import { BasicService } from "./basic.service";
-import { MatDialog } from "@angular/material";
 
 @Component({
   selector: "app-root",
@@ -9,7 +8,7 @@ import { MatDialog } from "@angular/material";
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
-    public constructor(private basicService: BasicService, private dialog: MatDialog) { }
+    public constructor(private basicService: BasicService) { }
 
     public readonly title: string = "LOG2990";
     public message: string;
