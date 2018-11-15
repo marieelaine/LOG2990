@@ -25,7 +25,7 @@ describe('PartieMultipleService', () => {
     it('POST request should be called with proper arguments', () => {
         let partieResponse;
         const partie = new PartieMultiple("name", [], [], new Buffer(""), new Buffer(""), new Buffer(""), new Buffer(""),
-            new Array<Array<string>>(), new Array<Array<string>>(), 10, "geo", "acs", "123");
+                                          new Array<Array<string>>(), new Array<Array<string>>(), 10, "geo", "acs", "123");
 
         service.register(partie).subscribe((response) => {
             partieResponse = response;
