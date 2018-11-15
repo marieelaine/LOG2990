@@ -12,9 +12,9 @@ export class PartieMultipleService {
 
   public register(partieMultiple: PartieMultiple): Observable<PartieMultiple> {
 
-    return this._http.post(this.AJOUTER_URL, partieMultiple, {
+    return this._http.post<PartieMultiple>(this.AJOUTER_URL, partieMultiple, {
       observe: "body",
       headers: new HttpHeaders().append("Content-Type", "application/json")
-    }) as Observable<PartieMultiple>;
+    });
   }
 }

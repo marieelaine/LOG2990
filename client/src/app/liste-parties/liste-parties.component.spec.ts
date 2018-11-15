@@ -3,7 +3,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ListePartiesComponent } from './liste-parties.component';
 import { MatCardModule, MAT_DIALOG_DATA, MatDialogModule, MatMenuTrigger, MatMenuModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { ListePartieSimpleComponent } from './liste-partie-simple/liste-partie-simple.component';
 import { ListePartieMultipleComponent } from './liste-partie-multiple/liste-partie-multiple.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -65,7 +64,6 @@ describe('ListePartiesComponent', () => {
         expect(component["isAdminMode"]).toBe(true);
     });
 
-    // Test ordonnance d'un tableau de temps
     it('should return array of sorted times', () => {
         const user1: TempsUser = new TempsUser("user1", 2);
         const user2: TempsUser = new TempsUser("user2", 1);
@@ -76,29 +74,24 @@ describe('ListePartiesComponent', () => {
         expect(sortedArray).toEqual(expectedArray);
     });
 
-    // Test retour du temps a afficher
     it('should return array of sorted times', () => {
         const temps = new TempsUser("", 61);
         expect(component["getDisplayTime"](temps)).toBe("1:01");
     });
 
-    // Test generer nouveaux tableaux des temps
     it('genererTableauTempsAleatoires devrait creer une tableau de taille 3', () => {
         const array = component["genererTableauTempsAleatoires"]();
         expect(array.length).toEqual(3);
     });
 
-    // Test remove first letter of title
     it('should return title without first letter', () => {
         expect(component["getTitleWithoutFirstLetter"](titleTest)).toBe("Success");
     });
 
-    // Test get first letter of title
     it('should return title first letter', () => {
         expect(component["getTitleFirstLetter"](titleTest)).toBe("N");
     });
 
-    // Test setToJouerAndCreer
     it('should change attribute modes', () => {
         component["setToJouerAndCreer"]();
         expect(component["isAdminMode"]).toBeFalsy();
@@ -107,7 +100,6 @@ describe('ListePartiesComponent', () => {
         expect(component["creerOuSupprimer"]).toBe("Créer");
     });
 
-    // Test setToReinitialiserAndSupprimer
     it('should change attribute modes', () => {
         component["setToReinitialiserAndSupprimer"]();
         expect(component["isAdminMode"]).toBeTruthy();

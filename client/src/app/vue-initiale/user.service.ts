@@ -13,14 +13,14 @@ export class UserService {
 
     public register(user: User): Observable<User> {
 
-        return this._http.post(this.AJOUTER_URL, user, {
+        return this._http.post<User>(this.AJOUTER_URL, user, {
             observe: "body",
             headers: new HttpHeaders().append("Content-Type", "application/json")
-        }) as Observable<User>;
+        })
     }
 
     public async delete(username: string): Promise<string> {
-        const id = this._http.delete(this.SUPPRIMER_URL + username) as Observable<string>;
+        const id = this._http.delete<string>(this.SUPPRIMER_URL + username);
 
         return id.toPromise();
     }

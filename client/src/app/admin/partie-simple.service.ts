@@ -11,9 +11,9 @@ export class PartieSimpleService {
     constructor(private _http: HttpClient) { }
 
     public register(partieSimple: PartieSimple): Observable<PartieSimple> {
-        return this._http.post(this.AJOUTER_URL, partieSimple, {
+        return this._http.post<PartieSimple>(this.AJOUTER_URL, partieSimple, {
             observe: "body",
             headers: new HttpHeaders().append("Content-Type", "application/json")
-        }) as Observable<PartieSimple>;
+        });
     }
 }
