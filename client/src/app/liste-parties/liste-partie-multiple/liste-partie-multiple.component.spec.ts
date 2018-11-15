@@ -12,8 +12,9 @@ import { Location } from "@angular/common";
 import { SocketClientService } from 'src/app/socket/socket-client.service';
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material';
 import { TempsUser } from 'src/app/admin/dialog-abstrait';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('PartieMultipleComponent', () => {
+describe('ListePartieMultipleComponent', () => {
     let mockListePartieService: jasmine.SpyObj<ListePartieServiceService>;
 
     let component: ListePartieMultipleComponent;
@@ -34,13 +35,16 @@ describe('PartieMultipleComponent', () => {
         "acs",
         "1");
     const parties: PartieMultiple[] = [partie];
+    const listePartieEnAttente: string[] = ["123"];
 
     // tslint:disable-next-line:max-func-body-length
     beforeEach(() => {
         mockListePartieService = jasmine.createSpyObj([
             "getListePartieMultiple",
             "deletePartieMultiple",
-            "reinitialiserTempsPartieMultiple"
+            "reinitialiserTempsPartieMultiple",
+            "addPartieMultipleEnAttente",
+            "getListePartieSimpleEnAttente"
         ]);
         TestBed.configureTestingModule({
             declarations: [
@@ -53,6 +57,7 @@ describe('PartieMultipleComponent', () => {
                 ]),
                 HttpClientTestingModule,
                 MatDialogModule,
+                BrowserAnimationsModule
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA
@@ -75,7 +80,8 @@ describe('PartieMultipleComponent', () => {
 
     describe("fonction ngOnInit", () => {
         it("Devrait apeller la fonction getListePartieMultiple du service", () => {
-            mockListePartieService['getListePartieMultiple'].and.returnValue(of(parties));
+            mockListePartieService["getListePartieMultiple"].and.returnValue(of(parties));
+            mockListePartieService["getListePartieSimpleEnAttente"].and.returnValue(of(listePartieEnAttente));
 
             component.ngOnInit();
 
@@ -110,6 +116,7 @@ describe('PartieMultipleComponent', () => {
         it("Devrait naviguer a la route '/'", fakeAsync(() => {
             component["isListePartiesMode"] = true;
             const id: string = "";
+            mockListePartieService["addPartieMultipleEnAttente"].and.returnValue({ subscribe: () => {} });
 
             component["onCreerOuSupprimerClick"](partie["_id"]);
             tick();

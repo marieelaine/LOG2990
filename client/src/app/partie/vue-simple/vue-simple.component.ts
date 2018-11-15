@@ -36,6 +36,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
   }
 
   protected testerPourDiff(event): void {
+      console.log(event.offsetX, event.offsetY);
       if (this.partieCommence && !this.penaliteEtat) {
           const coords = event.offsetX + "," + event.offsetY;
           let i: number = 0;
@@ -77,22 +78,6 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
           dataD[dim + 2] = dataG[dim + 2];
       }
       contextD.putImageData(imageDataD, 0, 0);
-  }
-
-  protected ajouterTemps(temps: number): void {
-      this.updateTableauTemps(temps);
-      this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
-      .catch(() => ErrorHandler);
-  }
-
-  private updateTableauTemps(temps: number) {
-    let joueur: string = this.cookieService.get("username");
-    if (joueur == null) {
-        joueur = "Anonyme";
-    }
-    const tempsUser: TempsUser =  new TempsUser(joueur, temps);
-    this.partie["_tempsSolo"].splice(-1, 1);
-    this.partie["_tempsSolo"].push(tempsUser);
   }
 
 }

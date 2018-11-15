@@ -16,5 +16,7 @@ export default  {
         RoutesPartieMultiple: Symbol("RoutesPartieMultiple"),
         PartieMultiple: Symbol("PartieMultiple"),
 
+        DBUser: Symbol("DBUser"),
+
         SocketServerService: Symbol("SocketServerService"),
 };

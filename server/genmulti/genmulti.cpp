@@ -1,13 +1,15 @@
 #include <iostream>
 #include <math.h>
-#include "inf2705-matrice.h"
-#include "inf2705-nuanceur.h"
-#include "inf2705-fenetre.h"
-#include "inf2705-forme.h"
-#include "FreeImage.h"
+#include "include/inf2705-matrice.h"
+#include "include/inf2705-nuanceur.h"
+#include "include/inf2705-fenetre.h"
+#include "include/inf2705-forme.h"
+#include "include/FreeImage.h"
+#include "include/bitmap_image.hpp"
 #include <vector>
 #include <string>
 #include <bits/stdc++.h> 
+#include <sys/wait.h>
   
 using namespace std; 
 
@@ -584,21 +586,22 @@ void creerModificationsSceneGeo()
 
 void capturerScene(string filepath, int x, int y)
 {
-    // Make the BYTE array, factor of 3 because it's RBG. 
-    char charArray[100];  
-    strcpy(charArray, filepath.c_str());  
+    // Make the BYTE array, factor of 3 because it's RBG.
+    bitmap_image screenshot(windowWidth, windowHeight);
+    unsigned char image[windowHeight*windowWidth*3];
+    glReadPixels(x, y, windowWidth, windowHeight, GL_RGB, GL_UNSIGNED_BYTE, &image);
+    int compteur = 0;
+    for (unsigned int x = 0; x < windowWidth; ++x)
+    {
+      for (unsigned int y = 0; y < windowHeight; ++y)
+      {
+        int dim = (y * 640 * 3) + (x * 3);
+        compteur += 3;
+        screenshot.set_pixel(x, y, image[dim], image[dim+1], image[dim+2]);
+      }
+    }
 
-    BYTE* pixels = new BYTE[3 * windowWidth * windowHeight];
-
-    glReadPixels(x, y, windowWidth, windowHeight, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-
-    // Convert to FreeImage format & save to file
-    FIBITMAP* image = FreeImage_ConvertFromRawBits(pixels, windowWidth, windowHeight, 3 * windowWidth, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
-    FreeImage_Save(FIF_BMP, image, charArray, 0);
-
-    // Free resources
-    FreeImage_Unload(image);
-    delete [] pixels;
+    screenshot.save_image(filepath);
 }
 
 void FenetreTP::afficherScene(int index)
@@ -679,8 +682,9 @@ void genScene(int argc, char* argv[]){
             fenetre.conclure();
         }
         else if (etat.theme == "theme"){
-            string paramGenScene = "./genScene/genScene " + etat.theme + " " + to_string(etat.nombreFormes) + " " + etat.modifications + " " + etat.filename;
+            string paramGenScene = "./genscene/genscene " + etat.theme + " " + to_string(etat.nombreFormes) + " " + etat.modifications + " " + etat.filename;
             system(paramGenScene.c_str());
+            wait(NULL);
         }
     }
     else {
