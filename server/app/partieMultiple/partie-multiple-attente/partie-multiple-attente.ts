@@ -25,7 +25,7 @@ export class RoutesPartieSimpleAttente extends ServiceWeb {
         router.post("/addPartieMultipleEnAttente", async (req: Request, res: Response) => {
             this.partieMultipleAttente.push(req.body.partieId);
             this.socket.envoyerPartieMultipleAttente(req.body.partieId);
-            res.send();
+            res.send(req.body.partieId);
         });
 
         router.delete("/deletePartieMultipleEnAttente/:id", async (req: Request, res: Response) => {
@@ -35,7 +35,7 @@ export class RoutesPartieSimpleAttente extends ServiceWeb {
                 }
             }
             this.socket.supprimerPartieMultipleAttente(req.params.id);
-            res.send();
+            res.send(req.params.id);
         });
 
         return router;
