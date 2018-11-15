@@ -1,4 +1,4 @@
-import {Component, ErrorHandler, Inject} from '@angular/core';
+import { Component, Inject} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ListePartieServiceService } from '../liste-partie-service.service';
 import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
