@@ -284,7 +284,7 @@ export class DBPartieMultiple {
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> {
         try {
             await this.genererScene(req.body, res);
-            res.status(201);
+            res.status(201).json(this.getPartieMultipleByName(req.params.nomPartie));
         } catch (err) {
             res.status(501).json(err);
         }
