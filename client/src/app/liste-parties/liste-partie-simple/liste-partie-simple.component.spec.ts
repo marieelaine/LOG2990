@@ -11,8 +11,8 @@ import { of } from "rxjs";
 import { PartieSimpleMultijoueurComponent } from "src/app/partie/vue-simple/partie-simple-multijoueur/partie-multijoueur.component";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import { MatDialogModule } from "@angular/material/dialog";
-import { PartieSimpleSoloComponent } from "src/app/partie/vue-simple/partie-simple-solo/partie-simple-solo.component";
 import { TempsUser } from "src/app/admin/dialog-abstrait";
+import { VueSimpleComponent } from "src/app/partie/vue-simple/vue-simple.component";
 
 describe("Liste Partie Simple Component", () => {
     let mockListePartieService: jasmine.SpyObj<ListePartieServiceService>;
@@ -42,12 +42,12 @@ describe("Liste Partie Simple Component", () => {
         TestBed.configureTestingModule({
             declarations: [
                 ListePartieSimpleComponent,
-                PartieSimpleSoloComponent,
                 PartieSimpleMultijoueurComponent,
+                VueSimpleComponent,
             ],
             imports: [
                 RouterTestingModule.withRoutes([
-                    { path: "partie-solo", component: PartieSimpleSoloComponent },
+                    { path: "partie-solo", component: VueSimpleComponent },
                     { path: "partie-multi", component: PartieSimpleMultijoueurComponent }
                 ]),
                 HttpClientTestingModule,
