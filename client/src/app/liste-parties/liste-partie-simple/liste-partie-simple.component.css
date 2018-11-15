@@ -97,6 +97,7 @@ col-1{
 .badge-pill {
     padding: .6em .9em;
     margin-left:2%;
+    margin-top: 200%;
 }
 
 /* CSS pour les cartes */
@@ -109,4 +110,8 @@ col-1{
 .card{
     background-color: transparent;
     border:none;
+}
+
+.card-subtitle{
+    text-transform: capitalize;
 }
