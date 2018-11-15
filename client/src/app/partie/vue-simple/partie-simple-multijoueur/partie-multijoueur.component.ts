@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ErrorHandler } from '@angular/core';
 import { PartieService} from "../../partie.service";
 import { VueSimpleComponent } from '../vue-simple.component';
 import { ActivatedRoute } from '@angular/router';

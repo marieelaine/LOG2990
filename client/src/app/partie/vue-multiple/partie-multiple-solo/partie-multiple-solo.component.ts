@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ErrorHandler } from '@angular/core';
 import { VueMultipleComponent } from '../vue-multiple.component';
 import { ActivatedRoute } from '@angular/router';
 import { PartieService } from '../../partie.service';
@@ -16,4 +16,5 @@ export class PartieMultipleSoloComponent extends VueMultipleComponent {
                 protected cookieService: CookieService) {
         super(route, partieService, cookieService);
     }
+
 }

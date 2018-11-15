@@ -13,6 +13,7 @@ export abstract class PartieAbstraiteClass {
     @ViewChildren('canvas') canvas: QueryList<ElementRef>;
     @ViewChild(ChatComponent) chat: ChatComponent;
 
+    // TODO : too many parameters
     protected blur: boolean;
     protected chrono: ChronoComponent;
     protected messageDifferences: string;
@@ -26,6 +27,7 @@ export abstract class PartieAbstraiteClass {
     protected image: Array<HTMLImageElement>;
     protected diffTrouvee: number[][];
     protected imageData: Array<string>;
+    // TODO: init dans le constructeur
     protected penaliteEtat: boolean = false;
     private nbImages: number;
 
@@ -51,6 +53,8 @@ export abstract class PartieAbstraiteClass {
     protected abstract setPartie(): void;
 
     protected abstract getImageData(): void;
+
+    protected abstract ajouterTemps(temps: number): void;
 
     protected commencerPartie(): void {
         this.partieCommence = true;
@@ -127,13 +131,7 @@ export abstract class PartieAbstraiteClass {
         this.ajouterTemps(this.chrono.getTime());
     }
 
-    protected ajouterTemps(temps: number): void {
-        this.updateTableauTemps(temps);
-        this.partieService.reinitialiserTempsPartie(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
-        .catch(() => ErrorHandler);
-    }
-
-    private updateTableauTemps(temps: number) {
+    protected updateTableauTemps(temps: number) {
       let joueur: string = this.cookieService.get("username");
       if (joueur === "") {
           joueur = "Anonyme";
