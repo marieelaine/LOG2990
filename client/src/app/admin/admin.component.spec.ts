@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { AdminComponent } from "./admin.component";
-import { MatMenuModule, MatToolbarModule, MatCardModule, MatDialogModule } from "@angular/material";
+import { MatMenuModule, MatToolbarModule, MatCardModule, MatDialogModule, MatDialog } from "@angular/material";
 import { ListePartiesComponent } from "../liste-parties/liste-parties.component";
 import { RouterTestingModule } from "@angular/router/testing";
 import { By } from "@angular/platform-browser";
@@ -11,10 +11,16 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { SocketClientService } from "../socket/socket-client.service";
 
 describe("AdminComponent", () => {
+    let mockMatDialog: jasmine.SpyObj<MatDialog>;
+
     let component: AdminComponent;
     let fixture: ComponentFixture<AdminComponent>;
 
     beforeEach(() => {
+        mockMatDialog = jasmine.createSpyObj([
+            "open"
+        ]);
+
         TestBed.configureTestingModule({
             declarations: [AdminComponent, ListePartiesComponent, ListePartieSimpleComponent, ListePartieMultipleComponent],
             imports: [
@@ -26,8 +32,9 @@ describe("AdminComponent", () => {
                 NoopAnimationsModule,
                 HttpClientTestingModule
             ],
-            providers : [
-                SocketClientService
+            providers: [
+                SocketClientService,
+                { provide: MatDialog, useValue: mockMatDialog },
             ]
         });
 
@@ -36,11 +43,11 @@ describe("AdminComponent", () => {
         fixture.detectChanges();
     });
 
-    it("should create", () => {
+    it("Devrait être créé", () => {
         expect(component).toBeTruthy();
     });
 
-    it("should have a menu with 2 options (native click), one simple dialog window and one multiple dialog window", async () => {
+    it("Devrait avoir un menu avec 2 options (native click), un simple dialog window et un multiple dialog window", async () => {
         const elem = fixture.debugElement;
         const button = elem.query((e) => e.name === "button");
         expect(!!button).toBe(true);
@@ -67,4 +74,62 @@ describe("AdminComponent", () => {
         expect(spyMultiple).toHaveBeenCalled();
     });
 
+    describe("Fonction openDialogSimple", () => {
+        it("Devrait assigner une chaine de caractere vide a l'attribut gameName", () => {
+            // Act
+            component["openDialogSimple"]();
+
+            // Assert
+            expect(component["gameName"]).toEqual("");
+        });
+
+        it("Devrait appeller la fonction open du service dialog", () => {
+            // Act
+            component["openDialogSimple"]();
+
+            // Assert
+            expect(mockMatDialog.open).toHaveBeenCalled();
+        });
+    });
+
+    describe("Fonction openDialogWithData", () => {
+        it("Devrait appelle la fonction open du service dialog", () => {
+            // Act
+            component["openDialogWithData"]("un message");
+
+            // Assert
+            expect(mockMatDialog.open).toHaveBeenCalled();
+        });
+    });
+
+    describe("Fonction openDialogMultiple", () => {
+        it("Devrait assigner une chaine de caractere vide a l'attribut gameName", () => {
+            // Act
+            component["openDialogMultiple"]();
+
+            // Assert
+            expect(component["gameName"]).toEqual("");
+        });
+
+        it("Devrait appeller la fonction open du service dialog", () => {
+            // Act
+            component["openDialogMultiple"]();
+
+            // Assert
+            expect(mockMatDialog.open).toHaveBeenCalled();
+        });
+    });
+
+    describe("Fonction initSocket", () => {
+        it("Devrait appeller la fonction on deux fois du service socket", () => {
+            // Arrange
+            const spySocketOn: jasmine.Spy = spyOn(component.socketClientService.socket, "on");
+
+            // Act
+            component["initSocket"]();
+
+            // Assert
+            expect(spySocketOn).toHaveBeenCalledTimes(2);
+        });
+    });
 });

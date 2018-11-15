@@ -10,32 +10,46 @@
                     </div>
                     <div class="col-sm-5 title">
                         <span class='gameNameHeader titleFirstLetter'>{{getTitleFirstLetter(partieMultiple._nomPartie)|uppercase}}</span>
-                        <span class='gameNameHeader'>{{getTitleWithoutFirstLetter(partieMultiple._nomPartie)}}</span>
+                        <span class='gameNameHeader'>{{getTitleWithoutFirstLetter(partieMultiple._nomPartie)|lowercase}}</span>
                     </div>
             </mat-card-header>
             <div class='row'>
                 <div class='col-sm-7'>
-                    <div class="row">
-                        <div class="col">
+                    <div class="row row-header">
+                        <div class="col-1"></div>
+                        <div class="col-5">
                             <h2 class='headers'> Solo </h2>
                         </div>
-                        <div class="col">
+                        <div class="col-5">
                             <h2 class='headers'> 1v1 </h2> 
                         </div>
+                        <div class="col-1 carte"></div>
                      </div>
-                     <div class="row temps"  *ngFor="let tempsSolo of partieMultiple['_tempsSolo']; let i = index">
-                         <div class="col-1">
+                     <div class="row temps carte"  *ngFor="let tempsSolo of partieMultiple['_tempsSolo']; let i = index">
+                        <div class="col-1">
                             <span class="badge badge-pill badge-danger">{{i+1}}</span>
-                         </div>
-                         <div class="col-5"><span>{{ getDisplayTime(tempsSolo) }}</span> : 
-                            <span>{{ tempsSolo['_user'] }}</span></div>
-                         <div class="col-1">
-                                <span class="badge badge-pill badge-danger">{{i+1}}</span>
                         </div>
-                        <div class="col-5">
-                            <span> {{ getDisplayTime(partieMultiple['_tempsUnContreUn'][i]) }} </span> :
-                            <span>  {{ partieMultiple['_tempsUnContreUn'][i]['_user'] }}  </span>
-                            </div> 
+                        <div class="card col-5" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    {{ getDisplayTime(tempsSolo) }}
+                                </h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    {{ tempsSolo['_user'] }}
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="card col-5" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    {{ getDisplayTime(partieMultiple['_tempsUnContreUn'][i]) }}
+                                </h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    {{ partieMultiple['_tempsUnContreUn'][i]['_user'] }}
+                                </h6>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
                      </div>
                 </div>
                 <div class='col-sm-5'>

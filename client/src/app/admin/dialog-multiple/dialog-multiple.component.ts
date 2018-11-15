@@ -1,12 +1,13 @@
 import { Component, Inject } from '@angular/core';
-import { DialogAbstrait, TempsUser } from '../dialog-abstrait';
+import { DialogAbstrait} from '../dialog-abstrait';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DialogData, Checkbox } from '../admin.component';
 import { HttpClient } from '@angular/common/http';
 import { PartieMultiple } from './partie-multiple';
 import * as Buffer from "buffer";
 import { PartieMultipleService } from '../partie-multiple.service';
-import { FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
+import { TempsUser } from '../temps-user';
 
 @Component({
   selector: 'app-dialog-multiple',

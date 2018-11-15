@@ -1,17 +1,15 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-
-import { DialogSimpleComponent } from "./dialog-simple.component";
 import {
     MatDividerModule, MatFormFieldModule, MatCardModule, MatDialogModule, MatDialogRef,
     MAT_DIALOG_DATA, MatInputModule, MatCheckboxModule
 } from "@angular/material";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { createMockImageFile } from "../../../testing/file-creator";
 import { By } from "@angular/platform-browser";
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { createMockImageFile } from "../../../testing/file-creator";
+import { DialogSimpleComponent } from "./dialog-simple.component";
 
 describe("DialogSimpleComponent", () => {
     let component: DialogSimpleComponent;
@@ -94,32 +92,32 @@ describe("DialogSimpleComponent", () => {
     });
 
     it("should call onUploadImage when an image is uploaded", () => {
-    const uploadImage1 = fixture.debugElement.query(By.css("#uploadImage1")).nativeElement;
+        const uploadImage1 = fixture.debugElement.query(By.css("#uploadImage1")).nativeElement;
 
-    // tslint:disable-next-line:no-any
-    const spy: jasmine.Spy = spyOn<any>(component, "onUploadImage");
-    uploadImage1.dispatchEvent(new Event("change"));
-    expect(spy).toHaveBeenCalled();
+        // tslint:disable-next-line:no-any
+        const spy: jasmine.Spy = spyOn<any>(component, "onUploadImage");
+        uploadImage1.dispatchEvent(new Event("change"));
+        expect(spy).toHaveBeenCalled();
     });
 
     it("should close the dialog if cancel button is clicked", () => {
-      const onNoClickButton = fixture.debugElement.query(By.css("#onNoClickButton")).nativeElement;
+        const onNoClickButton = fixture.debugElement.query(By.css("#onNoClickButton")).nativeElement;
 
-      // tslint:disable-next-line:no-any
-      const spy: jasmine.Spy = spyOn<any>(component, "surClickExterieurDialog");
-      onNoClickButton.dispatchEvent(new Event("click"));
+        // tslint:disable-next-line:no-any
+        const spy: jasmine.Spy = spyOn<any>(component, "surClickExterieurDialog");
+        onNoClickButton.dispatchEvent(new Event("click"));
 
-      expect(spy).toHaveBeenCalled();
+        expect(spy).toHaveBeenCalled();
     });
 
     it("should call onClickAjouterPartie when an add game button is clicked", () => {
-      const onAddClickButton = fixture.debugElement.query(By.css("#onAddClickButton")).nativeElement;
+        const onAddClickButton = fixture.debugElement.query(By.css("#onAddClickButton")).nativeElement;
 
-      // tslint:disable-next-line:no-any
-      const spy: jasmine.Spy = spyOn<any>(component, "onClickAjouterPartie");
-      onAddClickButton.dispatchEvent(new Event("click"));
+        // tslint:disable-next-line:no-any
+        const spy: jasmine.Spy = spyOn<any>(component, "onClickAjouterPartie");
+        onAddClickButton.dispatchEvent(new Event("click"));
 
-      expect(spy).toHaveBeenCalled();
+        expect(spy).toHaveBeenCalled();
     });
 
     it("should set wrongImageSizeOrTypeMessage image does not respect good size", () => {

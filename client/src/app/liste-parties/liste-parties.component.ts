@@ -1,9 +1,9 @@
 import {Component, ElementRef, QueryList, ViewChildren} from "@angular/core";
 import {Router, NavigationEnd} from "@angular/router";
 import {ListePartieServiceService} from "./liste-partie-service.service";
-import {TempsUser} from "../admin/dialog-abstrait";
 import {PartieMultiple} from "../admin/dialog-multiple/partie-multiple";
 import {PartieSimple} from "../admin/dialog-simple/partie-simple";
+import { TempsUser } from "../admin/temps-user";
 
 @Component({
     selector: "app-liste-parties",

@@ -8,7 +8,6 @@ import Types from "./types";
 import { injectable, inject } from "inversify";
 
 import { ServiceWeb } from "./serviceWeb";
-import { Routes } from "./routes";
 import { RoutesPartieMultiple } from "./partieMultiple/routes-partie-multiple/route-partie-multiple";
 import { RoutesPartieSimple } from "./partieSimple/routes-partie-simples/routes-partie-simple";
 import { RoutesPartieSimpleAttente } from "./partieSimple/partie-simple-attente/partie-simple-attente";
@@ -20,8 +19,7 @@ export class Application {
     private readonly internalError: number = 500;
     public app: express.Application;
 
-    public constructor(@inject(Types.Routes) private index: Routes,
-                       @inject(Types.RoutesPartieSimple) private partieSimple: RoutesPartieSimple,
+    public constructor(@inject(Types.RoutesPartieSimple) private partieSimple: RoutesPartieSimple,
                        @inject(Types.RoutesPartieMultiple) private partieMultiple: RoutesPartieMultiple,
                        @inject(Types.RoutesPartieSimpleAttente) private partieSimpleAttente: RoutesPartieSimpleAttente,
                        @inject(Types.RoutesUser) private routeDbUser: RoutesUser) {
@@ -44,7 +42,6 @@ export class Application {
     }
 
     public routes(): void {
-        this.ajouterService(this.index);
         this.ajouterService(this.partieSimple);
         this.ajouterService(this.partieMultiple);
         this.ajouterService(this.partieSimpleAttente);
