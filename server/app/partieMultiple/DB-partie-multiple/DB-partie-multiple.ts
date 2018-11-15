@@ -277,8 +277,25 @@ export class DBPartieMultiple {
     }
 
     private async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
+        tempsSolo = this.getSortedTimes(tempsSolo);
+        tempsUnContreUn = this.getSortedTimes(tempsUnContreUn);
         await this.modelPartie.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
             .catch(() => { throw new Error(); });
+    }
+
+    private getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {
+        if (arr) {
+          arr.sort((t1: TempsUser, t2: TempsUser) => {
+            const time1: number = t1["_temps"];
+            const time2: number = t2["_temps"];
+            if (time1 > time2) { return 1; }
+            if (time1 < time2) { return -1; }
+
+            return 0;
+          });
+        }
+
+        return arr;
     }
 
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> {
