@@ -27,7 +27,7 @@ mat-card-header
 }
 
 .titleFirstLetter{
-    color: #ff5252;
+    color: #dc3545;
 }
 
 .gameImage
@@ -54,7 +54,12 @@ mat-card-header
     width:100%;
     text-align: center;
     font-size:200%;
-    color:black;
+    color:#dc3545;
+}
+
+.row-header{
+    padding-top:5%;
+
 }
 
 .mat-button{
@@ -90,6 +95,22 @@ col-1{
 }
 
 .badge-pill {
-    padding: .3em .6em;
+    padding: .6em .9em;
     margin-left:2%;
+}
+
+.carte{
+    background: #dadada;
+}
+
+/* CSS pour les cartes */
+
+.card-body{
+    padding:0;
+    text-align: center;
+}
+
+.card{
+    background-color: transparent;
+    border:none;
 }
