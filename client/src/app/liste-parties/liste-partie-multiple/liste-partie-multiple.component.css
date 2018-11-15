@@ -4,7 +4,7 @@
 mat-card
 {
     background-color: #dadada;
-    border-radius:20px;
+    border-radius:5px;
     margin-bottom:2%;
     height:75%;
     width:90%;
@@ -32,7 +32,7 @@ mat-card-header
 
 .gameImage
 {
-    border-radius:20px;
+    border-radius:5px;
     max-width: 100%;
     max-height: 200px;
     display: block;
@@ -58,7 +58,7 @@ mat-card-header
 }
 
 .mat-button{
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .bronzeMedal{
