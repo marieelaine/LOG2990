@@ -11,16 +11,17 @@ export class UserService {
 
     public constructor(private _http: HttpClient) { }
 
-    public register(user: User): Observable<Object> {
-        console.log(user);
+    public register(user: User): Observable<User> {
 
         return this._http.post(this.AJOUTER_URL, user, {
             observe: "body",
             headers: new HttpHeaders().append("Content-Type", "application/json")
-        });
+        }) as Observable<User>;
     }
 
-    public async delete(username: string): Promise<Object> {
-        return this._http.delete(this.SUPPRIMER_URL + username).toPromise();
+    public async delete(username: string): Promise<string> {
+        const id = this._http.delete(this.SUPPRIMER_URL + username) as Observable<string>;
+
+        return id.toPromise();
     }
 }

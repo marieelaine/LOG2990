@@ -18,8 +18,6 @@ export class RoutesUser extends ServiceWeb {
         const router: Router = Router();
 
         router.post("/ajouter", async (req: Request, res: Response) => {
-            // tslint:disable-next-line:no-console
-            console.log("post " + req);
             await this.user.requeteAjouterUser(req, res);
         });
 

@@ -31,18 +31,19 @@ export class DBUser {
     }
 
     public async requeteAjouterUser(req: Request, res: Response): Promise<void> {
-        res.send(await this.ajouterUser(req.body, res));
+        await this.ajouterUser(req.body, res);
     }
 
     public async requeteUserId(req: Request, res: Response): Promise<void> {
-        res.send(await this.obtenirUserId(req.params.id));
+        const id: string = await this.obtenirUserId(req.params.id);
+        id === "" ? res.status(501).json(id) : res.status(201).json(id);
     }
 
     public async requeteDeleteUser(req: Request, res: Response): Promise<void> {
-        res.send(await this.deleteUser(req.params.id, res));
+        await this.deleteUser(req.params.id, res);
     }
 
-    private async ajouterUser(user: {}, res: Response): Promise<Response> {
+    private async ajouterUser(user: Usager, res: Response): Promise<Response> {
         const usager: Document = new this.modelUser(user);
         try {
             await usager.save();
@@ -53,18 +54,22 @@ export class DBUser {
         }
     }
 
-    private async deleteUser(username: String, res: Response): Promise<Response> {
-        const userId: String = await this.obtenirUserId(username);
+    private async deleteUser(username: string, res: Response): Promise<Response> {
+        const userId: string = await this.obtenirUserId(username);
         try {
-            this.modelUser.findByIdAndDelete(userId);
+            this.modelUser.deleteOne({"_id": userId}, (err: Error) => {
+                if (err) {
+                    res.status(501).json(err);
+                }
+            });
 
-            return res.status(201);
+            return res.status(201).json(userId);
         } catch (err) {
             return res.status(501).json(err);
         }
     }
 
-    private async obtenirUserId(username: String): Promise<String> {
+    private async obtenirUserId(username: string): Promise<string> {
         const users: Usager[] = [];
         await this.modelUser.find()
             .then((res: Document[]) => {
@@ -79,8 +84,7 @@ export class DBUser {
             }
         }
 
-        // Change the return.
-        return users[0]._id;
+        return "";
     }
 
 }
