@@ -53,7 +53,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
   protected async onCreerOuSupprimerClick(partieId: string): Promise<void> {
       if (this.isListePartiesMode) {
-        await this.listePartieService.addPartieMultipleEnAttente(partieId).subscribe(() => {
+        this.listePartieService.addPartieMultipleEnAttente(partieId).subscribe(() => {
           this.ouvrirDialogVueAttente(partieId);
           this.router.navigate(["/partie-multiple-solo/" + partieId])
           .catch(() => ErrorHandler);
