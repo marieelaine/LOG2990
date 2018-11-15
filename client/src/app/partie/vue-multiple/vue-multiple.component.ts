@@ -24,8 +24,8 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
 
     // TODO
     protected ajouterTemps(temps: number): void {
-        this.updateTableauTemps(temps);
-        this.partieService.reinitialiserTempsPartieSimple(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
+        this.updateTableauTempsSolo(temps);
+        this.partieService.reinitialiserTempsPartieMultiple(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
         .catch(() => ErrorHandler);
     }
 

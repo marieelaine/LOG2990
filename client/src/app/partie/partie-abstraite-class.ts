@@ -131,14 +131,16 @@ export abstract class PartieAbstraiteClass {
         this.ajouterTemps(this.chrono.getTime());
     }
 
-    protected updateTableauTemps(temps: number) {
+    protected updateTableauTempsSolo(temps: number) {
       let joueur: string = this.cookieService.get("username");
       if (joueur === "") {
           joueur = "Anonyme";
       }
-      const tempsUser: TempsUser =  new TempsUser(joueur, temps);
-      this.partie["_tempsSolo"].splice(-1, 1);
-      this.partie["_tempsSolo"].push(tempsUser);
+      if (temps < this.partie["_tempsSolo"][2]["_temps"]) {
+        const tempsUser: TempsUser =  new TempsUser(joueur, temps);
+        this.partie["_tempsSolo"].splice(-1, 1);
+        this.partie["_tempsSolo"].push(tempsUser);
+      }
     }
 
     protected penalite(event): void {

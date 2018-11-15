@@ -22,11 +22,12 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
       this.differenceRestantes = 7;
   }
 
+  // TODO
   protected ajouterTemps(temps: number): void {
-    this.updateTableauTemps(temps);
+    this.updateTableauTempsSolo(temps);
     this.partieService.reinitialiserTempsPartieSimple(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
     .catch(() => ErrorHandler);
-}
+    }
 
   protected setPartie(): void {
       this.partieService.getPartieSimple(this.partieID).subscribe((res: PartieSimple) => {
