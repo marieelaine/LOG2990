@@ -19,7 +19,6 @@ export abstract class PartieAbstraiteClass {
     @ViewChildren("canvas") protected canvas: QueryList<ElementRef>;
     @ViewChild(ChatComponent) protected chat: ChatComponent;
 
-    // TODO : too many parameters
     protected chrono: ChronoComponent;
     protected messageDifferences: string;
     protected differencesTrouvees: number;
