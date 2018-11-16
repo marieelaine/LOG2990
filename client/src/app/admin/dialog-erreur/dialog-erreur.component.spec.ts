@@ -34,7 +34,7 @@ describe("DialogErreurComponent", () => {
     });
 
     it("devrait fermer le dialog si l'utilisateur appuie sur le bouton pour fermer", () => {
-        const onNoClickButton = fixture.debugElement.query(By.css(".dialogButtons")).nativeElement;
+        const onNoClickButton: HTMLElement = fixture.debugElement.query(By.css(".dialogButtons")).nativeElement;
 
         // tslint:disable-next-line:no-any
         const spy: jasmine.Spy = spyOn<any>(component, "fermerDialog");

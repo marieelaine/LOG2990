@@ -20,7 +20,7 @@ export class UserService {
     }
 
     public async delete(username: string): Promise<string> {
-        const id = this._http.delete<string>(this.SUPPRIMER_URL + username);
+        const id: Observable<string> = this._http.delete<string>(this.SUPPRIMER_URL + username);
 
         return id.toPromise();
     }

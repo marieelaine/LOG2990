@@ -5,27 +5,24 @@ import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 import { PartieService } from "./partie.service";
 import { HttpClient } from "@angular/common/http";
 import { HttpHandlerMock, ActivatedRouteMock } from "src/testing/mocks";
-import { TempsUser } from "../admin/dialog-abstrait";
-import {CookieService} from "ngx-cookie-service";
+import { TempsUser } from "../admin/temps-user";
+import { CookieServiceMock } from "../../testing/cookieMock";
+
+const ONE_SECOND_TIMER: number = 1000;
+const TWO_SECONDS_TIMER: number = 2000;
+const TWO_SECONDS_CHRONO: number = 2;
 
 class PartieServiceMock extends PartieService {
-    constructor() {
-        const httpHandlerMock = new HttpHandlerMock();
-        const httpClient = new HttpClient(httpHandlerMock);
+    public constructor() {
+        const httpHandlerMock: HttpHandlerMock = new HttpHandlerMock();
+        const httpClient: HttpClient = new HttpClient(httpHandlerMock);
         super(httpClient);
     }
 }
 
-class CookieServiceMock extends CookieService {
-       constructor() {
-           const doc = document;
-           super(doc);
-       }
-   }
-
 class AbstractClassInstance extends PartieAbstraiteClass {
     protected partie: PartieSimple | PartieMultiple;
-    protected ajouterTemps(temps: number) {}
+    protected ajouterTemps(temps: number): void {}
     protected setPartie(): void {}
     protected getImageData(): void {}
 }
@@ -56,8 +53,6 @@ describe("PartieAbstraiteComponent", () => {
             component["commencerPartie"]();
             expect(spy).toHaveBeenCalled();
         });
-
-        // TODO : tester si le bouton Commencer à bien été enlevé dans les components
     });
 
     it("setID devrait setter le ID correctement", () => {
@@ -75,9 +70,9 @@ describe("PartieAbstraiteComponent", () => {
 
     it("chrono.getTime devrait retourner 2 lorsque la partie dure 2 secondes", fakeAsync(() => {
         component["commencerPartie"]();
-        tick(2000);
+        tick(TWO_SECONDS_TIMER);
         component["terminerPartie"]();
-        expect(component["chrono"].getTime()).toBe(2);
+        expect(component["chrono"].getTime()).toBe(TWO_SECONDS_CHRONO);
     }));
 
     it("partieCommence should be false true", () => {
@@ -85,7 +80,7 @@ describe("PartieAbstraiteComponent", () => {
     });
 
     it("should return value 0", fakeAsync(() => {
-    tick(1000);
+    tick(ONE_SECOND_TIMER);
     expect(component["chrono"].getTime()).toBe(0);
     }));
 });

@@ -1,4 +1,4 @@
-export var myParams: object = {
+export const myParams: object = {
     "particles": {
       "number": {
         "value": 80,
@@ -109,7 +109,7 @@ export var myParams: object = {
     "retina_detect": true
   };
 
-export var myStyle: object = {
+export const myStyle: object = {
   "position": "fixed",
   "width": "100%",
   "height": "100%",

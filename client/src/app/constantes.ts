@@ -25,3 +25,23 @@ export const LONGUEUR_NOM_MIN: number = 3;
 export const LONGUEUR_NOM_MAX: number = 20;
 export const NB_OBJET_MIN: number = 10;
 export const NB_OBJET_MAX: number = 200;
+
+export const BIT_FORMAT: number = 24;
+export const WINDOW_WIDTH: number = 640;
+export const WINDOW_HEIGHT: number = 480;
+
+export const HEADER_BMP_P1: number = 28;
+export const HEADER_BMP_P2: number = 18;
+export const HEADER_BMP_P3: number = 22;
+
+export const PARTIE_SIMPLE_NB_IMAGES: number = 2;
+export const PARTIE_MULTIPLE_NB_IMAGES: number = 4;
+export const DIFF_PARTIE_SIMPLE: number = 7;
+export const DIFF_PARTIE_MULTIPLE: number = 14;
+export const RGB_WIDTH: number = 4;
+export const RGB_FIRST_INCREMENT: number = 1;
+export const RGB_SECOND_INCREMENT: number = 2;
+export const CONTEXT_GAUCHE_POV1_POSITION: number = 0;
+export const CONTEXT_DROITE_POV1_POSITION: number = 1;
+export const CONTEXT_GAUCHE_POV2_POSITION: number = 2;
+export const CONTEXT_DROITE_POV2_POSITION: number = 3;

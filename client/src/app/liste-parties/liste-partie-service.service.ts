@@ -11,7 +11,7 @@ import { TempsUser } from "../admin/temps-user";
 })
 export class ListePartieServiceService {
 
-  constructor( private http: HttpClient ) {}
+  public constructor( private http: HttpClient ) {}
 
   public getListePartieSimple(): Observable<PartieSimple[]> {
 

@@ -11,8 +11,8 @@ import { of } from "rxjs";
 import { PartieSimpleMultijoueurComponent } from "src/app/partie/vue-simple/partie-simple-multijoueur/partie-multijoueur.component";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import { MatDialogModule } from "@angular/material/dialog";
-import { TempsUser } from "src/app/admin/dialog-abstrait";
 import { VueSimpleComponent } from "src/app/partie/vue-simple/vue-simple.component";
+import { TempsUser } from "src/app/admin/temps-user";
 
 describe("Liste Partie Simple Component", () => {
     let mockListePartieService: jasmine.SpyObj<ListePartieServiceService>;
@@ -92,15 +92,6 @@ describe("Liste Partie Simple Component", () => {
     });
 
     describe("fonction onJouerOuReinitialiserClick", () => {
-        // it("Devrait naviguer a la route '/partie-simple-solo'", fakeAsync(() => {
-        //     component["isListePartiesMode"] = true;
-        //     const id: string = "id";
-
-        //     component["onJouerOuReinitialiserClick"](id);
-        //     tick();
-
-        //     expect(location.path()).toBe("id");
-        // }));
         it("Devrait rester a la route courante", fakeAsync(() => {
             const pathAvant: string = location.path();
             component["isListePartiesMode"] = false;
@@ -114,15 +105,6 @@ describe("Liste Partie Simple Component", () => {
     });
 
     describe("fonction onCreerOuSupprimerClick", () => {
-        // it("Devrait naviguer a la route '/partie-simple-solo/'", fakeAsync(() => {
-        //     component["isListePartiesMode"] = true;
-        //     const id: string = "id";
-        //     mockListePartieService.addPartieSimpleEnAttente.and.returnValue(of());
-        //     component["onCreerOuSupprimerClick"](id);
-        //     tick();
-
-        //     expect(location.path()).toBe("id");
-        // }));
         it("Devrait rester a la route courante", fakeAsync(() => {
             const pathAvant: string = location.path();
             component["isListePartiesMode"] = false;

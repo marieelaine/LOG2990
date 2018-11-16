@@ -1,23 +1,17 @@
-export function createMockImageFile(isBMP: Boolean) {
-    const content = "Test image";
-    const data: Blob = new Blob([content]);
-    const arrayOfBlob = new Array<Blob>();
-    arrayOfBlob.push(data);
-
-    if (isBMP) {
-        return new File(arrayOfBlob, "MockFile", { type: "image/bmp" });
+export class MockFileCreator {
+    public constructor() {
     }
 
-    return new File(arrayOfBlob, "MockFile", { type: "image/jpeg" });
-}
+    public createMockImageFile(isBMP: Boolean): File {
+        const content: string = "Test image";
+        const data: Blob = new Blob([content]);
+        const arrayOfBlob: Array<Blob> = new Array<Blob>();
+        arrayOfBlob.push(data);
 
-export function createMockBmpFile() {
-    const byteLength: number = 921738;
-    const buffer: ArrayBuffer = new ArrayBuffer(byteLength);
-    const dataView: DataView =  new DataView(buffer);
-    dataView.setUint16(28, 24);
-    dataView.setUint32(18, 640);
-    dataView.setUint32(22, 480);
+        if (isBMP) {
+            return new File(arrayOfBlob, "MockFile", { type: "image/bmp" });
+        }
 
-    return new File([dataView], "MockBmpFile", {type: "image/bmp"});
+        return new File(arrayOfBlob, "MockFile", { type: "image/jpeg" });
+    }
 }

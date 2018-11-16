@@ -1,6 +1,6 @@
 import {Component, ErrorHandler, Inject, OnDestroy} from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
-import { Router } from "@angular/router";
+import { Router, Data } from "@angular/router";
 import { ListePartieServiceService } from "../liste-partie-service.service";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
@@ -19,12 +19,12 @@ export class DialogVueAttenteComponent implements OnDestroy {
     protected isEnAttente: boolean;
     private souscriptionDeletePartieSimpleAttente: Subscription;
 
-    constructor(
+    public constructor(
         public dialogRef: MatDialogRef<DialogVueAttenteComponent>,
         public router: Router,
         public listePartieService: ListePartieServiceService,
         public socketClientService: SocketClientService,
-        @Inject(MAT_DIALOG_DATA) data
+        @Inject(MAT_DIALOG_DATA) data: Data
     ) {
         this.partieId = data.id;
         dialogRef.disableClose = true;
@@ -33,7 +33,7 @@ export class DialogVueAttenteComponent implements OnDestroy {
         this.isEnAttente = true;
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         if (this.souscriptionDeletePartieSimpleAttente) {
             this.listePartieService.deletePartieSimpleEnAttente(this.partieId).subscribe((res) => {
                 this.router.navigate(["/liste-parties/"]).catch(() => ErrorHandler);

@@ -1,13 +1,17 @@
 import { TestBed } from "@angular/core/testing";
 import { PartieService } from "./partie.service";
-import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
-import { TempsUser } from "../admin/dialog-abstrait";
+import { HttpClientTestingModule, HttpTestingController, TestRequest } from "@angular/common/http/testing";
+import { TempsUser } from "../admin/temps-user";
 import {ErrorHandler} from "@angular/core";
+import { PartieSimple } from "../admin/dialog-simple/partie-simple";
+import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
+
+const QUANTITE_OBJETS: number = 10;
 
 describe("PartieService", () => {
     let service: PartieService;
     let http: HttpTestingController;
-    const responseForm = "<form />";
+    const responseForm: string = "<form />";
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -29,7 +33,7 @@ describe("PartieService", () => {
 
     describe("Fonction getPartieSimple", () => {
         it("GET request should be called with proper arguments", () => {
-            let partieResponse;
+            let partieResponse: PartieSimple =  new PartieSimple("name", [], [], new Buffer(""), new Buffer(""), [[]]);
             const id: string = "12345abcde";
 
             service.getPartieSimple(id).subscribe((response) => {
@@ -47,7 +51,9 @@ describe("PartieService", () => {
 
     describe("Fonction getPartieMultiple", () => {
         it("GET request should be called with proper arguments", () => {
-            let partieResponse;
+            let partieResponse: PartieMultiple = new PartieMultiple("name", [], [], new Buffer(""), new Buffer(""),
+                                                                    new Buffer(""), new Buffer(""), new Array<Array<string>>(),
+                                                                    new Array<Array<string>>(), QUANTITE_OBJETS, "geo", "acs", "123");
             const id: string = "12345abcde";
 
             service.getPartieMultiple(id).subscribe((response) => {
@@ -70,7 +76,7 @@ describe("PartieService", () => {
             service.reinitialiserTempsPartieSimple(id, new Array<TempsUser>(), new Array<TempsUser>())
                 .catch(() => ErrorHandler);
 
-            const req = http.expectOne("http://localhost:3000/partieSimple/reinitialiseTemps/" + id);
+            const req: TestRequest = http.expectOne("http://localhost:3000/partieSimple/reinitialiseTemps/" + id);
             expect(req.request.method).toBe("PUT");
         });
     });

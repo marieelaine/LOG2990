@@ -116,7 +116,8 @@ describe("DialogMultipleComponent", () => {
         });
 
         it("Devrait retourner vrai si la quantité de formes désirées est inférieur à 10", () => {
-            component["data"].quantiteObjets = 9;
+            const qteObjets: number = 9;
+            component["data"].quantiteObjets = qteObjets;
 
             const result: Boolean = component["checkIfOutOfBoundNumberForms"]();
 
@@ -124,7 +125,8 @@ describe("DialogMultipleComponent", () => {
         });
 
         it("Devrait retourner vrai si la quantité de formes désirées est supérieure à 200", () => {
-            component["data"].quantiteObjets = 201;
+            const qteObjets: number = 201;
+            component["data"].quantiteObjets = qteObjets;
 
             const result: Boolean = component["checkIfOutOfBoundNumberForms"]();
 
@@ -172,7 +174,8 @@ describe("DialogMultipleComponent", () => {
         });
 
         it("Devrait retourner faux si la quantité de formes désirées est entre 10 et 200", () => {
-            component["data"].quantiteObjets = 57;
+            const qteObjets: number = 57;
+            component["data"].quantiteObjets = qteObjets;
 
             const result: Boolean = component["checkIfOutOfBoundNumberForms"]();
 
@@ -232,7 +235,7 @@ describe("DialogMultipleComponent", () => {
         });
 
         it("should close the dialog if cancel button is clicked", () => {
-            const onNoClickButton = fixture.debugElement.query(By.css("#onNoClickButton")).nativeElement;
+            const onNoClickButton: HTMLElement = fixture.debugElement.query(By.css("#onNoClickButton")).nativeElement;
 
             // tslint:disable-next-line:no-any
             const spy: jasmine.Spy = spyOn<any>(component, "surClickExterieurDialog");
@@ -241,7 +244,7 @@ describe("DialogMultipleComponent", () => {
           });
 
         it("should call onClickAjouterPartie when an add game button is clicked", () => {
-            const onAddClickButton = fixture.debugElement.query(By.css("#onAddClickButton")).nativeElement;
+            const onAddClickButton: HTMLElement = fixture.debugElement.query(By.css("#onAddClickButton")).nativeElement;
 
             // tslint:disable-next-line:no-any
             const spy: jasmine.Spy = spyOn<any>(component, "onClickAjouterPartie");

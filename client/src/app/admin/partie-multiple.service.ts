@@ -8,7 +8,7 @@ export class PartieMultipleService {
   private readonly BASE_URL: string = "http://localhost:3000/partieMultiple/";
   private readonly AJOUTER_URL: string = this.BASE_URL + "ajouter";
 
-  constructor(private _http: HttpClient) { }
+  public constructor(private _http: HttpClient) { }
 
   public register(partieMultiple: PartieMultiple): Observable<PartieMultiple> {
 

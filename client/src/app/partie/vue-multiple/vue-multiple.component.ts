@@ -4,6 +4,7 @@ import { ActivatedRoute} from "@angular/router";
 import { PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
 import { PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
+import * as constantes from "../../constantes";
 
 @Component({
   selector: "app-vue-multiple",
@@ -18,7 +19,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                        protected partieService: PartieService,
                        protected cookieService: CookieService) {
         super(route, partieService, cookieService, false);
-        this.differenceRestantes = 14;
+        this.differenceRestantes = constantes.DIFF_PARTIE_MULTIPLE;
     }
 
     // TODO
@@ -43,11 +44,12 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         this.imageData.push(atob(String(this.partie["_image2PV2"][0])));
     }
 
-    protected testerPourDiff(event): void {
+    protected testerPourDiff(event: MouseEvent): void {
         if (this.partieCommence && !this.penaliteEtat) {
 
-            const coords = event.offsetX + "," + event.offsetY;
-            const source: string = event.srcElement.id === "canvasG1" || event.srcElement.id === "canvasD1"
+            const coords: string = event.offsetX + "," + event.offsetY;
+            const srcElem: Element = event.srcElement as Element;
+            const source: string = srcElem.id === "canvasG1" || srcElem.id === "canvasD1"
                 ? "_imageDiff1"
                 : "_imageDiff2";
 
@@ -76,24 +78,24 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         let contextG: CanvasRenderingContext2D;
         let contextD: CanvasRenderingContext2D;
         if (src === "_imageDiff1") {
-            contextG = this.canvas.toArray()[0].nativeElement.getContext("2d");
-            contextD = this.canvas.toArray()[1].nativeElement.getContext("2d");
+            contextG = this.canvas.toArray()[constantes.CONTEXT_GAUCHE_POV1_POSITION].nativeElement.getContext("2d");
+            contextD = this.canvas.toArray()[constantes.CONTEXT_DROITE_POV1_POSITION].nativeElement.getContext("2d");
         } else {
-            contextG = this.canvas.toArray()[2].nativeElement.getContext("2d");
-            contextD = this.canvas.toArray()[3].nativeElement.getContext("2d");
+            contextG = this.canvas.toArray()[constantes.CONTEXT_GAUCHE_POV2_POSITION].nativeElement.getContext("2d");
+            contextD = this.canvas.toArray()[constantes.CONTEXT_DROITE_POV2_POSITION].nativeElement.getContext("2d");
         }
-        const imageDataG = contextG.getImageData(0, 0, 640, 480);
-        const dataG = imageDataG.data;
-        const imageDataD = contextD.getImageData(0, 0, 640, 480);
-        const dataD = imageDataD.data;
+        const imageDataG: ImageData = contextG.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
+        const dataG: Uint8ClampedArray = imageDataG.data;
+        const imageDataD: ImageData = contextD.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
+        const dataD: Uint8ClampedArray = imageDataD.data;
 
         for (const pixel of this.partie[src][i]) {
             const x: number = Number(pixel.split(",")[0]);
             const y: number = Number(pixel.split(",")[1]);
-            const dim = (y * 640 * 4) + (x * 4);
+            const dim: number = (y * constantes.WINDOW_WIDTH * constantes.RGB_WIDTH) + (x * constantes.RGB_WIDTH);
             dataD[dim] = dataG[dim];
-            dataD[dim + 1] = dataG[dim + 1];
-            dataD[dim + 2] = dataG[dim + 2];
+            dataD[dim + constantes.RGB_FIRST_INCREMENT] = dataG[dim + constantes.RGB_FIRST_INCREMENT];
+            dataD[dim + constantes.RGB_SECOND_INCREMENT] = dataG[dim + constantes.RGB_SECOND_INCREMENT];
         }
         contextD.putImageData(imageDataD, 0, 0);
     }

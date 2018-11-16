@@ -20,6 +20,7 @@ describe("ListePartieMultipleComponent", () => {
     let component: ListePartieMultipleComponent;
     let fixture: ComponentFixture<ListePartieMultipleComponent>;
     let location: Location;
+    const qteObjetsParam: number = 10;
     const partie: PartieMultiple = new PartieMultiple(
         "partie1",
         new Array<TempsUser>(),
@@ -30,7 +31,7 @@ describe("ListePartieMultipleComponent", () => {
         new Buffer.Buffer(new Array<number>()),
         new Array<Array<string>>(),
         new Array<Array<string>>(),
-        15,
+        qteObjetsParam,
         "geo",
         "acs",
         "1");

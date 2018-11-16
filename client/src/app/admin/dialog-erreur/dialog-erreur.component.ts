@@ -1,5 +1,6 @@
 import { Component, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { Data } from "@angular/router";
 
 @Component({
   selector: "app-dialog-erreur",
@@ -10,12 +11,12 @@ export class DialogErreurComponent {
 
   public messageErreur: string;
 
-  constructor(private dialogRef: MatDialogRef<DialogErreurComponent>,
-              @Inject(MAT_DIALOG_DATA) data) {
+  public constructor(private dialogRef: MatDialogRef<DialogErreurComponent>,
+                     @Inject(MAT_DIALOG_DATA) data: Data) {
     this.messageErreur = data.message;
   }
 
-  protected fermerDialog() {
+  protected fermerDialog(): void {
     this.dialogRef.close();
   }
 }

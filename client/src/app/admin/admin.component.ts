@@ -29,7 +29,7 @@ export interface Checkbox {
 export class AdminComponent {
 
   protected gameName: string;
-  @ViewChild("menuTrigger") menuTrigger: MatMenuTrigger;
+  @ViewChild("menuTrigger") protected menuTrigger: MatMenuTrigger;
 
   public constructor(public dialog: MatDialog, public socketClientService: SocketClientService) {
     this.initSocket();

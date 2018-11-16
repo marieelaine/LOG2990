@@ -7,11 +7,11 @@ import { PartieSimpleService } from "../partie-simple.service";
 import { DialogAbstrait } from "../dialog-abstrait";
 import * as Buffer from "buffer";
 import { FormControl, Validators } from "@angular/forms";
-import { LONGUEUR_NOM_MIN, LONGUEUR_NOM_MAX } from "src/app/constantes";
+import * as constante from "src/app/constantes";
 
 export const IMAGE_URL: string = "http://localhost:3000/images/";
 
-interface ImageInfo {
+export interface ImageInfo {
   size: number;
   width: number;
   height: number;
@@ -50,7 +50,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
       this.wrongImageSizeOrTypeMessage = "";
       this.wrongNumberOfImagesMessage = "";
       this.nameControl = new FormControl("", [
-        Validators.minLength(LONGUEUR_NOM_MIN), Validators.maxLength(LONGUEUR_NOM_MAX), Validators.required]);
+        Validators.minLength(constante.LONGUEUR_NOM_MIN), Validators.maxLength(constante.LONGUEUR_NOM_MAX), Validators.required]);
     }
 
   protected onClickAjouterPartie(): void {
@@ -85,8 +85,9 @@ export class DialogSimpleComponent extends DialogAbstrait {
 
   protected onUploadImage(event: Event, i: number): void {
     this.currentImageNumber = i;
-    const target: EventTarget = event.target as EventTarget;
-    this.selectedFiles[this.currentImageNumber] = event.target.files[0] as File;
+    const target: HTMLInputElement = event.target as HTMLInputElement;
+    const files: FileList = target.files as FileList;
+    this.selectedFiles[this.currentImageNumber] = files[0] as File;
     this.convertImageToArrayToCheckSize(this.selectedFiles[this.currentImageNumber]);
     this.afficherImageSurUploadClient();
   }
@@ -107,7 +108,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
   protected checkIfOutOfBoundNameLength(): Boolean {
 
     return (this["data"].simpleGameName === "" || this["data"].simpleGameName === undefined
-    || this["data"].simpleGameName.length < 3 || this["data"].simpleGameName.length > 20);
+    || this["data"].simpleGameName.length < constante.LONGUEUR_NOM_MIN || this["data"].simpleGameName.length > constante.LONGUEUR_NOM_MAX);
   }
 
   private afficherImageSurUploadClient(): void {
@@ -140,13 +141,19 @@ export class DialogSimpleComponent extends DialogAbstrait {
     reader.readAsArrayBuffer(file);
     reader.onload = () => {
       const dv: DataView = new DataView(reader.result as ArrayBuffer);
-      const imageInfo: ImageInfo = {size: dv.getUint16(28, true), width: dv.getUint32(18, true), height: dv.getUint32(22, true)};
+      const imageInfo: ImageInfo = {
+        size: dv.getUint16(constante.HEADER_BMP_P1, true),
+        width: dv.getUint32(constante.HEADER_BMP_P2, true),
+        height: dv.getUint32(constante.HEADER_BMP_P3, true)
+      };
       self.setWrongImageSizeOrTypeMessage(imageInfo);
     };
   }
 
   private checkIfWrongImageSize(imageInfo: ImageInfo): Boolean {
-    return (imageInfo["size"] !== 24 || imageInfo["width"] !== 640 || imageInfo["height"] !== 480);
+    return (imageInfo["size"] !== constante.BIT_FORMAT
+            || imageInfo["width"] !== constante.WINDOW_WIDTH
+            || imageInfo["height"] !== constante.WINDOW_HEIGHT);
   }
 
   private checkIfWrongImageType(): Boolean {

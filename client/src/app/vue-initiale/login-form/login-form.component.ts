@@ -7,6 +7,10 @@ import { myParams, myStyle } from "../../../assets/particles";
 import { CookieService } from "ngx-cookie-service";
 
 export const USER_URL: string = "http://localhost:3000/users/";
+const PARTICULES_WIDTH: number = 100;
+const PARTICULES_HEIGHT: number = 100;
+const MAX_LENGTH_USERNAME: number = 12;
+const MIN_LENGTH_USERNAME: number = 3;
 
 @Component({
     selector: "app-login-form",
@@ -22,10 +26,10 @@ export class LoginFormComponent implements OnInit {
     protected username: string;
 
     // Paramètres de particles background
-    myStyle: object = {};
-    myParams: object = {};
-    width: number = 100;
-    height: number = 100;
+    public myStyle: object = {};
+    public myParams: object = {};
+    public width: number = PARTICULES_WIDTH;
+    public height: number = PARTICULES_HEIGHT;
 
     public constructor(private router: Router,
                        private userService: UserService,
@@ -44,7 +48,7 @@ export class LoginFormComponent implements OnInit {
     }
 
     protected onSubmit(): void {
-        const username = this.loginForm.value.username;
+        const username: string = this.loginForm.value.username;
         const result: User = new User(username);
         this.userService.register(result)
             .subscribe(
@@ -64,8 +68,8 @@ export class LoginFormComponent implements OnInit {
             username: new FormControl("", [
                 Validators.required,
                 Validators.pattern("^[A-Za-z0-9]+$"),
-                Validators.maxLength(12),
-                Validators.minLength(3)
+                Validators.maxLength(MAX_LENGTH_USERNAME),
+                Validators.minLength(MIN_LENGTH_USERNAME)
             ])
         });
     }

@@ -5,6 +5,12 @@ import {PartieMultiple} from "../admin/dialog-multiple/partie-multiple";
 import {PartieSimple} from "../admin/dialog-simple/partie-simple";
 import { TempsUser } from "../admin/temps-user";
 
+const NB_SECONDES: number = 60;
+const DISPLAY: number = 10;
+const BORNE_INF: number = 100;
+const BORNE_SUP: number = 400;
+const NB_ELEMENT: number = 4;
+
 @Component({
     selector: "app-liste-parties",
     templateUrl: "./liste-parties.component.html",
@@ -14,7 +20,7 @@ import { TempsUser } from "../admin/temps-user";
 
 export class ListePartiesComponent {
 
-    @ViewChildren("image") image: QueryList<ElementRef>;
+    @ViewChildren("image") public image: QueryList<ElementRef>;
 
     protected jouerOuReinitialiser: string;
     protected creerOuSupprimer: string;
@@ -44,14 +50,14 @@ export class ListePartiesComponent {
 
                 isPartieSimple ? data = atob(String(partie["_image1"][0])) : data = atob(String(partie["_image1PV1"][0]));
 
-                let hex = 0x00;
+                let hex: number = 0x00;
                 const result: Uint8Array = new Uint8Array(data.length);
 
-                for (let i = 0; i < data.length; i++) {
+                for (let i: number = 0; i < data.length; i++) {
                     hex = data.charCodeAt(i);
                     result[i] = hex;
                 }
-                const blob = new Blob([result], {type: "image/bmp"});
+                const blob: Blob = new Blob([result], {type: "image/bmp"});
                 for (const elem of this.image.toArray()) {
                     if (elem.nativeElement.id === id) {
                         elem.nativeElement.src = URL.createObjectURL(blob);
@@ -81,15 +87,15 @@ export class ListePartiesComponent {
     }
 
     protected getDisplayTime(temps: TempsUser): string {
-        const minutes = Math.floor(temps["_temps"] / 60);
-        const secondes = temps["_temps"] - minutes * 60;
+        const minutes: number = Math.floor(temps["_temps"] / NB_SECONDES);
+        const secondes: number = temps["_temps"] - minutes * NB_SECONDES;
 
-        return (secondes < 10) ? (minutes + ":0" + secondes) : minutes + ":" + secondes;
+        return (secondes < DISPLAY) ? (minutes + ":0" + secondes) : minutes + ":" + secondes;
     }
 
     protected genererTableauTempsAleatoires(): Array<TempsUser> {
         const arr: Array<TempsUser> = [];
-        for (let i: number = 1; i < 4; i++) {
+        for (let i: number = 1; i < NB_ELEMENT; i++) {
             arr.push(new TempsUser("Joueur " + i, this.genererTempsAleatoire()));
         }
         this.getSortedTimes(arr);
@@ -98,7 +104,7 @@ export class ListePartiesComponent {
     }
 
     private genererTempsAleatoire(): number {
-        return Math.floor(Math.random() * 400) + 100;
+        return Math.floor(Math.random() * BORNE_SUP) + BORNE_INF;
     }
 
     private getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {

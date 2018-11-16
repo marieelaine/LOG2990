@@ -28,7 +28,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
         this.listeParties = [];
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.listePartieService.getListePartieMultiple().subscribe((res: PartieMultiple[]) => {
             this.listeParties = res;
         });
@@ -38,7 +38,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
         this.ajouterPartieSurSocketEvent();
     }
 
-    protected afficherImage(id: string) {
+    protected afficherImage(id: string): void {
         this.ajusterImage(id, this.listeParties, false);
     }
 
@@ -64,7 +64,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
         }
     }
 
-    private ouvrirDialogVueAttente(partieId: string) {
+    private ouvrirDialogVueAttente(partieId: string): void {
         this.dialog.open(DialogVueAttenteComponent, {
             height: "220px",
             width: "600px",
@@ -95,7 +95,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
         });
     }
 
-    private ajouterPartieSurSocketEvent() {
+    private ajouterPartieSurSocketEvent(): void {
         this.socketClientService.socket.on(event.ENVOYER_PARTIE_MULTIPLE, (data) => {
             this.listeParties.push(data);
         });

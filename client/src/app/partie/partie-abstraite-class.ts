@@ -7,13 +7,18 @@ import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 import { ChatComponent } from "../chat/chat.component";
 import {CookieService} from "ngx-cookie-service";
 import { TempsUser } from "../admin/temps-user";
+import * as constantes from "../constantes";
+
+const TIMEOUT: number = 1000;
+const OFFSET_ADDITIONNEL: number = 10;
+const LINE_WIDTH: number = 1.5;
+const PARTIE_SECOND_ELEMENT: number = 2;
 
 export abstract class PartieAbstraiteClass {
 
-    @ViewChildren("canvas") canvas: QueryList<ElementRef>;
-    @ViewChild(ChatComponent) chat: ChatComponent;
+    @ViewChildren("canvas") protected canvas: QueryList<ElementRef>;
+    @ViewChild(ChatComponent) protected chat: ChatComponent;
 
-    // TODO : too many parameters
     protected chrono: ChronoComponent;
     protected messageDifferences: string;
     protected differencesTrouvees: number;
@@ -67,28 +72,28 @@ export abstract class PartieAbstraiteClass {
 
     protected setup(): void {
         this.addNomPartieToChat();
-        for (let i = 0; i < this.nbImages; i++) {
+        for (let i: number = 0; i < this.nbImages; i++) {
             this.ajusterSourceImage(this.imageData[i], this.canvas.toArray()[i], this.image[i]);
         }
         this.commencerPartie();
     }
 
-    protected addNomPartieToChat() {
+    protected addNomPartieToChat(): void {
         this.nomPartie = this.partie["_nomPartie"];
-        const msg = ("Bienvenue dans la partie " + this.nomPartie.charAt(0).toUpperCase()
+        const msg: string = ("Bienvenue dans la partie " + this.nomPartie.charAt(0).toUpperCase()
                                      + this.partie["_nomPartie"].slice(1));
         this.chat.addMessageToMessagesChat(msg);
     }
 
     protected ajusterSourceImage(data: String, canvas: ElementRef, image: HTMLImageElement): void {
-        let hex = 0x00;
+        let hex: number = 0x00;
         const result: Uint8Array = new Uint8Array(data.length);
 
-        for (let i  = 0; i < data.length; i++) {
+        for (let i: number  = 0; i < data.length; i++) {
             hex = data.charCodeAt(i);
             result[i] = hex;
         }
-        const blob = new Blob([result], {type: "image/bmp"});
+        const blob: Blob = new Blob([result], {type: "image/bmp"});
 
         const context: CanvasRenderingContext2D = canvas.nativeElement.getContext("2d");
         image.src = URL.createObjectURL(blob);
@@ -112,7 +117,7 @@ export abstract class PartieAbstraiteClass {
         }
     }
 
-    protected ajouterMessageDiffTrouvee() {
+    protected ajouterMessageDiffTrouvee(): void {
         this.chat.messagesChat.push("Vous avez trouvé une différence!");
     }
 
@@ -125,12 +130,12 @@ export abstract class PartieAbstraiteClass {
         this.ajouterTemps(this.chrono.getTime());
     }
 
-    protected updateTableauTempsSolo(temps: number) {
+    protected updateTableauTempsSolo(temps: number): void {
       let joueur: string = this.cookieService.get("username");
       if (joueur === "") {
           joueur = "Anonyme";
       }
-      if (temps < this.partie["_tempsSolo"][2]["_temps"]) {
+      if (temps < this.partie["_tempsSolo"][PARTIE_SECOND_ELEMENT]["_temps"]) {
         const tempsUser: TempsUser =  new TempsUser(joueur, temps);
         this.partie["_tempsSolo"].splice(-1, 1);
         this.partie["_tempsSolo"].push(tempsUser);
@@ -140,15 +145,15 @@ export abstract class PartieAbstraiteClass {
     protected penalite(event): void {
         this.penaliteEtat = true;
         const canvas = event.srcElement;
-        const ctx = canvas.getContext("2d");
+        const ctx: CanvasRenderingContext2D = canvas.getContext("2d");
         const imageSaved: ImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         ctx.font = "600 28px Arial";
         ctx.textAlign = "center";
         ctx.fillStyle = "#ff0000";
-        ctx.fillText("ERREUR", event.offsetX, event.offsetY + 10);
-        ctx.lineWidth = 1.5;
+        ctx.fillText("ERREUR", event.offsetX, event.offsetY + OFFSET_ADDITIONNEL);
+        ctx.lineWidth = LINE_WIDTH;
         ctx.fillStyle = "black";
-        ctx.strokeText("ERREUR", event.offsetX, event.offsetY + 10);
+        ctx.strokeText("ERREUR", event.offsetX, event.offsetY + OFFSET_ADDITIONNEL);
         this.audio.src = "../assets/no.mp3";
         this.audio.load();
         this.audio.play().catch(() => ErrorHandler);
@@ -156,13 +161,13 @@ export abstract class PartieAbstraiteClass {
         setTimeout(() => {
             ctx.putImageData(imageSaved, 0, 0);
             this.penaliteEtat = false;
-        },         1000);
+        },         TIMEOUT);
     }
 
     private setImage(isSimple: boolean): void {
-        this.nbImages = isSimple ? 2 : 4;
+        this.nbImages = isSimple ? constantes.PARTIE_SIMPLE_NB_IMAGES : constantes.PARTIE_MULTIPLE_NB_IMAGES;
         this.image = [];
-        for (let i = 0; i < this.nbImages; i++) {
+        for (let i: number = 0; i < this.nbImages; i++) {
             this.image.push(new Image());
         }
     }
