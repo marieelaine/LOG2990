@@ -1,4 +1,4 @@
-import { HttpHandler, HttpClient, HttpRequest, HttpEvent } from "@angular/common/http";
+import { HttpHandler, HttpClient, HttpRequest, HttpEvent, HttpResponse } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 
@@ -8,8 +8,8 @@ export class HttpHandlerMock extends HttpHandler {
         super();
     }
 
-    public handle(req: HttpRequest<HttpClient>): Observable<HttpEvent<any>> {
-        return this.http.get<any>("");
+    public handle(req: HttpRequest<HttpClient>): Observable<HttpEvent<HttpResponse<string>>> {
+        return this.http.get<HttpEvent<HttpResponse<string>>>("");
     }
 }
 
