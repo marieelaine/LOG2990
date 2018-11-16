@@ -1,7 +1,7 @@
 import { TestBed } from "@angular/core/testing";
 import { PartieService } from "./partie.service";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
-import { TempsUser } from "../admin/dialog-abstrait";
+import { TempsUser } from "../admin/temps-user";
 import {ErrorHandler} from "@angular/core";
 
 describe("PartieService", () => {

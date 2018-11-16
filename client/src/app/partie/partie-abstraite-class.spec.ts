@@ -5,7 +5,7 @@ import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 import { PartieService } from "./partie.service";
 import { HttpClient } from "@angular/common/http";
 import { HttpHandlerMock, ActivatedRouteMock } from "src/testing/mocks";
-import { TempsUser } from "../admin/dialog-abstrait";
+import { TempsUser } from "../admin/temps-user";
 import {CookieService} from "ngx-cookie-service";
 
 class PartieServiceMock extends PartieService {
