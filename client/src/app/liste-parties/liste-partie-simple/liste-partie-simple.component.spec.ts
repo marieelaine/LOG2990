@@ -11,7 +11,7 @@ import { of } from "rxjs";
 import { PartieSimpleMultijoueurComponent } from "src/app/partie/vue-simple/partie-simple-multijoueur/partie-multijoueur.component";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import { MatDialogModule } from "@angular/material/dialog";
-import { TempsUser } from "src/app/admin/temps-user";
+import { TempsUser } from "src/app/admin/dialog-abstrait";
 import { VueSimpleComponent } from "src/app/partie/vue-simple/vue-simple.component";
 
 describe("Liste Partie Simple Component", () => {

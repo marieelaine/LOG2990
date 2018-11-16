@@ -1,14 +1,14 @@
-import {Component, ErrorHandler} from "@angular/core";
-import {PartieAbstraiteClass} from "../partie-abstraite-class";
-import {PartieSimple} from "src/app/admin/dialog-simple/partie-simple";
-import {ActivatedRoute} from "@angular/router";
-import {PartieService} from "../partie.service";
-import {CookieService} from "ngx-cookie-service";
+import {Component, ErrorHandler} from '@angular/core';
+import {PartieAbstraiteClass} from '../partie-abstraite-class';
+import {PartieSimple} from 'src/app/admin/dialog-simple/partie-simple';
+import {ActivatedRoute} from '@angular/router';
+import {PartieService} from '../partie.service';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
-    selector: "app-vue-simple",
-    templateUrl: "./vue-simple.component.html",
-    styleUrls: ["./vue-simple.component.css"]
+    selector: 'app-vue-simple',
+    templateUrl: './vue-simple.component.html',
+    styleUrls: ['./vue-simple.component.css']
 })
 export class VueSimpleComponent extends PartieAbstraiteClass {
     protected partie: PartieSimple;

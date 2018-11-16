@@ -8,7 +8,6 @@ import * as Buffer from "buffer";
 import { PartieMultipleService } from "../partie-multiple.service";
 import { FormControl, Validators } from "@angular/forms";
 import { TempsUser } from "../temps-user";
-import { LONGUEUR_NOM_MIN, LONGUEUR_NOM_MAX, NB_OBJET_MIN, NB_OBJET_MAX } from "src/app/constantes";
 
 @Component({
   selector: "app-dialog-multiple",
@@ -38,9 +37,9 @@ export class DialogMultipleComponent extends DialogAbstrait {
       this.data.theme = "";
       this.data.typeModification = "";
       this.nameControl = new FormControl("", [
-        Validators.minLength(LONGUEUR_NOM_MIN), Validators.maxLength(LONGUEUR_NOM_MAX), Validators.required]);
+        Validators.minLength(3), Validators.maxLength(20), Validators.required]);
       this.qtyControl = new FormControl("", [
-        Validators.min(NB_OBJET_MIN), Validators.max(NB_OBJET_MAX),
+        Validators.min(10), Validators.max(200),
         Validators.required, Validators.pattern("[ 0-9 ]*")]);
   }
 
@@ -84,7 +83,7 @@ export class DialogMultipleComponent extends DialogAbstrait {
     this.ajouterPartie();
   }
 
-  protected ajouterPartie(): void {
+  protected ajouterPartie() {
     const tempsSolo: Array<TempsUser> = this.genererTableauTempsAleatoires();
     const temps1v1: Array<TempsUser> = this.genererTableauTempsAleatoires();
 

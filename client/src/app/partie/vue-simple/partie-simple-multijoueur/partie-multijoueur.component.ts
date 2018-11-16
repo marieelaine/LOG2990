@@ -1,8 +1,8 @@
-import { Component } from "@angular/core";
-import { PartieService} from "../../partie.service";
-import { VueSimpleComponent } from "../vue-simple.component";
-import { ActivatedRoute } from "@angular/router";
-import { CookieService } from "ngx-cookie-service";
+import {Component} from "@angular/core";
+import {PartieService} from "../../partie.service";
+import {VueSimpleComponent} from "../vue-simple.component";
+import {ActivatedRoute} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
     selector: "app-partie-multijoueur",
@@ -14,9 +14,10 @@ import { CookieService } from "ngx-cookie-service";
 export class PartieSimpleMultijoueurComponent extends VueSimpleComponent {
 
     constructor(protected route: ActivatedRoute,
-                protected partieService: PartieService,
-                protected cookieService: CookieService) {
+                          protected partieService: PartieService,
+                          protected cookieService: CookieService) {
         super(route, partieService, cookieService);
     }
+
     // TODO partie multijoueur pour le sprint 4
 }

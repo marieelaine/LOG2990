@@ -1,15 +1,15 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PartieMultipleMultijoueurComponent } from "./partie-multiple-multijoueur.component";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { MatCardModule } from "@angular/material";
-import { ChatComponent } from "src/app/chat/chat.component";
-import { ActivatedRoute } from "@angular/router";
-import { ActivatedRouteMock } from "src/testing/mocks";
+import { PartieMultipleMultijoueurComponent } from './partie-multiple-multijoueur.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatCardModule } from '@angular/material';
+import { ChatComponent } from 'src/app/chat/chat.component';
+import { ActivatedRoute } from '@angular/router';
+import { ActivatedRouteMock } from 'src/testing/mocks';
 import {CookieService} from "ngx-cookie-service";
 import {ErrorHandler} from "@angular/core";
 
-describe("PartieMultipleMultijoueurComponent", () => {
+describe('PartieMultipleMultijoueurComponent', () => {
   let component: PartieMultipleMultijoueurComponent;
   let fixture: ComponentFixture<PartieMultipleMultijoueurComponent>;
 
@@ -38,7 +38,7 @@ describe("PartieMultipleMultijoueurComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

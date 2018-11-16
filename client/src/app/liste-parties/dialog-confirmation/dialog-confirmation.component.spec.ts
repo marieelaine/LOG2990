@@ -2,14 +2,14 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { DialogConfirmationComponent } from "./dialog-confirmation.component";
 import { MatDividerModule, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { PartieSimple } from "src/app/admin/dialog-simple/partie-simple";
 import { PartieMultiple } from "src/app/admin/dialog-multiple/partie-multiple";
-import { TempsUser } from "src/app/admin/dialog-abstrait";
+import { TempsUser } from "src/app/admin/temps-user";
 
 describe("DialogConfirmationComponent", () => {
-    const dialogMock:  = {
+    const dialogMock = {
         close: () => { }
     };
     let component: DialogConfirmationComponent;
@@ -33,7 +33,7 @@ describe("DialogConfirmationComponent", () => {
         component = fixture.componentInstance;
     });
 
-    it('should create', () => {
+    it("should create", () => {
         expect(component).toBeTruthy();
     });
 
