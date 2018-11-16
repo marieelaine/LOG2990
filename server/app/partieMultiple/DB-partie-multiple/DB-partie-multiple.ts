@@ -28,6 +28,9 @@ export interface PartieMultipleInterface {
     _typeModification: string;
 }
 
+const imagePOV1: number = 1;
+const imagePOV2: number = 2;
+
 @injectable()
 export class DBPartieMultiple extends DBPartieAbstract {
 
@@ -44,9 +47,9 @@ export class DBPartieMultiple extends DBPartieAbstract {
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> {
         try {
             await this.genererScene(req.body);
-            res.status(201).json(this.getPartieByName(req.params.nomPartie));
+            res.status(constantes.HTTP_CREATED).json(this.getPartieByName(req.params.nomPartie));
         } catch (err) {
-            res.status(501).json(err);
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
         }
     }
 
@@ -54,9 +57,9 @@ export class DBPartieMultiple extends DBPartieAbstract {
         try {
             await this.deletePartie(req.params.id, res);
             // TODO : this.socket.supprimerPartieMultiple(req.params.id);
-            res.status(201);
+            res.status(constantes.HTTP_CREATED);
         } catch (err) {
-            res.status(501).json(err);
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
         }
     }
 
@@ -116,10 +119,10 @@ export class DBPartieMultiple extends DBPartieAbstract {
                 throw new Error();
             });
 
-            return res.status(201);
+            return res.status(constantes.HTTP_CREATED);
         } catch (err) {
 
-            return res.status(501).json(err);
+            return res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
         }
     }
 
@@ -212,9 +215,9 @@ export class DBPartieMultiple extends DBPartieAbstract {
     }
 
     private async setImageDiff(diffArrays: Array<Array<string>>, partie: PartieMultipleInterface, imgNumber: number): Promise<void> {
-        if (imgNumber === 1) {
+        if (imgNumber === imagePOV1) {
             partie._imageDiff1 = diffArrays;
-            this.getImageDiffTextFile("../Images/n_b_diff.bmp.txt", partie, 2);
+            this.getImageDiffTextFile("../Images/n_b_diff.bmp.txt", partie, imagePOV2);
         } else {
             partie._imageDiff2 = diffArrays;
             await this.enregistrerPartieMultiple(partie);

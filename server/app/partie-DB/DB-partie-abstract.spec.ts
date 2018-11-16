@@ -18,7 +18,7 @@ class DBPartie extends DBPartieAbstract {
         this.schemaArray = new Schema({});
         this.schemaBuffer = new Schema({});
     }
-    
+
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> { ""; }
 
     public async requeteDeletePartie(req: Request, res: Response): Promise<void> { ""; }

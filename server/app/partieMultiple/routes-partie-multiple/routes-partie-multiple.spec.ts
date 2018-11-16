@@ -12,7 +12,7 @@ describe("Route Partie Multiple classe", () => {
         it("Devrait retourner un tableau d'une longueur differente de 0", async () => {
             const resultat: PartieMultipleInterface[] = await WebRequest.json<PartieMultipleInterface[]>(URL_LISTMULTIPLE);
 
-            assert.notEqual(resultat.length, 0);
+            assert.notStrictEqual(resultat.length, 0);
         });
 
         it("Devrait retourner des donnees", async () => {
@@ -28,7 +28,7 @@ describe("Route Partie Multiple classe", () => {
         it("Devrait retourner un tableau d'une longueur differente de 0", async () => {
             const resultat: PartieMultipleInterface[] = await WebRequest.json<PartieMultipleInterface[]>(URL_ID_PARTIE);
 
-            assert.notEqual(resultat.length, 0);
+            assert.notStrictEqual(resultat.length, 0);
         });
 
         it("Devrait retourner des donnees", async () => {
@@ -44,7 +44,7 @@ describe("Route Partie Multiple classe", () => {
         it("Devrait retourner un string d'une longueur differente de 0", async () => {
             const resultat: PartieMultipleInterface[] = await WebRequest.json<PartieMultipleInterface[]>(URL_ID);
 
-            assert.notEqual(resultat.length, 0);
+            assert.notStrictEqual(resultat.length, 0);
         });
 
         it("Devrait retourner des donnees", async () => {

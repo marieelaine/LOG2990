@@ -37,9 +37,9 @@ export class DBPartieSimple extends DBPartieAbstract {
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> {
         try {
             await this.genererImageMod(req.body);
-            res.status(201).json(await this.getPartieByName(req.params.nomPartie));
+            res.status(constantes.HTTP_CREATED).json(await this.getPartieByName(req.params.nomPartie));
         } catch (err) {
-            res.status(501).json(err);
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
         }
     }
 
@@ -47,9 +47,9 @@ export class DBPartieSimple extends DBPartieAbstract {
         try {
             await this.deletePartie(req.params.id, res);
             this.socket.supprimerPartieSimple(req.params.id);
-            res.status(201);
+            res.status(constantes.HTTP_CREATED);
         } catch (err) {
-            res.status(501).json(err);
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
         }
     }
 
@@ -93,10 +93,10 @@ export class DBPartieSimple extends DBPartieAbstract {
                 throw new Error();
             });
 
-            return res.status(201);
+            return res.status(constantes.HTTP_CREATED);
         } catch (err) {
 
-            return res.status(501).json(err);
+            return res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
         }
     }
 
