@@ -65,7 +65,8 @@ describe("ListePartiesComponent", () => {
     });
 
     it("should return array of sorted times", () => {
-        const user1: TempsUser = new TempsUser("user1", 2);
+        const tempsParam: number = 2;
+        const user1: TempsUser = new TempsUser("user1", tempsParam);
         const user2: TempsUser = new TempsUser("user2", 1);
         const sortingTimesTest: TempsUser[] = [user1, user2];
 
@@ -75,13 +76,15 @@ describe("ListePartiesComponent", () => {
     });
 
     it("should return array of sorted times", () => {
-        const temps = new TempsUser("", 61);
-        expect(component["getDisplayTime"](temps)).toBe("1:01");
+        const tempsParam: number = 61;
+        const tempsUser: TempsUser = new TempsUser("", tempsParam);
+        expect(component["getDisplayTime"](tempsUser)).toBe("1:01");
     });
 
     it("genererTableauTempsAleatoires devrait creer une tableau de taille 3", () => {
-        const array = component["genererTableauTempsAleatoires"]();
-        expect(array.length).toEqual(3);
+        const arrLength: number = 3;
+        const array: Array<TempsUser> = component["genererTableauTempsAleatoires"]();
+        expect(array.length).toEqual(arrLength);
     });
 
     it("should return title without first letter", () => {
