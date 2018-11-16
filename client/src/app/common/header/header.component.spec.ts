@@ -52,24 +52,11 @@ describe("HeaderComponent", () => {
         expect(component).toBeDefined();
     });
 
-    describe("fonction onLogout", () => {
-        it("Devrait appeler les fonctions du cookieService et du userService", fakeAsync(() => {
-            const unNomUsager: string = "un nom dusager";
-            mockCookieService.get.and.returnValue(unNomUsager);
-            mockUserService.delete.and.callThrough();
-
-            component["onLogout"]();
-            tick();
-
-            expect(mockCookieService.get).toHaveBeenCalledWith("username");
-            expect(mockCookieService.deleteAll).toHaveBeenCalledTimes(1);
-            expect(mockUserService.delete).toHaveBeenCalledWith(unNomUsager);
-            expect(location.path()).toBe("/");
-        }));
-    });
-
     describe("fonction onHeaderTitleClick", () => {
         it("Devrait naviguer a la router '/liste-parties'", fakeAsync(() => {
+            const spy: jasmine.Spy = spyOn(component["router"], "navigateByUrl");
+            spy.and.callThrough();
+
             component["OnHeaderTitleClick"]();
             tick();
 
