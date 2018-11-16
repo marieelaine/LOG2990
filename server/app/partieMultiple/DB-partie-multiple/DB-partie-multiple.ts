@@ -54,7 +54,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
     public async requeteDeletePartie(req: Request, res: Response): Promise<void> {
         try {
             await this.deletePartie(req.params.id, res);
-            // TODO sprint 4: this.socket.supprimerPartieMultiple(req.params.id);
+            this.socket.supprimerPartieMultiple(req.params.id);
             res.status(constantes.HTTP_CREATED);
         } catch (err) {
             res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
@@ -139,7 +139,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
 
     protected async obtenirPartieId(nomPartie: String): Promise<string> {
         const partieMultiple: PartieMultipleInterface[] = [];
-        
+
         await this.modelPartieBuffer.find()
             .then((res: Document[]) => {
                 for (const partie of res) {
@@ -158,7 +158,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
 
     protected async getPartieById(partieID: String): Promise<PartieMultipleInterface> {
         const partieMultiple: PartieMultipleInterface[] = [];
-        
+
         await this.modelPartieArray.find()
             .then((parties: Document[]) => {
                 for (const partie of parties) {
@@ -177,7 +177,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
 
     protected async getPartieByName(nomPartie: String): Promise<PartieMultipleInterface> {
         const partieMultiple: PartieMultipleInterface[] = [];
-        
+
         await this.modelPartieArray.find()
             .then((parties: Document[]) => {
                 for (const partie of parties) {
@@ -263,7 +263,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
         });
         let i: number = 0;
         let arrayDiff: Array<string> = new Array<string>();
-        
+
         rl.on("line", async (line: string) => {
             if (line.startsWith("END")) {
                 diffArrays.push(arrayDiff);

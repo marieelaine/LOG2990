@@ -51,16 +51,24 @@ export class DialogVueAttenteComponent implements OnDestroy {
         });
     }
 
-    private setMessageErreur(): void {
+    private setMessageDialog(): void {
         this.message = "Erreur : cette partie n'existe plus!";
+    }
+
+    private setMessageErreur(data: string): void {
+        if (this.partieId === data) {
+            this.isEnAttente = false;
+            this.setMessageDialog();
+        }
     }
 
     private ajouterPartieSurSocket(): void {
         this.socketClientService.socket.on(event.DELETE_PARTIE_SIMPLE, (data: string) => {
-            if (this.partieId === data) {
-                this.isEnAttente = false;
-                this.setMessageErreur();
-            }
+            this.setMessageErreur(data);
+        });
+
+        this.socketClientService.socket.on(event.DELETE_PARTIE_MULTIPLE, (data: string) => {
+            this.setMessageErreur(data);
         });
     }
 
