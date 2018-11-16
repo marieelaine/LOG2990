@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from "@angular/core/testing";
 import { Location } from "@angular/common";
-import { ListePartiesComponent } from '../../liste-parties/liste-parties.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { HeaderComponent } from './header.component';
-import { MatToolbarModule } from '@angular/material';
-import { RouterTestingModule } from '@angular/router/testing';
-import { CookieService } from 'ngx-cookie-service';
-import { UserService } from '../../vue-initiale/user.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ListePartiesComponent } from "../../liste-parties/liste-parties.component";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { HeaderComponent } from "./header.component";
+import { MatToolbarModule } from "@angular/material";
+import { RouterTestingModule } from "@angular/router/testing";
+import { CookieService } from "ngx-cookie-service";
+import { UserService } from "../../vue-initiale/user.service";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
-describe('HeaderComponent', () => {
+describe("HeaderComponent", () => {
     let mockUserService: jasmine.SpyObj<UserService>;
     let mockCookieService: jasmine.SpyObj<CookieService>;
 
@@ -48,14 +48,15 @@ describe('HeaderComponent', () => {
         location = TestBed.get(Location);
     });
 
-    it('Devrait etre construit', () => {
+    it("Devrait etre construit", () => {
         expect(component).toBeDefined();
     });
 
     describe("fonction onLogout", () => {
-        it("Devrait appeller les fonctions du cookieService et du userService", fakeAsync(() => {
+        it("Devrait appeler les fonctions du cookieService et du userService", fakeAsync(() => {
             const unNomUsager: string = "un nom dusager";
             mockCookieService.get.and.returnValue(unNomUsager);
+            mockUserService.delete.and.callThrough();
 
             component["onLogout"]();
             tick();

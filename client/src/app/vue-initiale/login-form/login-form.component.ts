@@ -26,10 +26,10 @@ export class LoginFormComponent implements OnInit {
     protected username: string;
 
     // Paramètres de particles background
-    private myStyle: object = {};
-    private myParams: object = {};
-    private width: number = PARTICULES_WIDTH;
-    private height: number = PARTICULES_HEIGHT;
+    public myStyle: object = {};
+    public myParams: object = {};
+    public width: number = PARTICULES_WIDTH;
+    public height: number = PARTICULES_HEIGHT;
 
     public constructor(private router: Router,
                        private userService: UserService,

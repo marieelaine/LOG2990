@@ -10,7 +10,6 @@ import { TempsUser } from "src/app/admin/temps-user";
 import { Data } from "@angular/router";
 
 describe("DialogConfirmationComponent", () => {
-
     let component: DialogConfirmationComponent;
     let fixture: ComponentFixture<DialogConfirmationComponent>;
 
@@ -56,20 +55,6 @@ describe("DialogConfirmationComponent", () => {
         expect(spy).toHaveBeenCalled();
     });
 
-    describe("onConfirmationClick", () => {
-        it("devrait appeler supprimerPartieMultiple si isSimple == false;", () => {
-            component["listeParties"] = [];
-            component["isSimple"] = false;
-
-            // tslint:disable-next-line:no-any
-            const spy: jasmine.Spy = spyOn<any>(component, "supprimerPartieMultiple");
-
-            component["onConfirmationClick"]();
-
-            expect(spy).toHaveBeenCalled();
-        });
-    });
-
     describe("supprimerPartieSimple", () => {
         beforeEach(() => {
             component["listePartiesSimple"] = [];
@@ -78,6 +63,7 @@ describe("DialogConfirmationComponent", () => {
 
             // tslint:disable-next-line:no-any
             const spy: jasmine.Spy = spyOn<any>(component["listePartieService"], "deletePartieSimple");
+            spy.and.callThrough();
 
             component["supprimerPartieSimple"]();
 
@@ -87,6 +73,7 @@ describe("DialogConfirmationComponent", () => {
 
             // tslint:disable-next-line:no-any
             const spy: jasmine.Spy = spyOn<any>(component, "supprimerPartieSimpleDeLaffichage");
+            spy.and.callThrough();
 
             component["supprimerPartieSimple"]();
 
@@ -102,6 +89,7 @@ describe("DialogConfirmationComponent", () => {
 
             // tslint:disable-next-line:no-any
             const spy: jasmine.Spy = spyOn<any>(component["listePartieService"], "deletePartieMultiple");
+            spy.and.callThrough();
 
             component["supprimerPartieMultiple"]();
 

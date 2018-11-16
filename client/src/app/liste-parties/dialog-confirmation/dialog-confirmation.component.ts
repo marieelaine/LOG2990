@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { ListePartieServiceService } from "../liste-partie-service.service";
 import { PartieSimple } from "src/app/admin/dialog-simple/partie-simple";
 import { PartieMultiple } from "src/app/admin/dialog-multiple/partie-multiple";
+import { Data } from "@angular/router";
 
 @Component({
   selector: "app-dialog-confirmation",
@@ -20,7 +21,7 @@ export class DialogConfirmationComponent {
   public constructor(
     private dialogRef: MatDialogRef<DialogConfirmationComponent>,
     private listePartieService: ListePartieServiceService,
-    @Inject(MAT_DIALOG_DATA) data) {
+    @Inject(MAT_DIALOG_DATA) data: Data) {
 
       this.partieId = data.id;
       this.isSimple = data.isSimple;
@@ -36,7 +37,7 @@ export class DialogConfirmationComponent {
     this.dialogRef.close();
   }
 
-  private setListeParties(data): void {
+  private setListeParties(data: Data): void {
     if (this.isSimple) {
       this.listePartiesSimples = data.listeParties;
       this.listePartiesMultiples = [];
