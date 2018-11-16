@@ -14,7 +14,7 @@ import { DialogSimpleComponent } from "./dialog-simple.component";
 describe("DialogSimpleComponent", () => {
     let component: DialogSimpleComponent;
     let fixture: ComponentFixture<DialogSimpleComponent>;
-    const mockFile = new MockFileCreator();
+    const mockFile: MockFileCreator = new MockFileCreator();
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -93,7 +93,7 @@ describe("DialogSimpleComponent", () => {
     });
 
     it("should call onUploadImage when an image is uploaded", () => {
-        const uploadImage1 = fixture.debugElement.query(By.css("#uploadImage1")).nativeElement;
+        const uploadImage1: HTMLElement = fixture.debugElement.query(By.css("#uploadImage1")).nativeElement;
 
         // tslint:disable-next-line:no-any
         const spy: jasmine.Spy = spyOn<any>(component, "onUploadImage");
@@ -102,7 +102,7 @@ describe("DialogSimpleComponent", () => {
     });
 
     it("should close the dialog if cancel button is clicked", () => {
-        const onNoClickButton = fixture.debugElement.query(By.css("#onNoClickButton")).nativeElement;
+        const onNoClickButton: HTMLElement = fixture.debugElement.query(By.css("#onNoClickButton")).nativeElement;
 
         // tslint:disable-next-line:no-any
         const spy: jasmine.Spy = spyOn<any>(component, "surClickExterieurDialog");
@@ -112,7 +112,7 @@ describe("DialogSimpleComponent", () => {
     });
 
     it("should call onClickAjouterPartie when an add game button is clicked", () => {
-        const onAddClickButton = fixture.debugElement.query(By.css("#onAddClickButton")).nativeElement;
+        const onAddClickButton: HTMLElement = fixture.debugElement.query(By.css("#onAddClickButton")).nativeElement;
 
         // tslint:disable-next-line:no-any
         const spy: jasmine.Spy = spyOn<any>(component, "onClickAjouterPartie");

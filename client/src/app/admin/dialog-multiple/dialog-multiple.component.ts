@@ -124,11 +124,11 @@ export class DialogMultipleComponent extends DialogAbstrait {
 
   protected checkIfOutOfBoundNameLength(): Boolean {
     return (this["data"].multipleGameName === "" || this["data"].multipleGameName === undefined
-    || this["data"].multipleGameName.length < 3 || this["data"].multipleGameName.length > 20);
+    || this["data"].multipleGameName.length < LONGUEUR_NOM_MIN || this["data"].multipleGameName.length > LONGUEUR_NOM_MAX);
   }
 
   protected checkIfOutOfBoundNumberForms(): Boolean {
-    return (this["data"].quantiteObjets < 10 || this["data"].quantiteObjets > 200);
+    return (this["data"].quantiteObjets < NB_OBJET_MIN || this["data"].quantiteObjets > NB_OBJET_MAX);
   }
 
   protected checkAllCheckbox(): Boolean {

@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-1 carte"></div>
                      </div>
-                     <div class="row temps carte"  *ngFor="let tempsSolo of partieMultiple["_tempsSolo"]; let i = index">
+                     <div class="row temps carte"  *ngFor="let tempsSolo of partieMultiple['_tempsSolo']; let i = index">
                         <div class="col-1">
                             <span class="badge badge-pill badge-danger">{{i+1}}</span>
                         </div>
@@ -45,7 +45,7 @@
                                     {{ getDisplayTime(partieMultiple["_tempsUnContreUn"][i]) }}
                                 </h5>
                                 <h6 class="card-subtitle mb-2 text-muted">
-                                    {{ partieMultiple["_tempsUnContreUn'][i]['_user'] }}
+                                    {{ partieMultiple["_tempsUnContreUn"][i]['_user'] }}
                                 </h6>
                             </div>
                             <div class="col-1"></div>
@@ -57,8 +57,7 @@
                         [class.mat-elevation-z6]="!partieMultiple.isElevatedActive"
                         [class.mat-elevation-z10]="!!partieMultiple.isElevatedActive">
                 </div> 
-            </div>
-    
+            </div>    
             <div class="row">
                     <div class="col boutons d-flex flex-row bd-highlight justify-content-end">
                         <button class="p-2 bd-highlight" mat-button (click) = "onJouerOuReinitialiserClick(partieMultiple._id)" class='mat-elevation-z6'> {{jouerOuReinitialiser}} </button>
