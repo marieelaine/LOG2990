@@ -28,14 +28,13 @@ describe("Partie Simple Service", () => {
 
         service.register(partie).subscribe((response) => {
           partieResponse = response;
+
+          http.expectOne({
+            url: "http://127.0.0.1:3000/partieSimple/ajouter",
+            method: "POST"
+          }).flush(responseForm);
+
+          expect(partieResponse).toEqual(partie);
         });
-
-        http.expectOne({
-          url: "http://127.0.0.1:3000/partieSimple/ajouter",
-          method: "POST"
-        }).flush(responseForm);
-
-        expect(partieResponse).toEqual(responseForm);
       });
-
 });
