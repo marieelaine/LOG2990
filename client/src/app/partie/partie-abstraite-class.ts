@@ -123,7 +123,7 @@ export abstract class PartieAbstraiteClass {
 
     protected terminerPartie(): void {
         this.chrono.stopTimer();
-        this.messageDifferences = "FÉLICITATIONS!";
+        this.messageDifferences = "";
         this.audio.src = "../assets/applause.mp3";
         this.audio.load();
         this.audio.play().catch(() => ErrorHandler);

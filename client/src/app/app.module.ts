@@ -48,6 +48,7 @@ import { VueSimpleComponent } from "./partie/vue-simple/vue-simple.component";
 import {
     PartieMultipleMultijoueurComponent
 } from "./partie/vue-multiple/partie-multiple-multijoueur/partie-multiple-multijoueur.component";
+import { DialogFinPartieComponent } from './partie/dialog-fin-partie/dialog-fin-partie.component';
 
 const config: SocketIoConfig = { url: "http://localhost:4200", options: {} };
 
@@ -83,6 +84,7 @@ const appRoutes: Routes = [
         ChatComponent,
         VueSimpleComponent,
         PartieMultipleMultijoueurComponent,
+        DialogFinPartieComponent,
     ],
     imports: [
         RouterModule.forRoot(
