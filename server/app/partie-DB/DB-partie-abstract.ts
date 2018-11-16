@@ -55,9 +55,9 @@ export abstract class DBPartieAbstract {
       await this.baseDeDonnees.assurerConnection();
       try {
           await this.reinitialiserTemps(req.params.id, req.body.tempsSolo, req.body.tempsUnContreUn);
-          res.status(201);
+          res.status(constantes.HTTP_CREATED);
       } catch (err) {
-          res.status(501).json(err);
+          res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
       }
     }
 
