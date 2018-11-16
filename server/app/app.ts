@@ -12,6 +12,7 @@ import { RoutesPartieMultiple } from "./partieMultiple/routes-partie-multiple/ro
 import { RoutesPartieSimple } from "./partieSimple/routes-partie-simples/routes-partie-simple";
 import { RoutesPartieSimpleAttente } from "./partieSimple/partie-simple-attente/partie-simple-attente";
 import { RoutesUser } from "./user/routes-user";
+import { RoutesPartieMultipleAttente } from "./partieMultiple/partie-multiple-attente/partie-multiple-attente";
 
 @injectable()
 export class Application {
@@ -22,6 +23,7 @@ export class Application {
     public constructor(@inject(Types.RoutesPartieSimple) private partieSimple: RoutesPartieSimple,
                        @inject(Types.RoutesPartieMultiple) private partieMultiple: RoutesPartieMultiple,
                        @inject(Types.RoutesPartieSimpleAttente) private partieSimpleAttente: RoutesPartieSimpleAttente,
+                       @inject(Types.RoutesPartieMultipleAttente) private partieMultipleAttente: RoutesPartieMultipleAttente,
                        @inject(Types.RoutesUser) private routeDbUser: RoutesUser) {
         this.app = express();
 
@@ -45,6 +47,7 @@ export class Application {
         this.ajouterService(this.partieSimple);
         this.ajouterService(this.partieMultiple);
         this.ajouterService(this.partieSimpleAttente);
+        this.ajouterService(this.partieMultipleAttente);
         this.ajouterService(this.routeDbUser);
 
         this.errorHandeling();

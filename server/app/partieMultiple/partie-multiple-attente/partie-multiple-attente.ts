@@ -5,7 +5,7 @@ import Types from "../../types";
 import { SocketServerService } from "../../socket-io.service";
 
 @injectable()
-export class RoutesPartieSimpleAttente extends ServiceWeb {
+export class RoutesPartieMultipleAttente extends ServiceWeb {
 
     private partieMultipleAttente: string[];
     public readonly mainRoute: string = "/";
