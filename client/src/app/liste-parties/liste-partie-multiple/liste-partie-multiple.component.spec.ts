@@ -1,20 +1,20 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { ListePartieMultipleComponent } from './liste-partie-multiple.component';
-import {CUSTOM_ELEMENTS_SCHEMA, ErrorHandler} from '@angular/core';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ListePartieServiceService } from '../liste-partie-service.service';
+import { ComponentFixture, TestBed, fakeAsync, tick } from "@angular/core/testing";
+import { ListePartieMultipleComponent } from "./liste-partie-multiple.component";
+import {CUSTOM_ELEMENTS_SCHEMA, ErrorHandler} from "@angular/core";
+import { RouterTestingModule } from "@angular/router/testing";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ListePartieServiceService } from "../liste-partie-service.service";
 import { PartieMultiple } from "../../admin/dialog-multiple/partie-multiple";
 import { VueMultipleComponent } from "../../partie/vue-multiple/vue-multiple.component";
 import * as Buffer from "buffer";
 import { of } from "rxjs";
 import { Location } from "@angular/common";
-import { SocketClientService } from 'src/app/socket/socket-client.service';
-import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material';
-import { TempsUser } from 'src/app/admin/dialog-abstrait';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SocketClientService } from "src/app/socket/socket-client.service";
+import { MatDialogModule, MAT_DIALOG_DATA } from "@angular/material";
+import { TempsUser } from "src/app/admin/dialog-abstrait";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-describe('ListePartieMultipleComponent', () => {
+describe("ListePartieMultipleComponent", () => {
     let mockListePartieService: jasmine.SpyObj<ListePartieServiceService>;
 
     let component: ListePartieMultipleComponent;
@@ -74,7 +74,7 @@ describe('ListePartieMultipleComponent', () => {
         location = TestBed.get(Location);
     });
 
-    it('Devrait creer le composant', () => {
+    it("Devrait creer le composant", () => {
         expect(component).toBeDefined();
     });
 

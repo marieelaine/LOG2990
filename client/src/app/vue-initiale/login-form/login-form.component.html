@@ -15,7 +15,7 @@
             required minlength="3" 
             maxlength="12"
             unique
-            [ngClass]="{'is-invalid': (loginForm.get('username').touched ||
+            [ngClass]="{'is-invalid': (loginForm.get('username").touched ||
                                             loginForm.get('username').dirty) &&
                                             !loginForm.get('username').valid}">
             <span class="invalid-feedback">
