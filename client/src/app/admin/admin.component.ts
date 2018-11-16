@@ -57,7 +57,7 @@ export class AdminComponent {
     this.dialog.open(DialogErreurComponent, {
         height: "190px",
         width: "600px",
-        panelClass: 'dialog',
+        panelClass: "dialog",
         data: { message : msg }
     });
   }

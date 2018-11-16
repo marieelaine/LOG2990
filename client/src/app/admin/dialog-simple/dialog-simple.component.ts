@@ -41,7 +41,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
       this.correctImageExtension = "image/bmp";
       this.wrongImageSizeOrTypeMessage = "";
       this.wrongNumberOfImagesMessage = "";
-      this.nameControl = new FormControl('', [
+      this.nameControl = new FormControl("", [
         Validators.minLength(3), Validators.maxLength(20), Validators.required]);
     }
 
