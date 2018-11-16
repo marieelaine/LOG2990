@@ -142,10 +142,11 @@ export abstract class PartieAbstraiteClass {
       }
     }
 
-    protected penalite(event): void {
+    protected penalite(event: MouseEvent): void {
         this.penaliteEtat = true;
-        const canvas = event.srcElement;
-        const ctx: CanvasRenderingContext2D = canvas.getContext("2d");
+        const canvas: HTMLCanvasElement = event.srcElement as HTMLCanvasElement;
+        const ctx: CanvasRenderingContext2D = canvas.getContext("2d") as CanvasRenderingContext2D;
+
         const imageSaved: ImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         ctx.font = "600 28px Arial";
         ctx.textAlign = "center";
