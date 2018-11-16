@@ -1,15 +1,15 @@
-import {Component, ErrorHandler, Inject, OnDestroy} from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Router } from '@angular/router';
+import {Component, ErrorHandler, Inject, OnDestroy} from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { Router } from "@angular/router";
 import { ListePartieServiceService } from "../liste-partie-service.service";
-import { SocketClientService } from 'src/app/socket/socket-client.service';
+import { SocketClientService } from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
-import { Subscription } from 'rxjs';
+import { Subscription } from "rxjs";
 
 @Component({
-    selector: 'app-dialog-vue-attente',
-    templateUrl: './dialog-vue-attente.component.html',
-    styleUrls: ['./dialog-vue-attente.component.css']
+    selector: "app-dialog-vue-attente",
+    templateUrl: "./dialog-vue-attente.component.html",
+    styleUrls: ["./dialog-vue-attente.component.css"]
 })
 
 export class DialogVueAttenteComponent implements OnDestroy {

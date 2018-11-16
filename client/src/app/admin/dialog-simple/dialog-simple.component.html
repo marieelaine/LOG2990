@@ -1,31 +1,30 @@
 <h1 mat-dialog-title>Ajouter une partie en point de vue simple</h1>
 <hr>
 <div mat-dialog-content>
-    <mat-card class='addGameCard mat-elevation-z10'>
-        <div class='gameName'>
-            <mat-form-field class='formField'>
-                <input matInput [(ngModel)]="data.simpleGameName" type='text' placeholder="Nom de la partie" class='gameNameInput' [formControl]="nameControl" required>
+    <mat-card class="addGameCard mat-elevation-z10">
+        <div class="gameName">
+            <mat-form-field class="formField">
+                <input matInput [(ngModel)]="data.simpleGameName" type="text" placeholder="Nom de la partie" class="gameNameInput" [formControl]="nameControl" required>
                 <mat-error>Veuillez entrer un nom entre 3 et 20 caratères</mat-error>
             </mat-form-field>
         </div>
         <div class="firstImageContainer">
-            <button mat-button class='mat-elevation-z6'><label for="uploadImage1" class='imageButtons'>Première image</label></button>
-            <input id='uploadImage1' type="file" accept="image/*" (change)='onUploadImage($event, 0)'>
-            <div id='firstImageFrame'> 
+            <button mat-button class="mat-elevation-z6"><label for="uploadImage1" class="imageButtons">Première image</label></button>
+            <input id="uploadImage1" type="file" accept="image/*" (change)="onUploadImage($event, 0)">
+            <div id="firstImageFrame">
                 <img *ngIf = "premiereImage" [src] = "premiereImage" id = "firstImage">                      
             </div>
         </div>
         <div class="secondImageContainer">
-                <button mat-button class='mat-elevation-z6'><label for="uploadImage2" class='imageButtons'>Deuxième image</label></button>
-                <input id='uploadImage2' type="file" accept="image/*" (change)='onUploadImage($event, 1)'>
-            <div id='secondImageFrame'> 
+                <button mat-button class="mat-elevation-z6"><label for="uploadImage2" class="imageButtons">Deuxième image</label></button>
+                <input id="uploadImage2" type="file" accept="image/*" (change)="onUploadImage($event, 1)">
+            <div id="secondImageFrame">
                 <img *ngIf = "deuxiemeImage" [src] = "deuxiemeImage" id = "secondImage">          
             </div>
         </div>
     </mat-card>
-    <button mat-button id="onAddClickButton" (click)='onClickAjouterPartie()' class='dialogButtons mat-elevation-z6'>Ajouter</button>
-    <button mat-button id="onNoClickButton" (click)="surClickExterieurDialog()" class='dialogButtons mat-elevation-z6'>Annuler</button>
-    <!-- <p id='errorMessage'> {{ outOfBoundNameLengthMessage }} </p>  -->
-    <p id='errorMessage'> {{ wrongImageSizeOrTypeMessage }} </p> 
-    <p id='errorMessage'> {{ wrongNumberOfImagesMessage }} </p> 
+    <button mat-button id="onAddClickButton" (click)="onClickAjouterPartie()" class="dialogButtons mat-elevation-z6">Ajouter</button>
+    <button mat-button id="onNoClickButton" (click)="surClickExterieurDialog()" class="dialogButtons mat-elevation-z6">Annuler</button>
+    <p id="errorMessage"> {{ wrongImageSizeOrTypeMessage }} </p>
+    <p id="errorMessage"> {{ wrongNumberOfImagesMessage }} </p>
 </div>

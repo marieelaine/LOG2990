@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { PartieMultiple } from './dialog-multiple/partie-multiple';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { PartieMultiple } from "./dialog-multiple/partie-multiple";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class PartieMultipleService {
