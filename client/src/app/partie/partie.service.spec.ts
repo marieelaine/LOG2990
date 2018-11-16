@@ -1,6 +1,6 @@
 import { TestBed } from "@angular/core/testing";
 import { PartieService } from "./partie.service";
-import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { HttpClientTestingModule, HttpTestingController, TestRequest } from "@angular/common/http/testing";
 import { TempsUser } from "../admin/temps-user";
 import {ErrorHandler} from "@angular/core";
 
@@ -70,7 +70,7 @@ describe("PartieService", () => {
             service.reinitialiserTempsPartieSimple(id, new Array<TempsUser>(), new Array<TempsUser>())
                 .catch(() => ErrorHandler);
 
-            const req = http.expectOne("http://localhost:3000/partieSimple/reinitialiseTemps/" + id);
+            const req: TestRequest = http.expectOne("http://localhost:3000/partieSimple/reinitialiseTemps/" + id);
             expect(req.request.method).toBe("PUT");
         });
     });
