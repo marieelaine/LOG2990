@@ -2,6 +2,7 @@ import { PartieMultipleInterface, DBPartieMultiple } from "./DB-partie-multiple"
 import { assert } from "chai";
 import * as fsx from "fs-extra";
 import * as sinon from "sinon";
+import * as constantes from "../../constantes";
 import { SocketServerService } from "../../socket-io.service";
 import { TempsUser } from "../../partie-DB/DB-partie-abstract";
 
@@ -17,37 +18,12 @@ describe("Partie Multiple BD classe", () => {
         it("Devrait etre defini", () => {
             assert.isDefined(partieMultipleBD);
         });
-
-        it("Devrait definir l'attribut baseDeDonnees", () => {
-            assert.isDefined(partieMultipleBD["baseDeDonnees"]);
-        });
-
-        it("Devrait definir l'attribut modelPartie", () => {
-            assert.isDefined(partieMultipleBD["modelPartie"]);
+        it("Devrait definir l'attribut modelPartieBuffer", () => {
+            assert.isDefined(partieMultipleBD["modelPartieBuffer"]);
         });
 
         it("Devrait definir l'attribut modelPartieArray", () => {
             assert.isDefined(partieMultipleBD["modelPartieArray"]);
-        });
-
-        it("Devrait definir l'attribut schemaArray", () => {
-            assert.isDefined(partieMultipleBD["schemaArray"]);
-        });
-
-        it("Devrait definir l'attribut schema", () => {
-            assert.isDefined(partieMultipleBD["schema"]);
-        });
-    });
-
-    describe("Fonction makeDirectory", () => {
-        it("Devrait appeller la fonction makeDirectory", () => {
-            // tslint:disable-next-line:no-any
-            const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "makeDirectory");
-            const resultatAttendu: string = "../Images";
-
-            partieMultipleBD["makeDirectory"](resultatAttendu);
-
-            assert(spy.calledOnce);
         });
     });
 
@@ -113,13 +89,15 @@ describe("Partie Multiple BD classe", () => {
                 _typeModification: "a",
             };
 
-            await partieMultipleBD["genererScene"](unePartie, {} as Response);
+            await partieMultipleBD["genererScene"](unePartie);
 
             assert(spy.calledOnce);
         });
     });
 
-    afterEach(() => {
+    afterEach(async() => {
         sinon.restore();
+        const dir: string = constantes.IMAGES_DIRECTORY;
+        await fsx.remove(dir);
     });
 });

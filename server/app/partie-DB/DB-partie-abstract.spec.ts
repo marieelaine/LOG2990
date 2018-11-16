@@ -4,8 +4,21 @@ import { PartieMultipleInterface } from "../partieMultiple/DB-partie-multiple/DB
 import { ChildProcess } from "child_process";
 import { Request, Response} from "express";
 import { assert } from "chai";
+import sinon = require("sinon");
+import { Schema } from "mongoose";
+import * as constantes from "../constantes";
+import * as fs from "fs";
+import * as fsx from "fs-extra";
 
 class DBPartie extends DBPartieAbstract {
+
+    public constructor() {
+        super();
+
+        this.schemaArray = new Schema({});
+        this.schemaBuffer = new Schema({});
+    }
+    
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> { ""; }
 
     public async requeteDeletePartie(req: Request, res: Response): Promise<void> { ""; }
@@ -76,7 +89,36 @@ describe("DBPartieAbstract", () => {
         dbPartie = new DBPartie();
     });
 
+    describe("Constructeur", () => {
+        it("Devrait etre defini", () => {
+            assert.isDefined(dbPartie);
+        });
+        it("Devrait definir l'attribut basseDeDonnees", () => {
+            assert.isDefined(dbPartie["baseDeDonnees"]);
+        });
+
+        it("Devrait definir l'attribut schemaArray", () => {
+            assert.isDefined(dbPartie["schemaArray"]);
+        });
+
+        it("Devrait definir l'attribut schemaBuffer", () => {
+            assert.isDefined(dbPartie["schemaBuffer"]);
+        });
+    });
+
+    describe("Fonction makeImagesDirectory", () => {
+        it("Devrait appeller la fonction makeDirectory", () => {
+            // tslint:disable-next-line:no-any
+            const spy: sinon.SinonSpy = sinon.spy<any>(fs, "mkdir").withArgs(sinon.match.string);
+
+            dbPartie["makeImagesDirectory"]();
+
+            assert(spy.calledOnce);
+        });
+    });
+
     it("getSortedTimes devrait sort un array de TempsUser", () => {
+
         const user1: TempsUser = { _user: "", _temps: 1 };
         const user2: TempsUser = { _user: "", _temps: 2 };
 
@@ -86,6 +128,15 @@ describe("DBPartieAbstract", () => {
 
         const expectedArray: Array<TempsUser> = [user1, user2];
 
-        assert.equal(expectedArray, array);
+        // console.log(expectedArray, array);
+        assert.equal(expectedArray.length, array.length);
+        assert.equal(expectedArray[0], array[0]);
+        assert.equal(expectedArray[1], array[1]);
+    });
+
+    afterEach(async() => {
+        sinon.restore();
+        const dir: string = constantes.IMAGES_DIRECTORY;
+        await fsx.remove(dir);
     });
 });

@@ -39,7 +39,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         this.imageData.push(atob(String(this.partie["_image2"][0])));
     }
 
-    protected testerPourDiff(event): void {
+    protected testerPourDiff(event: MouseEvent): void {
         if (this.partieCommence && !this.penaliteEtat) {
             const coords = event.offsetX + "," + event.offsetY;
             let i: number = 0;
