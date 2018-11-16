@@ -6,10 +6,10 @@ import { SocketServerService } from "../../socket-io.service";
 
 describe("Partie Simple BD classe", () => {
     let dbPartieSimple: DBPartieSimple;
-    const socket: SocketServerService = new SocketServerService();
-
+    const socketService: SocketServerService = new SocketServerService();
+    
     beforeEach(() => {
-        dbPartieSimple = new DBPartieSimple(socket);
+        dbPartieSimple = new DBPartieSimple(socketService);
     });
 
     describe("Constructeur", () => {
@@ -41,7 +41,7 @@ describe("Partie Simple BD classe", () => {
         it("Devrait appeller la fonction remove de fsx", () => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             const resultatAttendu: string = "../Images";
-
+            
             dbPartieSimple["deleteImagesDirectory"]();
 
             assert(stub.calledOnce);
@@ -50,11 +50,13 @@ describe("Partie Simple BD classe", () => {
     });
 
     describe("Fonction traiterMessageErreur", () => {
-        it("Devrait appeller la fonction deleteImagesDirectory si errorMsg n'est pas nul", () => {
+        it("Devrait appeller la fonction deleteImagesDirectory si errorMsg n'est pas nul", async () => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(dbPartieSimple, "deleteImagesDirectory");
-
+            const stubSocket: sinon.SinonStub = sinon.stub(dbPartieSimple["socket"], "envoyerMessageErreurDifferences");
+            stubSocket.onCall(0).callThrough();
+            
             const unePartie: PartieSimpleInterface = {
                 _id: "1",
                 _nomPartie: "unePartie",
@@ -65,7 +67,7 @@ describe("Partie Simple BD classe", () => {
                 _imageDiff: new Array<Array<string>>(),
             };
 
-            dbPartieSimple["traiterMessageErreur"](unePartie, "erreur");
+            await dbPartieSimple["traiterMessageErreur"](unePartie, "erreur");
 
             assert(spy.calledOnce);
             assert(stub.calledOnce);
