@@ -3,6 +3,7 @@ import { ServiceWeb } from "../../serviceWeb";
 import { Router, Request, Response } from "express";
 import Types from "../../types";
 import { SocketServerService } from "../../socket-io.service";
+import { HTTP_CREATED } from "../../constantes";
 
 @injectable()
 export class RoutesPartieSimpleAttente extends ServiceWeb {
@@ -25,7 +26,7 @@ export class RoutesPartieSimpleAttente extends ServiceWeb {
         router.post("/addPartieSimpleEnAttente", async (req: Request, res: Response) => {
             this.partieSimpleAttente.push(req.body.partieId);
             this.socket.envoyerPartieSimpleAttente(req.body.partieId);
-            res.status(201).json(req.body.partieId);
+            res.status(HTTP_CREATED).json(req.body.partieId);
         });
 
         router.delete("/deletePartieSimpleEnAttente/:id", async (req: Request, res: Response) => {
@@ -35,7 +36,7 @@ export class RoutesPartieSimpleAttente extends ServiceWeb {
                 }
             }
             this.socket.supprimerPartieSimpleAttente(req.params.id);
-            res.status(201).json(req.body.partieId);
+            res.status(HTTP_CREATED).json(req.body.partieId);
         });
 
         return router;

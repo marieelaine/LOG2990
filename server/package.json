@@ -62,8 +62,9 @@
     "concurrently": "^4.0.1",
     "jasmine": "^3.3.0",
     "mocha": "~5.2.0",
+    "node-mocks-http": "^1.7.3",
     "rimraf": "2.6.2",
-    "tslint": "~5.9.1",
+    "tslint": "^5.9.1",
     "tslint-eslint-rules": "5.4.0",
     "tslint-microsoft-contrib": "5.2.0",
     "typescript": "~2.9.2"

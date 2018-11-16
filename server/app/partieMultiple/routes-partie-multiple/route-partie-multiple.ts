@@ -33,11 +33,11 @@ export class RoutesPartieMultiple extends ServiceWeb {
         });
 
         router.get("/:id", async (req: Request, res: Response) => {
-            await this.partieMultiple.requetePartieMultipleId(req, res);
+            await this.partieMultiple.requetePartieId(req, res);
         });
 
         router.get("/getPartieMultiple/:id", async (req: Request, res: Response) => {
-            await this.partieMultiple.requeteGetPartieMultiple(req, res);
+            await this.partieMultiple.requeteGetPartie(req, res);
         });
 
         return router;

@@ -29,7 +29,6 @@ class AbstractClassInstance extends PartieAbstraiteClass {
 
 describe("PartieAbstraiteComponent", () => {
     let component: AbstractClassInstance;
-
     beforeEach(() => {
     component = new AbstractClassInstance(new ActivatedRouteMock(), new PartieServiceMock(), new CookieServiceMock(), true);
     component["partie"] = new PartieSimple ("nomPartie", new Array<TempsUser>(), new Array<TempsUser>(), Buffer.from(new Array<number>()),
