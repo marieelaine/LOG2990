@@ -56,7 +56,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
     public async requeteDeletePartie(req: Request, res: Response): Promise<void> {
         try {
             await this.deletePartie(req.params.id, res);
-            // TODO : this.socket.supprimerPartieMultiple(req.params.id);
+            // TODO sprint 4: this.socket.supprimerPartieMultiple(req.params.id);
             res.status(constantes.HTTP_CREATED);
         } catch (err) {
             res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);

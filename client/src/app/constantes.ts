@@ -11,6 +11,7 @@ export const ADD_PARTIE_SIMPLE_ATTENTE: string = BASE_URL + "addPartieSimpleEnAt
 export const DELETE_PARTIE_SIMPLE_ATTENTE: string = BASE_URL + "deletePartieSimpleEnAttente/";
 
 export const GET_LISTE_MULTIPLE_URL: string = BASE_URL + MULTIPLE + "getListePartieMultiple";
+export const AJOUTER_PARTIE_MULTIPLE_URL: string = BASE_URL + MULTIPLE + "ajouter/";
 export const DELETE_PARTIE_MULTIPLE_URL: string = BASE_URL + MULTIPLE + "delete/";
 export const REINITIALISER_TEMPS_MULTIPLE_URL: string = BASE_URL + MULTIPLE + "reinitialiseTemps/";
 
