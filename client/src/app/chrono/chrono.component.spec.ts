@@ -39,7 +39,8 @@ describe("ChronoComponent", () => {
     describe("Fonction reset", () => {
         it("Devrait remettre l'attribut time a 0 et l'attribut running a false", () => {
             // Arrange
-            component["time"] = 10;
+            const temps: number = 10;
+            component["time"] = temps;;
             component["running"] = true;
 
             // Act
@@ -53,15 +54,18 @@ describe("ChronoComponent", () => {
 
     describe("Calcul de bon temps", () => {
         it("Devrait retourner 5", fakeAsync(() => {
+            const temps: number = 5000;
+            const valRetour: number = 5;
             component.startTimer();
-            tick(5000);
+            tick(temps);
             component.stopTimer();
-            expect(component.getTime()).toBe(5);
+            expect(component.getTime()).toBe(valRetour);
         }));
 
         it("Devrait retourner \'05\' pour minute et second", fakeAsync(() => {
+            const temps: number = 305000;
             component.startTimer();
-            tick(305000);
+            tick(temps);
             expect(component["getSecondsSrtring"]()).toBe("05");
             expect(component["getMinutesString"]()).toBe("05");
             component.stopTimer();

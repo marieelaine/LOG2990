@@ -1,5 +1,9 @@
 import { Component } from "@angular/core";
 
+const NB_SECONDES: number = 60;
+const UNE_SECONDE: number = 1000;
+const DISPLAY: number = 10;
+
 @Component({
   selector: "app-chrono",
   templateUrl: "./chrono.component.html",
@@ -16,11 +20,11 @@ export class ChronoComponent {
     }
 
     protected getSecondsSrtring(): string {
-        return (this.time % 60 < 10) ? "0" + this.time % 60 : this.time % 60 + "";
+        return (this.time % NB_SECONDES < DISPLAY) ? "0" + this.time % NB_SECONDES : this.time % NB_SECONDES + "";
     }
 
     protected getMinutesString(): string {
-        return (this.time / 60 < 10) ? "0" + Math.floor(this.time / 60) : Math.floor(this.time / 60) + "";
+        return (this.time / NB_SECONDES < DISPLAY) ? "0" + Math.floor(this.time / NB_SECONDES) : Math.floor(this.time / NB_SECONDES) + "";
     }
 
     protected reset(): void {
@@ -40,7 +44,7 @@ export class ChronoComponent {
 
     public startTimer(): void {
         if (!this.running) {
-            this.interval = setInterval(() => { this.time++; }, 1000);
+            this.interval = setInterval(() => { this.time++; }, UNE_SECONDE);
             this.running = true;
         }
     }

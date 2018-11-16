@@ -9,7 +9,7 @@ export class ChatComponent {
 
   public messagesChat: Array<string>;
 
-  constructor() {
+  public constructor() {
     this.messagesChat = new Array<string>();
   }
 

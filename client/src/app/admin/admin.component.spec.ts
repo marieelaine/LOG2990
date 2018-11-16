@@ -9,6 +9,7 @@ import { ListePartieMultipleComponent } from "../liste-parties/liste-partie-mult
 import { ListePartieSimpleComponent } from "../liste-parties/liste-partie-simple/liste-partie-simple.component";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { SocketClientService } from "../socket/socket-client.service";
+import { DebugElement } from "@angular/core";
 
 describe("AdminComponent", () => {
     let mockMatDialog: jasmine.SpyObj<MatDialog>;
@@ -48,16 +49,17 @@ describe("AdminComponent", () => {
     });
 
     it("Devrait avoir un menu avec 2 options (native click), un simple dialog window et un multiple dialog window", async () => {
-        const elem = fixture.debugElement;
-        const button = elem.query((e) => e.name === "button");
+        const elem: DebugElement = fixture.debugElement;
+        const button: DebugElement = elem.query((e) => e.name === "button");
+        const nbMenuItem: number = 2;
         expect(!!button).toBe(true);
 
         button.nativeElement.click();
         fixture.detectChanges();
-        expect(fixture.debugElement.queryAll(By.css(".menu-item")).length).toEqual(2);
+        expect(fixture.debugElement.queryAll(By.css(".menu-item")).length).toEqual(nbMenuItem);
 
-        const buttonSimple = fixture.debugElement.query(By.css("#simpleDialog")).nativeElement;
-        const buttonMultiple = fixture.debugElement.query(By.css("#multipleDialog")).nativeElement;
+        const buttonSimple: HTMLElement = fixture.debugElement.query(By.css("#simpleDialog")).nativeElement;
+        const buttonMultiple: HTMLElement = fixture.debugElement.query(By.css("#multipleDialog")).nativeElement;
 
         // tslint:disable-next-line:no-any
         const spySimple: jasmine.Spy = spyOn<any>(component, "openDialogSimple");
@@ -121,15 +123,16 @@ describe("AdminComponent", () => {
     });
 
     describe("Fonction initSocket", () => {
-        it("Devrait appeller la fonction on deux fois du service socket", () => {
+        it("Devrait appeler la fonction on deux fois du service socket", () => {
             // Arrange
+            const nbAppels: number = 2;
             const spySocketOn: jasmine.Spy = spyOn(component.socketClientService.socket, "on");
 
             // Act
             component["initSocket"]();
 
             // Assert
-            expect(spySocketOn).toHaveBeenCalledTimes(2);
+            expect(spySocketOn).toHaveBeenCalledTimes(nbAppels);
         });
     });
 });

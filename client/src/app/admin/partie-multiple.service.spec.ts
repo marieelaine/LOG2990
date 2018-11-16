@@ -30,7 +30,7 @@ describe("PartieMultipleService", () => {
                                                                 new Array<Array<string>>(), QUANTITE_OBJETS, "geo", "acs", "123");
 
         const partie: PartieMultiple = new PartieMultiple("name", [], [], new Buffer(""), new Buffer(""), new Buffer(""), new Buffer(""),
-                                                          new Array<Array<string>>(), new Array<Array<string>>(), 
+                                                          new Array<Array<string>>(), new Array<Array<string>>(),
                                                           QUANTITE_OBJETS, "geo", "acs", "123");
 
         service.register(partie).subscribe((response) => {
