@@ -73,6 +73,10 @@ mat-card-header
     float:top;
 }
 
+.top3{
+    width: 10rem;
+}
+
 .temps{
     padding-top: 5%;
 } 

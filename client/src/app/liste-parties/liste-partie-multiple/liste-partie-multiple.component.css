@@ -93,6 +93,10 @@ mat-badge{
     padding-top: 1%;
 }
 
+.top3{
+    width: 10rem;
+}
+
 col-1{
     display: flex;
     padding: 3%;
