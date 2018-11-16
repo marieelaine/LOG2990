@@ -7,11 +7,10 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { PartieSimple } from "src/app/admin/dialog-simple/partie-simple";
 import { PartieMultiple } from "src/app/admin/dialog-multiple/partie-multiple";
 import { TempsUser } from "src/app/admin/temps-user";
+import { Data } from "@angular/router";
 
 describe("DialogConfirmationComponent", () => {
-    const dialogMock = {
-        close: () => { }
-    };
+
     let component: DialogConfirmationComponent;
     let fixture: ComponentFixture<DialogConfirmationComponent>;
 
@@ -24,7 +23,7 @@ describe("DialogConfirmationComponent", () => {
                 RouterTestingModule,
             ],
             providers: [
-                { provide: MatDialogRef, useValue: dialogMock },
+                { provide: MatDialogRef, useValue: {} },
                 { provide: MAT_DIALOG_DATA, useValue: {} },
             ]
         });
@@ -38,7 +37,7 @@ describe("DialogConfirmationComponent", () => {
     });
 
     it("devrait fermer le dialog si l'utilisateur appuie sur le bouton pour fermer", () => {
-        const onNoClickButton = fixture.debugElement.query(By.css("#onConfirmationButtonYes")).nativeElement;
+        const onNoClickButton: HTMLElement = fixture.debugElement.query(By.css("#onConfirmationButtonYes")).nativeElement;
 
         // tslint:disable-next-line:no-any
         const spy: jasmine.Spy = spyOn<any>(component, "onDialogClose");
@@ -48,7 +47,7 @@ describe("DialogConfirmationComponent", () => {
     });
 
     it("devrait appeler onConfirmationClick lorsque l'utiliateur click sur Yes", () => {
-        const onNoClickButton = fixture.debugElement.query(By.css("#onConfirmationButtonNo")).nativeElement;
+        const onNoClickButton: HTMLElement = fixture.debugElement.query(By.css("#onConfirmationButtonNo")).nativeElement;
 
         // tslint:disable-next-line:no-any
         const spy: jasmine.Spy = spyOn<any>(component, "onConfirmationClick");
@@ -58,17 +57,6 @@ describe("DialogConfirmationComponent", () => {
     });
 
     describe("onConfirmationClick", () => {
-        it("devrait appeler supprimerPartieSimple si isSimple == true;", () => {
-            component["listeParties"] = [];
-            component["isSimple"] = true;
-
-            // tslint:disable-next-line:no-any
-            const spy: jasmine.Spy = spyOn<any>(component, "supprimerPartieSimple");
-
-            component["onConfirmationClick"]();
-
-            expect(spy).toHaveBeenCalled();
-        });
         it("devrait appeler supprimerPartieMultiple si isSimple == false;", () => {
             component["listeParties"] = [];
             component["isSimple"] = false;
@@ -158,11 +146,12 @@ describe("DialogConfirmationComponent", () => {
 
     describe("supprimerPartieMultipleDeLaffichage", () => {
         beforeEach(() => {
+            const qteObjetsParam: number = 10;
             component["listePartiesMultiples"] = [ new PartieMultiple("", new Array<TempsUser>(), new Array<TempsUser>(),
                                                                       Buffer.from(new Array()), Buffer.from(new Array()),
                                                                       Buffer.from(new Array()), Buffer.from(new Array()),
                                                                       new Array<Array<string>>(), new Array<Array<string>>(),
-                                                                      10, "", "123") ];
+                                                                      qteObjetsParam, "", "123") ];
         });
         it("devrait enlever la partie de la liste si elle existe", () => {
 
@@ -186,9 +175,9 @@ describe("DialogConfirmationComponent", () => {
 
     describe("setListeParties", () => {
         it("devrait assigner la listePartie de data à ListePartieSimple si isSimple == true", () => {
-            const data = { listeParties: [ new PartieSimple ("nomPartie", new Array<TempsUser>(), new Array<TempsUser>(),
-                                                             Buffer.from(new Array<number>()),
-                                                             Buffer.from(new Array<number>()), [["1,2"]], "123")] };
+            const data: Data = { listeParties: [ new PartieSimple ("nomPartie", new Array<TempsUser>(), new Array<TempsUser>(),
+                                                                   Buffer.from(new Array<number>()),
+                                                                   Buffer.from(new Array<number>()), [["1,2"]], "123")] };
             component["isSimple"] = true;
 
             component["setListeParties"](data);
@@ -197,11 +186,12 @@ describe("DialogConfirmationComponent", () => {
             expect(component["listePartiesMultiples"]).toEqual([]);
         });
         it("devrait assigner la listePartie de data à ListePartieMultiple si isSimple == false", () => {
-            const data = { listeParties: [ new PartieMultiple("", new Array<TempsUser>(), new Array<TempsUser>(),
-                                                              Buffer.from(new Array()), Buffer.from(new Array()),
-                                                              Buffer.from(new Array()), Buffer.from(new Array()),
-                                                              new Array<Array<string>>(), new Array<Array<string>>(),
-                                                              10, "", "123") ] };
+            const qteObjetsParam: number = 10;
+            const data: Data = { listeParties: [ new PartieMultiple("", new Array<TempsUser>(), new Array<TempsUser>(),
+                                                                    Buffer.from(new Array()), Buffer.from(new Array()),
+                                                                    Buffer.from(new Array()), Buffer.from(new Array()),
+                                                                    new Array<Array<string>>(), new Array<Array<string>>(),
+                                                                    qteObjetsParam, "", "123") ] };
             component["isSimple"] = false;
 
             component["setListeParties"](data);

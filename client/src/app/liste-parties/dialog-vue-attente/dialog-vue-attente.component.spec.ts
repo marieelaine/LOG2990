@@ -7,10 +7,6 @@ import { SocketClientService } from "src/app/socket/socket-client.service";
 import { ListePartieServiceService } from "../liste-partie-service.service";
 
 describe("DialogVueAttenteComponent", () => {
-    const dialogMock = {
-        disableClose: true,
-        close: () => { }
-    };
 
     let mockListePartieService: jasmine.SpyObj<ListePartieServiceService>;
 
@@ -30,7 +26,7 @@ describe("DialogVueAttenteComponent", () => {
                 RouterTestingModule,
             ],
             providers: [
-                { provide: MatDialogRef, useValue: dialogMock },
+                { provide: MatDialogRef, useValue: {} },
                 { provide: MAT_DIALOG_DATA, useValue: {} },
                 SocketClientService,
                 { provide: ListePartieServiceService, useValue: mockListePartieService },
@@ -60,7 +56,7 @@ describe("DialogVueAttenteComponent", () => {
     });
 
     describe("Fonction ajouterPartieSurSocket", () => {
-        it("Devrait appeller la fonction on de socket lors de l'appel de la fonction", () => {
+        it("Devrait appeler la fonction on de socket lors de l'appel de la fonction", () => {
             // Arrange
             const spySocket: jasmine.Spy = spyOn(component.socketClientService.socket, "on");
 
