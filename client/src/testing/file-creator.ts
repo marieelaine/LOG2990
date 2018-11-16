@@ -5,10 +5,10 @@ export function createMockImageFile(isBMP: Boolean) {
     arrayOfBlob.push(data);
 
     if (isBMP) {
-        return new File(arrayOfBlob, "MockFile", { type: 'image/bmp' });
+        return new File(arrayOfBlob, "MockFile", { type: "image/bmp" });
     }
 
-    return new File(arrayOfBlob, "MockFile", { type: 'image/jpeg' });
+    return new File(arrayOfBlob, "MockFile", { type: "image/jpeg" });
 }
 
 export function createMockBmpFile() {
@@ -19,5 +19,5 @@ export function createMockBmpFile() {
     dataView.setUint32(18, 640);
     dataView.setUint32(22, 480);
 
-    return new File([dataView], "MockBmpFile", {type: 'image/bmp'});
+    return new File([dataView], "MockBmpFile", {type: "image/bmp"});
 }
