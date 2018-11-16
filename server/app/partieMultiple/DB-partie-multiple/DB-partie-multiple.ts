@@ -203,11 +203,11 @@ export class DBPartieMultiple extends DBPartieAbstract {
     private async ajouterImagesPartieMultiple(partie: PartieMultipleInterface, errorMsg: string):
     Promise<void> {
         if (errorMsg === "") {
-            partie._image1PV1 = await this.getImageDiffAsBuffer("../Images/n_a_ori.bmp");
-            partie._image2PV1 = await this.getImageDiffAsBuffer("../Images/n_b_ori.bmp");
-            partie._image1PV2 = await this.getImageDiffAsBuffer("../Images/n_a_mod.bmp");
-            partie._image2PV2 = await this.getImageDiffAsBuffer("../Images/n_b_mod.bmp");
-            this.getImageDiffTextFile("../Images/n_a_diff.bmp.txt", partie, 1);
+            partie._image1PV1 = await this.getImageDiffAsBuffer(constantes.INSIDE_IMAGES_DIRECTORY + "n_a_ori.bmp");
+            partie._image2PV1 = await this.getImageDiffAsBuffer(constantes.INSIDE_IMAGES_DIRECTORY + "n_b_ori.bmp");
+            partie._image1PV2 = await this.getImageDiffAsBuffer(constantes.INSIDE_IMAGES_DIRECTORY + "n_a_mod.bmp");
+            partie._image2PV2 = await this.getImageDiffAsBuffer(constantes.INSIDE_IMAGES_DIRECTORY + "n_b_mod.bmp");
+            this.getImageDiffTextFile(constantes.INSIDE_IMAGES_DIRECTORY + "n_a_diff.bmp.txt", partie, 1);
 
         } else {
             this.socket.envoyerMessageErreurDifferences(constantes.ERREUR_SCENE);
@@ -217,7 +217,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
     private async setImageDiff(diffArrays: Array<Array<string>>, partie: PartieMultipleInterface, imgNumber: number): Promise<void> {
         if (imgNumber === imagePOV1) {
             partie._imageDiff1 = diffArrays;
-            this.getImageDiffTextFile("../Images/n_b_diff.bmp.txt", partie, imagePOV2);
+            this.getImageDiffTextFile(constantes.INSIDE_IMAGES_DIRECTORY + "n_b_diff.bmp.txt", partie, imagePOV2);
         } else {
             partie._imageDiff2 = diffArrays;
             await this.enregistrerPartieMultiple(partie);
@@ -242,7 +242,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
     private async enregistrerPartieMultiple(partie: PartieMultipleInterface): Promise<void> {
         const partieMultiple: Document = new this.modelPartieBuffer(partie);
         await partieMultiple.save(async (err: Error) => {
-            if (err !== null && err.name === "ValidationError") {
+            if (err !== null && err.name === constantes.ERREUR_UNIQUE) {
                 this.socket.envoyerMessageErreurNom(constantes.ERREUR_NOM_PRIS);
             } else {
                 this.socket.envoyerPartieMultiple(await this.getPartieByName(partie._nomPartie));
