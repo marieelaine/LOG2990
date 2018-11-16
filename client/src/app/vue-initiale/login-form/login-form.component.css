@@ -1,6 +1,6 @@
-@import url("https://fonts.googleapis.com/css?family=Nunito");
-@import url("https://fonts.googleapis.com/css?family=Poiret+One");
-@import url("https://fonts.googleapis.com/css?family=Handlee");
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Poiret+One');
+@import url('https://fonts.googleapis.com/css?family=Handlee');
 
 body, html {
 	height: 100%;
@@ -22,7 +22,7 @@ body, html {
 	z-index: 9999;
 }
 #login-box .logo .logo-caption {
-	font-family: "Handlee", cursive;
+	font-family: 'Handlee', cursive;
 	color: white;
 	text-align: center;
 	margin-bottom: 0px;
@@ -38,7 +38,7 @@ body, html {
 	background: rgb(98, 96, 96);
 	border: 0px;
 	color: white;
-	font-family: "Nunito", sans-serif;
+	font-family: 'Nunito', sans-serif;
 }
 #login-box .controls input:focus {
 	box-shadow: none;
@@ -57,7 +57,7 @@ body, html {
 	background:#ff5252;
 	border-color: rgba(48, 46, 45, 1);
 	color: white;
-	font-family: "Nunito", sans-serif;
+	font-family: 'Nunito', sans-serif;
 }
 #login-box button.btn-custom:hover{
 	-webkit-transition: all 500ms ease;

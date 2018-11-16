@@ -14,7 +14,7 @@ import { TempsUser } from "../admin/temps-user";
 
 export class ListePartiesComponent {
 
-    @ViewChildren("image") image: QueryList<ElementRef>;
+    @ViewChildren('image') image: QueryList<ElementRef>;
 
     protected jouerOuReinitialiser: string;
     protected creerOuSupprimer: string;
@@ -51,7 +51,7 @@ export class ListePartiesComponent {
                     hex = data.charCodeAt(i);
                     result[i] = hex;
                 }
-                const blob = new Blob([result], {type: "image/bmp"});
+                const blob = new Blob([result], {type: 'image/bmp'});
                 for (const elem of this.image.toArray()) {
                     if (elem.nativeElement.id === id) {
                         elem.nativeElement.src = URL.createObjectURL(blob);

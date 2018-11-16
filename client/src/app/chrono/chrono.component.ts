@@ -1,9 +1,9 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  selector: "app-chrono",
-  templateUrl: "./chrono.component.html",
-  styleUrls: ["./chrono.component.css"]
+  selector: 'app-chrono',
+  templateUrl: './chrono.component.html',
+  styleUrls: ['./chrono.component.css']
 })
 export class ChronoComponent {
     protected time: number;

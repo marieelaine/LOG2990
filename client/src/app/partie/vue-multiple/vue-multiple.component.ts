@@ -1,4 +1,4 @@
-import {Component, ErrorHandler} from "@angular/core";
+import {Component, ErrorHandler} from '@angular/core';
 import { PartieAbstraiteClass } from "../partie-abstraite-class";
 import { ActivatedRoute} from "@angular/router";
 import { PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
@@ -6,9 +6,9 @@ import { PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 
 @Component({
-  selector: "app-vue-multiple",
-  templateUrl: "./vue-multiple.component.html",
-  styleUrls: ["./vue-multiple.component.css"]
+  selector: 'app-vue-multiple',
+  templateUrl: './vue-multiple.component.html',
+  styleUrls: ['./vue-multiple.component.css']
 })
 export class VueMultipleComponent extends PartieAbstraiteClass {
 

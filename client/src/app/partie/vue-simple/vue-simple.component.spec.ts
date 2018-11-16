@@ -1,12 +1,12 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { VueSimpleComponent } from "./vue-simple.component";
-import { PartieSimple } from "src/app/admin/dialog-simple/partie-simple";
-import { MatCardModule } from "@angular/material";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { RouterTestingModule } from "@angular/router/testing";
-import { ChatComponent } from "src/app/chat/chat.component";
-import { CookieService } from "ngx-cookie-service";
-import { TempsUser } from "src/app/admin/temps-user";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { VueSimpleComponent } from './vue-simple.component';
+import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
+import { MatCardModule } from '@angular/material';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ChatComponent } from 'src/app/chat/chat.component';
+import { CookieService } from 'ngx-cookie-service';
+import { TempsUser } from 'src/app/admin/temps-user';
 
 export class MockEvent {
     public offsetX: number;
@@ -28,7 +28,7 @@ export class MockCanvas {
     }
 }
 
-describe("VueSimpleComponent", () => {
+describe('VueSimpleComponent', () => {
     let mockCookieService: jasmine.SpyObj<CookieService>;
 
     let component: VueSimpleComponent;
@@ -62,7 +62,7 @@ describe("VueSimpleComponent", () => {
             "");
     });
 
-    it("should create", () => {
+    it('should create', () => {
         expect(component).toBeTruthy();
     });
 

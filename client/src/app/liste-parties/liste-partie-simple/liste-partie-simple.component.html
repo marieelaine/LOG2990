@@ -1,31 +1,31 @@
 <div *ngFor="let partieSimple of listeParties">
-    <mat-card class="container-fluid"
+    <mat-card class='container-fluid' 
     [class.mat-elevation-z6]="!partieSimple.isElevatedActive"
     [class.mat-elevation-z10]="!!partieSimple.isElevatedActive"
     (mouseenter)="partieSimple.isElevatedActive = !partieSimple.isElevatedActive"
     (mouseleave)="partieSimple.isElevatedActive = !partieSimple.isElevatedActive">
         <mat-card-header>
                 <div class=col-sm-7>
-                    <h2 class="topThreeHeaders text-center">Top <img class="bronzeMedal" src="assets/bronze-medal.png"></h2>
+                    <h2 class='topThreeHeaders text-center'>Top <img class='bronzeMedal' src="assets/bronze-medal.png"></h2>
                 </div>
                 <div class="col-sm-5 title">
-                    <span class="gameNameHeader titleFirstLetter">{{getTitleFirstLetter(partieSimple._nomPartie)|uppercase}}</span>
-                    <span class="gameNameHeader">{{getTitleWithoutFirstLetter(partieSimple._nomPartie)|lowercase}}</span>
+                    <span class='gameNameHeader titleFirstLetter'>{{getTitleFirstLetter(partieSimple._nomPartie)|uppercase}}</span>
+                    <span class='gameNameHeader'>{{getTitleWithoutFirstLetter(partieSimple._nomPartie)|lowercase}}</span>
                 </div>
         </mat-card-header>
-        <div class="row">
-            <div class="col-sm-7">
+        <div class='row'>
+            <div class='col-sm-7'>
                 <div class="row row-header">
                     <div class="col-1"></div>
                     <div class="col-5">
-                        <h2 class="headers"> Solo </h2>
+                        <h2 class='headers'> Solo </h2>
                     </div>
                     <div class="col-5">
-                        <h2 class="headers"> 1v1 </h2>
+                        <h2 class='headers'> 1v1 </h2> 
                     </div>
                     <div class="col-1 carte"></div>
                  </div>
-                 <div class="row temps carte"  *ngFor="let tempsSolo of partieSimple["_tempsSolo"]; let i = index">
+                 <div class="row temps carte"  *ngFor="let tempsSolo of partieSimple['_tempsSolo']; let i = index">
                     <div class="col-1">
                         <span class="badge badge-pill badge-danger">{{i+1}}</span>
                     </div>
@@ -35,25 +35,25 @@
                                 {{ getDisplayTime(tempsSolo) }}
                             </h5>
                             <h6 class="card-subtitle mb-2 text-muted">
-                                {{ tempsSolo["_user"] }}
+                                {{ tempsSolo['_user'] }}
                             </h6>
                         </div>
                     </div>
                 <div class="card col-5" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">
-                            {{ getDisplayTime(partieSimple["_tempsUnContreUn"][i]) }}
+                            {{ getDisplayTime(partieSimple['_tempsUnContreUn'][i]) }}
                         </h5>
                         <h6 class="card-subtitle mb-2 text-muted">
-                            {{ partieSimple["_tempsUnContreUn"][i]["_user"] }}
+                            {{ partieSimple['_tempsUnContreUn'][i]['_user'] }}
                         </h6>
                     </div>
                         <div class="col-1"></div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-5">
-                <img #image src="" id="{{partieSimple["_id"]}}" class="gameImage img-responsive mat-elevation-z6 center"
+        <div class='col-sm-5'>
+                <img #image src='' id="{{partieSimple['_id']}}" class='gameImage img-responsive mat-elevation-z6 center'
                     [class.mat-elevation-z6]="!partieSimple.isElevatedActive"
                     [class.mat-elevation-z10]="!!partieSimple.isElevatedActive">
             </div> 
@@ -61,8 +61,8 @@
 
         <div class="row">
                 <div class="col boutons d-flex flex-row bd-highlight justify-content-end">
-                    <button class="p-2 bd-highlight" mat-button (click) = "onJouerOuReinitialiserClick(partieSimple._id)" class="mat-elevation-z6"> {{jouerOuReinitialiser}} </button>
-                    <button class="p-2 bd-highlight" mat-button (click) = "onCreerOuSupprimerClick(partieSimple._id)" class="mat-elevation-z6"> {{listePartieEnAttente.includes(partieSimple._id) ? joindreOuSupprimer : creerOuSupprimer}} </button>
+                    <button class="p-2 bd-highlight" mat-button (click) = "onJouerOuReinitialiserClick(partieSimple._id)" class='mat-elevation-z6'> {{jouerOuReinitialiser}} </button>
+                    <button class="p-2 bd-highlight" mat-button (click) = "onCreerOuSupprimerClick(partieSimple._id)" class='mat-elevation-z6'> {{listePartieEnAttente.includes(partieSimple._id) ? joindreOuSupprimer : creerOuSupprimer}} </button>
                 </div>
         </div>
     </mat-card>  

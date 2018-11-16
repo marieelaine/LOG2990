@@ -1,18 +1,18 @@
-import {Component, OnInit, ErrorHandler} from "@angular/core";
-import {ListePartiesComponent} from "../liste-parties.component";
-import {Router} from "@angular/router";
+import {Component, OnInit, ErrorHandler} from '@angular/core';
+import {ListePartiesComponent} from '../liste-parties.component';
+import {Router} from '@angular/router';
 import {ListePartieServiceService} from "../liste-partie-service.service";
-import {PartieMultiple} from "src/app/admin/dialog-multiple/partie-multiple";
-import {DialogConfirmationComponent} from "../dialog-confirmation/dialog-confirmation.component";
-import {MatDialog} from "@angular/material";
-import {SocketClientService} from "src/app/socket/socket-client.service";
+import {PartieMultiple} from 'src/app/admin/dialog-multiple/partie-multiple';
+import {DialogConfirmationComponent} from '../dialog-confirmation/dialog-confirmation.component';
+import {MatDialog} from '@angular/material';
+import {SocketClientService} from 'src/app/socket/socket-client.service';
 import * as event from "../../../../../common/communication/evenementsSocket";
-import {DialogVueAttenteComponent} from "../dialog-vue-attente/dialog-vue-attente.component";
+import {DialogVueAttenteComponent} from '../dialog-vue-attente/dialog-vue-attente.component';
 
 @Component({
-    selector: "app-liste-partie-multiple",
-    templateUrl: "./liste-partie-multiple.component.html",
-    styleUrls: ["./liste-partie-multiple.component.css"],
+    selector: 'app-liste-partie-multiple',
+    templateUrl: './liste-partie-multiple.component.html',
+    styleUrls: ['./liste-partie-multiple.component.css'],
     providers: [SocketClientService]
 })
 export class ListePartieMultipleComponent extends ListePartiesComponent implements OnInit {

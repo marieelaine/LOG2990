@@ -10,7 +10,7 @@ import { TempsUser } from "../admin/temps-user";
 
 export abstract class PartieAbstraiteClass {
 
-    @ViewChildren("canvas") canvas: QueryList<ElementRef>;
+    @ViewChildren('canvas') canvas: QueryList<ElementRef>;
     @ViewChild(ChatComponent) chat: ChatComponent;
 
     // TODO : too many parameters
@@ -88,7 +88,7 @@ export abstract class PartieAbstraiteClass {
             hex = data.charCodeAt(i);
             result[i] = hex;
         }
-        const blob = new Blob([result], {type: "image/bmp"});
+        const blob = new Blob([result], {type: 'image/bmp'});
 
         const context: CanvasRenderingContext2D = canvas.nativeElement.getContext("2d");
         image.src = URL.createObjectURL(blob);
@@ -145,7 +145,7 @@ export abstract class PartieAbstraiteClass {
         ctx.font = "600 28px Arial";
         ctx.textAlign = "center";
         ctx.fillStyle = "#ff0000";
-        ctx.fillText("ERREUR", event.offsetX, event.offsetY + 10);
+        ctx.fillText('ERREUR', event.offsetX, event.offsetY + 10);
         ctx.lineWidth = 1.5;
         ctx.fillStyle = "black";
         ctx.strokeText("ERREUR", event.offsetX, event.offsetY + 10);
