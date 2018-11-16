@@ -1,18 +1,18 @@
-import { Component, Inject } from '@angular/core';
-import { DialogAbstrait} from '../dialog-abstrait';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { DialogData, Checkbox } from '../admin.component';
-import { HttpClient } from '@angular/common/http';
-import { PartieMultiple } from './partie-multiple';
+import { Component, Inject } from "@angular/core";
+import { DialogAbstrait} from "../dialog-abstrait";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { DialogData, Checkbox } from "../admin.component";
+import { HttpClient } from "@angular/common/http";
+import { PartieMultiple } from "./partie-multiple";
 import * as Buffer from "buffer";
-import { PartieMultipleService } from '../partie-multiple.service';
-import { FormControl, Validators } from '@angular/forms';
-import { TempsUser } from '../temps-user';
+import { PartieMultipleService } from "../partie-multiple.service";
+import { FormControl, Validators } from "@angular/forms";
+import { TempsUser } from "../temps-user";
 
 @Component({
-  selector: 'app-dialog-multiple',
-  templateUrl: './dialog-multiple.component.html',
-  styleUrls: ['./dialog-multiple.component.css'],
+  selector: "app-dialog-multiple",
+  templateUrl: "./dialog-multiple.component.html",
+  styleUrls: ["./dialog-multiple.component.css"],
 })
 
 export class DialogMultipleComponent extends DialogAbstrait {
@@ -36,11 +36,11 @@ export class DialogMultipleComponent extends DialogAbstrait {
       this.themeButtonMessage = "";
       this.data.theme = "";
       this.data.typeModification = "";
-      this.nameControl = new FormControl('', [
+      this.nameControl = new FormControl("", [
         Validators.minLength(3), Validators.maxLength(20), Validators.required]);
-      this.qtyControl = new FormControl('', [
+      this.qtyControl = new FormControl("", [
         Validators.min(10), Validators.max(200),
-        Validators.required, Validators.pattern('[ 0-9 ]*')]);
+        Validators.required, Validators.pattern("[ 0-9 ]*")]);
   }
 
   protected checkboxArray: Checkbox[] =  [
