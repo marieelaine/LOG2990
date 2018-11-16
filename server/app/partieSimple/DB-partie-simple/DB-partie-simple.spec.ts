@@ -9,7 +9,6 @@ import { TempsUser } from "../../partie-DB/DB-partie-abstract";
 describe("Partie Simple BD classe", () => {
     let dbPartieSimple: DBPartieSimple;
     const socketService: SocketServerService = new SocketServerService();
-
     beforeEach(() => {
         dbPartieSimple = new DBPartieSimple(socketService);
     });
