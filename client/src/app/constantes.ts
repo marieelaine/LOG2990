@@ -35,3 +35,11 @@ export const HEADER_BMP_P2: number = 18;
 export const HEADER_BMP_P3: number = 22;
 
 export const DIFF_PARTIE_SIMPLE: number = 7;
+export const DIFF_PARTIE_MULTIPLE: number = 14;
+export const RGB_WIDTH: number = 4;
+export const RGB_FIRST_INCREMENT: number = 1;
+export const RGB_SECOND_INCREMENT: number = 2;
+export const CONTEXT_GAUCHE_POV1_POSITION: number = 0;
+export const CONTEXT_DROITE_POV1_POSITION: number = 1;
+export const CONTEXT_GAUCHE_POV2_POSITION: number = 2;
+export const CONTEXT_DROITE_POV2_POSITION: number = 3;
