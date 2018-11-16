@@ -8,8 +8,9 @@ import { HttpHandlerMock, ActivatedRouteMock } from "src/testing/mocks";
 import { TempsUser } from "../admin/temps-user";
 import { CookieServiceMock } from "../../testing/cookieMock";
 
-const ONE_SECOND: number = 1000;
-const TWO_SECONDS: number = 2000;
+const ONE_SECOND_TIMER: number = 1000;
+const TWO_SECONDS_TIMER: number = 2000;
+const TWO_SECONDS_CHRONO: number = 2;
 
 class PartieServiceMock extends PartieService {
     public constructor() {
@@ -69,9 +70,9 @@ describe("PartieAbstraiteComponent", () => {
 
     it("chrono.getTime devrait retourner 2 lorsque la partie dure 2 secondes", fakeAsync(() => {
         component["commencerPartie"]();
-        tick(TWO_SECONDS);
+        tick(TWO_SECONDS_TIMER);
         component["terminerPartie"]();
-        expect(component["chrono"].getTime()).toBe(2);
+        expect(component["chrono"].getTime()).toBe(TWO_SECONDS_CHRONO);
     }));
 
     it("partieCommence should be false true", () => {
@@ -79,7 +80,7 @@ describe("PartieAbstraiteComponent", () => {
     });
 
     it("should return value 0", fakeAsync(() => {
-    tick(ONE_SECOND);
+    tick(ONE_SECOND_TIMER);
     expect(component["chrono"].getTime()).toBe(0);
     }));
 });
