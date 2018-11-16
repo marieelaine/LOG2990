@@ -9,7 +9,7 @@ import { Data } from "@angular/router";
 })
 export class DialogErreurComponent {
 
-  public messageErreur: string;
+  protected messageErreur: string;
 
   public constructor(private dialogRef: MatDialogRef<DialogErreurComponent>,
                      @Inject(MAT_DIALOG_DATA) data: Data) {
