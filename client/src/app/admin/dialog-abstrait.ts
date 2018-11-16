@@ -6,6 +6,10 @@ import { DialogSimpleComponent } from "./dialog-simple/dialog-simple.component";
 import { DialogMultipleComponent } from "./dialog-multiple/dialog-multiple.component";
 import { TempsUser } from "./temps-user";
 
+const BORNE_INF: number = 100;
+const BORNE_SUP: number = 400;
+const NB_ELEMENT: number = 4;
+
 export abstract class DialogAbstrait {
 
     protected outOfBoundNameLengthMessage: string;
@@ -41,7 +45,7 @@ export abstract class DialogAbstrait {
 
     protected genererTableauTempsAleatoires(): Array<TempsUser> {
         const arr: Array<TempsUser> = [];
-        for (let i: number = 1; i < 4; i++) {
+        for (let i: number = 1; i < NB_ELEMENT; i++) {
           arr.push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
         }
 
@@ -49,7 +53,7 @@ export abstract class DialogAbstrait {
     }
 
     private genererTempsAleatoire(): number {
-        return Math.floor(Math.random() * 400) + 100;
+        return Math.floor(Math.random() * BORNE_SUP) + BORNE_INF;
     }
 
 }

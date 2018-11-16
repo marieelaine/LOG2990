@@ -80,14 +80,14 @@ describe("DialogSimpleComponent", () => {
     });
 
     it("should set wrongNumberOfImagesMessage if there are less than two images", () => {
-        component["selectedFiles"][0] = createMockImageFile(true);
+        component["selectedFiles"][0] = mockFile.createMockImageFile(true);
         component["setWrongNumberOfImagesMessage"]();
         expect(component["wrongNumberOfImagesMessage"]).toEqual("*Vous devez entrer deux images.");
     });
 
     it("should not set wrongNumberOfImagesMessage if there are two images", () => {
-        component["selectedFiles"][0] = createMockImageFile(true);
-        component["selectedFiles"][1] = createMockImageFile(true);
+        component["selectedFiles"][0] = mockFile.createMockImageFile(true);
+        component["selectedFiles"][1] = mockFile.createMockImageFile(true);
         component["setWrongNumberOfImagesMessage"]();
         expect(component["wrongNumberOfImagesMessage"]).toEqual("");
     });
@@ -123,7 +123,7 @@ describe("DialogSimpleComponent", () => {
 
     it("should set wrongImageSizeOrTypeMessage image does not respect good size", () => {
         const imageInfo: ImageInfo = { "size": 64, "width": 1080, "height": 480 };
-        component["selectedFiles"][0] = createMockImageFile(true);
+        component["selectedFiles"][0] = mockFile.createMockImageFile(true);
         component["setWrongImageSizeOrTypeMessage"](imageInfo);
         expect(component["wrongImageSizeOrTypeMessage"]).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
     });
@@ -131,14 +131,14 @@ describe("DialogSimpleComponent", () => {
     it("should set wrongImageSizeOrTypeMessage image does not respect good type", () => {
         const imageInfo: ImageInfo = { "size": 24, "width": 640, "height": 480 };
         component["currentImageNumber"] = 0;
-        component["selectedFiles"][0] = createMockImageFile(false);
+        component["selectedFiles"][0] = mockFile.createMockImageFile(false);
         component["setWrongImageSizeOrTypeMessage"](imageInfo);
         expect(component["wrongImageSizeOrTypeMessage"]).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
     });
 
     it("should not set wrongImageSizeOrTypeMessage image respect good type and size", () => {
         const imageInfo: ImageInfo = { "size": 24, "width": 640, "height": 480 };
-        component["selectedFiles"][0] = createMockImageFile(true);
+        component["selectedFiles"][0] = mockFile.createMockImageFile(true);
         component["setWrongImageSizeOrTypeMessage"](imageInfo);
         expect(component["wrongImageSizeOrTypeMessage"]).toEqual("");
     });
