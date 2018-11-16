@@ -85,7 +85,9 @@ export class DialogSimpleComponent extends DialogAbstrait {
 
   protected onUploadImage(event: Event, i: number): void {
     this.currentImageNumber = i;
-    this.selectedFiles[this.currentImageNumber] = event.target.files[0] as File;
+    const target: HTMLInputElement = event.target as HTMLInputElement;
+    const files: FileList = target.files as FileList;
+    this.selectedFiles[this.currentImageNumber] = files[0] as File;
     this.convertImageToArrayToCheckSize(this.selectedFiles[this.currentImageNumber]);
     this.afficherImageSurUploadClient();
   }

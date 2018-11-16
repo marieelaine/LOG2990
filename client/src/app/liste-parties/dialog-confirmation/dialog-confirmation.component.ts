@@ -17,7 +17,7 @@ export class DialogConfirmationComponent {
   private listePartiesMultiples: PartieMultiple[];
   private isSimple: boolean;
 
-  constructor(
+  public constructor(
     private dialogRef: MatDialogRef<DialogConfirmationComponent>,
     private listePartieService: ListePartieServiceService,
     @Inject(MAT_DIALOG_DATA) data) {
