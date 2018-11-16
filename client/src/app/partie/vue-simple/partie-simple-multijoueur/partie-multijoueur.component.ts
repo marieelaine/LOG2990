@@ -13,7 +13,7 @@ import {CookieService} from "ngx-cookie-service";
 
 export class PartieSimpleMultijoueurComponent extends VueSimpleComponent {
 
-    protected constructor(protected route: ActivatedRoute,
+    constructor(protected route: ActivatedRoute,
                           protected partieService: PartieService,
                           protected cookieService: CookieService) {
         super(route, partieService, cookieService);
