@@ -6,7 +6,7 @@ import {PartieSimple} from "./dialog-simple/partie-simple";
 describe("Partie Simple Service", () => {
     let service: PartieSimpleService;
     let http: HttpTestingController;
-    const responseForm = "<form />";
+    const responseForm: string = "<form />";
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -23,8 +23,8 @@ describe("Partie Simple Service", () => {
     });
 
     it("POST request should be called with proper arguments", () => {
-        let partieResponse;
-        const partie = new PartieSimple("name", [], [], new Buffer(""), new Buffer(""), [[]]);
+        let partieResponse: PartieSimple = new PartieSimple("name", [], [], new Buffer(""), new Buffer(""), [[]]);
+        const partie: PartieSimple = new PartieSimple("name", [], [], new Buffer(""), new Buffer(""), [[]]);
 
         service.register(partie).subscribe((response) => {
           partieResponse = response;
