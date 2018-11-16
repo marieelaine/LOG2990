@@ -147,8 +147,6 @@ export abstract class PartieAbstraiteClass {
         const canvas: HTMLCanvasElement = event.srcElement as HTMLCanvasElement;
         const ctx: CanvasRenderingContext2D = canvas.getContext("2d") as CanvasRenderingContext2D;
 
-        const srcElem: Element = event.srcElement as Element;
-
         const imageSaved: ImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         ctx.font = "600 28px Arial";
         ctx.textAlign = "center";
