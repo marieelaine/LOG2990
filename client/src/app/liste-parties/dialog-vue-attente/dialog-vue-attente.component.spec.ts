@@ -58,10 +58,11 @@ describe("DialogVueAttenteComponent", () => {
     describe("Fonction ajouterPartieSurSocket", () => {
         it("Devrait appeler la fonction on de socket lors de l'appel de la fonction", () => {
             const spySocket: jasmine.Spy = spyOn(component.socketClientService.socket, "on");
+            const nbCalls: number = 2;
 
             component["ajouterPartieSurSocket"]();
 
-            expect(spySocket).toHaveBeenCalledTimes(1);
+            expect(spySocket).toHaveBeenCalledTimes(nbCalls);
         });
     });
 
@@ -69,7 +70,7 @@ describe("DialogVueAttenteComponent", () => {
         it("Devrait mettre la bonne valeur dans l'attribut message", () => {
             const messageInitial: string = component["message"];
 
-            component["setMessageErreur"]();
+            component["setMessageDialog"]();
 
             expect(component["message"]).not.toEqual(messageInitial);
             expect(component["message"]).toEqual("Erreur : cette partie n'existe plus!");
