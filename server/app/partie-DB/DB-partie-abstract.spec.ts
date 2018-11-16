@@ -2,7 +2,7 @@ import { DBPartieAbstract, TempsUser } from "../partie-DB/DB-partie-abstract";
 import { PartieSimpleInterface } from "../partieSimple/DB-partie-simple/DB-partie-simple";
 import { PartieMultipleInterface } from "../partieMultiple/DB-partie-multiple/DB-partie-multiple";
 import { ChildProcess } from "child_process";
-import { Request, Response} from "express";
+import { Request, Response } from "express";
 import { assert } from "chai";
 import sinon = require("sinon");
 import { Schema } from "mongoose";
@@ -67,10 +67,7 @@ class DBPartie extends DBPartieAbstract {
     }
 
     protected async deletePartie(idPartie: string, res: Response): Promise<Response> {
-        // tslint:disable-next-line:typedef
-        const httpMocks = require("node-mocks-http");
-
-        return Promise.resolve(httpMocks.createReponse());
+        return Promise.resolve(res);
     }
 
     protected async verifierErreurScript(child: ChildProcess,
