@@ -34,6 +34,8 @@ export const HEADER_BMP_P1: number = 28;
 export const HEADER_BMP_P2: number = 18;
 export const HEADER_BMP_P3: number = 22;
 
+export const PARTIE_SIMPLE_NB_IMAGES: number = 2;
+export const PARTIE_MULTIPLE_NB_IMAGES: number = 4;
 export const DIFF_PARTIE_SIMPLE: number = 7;
 export const DIFF_PARTIE_MULTIPLE: number = 14;
 export const RGB_WIDTH: number = 4;
