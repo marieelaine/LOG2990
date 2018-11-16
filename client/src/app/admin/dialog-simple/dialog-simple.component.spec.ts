@@ -8,7 +8,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { createMockImageFile } from "../../../testing/file-creator";
+import { MockFileCreator } from "../../../testing/file-creator";
 import { DialogSimpleComponent, ImageInfo } from "./dialog-simple.component";
 
 describe("DialogSimpleComponent", () => {

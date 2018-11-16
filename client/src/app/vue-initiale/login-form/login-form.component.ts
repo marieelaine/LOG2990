@@ -14,6 +14,10 @@ export const USER_URL: string = "http://localhost:3000/users/";
     templateUrl: "./login-form.component.html",
     styleUrls: ["./login-form.component.css"]
 })
+const particulesWidth: number = 100;
+const particulesHeight: number = 100;
+const maxLengthUsername: number = 12;
+const minLengthUsername: number = 12;
 
 export class LoginFormComponent implements OnInit {
 
@@ -22,10 +26,10 @@ export class LoginFormComponent implements OnInit {
     protected username: string;
 
     // Paramètres de particles background
-    myStyle: object = {};
-    myParams: object = {};
-    width: number = 100;
-    height: number = 100;
+    private myStyle: object = {};
+    private myParams: object = {};
+    private width: number = particulesWidth;
+    private height: number = particulesHeight;
 
     public constructor(private router: Router,
                        private userService: UserService,
@@ -44,7 +48,7 @@ export class LoginFormComponent implements OnInit {
     }
 
     protected onSubmit(): void {
-        const username = this.loginForm.value.username;
+        const username: string = this.loginForm.value.username;
         const result: User = new User(username);
         this.userService.register(result)
             .subscribe(
@@ -64,8 +68,8 @@ export class LoginFormComponent implements OnInit {
             username: new FormControl("", [
                 Validators.required,
                 Validators.pattern("^[A-Za-z0-9]+$"),
-                Validators.maxLength(12),
-                Validators.minLength(3)
+                Validators.maxLength(maxLengthUsername),
+                Validators.minLength(minLengthUsername)
             ])
         });
     }
