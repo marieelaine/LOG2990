@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { MockFileCreator } from "../../../testing/file-creator";
-import { DialogSimpleComponent } from "./dialog-simple.component";
+import { DialogSimpleComponent, ImageInfo } from "./dialog-simple.component";
 
 describe("DialogSimpleComponent", () => {
     let component: DialogSimpleComponent;
@@ -122,14 +122,14 @@ describe("DialogSimpleComponent", () => {
     });
 
     it("should set wrongImageSizeOrTypeMessage image does not respect good size", () => {
-        const imageInfo = { "size": 64, "width": 1080, "height": 480 };
+        const imageInfo: ImageInfo = { "size": 64, "width": 1080, "height": 480 };
         component["selectedFiles"][0] = createMockImageFile(true);
         component["setWrongImageSizeOrTypeMessage"](imageInfo);
         expect(component["wrongImageSizeOrTypeMessage"]).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
     });
 
     it("should set wrongImageSizeOrTypeMessage image does not respect good type", () => {
-        const imageInfo = { "size": 24, "width": 640, "height": 480 };
+        const imageInfo: ImageInfo = { "size": 24, "width": 640, "height": 480 };
         component["currentImageNumber"] = 0;
         component["selectedFiles"][0] = createMockImageFile(false);
         component["setWrongImageSizeOrTypeMessage"](imageInfo);
@@ -137,7 +137,7 @@ describe("DialogSimpleComponent", () => {
     });
 
     it("should not set wrongImageSizeOrTypeMessage image respect good type and size", () => {
-        const imageInfo = { "size": 24, "width": 640, "height": 480 };
+        const imageInfo: ImageInfo = { "size": 24, "width": 640, "height": 480 };
         component["selectedFiles"][0] = createMockImageFile(true);
         component["setWrongImageSizeOrTypeMessage"](imageInfo);
         expect(component["wrongImageSizeOrTypeMessage"]).toEqual("");

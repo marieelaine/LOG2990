@@ -41,7 +41,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
     protected testerPourDiff(event): void {
         if (this.partieCommence && !this.penaliteEtat) {
-            const coords = event.offsetX + "," + event.offsetY;
+            const coords: string = event.offsetX + "," + event.offsetY;
             let i: number = 0;
             for (const diff of this.partie["_imageDiff"]) {
                 for (const pixel of diff) {
@@ -59,7 +59,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         }
     }
 
-    protected differenceTrouver(i): void {
+    protected differenceTrouver(i: number): void {
         this.diffTrouvee[0].push(i);
         this.trouverDifference();
 
