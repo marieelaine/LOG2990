@@ -7,8 +7,15 @@ import { PartieSimpleService } from "../partie-simple.service";
 import { DialogAbstrait } from "../dialog-abstrait";
 import * as Buffer from "buffer";
 import { FormControl, Validators } from "@angular/forms";
+import { LONGUEUR_NOM_MIN, LONGUEUR_NOM_MAX } from "src/app/constantes";
 
 export const IMAGE_URL: string = "http://localhost:3000/images/";
+
+interface ImageInfo {
+  size: number;
+  width: number;
+  height: number;
+}
 
 @Component({
   selector: "app-dialog-simple",
@@ -28,6 +35,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
   private selectedFiles: File[];
   private selectedFilesAsBuffers: Buffer[];
   private correctImageExtension: String;
+  private readonly maxNbImage: number = 2;
 
   public constructor(
     dialogRef: MatDialogRef<DialogSimpleComponent>,
@@ -42,7 +50,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
       this.wrongImageSizeOrTypeMessage = "";
       this.wrongNumberOfImagesMessage = "";
       this.nameControl = new FormControl("", [
-        Validators.minLength(3), Validators.maxLength(20), Validators.required]);
+        Validators.minLength(LONGUEUR_NOM_MIN), Validators.maxLength(LONGUEUR_NOM_MAX), Validators.required]);
     }
 
   protected onClickAjouterPartie(): void {
@@ -60,7 +68,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
 
       reader.onload = () => {
         this.arraybufferToBuffer(reader.result as ArrayBuffer, imageQty);
-        if (this.selectedFilesAsBuffers.length === 2) {
+        if (this.selectedFilesAsBuffers.length === this.maxNbImage) {
           this.ajouterPartie()
           .catch(() => ErrorHandler);
         }
@@ -75,8 +83,9 @@ export class DialogSimpleComponent extends DialogAbstrait {
             || this.wrongImageSizeOrTypeMessage !== "");
   }
 
-  protected onUploadImage(event, i): void {
+  protected onUploadImage(event: Event, i: number): void {
     this.currentImageNumber = i;
+    const target: EventTarget = event.target as EventTarget;
     this.selectedFiles[this.currentImageNumber] = event.target.files[0] as File;
     this.convertImageToArrayToCheckSize(this.selectedFiles[this.currentImageNumber]);
     this.afficherImageSurUploadClient();
@@ -101,7 +110,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
     || this["data"].simpleGameName.length < 3 || this["data"].simpleGameName.length > 20);
   }
 
-  private afficherImageSurUploadClient() {
+  private afficherImageSurUploadClient(): void {
     const reader: FileReader = new FileReader();
     reader.readAsDataURL(this.selectedFiles[this.currentImageNumber]);
     reader.onload = () => {
@@ -109,11 +118,11 @@ export class DialogSimpleComponent extends DialogAbstrait {
     };
   }
 
-  private arraybufferToBuffer(file: ArrayBuffer, i: number) {
+  private arraybufferToBuffer(file: ArrayBuffer, i: number): void {
     this.selectedFilesAsBuffers[i] = Buffer.Buffer.from(file);
   }
 
-  private setWrongImageSizeOrTypeMessage(imageInfo): void {
+  private setWrongImageSizeOrTypeMessage(imageInfo: ImageInfo): void {
     this.checkIfWrongImageSize(imageInfo) || this.checkIfWrongImageType() ?
     this.wrongImageSizeOrTypeMessage = "*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels" :
     this.wrongImageSizeOrTypeMessage = "";
@@ -129,19 +138,19 @@ export class DialogSimpleComponent extends DialogAbstrait {
     const self: DialogSimpleComponent = this;
     const reader: FileReader = new FileReader();
     reader.readAsArrayBuffer(file);
-    reader.onload = function() {
+    reader.onload = () => {
       const dv: DataView = new DataView(reader.result as ArrayBuffer);
-      const imageInfo = {"size": dv.getUint16(28, true), "width": dv.getUint32(18, true), "height": dv.getUint32(22, true)};
+      const imageInfo: ImageInfo = {size: dv.getUint16(28, true), width: dv.getUint32(18, true), height: dv.getUint32(22, true)};
       self.setWrongImageSizeOrTypeMessage(imageInfo);
     };
   }
 
-  private checkIfWrongImageSize(imageInfo): Boolean {
+  private checkIfWrongImageSize(imageInfo: ImageInfo): Boolean {
     return (imageInfo["size"] !== 24 || imageInfo["width"] !== 640 || imageInfo["height"] !== 480);
   }
 
   private checkIfWrongImageType(): Boolean {
-    var isWrongType: Boolean = false;
+    let isWrongType: Boolean = false;
     this.selectedFiles.forEach((file) => {
     if (file !== undefined && file.type !== this.correctImageExtension) {
       isWrongType = true;
