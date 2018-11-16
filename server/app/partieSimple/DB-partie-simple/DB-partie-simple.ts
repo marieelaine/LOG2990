@@ -190,7 +190,7 @@ export class DBPartieSimple extends DBPartieAbstract {
         partieSimple["_tempsSolo"] = this.getSortedTimes(partieSimple["_tempsSolo"]);
         partieSimple["_tempsUnContreUn"] = this.getSortedTimes(partieSimple["_tempsUnContreUn"]);
         await partieSimple.save(async (err: Error, data: Document) => {
-            if (err !== null && err.name === "ValidationError") {
+            if (err !== null && err.name === constantes.ERREUR_UNIQUE) {
                 this.socket.envoyerMessageErreurNom(constantes.ERREUR_NOM_PRIS);
             } else {
                 this.socket.envoyerPartieSimple(await this.getPartieByName(partie._nomPartie));
@@ -199,7 +199,7 @@ export class DBPartieSimple extends DBPartieAbstract {
     }
 
     private getImageDiffAsArrays(partie: PartieSimpleInterface): void {
-        const imageMod: string = p.resolve("../Images/image3.bmp.txt");
+        const imageMod: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + "image3.bmp.txt");
         const diffArrays: Array<Array<string>> = new Array<Array<string>>();
         const input: fs.ReadStream = fs.createReadStream(imageMod);
         const rl: ReadLine = require("readline").createInterface({
@@ -232,9 +232,9 @@ export class DBPartieSimple extends DBPartieAbstract {
         await this.addImagesToDirectory(buffers);
 
         const script: string = p.resolve("./bmpdiff/bmpdiff");
-        const imageOri1: string = p.resolve("../Images/image1.bmp");
-        const imageOri2: string = p.resolve("../Images/image2.bmp");
-        const imageMod: string = p.resolve("../Images/image3.bmp");
+        const imageOri1: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + "image1.bmp");
+        const imageOri2: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + "image2.bmp");
+        const imageMod: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + "image3.bmp");
         const args: string[] = [imageOri1, imageOri2, imageMod];
 
         const child: ChildProcess = execFile(script, args);
