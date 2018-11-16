@@ -33,3 +33,5 @@ export const WINDOW_HEIGHT: number = 480;
 export const HEADER_BMP_P1: number = 28;
 export const HEADER_BMP_P2: number = 18;
 export const HEADER_BMP_P3: number = 22;
+
+export const DIFF_PARTIE_SIMPLE: number = 7;
