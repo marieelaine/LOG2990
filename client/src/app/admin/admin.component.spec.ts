@@ -124,14 +124,11 @@ describe("AdminComponent", () => {
 
     describe("Fonction initSocket", () => {
         it("Devrait appeler la fonction on deux fois du service socket", () => {
-            // Arrange
             const nbAppels: number = 2;
             const spySocketOn: jasmine.Spy = spyOn(component.socketClientService.socket, "on");
 
-            // Act
             component["initSocket"]();
 
-            // Assert
             expect(spySocketOn).toHaveBeenCalledTimes(nbAppels);
         });
     });
