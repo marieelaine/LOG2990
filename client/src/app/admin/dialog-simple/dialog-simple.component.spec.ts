@@ -8,13 +8,12 @@ import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { MockFileCreator } from "../../../testing/file-creator";
+import { createMockImageFile } from "../../../testing/file-creator";
 import { DialogSimpleComponent } from "./dialog-simple.component";
 
 describe("DialogSimpleComponent", () => {
     let component: DialogSimpleComponent;
     let fixture: ComponentFixture<DialogSimpleComponent>;
-    const mockFile = new MockFileCreator();
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -80,14 +79,14 @@ describe("DialogSimpleComponent", () => {
     });
 
     it("should set wrongNumberOfImagesMessage if there are less than two images", () => {
-        component["selectedFiles"][0] = mockFile.createMockImageFile(true);
+        component["selectedFiles"][0] = createMockImageFile(true);
         component["setWrongNumberOfImagesMessage"]();
         expect(component["wrongNumberOfImagesMessage"]).toEqual("*Vous devez entrer deux images.");
     });
 
     it("should not set wrongNumberOfImagesMessage if there are two images", () => {
-        component["selectedFiles"][0] = mockFile.createMockImageFile(true);
-        component["selectedFiles"][1] = mockFile.createMockImageFile(true);
+        component["selectedFiles"][0] = createMockImageFile(true);
+        component["selectedFiles"][1] = createMockImageFile(true);
         component["setWrongNumberOfImagesMessage"]();
         expect(component["wrongNumberOfImagesMessage"]).toEqual("");
     });
@@ -123,7 +122,7 @@ describe("DialogSimpleComponent", () => {
 
     it("should set wrongImageSizeOrTypeMessage image does not respect good size", () => {
         const imageInfo = { "size": 64, "width": 1080, "height": 480 };
-        component["selectedFiles"][0] = mockFile.createMockImageFile(true);
+        component["selectedFiles"][0] = createMockImageFile(true);
         component["setWrongImageSizeOrTypeMessage"](imageInfo);
         expect(component["wrongImageSizeOrTypeMessage"]).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
     });
@@ -131,14 +130,14 @@ describe("DialogSimpleComponent", () => {
     it("should set wrongImageSizeOrTypeMessage image does not respect good type", () => {
         const imageInfo = { "size": 24, "width": 640, "height": 480 };
         component["currentImageNumber"] = 0;
-        component["selectedFiles"][0] = mockFile.createMockImageFile(false);
+        component["selectedFiles"][0] = createMockImageFile(false);
         component["setWrongImageSizeOrTypeMessage"](imageInfo);
         expect(component["wrongImageSizeOrTypeMessage"]).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
     });
 
     it("should not set wrongImageSizeOrTypeMessage image respect good type and size", () => {
         const imageInfo = { "size": 24, "width": 640, "height": 480 };
-        component["selectedFiles"][0] = mockFile.createMockImageFile(true);
+        component["selectedFiles"][0] = createMockImageFile(true);
         component["setWrongImageSizeOrTypeMessage"](imageInfo);
         expect(component["wrongImageSizeOrTypeMessage"]).toEqual("");
     });

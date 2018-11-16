@@ -4,18 +4,18 @@ import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 
 export class HttpHandlerMock extends HttpHandler {
     private http: HttpClient;
-    public constructor() {
+    constructor() {
         super();
     }
     // tslint:disable-next-line:no-any
-    public handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+    handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
         // tslint:disable-next-line:no-any
         return this.http.get<any>("");
     }
 }
 
 export class ActivatedRouteMock extends ActivatedRoute {
-    public constructor() {
+    constructor() {
         super();
         this.snapshot = new ActivatedRouteSnapshot();
         this.snapshot.params = {
