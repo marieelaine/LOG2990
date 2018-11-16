@@ -15,9 +15,9 @@ import { Subscription } from "rxjs";
 export class DialogVueAttenteComponent implements OnDestroy {
 
     private partieId: string;
+    private souscriptionDeletePartieSimpleAttente: Subscription;
     protected message: string;
     protected isEnAttente: boolean;
-    private souscriptionDeletePartieSimpleAttente: Subscription;
 
     public constructor(
         public dialogRef: MatDialogRef<DialogVueAttenteComponent>,

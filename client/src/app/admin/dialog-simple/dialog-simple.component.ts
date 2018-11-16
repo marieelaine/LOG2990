@@ -41,8 +41,8 @@ export class DialogSimpleComponent extends DialogAbstrait {
     dialogRef: MatDialogRef<DialogSimpleComponent>,
     @Inject(MAT_DIALOG_DATA) data: DialogData,
     http: HttpClient,
-
     private partieSimpleService: PartieSimpleService) {
+
       super(dialogRef, data, http);
       this.selectedFiles = [];
       this.selectedFilesAsBuffers = [];

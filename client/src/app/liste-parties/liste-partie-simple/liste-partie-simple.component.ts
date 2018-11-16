@@ -61,6 +61,17 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     }
   }
 
+  protected reinitialiserTemps(partieId: string): void {
+    this.listeParties.forEach((partie: PartieSimple) => {
+      if (partie["_id"] === partieId) {
+       partie["_tempsSolo"] = this.genererTableauTempsAleatoires();
+       partie["_tempsUnContreUn"] = this.genererTableauTempsAleatoires();
+       this.listePartieService.reinitialiserTempsPartie(partieId, partie["_tempsSolo"], partie["_tempsUnContreUn"])
+       .catch(() => ErrorHandler);
+      }
+    });
+  }
+
   private checkJoindreOuSupprimer(partieId: string): void {
     if (this.listePartieEnAttente.includes(partieId)) {
       this.router.navigate(["/partie-simple-solo/" + partieId]).catch(() => ErrorHandler);
@@ -86,17 +97,6 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
       data: { id: partieId,
               listeParties: this.listeParties,
               isSimple: true}
-    });
-  }
-
-  protected reinitialiserTemps(partieId: string): void {
-    this.listeParties.forEach((partie: PartieSimple) => {
-      if (partie["_id"] === partieId) {
-       partie["_tempsSolo"] = this.genererTableauTempsAleatoires();
-       partie["_tempsUnContreUn"] = this.genererTableauTempsAleatoires();
-       this.listePartieService.reinitialiserTempsPartie(partieId, partie["_tempsSolo"], partie["_tempsUnContreUn"])
-       .catch(() => ErrorHandler);
-      }
     });
   }
 

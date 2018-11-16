@@ -19,10 +19,9 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                        protected partieService: PartieService,
                        protected cookieService: CookieService) {
         super(route, partieService, cookieService, false);
-        this.differenceRestantes = constantes.DIFF_PARTIE_MULTIPLE;
+        this.differenceRestantes = constantes.DIFF_PARTIE_SIMPLE;
     }
 
-    // TODO
     protected ajouterTemps(temps: number): void {
         this.updateTableauTempsSolo(temps);
         this.partieService.reinitialiserTempsPartieMultiple(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
