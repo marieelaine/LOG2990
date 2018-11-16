@@ -2,9 +2,9 @@ import { PartieMultipleInterface, DBPartieMultiple } from "./DB-partie-multiple"
 import { assert } from "chai";
 import * as fsx from "fs-extra";
 import * as sinon from "sinon";
-import { Response } from "express";
+import * as constantes from "../../constantes";
 import { SocketServerService } from "../../socket-io.service";
-import { TempsUser } from "../../partieSimple/DB-partie-simple/DB-partie-simple";
+import { TempsUser } from "../../partie-DB/DB-partie-abstract";
 
 describe("Partie Multiple BD classe", () => {
     let partieMultipleBD: DBPartieMultiple;
@@ -18,37 +18,12 @@ describe("Partie Multiple BD classe", () => {
         it("Devrait etre defini", () => {
             assert.isDefined(partieMultipleBD);
         });
-
-        it("Devrait definir l'attribut baseDeDonnees", () => {
-            assert.isDefined(partieMultipleBD["baseDeDonnees"]);
-        });
-
-        it("Devrait definir l'attribut modelPartie", () => {
-            assert.isDefined(partieMultipleBD["modelPartie"]);
+        it("Devrait definir l'attribut modelPartieBuffer", () => {
+            assert.isDefined(partieMultipleBD["modelPartieBuffer"]);
         });
 
         it("Devrait definir l'attribut modelPartieArray", () => {
             assert.isDefined(partieMultipleBD["modelPartieArray"]);
-        });
-
-        it("Devrait definir l'attribut schemaArray", () => {
-            assert.isDefined(partieMultipleBD["schemaArray"]);
-        });
-
-        it("Devrait definir l'attribut schema", () => {
-            assert.isDefined(partieMultipleBD["schema"]);
-        });
-    });
-
-    describe("Fonction makeDirectory", () => {
-        it("Devrait appeller la fonction makeDirectory", () => {
-            // tslint:disable-next-line:no-any
-            const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "makeDirectory");
-            const resultatAttendu: string = "../Images";
-
-            partieMultipleBD["makeDirectory"](resultatAttendu);
-
-            assert(spy.calledOnce);
         });
     });
 
@@ -94,7 +69,7 @@ describe("Partie Multiple BD classe", () => {
     });
 
     describe("Fonction genererScene", () => {
-        it("Devrait appeller la fonction genererScene", async () => {
+        it("Devrait appeller la fonction genererScene", async() => {
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "genererScene");
 
@@ -114,13 +89,42 @@ describe("Partie Multiple BD classe", () => {
                 _typeModification: "a",
             };
 
-            await partieMultipleBD["genererScene"](unePartie, {} as Response);
+            await partieMultipleBD["genererScene"](unePartie);
 
             assert(spy.calledOnce);
         });
     });
 
-    afterEach(() => {
+    describe("Fonction ajouterImagesPartieMultiple", () => {
+        it("Devrait appeller la fonction getImageDiffAsArray", async() => {
+            // tslint:disable-next-line:no-any
+            const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "getImageDiffAsArray");
+
+            const unePartie: PartieMultipleInterface = {
+                _id: "1",
+                _nomPartie: "unePartie",
+                _tempsSolo: new Array<TempsUser>(),
+                _tempsUnContreUn: new Array<TempsUser>(),
+                _image1PV1: Buffer.alloc(1),
+                _image1PV2: Buffer.alloc(1),
+                _image2PV1: Buffer.alloc(1),
+                _image2PV2: Buffer.alloc(1),
+                _imageDiff1: new Array<Array<string>>(),
+                _imageDiff2: new Array<Array<string>>(),
+                _quantiteObjets: 1,
+                _theme: "theme",
+                _typeModification: "a",
+            };
+
+            await partieMultipleBD["ajouterImagesPartieMultiple"](unePartie, "");
+
+            assert(spy.calledOnce);
+        });
+    });
+
+    afterEach(async () => {
         sinon.restore();
+        const dir: string = constantes.IMAGES_DIRECTORY;
+        await fsx.remove(dir);
     });
 });

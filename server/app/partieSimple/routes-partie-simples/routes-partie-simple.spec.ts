@@ -17,7 +17,7 @@ describe("Routes Partie Simple classe", () => {
             const uri: string = URL_BASE + "/getListePartieSimple";
             const resultat: PartieSimpleInterface[] = await WebRequest.json<PartieSimpleInterface[]>(uri);
 
-            assert.notEqual(resultat.length, 0);
+            assert.notStrictEqual(resultat.length, 0);
         });
     });
 });
