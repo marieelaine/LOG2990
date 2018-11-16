@@ -6,10 +6,6 @@ import {PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
 
-const RGB_WIDTH: number = 4;
-const RGB_FIRST_INCREMENT: number = 1;
-const RGB_SECOND_INCREMENT: number = 2;
-
 @Component({
     selector: "app-vue-simple",
     templateUrl: "./vue-simple.component.html",
@@ -79,11 +75,11 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         for (const pixel of this.partie["_imageDiff"][i]) {
             const x: number = Number(pixel.split(",")[0]);
             const y: number = Number(pixel.split(",")[1]);
-            const dim: number = (y * constantes.WINDOW_WIDTH * RGB_WIDTH) + (x * RGB_WIDTH);
+            const dim: number = (y * constantes.WINDOW_WIDTH * constantes.RGB_WIDTH) + (x * constantes.RGB_WIDTH);
 
             dataD[dim] = dataG[dim];
-            dataD[dim + RGB_FIRST_INCREMENT] = dataG[dim + RGB_FIRST_INCREMENT];
-            dataD[dim + RGB_SECOND_INCREMENT] = dataG[dim + RGB_SECOND_INCREMENT];
+            dataD[dim + constantes.RGB_FIRST_INCREMENT] = dataG[dim + constantes.RGB_FIRST_INCREMENT];
+            dataD[dim + constantes.RGB_SECOND_INCREMENT] = dataG[dim + constantes.RGB_SECOND_INCREMENT];
         }
         contextD.putImageData(imageDataD, 0, 0);
     }
