@@ -45,7 +45,7 @@ describe("Partie Multiple BD classe", () => {
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "deleteImagesDirectory");
             const stubSocketEnvoyerPartie: sinon.SinonStub = sinon.stub(partieMultipleBD["socket"], "envoyerMessageErreurNom");
-            
+
             stubSocketEnvoyerPartie.onCall(0).callThrough();
             stubSocketEnvoyerPartie.onCall(1).callThrough();
 
@@ -113,7 +113,7 @@ describe("Partie Multiple BD classe", () => {
         it("Devrait appeller la fonction getImageDiffAsBuffer", async() => {
             // tslint:disable-next-line:no-any
             const stub: sinon.SinonStub = sinon.stub<any>(partieMultipleBD, "getImageDiffAsBuffer");
-            
+
             stub.onCall(0).callThrough();
             stub.onCall(1).callThrough();
             stub.onCall(thirdCall).callThrough();

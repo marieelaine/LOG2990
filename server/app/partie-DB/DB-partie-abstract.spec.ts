@@ -118,7 +118,7 @@ describe("DBPartieAbstract", () => {
         const user2: TempsUser = { _user: "", _temps: 2 };
         let array: Array<TempsUser> = [user2, user1];
         const expectedArray: Array<TempsUser> = [user1, user2];
-        
+
         array = dbPartie["getSortedTimes"](array);
 
         assert.equal(expectedArray.length, array.length);
