@@ -44,6 +44,9 @@ describe("Partie Multiple BD classe", () => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "deleteImagesDirectory");
+            const stubSocketEnvoyerPartie: sinon.SinonStub = sinon.stub(partieMultipleBD["socket"], "envoyerMessageErreurNom");
+            stubSocketEnvoyerPartie.onCall(0).callThrough();
+            stubSocketEnvoyerPartie.onCall(1).callThrough();
 
             const unePartie: PartieMultipleInterface = {
                 _id: "1",

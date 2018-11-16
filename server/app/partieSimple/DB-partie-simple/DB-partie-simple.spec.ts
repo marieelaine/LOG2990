@@ -8,10 +8,10 @@ import { TempsUser } from "../../partie-DB/DB-partie-abstract";
 
 describe("Partie Simple BD classe", () => {
     let dbPartieSimple: DBPartieSimple;
-    const socket: SocketServerService = new SocketServerService();
-
+    const socketService: SocketServerService = new SocketServerService();
+    
     beforeEach(() => {
-        dbPartieSimple = new DBPartieSimple(socket);
+        dbPartieSimple = new DBPartieSimple(socketService);
     });
 
     describe("Constructeur", () => {
@@ -44,7 +44,9 @@ describe("Partie Simple BD classe", () => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(dbPartieSimple, "deleteImagesDirectory");
-
+            const stubSocket: sinon.SinonStub = sinon.stub(dbPartieSimple["socket"], "envoyerMessageErreurDifferences");
+            stubSocket.onCall(0).callThrough();
+            
             const unePartie: PartieSimpleInterface = {
                 _id: "1",
                 _nomPartie: "unePartie",
