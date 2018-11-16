@@ -14,7 +14,7 @@ mat-card-header
 {
     justify-content: right;
     margin-bottom:2%;
-    border-bottom:2px solid #e6e5e5;
+    border-bottom:5px solid #e6e5e5;
 }
 
 .gameNameHeader
@@ -102,6 +102,13 @@ col-1{
     padding: .6em .9em;
     margin-left:2%;
 }
+
+@media (min-width: 576px){
+    .col-sm-5 {
+        flex: auto;
+    }
+}
+    
 
 
 /* CSS pour les cartes */
