@@ -121,7 +121,6 @@ describe("Partie Multiple BD classe", () => {
             const stubGetImageDiff: sinon.SinonStub = sinon.stub<any>(partieMultipleBD, "getImageDiffTextFile");
             stubGetImageDiff.onCall(0).callThrough();
 
-
             await partieMultipleBD["ajouterImagesPartieMultiple"](unePartie, "");
 
             assert(stub.called);

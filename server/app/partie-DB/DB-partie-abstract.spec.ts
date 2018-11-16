@@ -104,11 +104,11 @@ describe("DBPartieAbstract", () => {
     });
 
     describe("Fonction makeImagesDirectory", () => {
-        it("Devrait appeller la fonction makeDirectory", () => {
+        it("Devrait appeller la fonction makeDirectory", async() => {
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(fs, "mkdir").withArgs(sinon.match.string);
 
-            dbPartie["makeImagesDirectory"]();
+            await dbPartie["makeImagesDirectory"]();
 
             assert(spy.calledOnce);
         });
@@ -125,7 +125,6 @@ describe("DBPartieAbstract", () => {
 
         const expectedArray: Array<TempsUser> = [user1, user2];
 
-        // console.log(expectedArray, array);
         assert.equal(expectedArray.length, array.length);
         assert.equal(expectedArray[0], array[0]);
         assert.equal(expectedArray[1], array[1]);
