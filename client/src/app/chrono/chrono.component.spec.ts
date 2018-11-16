@@ -40,7 +40,7 @@ describe("ChronoComponent", () => {
         it("Devrait remettre l'attribut time a 0 et l'attribut running a false", () => {
             // Arrange
             const temps: number = 10;
-            component["time"] = temps;;
+            component["time"] = temps;
             component["running"] = true;
 
             // Act
