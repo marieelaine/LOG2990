@@ -1,13 +1,13 @@
-import { Component, Inject, ErrorHandler} from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ListePartieServiceService } from '../liste-partie-service.service';
-import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
-import { PartieMultiple } from 'src/app/admin/dialog-multiple/partie-multiple';
+import { Component, Inject, ErrorHandler} from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { ListePartieServiceService } from "../liste-partie-service.service";
+import { PartieSimple } from "src/app/admin/dialog-simple/partie-simple";
+import { PartieMultiple } from "src/app/admin/dialog-multiple/partie-multiple";
 
 @Component({
-  selector: 'app-dialog-confirmation',
-  templateUrl: './dialog-confirmation.component.html',
-  styleUrls: ['./dialog-confirmation.component.css']
+  selector: "app-dialog-confirmation",
+  templateUrl: "./dialog-confirmation.component.html",
+  styleUrls: ["./dialog-confirmation.component.css"]
 })
 
 export class DialogConfirmationComponent {
@@ -17,7 +17,7 @@ export class DialogConfirmationComponent {
   private listePartiesMultiples: PartieMultiple[];
   private isSimple: boolean;
 
-  constructor(
+  public constructor(
     private dialogRef: MatDialogRef<DialogConfirmationComponent>,
     private listePartieService: ListePartieServiceService,
     @Inject(MAT_DIALOG_DATA) data) {

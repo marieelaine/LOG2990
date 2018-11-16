@@ -21,10 +21,10 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   protected listeParties: PartieSimple[];
   protected listePartieEnAttente: string[];
 
-  constructor(public router: Router,
-              public listePartieService: ListePartieServiceService,
-              private dialog: MatDialog,
-              public socketClientService: SocketClientService) {
+  public constructor(public router: Router,
+                     public listePartieService: ListePartieServiceService,
+                     private dialog: MatDialog,
+                     public socketClientService: SocketClientService) {
     super(router, listePartieService);
     this.listeParties = [];
     this.listePartieEnAttente = [];

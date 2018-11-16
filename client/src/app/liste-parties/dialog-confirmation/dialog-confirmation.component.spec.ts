@@ -3,13 +3,13 @@ import { By } from "@angular/platform-browser";
 import { DialogConfirmationComponent } from './dialog-confirmation.component';
 import { MatDividerModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { PartieSimple } from 'src/app/admin/dialog-simple/partie-simple';
-import { PartieMultiple } from 'src/app/admin/dialog-multiple/partie-multiple';
-import { TempsUser } from 'src/app/admin/dialog-abstrait';
+import { RouterTestingModule } from "@angular/router/testing";
+import { PartieSimple } from "src/app/admin/dialog-simple/partie-simple";
+import { PartieMultiple } from "src/app/admin/dialog-multiple/partie-multiple";
+import { TempsUser } from "src/app/admin/dialog-abstrait";
 
-describe('DialogConfirmationComponent', () => {
-    const dialogMock = {
+describe("DialogConfirmationComponent", () => {
+    const dialogMock:  = {
         close: () => { }
     };
     let component: DialogConfirmationComponent;
