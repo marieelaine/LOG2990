@@ -58,8 +58,9 @@ const appRoutes: Routes = [
     { path: "liste-parties", component: ListePartiesComponent },
     { path: "chrono", component: ChronoComponent },
     { path: "partie-simple-solo/:idPartie", component: VueSimpleComponent },
-    { path: "partie-multi/:idPartie", component: PartieSimpleMultijoueurComponent },
-    { path: "partie-multiple/:idPartie", component: VueMultipleComponent },
+    { path: "partie-simple-multijoueur/:idPartie", component: VueSimpleComponent },
+    { path: "partie-multiple-solo/:idPartie", component: VueMultipleComponent },
+    { path: "partie-multiple-multijoueur/:idPartie", component: VueMultipleComponent },
 ];
 
 @NgModule({

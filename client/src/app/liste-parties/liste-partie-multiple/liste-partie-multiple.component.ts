@@ -44,7 +44,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     protected onJouerOuReinitialiserClick(partieId: string): void {
         if (this.isListePartiesMode) {
-            this.router.navigate(["/partie-multiple/" + partieId])
+            this.router.navigate(["/partie-multiple-solo/" + partieId])
                 .catch(() => ErrorHandler);
         } else if (this.isAdminMode) {
             this.reinitialiserTemps(partieId);
@@ -53,12 +53,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     protected async onCreerOuSupprimerClick(partieId: string): Promise<void> {
         if (this.isListePartiesMode) {
-            this.listePartieService.addPartieMultipleEnAttente(partieId).subscribe(() => {
-                this.ouvrirDialogVueAttente(partieId);
-                this.router.navigate(["/partie-multiple-solo/" + partieId])
-                    .catch(() => ErrorHandler);
-            });
-
+            this.checkJoindreOuSupprimer(partieId);
         } else if (this.isAdminMode) {
             this.ouvrirDialogConfirmation(partieId);
         }
@@ -82,6 +77,16 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
                 isSimple: false
             }
         });
+    }
+
+    private checkJoindreOuSupprimer(partieId: string): void {
+        if (this.listePartieEnAttente.includes(partieId)) {
+          this.router.navigate(["/partie-multiple-multijoueur/" + partieId]).catch(() => ErrorHandler);
+        } else {
+          this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
+            this.ouvrirDialogVueAttente(partieId);
+          });
+        }
     }
 
     protected reinitialiserTemps(partieId: string): void {
@@ -108,6 +113,10 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
                     this.listePartieEnAttente.splice(i, 1);
                 }
             }
+        });
+        this.socketClientService.socket.on(event.DIALOG_ATTENTE_FERME, () => {
+            this.joindreOuSupprimer = "Créer";
+            this.creerOuSupprimer = "Créer";
         });
     }
 }

@@ -74,7 +74,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   private checkJoindreOuSupprimer(partieId: string): void {
     if (this.listePartieEnAttente.includes(partieId)) {
-      this.router.navigate(["/partie-simple-solo/" + partieId]).catch(() => ErrorHandler);
+      this.socketClientService.socket.emit(event.JOINDRE_PARTIE_MULTIJOUER, partieId);
+      this.router.navigate(["/partie-simple-multijoueur/" + partieId]).catch(() => ErrorHandler);
     } else {
       this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
         this.ouvrirDialogVueAttente(partieId);
