@@ -5,7 +5,6 @@ import { PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
 import { PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
-import { Multijoueur } from "../Multijoueur/multijoueur";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 
 @Component({

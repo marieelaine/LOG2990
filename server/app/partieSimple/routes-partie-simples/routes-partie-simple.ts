@@ -33,12 +33,21 @@ export class RoutesPartieSimple extends ServiceWeb {
             await this.partieSimple.requeteDeletePartie(req, res);
         });
 
-        router.get("/:id", async (req: Request, res: Response) => {
-            await this.partieSimple.requetePartieId(req, res);
-        });
+        // router.get("/:id", async (req: Request, res: Response) => {
+        //     console.log("Routes3");
+        //     await this.partieSimple.requetePartieId(req, res);
+        // });
 
         router.get("/getPartieSimple/:id", async (req: Request, res: Response) => {
             await this.partieSimple.requeteGetPartie(req, res);
+        });
+
+        router.get("/getListeChannelsMultijoueur", (req: Request, res: Response) => {
+            this.partieSimple.requeteGetlisteChannelsMultijoueur(req, res);
+        });
+
+        router.post("/addChannelMultijoueur", (req: Request, res: Response) => {
+            this.partieSimple.requeteAjouterChannelMultijoueur(req, res);
         });
 
         return router;

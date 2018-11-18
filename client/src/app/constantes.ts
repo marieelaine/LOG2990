@@ -22,6 +22,9 @@ export const DELETE_PARTIE_MULTIPLE_ATTENTE: string = BASE_URL + "deletePartieSi
 export const GET_PARTIE_SIMPLE: string = BASE_URL + SIMPLE + "getPartieSimple/";
 export const GET_PARTIE_MULTIPLE: string = BASE_URL + MULTIPLE + "getPartieMultiple/";
 
+export const GET_LISTE_CHANNELS_MULTIJOUEUR: string = BASE_URL + SIMPLE + "/getListeChannelsMultijoueur";
+export const AJOUTER_CHANNEL_MULTIJOUEUR: string = BASE_URL + SIMPLE + "/addChannelMultijoueur";
+
 export const LONGUEUR_NOM_MIN: number = 3;
 export const LONGUEUR_NOM_MAX: number = 20;
 export const NB_OBJET_MIN: number = 10;
