@@ -50,7 +50,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                 for (const pixel of diff) {
                     if (coords === pixel) {
                         if (!this.diffTrouvee[0].includes(i)) {
-                            this.isMultijoueur ? this.evenementsMultijoueur.differenceTrouvee() : this.differenceTrouver(i);
+                            this.isMultijoueur ? this.socketClientService.differenceTrouvee() : this.differenceTrouver(i);
 
                             return;
                         }

@@ -8,7 +8,6 @@ import { ChatComponent } from "../chat/chat.component";
 import {CookieService} from "ngx-cookie-service";
 import { TempsUser } from "../admin/temps-user";
 import * as constantes from "../constantes";
-import { Multijoueur } from "./Multijoueur/multijoueur";
 import { SocketClientService } from "../socket/socket-client.service";
 
 const TIMEOUT: number = 1000;
@@ -35,7 +34,6 @@ export abstract class PartieAbstraiteClass {
     protected imageData: Array<string>;
     protected penaliteEtat: boolean;
     protected isMultijoueur: boolean;
-    protected evenementsMultijoueur: Multijoueur;
     protected channelId: string;
     private nbImages: number;
 
@@ -53,7 +51,6 @@ export abstract class PartieAbstraiteClass {
         this.diffTrouvee = [[], []];
         this.audio = new Audio();
         this.penaliteEtat = false;
-        this.evenementsMultijoueur = new Multijoueur(socketClientService);
 
         this.setImage(isSimple);
         this.setID();
