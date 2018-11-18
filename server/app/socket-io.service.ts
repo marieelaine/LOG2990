@@ -24,6 +24,10 @@ export class SocketServerService {
             this.io.emit(event.DIALOG_ATTENTE_FERME);
         });
 
+        this.io.on(event.JOINDRE_PARTIE_MULTIJOUEUR, (partieId: string) => {
+            this.io.emit(event.JOINDRE_PARTIE_MULTIJOUEUR, partieId);
+        });
+
     }
 
     public envoyerMessageErreurNom(msg: string): void {

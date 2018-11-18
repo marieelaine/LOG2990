@@ -7,6 +7,7 @@ import { HttpClient } from "@angular/common/http";
 import { HttpHandlerMock, ActivatedRouteMock } from "src/testing/mocks";
 import { TempsUser } from "../admin/temps-user";
 import { CookieServiceMock } from "../../testing/cookieMock";
+import { SocketClientMock } from "src/testing/socketMock";
 
 const ONE_SECOND_TIMER: number = 1000;
 const TWO_SECONDS_TIMER: number = 2000;
@@ -30,7 +31,8 @@ class AbstractClassInstance extends PartieAbstraiteClass {
 describe("PartieAbstraiteComponent", () => {
     let component: AbstractClassInstance;
     beforeEach(() => {
-    component = new AbstractClassInstance(new ActivatedRouteMock(), new PartieServiceMock(), new CookieServiceMock(), true);
+    component = new AbstractClassInstance(new ActivatedRouteMock(), new PartieServiceMock(),
+                                          new CookieServiceMock(), new SocketClientMock(), true);
     component["partie"] = new PartieSimple ("nomPartie", new Array<TempsUser>(), new Array<TempsUser>(), Buffer.from(new Array<number>()),
                                             Buffer.from(new Array<number>()), new Array<Array<string>>(), "");
     });

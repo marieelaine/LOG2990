@@ -5,6 +5,7 @@ import {ActivatedRoute} from "@angular/router";
 import {PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
+import { SocketClientService } from "src/app/socket/socket-client.service";
 
 @Component({
     selector: "app-vue-simple",
@@ -16,8 +17,9 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
     public constructor(protected route: ActivatedRoute,
                        protected partieService: PartieService,
+                       protected socketClientService: SocketClientService,
                        protected cookieService: CookieService) {
-        super(route, partieService, cookieService, true);
+        super(route, partieService, cookieService, socketClientService, true);
         this.differenceRestantes = constantes.DIFF_PARTIE_SIMPLE;
     }
 
@@ -48,7 +50,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                 for (const pixel of diff) {
                     if (coords === pixel) {
                         if (!this.diffTrouvee[0].includes(i)) {
-                            this.differenceTrouver(i);
+                            this.isMultijoueur ? this.evenementsMultijoueur.differenceTrouvee() : this.differenceTrouver(i);
 
                             return;
                         }

@@ -8,6 +8,8 @@ import { ChatComponent } from "../chat/chat.component";
 import {CookieService} from "ngx-cookie-service";
 import { TempsUser } from "../admin/temps-user";
 import * as constantes from "../constantes";
+import { Multijoueur } from "./Multijoueur/multijoueur";
+import { SocketClientService } from "../socket/socket-client.service";
 
 const TIMEOUT: number = 1000;
 const OFFSET_ADDITIONNEL: number = 10;
@@ -32,11 +34,15 @@ export abstract class PartieAbstraiteClass {
     protected diffTrouvee: number[][];
     protected imageData: Array<string>;
     protected penaliteEtat: boolean;
+    protected isMultijoueur: boolean;
+    protected evenementsMultijoueur: Multijoueur;
+    protected channelId: string;
     private nbImages: number;
 
     public constructor(protected route: ActivatedRoute,
                        protected partieService: PartieService,
                        protected cookieService: CookieService,
+                       protected socketClientService: SocketClientService,
                        isSimple: boolean) {
         this.partieCommence = false;
         this.differencesTrouvees = 0;
@@ -47,9 +53,11 @@ export abstract class PartieAbstraiteClass {
         this.diffTrouvee = [[], []];
         this.audio = new Audio();
         this.penaliteEtat = false;
+        this.evenementsMultijoueur = new Multijoueur(socketClientService);
 
         this.setImage(isSimple);
         this.setID();
+        this.setIsMultijoueur();
         this.setPartie();
     }
 
@@ -64,10 +72,6 @@ export abstract class PartieAbstraiteClass {
         this.messageDifferences = `Vous avez trouvé ${this.differencesTrouvees} différences`;
 
         this.chrono.startTimer();
-    }
-
-    protected setID(): void {
-        this.partieID = this.route.snapshot.params.idPartie;
     }
 
     protected setup(): void {
@@ -171,5 +175,13 @@ export abstract class PartieAbstraiteClass {
         for (let i: number = 0; i < this.nbImages; i++) {
             this.image.push(new Image());
         }
+    }
+
+    private setID(): void {
+        this.partieID = this.route.snapshot.params.idPartie;
+    }
+
+    private setIsMultijoueur(): void {
+        this.isMultijoueur = this.route.snapshot.params.isMultijoueur;
     }
 }

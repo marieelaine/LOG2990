@@ -5,20 +5,24 @@ import { PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
 import { PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
+import { Multijoueur } from "../Multijoueur/multijoueur";
+import { SocketClientService } from "src/app/socket/socket-client.service";
 
 @Component({
   selector: "app-vue-multiple",
   templateUrl: "./vue-multiple.component.html",
   styleUrls: ["./vue-multiple.component.css"]
 })
+
 export class VueMultipleComponent extends PartieAbstraiteClass {
 
     protected partie: PartieMultiple;
 
     public constructor(protected route: ActivatedRoute,
                        protected partieService: PartieService,
+                       protected socketClientService: SocketClientService,
                        protected cookieService: CookieService) {
-        super(route, partieService, cookieService, false);
+        super(route, partieService, cookieService, socketClientService, false);
         this.differenceRestantes = constantes.DIFF_PARTIE_MULTIPLE;
     }
 
