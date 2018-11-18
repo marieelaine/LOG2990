@@ -54,7 +54,7 @@ describe("ListePartieMultipleComponent", () => {
             ],
             imports: [
                 RouterTestingModule.withRoutes([
-                    { path: "partie-multiple-solo", component: VueMultipleComponent },
+                    { path: "partie-multiple/:idPartie/:isMultijoueur", component: VueMultipleComponent },
                 ]),
                 HttpClientTestingModule,
                 MatDialogModule,
@@ -92,14 +92,14 @@ describe("ListePartieMultipleComponent", () => {
     });
 
     describe("fonction onJouerOuReinitialiserClick", () => {
-        it("Devrait naviguer a la route '/partie-multiple-solo'", fakeAsync(() => {
+        it("Devrait naviguer a la route '/partie-multiple'", fakeAsync(() => {
             component["isListePartiesMode"] = true;
-            const id: string = "";
+            const id: string = "1";
 
             component["onJouerOuReinitialiserClick"](id);
             tick();
 
-            expect(location.path()).toBe("/partie-multiple-solo");
+            expect(location.path()).toBe("/partie-multiple/1/false");
         }));
         it("Devrait rester a la route courante", fakeAsync(() => {
             const pathAvant: string = location.path();

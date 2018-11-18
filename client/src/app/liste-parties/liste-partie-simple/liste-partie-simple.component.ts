@@ -46,7 +46,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   protected onJouerOuReinitialiserClick(partieId: string): void {
     if (this.isListePartiesMode) {
-      this.router.navigate(["/partie-simple-solo/" + partieId])
+      const isMultijoueur: boolean = false;
+      this.router.navigate(["/partie-simple/" + partieId + "/" + isMultijoueur])
       .catch(() => ErrorHandler);
     } else if (this.isAdminMode) {
       this.reinitialiserTemps(partieId);
@@ -74,8 +75,9 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   private checkJoindreOuSupprimer(partieId: string): void {
     if (this.listePartieEnAttente.includes(partieId)) {
-      this.socketClientService.socket.emit(event.JOINDRE_PARTIE_MULTIJOUER, partieId);
-      this.router.navigate(["/partie-simple-multijoueur/" + partieId]).catch(() => ErrorHandler);
+      this.socketClientService.socket.emit(event.JOINDRE_PARTIE_MULTIJOUEUR, partieId);
+      const isMultijouer: boolean = true;
+      this.router.navigate(["/partie-simple/" + partieId + "/" + isMultijouer]).catch(() => ErrorHandler);
     } else {
       this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
         this.ouvrirDialogVueAttente(partieId);
@@ -105,9 +107,11 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     this.socketClientService.socket.on(event.ENVOYER_PARTIE_SIMPLE, (data) => {
       this.listeParties.push(data);
     });
+
     this.socketClientService.socket.on(event.ENVOYER_PARTIE_SIMPLE_ATTENTE, (data) => {
         this.listePartieEnAttente.push(data);
     });
+
     this.socketClientService.socket.on(event.DELETE_PARTIE_SIMPLE_ATTENTE, (data) => {
       for (let i: number = 0 ; i < this.listePartieEnAttente.length ; i++) {
         if (this.listePartieEnAttente[i] === data) {
@@ -115,6 +119,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
         }
       }
     });
+
     this.socketClientService.socket.on(event.DIALOG_ATTENTE_FERME, () => {
       this.joindreOuSupprimer = "Créer";
       this.creerOuSupprimer = "Créer";

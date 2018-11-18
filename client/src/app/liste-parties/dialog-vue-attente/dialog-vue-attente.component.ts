@@ -70,6 +70,13 @@ export class DialogVueAttenteComponent implements OnDestroy {
         this.socketClientService.socket.on(event.DELETE_PARTIE_MULTIPLE, (data: string) => {
             this.setMessageErreur(data);
         });
-    }
 
+        this.socketClientService.socket.on(event.JOINDRE_PARTIE_MULTIJOUEUR, (partieId: string) => {
+            if (partieId === this.partieId) {
+                this.dialogRef.close();
+                const isMultijoueur: boolean = true;
+                this.router.navigate(["/partie-simple-multijoueur/" + partieId + "/" + isMultijoueur]).catch(() => ErrorHandler);
+            }
+        });
+    }
 }

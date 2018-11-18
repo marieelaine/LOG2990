@@ -8,7 +8,6 @@ import { ListePartieServiceService } from "../liste-partie-service.service";
 import { PartieSimple } from "src/app/admin/dialog-simple/partie-simple";
 import * as Buffer from "buffer";
 import { of } from "rxjs";
-import { PartieSimpleMultijoueurComponent } from "src/app/partie/vue-simple/partie-simple-multijoueur/partie-multijoueur.component";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import { MatDialogModule } from "@angular/material/dialog";
 import { VueSimpleComponent } from "src/app/partie/vue-simple/vue-simple.component";
@@ -42,13 +41,11 @@ describe("Liste Partie Simple Component", () => {
         TestBed.configureTestingModule({
             declarations: [
                 ListePartieSimpleComponent,
-                PartieSimpleMultijoueurComponent,
                 VueSimpleComponent,
             ],
             imports: [
                 RouterTestingModule.withRoutes([
-                    { path: "partie-solo", component: VueSimpleComponent },
-                    { path: "partie-multi", component: PartieSimpleMultijoueurComponent }
+                    { path: "partie-simple/:idPartie/:isMultijoueur", component: VueSimpleComponent },
                 ]),
                 HttpClientTestingModule,
                 MatDialogModule
@@ -92,6 +89,15 @@ describe("Liste Partie Simple Component", () => {
     });
 
     describe("fonction onJouerOuReinitialiserClick", () => {
+        it("Devrait naviguer a la route '/partie-simple'", fakeAsync(() => {
+            component["isListePartiesMode"] = true;
+            const id: string = "1";
+
+            component["onJouerOuReinitialiserClick"](id);
+            tick();
+
+            expect(location.path()).toBe("/partie-simple/1/false");
+        }));
         it("Devrait rester a la route courante", fakeAsync(() => {
             const pathAvant: string = location.path();
             component["isListePartiesMode"] = false;

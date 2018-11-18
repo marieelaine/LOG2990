@@ -44,7 +44,8 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     protected onJouerOuReinitialiserClick(partieId: string): void {
         if (this.isListePartiesMode) {
-            this.router.navigate(["/partie-multiple-solo/" + partieId])
+            const isMultijouer: boolean = false;
+            this.router.navigate(["/partie-multiple/" + partieId + "/" + isMultijouer])
                 .catch(() => ErrorHandler);
         } else if (this.isAdminMode) {
             this.reinitialiserTemps(partieId);
@@ -81,7 +82,8 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     private checkJoindreOuSupprimer(partieId: string): void {
         if (this.listePartieEnAttente.includes(partieId)) {
-          this.router.navigate(["/partie-multiple-multijoueur/" + partieId]).catch(() => ErrorHandler);
+          const isMultijouer: boolean = true;
+          this.router.navigate(["/partie-multiple/" + partieId + "/" + isMultijouer]).catch(() => ErrorHandler);
         } else {
           this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
             this.ouvrirDialogVueAttente(partieId);

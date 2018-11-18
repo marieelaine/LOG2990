@@ -58,7 +58,7 @@ describe("DialogVueAttenteComponent", () => {
     describe("Fonction ajouterPartieSurSocket", () => {
         it("Devrait appeler la fonction on de socket lors de l'appel de la fonction", () => {
             const spySocket: jasmine.Spy = spyOn(component.socketClientService.socket, "on");
-            const nbCalls: number = 2;
+            const nbCalls: number = 3;
 
             component["ajouterPartieSurSocket"]();
 
