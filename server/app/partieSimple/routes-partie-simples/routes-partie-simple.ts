@@ -42,11 +42,11 @@ export class RoutesPartieSimple extends ServiceWeb {
             await this.partieSimple.requeteGetPartie(req, res);
         });
 
-        router.get("/getListeChannelsMultijoueur", (req: Request, res: Response) => {
+        router.get("/getChannelIdSimple", (req: Request, res: Response) => {
             this.partieSimple.requeteGetlisteChannelsMultijoueur(req, res);
         });
 
-        router.post("/addChannelMultijoueur", (req: Request, res: Response) => {
+        router.post("/addChannelMultijoueurSimple", (req: Request, res: Response) => {
             this.partieSimple.requeteAjouterChannelMultijoueur(req, res);
         });
 

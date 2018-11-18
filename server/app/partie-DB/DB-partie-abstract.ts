@@ -27,7 +27,7 @@ export abstract class DBPartieAbstract {
     protected schemaBuffer: Schema;
     protected schemaArray: Schema;
 
-    private listeChannelsMultijoueur: string[];
+    protected abstract listeChannelsMultijoueur: string[];
 
     public constructor() {
       this.baseDeDonnees = new BaseDeDonnees();
@@ -38,7 +38,6 @@ export abstract class DBPartieAbstract {
       this.schemaBuffer.plugin(uniqueValidator);
       this.schemaArray.plugin(uniqueValidator);
 
-      this.listeChannelsMultijoueur = [];
     }
 
     public abstract async requeteAjouterPartie(req: Request, res: Response): Promise<void>;
@@ -56,7 +55,7 @@ export abstract class DBPartieAbstract {
     }
 
     public requeteGetlisteChannelsMultijoueur(req: Request, res: Response): void {
-        res.status(constantes.HTTP_CREATED).json(this.listeChannelsMultijoueur);
+        res.status(constantes.HTTP_CREATED).json(this.listeChannelsMultijoueur.length + 1);
     }
 
     public requeteAjouterChannelMultijoueur(req: Request, res: Response): void {

@@ -36,12 +36,4 @@ export class PartieService {
         this.http.put(route.REINITIALISER_TEMPS_MULTIPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise()
             .catch(() => ErrorHandler);
     }
-
-    public getListeChannelsMultijoueur(): Observable<string[]> {
-        return this.http.get<string[]>(route.GET_LISTE_CHANNELS_MULTIJOUEUR);
-    }
-
-    public async ajouterChannelMultijoueur(channelId: string): Promise<string> {
-        return this.http.post<string>(route.AJOUTER_CHANNEL_MULTIJOUEUR, { channelId }).toPromise();
-    }
 }

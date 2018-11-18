@@ -25,12 +25,15 @@ export interface PartieSimpleInterface {
 @injectable()
 export class DBPartieSimple extends DBPartieAbstract {
 
+    protected listeChannelsMultijoueur: string[];
+
     public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
 
         super();
 
-        this.modelPartieArray = this.baseDeDonnees["_mongoose"].model("parties-simples-array", this.schemaArray, "parties-simples");
+        this.listeChannelsMultijoueur = [];
 
+        this.modelPartieArray = this.baseDeDonnees["_mongoose"].model("parties-simples-array", this.schemaArray, "parties-simples");
         this.modelPartieBuffer = this.baseDeDonnees["_mongoose"].model("parties-simples", this.schemaBuffer, "parties-simples");
     }
 

@@ -53,8 +53,8 @@ const appRoutes: Routes = [
     { path: "admin", component: AdminComponent },
     { path: "liste-parties", component: ListePartiesComponent },
     { path: "chrono", component: ChronoComponent },
-    { path: "partie-simple/:idPartie/:isMultijoueur", component: VueSimpleComponent },
-    { path: "partie-multiple/:idPartie/:isMultijoueur", component: VueMultipleComponent },
+    { path: "partie-simple/:idPartie/:channelId", component: VueSimpleComponent },
+    { path: "partie-multiple/:idPartie/:channelId", component: VueMultipleComponent },
 ];
 
 @NgModule({

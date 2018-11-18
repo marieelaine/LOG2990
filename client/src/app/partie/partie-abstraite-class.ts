@@ -182,16 +182,13 @@ export abstract class PartieAbstraiteClass {
     }
 
     private setIsMultijoueur(): void {
-        this.route.snapshot.params.isMultijoueur === "true" ? this.isMultijoueur = true : this.isMultijoueur = false;
+        this.route.snapshot.params.channelId === "0" ? this.isMultijoueur = false : this.isMultijoueur = true;
         this.setChannelId();
     }
 
     private setChannelId(): void {
         if (this.isMultijoueur === true) {
-            this.partieService.getListeChannelsMultijoueur().subscribe(async (res: Array<string>) => {
-                this.channelId = res.length.toString();
-                await this.partieService.ajouterChannelMultijoueur(this.channelId);
-            });
+            this.channelId = this.route.snapshot.params.channelId;
         }
     }
 }

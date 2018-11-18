@@ -44,8 +44,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     protected onJouerOuReinitialiserClick(partieId: string): void {
         if (this.isListePartiesMode) {
-            const isMultijouer: boolean = false;
-            this.router.navigate(["/partie-multiple/" + partieId + "/" + isMultijouer])
+            this.router.navigate(["/partie-multiple/" + partieId + "/0"])
                 .catch(() => ErrorHandler);
         } else if (this.isAdminMode) {
             this.reinitialiserTemps(partieId);
@@ -54,11 +53,18 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     protected async onCreerOuSupprimerClick(partieId: string): Promise<void> {
         if (this.isListePartiesMode) {
-            this.checkJoindreOuSupprimer(partieId);
+            await this.checkJoindreOuSupprimer(partieId);
         } else if (this.isAdminMode) {
             this.ouvrirDialogConfirmation(partieId);
         }
     }
+
+    private async getChannelId(): Promise<string> {
+        const channelId: string = await this.listePartieService.getChannelIdMultiple();
+        await this.listePartieService.ajouterChannelMultijoueurMultiple(channelId);
+
+        return channelId;
+      }
 
     private ouvrirDialogVueAttente(partieId: string): void {
         this.dialog.open(DialogVueAttenteComponent, {
@@ -80,10 +86,10 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
         });
     }
 
-    private checkJoindreOuSupprimer(partieId: string): void {
+    private async checkJoindreOuSupprimer(partieId: string): Promise<void> {
         if (this.listePartieEnAttente.includes(partieId)) {
-          const isMultijouer: boolean = true;
-          this.router.navigate(["/partie-multiple/" + partieId + "/" + isMultijouer]).catch(() => ErrorHandler);
+            this.router.navigate(["/partie-multiple/" + partieId + "/" + await this.getChannelId()])
+            .catch(() => ErrorHandler);
         } else {
           this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
             this.ouvrirDialogVueAttente(partieId);

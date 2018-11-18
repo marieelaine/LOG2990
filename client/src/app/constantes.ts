@@ -22,8 +22,10 @@ export const DELETE_PARTIE_MULTIPLE_ATTENTE: string = BASE_URL + "deletePartieSi
 export const GET_PARTIE_SIMPLE: string = BASE_URL + SIMPLE + "getPartieSimple/";
 export const GET_PARTIE_MULTIPLE: string = BASE_URL + MULTIPLE + "getPartieMultiple/";
 
-export const GET_LISTE_CHANNELS_MULTIJOUEUR: string = BASE_URL + SIMPLE + "/getListeChannelsMultijoueur";
-export const AJOUTER_CHANNEL_MULTIJOUEUR: string = BASE_URL + SIMPLE + "/addChannelMultijoueur";
+export const GET_CHANNEL_ID_SIMPLE: string = BASE_URL + SIMPLE + "/getChannelIdSimple";
+export const AJOUTER_CHANNEL_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "/addChannelMultijoueurSimple";
+export const GET_CHANNEL_ID_MULTIPLE: string = BASE_URL + SIMPLE + "/getChannelIdMultiple";
+export const AJOUTER_CHANNEL_MULTIJOUEUR_MULTIPLE: string = BASE_URL + SIMPLE + "/addChannelMultijoueurMultiple";
 
 export const LONGUEUR_NOM_MIN: number = 3;
 export const LONGUEUR_NOM_MAX: number = 20;

@@ -34,9 +34,13 @@ const imagePOV2: number = 2;
 @injectable()
 export class DBPartieMultiple extends DBPartieAbstract {
 
+    protected listeChannelsMultijoueur: string[];
+
     public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
 
         super();
+
+        this.listeChannelsMultijoueur = [];
 
         this.modelPartieBuffer = this.baseDeDonnees.mongoose.model("parties-multiples", this.schemaBuffer, "parties-multiples");
         this.modelPartieArray = this.baseDeDonnees.mongoose.model("parties-multiples-array", this.schemaArray, "parties-multiples");

@@ -46,17 +46,16 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   protected onJouerOuReinitialiserClick(partieId: string): void {
     if (this.isListePartiesMode) {
-      const isMultijoueur: boolean = false;
-      this.router.navigate(["/partie-simple/" + partieId + "/" + isMultijoueur])
+      this.router.navigate(["/partie-simple/" + partieId + "/0"])
       .catch(() => ErrorHandler);
     } else if (this.isAdminMode) {
       this.reinitialiserTemps(partieId);
     }
   }
 
-  protected onCreerOuSupprimerClick(partieId: string): void {
+  protected async onCreerOuSupprimerClick(partieId: string): Promise<void> {
     if (this.isListePartiesMode) {
-      this.checkJoindreOuSupprimer(partieId);
+      await this.checkJoindreOuSupprimer(partieId);
     } else if (this.isAdminMode) {
       this.ouvrirDialogConfirmation(partieId);
     }
@@ -73,16 +72,23 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     });
   }
 
-  private checkJoindreOuSupprimer(partieId: string): void {
+  private async checkJoindreOuSupprimer(partieId: string): Promise<void> {
     if (this.listePartieEnAttente.includes(partieId)) {
       this.socketClientService.socket.emit(event.JOINDRE_PARTIE_MULTIJOUEUR, partieId);
-      const isMultijouer: boolean = true;
-      this.router.navigate(["/partie-simple/" + partieId + "/" + isMultijouer]).catch(() => ErrorHandler);
+      this.router.navigate(["/partie-simple/" + partieId + "/" + await this.getChannelId()])
+      .catch(() => ErrorHandler);
     } else {
       this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
         this.ouvrirDialogVueAttente(partieId);
       });
     }
+  }
+
+  private async getChannelId(): Promise<string> {
+    const channelId: string = await this.listePartieService.getChannelIdSimple();
+    await this.listePartieService.ajouterChannelMultijoueurSimple(channelId);
+
+    return channelId;
   }
 
   private ouvrirDialogVueAttente(partieId: string): void {
