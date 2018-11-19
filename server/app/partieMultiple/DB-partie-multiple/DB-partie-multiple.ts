@@ -70,7 +70,11 @@ export class DBPartieMultiple extends DBPartieAbstract {
     }
 
     public requeteEnvoyerDiffTrouveeMultiple(req: Request, res: Response): void {
-        this.socket.envoyerDiffPartieMultiple(req.body.channelId, req.body.diff, req.body.source);
+        this.socket.envoyerDiffPartieMultiple(req.body.channelId, req.body.diff, req.body.source, req.body.joueur);
+    }
+
+    public requeteEnvoyerPartieMultipleTerminee(req: Request, res: Response): void {
+        this.socket.envoyerPartieMultipleTerminee(req.body.channelId, req.body.joueur);
     }
 
     protected CreateSchemaBuffer(): void {

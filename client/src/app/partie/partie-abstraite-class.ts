@@ -10,7 +10,6 @@ import { TempsUser } from "../admin/temps-user";
 import * as constantes from "../constantes";
 import { SocketClientService } from "../socket/socket-client.service";
 
-const NOMBRE_DIFF_MULTIJOUEUR: number = 4;
 const TIMEOUT: number = 1000;
 const OFFSET_ADDITIONNEL: number = 10;
 const LINE_WIDTH: number = 1.5;
@@ -105,17 +104,6 @@ export abstract class PartieAbstraiteClass {
         };
     }
 
-    protected async trouverDifference(): Promise<void> {
-        if (this.partieCommence) {
-            this.differencesTrouvees ++;
-            this.messageDifferences = `Vous avez trouvé ${this.differencesTrouvees} différences`;
-            this.audio.src = "../assets/yes.wav";
-            this.audio.load();
-            this.audio.play().catch(() => ErrorHandler);
-        }
-        this.isMultijoueur ? await this.terminerPartieMultijoueur() : this.terminerPartieSolo();
-    }
-
     protected ajouterMessageDiffTrouvee(joueur: string): void {
         this.isMultijoueur ? this.chat.messagesChat.push(joueur + " a trouvé une différence!")
                            : this.chat.messagesChat.push("Vous avez trouvé une différence!");
@@ -126,9 +114,12 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected partieMultijoueurTerminee(gagnant: string): void {
+        this.chrono.stopTimer();
+
         if (this.joueurMultijoueur === gagnant) {
             this.messageDifferences = "FÉLICITATIONS, VOUS AVEZ GAGNÉ!";
             this.joueurApplaudissements();
+            // tslint:disable-next-line:no-suspicious-comment
             // TODO: Ajouter les temps multijoueur
         } else {
             this.messageDifferences = "PUTAIN T'AS PERDU MEC!";
@@ -153,6 +144,24 @@ export abstract class PartieAbstraiteClass {
         this.partie["_tempsSolo"].splice(-1, 1);
         this.partie["_tempsSolo"].push(tempsUser);
       }
+    }
+
+    protected augmenterDiffTrouvee(): void {
+        this.differencesTrouvees ++;
+        this.messageDifferences = `Vous avez trouvé ${this.differencesTrouvees} différences`;
+    }
+
+    protected jouerYesSound(): void {
+        this.audio.src = "../assets/yes.wav";
+        this.audio.load();
+        this.audio.play().catch(() => ErrorHandler);
+    }
+
+    protected terminerPartieSolo(): void {
+        if (this.differenceRestantes === this.differencesTrouvees) {
+            this.partieCommence = false;
+            this.terminerPartie("");
+        }
     }
 
     protected penalite(event: MouseEvent): void {
@@ -215,19 +224,7 @@ export abstract class PartieAbstraiteClass {
     }
 
     private setJoueurMultijoueur(): void {
-        this.joueurMultijoueur = this.cookieService.get("username");
-    }
-
-    private terminerPartieSolo(): void {
-        if (this.differenceRestantes === this.differencesTrouvees) {
-            this.partieCommence = false;
-            this.terminerPartie("");
-        }
-    }
-
-    protected async terminerPartieMultijoueur(): Promise<void> {
-        if (this.differencesTrouvees === NOMBRE_DIFF_MULTIJOUEUR) {
-            await this.partieService.partieMultijoueurTerminee(this.channelId, this.joueurMultijoueur);
-        }
+        this.cookieService.get("username") === "" ? this.joueurMultijoueur = "Anonyme"
+                                                  : this.joueurMultijoueur = this.cookieService.get("username");
     }
 }

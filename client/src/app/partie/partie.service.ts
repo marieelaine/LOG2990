@@ -41,11 +41,15 @@ export class PartieService {
         this.http.post(route.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, {channelId, diff, joueur}).toPromise();
     }
 
-    public async differenceTrouveeMultijoueurMultiple(channelId: string, diff: number, source: string): Promise<void> {
-        this.http.post(route.DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE, {channelId, diff, source}).toPromise();
+    public async differenceTrouveeMultijoueurMultiple(channelId: string, diff: number, source: string, joueur: string): Promise<void> {
+        this.http.post(route.DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE, {channelId, diff, source, joueur}).toPromise();
     }
 
-    public async partieMultijoueurTerminee(channelId: string, joueur: string): Promise<void> {
+    public async partieMultijoueurSimpleTerminee(channelId: string, joueur: string): Promise<void> {
         this.http.post(route.PARTIE_TERMINEE_MULTIJOUEUR_SIMPLE, {channelId, joueur}).toPromise();
+    }
+
+    public async partieMultijoueurMultipleTerminee(channelId: string, joueur: string): Promise<void> {
+        this.http.post(route.PARTIE_TERMINEE_MULTIJOUEUR_MULTIPLE, {channelId, joueur}).toPromise();
     }
 }

@@ -33,7 +33,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
         this.listePartieService.getListePartieMultiple().subscribe((res: PartieMultiple[]) => {
             this.listeParties = res;
         });
-        this.listePartieService.getListePartieSimpleEnAttente().subscribe((res: string[]) => {
+        this.listePartieService.getListePartieMultipleEnAttente().subscribe((res: string[]) => {
             this.listePartieEnAttente = res;
         });
         this.ajouterPartieSurSocketEvent();

@@ -62,8 +62,8 @@ export class SocketServerService {
         this.io.emit(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, {channelId: channelId, diff: diff, joueur: joueur});
     }
 
-    public envoyerDiffPartieMultiple(channelId: string, diff: number, source: string): void {
-        this.io.emit(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE, {channelId: channelId, diff: diff, source: source});
+    public envoyerDiffPartieMultiple(channelId: string, diff: number, source: string, joueur: string): void {
+        this.io.emit(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE, {channelId: channelId, diff: diff, source: source, joueur: joueur});
     }
 
     public envoyerJoindreSimple(partieId: string, channelId: string): void {
@@ -84,5 +84,9 @@ export class SocketServerService {
 
     public envoyerPartieSimpleTerminee(channelId: string, joueur: string): void {
         this.io.emit(event.PARTIE_SIMPLE_MULTIJOUEUR_TERMINEE, {channelId: channelId, joueur: joueur});
+    }
+
+    public envoyerPartieMultipleTerminee(channelId: string, joueur: string): void {
+        this.io.emit(event.PARTIE_MULTIPLE_MULTIJOUEUR_TERMINEE, {channelId: channelId, joueur: joueur});
     }
 }

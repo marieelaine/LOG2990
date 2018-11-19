@@ -8,6 +8,8 @@ import * as constantes from "../../constantes";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 
+const NOMBRE_DIFF_MULTIJOUEUR_SIMPLE: number = 4;
+
 @Component({
     selector: "app-vue-simple",
     templateUrl: "./vue-simple.component.html",
@@ -68,21 +70,35 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
     protected async differenceTrouver(i: number): Promise<void> {
         this.diffTrouvee[0].push(i);
-        await this.trouverDifference();
-        this.restaurationPixels(i);
+        await this.trouverDifferenceSimple();
+        this.restaurationPixelsSimple(i);
         this.ajouterMessageDiffTrouvee("");
     }
 
-    protected async differenceTrouverMultijoueur(i: number, joueur: string): Promise<void> {
+    protected async differenceTrouverMultijoueurSimple(i: number, joueur: string): Promise<void> {
         if (this.joueurMultijoueur === joueur) {
-            await this.trouverDifference();
+            await this.trouverDifferenceSimple();
         }
         this.ajouterMessageDiffTrouvee(joueur);
         this.diffTrouvee[0].push(i);
-        this.restaurationPixels(i);
+        this.restaurationPixelsSimple(i);
     }
 
-    private restaurationPixels(i: number): void {
+    protected async terminerPartieMultijoueurSimple(): Promise<void> {
+        if (this.differencesTrouvees === NOMBRE_DIFF_MULTIJOUEUR_SIMPLE) {
+            await this.partieService.partieMultijoueurSimpleTerminee(this.channelId, this.joueurMultijoueur);
+        }
+    }
+
+    protected async trouverDifferenceSimple(): Promise<void> {
+        if (this.partieCommence) {
+            this.augmenterDiffTrouvee();
+            this.jouerYesSound();
+        }
+        this.isMultijoueur ? await this.terminerPartieMultijoueurSimple() : this.terminerPartieSolo();
+    }
+
+    private restaurationPixelsSimple(i: number): void {
         const contextG: CanvasRenderingContext2D = this.canvas.toArray()[0].nativeElement.getContext("2d");
         const imageDataG: ImageData = contextG.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
         const dataG: Uint8ClampedArray = imageDataG.data;
@@ -106,7 +122,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
     private setSocketEvents(): void {
         this.socketClientService.socket.on(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, (data) => {
             if (this.channelId === data.channelId) {
-                this.differenceTrouverMultijoueur(data.diff, data.joueur);
+                this.differenceTrouverMultijoueurSimple(data.diff, data.joueur);
             }
         });
 

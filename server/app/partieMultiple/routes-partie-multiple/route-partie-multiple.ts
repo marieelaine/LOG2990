@@ -60,6 +60,10 @@ export class RoutesPartieMultiple extends ServiceWeb {
             this.partieMultiple.requeteEnvoyerDiffTrouveeMultiple(req, res);
         });
 
+        router.post("/partieTermineeMultijoueurMultiple", (req: Request, res: Response) => {
+            this.partieMultiple.requeteEnvoyerPartieMultipleTerminee(req, res);
+        });
+
         return router;
     }
 }
