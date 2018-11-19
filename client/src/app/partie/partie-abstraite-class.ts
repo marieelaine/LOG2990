@@ -36,6 +36,7 @@ export abstract class PartieAbstraiteClass {
     protected penaliteEtat: boolean;
     protected isMultijoueur: boolean;
     protected channelId: string;
+    protected joueurMultijoueur: string;
     private nbImages: number;
 
     public constructor(protected route: ActivatedRoute,
@@ -104,28 +105,41 @@ export abstract class PartieAbstraiteClass {
         };
     }
 
-    protected trouverDifference(): void {
+    protected async trouverDifference(): Promise<void> {
         if (this.partieCommence) {
             this.differencesTrouvees ++;
             this.messageDifferences = `Vous avez trouvé ${this.differencesTrouvees} différences`;
             this.audio.src = "../assets/yes.wav";
             this.audio.load();
             this.audio.play().catch(() => ErrorHandler);
-            this.ajouterMessageDiffTrouvee();
         }
-        this.isMultijoueur ? this.terminerPartieMultijoueur() : this.terminerPartieSolo();
+        this.isMultijoueur ? await this.terminerPartieMultijoueur() : this.terminerPartieSolo();
     }
 
-    protected ajouterMessageDiffTrouvee(): void {
-        this.chat.messagesChat.push("Vous avez trouvé une différence!");
+    protected ajouterMessageDiffTrouvee(joueur: string): void {
+        this.isMultijoueur ? this.chat.messagesChat.push(joueur + " a trouvé une différence!")
+                           : this.chat.messagesChat.push("Vous avez trouvé une différence!");
     }
 
-    protected terminerPartie(): void {
+    protected terminerPartie(gagnant: string): void {
+        this.isMultijoueur ? this.partieMultijoueurTerminee(gagnant) : this.partieSoloTerminee();
+    }
+
+    protected partieMultijoueurTerminee(gagnant: string): void {
+        if (this.joueurMultijoueur === gagnant) {
+            this.messageDifferences = "FÉLICITATIONS, VOUS AVEZ GAGNÉ!";
+            this.joueurApplaudissements();
+            // TODO: Ajouter les temps multijoueur
+        } else {
+            this.messageDifferences = "PUTAIN T'AS PERDU MEC!";
+            this.joueurLoserSound();
+        }
+    }
+
+    protected partieSoloTerminee(): void {
         this.chrono.stopTimer();
         this.messageDifferences = "FÉLICITATIONS!";
-        this.audio.src = "../assets/applause.mp3";
-        this.audio.load();
-        this.audio.play().catch(() => ErrorHandler);
+        this.joueurApplaudissements();
         this.ajouterTemps(this.chrono.getTime());
     }
 
@@ -164,6 +178,18 @@ export abstract class PartieAbstraiteClass {
         },         TIMEOUT);
     }
 
+    private joueurApplaudissements(): void {
+        this.audio.src = "../assets/applause.mp3";
+        this.audio.load();
+        this.audio.play().catch(() => ErrorHandler);
+    }
+
+    private joueurLoserSound(): void {
+        this.audio.src = "../assets/LoserSound.mp3";
+        this.audio.load();
+        this.audio.play().catch(() => ErrorHandler);
+    }
+
     private setImage(isSimple: boolean): void {
         this.nbImages = isSimple ? constantes.PARTIE_SIMPLE_NB_IMAGES : constantes.PARTIE_MULTIPLE_NB_IMAGES;
         this.image = [];
@@ -178,26 +204,30 @@ export abstract class PartieAbstraiteClass {
 
     private setIsMultijoueur(): void {
         this.route.snapshot.params.channelId === "0" ? this.isMultijoueur = false : this.isMultijoueur = true;
-        this.setChannelId();
+        if (this.isMultijoueur) {
+            this.setChannelId();
+            this.setJoueurMultijoueur();
+        }
     }
 
     private setChannelId(): void {
-        if (this.isMultijoueur === true) {
-            this.channelId = this.route.snapshot.params.channelId;
-        }
+        this.channelId = this.route.snapshot.params.channelId;
+    }
+
+    private setJoueurMultijoueur(): void {
+        this.joueurMultijoueur = this.cookieService.get("username");
     }
 
     private terminerPartieSolo(): void {
         if (this.differenceRestantes === this.differencesTrouvees) {
             this.partieCommence = false;
-            this.terminerPartie();
+            this.terminerPartie("");
         }
     }
 
-    private terminerPartieMultijoueur(): void {
+    protected async terminerPartieMultijoueur(): Promise<void> {
         if (this.differencesTrouvees === NOMBRE_DIFF_MULTIJOUEUR) {
-            this.partieCommence = false;
-            this.terminerPartie();
+            await this.partieService.partieMultijoueurTerminee(this.channelId, this.joueurMultijoueur);
         }
     }
 }

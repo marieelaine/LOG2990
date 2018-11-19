@@ -52,8 +52,9 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                 for (const pixel of diff) {
                     if (coords === pixel) {
                         if (!this.diffTrouvee[0].includes(i)) {
-                            this.isMultijoueur ? await this.partieService.differenceTrouveeMultijoueurSimple(this.channelId, i)
-                                               : this.differenceTrouver(i);
+                            this.isMultijoueur ?
+                                await this.partieService.differenceTrouveeMultijoueurSimple(this.channelId, i, this.joueurMultijoueur)
+                                : await this.differenceTrouver(i);
 
                             return;
                         }
@@ -65,10 +66,23 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         }
     }
 
-    protected differenceTrouver(i: number): void {
+    protected async differenceTrouver(i: number): Promise<void> {
         this.diffTrouvee[0].push(i);
-        this.trouverDifference();
+        await this.trouverDifference();
+        this.restaurationPixels(i);
+        this.ajouterMessageDiffTrouvee("");
+    }
 
+    protected async differenceTrouverMultijoueur(i: number, joueur: string): Promise<void> {
+        if (this.joueurMultijoueur === joueur) {
+            await this.trouverDifference();
+        }
+        this.ajouterMessageDiffTrouvee(joueur);
+        this.diffTrouvee[0].push(i);
+        this.restaurationPixels(i);
+    }
+
+    private restaurationPixels(i: number): void {
         const contextG: CanvasRenderingContext2D = this.canvas.toArray()[0].nativeElement.getContext("2d");
         const imageDataG: ImageData = contextG.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
         const dataG: Uint8ClampedArray = imageDataG.data;
@@ -92,7 +106,14 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
     private setSocketEvents(): void {
         this.socketClientService.socket.on(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, (data) => {
             if (this.channelId === data.channelId) {
-                this.differenceTrouver(data.diff);
+                this.differenceTrouverMultijoueur(data.diff, data.joueur);
+            }
+        });
+
+        this.socketClientService.socket.on(event.PARTIE_SIMPLE_MULTIJOUEUR_TERMINEE, (data) => {
+            if (this.channelId === data.channelId) {
+                this.partieCommence = false;
+                this.terminerPartie(data.joueur);
             }
         });
     }

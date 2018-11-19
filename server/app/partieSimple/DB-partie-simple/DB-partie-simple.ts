@@ -57,11 +57,15 @@ export class DBPartieSimple extends DBPartieAbstract {
     }
 
     public requeteEnvoyerDiffTrouveeSimple(req: Request, res: Response): void {
-        this.socket.envoyerDiffPartieSimple(req.body.channelId, req.body.diff);
+        this.socket.envoyerDiffPartieSimple(req.body.channelId, req.body.diff, req.body.joueur);
     }
 
     public requeteEnvoyerJoindreSimple(req: Request, res: Response): void {
         this.socket.envoyerJoindreSimple(req.body.partieId, req.body.channelId);
+    }
+
+    public requeteEnvoyerPartieSimpleTerminee(req: Request, res: Response): void {
+        this.socket.envoyerPartieSimpleTerminee(req.body.channelId, req.body.joueur);
     }
 
     protected CreateSchemaArray(): void {

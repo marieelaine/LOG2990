@@ -58,8 +58,8 @@ export class SocketServerService {
         this.io.emit(event.DELETE_PARTIE_MULTIPLE_ATTENTE, partieId);
     }
 
-    public envoyerDiffPartieSimple(channelId: string, diff: number): void {
-        this.io.emit(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, {channelId: channelId, diff: diff});
+    public envoyerDiffPartieSimple(channelId: string, diff: number, joueur: string): void {
+        this.io.emit(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, {channelId: channelId, diff: diff, joueur: joueur});
     }
 
     public envoyerDiffPartieMultiple(channelId: string, diff: number, source: string): void {
@@ -80,5 +80,9 @@ export class SocketServerService {
 
     public envoyerDialogSimpleFerme(): void {
         this.io.emit(event.DIALOG_ATTENTE_SIMPLE_FERME);
+    }
+
+    public envoyerPartieSimpleTerminee(channelId: string, joueur: string): void {
+        this.io.emit(event.PARTIE_SIMPLE_MULTIJOUEUR_TERMINEE, {channelId: channelId, joueur: joueur});
     }
 }
