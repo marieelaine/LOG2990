@@ -4,7 +4,6 @@ import { Router, Data } from "@angular/router";
 import { ListePartieServiceService } from "../liste-partie-service.service";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
-import { Subscription } from "rxjs";
 
 @Component({
     selector: "app-dialog-vue-attente",
@@ -15,9 +14,9 @@ import { Subscription } from "rxjs";
 export class DialogVueAttenteComponent implements OnDestroy {
 
     private partieId: string;
-    private souscriptionDeletePartieSimpleAttente: Subscription;
     protected message: string;
     protected isEnAttente: boolean;
+    private isSimple: boolean;
 
     public constructor(
         public dialogRef: MatDialogRef<DialogVueAttenteComponent>,
@@ -27,6 +26,7 @@ export class DialogVueAttenteComponent implements OnDestroy {
         @Inject(MAT_DIALOG_DATA) data: Data
     ) {
         this.partieId = data.id;
+        this.isSimple = data.isSimple;
         dialogRef.disableClose = true;
         this.ajouterPartieSurSocket();
         this.message = "En attente d'un adversaire";
@@ -34,20 +34,25 @@ export class DialogVueAttenteComponent implements OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if (this.souscriptionDeletePartieSimpleAttente) {
-            this.listePartieService.deletePartieSimpleEnAttente(this.partieId).subscribe((res) => {
-                this.router.navigate(["/liste-parties/"]).catch(() => ErrorHandler);
-                this.dialogRef.close();
-                this.socketClientService.socket.emit(event.DIALOG_ATTENTE_FERME);
-            });
-        }
+        this.isSimple ? this.deletePartieSimpleAttente() : this.deletePartieMultipleAttente();
     }
 
     protected onDialogClose(): void {
-        this.souscriptionDeletePartieSimpleAttente = this.listePartieService.deletePartieSimpleEnAttente(this.partieId).subscribe((res) => {
-            this.router.navigate(["/liste-parties/"]).catch(() => ErrorHandler);
+        this.dialogRef.close();
+        this.router.navigate(["/liste-parties/"]).catch(() => ErrorHandler);
+    }
+
+    private deletePartieSimpleAttente(): void {
+        this.listePartieService.deletePartieSimpleEnAttente(this.partieId).subscribe(async (res) => {
             this.dialogRef.close();
-            this.socketClientService.socket.emit(event.DIALOG_ATTENTE_FERME);
+            await this.listePartieService.dialogAttenteSimpleFerme();
+        });
+    }
+
+    private deletePartieMultipleAttente(): void {
+        this.listePartieService.deletePartieMultipleEnAttente(this.partieId).subscribe(async (res) => {
+            this.dialogRef.close();
+            await this.listePartieService.dialogAttenteMultipleFerme();
         });
     }
 

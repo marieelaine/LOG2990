@@ -39,6 +39,10 @@ export class RoutesPartieSimpleAttente extends ServiceWeb {
             res.status(HTTP_CREATED).json(req.body.partieId);
         });
 
+        router.post("/dialogAttenteSimpleFerme", (req: Request, res: Response) => {
+            this.socket.envoyerDialogSimpleFerme();
+        });
+
         return router;
     }
 }

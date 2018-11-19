@@ -100,5 +100,13 @@ export class ListePartieServiceService {
 
   public async joindrePartieMultijoueurMultiple(partieId: string, channelId: string): Promise<void> {
     this.http.post(route.JOINDRE_PARTIE_MULTIJOUER_MULTIPLE, {partieId, channelId}).toPromise();
-}
+  }
+
+  public async dialogAttenteSimpleFerme(): Promise<void> {
+    this.http.post(route.DIALOG_ATTENTE_SIMPLE_FERME, {}).toPromise();
+  }
+
+  public async dialogAttenteMultipleFerme(): Promise<void> {
+    this.http.post(route.DIALOG_ATTENTE_MULTIPLE_FERME, {}).toPromise();
+  }
 }

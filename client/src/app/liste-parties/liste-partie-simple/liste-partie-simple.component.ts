@@ -96,7 +96,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     this.dialog.open(DialogVueAttenteComponent, {
       height: "220px",
       width: "600px",
-      data : { id: partieId }
+      data : { id: partieId,
+               isSimple: true }
     });
   }
 
@@ -127,7 +128,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
       }
     });
 
-    this.socketClientService.socket.on(event.DIALOG_ATTENTE_FERME, () => {
+    this.socketClientService.socket.on(event.DIALOG_ATTENTE_MULTIPLE_FERME, () => {
       this.mettreBoutonsACreer();
     });
 
