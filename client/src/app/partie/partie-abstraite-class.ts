@@ -10,6 +10,7 @@ import { TempsUser } from "../admin/temps-user";
 import * as constantes from "../constantes";
 import { SocketClientService } from "../socket/socket-client.service";
 
+const NOMBRE_DIFF_MULTIJOUEUR = 4;
 const TIMEOUT: number = 1000;
 const OFFSET_ADDITIONNEL: number = 10;
 const LINE_WIDTH: number = 1.5;
@@ -112,10 +113,7 @@ export abstract class PartieAbstraiteClass {
             this.audio.play().catch(() => ErrorHandler);
             this.ajouterMessageDiffTrouvee();
         }
-        if (this.differenceRestantes === this.differencesTrouvees) {
-            this.partieCommence = false;
-            this.terminerPartie();
-        }
+        this.isMultijoueur ? this.terminerPartieMultijoueur() : this.terminerPartieSolo();
     }
 
     protected ajouterMessageDiffTrouvee(): void {
@@ -186,6 +184,20 @@ export abstract class PartieAbstraiteClass {
     private setChannelId(): void {
         if (this.isMultijoueur === true) {
             this.channelId = this.route.snapshot.params.channelId;
+        }
+    }
+
+    private terminerPartieSolo(): void {
+        if (this.differenceRestantes === this.differencesTrouvees) {
+            this.partieCommence = false;
+            this.terminerPartie();
+        }
+    }
+
+    private terminerPartieMultijoueur(): void {
+        if (this.differencesTrouvees === NOMBRE_DIFF_MULTIJOUEUR) {
+            this.partieCommence = false;
+            this.terminerPartie();
         }
     }
 }
