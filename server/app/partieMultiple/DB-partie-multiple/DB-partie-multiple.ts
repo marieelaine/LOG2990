@@ -65,6 +65,10 @@ export class DBPartieMultiple extends DBPartieAbstract {
         }
     }
 
+    public requeteEnvoyerJoindreMultiple(req: Request, res: Response): void {
+        this.socket.envoyerJoindreMultiple(req.body.partieId, req.body.channelId);
+    }
+
     protected CreateSchemaBuffer(): void {
             this.schemaBuffer = new Schema({
                 _nomPartie: { type: String, required: true, unique: true, },

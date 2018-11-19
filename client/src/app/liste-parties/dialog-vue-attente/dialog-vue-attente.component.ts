@@ -71,11 +71,23 @@ export class DialogVueAttenteComponent implements OnDestroy {
             this.setMessageErreur(data);
         });
 
-        this.socketClientService.socket.on(event.JOINDRE_PARTIE_MULTIJOUEUR, (partieId: string) => {
-            if (partieId === this.partieId) {
+        this.socketClientService.socket.on(event.JOINDRE_PARTIE_MULTIJOUEUR_SIMPLE, (data) => {
+            if (data.partieId === this.partieId) {
+                this.listePartieService.deletePartieSimpleEnAttente(this.partieId).subscribe((res) => {
+                    this.dialogRef.close();
+                    this.router.navigate(["/partie-simple/" + data.partieId + "/" + data.channelId])
+                    .catch(() => ErrorHandler);
+                });
+            }
+        });
+
+        this.socketClientService.socket.on(event.JOINDRE_PARTIE_MULTIJOUEUR_MULTIPLE, (data) => {
+            if (data.partieId === this.partieId) {
+                this.listePartieService.deletePartieMultipleEnAttente(this.partieId).subscribe((res) => {
                 this.dialogRef.close();
-                const isMultijoueur: boolean = true;
-                this.router.navigate(["/partie-simple-multijoueur/" + partieId + "/" + isMultijoueur]).catch(() => ErrorHandler);
+                this.router.navigate(["/partie-multiple/" + data.partieId + "/" + data.channelId])
+                .catch(() => ErrorHandler);
+                });
             }
         });
     }

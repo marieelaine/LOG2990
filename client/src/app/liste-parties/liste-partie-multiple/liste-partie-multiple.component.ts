@@ -88,7 +88,9 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     private async checkJoindreOuSupprimer(partieId: string): Promise<void> {
         if (this.listePartieEnAttente.includes(partieId)) {
-            this.router.navigate(["/partie-multiple/" + partieId + "/" + await this.getChannelId()])
+            const channelId: string = await this.getChannelId();
+            this.listePartieService.joindrePartieMultijoueurMultiple(partieId, channelId);
+            this.router.navigate(["/partie-multiple/" + partieId + "/" + channelId])
             .catch(() => ErrorHandler);
         } else {
           this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
@@ -123,8 +125,11 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
             }
         });
         this.socketClientService.socket.on(event.DIALOG_ATTENTE_FERME, () => {
-            this.joindreOuSupprimer = "Créer";
-            this.creerOuSupprimer = "Créer";
+            this.mettreBoutonsACreer();
+        });
+
+        this.socketClientService.socket.on(event.JOINDRE_PARTIE_MULTIJOUEUR_MULTIPLE, (data) => {
+            this.mettreBoutonsACreer();
         });
     }
 }

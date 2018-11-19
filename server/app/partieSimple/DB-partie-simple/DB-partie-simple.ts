@@ -56,6 +56,10 @@ export class DBPartieSimple extends DBPartieAbstract {
         }
     }
 
+    public requeteEnvoyerJoindreSimple(req: Request, res: Response): void {
+        this.socket.envoyerJoindreSimple(req.body.partieId, req.body.channelId);
+    }
+
     protected CreateSchemaArray(): void {
         this.schemaArray = new Schema({
             _nomPartie: { type: String, required: true, unique: true },

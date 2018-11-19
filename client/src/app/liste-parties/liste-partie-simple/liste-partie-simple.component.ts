@@ -74,8 +74,9 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   private async checkJoindreOuSupprimer(partieId: string): Promise<void> {
     if (this.listePartieEnAttente.includes(partieId)) {
-      this.socketClientService.socket.emit(event.JOINDRE_PARTIE_MULTIJOUEUR, partieId);
-      this.router.navigate(["/partie-simple/" + partieId + "/" + await this.getChannelId()])
+      const channelId: string = await this.getChannelId();
+      this.listePartieService.joindrePartieMultijoueurSimple(partieId, channelId);
+      this.router.navigate(["/partie-simple/" + partieId + "/" + channelId])
       .catch(() => ErrorHandler);
     } else {
       this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
@@ -127,8 +128,11 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     });
 
     this.socketClientService.socket.on(event.DIALOG_ATTENTE_FERME, () => {
-      this.joindreOuSupprimer = "Créer";
-      this.creerOuSupprimer = "Créer";
+      this.mettreBoutonsACreer();
+    });
+
+    this.socketClientService.socket.on(event.JOINDRE_PARTIE_MULTIJOUEUR_SIMPLE, (data) => {
+        this.mettreBoutonsACreer();
     });
   }
 }

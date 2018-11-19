@@ -69,4 +69,11 @@ export class SocketServerService {
     public supprimerPartieMultipleAttente(partieId: string): void {
         this.io.emit(event.DELETE_PARTIE_MULTIPLE_ATTENTE, partieId);
     }
+    public envoyerJoindreSimple(partieId: string, channelId: string): void {
+        this.io.emit(event.JOINDRE_PARTIE_MULTIJOUEUR_SIMPLE, { partieId, channelId });
+    }
+
+    public envoyerJoindreMultiple(partieId: string, channelId: string): void {
+        this.io.emit(event.JOINDRE_PARTIE_MULTIJOUEUR_MULTIPLE, { partieId, channelId });
+    }
 }
