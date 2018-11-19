@@ -5,6 +5,7 @@ import {ActivatedRoute} from "@angular/router";
 import {PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
+import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 
 @Component({
@@ -21,6 +22,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                        protected cookieService: CookieService) {
         super(route, partieService, cookieService, socketClientService, true);
         this.differenceRestantes = constantes.DIFF_PARTIE_SIMPLE;
+        this.setSocketEvents();
     }
 
     protected ajouterTemps(temps: number): void {
@@ -42,15 +44,16 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         this.imageData.push(atob(String(this.partie["_image2"][0])));
     }
 
-    protected testerPourDiff(event: MouseEvent): void {
+    protected async testerPourDiff(ev: MouseEvent): Promise<void> {
         if (this.partieCommence && !this.penaliteEtat) {
-            const coords: string = event.offsetX + "," + event.offsetY;
+            const coords: string = ev.offsetX + "," + ev.offsetY;
             let i: number = 0;
             for (const diff of this.partie["_imageDiff"]) {
                 for (const pixel of diff) {
                     if (coords === pixel) {
                         if (!this.diffTrouvee[0].includes(i)) {
-                            this.isMultijoueur ? this.socketClientService.differenceTrouvee() : this.differenceTrouver(i);
+                            this.isMultijoueur ? await this.partieService.differenceTrouveeMultijoueurSimple(this.channelId, i)
+                                               : this.differenceTrouver(i);
 
                             return;
                         }
@@ -58,7 +61,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                 }
                 i++;
             }
-            this.penalite(event);
+            this.penalite(ev);
         }
     }
 
@@ -84,6 +87,14 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
             dataD[dim + constantes.RGB_SECOND_INCREMENT] = dataG[dim + constantes.RGB_SECOND_INCREMENT];
         }
         contextD.putImageData(imageDataD, 0, 0);
+    }
+
+    private setSocketEvents(): void {
+        this.socketClientService.socket.on(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, (data) => {
+            if (this.channelId === data.channelId) {
+                this.differenceTrouver(data.diff);
+            }
+        });
     }
 
 }

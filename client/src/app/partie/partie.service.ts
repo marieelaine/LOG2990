@@ -36,4 +36,12 @@ export class PartieService {
         this.http.put(route.REINITIALISER_TEMPS_MULTIPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise()
             .catch(() => ErrorHandler);
     }
+
+    public async differenceTrouveeMultijoueurSimple(channelId: string, diff: number): Promise<void> {
+        this.http.post(route.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, {channelId, diff}).toPromise();
+    }
+
+    public async differenceTrouveeMultijoueurMultiple(channelId: string, diff: number, source: string): Promise<void> {
+        this.http.post(route.DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE, {channelId, diff, source}).toPromise();
+    }
 }

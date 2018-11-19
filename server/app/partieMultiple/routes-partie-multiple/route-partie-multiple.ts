@@ -56,6 +56,10 @@ export class RoutesPartieMultiple extends ServiceWeb {
             this.partieMultiple.requeteEnvoyerJoindreMultiple(req, res);
         });
 
+        router.post("/differenceTrouveeMultijoueurMultiple", (req: Request, res: Response) => {
+            this.partieMultiple.requeteEnvoyerDiffTrouveeMultiple(req, res);
+        });
+
         return router;
     }
 }

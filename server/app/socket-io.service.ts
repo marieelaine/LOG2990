@@ -5,6 +5,11 @@ import { injectable } from "inversify";
 import { PartieSimpleInterface } from "./partieSimple/DB-partie-simple/DB-partie-simple";
 import { PartieMultipleInterface } from "./partieMultiple/DB-partie-multiple/DB-partie-multiple";
 
+interface DifferenceTrouvee {
+    channelId: string;
+    diff: number;
+}
+
 @injectable()
 export class SocketServerService {
 
@@ -24,8 +29,8 @@ export class SocketServerService {
             this.io.emit(event.DIALOG_ATTENTE_FERME);
         });
 
-        this.io.on(event.JOINDRE_PARTIE_MULTIJOUEUR, (partieId: string) => {
-            this.io.emit(event.JOINDRE_PARTIE_MULTIJOUEUR, partieId);
+        this.io.on(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, (data: DifferenceTrouvee) => {
+            this.io.emit(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, data);
         });
 
     }
@@ -69,6 +74,15 @@ export class SocketServerService {
     public supprimerPartieMultipleAttente(partieId: string): void {
         this.io.emit(event.DELETE_PARTIE_MULTIPLE_ATTENTE, partieId);
     }
+
+    public envoyerDiffPartieSimple(channelId: string, diff: number): void {
+        this.io.emit(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, {channelId: channelId, diff: diff});
+    }
+
+    public envoyerDiffPartieMultiple(channelId: string, diff: number, source: string): void {
+        this.io.emit(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE, {channelId: channelId, diff: diff, source: source});
+    }
+
     public envoyerJoindreSimple(partieId: string, channelId: string): void {
         this.io.emit(event.JOINDRE_PARTIE_MULTIJOUEUR_SIMPLE, { partieId, channelId });
     }

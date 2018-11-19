@@ -5,6 +5,7 @@ import { PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
 import { PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
+import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 
 @Component({
@@ -23,6 +24,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                        protected cookieService: CookieService) {
         super(route, partieService, cookieService, socketClientService, false);
         this.differenceRestantes = constantes.DIFF_PARTIE_MULTIPLE;
+        this.setSocketEvents();
     }
 
     protected ajouterTemps(temps: number): void {
@@ -46,11 +48,11 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         this.imageData.push(atob(String(this.partie["_image2PV2"][0])));
     }
 
-    protected testerPourDiff(event: MouseEvent): void {
+    protected async testerPourDiff(ev: MouseEvent): Promise<void> {
         if (this.partieCommence && !this.penaliteEtat) {
 
-            const coords: string = event.offsetX + "," + event.offsetY;
-            const srcElem: Element = event.srcElement as Element;
+            const coords: string = ev.offsetX + "," + ev.offsetY;
+            const srcElem: Element = ev.srcElement as Element;
             const source: string = srcElem.id === "canvasG1" || srcElem.id === "canvasD1"
                 ? "_imageDiff1"
                 : "_imageDiff2";
@@ -61,7 +63,8 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                     if (coords === pixel) {
                         if (!this.diffTrouvee[0].includes(i) && source === "_imageDiff1"
                             || !this.diffTrouvee[1].includes(i) && source === "_imageDiff2") {
-                            this.differenceTrouver(i, source);
+                            this.isMultijoueur ? await this.partieService.differenceTrouveeMultijoueurMultiple(this.channelId, i, source)
+                                               : this.differenceTrouver(i, source);
 
                             return;
                         }
@@ -69,7 +72,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                 }
                 i++;
             }
-            this.penalite(event);
+            this.penalite(ev);
         }
     }
 
@@ -100,5 +103,13 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
             dataD[dim + constantes.RGB_SECOND_INCREMENT] = dataG[dim + constantes.RGB_SECOND_INCREMENT];
         }
         contextD.putImageData(imageDataD, 0, 0);
+    }
+
+    private setSocketEvents(): void {
+        this.socketClientService.socket.on(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE, (data) => {
+            if (this.channelId === data.channelId) {
+                this.differenceTrouver(data.diff, data.source);
+            }
+        });
     }
 }

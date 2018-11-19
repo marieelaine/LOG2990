@@ -50,6 +50,10 @@ export class RoutesPartieSimple extends ServiceWeb {
             this.partieSimple.requeteAjouterChannelMultijoueur(req, res);
         });
 
+        router.post("/differenceTrouveeMultijoueurSimple", (req: Request, res: Response) => {
+            this.partieSimple.requeteEnvoyerDiffTrouveeSimple(req, res);
+        });
+
         router.post("/joindrePartieMultijoueurSimple", (req: Request, res: Response) => {
             this.partieSimple.requeteEnvoyerJoindreSimple(req, res);
         });

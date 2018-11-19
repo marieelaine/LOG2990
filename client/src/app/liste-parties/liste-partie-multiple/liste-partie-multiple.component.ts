@@ -26,6 +26,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
                        private dialog: MatDialog) {
         super(router, listePartieService);
         this.listeParties = [];
+        this.listePartieEnAttente = [];
     }
 
     public ngOnInit(): void {
