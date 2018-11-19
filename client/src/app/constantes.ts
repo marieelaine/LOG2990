@@ -29,12 +29,14 @@ export const AJOUTER_CHANNEL_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "/
 export const DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "/differenceTrouveeMultijoueurSimple";
 export const JOINDRE_PARTIE_MULTIJOUER_SIMPLE: string = BASE_URL + SIMPLE + "/joindrePartieMultijoueurSimple";
 export const PARTIE_TERMINEE_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "/partieTermineeMultijoueurSimple";
+export const ERREUR_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "/erreurMultijoueurSimple";
 
 export const GET_CHANNEL_ID_MULTIPLE: string = BASE_URL + MULTIPLE + "/getChannelIdMultiple";
 export const AJOUTER_CHANNEL_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/addChannelMultijoueurMultiple";
 export const DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/differenceTrouveeMultijoueurMultiple";
 export const JOINDRE_PARTIE_MULTIJOUER_MULTIPLE: string = BASE_URL + MULTIPLE + "/joindrePartieMultijoueurMultiple";
 export const PARTIE_TERMINEE_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/partieTermineeMultijoueurMultiple";
+export const ERREUR_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/erreurMultijoueurMultiple";
 
 export const LONGUEUR_NOM_MIN: number = 3;
 export const LONGUEUR_NOM_MAX: number = 20;

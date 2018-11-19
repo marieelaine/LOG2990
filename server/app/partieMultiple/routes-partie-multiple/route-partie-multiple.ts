@@ -64,6 +64,10 @@ export class RoutesPartieMultiple extends ServiceWeb {
             this.partieMultiple.requeteEnvoyerPartieMultipleTerminee(req, res);
         });
 
+        router.post("/erreurMultijoueurMultiple", (req: Request, res: Response) => {
+            this.partieMultiple.requeteErreurMultiple(req, res);
+        });
+
         return router;
     }
 }

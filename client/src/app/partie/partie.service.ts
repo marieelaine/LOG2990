@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 import * as route from "../constantes";
 import { TempsUser } from "../admin/temps-user";
+import { ConsoleReporter } from "jasmine";
 
 @Injectable({
     providedIn: "root"
@@ -51,5 +52,13 @@ export class PartieService {
 
     public async partieMultijoueurMultipleTerminee(channelId: string, joueur: string): Promise<void> {
         this.http.post(route.PARTIE_TERMINEE_MULTIJOUEUR_MULTIPLE, {channelId, joueur}).toPromise();
+    }
+
+    public async erreurMultijoueurSimple(channelId: string, joueur: string): Promise<void> {
+        this.http.post(route.ERREUR_MULTIJOUEUR_SIMPLE, {channelId, joueur}).toPromise();
+    }
+
+    public async erreurMultijoueurMultiple(channelId: string, joueur: string): Promise<void> {
+        this.http.post(route.ERREUR_MULTIJOUEUR_MULTIPLE, {channelId, joueur}).toPromise();
     }
 }

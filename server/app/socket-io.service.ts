@@ -89,4 +89,12 @@ export class SocketServerService {
     public envoyerPartieMultipleTerminee(channelId: string, joueur: string): void {
         this.io.emit(event.PARTIE_MULTIPLE_MULTIJOUEUR_TERMINEE, {channelId: channelId, joueur: joueur});
     }
+
+    public erreurSimple(channelId: string, joueur: string, ev: MouseEvent): void {
+        this.io.emit(event.ERREUR_PARTIE_SIMPLE, {channelId: channelId, joueur: joueur, ev: ev});
+    }
+
+    public erreurMultiple(channelId: string, joueur: string, ev: MouseEvent): void {
+        this.io.emit(event.ERREUR_PARTIE_MULTIPLE, {channelId: channelId, joueur: joueur, ev: ev});
+    }
 }

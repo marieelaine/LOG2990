@@ -62,6 +62,10 @@ export class RoutesPartieSimple extends ServiceWeb {
             this.partieSimple.requeteEnvoyerPartieSimpleTerminee(req, res);
         });
 
+        router.post("/erreurMultijoueurSimple", (req: Request, res: Response) => {
+            this.partieSimple.requeteErreurSimple(req, res);
+        });
+
         return router;
     }
 }

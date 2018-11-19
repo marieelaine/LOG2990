@@ -64,7 +64,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                 }
                 i++;
             }
-            this.penalite(ev);
+            await this.setPenalite(ev);
         }
     }
 
@@ -73,6 +73,13 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         await this.trouverDifferenceSimple();
         this.restaurationPixelsSimple(i);
         this.ajouterMessageDiffTrouvee("");
+    }
+
+    private async setPenalite(ev: MouseEvent): Promise<void> {
+        if (this.isMultijoueur) {
+            await this.partieService.erreurMultijoueurSimple(this.channelId, this.joueurMultijoueur);
+        }
+        this.penalite(ev);
     }
 
     protected async differenceTrouverMultijoueurSimple(i: number, joueur: string): Promise<void> {
@@ -128,8 +135,16 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
         this.socketClientService.socket.on(event.PARTIE_SIMPLE_MULTIJOUEUR_TERMINEE, (data) => {
             if (this.channelId === data.channelId) {
+                console.log("Socket recu");
                 this.partieCommence = false;
                 this.terminerPartie(data.joueur);
+            }
+        });
+
+        this.socketClientService.socket.on(event.ERREUR_PARTIE_SIMPLE, (data) => {
+            if (this.channelId === data.channelId) {
+                this.isMultijoueur ? this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur par " + data.joueur)
+                : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur.");
             }
         });
     }

@@ -10,6 +10,7 @@ import { TempsUser } from "../admin/temps-user";
 import * as constantes from "../constantes";
 import { SocketClientService } from "../socket/socket-client.service";
 
+const MINUTESANDSECONDCONVERT: number = 10;
 const TIMEOUT: number = 1000;
 const OFFSET_ADDITIONNEL: number = 10;
 const LINE_WIDTH: number = 1.5;
@@ -105,11 +106,13 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected ajouterMessageDiffTrouvee(joueur: string): void {
-        this.isMultijoueur ? this.chat.messagesChat.push(joueur + " a trouvé une différence!")
-                           : this.chat.messagesChat.push("Vous avez trouvé une différence!");
+        const date: Date = new Date();
+        this.isMultijoueur ? this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Différence trouvée par " + joueur)
+                           : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Différence trouvée.");
     }
 
     protected terminerPartie(gagnant: string): void {
+        console.log("terminer");
         this.isMultijoueur ? this.partieMultijoueurTerminee(gagnant) : this.partieSoloTerminee();
     }
 
@@ -185,6 +188,20 @@ export abstract class PartieAbstraiteClass {
             ctx.putImageData(imageSaved, 0, 0);
             this.penaliteEtat = false;
         },         TIMEOUT);
+    }
+
+    protected getCurrentTime(): string {
+        const date: Date = new Date();
+
+        return date.getHours() + ":" + this.getMinutes(date) + ":" + this.getSeconds(date);
+    }
+
+    private getMinutes(date: Date): string {
+        return date.getMinutes() < MINUTESANDSECONDCONVERT ? "0" + date.getMinutes().toString() : date.getMinutes().toString();
+    }
+
+    private getSeconds(date: Date): string {
+        return date.getSeconds() < MINUTESANDSECONDCONVERT ? "0" + date.getSeconds().toString() : date.getSeconds().toString();
     }
 
     private joueurApplaudissements(): void {

@@ -76,7 +76,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                 }
                 i++;
             }
-            this.penalite(ev);
+            await this.setPenalite(ev);
         }
     }
 
@@ -133,6 +133,13 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         this.ajouterMessageDiffTrouvee(joueur);
         this.diffTrouvee[0].push(i);
         this.restaurationPixelsMultiple(i, source);
+    }
+
+    private async setPenalite(ev: MouseEvent): Promise<void> {
+        if (this.isMultijoueur) {
+            await this.partieService.erreurMultijoueurMultiple(this.channelId, this.joueurMultijoueur);
+        }
+        this.penalite(ev);
     }
 
     private setSocketEvents(): void {
