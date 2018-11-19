@@ -5,7 +5,6 @@ import { Observable } from "rxjs";
 import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 import * as route from "../constantes";
 import { TempsUser } from "../admin/temps-user";
-import { ConsoleReporter } from "jasmine";
 
 @Injectable({
     providedIn: "root"

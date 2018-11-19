@@ -114,6 +114,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
 
     protected async terminerPartieMultijoueurMultiple(): Promise<void> {
         if (this.differencesTrouvees === NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE) {
+            console.log("Diff fini");
             await this.partieService.partieMultijoueurSimpleTerminee(this.channelId, this.joueurMultijoueur);
         }
     }
@@ -153,6 +154,13 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
             if (this.channelId === data.channelId) {
                 this.partieCommence = false;
                 this.terminerPartie(data.joueur);
+            }
+        });
+
+        this.socketClientService.socket.on(event.ERREUR_PARTIE_MULTIPLE, (data) => {
+            if (this.channelId === data.channelId) {
+                this.isMultijoueur ? this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur par " + data.joueur)
+                : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur.");
             }
         });
     }

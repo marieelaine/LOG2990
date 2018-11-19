@@ -135,7 +135,6 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
         this.socketClientService.socket.on(event.PARTIE_SIMPLE_MULTIJOUEUR_TERMINEE, (data) => {
             if (this.channelId === data.channelId) {
-                console.log("Socket recu");
                 this.partieCommence = false;
                 this.terminerPartie(data.joueur);
             }
