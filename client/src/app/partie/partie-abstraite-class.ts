@@ -10,7 +10,7 @@ import { TempsUser } from "../admin/temps-user";
 import * as constantes from "../constantes";
 import { SocketClientService } from "../socket/socket-client.service";
 
-const NOMBRE_DIFF_MULTIJOUEUR = 4;
+const NOMBRE_DIFF_MULTIJOUEUR: number = 4;
 const TIMEOUT: number = 1000;
 const OFFSET_ADDITIONNEL: number = 10;
 const LINE_WIDTH: number = 1.5;
