@@ -21,6 +21,10 @@ export class RoutesPartieSimple extends ServiceWeb {
             await this.partieSimple.requeteAjouterPartie(req, res);
         });
 
+        router.put("/addTempsPartieSimple/:id", async (req: Request, res: Response) => {
+            await this.partieSimple.requeteAjouterPartieTemps(req, res);
+        });
+
         router.get("/getListePartieSimple", async (req: Request, res: Response) => {
             await this.partieSimple.requeteGetListePartie(req, res);
         });

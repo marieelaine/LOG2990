@@ -64,7 +64,7 @@ export abstract class PartieAbstraiteClass {
 
     protected abstract getImageData(): void;
 
-    protected abstract ajouterTemps(temps: number): void;
+    protected abstract ajouterTemps(partieID: string, tempsUser: TempsUser, isSolo: boolean): void;
 
     protected abstract ouvrirDialogFinPartie(): void;
 
@@ -113,9 +113,9 @@ export abstract class PartieAbstraiteClass {
 
         if (this.joueurMultijoueur === gagnant) {
             this.messageDifferences = "FÉLICITATIONS, VOUS AVEZ GAGNÉ!";
+            const tempsUser: TempsUser =  new TempsUser(gagnant, this.chrono.getTime());
             this.joueurApplaudissements();
-            // tslint:disable-next-line:no-suspicious-comment
-            // TODO: Ajouter les temps multijoueur
+            this.ajouterTemps(this.partieID, tempsUser, false);
         } else {
             this.messageDifferences = "PUTAIN T'AS PERDU MEC!";
             this.joueurLoserSound();
@@ -124,13 +124,15 @@ export abstract class PartieAbstraiteClass {
 
     protected partieSoloTerminee(): void {
         this.chrono.stopTimer();
+        const tempsUser: TempsUser =  new TempsUser(this.cookieService.get("username"), this.chrono.getTime());
+        this.messageDifferences = "FÉLICITATIONS!";
         this.messageDifferences = "";
         this.ouvrirDialogFinPartie();
         this.audio.src = "../assets/applause.mp3";
         this.audio.load();
         this.audio.play().catch(() => ErrorHandler);
         this.joueurApplaudissements();
-        this.ajouterTemps(this.chrono.getTime());
+        this.ajouterTemps(this.partieID, tempsUser, true);
     }
 
     protected updateTableauTempsSolo(temps: number): void {

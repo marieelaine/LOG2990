@@ -9,6 +9,7 @@ import { MatDialog } from "@angular/material";
 import { DialogFinPartieComponent } from "../dialog-fin-partie/dialog-fin-partie.component";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
+import { TempsUser } from "src/app/admin/temps-user";
 
 const NOMBRE_DIFF_MULTIJOUEUR_SIMPLE: number = 4;
 
@@ -30,9 +31,8 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         this.setSocketEvents();
     }
 
-    protected ajouterTemps(temps: number): void {
-        this.updateTableauTempsSolo(temps);
-        this.partieService.reinitialiserTempsPartieSimple(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
+    protected async ajouterTemps(partieID: string, joueur: TempsUser, isSolo: boolean): Promise<void> {
+        await this.partieService.addTempsPartieSimple(partieID, joueur, isSolo)
             .catch(() => ErrorHandler);
     }
 
