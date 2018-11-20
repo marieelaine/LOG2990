@@ -14,7 +14,7 @@ describe("VueMultipleComponent", () => {
   let mockCookieService: jasmine.SpyObj<CookieService>;
 
   beforeEach(() => {
-    mockCookieService = jasmine.createSpyObj([""]);
+    mockCookieService = jasmine.createSpyObj(["get"]);
 
     TestBed.configureTestingModule({
       declarations: [ VueMultipleComponent ],

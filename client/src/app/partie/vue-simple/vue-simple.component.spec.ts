@@ -37,7 +37,7 @@ describe("VueSimpleComponent", () => {
     let fixture: ComponentFixture<VueSimpleComponent>;
 
     beforeEach(() => {
-        mockCookieService = jasmine.createSpyObj([""]);
+        mockCookieService = jasmine.createSpyObj(["get"]);
 
         TestBed.configureTestingModule({
             declarations: [VueSimpleComponent, ChatComponent],
@@ -96,13 +96,6 @@ describe("VueSimpleComponent", () => {
             component["partie"]["_image1"] = Buffer.from("Hello World");
             component["partie"]["_image2"] = Buffer.from("Hello World");
             component["imageData"] = ["Hello World", "Hello World"];
-        });
-
-        it("devrait appeler addNomPartieToChat", () => {
-            // tslint:disable-next-line:no-any
-            spyOn<any>(component, "addNomPartieToChat");
-            component["setup"]();
-            expect(component["addNomPartieToChat"]).toHaveBeenCalled();
         });
 
         it("devrait appeler ajusterSourceImage", () => {

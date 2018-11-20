@@ -45,7 +45,8 @@ describe("ListePartieMultipleComponent", () => {
             "deletePartieMultiple",
             "reinitialiserTempsPartieMultiple",
             "addPartieMultipleEnAttente",
-            "getListePartieSimpleEnAttente"
+            "getListePartieSimpleEnAttente",
+            "getListePartieMultipleEnAttente"
         ]);
         TestBed.configureTestingModule({
             declarations: [
@@ -82,12 +83,20 @@ describe("ListePartieMultipleComponent", () => {
     describe("fonction ngOnInit", () => {
         it("Devrait apeller la fonction getListePartieMultiple du service", () => {
             mockListePartieService["getListePartieMultiple"].and.returnValue(of(parties));
-            mockListePartieService["getListePartieSimpleEnAttente"].and.returnValue(of(listePartieEnAttente));
+            mockListePartieService["getListePartieMultipleEnAttente"].and.returnValue(of(listePartieEnAttente));
 
             component.ngOnInit();
 
             expect(mockListePartieService["getListePartieMultiple"]).toHaveBeenCalledTimes(1);
             expect(component["listeParties"]).toEqual(parties);
+        });
+        it("Devrait apeller la fonction getListePartieMultiple du service", () => {
+            mockListePartieService["getListePartieMultiple"].and.returnValue(of(parties));
+            mockListePartieService["getListePartieMultipleEnAttente"].and.returnValue(of(listePartieEnAttente));
+
+            component.ngOnInit();
+
+            expect(mockListePartieService["getListePartieMultipleEnAttente"]).toHaveBeenCalledTimes(1);
         });
     });
 
