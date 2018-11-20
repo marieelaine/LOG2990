@@ -7,6 +7,7 @@ import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
+import { TempsUser } from "src/app/admin/temps-user";
 
 const NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE: number = 7;
 
@@ -29,10 +30,9 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         this.setSocketEvents();
     }
 
-    protected ajouterTemps(temps: number): void {
-        this.updateTableauTempsSolo(temps);
-        this.partieService.reinitialiserTempsPartieMultiple(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
-        .catch(() => ErrorHandler);
+    protected async ajouterTemps(partieID: string, joueur: TempsUser, isSolo: boolean): Promise<void> {
+        await this.partieService.addTempsPartieMultiple(partieID, joueur, isSolo)
+                                .catch(() => ErrorHandler);
     }
 
     protected setPartie(): void {

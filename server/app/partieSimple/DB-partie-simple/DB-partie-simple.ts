@@ -12,6 +12,8 @@ import Types from "../../types";
 import * as constantes from "../../constantes";
 import { DBPartieAbstract, TempsUser } from "../../partie-DB/DB-partie-abstract";
 
+const PARTIE_SECOND_ELEMENT: number = 2;
+
 export interface PartieSimpleInterface {
     _id: string;
     _nomPartie: string;
@@ -210,9 +212,27 @@ export class DBPartieSimple extends DBPartieAbstract {
         tempsSolo = this.getSortedTimes(tempsSolo);
         tempsUnContreUn = this.getSortedTimes(tempsUnContreUn);
         await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
-            .catch(() => { throw new Error(); });
+                                    .catch(() => { throw new Error(); });
     }
 
+    protected async ajouterTemps(idPartie: string, temps: TempsUser, isSolo: boolean): Promise<void> {
+        const partie: PartieSimpleInterface = await this.getPartieById(idPartie) as PartieSimpleInterface;
+        if (temps._user === "") {
+            temps._user = "Anonyme";
+        }
+        if (isSolo) {
+            if (temps._temps < partie["_tempsSolo"][PARTIE_SECOND_ELEMENT]["_temps"]) {
+                partie["_tempsSolo"].splice(-1, 1);
+                partie["_tempsSolo"].push(temps);
+            }
+        } else {
+            if (temps._temps < partie["_tempsUnContreUn"][PARTIE_SECOND_ELEMENT]["_temps"]) {
+                partie["_tempsUnContreUn"].splice(-1, 1);
+                partie["_tempsUnContreUn"].push(temps);
+            }
+        }
+        await this.reinitialiserTemps(idPartie, partie["_tempsSolo"], partie["_tempsUnContreUn"]);
+    }
     private async traiterMessageErreur(partie: PartieSimpleInterface, errorMsg: string): Promise<void> {
         if (errorMsg === "") {
             this.getImageDiffAsArrays(partie);

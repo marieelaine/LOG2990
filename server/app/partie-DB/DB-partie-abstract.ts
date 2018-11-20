@@ -77,10 +77,21 @@ export abstract class DBPartieAbstract {
       }
     }
 
+    public async requeteAjouterPartieTemps(req: Request, res: Response): Promise<void> {
+      try {
+          await this.ajouterTemps(req.params.id, req.body.temps, req.body.isSolo);
+          res.status(constantes.HTTP_CREATED);
+      } catch (err) {
+          res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+      }
+    }
+
     public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
       await this.baseDeDonnees.assurerConnection();
       res.send(await this.getListePartie());
     }
+
+    protected abstract async ajouterTemps(idPartie: string, temps: TempsUser, isSolo: boolean): Promise<void>;
 
     protected abstract async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>,
                                                 tempsUnContreUn: Array<TempsUser>): Promise<void>;
