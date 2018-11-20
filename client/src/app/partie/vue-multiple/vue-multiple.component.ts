@@ -5,6 +5,8 @@ import { PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
 import { PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
+import { DialogFinPartieComponent } from "../dialog-fin-partie/dialog-fin-partie.component";
+import { MatDialog } from "@angular/material";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import { TempsUser } from "src/app/admin/temps-user";
@@ -24,7 +26,8 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     public constructor(protected route: ActivatedRoute,
                        protected partieService: PartieService,
                        protected socketClientService: SocketClientService,
-                       protected cookieService: CookieService) {
+                       protected cookieService: CookieService,
+                       protected dialog: MatDialog) {
         super(route, partieService, cookieService, socketClientService, false);
         this.differenceRestantes = constantes.DIFF_PARTIE_MULTIPLE;
         this.setSocketEvents();
@@ -111,6 +114,13 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
             dataD[dim + constantes.RGB_SECOND_INCREMENT] = dataG[dim + constantes.RGB_SECOND_INCREMENT];
         }
         contextD.putImageData(imageDataD, 0, 0);
+    }
+
+    protected ouvrirDialogFinPartie(): void {
+        this.dialog.open(DialogFinPartieComponent, {
+            height: "190px",
+            width: "600px",
+          });
     }
 
     protected async terminerPartieMultijoueurMultiple(): Promise<void> {

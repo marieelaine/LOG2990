@@ -66,6 +66,8 @@ export abstract class PartieAbstraiteClass {
 
     protected abstract ajouterTemps(partieID: string, tempsUser: TempsUser, isSolo: boolean): void;
 
+    protected abstract ouvrirDialogFinPartie(): void;
+
     protected commencerPartie(): void {
         this.partieCommence = true;
         this.messageDifferences = `Vous avez trouvé ${this.differencesTrouvees} différences`;
@@ -124,6 +126,11 @@ export abstract class PartieAbstraiteClass {
         this.chrono.stopTimer();
         const tempsUser: TempsUser =  new TempsUser(this.cookieService.get("username"), this.chrono.getTime());
         this.messageDifferences = "FÉLICITATIONS!";
+        this.messageDifferences = "";
+        this.ouvrirDialogFinPartie();
+        this.audio.src = "../assets/applause.mp3";
+        this.audio.load();
+        this.audio.play().catch(() => ErrorHandler);
         this.joueurApplaudissements();
         this.ajouterTemps(this.partieID, tempsUser, true);
     }
