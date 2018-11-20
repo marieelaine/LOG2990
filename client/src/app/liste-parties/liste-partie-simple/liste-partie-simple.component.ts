@@ -23,8 +23,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
   public constructor(public router: Router,
                      public listePartieService: ListePartieServiceService,
-                     private dialog: MatDialog,
-                     public socketClientService: SocketClientService) {
+                     public socketClientService: SocketClientService,
+                     private dialog: MatDialog) {
     super(router, listePartieService);
     this.listeParties = [];
     this.listePartieEnAttente = [];

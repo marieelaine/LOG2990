@@ -5,6 +5,8 @@ import {ActivatedRoute} from "@angular/router";
 import {PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
+import { MatDialog } from "@angular/material";
+import { DialogFinPartieComponent } from "../dialog-fin-partie/dialog-fin-partie.component";
 
 @Component({
     selector: "app-vue-simple",
@@ -16,7 +18,8 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
     public constructor(protected route: ActivatedRoute,
                        protected partieService: PartieService,
-                       protected cookieService: CookieService) {
+                       protected cookieService: CookieService,
+                       private dialog: MatDialog) {
         super(route, partieService, cookieService, true);
         this.differenceRestantes = constantes.DIFF_PARTIE_SIMPLE;
     }
@@ -82,6 +85,13 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
             dataD[dim + constantes.RGB_SECOND_INCREMENT] = dataG[dim + constantes.RGB_SECOND_INCREMENT];
         }
         contextD.putImageData(imageDataD, 0, 0);
+    }
+
+    protected ouvrirDialogFinPartie(): void {
+        this.dialog.open(DialogFinPartieComponent, {
+            height: "190px",
+            width: "600px",
+          });
     }
 
 }

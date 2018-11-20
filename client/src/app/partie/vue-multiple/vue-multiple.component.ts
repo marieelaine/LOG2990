@@ -5,6 +5,8 @@ import { PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
 import { PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
+import { DialogFinPartieComponent } from "../dialog-fin-partie/dialog-fin-partie.component";
+import { MatDialog } from "@angular/material";
 
 @Component({
   selector: "app-vue-multiple",
@@ -17,7 +19,8 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
 
     public constructor(protected route: ActivatedRoute,
                        protected partieService: PartieService,
-                       protected cookieService: CookieService) {
+                       protected cookieService: CookieService,
+                       protected dialog: MatDialog) {
         super(route, partieService, cookieService, false);
         this.differenceRestantes = constantes.DIFF_PARTIE_MULTIPLE;
     }
@@ -98,4 +101,12 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         }
         contextD.putImageData(imageDataD, 0, 0);
     }
+
+    protected ouvrirDialogFinPartie(): void {
+        this.dialog.open(DialogFinPartieComponent, {
+            height: "190px",
+            width: "600px",
+          });
+    }
+
 }

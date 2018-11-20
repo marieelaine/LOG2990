@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from "@angular/core";
+import { MatDialogRef } from "@angular/material";
 
 @Component({
-  selector: 'app-dialog-fin-partie',
-  templateUrl: './dialog-fin-partie.component.html',
-  styleUrls: ['./dialog-fin-partie.component.css']
+  selector: "app-dialog-fin-partie",
+  templateUrl: "./dialog-fin-partie.component.html",
+  styleUrls: ["./dialog-fin-partie.component.css"]
 })
-export class DialogFinPartieComponent implements OnInit {
+export class DialogFinPartieComponent {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  public constructor(
+    public dialogRef: MatDialogRef<DialogFinPartieComponent>
+  ) { }
 
 }

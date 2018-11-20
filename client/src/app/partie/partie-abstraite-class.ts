@@ -59,6 +59,8 @@ export abstract class PartieAbstraiteClass {
 
     protected abstract ajouterTemps(temps: number): void;
 
+    protected abstract ouvrirDialogFinPartie(): void;
+
     protected commencerPartie(): void {
         this.partieCommence = true;
         this.messageDifferences = `Vous avez trouvé ${this.differencesTrouvees} différences`;
@@ -124,6 +126,7 @@ export abstract class PartieAbstraiteClass {
     protected terminerPartie(): void {
         this.chrono.stopTimer();
         this.messageDifferences = "";
+        this.ouvrirDialogFinPartie();
         this.audio.src = "../assets/applause.mp3";
         this.audio.load();
         this.audio.play().catch(() => ErrorHandler);

@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DialogFinPartieComponent } from './dialog-fin-partie.component';
+import { DialogFinPartieComponent } from "./dialog-fin-partie.component";
 
-describe('DialogFinPartieComponent', () => {
+describe("DialogFinPartieComponent", () => {
   let component: DialogFinPartieComponent;
   let fixture: ComponentFixture<DialogFinPartieComponent>;
 
@@ -19,7 +19,7 @@ describe('DialogFinPartieComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
