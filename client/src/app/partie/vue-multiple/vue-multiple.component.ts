@@ -114,8 +114,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
 
     protected async terminerPartieMultijoueurMultiple(): Promise<void> {
         if (this.differencesTrouvees === NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE) {
-            console.log("Diff fini");
-            await this.partieService.partieMultijoueurSimpleTerminee(this.channelId, this.joueurMultijoueur);
+            await this.partieService.partieMultijoueurMultipleTerminee(this.channelId, this.joueurMultijoueur);
         }
     }
 
