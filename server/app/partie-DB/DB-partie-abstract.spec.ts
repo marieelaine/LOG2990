@@ -28,6 +28,8 @@ class DBPartie extends DBPartieAbstract {
     protected async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>,
                                        tempsUnContreUn: Array<TempsUser>): Promise<void> { ""; }
 
+    protected async ajouterTemps(idPartie: string, temps: TempsUser, isSolo: boolean): Promise<void> { ""; }
+
     protected async getPartieByName(nomPartie: String): Promise<PartieSimpleInterface | PartieMultipleInterface> {
         const partie: PartieSimpleInterface = {     _id: "123",
                                                     _nomPartie: "",

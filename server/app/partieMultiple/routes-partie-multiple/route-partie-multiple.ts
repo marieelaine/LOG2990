@@ -20,6 +20,10 @@ export class RoutesPartieMultiple extends ServiceWeb {
             await this.partieMultiple.requeteAjouterPartie(req, res);
         });
 
+        router.put("/addTempsPartieMultiple/:id", async (req: Request, res: Response) => {
+            await this.partieMultiple.requeteAjouterPartieTemps(req, res);
+        });
+
         router.get("/getListePartieMultiple", async (req: Request, res: Response) => {
             await this.partieMultiple.requeteGetListePartie(req, res);
         });

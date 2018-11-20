@@ -23,6 +23,16 @@ export class PartieService {
         return this.http.get<PartieMultiple>(route.GET_PARTIE_MULTIPLE + partieID);
     }
 
+    public async addTempsPartieSimple(partieID: string, temps: TempsUser, isSolo: boolean): Promise<void> {
+        this.http.put(route.ADD_TEMPS_PARTIE_SIMPLE + partieID, { temps, isSolo }).toPromise()
+            .catch(() => ErrorHandler);
+    }
+
+    public async addTempsPartieMultiple(partieID: string, temps: TempsUser, isSolo: boolean): Promise<void> {
+        this.http.put(route.ADD_TEMPS_PARTIE_MULTIPLE + partieID, { temps, isSolo }).toPromise()
+            .catch(() => ErrorHandler);
+    }
+
     public async reinitialiserTempsPartieSimple(partieId: string, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>):
      Promise<void> {
 
