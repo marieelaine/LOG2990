@@ -74,18 +74,10 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected setup(): void {
-        this.addNomPartieToChat();
         for (let i: number = 0; i < this.nbImages; i++) {
             this.ajusterSourceImage(this.imageData[i], this.canvas.toArray()[i], this.image[i]);
         }
         this.commencerPartie();
-    }
-
-    protected addNomPartieToChat(): void {
-        this.nomPartie = this.partie["_nomPartie"];
-        const msg: string = ("Bienvenue dans la partie " + this.nomPartie.charAt(0).toUpperCase()
-                                     + this.partie["_nomPartie"].slice(1));
-        this.chat.addMessageToMessagesChat(msg);
     }
 
     protected ajusterSourceImage(data: String, canvas: ElementRef, image: HTMLImageElement): void {
@@ -106,13 +98,11 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected ajouterMessageDiffTrouvee(joueur: string): void {
-        const date: Date = new Date();
         this.isMultijoueur ? this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Différence trouvée par " + joueur)
                            : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Différence trouvée.");
     }
 
     protected terminerPartie(gagnant: string): void {
-        console.log("terminer");
         this.isMultijoueur ? this.partieMultijoueurTerminee(gagnant) : this.partieSoloTerminee();
     }
 
@@ -183,6 +173,10 @@ export abstract class PartieAbstraiteClass {
         this.audio.src = "../assets/no.mp3";
         this.audio.load();
         this.audio.play().catch(() => ErrorHandler);
+
+        if (!this.isMultijoueur) {
+            this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur");
+        }
 
         setTimeout(() => {
             ctx.putImageData(imageSaved, 0, 0);

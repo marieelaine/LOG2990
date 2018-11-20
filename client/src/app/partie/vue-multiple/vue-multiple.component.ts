@@ -84,6 +84,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         src === "_imageDiff1" ? this.diffTrouvee[0].push(i) : this.diffTrouvee[1].push(i);
         this.trouverDifferenceMultiple();
         this.restaurationPixelsMultiple(i, src);
+        this.ajouterMessageDiffTrouvee("");
     }
 
     private restaurationPixelsMultiple(i: number, src: string): void {
