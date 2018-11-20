@@ -12,6 +12,8 @@ import * as fsx from "fs-extra";
 
 class DBPartie extends DBPartieAbstract {
 
+    protected listeChannelsMultijoueur: string[];
+
     public constructor() {
         super();
 

@@ -35,7 +35,6 @@ import { UserService } from "./vue-initiale/user.service";
 import { PartieSimpleService } from "./admin/partie-simple.service";
 import { ListePartieSimpleComponent } from "./liste-parties/liste-partie-simple/liste-partie-simple.component";
 import { ListePartieMultipleComponent } from "./liste-parties/liste-partie-multiple/liste-partie-multiple.component";
-import { PartieSimpleMultijoueurComponent } from "./partie/vue-simple/partie-simple-multijoueur/partie-multijoueur.component";
 import { VueMultipleComponent } from "./partie/vue-multiple/vue-multiple.component";
 import { PartieMultipleService } from "./admin/partie-multiple.service";
 import { DialogConfirmationComponent } from "./liste-parties/dialog-confirmation/dialog-confirmation.component";
@@ -45,10 +44,13 @@ import { DialogErreurComponent } from "./admin/dialog-erreur/dialog-erreur.compo
 import { DialogVueAttenteComponent } from "./liste-parties/dialog-vue-attente/dialog-vue-attente.component";
 import { ChatComponent } from "./chat/chat.component";
 import { VueSimpleComponent } from "./partie/vue-simple/vue-simple.component";
+<<<<<<< HEAD
 import {
     PartieMultipleMultijoueurComponent
 } from "./partie/vue-multiple/partie-multiple-multijoueur/partie-multiple-multijoueur.component";
 import { DialogFinPartieComponent } from './partie/dialog-fin-partie/dialog-fin-partie.component';
+=======
+>>>>>>> multiplayer
 
 const config: SocketIoConfig = { url: "http://localhost:4200", options: {} };
 
@@ -58,9 +60,8 @@ const appRoutes: Routes = [
     { path: "admin", component: AdminComponent },
     { path: "liste-parties", component: ListePartiesComponent },
     { path: "chrono", component: ChronoComponent },
-    { path: "partie-simple-solo/:idPartie", component: VueSimpleComponent },
-    { path: "partie-multi/:idPartie", component: PartieSimpleMultijoueurComponent },
-    { path: "partie-multiple/:idPartie", component: VueMultipleComponent },
+    { path: "partie-simple/:idPartie/:channelId", component: VueSimpleComponent },
+    { path: "partie-multiple/:idPartie/:channelId", component: VueMultipleComponent },
 ];
 
 @NgModule({
@@ -76,15 +77,17 @@ const appRoutes: Routes = [
         ListePartieMultipleComponent,
         DialogSimpleComponent,
         DialogMultipleComponent,
-        PartieSimpleMultijoueurComponent,
         VueMultipleComponent,
         DialogConfirmationComponent,
         DialogErreurComponent,
         DialogVueAttenteComponent,
         ChatComponent,
         VueSimpleComponent,
+<<<<<<< HEAD
         PartieMultipleMultijoueurComponent,
         DialogFinPartieComponent,
+=======
+>>>>>>> multiplayer
     ],
     imports: [
         RouterModule.forRoot(

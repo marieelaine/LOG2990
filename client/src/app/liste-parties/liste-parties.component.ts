@@ -103,6 +103,11 @@ export class ListePartiesComponent {
         return arr;
     }
 
+    protected mettreBoutonsACreer(): void {
+        this.joindreOuSupprimer = "Créer";
+        this.creerOuSupprimer = "Créer";
+    }
+
     private genererTempsAleatoire(): number {
         return Math.floor(Math.random() * BORNE_SUP) + BORNE_INF;
     }

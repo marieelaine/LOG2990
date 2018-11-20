@@ -25,12 +25,15 @@ export interface PartieSimpleInterface {
 @injectable()
 export class DBPartieSimple extends DBPartieAbstract {
 
+    protected listeChannelsMultijoueur: string[];
+
     public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
 
         super();
 
-        this.modelPartieArray = this.baseDeDonnees["_mongoose"].model("parties-simples-array", this.schemaArray, "parties-simples");
+        this.listeChannelsMultijoueur = [];
 
+        this.modelPartieArray = this.baseDeDonnees["_mongoose"].model("parties-simples-array", this.schemaArray, "parties-simples");
         this.modelPartieBuffer = this.baseDeDonnees["_mongoose"].model("parties-simples", this.schemaBuffer, "parties-simples");
     }
 
@@ -48,6 +51,42 @@ export class DBPartieSimple extends DBPartieAbstract {
             await this.deletePartie(req.params.id, res);
             this.socket.supprimerPartieSimple(req.params.id);
             res.status(constantes.HTTP_CREATED);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
+    }
+
+    public requeteEnvoyerDiffTrouveeSimple(req: Request, res: Response): void {
+        try {
+            this.socket.envoyerDiffPartieSimple(req.body.channelId, req.body.diff, req.body.joueur);
+            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
+    }
+
+    public requeteEnvoyerJoindreSimple(req: Request, res: Response): void {
+        try {
+            this.socket.envoyerJoindreSimple(req.body.partieId, req.body.channelId);
+            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
+    }
+
+    public requeteEnvoyerPartieSimpleTerminee(req: Request, res: Response): void {
+        try {
+            this.socket.envoyerPartieSimpleTerminee(req.body.channelId, req.body.joueur);
+            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
+    }
+
+    public requeteErreurSimple(req: Request, res: Response): void {
+        try {
+            this.socket.erreurSimple(req.body.channelId, req.body.joueur, req.body.ev);
+            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
         } catch (err) {
             res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
         }

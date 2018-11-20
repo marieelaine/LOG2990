@@ -34,9 +34,13 @@ const imagePOV2: number = 2;
 @injectable()
 export class DBPartieMultiple extends DBPartieAbstract {
 
+    protected listeChannelsMultijoueur: string[];
+
     public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
 
         super();
+
+        this.listeChannelsMultijoueur = [];
 
         this.modelPartieBuffer = this.baseDeDonnees.mongoose.model("parties-multiples", this.schemaBuffer, "parties-multiples");
         this.modelPartieArray = this.baseDeDonnees.mongoose.model("parties-multiples-array", this.schemaArray, "parties-multiples");
@@ -56,6 +60,42 @@ export class DBPartieMultiple extends DBPartieAbstract {
             await this.deletePartie(req.params.id, res);
             this.socket.supprimerPartieMultiple(req.params.id);
             res.status(constantes.HTTP_CREATED);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
+    }
+
+    public requeteEnvoyerJoindreMultiple(req: Request, res: Response): void {
+        try {
+            this.socket.envoyerJoindreMultiple(req.body.partieId, req.body.channelId);
+            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
+    }
+
+    public requeteEnvoyerDiffTrouveeMultiple(req: Request, res: Response): void {
+        try {
+            this.socket.envoyerDiffPartieMultiple(req.body.channelId, req.body.diff, req.body.source, req.body.joueur);
+            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
+    }
+
+    public requeteEnvoyerPartieMultipleTerminee(req: Request, res: Response): void {
+        try {
+            this.socket.envoyerPartieMultipleTerminee(req.body.channelId, req.body.joueur);
+            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
+    }
+
+    public requeteErreurMultiple(req: Request, res: Response): void {
+        try {
+            this.socket.erreurMultiple(req.body.channelId, req.body.joueur, req.body.ev);
+            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
         } catch (err) {
             res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
         }

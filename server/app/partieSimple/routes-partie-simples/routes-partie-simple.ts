@@ -33,12 +33,37 @@ export class RoutesPartieSimple extends ServiceWeb {
             await this.partieSimple.requeteDeletePartie(req, res);
         });
 
-        router.get("/:id", async (req: Request, res: Response) => {
-            await this.partieSimple.requetePartieId(req, res);
-        });
+        // router.get("/:id", async (req: Request, res: Response) => {
+        //     console.log("Routes3");
+        //     await this.partieSimple.requetePartieId(req, res);
+        // });
 
         router.get("/getPartieSimple/:id", async (req: Request, res: Response) => {
             await this.partieSimple.requeteGetPartie(req, res);
+        });
+
+        router.get("/getChannelIdSimple", (req: Request, res: Response) => {
+            this.partieSimple.requeteGetlisteChannelsMultijoueur(req, res);
+        });
+
+        router.post("/addChannelMultijoueurSimple", (req: Request, res: Response) => {
+            this.partieSimple.requeteAjouterChannelMultijoueur(req, res);
+        });
+
+        router.post("/differenceTrouveeMultijoueurSimple", (req: Request, res: Response) => {
+            this.partieSimple.requeteEnvoyerDiffTrouveeSimple(req, res);
+        });
+
+        router.post("/joindrePartieMultijoueurSimple", (req: Request, res: Response) => {
+            this.partieSimple.requeteEnvoyerJoindreSimple(req, res);
+        });
+
+        router.post("/partieTermineeMultijoueurSimple", (req: Request, res: Response) => {
+            this.partieSimple.requeteEnvoyerPartieSimpleTerminee(req, res);
+        });
+
+        router.post("/erreurMultijoueurSimple", (req: Request, res: Response) => {
+            this.partieSimple.requeteErreurSimple(req, res);
         });
 
         return router;

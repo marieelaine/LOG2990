@@ -45,7 +45,8 @@ describe("ListePartieMultipleComponent", () => {
             "deletePartieMultiple",
             "reinitialiserTempsPartieMultiple",
             "addPartieMultipleEnAttente",
-            "getListePartieSimpleEnAttente"
+            "getListePartieSimpleEnAttente",
+            "getListePartieMultipleEnAttente"
         ]);
         TestBed.configureTestingModule({
             declarations: [
@@ -54,7 +55,7 @@ describe("ListePartieMultipleComponent", () => {
             ],
             imports: [
                 RouterTestingModule.withRoutes([
-                    { path: "partie-multiple", component: VueMultipleComponent },
+                    { path: "partie-multiple/:idPartie/:channelId", component: VueMultipleComponent },
                 ]),
                 HttpClientTestingModule,
                 MatDialogModule,
@@ -82,24 +83,32 @@ describe("ListePartieMultipleComponent", () => {
     describe("fonction ngOnInit", () => {
         it("Devrait apeller la fonction getListePartieMultiple du service", () => {
             mockListePartieService["getListePartieMultiple"].and.returnValue(of(parties));
-            mockListePartieService["getListePartieSimpleEnAttente"].and.returnValue(of(listePartieEnAttente));
+            mockListePartieService["getListePartieMultipleEnAttente"].and.returnValue(of(listePartieEnAttente));
 
             component.ngOnInit();
 
             expect(mockListePartieService["getListePartieMultiple"]).toHaveBeenCalledTimes(1);
             expect(component["listeParties"]).toEqual(parties);
         });
+        it("Devrait apeller la fonction getListePartieMultiple du service", () => {
+            mockListePartieService["getListePartieMultiple"].and.returnValue(of(parties));
+            mockListePartieService["getListePartieMultipleEnAttente"].and.returnValue(of(listePartieEnAttente));
+
+            component.ngOnInit();
+
+            expect(mockListePartieService["getListePartieMultipleEnAttente"]).toHaveBeenCalledTimes(1);
+        });
     });
 
     describe("fonction onJouerOuReinitialiserClick", () => {
         it("Devrait naviguer a la route '/partie-multiple'", fakeAsync(() => {
             component["isListePartiesMode"] = true;
-            const id: string = "";
+            const id: string = "1";
 
             component["onJouerOuReinitialiserClick"](id);
             tick();
 
-            expect(location.path()).toBe("/partie-multiple");
+            expect(location.path()).toBe("/partie-multiple/1/0");
         }));
         it("Devrait rester a la route courante", fakeAsync(() => {
             const pathAvant: string = location.path();

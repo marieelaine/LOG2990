@@ -40,6 +40,34 @@ export class RoutesPartieMultiple extends ServiceWeb {
             await this.partieMultiple.requeteGetPartie(req, res);
         });
 
+        router.get("/getListeChannelsMultijoueur", async (req: Request, res: Response) => {
+            await this.partieMultiple.requeteGetlisteChannelsMultijoueur(req, res);
+        });
+
+        router.get("/getChannelIdMultiple", (req: Request, res: Response) => {
+            this.partieMultiple.requeteGetlisteChannelsMultijoueur(req, res);
+        });
+
+        router.post("/addChannelMultijoueurMultiple", (req: Request, res: Response) => {
+            this.partieMultiple.requeteAjouterChannelMultijoueur(req, res);
+        });
+
+        router.post("/joindrePartieMultijoueurMultiple", (req: Request, res: Response) => {
+            this.partieMultiple.requeteEnvoyerJoindreMultiple(req, res);
+        });
+
+        router.post("/differenceTrouveeMultijoueurMultiple", (req: Request, res: Response) => {
+            this.partieMultiple.requeteEnvoyerDiffTrouveeMultiple(req, res);
+        });
+
+        router.post("/partieTermineeMultijoueurMultiple", (req: Request, res: Response) => {
+            this.partieMultiple.requeteEnvoyerPartieMultipleTerminee(req, res);
+        });
+
+        router.post("/erreurMultijoueurMultiple", (req: Request, res: Response) => {
+            this.partieMultiple.requeteErreurMultiple(req, res);
+        });
+
         return router;
     }
 }

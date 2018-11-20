@@ -5,8 +5,15 @@ import {ActivatedRoute} from "@angular/router";
 import {PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
+<<<<<<< HEAD
 import { MatDialog } from "@angular/material";
 import { DialogFinPartieComponent } from "../dialog-fin-partie/dialog-fin-partie.component";
+=======
+import * as event from "../../../../../common/communication/evenementsSocket";
+import { SocketClientService } from "src/app/socket/socket-client.service";
+
+const NOMBRE_DIFF_MULTIJOUEUR_SIMPLE: number = 4;
+>>>>>>> multiplayer
 
 @Component({
     selector: "app-vue-simple",
@@ -18,10 +25,17 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
     public constructor(protected route: ActivatedRoute,
                        protected partieService: PartieService,
+<<<<<<< HEAD
                        protected cookieService: CookieService,
                        private dialog: MatDialog) {
         super(route, partieService, cookieService, true);
+=======
+                       protected socketClientService: SocketClientService,
+                       protected cookieService: CookieService) {
+        super(route, partieService, cookieService, socketClientService, true);
+>>>>>>> multiplayer
         this.differenceRestantes = constantes.DIFF_PARTIE_SIMPLE;
+        this.setSocketEvents();
     }
 
     protected ajouterTemps(temps: number): void {
@@ -43,15 +57,17 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         this.imageData.push(atob(String(this.partie["_image2"][0])));
     }
 
-    protected testerPourDiff(event: MouseEvent): void {
+    protected async testerPourDiff(ev: MouseEvent): Promise<void> {
         if (this.partieCommence && !this.penaliteEtat) {
-            const coords: string = event.offsetX + "," + event.offsetY;
+            const coords: string = ev.offsetX + "," + ev.offsetY;
             let i: number = 0;
             for (const diff of this.partie["_imageDiff"]) {
                 for (const pixel of diff) {
                     if (coords === pixel) {
                         if (!this.diffTrouvee[0].includes(i)) {
-                            this.differenceTrouver(i);
+                            this.isMultijoueur ?
+                                await this.partieService.differenceTrouveeMultijoueurSimple(this.channelId, i, this.joueurMultijoueur)
+                                : await this.differenceTrouver(i);
 
                             return;
                         }
@@ -59,14 +75,48 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                 }
                 i++;
             }
-            this.penalite(event);
+            await this.setPenalite(ev);
         }
     }
 
-    protected differenceTrouver(i: number): void {
+    protected async differenceTrouver(i: number): Promise<void> {
         this.diffTrouvee[0].push(i);
-        this.trouverDifference();
+        await this.trouverDifferenceSimple();
+        this.restaurationPixelsSimple(i);
+        this.ajouterMessageDiffTrouvee("");
+    }
 
+    private async setPenalite(ev: MouseEvent): Promise<void> {
+        if (this.isMultijoueur) {
+            await this.partieService.erreurMultijoueurSimple(this.channelId, this.joueurMultijoueur);
+        }
+        this.penalite(ev);
+    }
+
+    protected async differenceTrouverMultijoueurSimple(i: number, joueur: string): Promise<void> {
+        if (this.joueurMultijoueur === joueur) {
+            await this.trouverDifferenceSimple();
+        }
+        this.ajouterMessageDiffTrouvee(joueur);
+        this.diffTrouvee[0].push(i);
+        this.restaurationPixelsSimple(i);
+    }
+
+    protected async terminerPartieMultijoueurSimple(): Promise<void> {
+        if (this.differencesTrouvees === NOMBRE_DIFF_MULTIJOUEUR_SIMPLE) {
+            await this.partieService.partieMultijoueurSimpleTerminee(this.channelId, this.joueurMultijoueur);
+        }
+    }
+
+    protected async trouverDifferenceSimple(): Promise<void> {
+        if (this.partieCommence) {
+            this.augmenterDiffTrouvee();
+            this.jouerYesSound();
+        }
+        this.isMultijoueur ? await this.terminerPartieMultijoueurSimple() : this.terminerPartieSolo();
+    }
+
+    private restaurationPixelsSimple(i: number): void {
         const contextG: CanvasRenderingContext2D = this.canvas.toArray()[0].nativeElement.getContext("2d");
         const imageDataG: ImageData = contextG.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
         const dataG: Uint8ClampedArray = imageDataG.data;
@@ -87,11 +137,34 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         contextD.putImageData(imageDataD, 0, 0);
     }
 
+<<<<<<< HEAD
     protected ouvrirDialogFinPartie(): void {
         this.dialog.open(DialogFinPartieComponent, {
             height: "190px",
             width: "600px",
           });
+=======
+    private setSocketEvents(): void {
+        this.socketClientService.socket.on(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, (data) => {
+            if (this.channelId === data.channelId) {
+                this.differenceTrouverMultijoueurSimple(data.diff, data.joueur);
+            }
+        });
+
+        this.socketClientService.socket.on(event.PARTIE_SIMPLE_MULTIJOUEUR_TERMINEE, (data) => {
+            if (this.channelId === data.channelId) {
+                this.partieCommence = false;
+                this.terminerPartie(data.joueur);
+            }
+        });
+
+        this.socketClientService.socket.on(event.ERREUR_PARTIE_SIMPLE, (data) => {
+            if (this.channelId === data.channelId) {
+                this.isMultijoueur ? this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur par " + data.joueur)
+                : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur.");
+            }
+        });
+>>>>>>> multiplayer
     }
 
 }
