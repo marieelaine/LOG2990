@@ -5,15 +5,12 @@ import { PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
 import { PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
-<<<<<<< HEAD
 import { DialogFinPartieComponent } from "../dialog-fin-partie/dialog-fin-partie.component";
 import { MatDialog } from "@angular/material";
-=======
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 
 const NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE: number = 7;
->>>>>>> multiplayer
 
 @Component({
   selector: "app-vue-multiple",
@@ -27,15 +24,10 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
 
     public constructor(protected route: ActivatedRoute,
                        protected partieService: PartieService,
-<<<<<<< HEAD
+                       protected socketClientService: SocketClientService,
                        protected cookieService: CookieService,
                        protected dialog: MatDialog) {
-        super(route, partieService, cookieService, false);
-=======
-                       protected socketClientService: SocketClientService,
-                       protected cookieService: CookieService) {
         super(route, partieService, cookieService, socketClientService, false);
->>>>>>> multiplayer
         this.differenceRestantes = constantes.DIFF_PARTIE_MULTIPLE;
         this.setSocketEvents();
     }
@@ -124,7 +116,6 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         contextD.putImageData(imageDataD, 0, 0);
     }
 
-<<<<<<< HEAD
     protected ouvrirDialogFinPartie(): void {
         this.dialog.open(DialogFinPartieComponent, {
             height: "190px",
@@ -132,7 +123,6 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
           });
     }
 
-=======
     protected async terminerPartieMultijoueurMultiple(): Promise<void> {
         if (this.differencesTrouvees === NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE) {
             await this.partieService.partieMultijoueurMultipleTerminee(this.channelId, this.joueurMultijoueur);
@@ -184,5 +174,4 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
             }
         });
     }
->>>>>>> multiplayer
 }

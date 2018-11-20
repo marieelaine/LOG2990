@@ -5,15 +5,12 @@ import {ActivatedRoute} from "@angular/router";
 import {PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
-<<<<<<< HEAD
 import { MatDialog } from "@angular/material";
 import { DialogFinPartieComponent } from "../dialog-fin-partie/dialog-fin-partie.component";
-=======
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 
 const NOMBRE_DIFF_MULTIJOUEUR_SIMPLE: number = 4;
->>>>>>> multiplayer
 
 @Component({
     selector: "app-vue-simple",
@@ -25,15 +22,10 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
     public constructor(protected route: ActivatedRoute,
                        protected partieService: PartieService,
-<<<<<<< HEAD
+                       protected socketClientService: SocketClientService,
                        protected cookieService: CookieService,
                        private dialog: MatDialog) {
-        super(route, partieService, cookieService, true);
-=======
-                       protected socketClientService: SocketClientService,
-                       protected cookieService: CookieService) {
         super(route, partieService, cookieService, socketClientService, true);
->>>>>>> multiplayer
         this.differenceRestantes = constantes.DIFF_PARTIE_SIMPLE;
         this.setSocketEvents();
     }
@@ -137,13 +129,13 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         contextD.putImageData(imageDataD, 0, 0);
     }
 
-<<<<<<< HEAD
     protected ouvrirDialogFinPartie(): void {
         this.dialog.open(DialogFinPartieComponent, {
             height: "190px",
             width: "600px",
           });
-=======
+    }
+
     private setSocketEvents(): void {
         this.socketClientService.socket.on(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, (data) => {
             if (this.channelId === data.channelId) {
@@ -164,7 +156,6 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                 : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur.");
             }
         });
->>>>>>> multiplayer
     }
 
 }

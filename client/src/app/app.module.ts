@@ -44,13 +44,7 @@ import { DialogErreurComponent } from "./admin/dialog-erreur/dialog-erreur.compo
 import { DialogVueAttenteComponent } from "./liste-parties/dialog-vue-attente/dialog-vue-attente.component";
 import { ChatComponent } from "./chat/chat.component";
 import { VueSimpleComponent } from "./partie/vue-simple/vue-simple.component";
-<<<<<<< HEAD
-import {
-    PartieMultipleMultijoueurComponent
-} from "./partie/vue-multiple/partie-multiple-multijoueur/partie-multiple-multijoueur.component";
-import { DialogFinPartieComponent } from './partie/dialog-fin-partie/dialog-fin-partie.component';
-=======
->>>>>>> multiplayer
+import { DialogFinPartieComponent } from "./partie/dialog-fin-partie/dialog-fin-partie.component";
 
 const config: SocketIoConfig = { url: "http://localhost:4200", options: {} };
 
@@ -83,11 +77,7 @@ const appRoutes: Routes = [
         DialogVueAttenteComponent,
         ChatComponent,
         VueSimpleComponent,
-<<<<<<< HEAD
-        PartieMultipleMultijoueurComponent,
         DialogFinPartieComponent,
-=======
->>>>>>> multiplayer
     ],
     imports: [
         RouterModule.forRoot(
@@ -128,7 +118,8 @@ const appRoutes: Routes = [
         DialogMultipleComponent,
         DialogConfirmationComponent,
         DialogErreurComponent,
-        DialogVueAttenteComponent
+        DialogVueAttenteComponent,
+        DialogFinPartieComponent
     ],
 })
 export class AppModule { }

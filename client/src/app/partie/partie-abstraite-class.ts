@@ -124,16 +124,12 @@ export abstract class PartieAbstraiteClass {
 
     protected partieSoloTerminee(): void {
         this.chrono.stopTimer();
-<<<<<<< HEAD
         this.messageDifferences = "";
         this.ouvrirDialogFinPartie();
         this.audio.src = "../assets/applause.mp3";
         this.audio.load();
         this.audio.play().catch(() => ErrorHandler);
-=======
-        this.messageDifferences = "FÉLICITATIONS!";
         this.joueurApplaudissements();
->>>>>>> multiplayer
         this.ajouterTemps(this.chrono.getTime());
     }
 
