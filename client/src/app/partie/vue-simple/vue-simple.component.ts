@@ -25,8 +25,8 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                        protected partieService: PartieService,
                        protected socketClientService: SocketClientService,
                        protected cookieService: CookieService,
-                       private dialog: MatDialog) {
-        super(route, partieService, cookieService, socketClientService, true);
+                       protected dialog: MatDialog) {
+        super(route, partieService, cookieService, socketClientService, dialog, true);
         this.differenceRestantes = constantes.DIFF_PARTIE_SIMPLE;
         this.setSocketEvents();
     }
@@ -127,13 +127,6 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
             dataD[dim + constantes.RGB_SECOND_INCREMENT] = dataG[dim + constantes.RGB_SECOND_INCREMENT];
         }
         contextD.putImageData(imageDataD, 0, 0);
-    }
-
-    protected ouvrirDialogFinPartie(): void {
-        this.dialog.open(DialogFinPartieComponent, {
-            height: "190px",
-            width: "600px",
-          });
     }
 
     private setSocketEvents(): void {
