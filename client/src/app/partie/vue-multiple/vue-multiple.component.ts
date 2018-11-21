@@ -28,7 +28,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                        protected socketClientService: SocketClientService,
                        protected cookieService: CookieService,
                        protected dialog: MatDialog) {
-        super(route, partieService, cookieService, socketClientService, false);
+        super(route, partieService, cookieService, socketClientService, dialog, false);
         this.differenceRestantes = constantes.DIFF_PARTIE_MULTIPLE;
         this.setSocketEvents();
     }
@@ -114,13 +114,6 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
             dataD[dim + constantes.RGB_SECOND_INCREMENT] = dataG[dim + constantes.RGB_SECOND_INCREMENT];
         }
         contextD.putImageData(imageDataD, 0, 0);
-    }
-
-    protected ouvrirDialogFinPartie(): void {
-        this.dialog.open(DialogFinPartieComponent, {
-            height: "190px",
-            width: "600px",
-          });
     }
 
     protected async terminerPartieMultijoueurMultiple(): Promise<void> {
