@@ -9,6 +9,8 @@ import {CookieService} from "ngx-cookie-service";
 import { TempsUser } from "../admin/temps-user";
 import * as constantes from "../constantes";
 import { SocketClientService } from "../socket/socket-client.service";
+import { MatDialog } from "@angular/material";
+import { DialogFinPartieComponent } from "./dialog-fin-partie/dialog-fin-partie.component";
 
 const MINUTESANDSECONDCONVERT: number = 10;
 const TIMEOUT: number = 1000;
@@ -43,6 +45,7 @@ export abstract class PartieAbstraiteClass {
                        protected partieService: PartieService,
                        protected cookieService: CookieService,
                        protected socketClientService: SocketClientService,
+                       protected dialog: MatDialog,
                        isSimple: boolean) {
         this.partieCommence = false;
         this.differencesTrouvees = 0;
@@ -66,7 +69,13 @@ export abstract class PartieAbstraiteClass {
 
     protected abstract ajouterTemps(partieID: string, tempsUser: TempsUser, isSolo: boolean): void;
 
-    protected abstract ouvrirDialogFinPartie(): void;
+    protected ouvrirDialogFinPartie(msg: string): void {
+        this.dialog.open(DialogFinPartieComponent, {
+            height: "190px",
+            width: "600px",
+            data : { message: this.messageDifferences }
+          });
+    }
 
     protected commencerPartie(): void {
         this.partieCommence = true;
@@ -120,14 +129,14 @@ export abstract class PartieAbstraiteClass {
             this.messageDifferences = "PUTAIN T'AS PERDU MEC!";
             this.joueurLoserSound();
         }
+        this.ouvrirDialogFinPartie(this.messageDifferences);
     }
 
     protected partieSoloTerminee(): void {
         this.chrono.stopTimer();
         const tempsUser: TempsUser =  new TempsUser(this.cookieService.get("username"), this.chrono.getTime());
         this.messageDifferences = "FÉLICITATIONS!";
-        this.messageDifferences = "";
-        this.ouvrirDialogFinPartie();
+        this.ouvrirDialogFinPartie(this.messageDifferences);
         this.audio.src = "../assets/applause.mp3";
         this.audio.load();
         this.audio.play().catch(() => ErrorHandler);
