@@ -1,6 +1,7 @@
 import { Component, ViewContainerRef } from "@angular/core";
 import { SocketClientService } from "./socket/socket-client.service";
 import * as event from "../../../common/communication/evenementsSocket";
+import { NotifierService } from "angular-notifier";
 
 @Component({
   selector: "app-root",
@@ -8,10 +9,13 @@ import * as event from "../../../common/communication/evenementsSocket";
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
+    private readonly notifier: NotifierService;
+
     public constructor(
       protected socketClientService: SocketClientService,
-      private notifierService: NotifierService,
+      notifier: NotifierService
       ) {
+      this.notifier = notifier;
       this.setSocketEvents();
      }
 
@@ -25,6 +29,7 @@ export class AppComponent {
     }
 
     private afficherNotification(): void {
+      this.notifier.notify( "success", "You are awesome! I mean it!" );
       // tslint:disable-next-line:no-console
       console.log("hey");
     }
