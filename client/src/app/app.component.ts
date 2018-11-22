@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewContainerRef } from "@angular/core";
 import { SocketClientService } from "./socket/socket-client.service";
 import * as event from "../../../common/communication/evenementsSocket";
 
@@ -8,7 +8,9 @@ import * as event from "../../../common/communication/evenementsSocket";
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
-    public constructor(protected socketClientService: SocketClientService) {
+    public constructor(
+      protected socketClientService: SocketClientService,
+      ) {
       this.setSocketEvents();
      }
 
@@ -16,12 +18,13 @@ export class AppComponent {
     public message: string;
 
     private setSocketEvents(): void {
-      this.socketClientService.socket.on(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, (data) => {
-          this.afficherNotification(data.diff, data.joueur);
+      this.socketClientService.socket.on(event.ENVOYER_PARTIE_SIMPLE_ATTENTE, (data) => {
+          this.afficherNotification();
       });
     }
 
     private afficherNotification(): void {
-      
+      // tslint:disable-next-line:no-console
+      console.log("hey");
     }
 }

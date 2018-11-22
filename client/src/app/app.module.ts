@@ -111,7 +111,8 @@ const appRoutes: Routes = [
         PartieSimpleService,
         PartieMultipleService,
         SocketClientService,
-        ListePartieServiceService],
+        ListePartieServiceService,
+    ],
     bootstrap: [AppComponent],
     entryComponents: [
         DialogSimpleComponent,
@@ -119,7 +120,7 @@ const appRoutes: Routes = [
         DialogConfirmationComponent,
         DialogErreurComponent,
         DialogVueAttenteComponent,
-        DialogFinPartieComponent
+        DialogFinPartieComponent,
     ],
 })
 export class AppModule { }
