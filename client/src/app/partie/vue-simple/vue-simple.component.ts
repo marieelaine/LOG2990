@@ -6,7 +6,6 @@ import {PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
 import { MatDialog } from "@angular/material";
-import { DialogFinPartieComponent } from "../dialog-fin-partie/dialog-fin-partie.component";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import { TempsUser } from "src/app/admin/temps-user";
