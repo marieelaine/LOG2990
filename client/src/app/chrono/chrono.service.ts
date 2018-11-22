@@ -17,15 +17,7 @@ export class ChronoService {
         this.running = false;
     }
 
-    protected getSecondsSrtring(): string {
-        return (this.time % NB_SECONDES < DISPLAY) ? "0" + this.time % NB_SECONDES : this.time % NB_SECONDES + "";
-    }
-
-    protected getMinutesString(): string {
-        return (this.time / NB_SECONDES < DISPLAY) ? "0" + Math.floor(this.time / NB_SECONDES) : Math.floor(this.time / NB_SECONDES) + "";
-    }
-
-    protected reset(): void {
+    public reset(): void {
         this.time = 0;
         this.running = false;
         clearInterval(this.interval);
@@ -45,5 +37,13 @@ export class ChronoService {
             this.interval = setInterval(() => { this.time++; }, UNE_SECONDE);
             this.running = true;
         }
+    }
+
+    protected getSecondsSrtring(): string {
+        return (this.time % NB_SECONDES < DISPLAY) ? "0" + this.time % NB_SECONDES : this.time % NB_SECONDES + "";
+    }
+
+    protected getMinutesString(): string {
+        return (this.time / NB_SECONDES < DISPLAY) ? "0" + Math.floor(this.time / NB_SECONDES) : Math.floor(this.time / NB_SECONDES) + "";
     }
 }
