@@ -1,3 +1,4 @@
+import {ChronoComponent} from "../chrono/chrono.component";
 import {ChronoService} from "../chrono/chrono.service";
 import {ElementRef, ErrorHandler, QueryList, ViewChildren, ViewChild} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
