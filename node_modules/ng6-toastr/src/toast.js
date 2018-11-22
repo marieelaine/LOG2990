@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Toast = (function () {
+var Toast = /** @class */ (function () {
     function Toast(type, message, title, data) {
         this.type = type;
         this.message = message;
