@@ -1,14 +1,14 @@
-import { ChronoComponent } from "../chrono/chrono.component";
+import {ChronoService} from "../chrono/chrono.service";
 import {ElementRef, ErrorHandler, QueryList, ViewChildren, ViewChild} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {PartieService} from "./partie.service";
-import { PartieSimple } from "../admin/dialog-simple/partie-simple";
-import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
-import { ChatComponent } from "../chat/chat.component";
+import {PartieSimple} from "../admin/dialog-simple/partie-simple";
+import {PartieMultiple} from "../admin/dialog-multiple/partie-multiple";
+import {ChatComponent} from "../chat/chat.component";
 import {CookieService} from "ngx-cookie-service";
-import { TempsUser } from "../admin/temps-user";
+import {TempsUser} from "../admin/temps-user";
 import * as constantes from "../constantes";
-import { SocketClientService } from "../socket/socket-client.service";
+import {SocketClientService} from "../socket/socket-client.service";
 
 const MINUTESANDSECONDCONVERT: number = 10;
 const TIMEOUT: number = 1000;
@@ -21,7 +21,6 @@ export abstract class PartieAbstraiteClass {
     @ViewChildren("canvas") protected canvas: QueryList<ElementRef>;
     @ViewChild(ChatComponent) protected chat: ChatComponent;
 
-    protected chrono: ChronoComponent;
     protected messageDifferences: string;
     protected differencesTrouvees: number;
     protected partieCommence: boolean;
@@ -42,11 +41,11 @@ export abstract class PartieAbstraiteClass {
     public constructor(protected route: ActivatedRoute,
                        protected partieService: PartieService,
                        protected cookieService: CookieService,
+                       protected chrono: ChronoService,
                        protected socketClientService: SocketClientService,
                        isSimple: boolean) {
         this.partieCommence = false;
         this.differencesTrouvees = 0;
-        this.chrono = new ChronoComponent();
         this.messageDifferences = "Chargement des images";
         this.chat = new ChatComponent();
         this.imageData = [];
@@ -54,6 +53,7 @@ export abstract class PartieAbstraiteClass {
         this.audio = new Audio();
         this.penaliteEtat = false;
 
+        this.chrono.reset();
         this.setImage(isSimple);
         this.setID();
         this.setIsMultijoueur();
@@ -84,7 +84,7 @@ export abstract class PartieAbstraiteClass {
         let hex: number = 0x00;
         const result: Uint8Array = new Uint8Array(data.length);
 
-        for (let i: number  = 0; i < data.length; i++) {
+        for (let i: number = 0; i < data.length; i++) {
             hex = data.charCodeAt(i);
             result[i] = hex;
         }
@@ -99,7 +99,7 @@ export abstract class PartieAbstraiteClass {
 
     protected ajouterMessageDiffTrouvee(joueur: string): void {
         this.isMultijoueur ? this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Différence trouvée par " + joueur)
-                           : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Différence trouvée.");
+            : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Différence trouvée.");
     }
 
     protected terminerPartie(gagnant: string): void {
@@ -128,19 +128,19 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected updateTableauTempsSolo(temps: number): void {
-      let joueur: string = this.cookieService.get("username");
-      if (joueur === "") {
-          joueur = "Anonyme";
-      }
-      if (temps < this.partie["_tempsSolo"][PARTIE_SECOND_ELEMENT]["_temps"]) {
-        const tempsUser: TempsUser =  new TempsUser(joueur, temps);
-        this.partie["_tempsSolo"].splice(-1, 1);
-        this.partie["_tempsSolo"].push(tempsUser);
-      }
+        let joueur: string = this.cookieService.get("username");
+        if (joueur === "") {
+            joueur = "Anonyme";
+        }
+        if (temps < this.partie["_tempsSolo"][PARTIE_SECOND_ELEMENT]["_temps"]) {
+            const tempsUser: TempsUser = new TempsUser(joueur, temps);
+            this.partie["_tempsSolo"].splice(-1, 1);
+            this.partie["_tempsSolo"].push(tempsUser);
+        }
     }
 
     protected augmenterDiffTrouvee(): void {
-        this.differencesTrouvees ++;
+        this.differencesTrouvees++;
         this.messageDifferences = `Vous avez trouvé ${this.differencesTrouvees} différences`;
     }
 
@@ -181,7 +181,7 @@ export abstract class PartieAbstraiteClass {
         setTimeout(() => {
             ctx.putImageData(imageSaved, 0, 0);
             this.penaliteEtat = false;
-        },         TIMEOUT);
+        }, TIMEOUT);
     }
 
     protected getCurrentTime(): string {
@@ -236,6 +236,6 @@ export abstract class PartieAbstraiteClass {
 
     private setJoueurMultijoueur(): void {
         this.cookieService.get("username") === "" ? this.joueurMultijoueur = "Anonyme"
-                                                  : this.joueurMultijoueur = this.cookieService.get("username");
+            : this.joueurMultijoueur = this.cookieService.get("username");
     }
 }

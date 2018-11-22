@@ -7,6 +7,7 @@ import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
+import { ChronoService} from "../../chrono/chrono.service";
 
 const NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE: number = 7;
 
@@ -23,8 +24,9 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     public constructor(protected route: ActivatedRoute,
                        protected partieService: PartieService,
                        protected socketClientService: SocketClientService,
-                       protected cookieService: CookieService) {
-        super(route, partieService, cookieService, socketClientService, false);
+                       protected cookieService: CookieService,
+                       protected chrono: ChronoService) {
+        super(route, partieService, cookieService, chrono, socketClientService, false);
         this.differenceRestantes = constantes.DIFF_PARTIE_MULTIPLE;
         this.setSocketEvents();
     }
