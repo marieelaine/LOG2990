@@ -23,7 +23,6 @@ import {
     MatCheckboxModule
 } from "@angular/material";
 import { ListePartiesComponent } from "./liste-parties/liste-parties.component";
-import { ChronoComponent } from "./chrono/chrono.component";
 import { HeaderComponent } from "./common/header/header.component";
 import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
 import { AdminComponent } from "./admin/admin.component";
@@ -52,7 +51,6 @@ const appRoutes: Routes = [
     { path: "header", component: HeaderComponent },
     { path: "admin", component: AdminComponent },
     { path: "liste-parties", component: ListePartiesComponent },
-    { path: "chrono", component: ChronoComponent },
     { path: "partie-simple/:idPartie/:channelId", component: VueSimpleComponent },
     { path: "partie-multiple/:idPartie/:channelId", component: VueMultipleComponent },
 ];
@@ -65,7 +63,6 @@ const appRoutes: Routes = [
         AdminComponent,
         ListePartiesComponent,
         LoginFormComponent,
-        ChronoComponent,
         ListePartieSimpleComponent,
         ListePartieMultipleComponent,
         DialogSimpleComponent,
