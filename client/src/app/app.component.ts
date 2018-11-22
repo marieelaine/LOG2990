@@ -10,6 +10,7 @@ import * as event from "../../../common/communication/evenementsSocket";
 export class AppComponent {
     public constructor(
       protected socketClientService: SocketClientService,
+      private notifierService: NotifierService,
       ) {
       this.setSocketEvents();
      }
