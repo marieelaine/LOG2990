@@ -1,12 +1,15 @@
 import { assert } from "chai";
 import { DBUser } from "./DB-user";
+import { SocketServerService } from "../socket-io.service";
+
 
 describe("BaseDeDonneesUsager classe", () => {
     describe("Constructeur", () => {
         let user: DBUser;
+        const socket: SocketServerService = new SocketServerService();
 
         beforeEach(() => {
-            user = new DBUser();
+            user = new DBUser(socket);
         });
 
         describe("Constructeur", () => {
