@@ -3,6 +3,8 @@ import { SocketClientService } from "./socket/socket-client.service";
 import * as event from "../../../common/communication/evenementsSocket";
 import { NotifierService } from "angular-notifier";
 
+const MINUTESANDSECONDCONVERT: number = 10;
+
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -34,10 +36,28 @@ export class AppComponent {
     }
 
     private afficherNotificationConnection(joueur: string): void {
-      this.notifier.notify( "success", joueur + " s'est connecté" );
+      const temps: string = this.getCurrentTime();
+      this.notifier.notify( "success", temps + " - " + joueur + " s'est connecté" );
     }
 
     private afficherNotificationDeconnection(joueur: string): void {
-      this.notifier.notify( "warning", joueur + " s'est déconnecté" );
+      const temps: string = this.getCurrentTime();
+      this.notifier.notify( "warning", temps + " - " + joueur + " s'est déconnecté" );
     }
+
+    private getCurrentTime(): string {
+      const date: Date = new Date();
+
+      return date.getHours() + ":" + this.getMinutes(date) + ":" + this.getSeconds(date);
+  }
+
+    private getMinutes(date: Date): string {
+
+      return date.getMinutes() < MINUTESANDSECONDCONVERT ? "0" + date.getMinutes().toString() : date.getMinutes().toString();
+}
+
+    private getSeconds(date: Date): string {
+
+    return date.getSeconds() < MINUTESANDSECONDCONVERT ? "0" + date.getSeconds().toString() : date.getSeconds().toString();
+  }
 }
