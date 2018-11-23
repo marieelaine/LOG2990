@@ -9,11 +9,8 @@ import { DialogFinPartieComponent } from "../dialog-fin-partie/dialog-fin-partie
 import { MatDialog } from "@angular/material";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
-<<<<<<< HEAD
 import { ChronoService} from "../../chrono/chrono.service";
-=======
 import { TempsUser } from "src/app/admin/temps-user";
->>>>>>> toastr
 
 const NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE: number = 7;
 
@@ -31,13 +28,9 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                        protected partieService: PartieService,
                        protected socketClientService: SocketClientService,
                        protected cookieService: CookieService,
-<<<<<<< HEAD
-                       protected chrono: ChronoService) {
-        super(route, partieService, cookieService, chrono, socketClientService, false);
-=======
+                       protected chrono: ChronoService,
                        protected dialog: MatDialog) {
-        super(route, partieService, cookieService, socketClientService, dialog, false);
->>>>>>> toastr
+        super(route, partieService, cookieService, chrono, socketClientService, dialog, false);
         this.differenceRestantes = constantes.DIFF_PARTIE_MULTIPLE;
         this.setSocketEvents();
     }

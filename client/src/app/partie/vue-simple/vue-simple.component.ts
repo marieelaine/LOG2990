@@ -8,11 +8,8 @@ import * as constantes from "../../constantes";
 import { MatDialog } from "@angular/material";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
-<<<<<<< HEAD
 import {ChronoService} from "../../chrono/chrono.service";
-=======
 import { TempsUser } from "src/app/admin/temps-user";
->>>>>>> toastr
 
 const NOMBRE_DIFF_MULTIJOUEUR_SIMPLE: number = 4;
 
@@ -28,13 +25,9 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                        protected partieService: PartieService,
                        protected socketClientService: SocketClientService,
                        protected cookieService: CookieService,
-<<<<<<< HEAD
-                       protected chrono: ChronoService) {
-        super(route, partieService, cookieService, chrono, socketClientService, true);
-=======
+                       protected chrono: ChronoService,
                        protected dialog: MatDialog) {
-        super(route, partieService, cookieService, socketClientService, dialog, true);
->>>>>>> toastr
+        super(route, partieService, cookieService, chrono, socketClientService, dialog, true);
         this.differenceRestantes = constantes.DIFF_PARTIE_SIMPLE;
         this.setSocketEvents();
     }
