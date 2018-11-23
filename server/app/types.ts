@@ -15,6 +15,9 @@ export default  {
         RoutesPartieMultiple: Symbol("RoutesPartieMultiple"),
         PartieMultiple: Symbol("PartieMultiple"),
 
+        PartieMultipleMultijoueur: Symbol("PartieMultipleMultijoueur"),
+        PartieSimpleMultijoueur: Symbol("PartieSimpleMultijoueur"),
+
         DBUser: Symbol("DBUser"),
 
         SocketServerService: Symbol("SocketServerService"),

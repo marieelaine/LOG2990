@@ -13,6 +13,8 @@ import { RoutesPartieSimple } from "./partieSimple/routes-partie-simples/routes-
 import { RoutesPartieSimpleAttente } from "./partieSimple/partie-simple-attente/partie-simple-attente";
 import { RoutesUser } from "./user/routes-user";
 import { RoutesPartieMultipleAttente } from "./partieMultiple/partie-multiple-attente/partie-multiple-attente";
+import { PartieSimpleMultijoueur } from "./partieSimple/partie-simple-multijoueur/partie-simple-multijoueur";
+import { PartieMultipleMultijoueur } from "./partieMultiple/partie-multiple-multijoueur/partie-multiple-multijoueur";
 
 @injectable()
 export class Application {
@@ -24,6 +26,8 @@ export class Application {
                        @inject(Types.RoutesPartieMultiple) private partieMultiple: RoutesPartieMultiple,
                        @inject(Types.RoutesPartieSimpleAttente) private partieSimpleAttente: RoutesPartieSimpleAttente,
                        @inject(Types.RoutesPartieMultipleAttente) private partieMultipleAttente: RoutesPartieMultipleAttente,
+                       @inject(Types.PartieSimpleMultijoueur) private partieSimpleMultijoueur: PartieSimpleMultijoueur,
+                       @inject(Types.PartieMultipleMultijoueur) private partieMultipleMultijoueur: PartieMultipleMultijoueur,
                        @inject(Types.RoutesUser) private routeDbUser: RoutesUser) {
         this.app = express();
 
@@ -48,6 +52,8 @@ export class Application {
         this.ajouterService(this.partieMultiple);
         this.ajouterService(this.partieSimpleAttente);
         this.ajouterService(this.partieMultipleAttente);
+        this.ajouterService(this.partieSimpleMultijoueur);
+        this.ajouterService(this.partieMultipleMultijoueur);
         this.ajouterService(this.routeDbUser);
 
         this.errorHandeling();
