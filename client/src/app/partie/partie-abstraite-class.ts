@@ -9,7 +9,9 @@ import {ChatComponent} from "../chat/chat.component";
 import {CookieService} from "ngx-cookie-service";
 import {TempsUser} from "../admin/temps-user";
 import * as constantes from "../constantes";
-import {SocketClientService} from "../socket/socket-client.service";
+import { SocketClientService } from "../socket/socket-client.service";
+import { MatDialog } from "@angular/material";
+import { DialogFinPartieComponent } from "./dialog-fin-partie/dialog-fin-partie.component";
 
 const MINUTESANDSECONDCONVERT: number = 10;
 const TIMEOUT: number = 1000;
@@ -44,6 +46,7 @@ export abstract class PartieAbstraiteClass {
                        protected cookieService: CookieService,
                        protected chrono: ChronoService,
                        protected socketClientService: SocketClientService,
+                       protected dialog: MatDialog,
                        isSimple: boolean) {
         this.partieCommence = false;
         this.differencesTrouvees = 0;
@@ -65,7 +68,15 @@ export abstract class PartieAbstraiteClass {
 
     protected abstract getImageData(): void;
 
-    protected abstract ajouterTemps(temps: number): void;
+    protected abstract ajouterTemps(partieID: string, tempsUser: TempsUser, isSolo: boolean): void;
+
+    protected ouvrirDialogFinPartie(msg: string): void {
+        this.dialog.open(DialogFinPartieComponent, {
+            height: "190px",
+            width: "600px",
+            data : { message: this.messageDifferences }
+          });
+    }
 
     protected commencerPartie(): void {
         this.partieCommence = true;
@@ -112,20 +123,26 @@ export abstract class PartieAbstraiteClass {
 
         if (this.joueurMultijoueur === gagnant) {
             this.messageDifferences = "FÉLICITATIONS, VOUS AVEZ GAGNÉ!";
+            const tempsUser: TempsUser =  new TempsUser(gagnant, this.chrono.getTime());
             this.joueurApplaudissements();
-            // tslint:disable-next-line:no-suspicious-comment
-            // TODO: Ajouter les temps multijoueur
+            this.ajouterTemps(this.partieID, tempsUser, false);
         } else {
             this.messageDifferences = "PUTAIN T'AS PERDU MEC!";
             this.joueurLoserSound();
         }
+        this.ouvrirDialogFinPartie(this.messageDifferences);
     }
 
     protected partieSoloTerminee(): void {
         this.chrono.stopTimer();
+        const tempsUser: TempsUser =  new TempsUser(this.cookieService.get("username"), this.chrono.getTime());
         this.messageDifferences = "FÉLICITATIONS!";
+        this.ouvrirDialogFinPartie(this.messageDifferences);
+        this.audio.src = "../assets/applause.mp3";
+        this.audio.load();
+        this.audio.play().catch(() => ErrorHandler);
         this.joueurApplaudissements();
-        this.ajouterTemps(this.chrono.getTime());
+        this.ajouterTemps(this.partieID, tempsUser, true);
     }
 
     protected updateTableauTempsSolo(temps: number): void {
@@ -182,7 +199,7 @@ export abstract class PartieAbstraiteClass {
         setTimeout(() => {
             ctx.putImageData(imageSaved, 0, 0);
             this.penaliteEtat = false;
-        }, TIMEOUT);
+        },         TIMEOUT);
     }
 
     protected getCurrentTime(): string {

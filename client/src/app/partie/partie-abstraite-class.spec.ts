@@ -9,6 +9,7 @@ import { TempsUser } from "../admin/temps-user";
 import { CookieServiceMock } from "../../testing/cookieMock";
 import { SocketClientMock } from "src/testing/socketMock";
 import { ChronoService} from "../chrono/chrono.service";
+import { MatDialogMock } from "src/testing/mat-dialog-mock";
 
 const ONE_SECOND_TIMER: number = 1000;
 const TWO_SECONDS_TIMER: number = 2000;
@@ -24,7 +25,7 @@ class PartieServiceMock extends PartieService {
 
 class AbstractClassInstance extends PartieAbstraiteClass {
     protected partie: PartieSimple | PartieMultiple;
-    protected ajouterTemps(temps: number): void {}
+    protected ajouterTemps(partieID: string, tempsUser: TempsUser, isSolo: boolean): void {}
     protected setPartie(): void {}
     protected getImageData(): void {}
 }
@@ -33,8 +34,11 @@ describe("PartieAbstraiteComponent", () => {
     let component: AbstractClassInstance;
     beforeEach(() => {
     component = new AbstractClassInstance(new ActivatedRouteMock(), new PartieServiceMock(),
-                                          new CookieServiceMock(), new ChronoService, new SocketClientMock(), true);
-    component["partie"] = new PartieSimple ("nomPartie", new Array<TempsUser>(), new Array<TempsUser>(), Buffer.from(new Array<number>()),
+                                          new CookieServiceMock(), new ChronoService, new SocketClientMock(),
+                                          new MatDialogMock(), true);
+
+    component["partie"] = new PartieSimple ("nomPartie", new Array<TempsUser>(), new Array<TempsUser>(),
+                                            Buffer.from(new Array<number>()),
                                             Buffer.from(new Array<number>()), new Array<Array<string>>(), "");
     });
 

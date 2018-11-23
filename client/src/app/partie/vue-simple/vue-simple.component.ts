@@ -5,9 +5,14 @@ import {ActivatedRoute} from "@angular/router";
 import {PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
+import { MatDialog } from "@angular/material";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
+<<<<<<< HEAD
 import {ChronoService} from "../../chrono/chrono.service";
+=======
+import { TempsUser } from "src/app/admin/temps-user";
+>>>>>>> toastr
 
 const NOMBRE_DIFF_MULTIJOUEUR_SIMPLE: number = 4;
 
@@ -23,15 +28,19 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                        protected partieService: PartieService,
                        protected socketClientService: SocketClientService,
                        protected cookieService: CookieService,
+<<<<<<< HEAD
                        protected chrono: ChronoService) {
         super(route, partieService, cookieService, chrono, socketClientService, true);
+=======
+                       protected dialog: MatDialog) {
+        super(route, partieService, cookieService, socketClientService, dialog, true);
+>>>>>>> toastr
         this.differenceRestantes = constantes.DIFF_PARTIE_SIMPLE;
         this.setSocketEvents();
     }
 
-    protected ajouterTemps(temps: number): void {
-        this.updateTableauTempsSolo(temps);
-        this.partieService.reinitialiserTempsPartieSimple(this.partieID, this.partie["_tempsSolo"], this.partie["_tempsUnContreUn"])
+    protected async ajouterTemps(partieID: string, joueur: TempsUser, isSolo: boolean): Promise<void> {
+        await this.partieService.addTempsPartieSimple(partieID, joueur, isSolo)
             .catch(() => ErrorHandler);
     }
 

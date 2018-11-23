@@ -97,4 +97,16 @@ export class SocketServerService {
     public erreurMultiple(channelId: string, joueur: string, ev: MouseEvent): void {
         this.io.emit(event.ERREUR_PARTIE_MULTIPLE, {channelId: channelId, joueur: joueur, ev: ev});
     }
+
+    public connectionUser(joueur: string): void {
+        this.io.emit(event.CONNECTION_USER, {joueur: joueur});
+    }
+
+    public deconnectionUser(joueur: string): void {
+        this.io.emit(event.DECONNECTION_USER, {joueur: joueur});
+    }
+
+    public meilleurTemps(joueur: string, partie: string): void {
+        this.io.emit(event.MEILLEUR_TEMPS, {joueur: joueur, partie: partie});
+    }
 }

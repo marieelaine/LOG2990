@@ -44,6 +44,9 @@ import { DialogErreurComponent } from "./admin/dialog-erreur/dialog-erreur.compo
 import { DialogVueAttenteComponent } from "./liste-parties/dialog-vue-attente/dialog-vue-attente.component";
 import { ChatComponent } from "./chat/chat.component";
 import { VueSimpleComponent } from "./partie/vue-simple/vue-simple.component";
+import { DialogFinPartieComponent } from "./partie/dialog-fin-partie/dialog-fin-partie.component";
+import { NotifierService, NotifierModule } from "angular-notifier";
+import { NotifierQueueService } from "angular-notifier/src/services/notifier-queue.service";
 
 const config: SocketIoConfig = { url: "http://localhost:4200", options: {} };
 
@@ -76,6 +79,7 @@ const appRoutes: Routes = [
         DialogVueAttenteComponent,
         ChatComponent,
         VueSimpleComponent,
+        DialogFinPartieComponent,
     ],
     imports: [
         RouterModule.forRoot(
@@ -101,6 +105,7 @@ const appRoutes: Routes = [
         MatInputModule,
         ParticlesModule,
         SocketIoModule.forRoot(config),
+        NotifierModule
     ],
     providers: [
         BasicService,
@@ -109,14 +114,17 @@ const appRoutes: Routes = [
         PartieSimpleService,
         PartieMultipleService,
         SocketClientService,
-        ListePartieServiceService],
+        ListePartieServiceService,
+        NotifierService,
+    ],
     bootstrap: [AppComponent],
     entryComponents: [
         DialogSimpleComponent,
         DialogMultipleComponent,
         DialogConfirmationComponent,
         DialogErreurComponent,
-        DialogVueAttenteComponent
+        DialogVueAttenteComponent,
+        DialogFinPartieComponent,
     ],
 })
 export class AppModule { }

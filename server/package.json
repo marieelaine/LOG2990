@@ -37,6 +37,7 @@
     "npm": "^6.4.1",
     "python-shell": "^1.0.6",
     "reflect-metadata": "^0.1.10",
+    "rxjs": "^6.3.3",
     "serve-favicon": "^2.5.0",
     "sinon": "^6.3.4",
     "socket.io": "^2.1.1",
