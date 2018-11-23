@@ -23,14 +23,21 @@ export class AppComponent {
     public message: string;
 
     private setSocketEvents(): void {
-      this.socketClientService.socket.on(event.ENVOYER_PARTIE_SIMPLE_ATTENTE, (data) => {
-          this.afficherNotification();
+      this.socketClientService.socket.on(event.CONNECTION_USER, (data) => {
+          this.afficherNotificationConnection(data.joueur);
       });
+
+      this.socketClientService.socket.on(event.DECONNECTION_USER, (data) => {
+        this.afficherNotificationDeconnection(data.joueur);
+      });
+
     }
 
-    private afficherNotification(): void {
-      this.notifier.notify( "success", "You are awesome! I mean it!" );
-      // tslint:disable-next-line:no-console
-      console.log("hey");
+    private afficherNotificationConnection(joueur: string): void {
+      this.notifier.notify( "success", joueur + " s'est connecté" );
+    }
+
+    private afficherNotificationDeconnection(joueur: string): void {
+      this.notifier.notify( "warning", joueur + " s'est déconnecté" );
     }
 }

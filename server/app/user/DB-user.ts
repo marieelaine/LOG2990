@@ -2,9 +2,11 @@ import { Schema, Model, Document } from "mongoose";
 import { Request, Response } from "express";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
-import { injectable } from "inversify";
+import { injectable, inject } from "inversify";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import { HTTP_NOT_IMPLEMENTED, HTTP_CREATED } from "../constantes";
+import { SocketServerService } from "../socket-io.service";
+import Types from "../types";
 
 interface Usager {
     _id: string;
@@ -18,7 +20,9 @@ export class DBUser {
     private modelUser: Model<Document>;
     private schema: Schema;
 
-    public constructor() {
+    public constructor(
+        @inject(Types.SocketServerService) private socket: SocketServerService
+    ) {
         this.baseDeDonnees = new BaseDeDonnees();
         this.schema = new Schema({
             _username: {
@@ -48,6 +52,7 @@ export class DBUser {
         const usager: Document = new this.modelUser(user);
         try {
             await usager.save();
+            this.socket.connectionUser(user._username);
 
             return res.status(HTTP_CREATED).json(user);
         } catch (err) {
@@ -63,6 +68,7 @@ export class DBUser {
                     res.status(HTTP_NOT_IMPLEMENTED).json(err);
                 }
             });
+            this.socket.deconnectionUser(username);
 
             return res.status(HTTP_CREATED).json(userId);
         } catch (err) {
