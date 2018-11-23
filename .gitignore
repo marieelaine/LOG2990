@@ -9,3 +9,6 @@ client/package\.json
 server/Images/image2.bmp
 server/Images/image1.bmp
 *.map
+client/yarn\.lock
+
+server/yarn\.lock
