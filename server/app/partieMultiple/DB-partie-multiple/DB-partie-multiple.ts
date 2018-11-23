@@ -245,17 +245,18 @@ export class DBPartieMultiple extends DBPartieAbstract {
 
     protected async ajouterTemps(idPartie: string, temps: TempsUser, isSolo: boolean): Promise<void> {
         const partie: PartieMultipleInterface = await this.getPartieById(idPartie) as PartieMultipleInterface;
-        this.socket.meilleurTemps(temps._user, partie._nomPartie);
         if (temps._user === "") {
             temps._user = "Anonyme";
         }
         if (isSolo) {
             if (temps._temps < partie["_tempsSolo"][PARTIE_SECOND_ELEMENT]["_temps"]) {
+                this.socket.meilleurTemps(temps._user, partie._nomPartie);
                 partie["_tempsSolo"].splice(-1, 1);
                 partie["_tempsSolo"].push(temps);
             }
         } else {
             if (temps._temps < partie["_tempsUnContreUn"][PARTIE_SECOND_ELEMENT]["_temps"]) {
+                this.socket.meilleurTemps(temps._user, partie._nomPartie);
                 partie["_tempsUnContreUn"].splice(-1, 1);
                 partie["_tempsUnContreUn"].push(temps);
             }
