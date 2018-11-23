@@ -34,7 +34,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
   private currentImageNumber: number;
   private selectedFiles: File[];
   private selectedFilesAsBuffers: Buffer[];
-  private correctImageExtension: String;
+  private correctImageExtension: string;
   private readonly maxNbImage: number = 2;
 
   public constructor(

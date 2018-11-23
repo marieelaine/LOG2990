@@ -76,7 +76,7 @@ export class ListePartiesComponent {
         }
     }
 
-    protected getTitleFirstLetter(title: String): String {
+    protected getTitleFirstLetter(title: string): string {
 
         return title.substr(0, 1);
     }

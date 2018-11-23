@@ -81,7 +81,7 @@ export abstract class PartieAbstraiteClass {
         this.commencerPartie();
     }
 
-    protected ajusterSourceImage(data: String, canvas: ElementRef, image: HTMLImageElement): void {
+    protected ajusterSourceImage(data: string, canvas: ElementRef, image: HTMLImageElement): void {
         let hex: number = 0x00;
         const result: Uint8Array = new Uint8Array(data.length);
 
