@@ -105,4 +105,8 @@ export class SocketServerService {
     public deconnectionUser(joueur: string): void {
         this.io.emit(event.DECONNECTION_USER, {joueur: joueur});
     }
+
+    public meilleurTemps(joueur: string, partie: string): void {
+        this.io.emit(event.MEILLEUR_TEMPS, {joueur: joueur, partie: partie});
+    }
 }

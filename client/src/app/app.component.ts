@@ -33,6 +33,9 @@ export class AppComponent {
         this.afficherNotificationDeconnection(data.joueur);
       });
 
+      this.socketClientService.socket.on(event.MEILLEUR_TEMPS, (data) => {
+        this.afficherNotificationMeilleurTemps(data.joueur, data.partie);
+      });
     }
 
     private afficherNotificationConnection(joueur: string): void {
@@ -45,7 +48,12 @@ export class AppComponent {
       this.notifier.notify( "warning", temps + " - " + joueur + " s'est déconnecté" );
     }
 
-    private getCurrentTime(): string {
+    private afficherNotificationMeilleurTemps(joueur: string, partie: string): void {
+      const temps: string = this.getCurrentTime();
+      this.notifier.notify("info", temps + " - " + joueur + " s'est classé dans le tableau des meilleurs temps pour la partie " + partie);
+    }
+
+    public getCurrentTime(): string {
       const date: Date = new Date();
 
       return date.getHours() + ":" + this.getMinutes(date) + ":" + this.getSeconds(date);

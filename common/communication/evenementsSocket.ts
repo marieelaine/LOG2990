@@ -32,3 +32,4 @@ export const ERREUR_PARTIE_MULTIPLE: string = "ERREUR_PARTIE_MULTIPLE";
 
 export const CONNECTION_USER: string = "CONNECTION_USER";
 export const DECONNECTION_USER: string = "DECONNECTION_USER";
+export const MEILLEUR_TEMPS: string = "MEILLEUR_TEMPS";

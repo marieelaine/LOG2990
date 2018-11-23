@@ -217,6 +217,7 @@ export class DBPartieSimple extends DBPartieAbstract {
 
     protected async ajouterTemps(idPartie: string, temps: TempsUser, isSolo: boolean): Promise<void> {
         const partie: PartieSimpleInterface = await this.getPartieById(idPartie) as PartieSimpleInterface;
+        this.socket.meilleurTemps(temps._user, partie._nomPartie);
         if (temps._user === "") {
             temps._user = "Anonyme";
         }
