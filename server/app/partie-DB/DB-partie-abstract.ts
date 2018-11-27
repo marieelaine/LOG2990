@@ -5,6 +5,7 @@ import { injectable } from "inversify";
 import * as fsx from "fs-extra";
 import * as util from "util";
 import * as fs from "fs";
+import * as uniqid from "uniqid";
 import * as constantes from "../constantes";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import { ChildProcess } from "child_process";
@@ -54,8 +55,14 @@ export abstract class DBPartieAbstract {
       res.send(await this.getPartieById(req.params.id));
     }
 
-    public requeteGetlisteChannelsMultijoueur(req: Request, res: Response): void {
-        res.status(constantes.HTTP_CREATED).json(this.listeChannelsMultijoueur.length + 1);
+    public requeteGetChannelId(req: Request, res: Response): void {
+      try {
+        const id: string = this.getChannelId();
+        this.listeChannelsMultijoueur.push(id);
+        res.status(constantes.HTTP_CREATED).json(id);
+      } catch (err) {
+        res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+      }
     }
 
     public requeteAjouterChannelMultijoueur(req: Request, res: Response): void {
@@ -142,5 +149,14 @@ export abstract class DBPartieAbstract {
     protected async deleteImagesDirectory(): Promise<void> {
       const dir: string = constantes.IMAGES_DIRECTORY;
       await fsx.remove(dir);
+    }
+
+    private getChannelId(): string {
+      const id: string = uniqid();
+      if (this.listeChannelsMultijoueur.includes(id)) {
+        this.getChannelId();
+      }
+
+      return id;
     }
 }

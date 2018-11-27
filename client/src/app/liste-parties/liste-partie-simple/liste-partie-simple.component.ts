@@ -75,6 +75,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   private async checkJoindreOuSupprimer(partieId: string): Promise<void> {
     if (this.listePartieEnAttente.includes(partieId)) {
       const channelId: string = await this.getChannelId();
+      console.log(channelId);
       this.listePartieService.joindrePartieMultijoueurSimple(partieId, channelId);
       this.router.navigate(["/partie-simple/" + partieId + "/" + channelId])
       .catch(() => ErrorHandler);
@@ -86,10 +87,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   }
 
   private async getChannelId(): Promise<string> {
-    const channelId: string = await this.listePartieService.getChannelIdSimple();
-    await this.listePartieService.ajouterChannelMultijoueurSimple(channelId);
-
-    return channelId;
+    return this.listePartieService.getChannelIdSimple();
   }
 
   private ouvrirDialogVueAttente(partieId: string): void {

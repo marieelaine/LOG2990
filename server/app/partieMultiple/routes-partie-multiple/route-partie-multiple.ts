@@ -44,12 +44,8 @@ export class RoutesPartieMultiple extends ServiceWeb {
             await this.partieMultiple.requeteGetPartie(req, res);
         });
 
-        router.get("/getListeChannelsMultijoueur", async (req: Request, res: Response) => {
-            await this.partieMultiple.requeteGetlisteChannelsMultijoueur(req, res);
-        });
-
         router.get("/getChannelIdMultiple", (req: Request, res: Response) => {
-            this.partieMultiple.requeteGetlisteChannelsMultijoueur(req, res);
+            this.partieMultiple.requeteGetChannelId(req, res);
         });
 
         router.post("/addChannelMultijoueurMultiple", (req: Request, res: Response) => {
