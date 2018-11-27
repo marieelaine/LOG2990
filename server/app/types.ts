@@ -9,6 +9,7 @@ export default  {
 
         RoutesPartieSimple: Symbol("RoutesPartieSimple"),
         RoutesPartieSimpleAttente: Symbol("RoutesPartieSimpleAttente"),
+        RoutesPartieMultipleAttente: Symbol("RoutesPartieMultipleAttente"),
         PartieSimple: Symbol("PartieSimple"),
 
         RoutesPartieMultiple: Symbol("RoutesPartieMultiple"),

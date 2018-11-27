@@ -1,18 +1,18 @@
 import * as fs from "fs";
 import * as util from "util";
 import * as p from "path";
-import * as fsx from "fs-extra";
 import { ChildProcess, execFile } from "child_process";
-import { Schema, Model, Document } from "mongoose";
+import { Schema, Document } from "mongoose";
 import { Request, Response} from "express";
-import { BaseDeDonnees } from "../../baseDeDonnees/baseDeDonnees";
-import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
 import { ReadLine } from "readline";
 import { injectable, inject } from "inversify";
 import { SocketServerService } from "../../socket-io.service";
 import Types from "../../types";
 import * as constantes from "../../constantes";
+import { DBPartieAbstract, TempsUser } from "../../partie-DB/DB-partie-abstract";
+
+const PARTIE_SECOND_ELEMENT: number = 2;
 
 export interface PartieSimpleInterface {
     _id: string;
@@ -24,36 +24,77 @@ export interface PartieSimpleInterface {
     _imageDiff: Array<Array<string>>;
 }
 
-export interface TempsUser {
-    _user: string;
-    _temps: number;
-}
-
 @injectable()
-export class DBPartieSimple {
+export class DBPartieSimple extends DBPartieAbstract {
 
-    private baseDeDonnees: BaseDeDonnees;
-
-    private modelPartieBuffer: Model<Document>;
-    private modelPartieArray: Model<Document>;
-
-    private schemaArray: Schema;
-    private schemaBuffer: Schema;
+    protected listeChannelsMultijoueur: string[];
 
     public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
 
-        this.baseDeDonnees = new BaseDeDonnees();
+        super();
 
-        this.CreateSchemaArray();
-        this.schemaArray.plugin(uniqueValidator);
+        this.listeChannelsMultijoueur = [];
+
         this.modelPartieArray = this.baseDeDonnees["_mongoose"].model("parties-simples-array", this.schemaArray, "parties-simples");
-
-        this.CreateSchemaBuffer();
-        this.schemaBuffer.plugin(uniqueValidator);
         this.modelPartieBuffer = this.baseDeDonnees["_mongoose"].model("parties-simples", this.schemaBuffer, "parties-simples");
     }
 
-    private CreateSchemaArray(): void {
+    public async requeteAjouterPartie(req: Request, res: Response): Promise<void> {
+        try {
+            await this.genererImageMod(req.body);
+            res.status(constantes.HTTP_CREATED).json(await this.getPartieByName(req.params.nomPartie));
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
+    }
+
+    public async requeteDeletePartie(req: Request, res: Response): Promise<void> {
+        try {
+            await this.deletePartie(req.params.id, res);
+            this.socket.supprimerPartieSimple(req.params.id);
+            res.status(constantes.HTTP_CREATED);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
+    }
+
+    public requeteEnvoyerDiffTrouveeSimple(req: Request, res: Response): void {
+        try {
+            this.socket.envoyerDiffPartieSimple(req.body.channelId, req.body.diff, req.body.joueur);
+            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
+    }
+
+    public requeteEnvoyerJoindreSimple(req: Request, res: Response): void {
+        try {
+            this.socket.envoyerJoindreSimple(req.body.partieId, req.body.channelId);
+            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
+    }
+
+    public requeteEnvoyerPartieSimpleTerminee(req: Request, res: Response): void {
+        try {
+            this.socket.envoyerPartieSimpleTerminee(req.body.channelId, req.body.joueur);
+            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
+    }
+
+    public requeteErreurSimple(req: Request, res: Response): void {
+        try {
+            this.socket.erreurSimple(req.body.channelId, req.body.joueur, req.body.ev);
+            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
+    }
+
+    protected CreateSchemaArray(): void {
         this.schemaArray = new Schema({
             _nomPartie: { type: String, required: true, unique: true },
             _tempsSolo: { type: Array, required: true },
@@ -64,7 +105,7 @@ export class DBPartieSimple {
         });
     }
 
-    private CreateSchemaBuffer(): void {
+    protected CreateSchemaBuffer(): void {
         this.schemaBuffer = new Schema({
             _nomPartie: { type: String, required: true, unique: true },
             _tempsSolo: { type: Array, required: true },
@@ -75,22 +116,7 @@ export class DBPartieSimple {
         });
     }
 
-    private async traiterMessageErreur(partie: PartieSimpleInterface, errorMsg: string): Promise<void> {
-        if (errorMsg === "") {
-            this.getImageDiffAsArrays(partie);
-        } else {
-            this.socket.envoyerMessageErreurDifferences(constantes.ERREUR_DIFFERENCES);
-        }
-
-        await this.deleteImagesDirectory();
-    }
-
-    private async deleteImagesDirectory(): Promise<void> {
-        const dir: string = constantes.IMAGES_DIRECTORY;
-        await fsx.remove(dir);
-    }
-
-    private async verifierErreurScript(child: ChildProcess, partie: PartieSimpleInterface): Promise<void> {
+    protected async verifierErreurScript(child: ChildProcess, partie: PartieSimpleInterface): Promise<void> {
         let errorMsg: string = "";
 
         child.stderr.on("data", async (data: string) => {
@@ -102,55 +128,33 @@ export class DBPartieSimple {
         });
     }
 
-    private async genererImageMod(partie: PartieSimpleInterface): Promise<void> {
-        const buffers: Array<Buffer> = [partie._image1, partie._image2];
-        await this.addImagesToDirectory(buffers);
-
-        const script: string = p.resolve("./bmpdiff/bmpdiff");
-        const imageOri1: string = p.resolve("../Images/image1.bmp");
-        const imageOri2: string = p.resolve("../Images/image2.bmp");
-        const imageMod: string = p.resolve("../Images/image3.bmp");
-        const args: string[] = [imageOri1, imageOri2, imageMod];
-
-        const child: ChildProcess = execFile(script, args);
-        await this.verifierErreurScript(child, partie);
-    }
-
-    private async makeImagesDirectory(): Promise<void> {
-        const dir: string = constantes.IMAGES_DIRECTORY;
-        const mkdirPromise: Function = util.promisify(fs.mkdir);
-        const existsPromise: Function = util.promisify(fs.exists);
-        if (await existsPromise(dir)) {
-            await fsx.remove(dir);
-        }
-
-        await mkdirPromise(dir);
-    }
-
-    private async addImagesToDirectory(buffers: Array<Buffer>): Promise<void> {
-        await this.makeImagesDirectory();
-        const writeFilePromise: Function = util.promisify(fs.writeFile);
-        let i: number = 1;
-        for (const buf of buffers) {
-            await writeFilePromise(constantes.IMAGES_DIRECTORY + "/image" + i.toString() + ".bmp", Buffer.from(buf));
-            i++;
-        }
-    }
-
-    private async deletePartieSimple(idPartie: String, res: Response): Promise<Response> {
+    protected async deletePartie(idPartie: string, res: Response): Promise<Response> {
         try {
             await this.modelPartieBuffer.findOneAndRemove(this.modelPartieBuffer.findById(idPartie)).catch(() => {
                 throw new Error();
             });
 
-            return res.status(201);
+            return res.status(constantes.HTTP_CREATED);
         } catch (err) {
 
-            return res.status(501).json(err);
+            return res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
         }
     }
 
-    private async obtenirPartieSimpleId(nomPartie: String): Promise<string> {
+    protected async getListePartie(): Promise<PartieSimpleInterface[]> {
+        const listeParties: PartieSimpleInterface[] = [];
+
+        await this.modelPartieArray.find()
+            .then((res: Document[]) => {
+                for (const partie of res) {
+                    listeParties.push(partie.toJSON());
+                }
+            });
+
+        return listeParties;
+    }
+
+    protected async obtenirPartieId(nomPartie: String): Promise<string> {
         const partieSimples: PartieSimpleInterface[] = [];
         await this.modelPartieBuffer.find()
             .then((res: Document[]) => {
@@ -168,27 +172,7 @@ export class DBPartieSimple {
         return partieSimples[0]._id;
     }
 
-    private async getListePartie(): Promise<PartieSimpleInterface[]> {
-        const listeParties: PartieSimpleInterface[] = [];
-
-        await this.modelPartieArray.find()
-            .then((res: Document[]) => {
-                for (const partie of res) {
-                    listeParties.push(partie.toJSON());
-                }
-            });
-
-        return listeParties;
-    }
-
-    private async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
-        tempsSolo = this.getSortedTimes(tempsSolo);
-        tempsUnContreUn = this.getSortedTimes(tempsUnContreUn);
-        await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
-            .catch(() => { throw new Error(); });
-    }
-
-    private async getPartieSimple(partieID: String): Promise<PartieSimpleInterface> {
+    protected async getPartieById(partieID: String): Promise<PartieSimpleInterface> {
         const partieSimples: PartieSimpleInterface[] = [];
         await this.modelPartieArray.find()
             .then((parties: Document[]) => {
@@ -206,8 +190,77 @@ export class DBPartieSimple {
         return partieSimples[1];
     }
 
+    protected async getPartieByName(nomPartie: String): Promise<PartieSimpleInterface> {
+        const partieSimples: PartieSimpleInterface[] = [];
+        await this.modelPartieArray.find()
+            .then((parties: Document[]) => {
+                for (const partie of parties) {
+                    partieSimples.push(partie.toJSON());
+                }
+            });
+
+        for (const partie of partieSimples) {
+            if (partie._nomPartie.toString() === nomPartie) {
+                return partie;
+            }
+        }
+
+        return partieSimples[1];
+    }
+
+    protected async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
+        tempsSolo = this.getSortedTimes(tempsSolo);
+        tempsUnContreUn = this.getSortedTimes(tempsUnContreUn);
+        await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
+                                    .catch(() => { throw new Error(); });
+    }
+
+    protected async ajouterTemps(idPartie: string, temps: TempsUser, isSolo: boolean): Promise<void> {
+        const partie: PartieSimpleInterface = await this.getPartieById(idPartie) as PartieSimpleInterface;
+        if (temps._user === "") {
+            temps._user = "Anonyme";
+        }
+        if (isSolo) {
+            if (temps._temps < partie["_tempsSolo"][PARTIE_SECOND_ELEMENT]["_temps"]) {
+                this.socket.meilleurTemps(temps._user, partie._nomPartie);
+                partie["_tempsSolo"].splice(-1, 1);
+                partie["_tempsSolo"].push(temps);
+            }
+        } else {
+            if (temps._temps < partie["_tempsUnContreUn"][PARTIE_SECOND_ELEMENT]["_temps"]) {
+                this.socket.meilleurTemps(temps._user, partie._nomPartie);
+                partie["_tempsUnContreUn"].splice(-1, 1);
+                partie["_tempsUnContreUn"].push(temps);
+            }
+        }
+        await this.reinitialiserTemps(idPartie, partie["_tempsSolo"], partie["_tempsUnContreUn"]);
+    }
+    private async traiterMessageErreur(partie: PartieSimpleInterface, errorMsg: string): Promise<void> {
+        if (errorMsg === "") {
+            this.getImageDiffAsArrays(partie);
+        } else {
+            this.socket.envoyerMessageErreurDifferences(constantes.ERREUR_DIFFERENCES);
+        }
+
+        await this.deleteImagesDirectory();
+    }
+
+    private async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
+        partie._imageDiff = diffArrays;
+        const partieSimple: Document = new this.modelPartieBuffer(partie);
+        partieSimple["_tempsSolo"] = this.getSortedTimes(partieSimple["_tempsSolo"]);
+        partieSimple["_tempsUnContreUn"] = this.getSortedTimes(partieSimple["_tempsUnContreUn"]);
+        await partieSimple.save(async (err: Error, data: Document) => {
+            if (err !== null && err.name === constantes.ERREUR_UNIQUE) {
+                this.socket.envoyerMessageErreurNom(constantes.ERREUR_NOM_PRIS);
+            } else {
+                this.socket.envoyerPartieSimple(await this.getPartieByName(partie._nomPartie));
+            }
+        });
+    }
+
     private getImageDiffAsArrays(partie: PartieSimpleInterface): void {
-        const imageMod: string = p.resolve("../Images/image3.bmp.txt");
+        const imageMod: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + "image3.bmp.txt");
         const diffArrays: Array<Array<string>> = new Array<Array<string>>();
         const input: fs.ReadStream = fs.createReadStream(imageMod);
         const rl: ReadLine = require("readline").createInterface({
@@ -235,94 +288,27 @@ export class DBPartieSimple {
         });
     }
 
-    private async getPartieSimpleByName(nomPartie: String): Promise<PartieSimpleInterface> {
-        const partieSimples: PartieSimpleInterface[] = [];
-        await this.modelPartieArray.find()
-            .then((parties: Document[]) => {
-                for (const partie of parties) {
-                    partieSimples.push(partie.toJSON());
-                }
-            });
+    private async genererImageMod(partie: PartieSimpleInterface): Promise<void> {
+        const buffers: Array<Buffer> = [partie._image1, partie._image2];
+        await this.addImagesToDirectory(buffers);
 
-        for (const partie of partieSimples) {
-            if (partie._nomPartie.toString() === nomPartie) {
-                return partie;
-            }
-        }
+        const script: string = p.resolve("./bmpdiff/bmpdiff");
+        const imageOri1: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + "image1.bmp");
+        const imageOri2: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + "image2.bmp");
+        const imageMod: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + "image3.bmp");
+        const args: string[] = [imageOri1, imageOri2, imageMod];
 
-        return partieSimples[1];
+        const child: ChildProcess = execFile(script, args);
+        await this.verifierErreurScript(child, partie);
     }
 
-    private getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {
-        if (arr) {
-          arr.sort((t1: TempsUser, t2: TempsUser) => {
-            const time1: number = t1["_temps"];
-            const time2: number = t2["_temps"];
-            if (time1 > time2) { return 1; }
-            if (time1 < time2) { return -1; }
-
-            return 0;
-          });
-        }
-
-        return arr;
-    }
-
-    protected async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
-        partie._imageDiff = diffArrays;
-        const partieSimple: Document = new this.modelPartieBuffer(partie);
-        partieSimple["_tempsSolo"] = this.getSortedTimes(partieSimple["_tempsSolo"]);
-        partieSimple["_tempsUnContreUn"] = this.getSortedTimes(partieSimple["_tempsUnContreUn"]);
-        await partieSimple.save(async (err: Error, data: Document) => {
-            if (err !== null && err.name === "ValidationError") {
-                this.socket.envoyerMessageErreurNom(constantes.ERREUR_NOM_PRIS);
-            } else {
-                this.socket.envoyerPartieSimple(await this.getPartieSimpleByName(partie._nomPartie));
-            }
-        });
-    }
-
-    public async requeteAjouterPartieSimple(req: Request, res: Response): Promise<void> {
-        try {
-            await this.genererImageMod(req.body);
-            res.status(201).json(await this.getPartieSimpleByName(req.params.nomPartie));
-        } catch (err) {
-            res.status(501).json(err);
+    private async addImagesToDirectory(buffers: Array<Buffer>): Promise<void> {
+        await this.makeImagesDirectory();
+        const writeFilePromise: Function = util.promisify(fs.writeFile);
+        let i: number = 1;
+        for (const buf of buffers) {
+            await writeFilePromise(constantes.IMAGES_DIRECTORY + "/image" + i.toString() + ".bmp", Buffer.from(buf));
+            i++;
         }
     }
-
-    public async requetePartieSimpleId(req: Request, res: Response): Promise<void> {
-        res.send(await this.obtenirPartieSimpleId(req.params.id));
-    }
-
-    public async requeteDeletePartieSimple(req: Request, res: Response): Promise<void> {
-        try {
-            await this.deletePartieSimple(req.params.id, res);
-            this.socket.supprimerPartieSimple(req.params.id);
-            res.status(201);
-        } catch (err) {
-            res.status(501).json(err);
-        }
-    }
-
-    public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
-        await this.baseDeDonnees.assurerConnection();
-        res.send(await this.getListePartie());
-    }
-
-    public async requeteReinitialiserTemps(req: Request, res: Response): Promise<void> {
-        await this.baseDeDonnees.assurerConnection();
-        try {
-            await this.reinitialiserTemps(req.params.id, req.body.tempsSolo, req.body.tempsUnContreUn);
-            res.status(201);
-        } catch (err) {
-            res.status(501).json(err);
-        }
-    }
-
-    public async requeteGetPartieSimple(req: Request, res: Response): Promise<void> {
-        await this.baseDeDonnees.assurerConnection();
-        res.send(await this.getPartieSimple(req.params.id));
-    }
-// tslint:disable-next-line:max-file-line-count
 }

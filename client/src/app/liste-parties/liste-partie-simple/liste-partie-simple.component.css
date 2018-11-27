@@ -14,7 +14,7 @@ mat-card-header
 {
     justify-content: right;
     margin-bottom:2%;
-    border-bottom:2px solid #e6e5e5;
+    border-bottom:5px solid #e6e5e5;
 
 }
 
@@ -73,6 +73,10 @@ mat-card-header
     float:top;
 }
 
+.top3{
+    width: 7rem;
+}
+
 .temps{
     padding-top: 5%;
 } 
@@ -91,6 +95,7 @@ mat-badge{
     text-align:center;
     background: #e6e5e5;
     border-radius: 10px 10px 0 0;
+    padding-top: 1.5%;
 }
 
 col-1{
@@ -103,6 +108,13 @@ col-1{
     margin-left:2%;
     margin-top: 200%;
 }
+
+@media (min-width: 576px){
+    .col-sm-5 {
+        flex: auto;
+    }
+}
+    
 
 /* CSS pour les cartes */
 

@@ -34,15 +34,15 @@ export class DialogSimpleComponent extends DialogAbstrait {
   private currentImageNumber: number;
   private selectedFiles: File[];
   private selectedFilesAsBuffers: Buffer[];
-  private correctImageExtension: String;
+  private correctImageExtension: string;
   private readonly maxNbImage: number = 2;
 
   public constructor(
     dialogRef: MatDialogRef<DialogSimpleComponent>,
     @Inject(MAT_DIALOG_DATA) data: DialogData,
     http: HttpClient,
-
     private partieSimpleService: PartieSimpleService) {
+
       super(dialogRef, data, http);
       this.selectedFiles = [];
       this.selectedFilesAsBuffers = [];

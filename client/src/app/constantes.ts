@@ -9,17 +9,37 @@ export const REINITIALISER_TEMPS_SIMPLE_URL: string = BASE_URL + SIMPLE + "reini
 export const GET_PARTIE_SIMPLE_ATTENTE: string = BASE_URL + "getPartieSimpleEnAttente/";
 export const ADD_PARTIE_SIMPLE_ATTENTE: string = BASE_URL + "addPartieSimpleEnAttente/";
 export const DELETE_PARTIE_SIMPLE_ATTENTE: string = BASE_URL + "deletePartieSimpleEnAttente/";
+export const DIALOG_ATTENTE_SIMPLE_FERME: string = BASE_URL + "dialogAttenteSimpleFerme/";
+
+export const GET_PARTIE_MULTIPLE_ATTENTE: string = BASE_URL + "getPartieMultipleEnAttente/";
+export const ADD_PARTIE_MULTIPLE_ATTENTE: string = BASE_URL + "addPartieMultipleEnAttente/";
+export const DELETE_PARTIE_MULTIPLE_ATTENTE: string = BASE_URL + "deletePartieMultipleEnAttente/";
+export const DIALOG_ATTENTE_MULTIPLE_FERME: string = BASE_URL + "dialogAttenteMultipleFerme/";
 
 export const GET_LISTE_MULTIPLE_URL: string = BASE_URL + MULTIPLE + "getListePartieMultiple";
+export const AJOUTER_PARTIE_MULTIPLE_URL: string = BASE_URL + MULTIPLE + "ajouter/";
 export const DELETE_PARTIE_MULTIPLE_URL: string = BASE_URL + MULTIPLE + "delete/";
 export const REINITIALISER_TEMPS_MULTIPLE_URL: string = BASE_URL + MULTIPLE + "reinitialiseTemps/";
 
-export const GET_PARTIE_MULTIPLE_ATTENTE: string = BASE_URL + "getPartieSimpleEnAttente/";
-export const ADD_PARTIE_MULTIPLE_ATTENTE: string = BASE_URL + "addPartieSimpleEnAttente/";
-export const DELETE_PARTIE_MULTIPLE_ATTENTE: string = BASE_URL + "deletePartieSimpleEnAttente/";
-
 export const GET_PARTIE_SIMPLE: string = BASE_URL + SIMPLE + "getPartieSimple/";
 export const GET_PARTIE_MULTIPLE: string = BASE_URL + MULTIPLE + "getPartieMultiple/";
+
+export const ADD_TEMPS_PARTIE_SIMPLE: string = BASE_URL + SIMPLE + "addTempsPartieSimple/";
+export const ADD_TEMPS_PARTIE_MULTIPLE: string = BASE_URL + SIMPLE + "addTempsPartieMultiple/";
+
+export const GET_CHANNEL_ID_SIMPLE: string = BASE_URL + SIMPLE + "/getChannelIdSimple";
+export const AJOUTER_CHANNEL_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "/addChannelMultijoueurSimple";
+export const DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "/differenceTrouveeMultijoueurSimple";
+export const JOINDRE_PARTIE_MULTIJOUER_SIMPLE: string = BASE_URL + SIMPLE + "/joindrePartieMultijoueurSimple";
+export const PARTIE_TERMINEE_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "/partieTermineeMultijoueurSimple";
+export const ERREUR_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "/erreurMultijoueurSimple";
+
+export const GET_CHANNEL_ID_MULTIPLE: string = BASE_URL + MULTIPLE + "/getChannelIdMultiple";
+export const AJOUTER_CHANNEL_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/addChannelMultijoueurMultiple";
+export const DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/differenceTrouveeMultijoueurMultiple";
+export const JOINDRE_PARTIE_MULTIJOUER_MULTIPLE: string = BASE_URL + MULTIPLE + "/joindrePartieMultijoueurMultiple";
+export const PARTIE_TERMINEE_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/partieTermineeMultijoueurMultiple";
+export const ERREUR_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/erreurMultijoueurMultiple";
 
 export const LONGUEUR_NOM_MIN: number = 3;
 export const LONGUEUR_NOM_MAX: number = 20;

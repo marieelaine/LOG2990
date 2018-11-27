@@ -26,13 +26,14 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
                        private dialog: MatDialog) {
         super(router, listePartieService);
         this.listeParties = [];
+        this.listePartieEnAttente = [];
     }
 
     public ngOnInit(): void {
         this.listePartieService.getListePartieMultiple().subscribe((res: PartieMultiple[]) => {
             this.listeParties = res;
         });
-        this.listePartieService.getListePartieSimpleEnAttente().subscribe((res: string[]) => {
+        this.listePartieService.getListePartieMultipleEnAttente().subscribe((res: string[]) => {
             this.listePartieEnAttente = res;
         });
         this.ajouterPartieSurSocketEvent();
@@ -44,7 +45,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     protected onJouerOuReinitialiserClick(partieId: string): void {
         if (this.isListePartiesMode) {
-            this.router.navigate(["/partie-multiple/" + partieId])
+            this.router.navigate(["/partie-multiple/" + partieId + "/0"])
                 .catch(() => ErrorHandler);
         } else if (this.isAdminMode) {
             this.reinitialiserTemps(partieId);
@@ -53,22 +54,25 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     protected async onCreerOuSupprimerClick(partieId: string): Promise<void> {
         if (this.isListePartiesMode) {
-            this.listePartieService.addPartieMultipleEnAttente(partieId).subscribe(() => {
-                this.ouvrirDialogVueAttente(partieId);
-                this.router.navigate(["/partie-multiple-solo/" + partieId])
-                    .catch(() => ErrorHandler);
-            });
-
+            await this.checkJoindreOuSupprimer(partieId);
         } else if (this.isAdminMode) {
             this.ouvrirDialogConfirmation(partieId);
         }
     }
 
+    private async getChannelId(): Promise<string> {
+        const channelId: string = await this.listePartieService.getChannelIdMultiple();
+        await this.listePartieService.ajouterChannelMultijoueurMultiple(channelId);
+
+        return channelId;
+      }
+
     private ouvrirDialogVueAttente(partieId: string): void {
         this.dialog.open(DialogVueAttenteComponent, {
             height: "220px",
             width: "600px",
-            data: {id: partieId}
+            data: {id: partieId,
+                   isSimple: false}
         });
     }
 
@@ -82,6 +86,19 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
                 isSimple: false
             }
         });
+    }
+
+    private async checkJoindreOuSupprimer(partieId: string): Promise<void> {
+        if (this.listePartieEnAttente.includes(partieId)) {
+            const channelId: string = await this.getChannelId();
+            this.listePartieService.joindrePartieMultijoueurMultiple(partieId, channelId);
+            this.router.navigate(["/partie-multiple/" + partieId + "/" + channelId])
+            .catch(() => ErrorHandler);
+        } else {
+          this.listePartieService.addPartieMultipleEnAttente(partieId).subscribe(() => {
+            this.ouvrirDialogVueAttente(partieId);
+          });
+        }
     }
 
     protected reinitialiserTemps(partieId: string): void {
@@ -108,6 +125,13 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
                     this.listePartieEnAttente.splice(i, 1);
                 }
             }
+        });
+        this.socketClientService.socket.on(event.DIALOG_ATTENTE_MULTIPLE_FERME, () => {
+            this.mettreBoutonsACreer();
+        });
+
+        this.socketClientService.socket.on(event.JOINDRE_PARTIE_MULTIJOUEUR_MULTIPLE, (data) => {
+            this.mettreBoutonsACreer();
         });
     }
 }

@@ -18,7 +18,11 @@ export class RoutesPartieSimple extends ServiceWeb {
         const router: Router = Router();
 
         router.post("/ajouter", async (req: Request, res: Response) => {
-            await this.partieSimple.requeteAjouterPartieSimple(req, res);
+            await this.partieSimple.requeteAjouterPartie(req, res);
+        });
+
+        router.put("/addTempsPartieSimple/:id", async (req: Request, res: Response) => {
+            await this.partieSimple.requeteAjouterPartieTemps(req, res);
         });
 
         router.get("/getListePartieSimple", async (req: Request, res: Response) => {
@@ -30,15 +34,40 @@ export class RoutesPartieSimple extends ServiceWeb {
         });
 
         router.delete("/delete/:id", async (req: Request, res: Response) => {
-            await this.partieSimple.requeteDeletePartieSimple(req, res);
+            await this.partieSimple.requeteDeletePartie(req, res);
         });
 
-        router.get("/:id", async (req: Request, res: Response) => {
-            await this.partieSimple.requetePartieSimpleId(req, res);
-        });
+        // router.get("/:id", async (req: Request, res: Response) => {
+        //     console.log("Routes3");
+        //     await this.partieSimple.requetePartieId(req, res);
+        // });
 
         router.get("/getPartieSimple/:id", async (req: Request, res: Response) => {
-            await this.partieSimple.requeteGetPartieSimple(req, res);
+            await this.partieSimple.requeteGetPartie(req, res);
+        });
+
+        router.get("/getChannelIdSimple", (req: Request, res: Response) => {
+            this.partieSimple.requeteGetlisteChannelsMultijoueur(req, res);
+        });
+
+        router.post("/addChannelMultijoueurSimple", (req: Request, res: Response) => {
+            this.partieSimple.requeteAjouterChannelMultijoueur(req, res);
+        });
+
+        router.post("/differenceTrouveeMultijoueurSimple", (req: Request, res: Response) => {
+            this.partieSimple.requeteEnvoyerDiffTrouveeSimple(req, res);
+        });
+
+        router.post("/joindrePartieMultijoueurSimple", (req: Request, res: Response) => {
+            this.partieSimple.requeteEnvoyerJoindreSimple(req, res);
+        });
+
+        router.post("/partieTermineeMultijoueurSimple", (req: Request, res: Response) => {
+            this.partieSimple.requeteEnvoyerPartieSimpleTerminee(req, res);
+        });
+
+        router.post("/erreurMultijoueurSimple", (req: Request, res: Response) => {
+            this.partieSimple.requeteErreurSimple(req, res);
         });
 
         return router;

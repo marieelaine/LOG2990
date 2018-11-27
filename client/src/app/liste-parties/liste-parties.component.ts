@@ -76,7 +76,7 @@ export class ListePartiesComponent {
         }
     }
 
-    protected getTitleFirstLetter(title: String): String {
+    protected getTitleFirstLetter(title: string): string {
 
         return title.substr(0, 1);
     }
@@ -101,6 +101,11 @@ export class ListePartiesComponent {
         this.getSortedTimes(arr);
 
         return arr;
+    }
+
+    protected mettreBoutonsACreer(): void {
+        this.joindreOuSupprimer = "Créer";
+        this.creerOuSupprimer = "Créer";
     }
 
     private genererTempsAleatoire(): number {

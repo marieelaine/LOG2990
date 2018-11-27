@@ -2,8 +2,11 @@ import { Schema, Model, Document } from "mongoose";
 import { Request, Response } from "express";
 import uniqueValidator = require("mongoose-unique-validator");
 import "reflect-metadata";
-import { injectable } from "inversify";
+import { injectable, inject } from "inversify";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
+import { HTTP_NOT_IMPLEMENTED, HTTP_CREATED } from "../constantes";
+import { SocketServerService } from "../socket-io.service";
+import Types from "../types";
 
 interface Usager {
     _id: string;
@@ -17,7 +20,9 @@ export class DBUser {
     private modelUser: Model<Document>;
     private schema: Schema;
 
-    public constructor() {
+    public constructor(
+        @inject(Types.SocketServerService) private socket: SocketServerService
+    ) {
         this.baseDeDonnees = new BaseDeDonnees();
         this.schema = new Schema({
             _username: {
@@ -36,7 +41,7 @@ export class DBUser {
 
     public async requeteUserId(req: Request, res: Response): Promise<void> {
         const id: string = await this.obtenirUserId(req.params.id);
-        id === "" ? res.status(501).json(id) : res.status(201).json(id);
+        id === "" ? res.status(HTTP_NOT_IMPLEMENTED).json(id) : res.status(HTTP_CREATED).json(id);
     }
 
     public async requeteDeleteUser(req: Request, res: Response): Promise<void> {
@@ -47,10 +52,11 @@ export class DBUser {
         const usager: Document = new this.modelUser(user);
         try {
             await usager.save();
+            this.socket.connectionUser(user._username);
 
-            return res.status(201).json(user);
+            return res.status(HTTP_CREATED).json(user);
         } catch (err) {
-            return res.status(501).json(err);
+            return res.status(HTTP_NOT_IMPLEMENTED).json(err);
         }
     }
 
@@ -59,13 +65,14 @@ export class DBUser {
         try {
             this.modelUser.deleteOne({"_id": userId}, (err: Error) => {
                 if (err) {
-                    res.status(501).json(err);
+                    res.status(HTTP_NOT_IMPLEMENTED).json(err);
                 }
             });
+            this.socket.deconnectionUser(username);
 
-            return res.status(201).json(userId);
+            return res.status(HTTP_CREATED).json(userId);
         } catch (err) {
-            return res.status(501).json(err);
+            return res.status(HTTP_NOT_IMPLEMENTED).json(err);
         }
     }
 

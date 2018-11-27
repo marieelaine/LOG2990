@@ -1,25 +1,22 @@
-import { DBPartieSimple, PartieSimpleInterface, TempsUser } from "./DB-partie-simple";
+import { DBPartieSimple, PartieSimpleInterface } from "./DB-partie-simple";
 import { assert } from "chai";
 import * as fsx from "fs-extra";
 import * as sinon from "sinon";
+import * as constantes from "../../constantes";
 import { SocketServerService } from "../../socket-io.service";
+import { TempsUser } from "../../partie-DB/DB-partie-abstract";
 
 describe("Partie Simple BD classe", () => {
     let dbPartieSimple: DBPartieSimple;
-    const socket: SocketServerService = new SocketServerService();
-
+    const socketService: SocketServerService = new SocketServerService();
     beforeEach(() => {
-        dbPartieSimple = new DBPartieSimple(socket);
+        dbPartieSimple = new DBPartieSimple(socketService);
     });
 
     describe("Constructeur", () => {
         it("Devrait etre defini", () => {
             assert.isDefined(dbPartieSimple);
         });
-        it("Devrait definir l'attribut basseDeDonnees", () => {
-            assert.isDefined(dbPartieSimple["baseDeDonnees"]);
-        });
-
         it("Devrait definir l'attribut modelPartieBuffer", () => {
             assert.isDefined(dbPartieSimple["modelPartieBuffer"]);
         });
@@ -27,22 +24,14 @@ describe("Partie Simple BD classe", () => {
         it("Devrait definir l'attribut modelPartieArray", () => {
             assert.isDefined(dbPartieSimple["modelPartieArray"]);
         });
-
-        it("Devrait definir l'attribut schemaArray", () => {
-            assert.isDefined(dbPartieSimple["schemaArray"]);
-        });
-
-        it("Devrait definir l'attribut schemaBuffer", () => {
-            assert.isDefined(dbPartieSimple["schemaBuffer"]);
-        });
     });
 
     describe("Fonction deleteImagesDirectory", () => {
-        it("Devrait appeller la fonction remove de fsx", () => {
+        it("Devrait appeller la fonction remove de fsx", async () => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             const resultatAttendu: string = "../Images";
 
-            dbPartieSimple["deleteImagesDirectory"]();
+            await dbPartieSimple["deleteImagesDirectory"]();
 
             assert(stub.calledOnce);
             assert(stub.calledWith(resultatAttendu));
@@ -50,10 +39,12 @@ describe("Partie Simple BD classe", () => {
     });
 
     describe("Fonction traiterMessageErreur", () => {
-        it("Devrait appeller la fonction deleteImagesDirectory si errorMsg n'est pas nul", () => {
+        it("Devrait appeller la fonction deleteImagesDirectory", async() => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(dbPartieSimple, "deleteImagesDirectory");
+            const stubSocket: sinon.SinonStub = sinon.stub(dbPartieSimple["socket"], "envoyerMessageErreurDifferences");
+            stubSocket.onCall(0).callThrough();
 
             const unePartie: PartieSimpleInterface = {
                 _id: "1",
@@ -65,36 +56,16 @@ describe("Partie Simple BD classe", () => {
                 _imageDiff: new Array<Array<string>>(),
             };
 
-            dbPartieSimple["traiterMessageErreur"](unePartie, "erreur");
+            await dbPartieSimple["traiterMessageErreur"](unePartie, "erreur");
 
             assert(spy.calledOnce);
             assert(stub.calledOnce);
         });
     });
 
-    // describe("Fonction enregistrerPartieSimple", () => {
-    //     it("Devrait ajouter en element à la BD", async () => {
-    //         const nbreElementsBDAvant: number = await dbPartieSimple["modelPartieBuffer"].find().count();
-
-    //         const unePartie: PartieSimpleInterface = {
-    //             _id: "1",
-    //             _nomPartie: "unePartie",
-    //             _tempsSolo: new Array<number>(),
-    //             _tempsUnContreUn: new Array<number>(),
-    //             _image1: Buffer.alloc(1),
-    //             _image2: Buffer.alloc(1),
-    //             _imageDiff: new Array<Array<string>>(),
-    //         };
-
-    //         dbPartieSimple["enregistrerPartieSimple"](new Array<Array<string>>(), unePartie);
-
-    //         const nbreElementsBDApres: number = await dbPartieSimple["modelPartieBuffer"].find().count();
-
-    //         assert.equal(nbreElementsBDApres, nbreElementsBDAvant + 1);
-    //     });
-    // });
-
-    afterEach(() => {
+    afterEach(async() => {
         sinon.restore();
+        const dir: string = constantes.IMAGES_DIRECTORY;
+        await fsx.remove(dir);
     });
 });

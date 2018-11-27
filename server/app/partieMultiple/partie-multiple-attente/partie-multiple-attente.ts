@@ -3,9 +3,10 @@ import { ServiceWeb } from "../../serviceWeb";
 import { Router, Request, Response } from "express";
 import Types from "../../types";
 import { SocketServerService } from "../../socket-io.service";
+import { HTTP_CREATED } from "../../constantes";
 
 @injectable()
-export class RoutesPartieSimpleAttente extends ServiceWeb {
+export class RoutesPartieMultipleAttente extends ServiceWeb {
 
     private partieMultipleAttente: string[];
     public readonly mainRoute: string = "/";
@@ -25,7 +26,7 @@ export class RoutesPartieSimpleAttente extends ServiceWeb {
         router.post("/addPartieMultipleEnAttente", async (req: Request, res: Response) => {
             this.partieMultipleAttente.push(req.body.partieId);
             this.socket.envoyerPartieMultipleAttente(req.body.partieId);
-            res.send(req.body.partieId);
+            res.status(HTTP_CREATED).json(req.body.partieId);
         });
 
         router.delete("/deletePartieMultipleEnAttente/:id", async (req: Request, res: Response) => {
@@ -35,7 +36,11 @@ export class RoutesPartieSimpleAttente extends ServiceWeb {
                 }
             }
             this.socket.supprimerPartieMultipleAttente(req.params.id);
-            res.send(req.params.id);
+            res.status(HTTP_CREATED).json(req.params.id);
+        });
+
+        router.post("/dialogAttenteMultipleFerme", (req: Request, res: Response) => {
+            this.socket.envoyerDialogMultipleFerme();
         });
 
         return router;

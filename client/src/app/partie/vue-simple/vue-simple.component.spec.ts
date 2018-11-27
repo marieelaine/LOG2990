@@ -7,6 +7,8 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { ChatComponent } from "src/app/chat/chat.component";
 import { CookieService } from "ngx-cookie-service";
 import { TempsUser } from "src/app/admin/temps-user";
+import { SocketClientService } from "src/app/socket/socket-client.service";
+import { SocketClientMock } from "src/testing/socketMock";
 
 export class MockEvent {
     public offsetX: number;
@@ -35,7 +37,7 @@ describe("VueSimpleComponent", () => {
     let fixture: ComponentFixture<VueSimpleComponent>;
 
     beforeEach(() => {
-        mockCookieService = jasmine.createSpyObj([""]);
+        mockCookieService = jasmine.createSpyObj(["get"]);
 
         TestBed.configureTestingModule({
             declarations: [VueSimpleComponent, ChatComponent],
@@ -46,6 +48,7 @@ describe("VueSimpleComponent", () => {
             ],
             providers: [
                 { provide: CookieService, useValue: mockCookieService },
+                SocketClientService
             ]
         });
 
@@ -93,13 +96,6 @@ describe("VueSimpleComponent", () => {
             component["partie"]["_image1"] = Buffer.from("Hello World");
             component["partie"]["_image2"] = Buffer.from("Hello World");
             component["imageData"] = ["Hello World", "Hello World"];
-        });
-
-        it("devrait appeler addNomPartieToChat", () => {
-            // tslint:disable-next-line:no-any
-            spyOn<any>(component, "addNomPartieToChat");
-            component["setup"]();
-            expect(component["addNomPartieToChat"]).toHaveBeenCalled();
         });
 
         it("devrait appeler ajusterSourceImage", () => {

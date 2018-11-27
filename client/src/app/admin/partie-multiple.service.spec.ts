@@ -35,14 +35,14 @@ describe("PartieMultipleService", () => {
 
         service.register(partie).subscribe((response) => {
             partieResponse = response;
+
+            http.expectOne({
+              url: "http://localhost:3000/partieMultiple/ajouter",
+              method: "POST"
+            }).flush(responseForm);
+
+            expect(partieResponse).toEqual(partie);
         });
-
-        http.expectOne({
-          url: "http://localhost:3000/partieMultiple/ajouter",
-          method: "POST"
-        }).flush(responseForm);
-
-        expect(partieResponse).toEqual(responseForm);
     });
 
 });

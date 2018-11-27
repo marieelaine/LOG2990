@@ -20,6 +20,10 @@ export class RoutesPartieMultiple extends ServiceWeb {
             await this.partieMultiple.requeteAjouterPartie(req, res);
         });
 
+        router.put("/addTempsPartieMultiple/:id", async (req: Request, res: Response) => {
+            await this.partieMultiple.requeteAjouterPartieTemps(req, res);
+        });
+
         router.get("/getListePartieMultiple", async (req: Request, res: Response) => {
             await this.partieMultiple.requeteGetListePartie(req, res);
         });
@@ -33,11 +37,39 @@ export class RoutesPartieMultiple extends ServiceWeb {
         });
 
         router.get("/:id", async (req: Request, res: Response) => {
-            await this.partieMultiple.requetePartieMultipleId(req, res);
+            await this.partieMultiple.requetePartieId(req, res);
         });
 
         router.get("/getPartieMultiple/:id", async (req: Request, res: Response) => {
-            await this.partieMultiple.requeteGetPartieMultiple(req, res);
+            await this.partieMultiple.requeteGetPartie(req, res);
+        });
+
+        router.get("/getListeChannelsMultijoueur", async (req: Request, res: Response) => {
+            await this.partieMultiple.requeteGetlisteChannelsMultijoueur(req, res);
+        });
+
+        router.get("/getChannelIdMultiple", (req: Request, res: Response) => {
+            this.partieMultiple.requeteGetlisteChannelsMultijoueur(req, res);
+        });
+
+        router.post("/addChannelMultijoueurMultiple", (req: Request, res: Response) => {
+            this.partieMultiple.requeteAjouterChannelMultijoueur(req, res);
+        });
+
+        router.post("/joindrePartieMultijoueurMultiple", (req: Request, res: Response) => {
+            this.partieMultiple.requeteEnvoyerJoindreMultiple(req, res);
+        });
+
+        router.post("/differenceTrouveeMultijoueurMultiple", (req: Request, res: Response) => {
+            this.partieMultiple.requeteEnvoyerDiffTrouveeMultiple(req, res);
+        });
+
+        router.post("/partieTermineeMultijoueurMultiple", (req: Request, res: Response) => {
+            this.partieMultiple.requeteEnvoyerPartieMultipleTerminee(req, res);
+        });
+
+        router.post("/erreurMultijoueurMultiple", (req: Request, res: Response) => {
+            this.partieMultiple.requeteErreurMultiple(req, res);
         });
 
         return router;

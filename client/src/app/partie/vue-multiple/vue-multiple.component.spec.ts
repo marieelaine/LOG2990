@@ -5,12 +5,17 @@ import { MatCardModule } from "@angular/material";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import {CookieService} from "ngx-cookie-service";
+import { SocketClientService } from "src/app/socket/socket-client.service";
+import { SocketClientMock } from "src/testing/socketMock";
 
 describe("VueMultipleComponent", () => {
   let component: VueMultipleComponent;
   let fixture: ComponentFixture<VueMultipleComponent>;
+  let mockCookieService: jasmine.SpyObj<CookieService>;
 
   beforeEach(() => {
+    mockCookieService = jasmine.createSpyObj(["get"]);
+
     TestBed.configureTestingModule({
       declarations: [ VueMultipleComponent ],
       imports: [
@@ -22,7 +27,8 @@ describe("VueMultipleComponent", () => {
         CUSTOM_ELEMENTS_SCHEMA,
       ],
       providers: [
-          CookieService
+        { provide: CookieService, useValue: mockCookieService },
+        SocketClientService
       ]
     });
 
