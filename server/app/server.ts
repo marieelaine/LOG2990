@@ -4,9 +4,7 @@ import Types from "./types";
 import { injectable, inject } from "inversify";
 import { AddressInfo } from "net";
 import { SocketServerService } from "./socket-io.service";
-
 import * as express from "express";
-// import * as bodyParser from "body-parser"
 
 @injectable()
 export class Server {
