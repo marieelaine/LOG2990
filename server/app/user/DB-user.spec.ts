@@ -2,7 +2,6 @@ import { assert } from "chai";
 import { DBUser } from "./DB-user";
 import { SocketServerService } from "../socket-io.service";
 
-
 describe("BaseDeDonneesUsager classe", () => {
     describe("Constructeur", () => {
         let user: DBUser;
