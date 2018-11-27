@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { VueSimpleComponent } from "./vue-simple.component";
 import { PartieSimple } from "src/app/admin/dialog-simple/partie-simple";
-import { MatCardModule } from "@angular/material";
+import { MatCardModule, MatDialog } from "@angular/material";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ChatComponent } from "src/app/chat/chat.component";
@@ -30,12 +30,16 @@ export class MockCanvas {
 }
 
 describe("VueSimpleComponent", () => {
+    let mockMatDialog: jasmine.SpyObj<MatDialog>;
     let mockCookieService: jasmine.SpyObj<CookieService>;
 
     let component: VueSimpleComponent;
     let fixture: ComponentFixture<VueSimpleComponent>;
 
     beforeEach(() => {
+        mockMatDialog = jasmine.createSpyObj([
+            "open"
+        ]);
         mockCookieService = jasmine.createSpyObj(["get"]);
 
         TestBed.configureTestingModule({
@@ -47,6 +51,7 @@ describe("VueSimpleComponent", () => {
             ],
             providers: [
                 { provide: CookieService, useValue: mockCookieService },
+                { provide: MatDialog, useValue: mockMatDialog },
                 SocketClientService
             ]
         });
@@ -55,13 +60,8 @@ describe("VueSimpleComponent", () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         component["partie"] = new PartieSimple(
-            "nomPartie",
-            new Array<TempsUser>(),
-            new Array<TempsUser>(),
-            Buffer.from(new Array<number>()),
-            Buffer.from(new Array<number>()),
-            new Array<Array<string>>(),
-            "");
+            "nomPartie", new Array<TempsUser>(), new Array<TempsUser>(),
+            Buffer.from(new Array<number>()), Buffer.from(new Array<number>()), new Array<Array<string>>(), "");
     });
 
     it("should create", () => {
