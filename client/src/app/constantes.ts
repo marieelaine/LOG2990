@@ -1,6 +1,7 @@
 export const BASE_URL: string = "http://localhost:3000/";
 export const SIMPLE: string = "partieSimple/";
 export const MULTIPLE: string = "partieMultiple/";
+export const USERS: string = "users/";
 
 export const GET_LISTE_SIMPLE_URL: string = BASE_URL + SIMPLE + "getListePartieSimple";
 export const AJOUTER_PARTIE_SIMPLE_URL: string = BASE_URL + SIMPLE + "ajouter/";
@@ -41,6 +42,9 @@ export const DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIP
 export const JOINDRE_PARTIE_MULTIJOUER_MULTIPLE: string = BASE_URL + MULTIPLE + "/joindrePartieMultijoueurMultiple";
 export const PARTIE_TERMINEE_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/partieTermineeMultijoueurMultiple";
 export const ERREUR_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/erreurMultijoueurMultiple";
+
+export const AJOUTER_USERS_URL: string = BASE_URL + USERS + "ajouter/";
+export const DELETE_USERS_URL: string = BASE_URL + USERS + "delete/";
 
 export const METHODE_POST: string = "POST";
 export const METHODE_GET: string = "GET";
