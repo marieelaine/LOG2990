@@ -2,13 +2,14 @@ import { TestBed } from "@angular/core/testing";
 import { PartieMultipleService } from "./partie-multiple.service";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { PartieMultiple } from "./dialog-multiple/partie-multiple";
+import * as constantes from "../constantes";
 
 const QUANTITE_OBJETS: number = 10;
 
 describe("PartieMultipleService", () => {
     let service: PartieMultipleService;
     let http: HttpTestingController;
-    const responseForm: string = "<form />";
+    const responseForm: string = constantes.RESPONSE_FORM;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -37,8 +38,8 @@ describe("PartieMultipleService", () => {
             partieResponse = response;
 
             http.expectOne({
-              url: "http://localhost:3000/partieMultiple/ajouter",
-              method: "POST"
+              url: constantes.AJOUTER_PARTIE_MULTIPLE_URL,
+              method: constantes.METHODE_POST
             }).flush(responseForm);
 
             expect(partieResponse).toEqual(partie);

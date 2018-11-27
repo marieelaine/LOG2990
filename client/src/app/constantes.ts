@@ -3,6 +3,7 @@ export const SIMPLE: string = "partieSimple/";
 export const MULTIPLE: string = "partieMultiple/";
 
 export const GET_LISTE_SIMPLE_URL: string = BASE_URL + SIMPLE + "getListePartieSimple";
+export const AJOUTER_PARTIE_SIMPLE_URL: string = BASE_URL + SIMPLE + "ajouter/";
 export const DELETE_PARTIE_SIMPLE_URL: string = BASE_URL + SIMPLE + "delete/";
 export const REINITIALISER_TEMPS_SIMPLE_URL: string = BASE_URL + SIMPLE + "reinitialiseTemps/";
 
@@ -40,6 +41,10 @@ export const DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIP
 export const JOINDRE_PARTIE_MULTIJOUER_MULTIPLE: string = BASE_URL + MULTIPLE + "/joindrePartieMultijoueurMultiple";
 export const PARTIE_TERMINEE_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/partieTermineeMultijoueurMultiple";
 export const ERREUR_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/erreurMultijoueurMultiple";
+
+export const METHODE_POST: string = "POST";
+export const METHODE_GET: string = "GET";
+export const RESPONSE_FORM: string = "<form />";
 
 export const LONGUEUR_NOM_MIN: number = 3;
 export const LONGUEUR_NOM_MAX: number = 20;

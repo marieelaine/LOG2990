@@ -2,11 +2,12 @@ import { PartieSimpleService } from "./partie-simple.service";
 import { TestBed } from "@angular/core/testing";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import {PartieSimple} from "./dialog-simple/partie-simple";
+import * as constantes from "../constantes";
 
 describe("Partie Simple Service", () => {
     let service: PartieSimpleService;
     let http: HttpTestingController;
-    const responseForm: string = "<form />";
+    const responseForm: string = constantes.RESPONSE_FORM;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -30,8 +31,8 @@ describe("Partie Simple Service", () => {
           partieResponse = response;
 
           http.expectOne({
-            url: "http://127.0.0.1:3000/partieSimple/ajouter",
-            method: "POST"
+            url: constantes.AJOUTER_PARTIE_SIMPLE_URL,
+            method: constantes.METHODE_POST
           }).flush(responseForm);
 
           expect(partieResponse).toEqual(partie);
