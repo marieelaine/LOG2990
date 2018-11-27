@@ -78,46 +78,31 @@ describe("AdminComponent", () => {
 
     describe("Fonction openDialogSimple", () => {
         it("Devrait assigner une chaine de caractere vide a l'attribut gameName", () => {
-            // Act
             component["openDialogSimple"]();
-
-            // Assert
             expect(component["gameName"]).toEqual("");
         });
 
         it("Devrait appeller la fonction open du service dialog", () => {
-            // Act
             component["openDialogSimple"]();
-
-            // Assert
             expect(mockMatDialog.open).toHaveBeenCalled();
         });
     });
 
     describe("Fonction openDialogWithData", () => {
         it("Devrait appelle la fonction open du service dialog", () => {
-            // Act
             component["openDialogWithData"]("un message");
-
-            // Assert
             expect(mockMatDialog.open).toHaveBeenCalled();
         });
     });
 
     describe("Fonction openDialogMultiple", () => {
         it("Devrait assigner une chaine de caractere vide a l'attribut gameName", () => {
-            // Act
             component["openDialogMultiple"]();
-
-            // Assert
             expect(component["gameName"]).toEqual("");
         });
 
         it("Devrait appeller la fonction open du service dialog", () => {
-            // Act
             component["openDialogMultiple"]();
-
-            // Assert
             expect(mockMatDialog.open).toHaveBeenCalled();
         });
     });
