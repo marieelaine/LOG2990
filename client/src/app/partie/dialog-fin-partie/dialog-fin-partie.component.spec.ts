@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
+import { ErrorHandler } from "@angular/core";
 import { DialogFinPartieComponent } from "./dialog-fin-partie.component";
 
 describe("DialogFinPartieComponent", () => {
@@ -10,7 +10,7 @@ describe("DialogFinPartieComponent", () => {
     TestBed.configureTestingModule({
       declarations: [ DialogFinPartieComponent ]
     })
-    .compileComponents();
+    .compileComponents().catch(() => ErrorHandler);
   }));
 
   beforeEach(() => {

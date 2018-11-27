@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from "@angular/core/testing";
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, ErrorHandler } from "@angular/core";
 import { RouterTestingModule } from "@angular/router/testing";
 import { Location } from "@angular/common";
 import { ListePartieSimpleComponent } from "./liste-partie-simple.component";
@@ -116,7 +116,7 @@ describe("Liste Partie Simple Component", () => {
             component["isListePartiesMode"] = false;
             component["isAdminMode"] = false;
 
-            component["onCreerOuSupprimerClick"]("");
+            component["onCreerOuSupprimerClick"]("").catch(() => ErrorHandler);
             tick();
 
             expect(location.path()).toBe(pathAvant);
