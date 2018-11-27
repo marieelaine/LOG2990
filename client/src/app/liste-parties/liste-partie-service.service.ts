@@ -78,7 +78,7 @@ export class ListePartieServiceService {
     return this.http.delete<string>(route.DELETE_PARTIE_MULTIPLE_ATTENTE + partieId);
   }
 
-  public getChannelIdSimple(): Promise<string> {
+  public async getChannelIdSimple(): Promise<string> {
     return this.http.get<string>(route.GET_CHANNEL_ID_SIMPLE).toPromise();
   }
 
@@ -86,7 +86,7 @@ export class ListePartieServiceService {
       return this.http.post<string>(route.AJOUTER_CHANNEL_MULTIJOUEUR_SIMPLE, { channelId }).toPromise();
   }
 
-  public getChannelIdMultiple(): Promise<string> {
+  public async getChannelIdMultiple(): Promise<string> {
     return this.http.get<string>(route.GET_CHANNEL_ID_SIMPLE).toPromise();
   }
 

@@ -48,26 +48,27 @@ export class PartieService {
     }
 
     public async differenceTrouveeMultijoueurSimple(channelId: string, diff: number, joueur: string): Promise<void> {
-        this.http.post(route.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, {channelId, diff, joueur}).toPromise();
+        this.http.post(route.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, {channelId, diff, joueur}).toPromise().catch(() => ErrorHandler);
     }
 
     public async differenceTrouveeMultijoueurMultiple(channelId: string, diff: number, source: string, joueur: string): Promise<void> {
-        this.http.post(route.DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE, {channelId, diff, source, joueur}).toPromise();
+        this.http.post(route.DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE, {channelId, diff, source, joueur}).toPromise()
+        .catch(() => ErrorHandler);
     }
 
     public async partieMultijoueurSimpleTerminee(channelId: string, joueur: string): Promise<void> {
-        this.http.post(route.PARTIE_TERMINEE_MULTIJOUEUR_SIMPLE, {channelId, joueur}).toPromise();
+        this.http.post(route.PARTIE_TERMINEE_MULTIJOUEUR_SIMPLE, {channelId, joueur}).toPromise().catch(() => ErrorHandler);
     }
 
     public async partieMultijoueurMultipleTerminee(channelId: string, joueur: string): Promise<void> {
-        this.http.post(route.PARTIE_TERMINEE_MULTIJOUEUR_MULTIPLE, {channelId, joueur}).toPromise();
+        this.http.post(route.PARTIE_TERMINEE_MULTIJOUEUR_MULTIPLE, {channelId, joueur}).toPromise().catch(() => ErrorHandler);
     }
 
     public async erreurMultijoueurSimple(channelId: string, joueur: string): Promise<void> {
-        this.http.post(route.ERREUR_MULTIJOUEUR_SIMPLE, {channelId, joueur}).toPromise();
+        this.http.post(route.ERREUR_MULTIJOUEUR_SIMPLE, {channelId, joueur}).toPromise().catch(() => ErrorHandler);
     }
 
     public async erreurMultijoueurMultiple(channelId: string, joueur: string): Promise<void> {
-        this.http.post(route.ERREUR_MULTIJOUEUR_MULTIPLE, {channelId, joueur}).toPromise();
+        this.http.post(route.ERREUR_MULTIJOUEUR_MULTIPLE, {channelId, joueur}).toPromise().catch(() => ErrorHandler);
     }
 }

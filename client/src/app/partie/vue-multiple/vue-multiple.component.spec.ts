@@ -6,7 +6,6 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import {CookieService} from "ngx-cookie-service";
 import { SocketClientService } from "src/app/socket/socket-client.service";
-import { SocketClientMock } from "src/testing/socketMock";
 
 describe("VueMultipleComponent", () => {
   let component: VueMultipleComponent;

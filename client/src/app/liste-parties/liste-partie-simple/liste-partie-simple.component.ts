@@ -75,7 +75,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
   private async checkJoindreOuSupprimer(partieId: string): Promise<void> {
     if (this.listePartieEnAttente.includes(partieId)) {
       const channelId: string = await this.getChannelId();
-      this.listePartieService.joindrePartieMultijoueurSimple(partieId, channelId);
+      this.listePartieService.joindrePartieMultijoueurSimple(partieId, channelId).catch(() => ErrorHandler);
       this.router.navigate(["/partie-simple/" + partieId + "/" + channelId])
       .catch(() => ErrorHandler);
     } else {

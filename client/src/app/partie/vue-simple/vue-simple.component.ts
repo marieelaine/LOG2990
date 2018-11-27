@@ -133,7 +133,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
     private setSocketEvents(): void {
         this.socketClientService.socket.on(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, (data) => {
             if (this.channelId === data.channelId) {
-                this.differenceTrouverMultijoueurSimple(data.diff, data.joueur);
+                this.differenceTrouverMultijoueurSimple(data.diff, data.joueur).catch(() => ErrorHandler);
             }
         });
 
