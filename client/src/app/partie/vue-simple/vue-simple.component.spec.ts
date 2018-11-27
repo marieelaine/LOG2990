@@ -8,7 +8,6 @@ import { ChatComponent } from "src/app/chat/chat.component";
 import { CookieService } from "ngx-cookie-service";
 import { TempsUser } from "src/app/admin/temps-user";
 import { SocketClientService } from "src/app/socket/socket-client.service";
-import { SocketClientMock } from "src/testing/socketMock";
 
 export class MockEvent {
     public offsetX: number;

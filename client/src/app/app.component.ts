@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef } from "@angular/core";
+import { Component } from "@angular/core";
 import { SocketClientService } from "./socket/socket-client.service";
 import * as event from "../../../common/communication/evenementsSocket";
 import { NotifierService } from "angular-notifier";

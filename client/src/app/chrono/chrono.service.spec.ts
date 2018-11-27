@@ -1,4 +1,4 @@
-import {TestBed, ComponentFixture, fakeAsync, tick} from "@angular/core/testing";
+import {TestBed, fakeAsync, tick} from "@angular/core/testing";
 import {ChronoService} from "./chrono.service";
 
 describe("ChronoService", () => {
