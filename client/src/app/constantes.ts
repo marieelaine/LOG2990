@@ -44,6 +44,8 @@ export const ERREUR_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/erreu
 
 export const METHODE_POST: string = "POST";
 export const METHODE_GET: string = "GET";
+export const METHODE_DELETE: string = "DELETE";
+export const METHODE_PUT: string = "PUT";
 export const RESPONSE_FORM: string = "<form />";
 
 export const LONGUEUR_NOM_MIN: number = 3;

@@ -18,7 +18,6 @@ describe("BasicService", () => {
 
         httpClientSpy.get.and.returnValue(TestHelper.asyncData(expectedMessage));
 
-        // check the content of the mocked call
         basicService.basicGet().subscribe(
             (response: Message) => {
                 expect(response.title).toEqual(expectedMessage.title, "Title check");
@@ -27,7 +26,6 @@ describe("BasicService", () => {
             fail
         );
 
-        // check if only one call was made
         expect(httpClientSpy.get.calls.count()).toBe(1, "one call");
     });
 });
