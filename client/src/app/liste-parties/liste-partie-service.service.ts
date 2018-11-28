@@ -82,7 +82,7 @@ export class ListePartieServiceService {
     return this.http.get<string>(route.GET_CHANNEL_ID_SIMPLE).toPromise();
   }
 
-  public getChannelIdMultiple(): Promise<string> {
+  public async getChannelIdMultiple(): Promise<string> {
     return this.http.get<string>(route.GET_CHANNEL_ID_MULTIPLE).toPromise();
   }
 

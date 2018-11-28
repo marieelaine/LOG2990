@@ -12,8 +12,6 @@ import { ChronoService} from "../chrono/chrono.service";
 import { MatDialogMock } from "src/testing/mat-dialog-mock";
 
 const ONE_SECOND_TIMER: number = 1000;
-const TWO_SECONDS_TIMER: number = 2000;
-const TWO_SECONDS_CHRONO: number = 2;
 
 class PartieServiceMock extends PartieService {
     public constructor() {

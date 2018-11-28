@@ -48,7 +48,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     }
 
     protected async supprimerChannelId(): Promise<void> {
-        this.partieService.supprimerChannelIdMultiple(this.partieID);
+        this.partieService.supprimerChannelIdMultiple(this.partieID).catch(() => ErrorHandler);
     }
 
     protected getImageData(): void {

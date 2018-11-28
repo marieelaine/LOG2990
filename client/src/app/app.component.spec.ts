@@ -1,6 +1,6 @@
 // tslint:disable:no-any les attributs sont des types any
 // tslint:disable:no-floating-promises pour le before each
-import { TestBed, async, ComponentFixture } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
