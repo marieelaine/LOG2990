@@ -1,4 +1,7 @@
 #Directories and files to ignore
+*.idea
+*.vscode
+*.ini
 
 package-lock.json
 /server/out/*

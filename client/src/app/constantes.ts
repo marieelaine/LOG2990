@@ -1,8 +1,10 @@
 export const BASE_URL: string = "http://localhost:3000/";
 export const SIMPLE: string = "partieSimple/";
 export const MULTIPLE: string = "partieMultiple/";
+export const USERS: string = "users/";
 
 export const GET_LISTE_SIMPLE_URL: string = BASE_URL + SIMPLE + "getListePartieSimple";
+export const AJOUTER_PARTIE_SIMPLE_URL: string = BASE_URL + SIMPLE + "ajouter/";
 export const DELETE_PARTIE_SIMPLE_URL: string = BASE_URL + SIMPLE + "delete/";
 export const REINITIALISER_TEMPS_SIMPLE_URL: string = BASE_URL + SIMPLE + "reinitialiseTemps/";
 
@@ -40,6 +42,15 @@ export const JOINDRE_PARTIE_MULTIJOUER_MULTIPLE: string = BASE_URL + MULTIPLE + 
 export const PARTIE_TERMINEE_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "partieTermineeMultijoueurMultiple";
 export const ERREUR_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "erreurMultijoueurMultiple";
 export const SUPPRIMER_CHANNEL_ID_MULTIPLE: string = BASE_URL + MULTIPLE + "supprimerChannelIdMultiple";
+
+export const AJOUTER_USERS_URL: string = BASE_URL + USERS + "ajouter/";
+export const DELETE_USERS_URL: string = BASE_URL + USERS + "delete/";
+
+export const METHODE_POST: string = "POST";
+export const METHODE_GET: string = "GET";
+export const METHODE_DELETE: string = "DELETE";
+export const METHODE_PUT: string = "PUT";
+export const RESPONSE_FORM: string = "<form />";
 
 export const LONGUEUR_NOM_MIN: number = 3;
 export const LONGUEUR_NOM_MAX: number = 20;

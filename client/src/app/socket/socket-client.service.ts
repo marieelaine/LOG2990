@@ -1,5 +1,4 @@
 import * as io from "socket.io-client";
-import * as event from "../../../../common/communication/evenementsSocket";
 import { Injectable } from "@angular/core";
 
 @Injectable()

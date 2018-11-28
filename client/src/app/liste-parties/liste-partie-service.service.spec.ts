@@ -4,6 +4,7 @@ import { ListePartieServiceService } from "./liste-partie-service.service";
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from "@angular/common/http/testing";
 import { ErrorHandler } from "@angular/core";
 import { TempsUser } from "../admin/temps-user";
+import * as constantes from "../constantes";
 
 describe("Liste Partie Service Service", () => {
     let service: ListePartieServiceService;
@@ -31,8 +32,8 @@ describe("Liste Partie Service Service", () => {
         it("Devrait faire une requete GET", fakeAsync(() => {
             service.getListePartieSimple().subscribe();
 
-            const req: TestRequest = mockHttp.expectOne("http://localhost:3000/partieSimple/getListePartieSimple");
-            expect(req.request.method).toBe("GET");
+            const req: TestRequest = mockHttp.expectOne(constantes.GET_LISTE_SIMPLE_URL);
+            expect(req.request.method).toBe(constantes.METHODE_GET);
         }));
     });
 
@@ -42,8 +43,8 @@ describe("Liste Partie Service Service", () => {
             service.deletePartieSimple(id)
             .catch(() => ErrorHandler);
 
-            const req: TestRequest = mockHttp.expectOne("http://localhost:3000/partieSimple/delete/" + id);
-            expect(req.request.method).toBe("DELETE");
+            const req: TestRequest = mockHttp.expectOne(constantes.DELETE_PARTIE_SIMPLE_URL + id);
+            expect(req.request.method).toBe(constantes.METHODE_DELETE);
         });
     });
 
@@ -53,8 +54,8 @@ describe("Liste Partie Service Service", () => {
 
             service.reinitialiserTempsPartie(id, new Array<TempsUser>(), new Array<TempsUser>()).catch(() => ErrorHandler);
 
-            const req: TestRequest = mockHttp.expectOne("http://localhost:3000/partieSimple/reinitialiseTemps/" + id);
-            expect(req.request.method).toBe("PUT");
+            const req: TestRequest = mockHttp.expectOne(constantes.REINITIALISER_TEMPS_SIMPLE_URL + id);
+            expect(req.request.method).toBe(constantes.METHODE_PUT);
         });
     });
 
@@ -62,8 +63,8 @@ describe("Liste Partie Service Service", () => {
         it("Devrait faire une requete GET", fakeAsync(() => {
             service.getListePartieMultiple().subscribe();
 
-            const req: TestRequest = mockHttp.expectOne("http://localhost:3000/partieMultiple/getListePartieMultiple");
-            expect(req.request.method).toBe("GET");
+            const req: TestRequest = mockHttp.expectOne(constantes.GET_LISTE_MULTIPLE_URL);
+            expect(req.request.method).toBe(constantes.METHODE_GET);
         }));
     });
 
@@ -73,8 +74,8 @@ describe("Liste Partie Service Service", () => {
             service.deletePartieMultiple(id)
             .catch(() => ErrorHandler);
 
-            const req: TestRequest = mockHttp.expectOne("http://localhost:3000/partieMultiple/delete/" + id);
-            expect(req.request.method).toBe("DELETE");
+            const req: TestRequest = mockHttp.expectOne(constantes.DELETE_PARTIE_MULTIPLE_URL + id);
+            expect(req.request.method).toBe(constantes.METHODE_DELETE);
         });
     });
 
@@ -84,8 +85,8 @@ describe("Liste Partie Service Service", () => {
 
             service.reinitialiserTempsPartieMultiple(id, new Array<TempsUser>(), new Array<TempsUser>()).catch(() => ErrorHandler);
 
-            const req: TestRequest = mockHttp.expectOne("http://localhost:3000/partieMultiple/reinitialiseTemps/" + id);
-            expect(req.request.method).toBe("PUT");
+            const req: TestRequest = mockHttp.expectOne(constantes.REINITIALISER_TEMPS_MULTIPLE_URL + id);
+            expect(req.request.method).toBe(constantes.METHODE_PUT);
         });
     });
 

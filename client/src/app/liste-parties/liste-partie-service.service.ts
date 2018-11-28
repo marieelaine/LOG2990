@@ -78,7 +78,7 @@ export class ListePartieServiceService {
     return this.http.delete<string>(route.DELETE_PARTIE_MULTIPLE_ATTENTE + partieId);
   }
 
-  public getChannelIdSimple(): Promise<string> {
+  public async getChannelIdSimple(): Promise<string> {
     return this.http.get<string>(route.GET_CHANNEL_ID_SIMPLE).toPromise();
   }
 
@@ -87,18 +87,18 @@ export class ListePartieServiceService {
   }
 
   public async joindrePartieMultijoueurSimple(partieId: string, channelId: string): Promise<void> {
-      this.http.post(route.JOINDRE_PARTIE_MULTIJOUER_SIMPLE, {partieId, channelId}).toPromise();
+      this.http.post(route.JOINDRE_PARTIE_MULTIJOUER_SIMPLE, {partieId, channelId}).toPromise().catch(() => ErrorHandler);
   }
 
   public async joindrePartieMultijoueurMultiple(partieId: string, channelId: string): Promise<void> {
-    this.http.post(route.JOINDRE_PARTIE_MULTIJOUER_MULTIPLE, {partieId, channelId}).toPromise();
+    this.http.post(route.JOINDRE_PARTIE_MULTIJOUER_MULTIPLE, {partieId, channelId}).toPromise().catch(() => ErrorHandler);
   }
 
   public async dialogAttenteSimpleFerme(): Promise<void> {
-    this.http.post(route.DIALOG_ATTENTE_SIMPLE_FERME, {}).toPromise();
+    this.http.post(route.DIALOG_ATTENTE_SIMPLE_FERME, {}).toPromise().catch(() => ErrorHandler);
   }
 
   public async dialogAttenteMultipleFerme(): Promise<void> {
-    this.http.post(route.DIALOG_ATTENTE_MULTIPLE_FERME, {}).toPromise();
+    this.http.post(route.DIALOG_ATTENTE_MULTIPLE_FERME, {}).toPromise().catch(() => ErrorHandler);
   }
 }

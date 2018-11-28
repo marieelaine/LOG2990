@@ -67,14 +67,6 @@ describe("PartieAbstraiteComponent", () => {
         expect(component["partieID"]).toEqual("123");
     });
 
-    it("chrono.getTime devrait retourner 2 lorsque la partie dure 2 secondes", fakeAsync(() => {
-        component["commencerPartie"]();
-        component["isMultijoueur"] = false;
-        tick(TWO_SECONDS_TIMER);
-        component["terminerPartie"]("");
-        expect(component["chrono"].getTime()).toBe(TWO_SECONDS_CHRONO);
-    }));
-
     it("partieCommence should be false true", () => {
     expect(component["partieCommence"]).toBeFalsy();
     });

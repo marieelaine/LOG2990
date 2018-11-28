@@ -5,13 +5,14 @@ import { TempsUser } from "../admin/temps-user";
 import { ErrorHandler } from "@angular/core";
 import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
+import * as constantes from "../constantes";
 
 const QUANTITE_OBJETS: number = 10;
 
 describe("PartieService", () => {
     let service: PartieService;
     let http: HttpTestingController;
-    const responseForm: string = "<form />";
+    const responseForm: string = constantes.RESPONSE_FORM;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -41,8 +42,8 @@ describe("PartieService", () => {
                 partieResponse = response;
 
                 http.expectOne({
-                    url: "http://localhost:3000/partieSimple/getPartieSimple/" + id,
-                    method: "GET"
+                    url: constantes.GET_PARTIE_SIMPLE + id,
+                    method: constantes.METHODE_GET
                 }).flush(responseForm);
 
                 expect(partieResponse).toEqual(partie);
@@ -64,8 +65,8 @@ describe("PartieService", () => {
                 partieResponse = response;
 
                 http.expectOne({
-                    url: "http://localhost:3000/partieMultiple/getPartieMultiple/" + id,
-                    method: "GET"
+                    url: constantes.GET_PARTIE_MULTIPLE + id,
+                    method: constantes.METHODE_GET
                 }).flush(responseForm);
 
                 expect(partieResponse).toEqual(partie);
@@ -81,8 +82,8 @@ describe("PartieService", () => {
             service.reinitialiserTempsPartieSimple(id, new Array<TempsUser>(), new Array<TempsUser>())
                 .catch(() => ErrorHandler);
 
-            const req: TestRequest = http.expectOne("http://localhost:3000/partieSimple/reinitialiseTemps/" + id);
-            expect(req.request.method).toBe("PUT");
+            const req: TestRequest = http.expectOne(constantes.REINITIALISER_TEMPS_SIMPLE_URL + id);
+            expect(req.request.method).toBe(constantes.METHODE_PUT);
         });
     });
 

@@ -5,7 +5,6 @@ import { PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
 import { PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
-import { DialogFinPartieComponent } from "../dialog-fin-partie/dialog-fin-partie.component";
 import { MatDialog } from "@angular/material";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
@@ -91,7 +90,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
 
     protected differenceTrouver(i: number, src: string): void {
         src === "_imageDiff1" ? this.diffTrouvee[0].push(i) : this.diffTrouvee[1].push(i);
-        this.trouverDifferenceMultiple();
+        this.trouverDifferenceMultiple().catch(() => ErrorHandler);
         this.restaurationPixelsMultiple(i, src);
         this.ajouterMessageDiffTrouvee("");
     }
@@ -155,7 +154,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     private setSocketEvents(): void {
         this.socketClientService.socket.on(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE, (data) => {
             if (this.channelId === data.channelId) {
-                this.differenceTrouverMultijoueurMultiple(data.diff, data.source, data.joueur);
+                this.differenceTrouverMultijoueurMultiple(data.diff, data.source, data.joueur).catch(() => ErrorHandler);
             }
         });
 

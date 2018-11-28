@@ -88,7 +88,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
     private async checkJoindreOuSupprimer(partieId: string): Promise<void> {
         if (this.listePartieEnAttente.includes(partieId)) {
             const channelId: string = await this.getChannelId();
-            this.listePartieService.joindrePartieMultijoueurMultiple(partieId, channelId);
+            this.listePartieService.joindrePartieMultijoueurMultiple(partieId, channelId).catch(() => ErrorHandler);
             this.router.navigate(["/partie-multiple/" + partieId + "/" + channelId])
             .catch(() => ErrorHandler);
         } else {
