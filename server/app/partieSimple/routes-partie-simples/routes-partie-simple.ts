@@ -1,6 +1,5 @@
 import { injectable, inject } from "inversify";
 import { Router, Request, Response } from "express";
-
 import { ServiceWeb } from "../../serviceWeb";
 import Types from "../../types";
 import { DBPartieSimple } from "../DB-partie-simple/DB-partie-simple";
@@ -38,7 +37,6 @@ export class RoutesPartieSimple extends ServiceWeb {
         });
 
         // router.get("/:id", async (req: Request, res: Response) => {
-        //     console.log("Routes3");
         //     await this.partieSimple.requetePartieId(req, res);
         // });
 
@@ -47,27 +45,11 @@ export class RoutesPartieSimple extends ServiceWeb {
         });
 
         router.get("/getChannelIdSimple", (req: Request, res: Response) => {
-            this.partieSimple.requeteGetlisteChannelsMultijoueur(req, res);
+            this.partieSimple.requeteGetChannelId(req, res);
         });
 
-        router.post("/addChannelMultijoueurSimple", (req: Request, res: Response) => {
-            this.partieSimple.requeteAjouterChannelMultijoueur(req, res);
-        });
-
-        router.post("/differenceTrouveeMultijoueurSimple", (req: Request, res: Response) => {
-            this.partieSimple.requeteEnvoyerDiffTrouveeSimple(req, res);
-        });
-
-        router.post("/joindrePartieMultijoueurSimple", (req: Request, res: Response) => {
-            this.partieSimple.requeteEnvoyerJoindreSimple(req, res);
-        });
-
-        router.post("/partieTermineeMultijoueurSimple", (req: Request, res: Response) => {
-            this.partieSimple.requeteEnvoyerPartieSimpleTerminee(req, res);
-        });
-
-        router.post("/erreurMultijoueurSimple", (req: Request, res: Response) => {
-            this.partieSimple.requeteErreurSimple(req, res);
+        router.post("/supprimerChannelIdSimple", (req: Request, res: Response) => {
+            this.partieSimple.requetesupprimerChannelId(req, res);
         });
 
         return router;

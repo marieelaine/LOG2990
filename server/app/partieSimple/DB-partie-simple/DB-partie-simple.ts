@@ -58,42 +58,6 @@ export class DBPartieSimple extends DBPartieAbstract {
         }
     }
 
-    public requeteEnvoyerDiffTrouveeSimple(req: Request, res: Response): void {
-        try {
-            this.socket.envoyerDiffPartieSimple(req.body.channelId, req.body.diff, req.body.joueur);
-            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
-        } catch (err) {
-            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
-        }
-    }
-
-    public requeteEnvoyerJoindreSimple(req: Request, res: Response): void {
-        try {
-            this.socket.envoyerJoindreSimple(req.body.partieId, req.body.channelId);
-            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
-        } catch (err) {
-            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
-        }
-    }
-
-    public requeteEnvoyerPartieSimpleTerminee(req: Request, res: Response): void {
-        try {
-            this.socket.envoyerPartieSimpleTerminee(req.body.channelId, req.body.joueur);
-            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
-        } catch (err) {
-            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
-        }
-    }
-
-    public requeteErreurSimple(req: Request, res: Response): void {
-        try {
-            this.socket.erreurSimple(req.body.channelId, req.body.joueur, req.body.ev);
-            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
-        } catch (err) {
-            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
-        }
-    }
-
     protected CreateSchemaArray(): void {
         this.schemaArray = new Schema({
             _nomPartie: { type: String, required: true, unique: true },

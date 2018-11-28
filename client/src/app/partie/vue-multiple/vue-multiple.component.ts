@@ -48,6 +48,10 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         });
     }
 
+    protected async supprimerChannelId(): Promise<void> {
+        this.partieService.supprimerChannelIdMultiple(this.partieID);
+    }
+
     protected getImageData(): void {
         this.imageData.push(atob(String(this.partie["_image1PV1"][0])));
         this.imageData.push(atob(String(this.partie["_image1PV2"][0])));
@@ -155,10 +159,10 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
             }
         });
 
-        this.socketClientService.socket.on(event.PARTIE_MULTIPLE_MULTIJOUEUR_TERMINEE, (data) => {
+        this.socketClientService.socket.on(event.PARTIE_MULTIPLE_MULTIJOUEUR_TERMINEE, async(data) => {
             if (this.channelId === data.channelId) {
                 this.partieCommence = false;
-                this.terminerPartie(data.joueur);
+                await this.terminerPartie(data.joueur);
             }
         });
 

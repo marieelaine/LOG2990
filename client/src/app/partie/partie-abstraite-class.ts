@@ -70,6 +70,8 @@ export abstract class PartieAbstraiteClass {
 
     protected abstract ajouterTemps(partieID: string, tempsUser: TempsUser, isSolo: boolean): void;
 
+    protected async abstract supprimerChannelId(): Promise<void>;
+
     protected ouvrirDialogFinPartie(msg: string): void {
         this.dialog.open(DialogFinPartieComponent, {
             height: "190px",
@@ -114,11 +116,11 @@ export abstract class PartieAbstraiteClass {
             : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Différence trouvée.");
     }
 
-    protected terminerPartie(gagnant: string): void {
-        this.isMultijoueur ? this.partieMultijoueurTerminee(gagnant) : this.partieSoloTerminee();
+    protected async terminerPartie(gagnant: string): Promise<void> {
+        this.isMultijoueur ? await this.partieMultijoueurTerminee(gagnant) : this.partieSoloTerminee();
     }
 
-    protected partieMultijoueurTerminee(gagnant: string): void {
+    protected async partieMultijoueurTerminee(gagnant: string): Promise<void> {
         this.chrono.stopTimer();
 
         if (this.joueurMultijoueur === gagnant) {
@@ -126,8 +128,9 @@ export abstract class PartieAbstraiteClass {
             const tempsUser: TempsUser =  new TempsUser(gagnant, this.chrono.getTime());
             this.joueurApplaudissements();
             this.ajouterTemps(this.partieID, tempsUser, false);
+            await this.supprimerChannelId();
         } else {
-            this.messageDifferences = "PUTAIN T'AS PERDU MEC!";
+            this.messageDifferences = "VOUS AVEZ PERDU!";
             this.joueurLoserSound();
         }
         this.ouvrirDialogFinPartie(this.messageDifferences);
@@ -168,10 +171,10 @@ export abstract class PartieAbstraiteClass {
         this.audio.play().catch(() => ErrorHandler);
     }
 
-    protected terminerPartieSolo(): void {
+    protected async terminerPartieSolo(): Promise<void> {
         if (this.differenceRestantes === this.differencesTrouvees) {
             this.partieCommence = false;
-            this.terminerPartie("");
+            await this.terminerPartie("");
         }
     }
 

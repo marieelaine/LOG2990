@@ -67,42 +67,6 @@ export class DBPartieMultiple extends DBPartieAbstract {
         }
     }
 
-    public requeteEnvoyerJoindreMultiple(req: Request, res: Response): void {
-        try {
-            this.socket.envoyerJoindreMultiple(req.body.partieId, req.body.channelId);
-            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
-        } catch (err) {
-            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
-        }
-    }
-
-    public requeteEnvoyerDiffTrouveeMultiple(req: Request, res: Response): void {
-        try {
-            this.socket.envoyerDiffPartieMultiple(req.body.channelId, req.body.diff, req.body.source, req.body.joueur);
-            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
-        } catch (err) {
-            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
-        }
-    }
-
-    public requeteEnvoyerPartieMultipleTerminee(req: Request, res: Response): void {
-        try {
-            this.socket.envoyerPartieMultipleTerminee(req.body.channelId, req.body.joueur);
-            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
-        } catch (err) {
-            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
-        }
-    }
-
-    public requeteErreurMultiple(req: Request, res: Response): void {
-        try {
-            this.socket.erreurMultiple(req.body.channelId, req.body.joueur, req.body.ev);
-            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
-        } catch (err) {
-            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
-        }
-    }
-
     protected CreateSchemaBuffer(): void {
             this.schemaBuffer = new Schema({
                 _nomPartie: { type: String, required: true, unique: true, },

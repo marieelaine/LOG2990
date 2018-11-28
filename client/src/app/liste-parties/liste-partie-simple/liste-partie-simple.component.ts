@@ -86,12 +86,9 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
         }
     }
 
-    private async getChannelId(): Promise<string> {
-        const channelId: string = await this.listePartieService.getChannelIdSimple();
-        await this.listePartieService.ajouterChannelMultijoueurSimple(channelId);
-
-        return channelId;
-    }
+  private async getChannelId(): Promise<string> {
+    return this.listePartieService.getChannelIdSimple();
+  }
 
     private ouvrirDialogVueAttente(partieId: string): void {
         this.dialog.open(DialogVueAttenteComponent, {

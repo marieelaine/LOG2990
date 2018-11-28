@@ -28,6 +28,7 @@ class AbstractClassInstance extends PartieAbstraiteClass {
     protected ajouterTemps(partieID: string, tempsUser: TempsUser, isSolo: boolean): void {}
     protected setPartie(): void {}
     protected getImageData(): void {}
+    protected async supprimerChannelId(): Promise<void> {}
 }
 
 describe("PartieAbstraiteComponent", () => {
