@@ -4,7 +4,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { MatCardModule, MatDialog } from "@angular/material";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
-import {CookieService} from "ngx-cookie-service";
+import { CookieService } from "ngx-cookie-service";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 
 describe("VueMultipleComponent", () => {
