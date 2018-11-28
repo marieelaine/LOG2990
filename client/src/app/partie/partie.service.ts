@@ -70,4 +70,12 @@ export class PartieService {
     public async erreurMultijoueurMultiple(channelId: string, joueur: string): Promise<void> {
         this.http.post(route.ERREUR_MULTIJOUEUR_MULTIPLE, {channelId, joueur}).toPromise();
     }
+
+    public async supprimerChannelIdSimple(channelId: string): Promise<void> {
+        this.http.post(route.SUPPRIMER_CHANNEL_ID_SIMPLE, {channelId}).toPromise();
+    }
+
+    public async supprimerChannelIdMultiple(channelId: string): Promise<void> {
+        this.http.post(route.SUPPRIMER_CHANNEL_ID_MULTIPLE, {channelId}).toPromise();
+    }
 }

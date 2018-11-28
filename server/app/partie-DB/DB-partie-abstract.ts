@@ -55,6 +55,18 @@ export abstract class DBPartieAbstract {
       res.send(await this.getPartieById(req.params.id));
     }
 
+    public requetesupprimerChannelId(req: Request, res: Response): void {
+      for (let i: number = 0 ; i < this.listeChannelsMultijoueur.length ; i++) {
+        if (this.listeChannelsMultijoueur[i] === req.body.channelId) {
+          this.listeChannelsMultijoueur.splice(i, 1);
+          res.status(constantes.HTTP_CREATED).json(req.body.channelId);
+
+          return;
+        }
+      }
+      res.status(constantes.HTTP_NOT_IMPLEMENTED).json(constantes.ID_NON_TROUVE);
+    }
+
     public requeteGetChannelId(req: Request, res: Response): void {
       try {
         const id: string = this.getChannelId();
@@ -63,15 +75,6 @@ export abstract class DBPartieAbstract {
       } catch (err) {
         res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
       }
-    }
-
-    public requeteAjouterChannelMultijoueur(req: Request, res: Response): void {
-        try {
-          this.listeChannelsMultijoueur.push(req.body.channelId);
-          res.status(constantes.HTTP_CREATED).json(this.listeChannelsMultijoueur[this.listeChannelsMultijoueur.length]);
-        } catch (err) {
-          res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
-        }
     }
 
     public async requeteReinitialiserTemps(req: Request, res: Response): Promise<void> {

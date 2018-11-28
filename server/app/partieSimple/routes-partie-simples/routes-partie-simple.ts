@@ -48,8 +48,8 @@ export class RoutesPartieSimple extends ServiceWeb {
             this.partieSimple.requeteGetChannelId(req, res);
         });
 
-        router.post("/addChannelMultijoueurSimple", (req: Request, res: Response) => {
-            this.partieSimple.requeteAjouterChannelMultijoueur(req, res);
+        router.post("/supprimerChannelIdSimple", (req: Request, res: Response) => {
+            this.partieSimple.requetesupprimerChannelId(req, res);
         });
 
         return router;

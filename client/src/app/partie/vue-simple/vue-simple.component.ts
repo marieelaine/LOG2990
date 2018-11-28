@@ -37,6 +37,10 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
             .catch(() => ErrorHandler);
     }
 
+    protected async supprimerChannelId(): Promise<void> {
+        await this.partieService.supprimerChannelIdSimple(this.channelId);
+    }
+
     protected setPartie(): void {
         this.partieService.getPartieSimple(this.partieID).subscribe((res: PartieSimple) => {
             this.partie = res;
@@ -137,10 +141,10 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
             }
         });
 
-        this.socketClientService.socket.on(event.PARTIE_SIMPLE_MULTIJOUEUR_TERMINEE, (data) => {
+        this.socketClientService.socket.on(event.PARTIE_SIMPLE_MULTIJOUEUR_TERMINEE, async (data) => {
             if (this.channelId === data.channelId) {
                 this.partieCommence = false;
-                this.terminerPartie(data.joueur);
+                await this.terminerPartie(data.joueur);
             }
         });
 
