@@ -29,19 +29,19 @@ export const GET_PARTIE_MULTIPLE: string = BASE_URL + MULTIPLE + "getPartieMulti
 export const ADD_TEMPS_PARTIE_SIMPLE: string = BASE_URL + SIMPLE + "addTempsPartieSimple/";
 export const ADD_TEMPS_PARTIE_MULTIPLE: string = BASE_URL + SIMPLE + "addTempsPartieMultiple/";
 
-export const GET_CHANNEL_ID_SIMPLE: string = BASE_URL + SIMPLE + "/getChannelIdSimple";
-export const AJOUTER_CHANNEL_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "/addChannelMultijoueurSimple";
-export const DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "/differenceTrouveeMultijoueurSimple";
-export const JOINDRE_PARTIE_MULTIJOUER_SIMPLE: string = BASE_URL + SIMPLE + "/joindrePartieMultijoueurSimple";
-export const PARTIE_TERMINEE_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "/partieTermineeMultijoueurSimple";
-export const ERREUR_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "/erreurMultijoueurSimple";
+export const GET_CHANNEL_ID_SIMPLE: string = BASE_URL + SIMPLE + "getChannelIdSimple";
+export const DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "differenceTrouveeMultijoueurSimple";
+export const JOINDRE_PARTIE_MULTIJOUER_SIMPLE: string = BASE_URL + SIMPLE + "joindrePartieMultijoueurSimple";
+export const PARTIE_TERMINEE_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "partieTermineeMultijoueurSimple";
+export const ERREUR_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "erreurMultijoueurSimple";
+export const SUPPRIMER_CHANNEL_ID_SIMPLE: string = BASE_URL + SIMPLE + "supprimerChannelIdSimple";
 
-export const GET_CHANNEL_ID_MULTIPLE: string = BASE_URL + MULTIPLE + "/getChannelIdMultiple";
-export const AJOUTER_CHANNEL_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/addChannelMultijoueurMultiple";
-export const DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/differenceTrouveeMultijoueurMultiple";
-export const JOINDRE_PARTIE_MULTIJOUER_MULTIPLE: string = BASE_URL + MULTIPLE + "/joindrePartieMultijoueurMultiple";
-export const PARTIE_TERMINEE_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/partieTermineeMultijoueurMultiple";
-export const ERREUR_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "/erreurMultijoueurMultiple";
+export const GET_CHANNEL_ID_MULTIPLE: string = BASE_URL + MULTIPLE + "getChannelIdMultiple";
+export const DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "differenceTrouveeMultijoueurMultiple";
+export const JOINDRE_PARTIE_MULTIJOUER_MULTIPLE: string = BASE_URL + MULTIPLE + "joindrePartieMultijoueurMultiple";
+export const PARTIE_TERMINEE_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "partieTermineeMultijoueurMultiple";
+export const ERREUR_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "erreurMultijoueurMultiple";
+export const SUPPRIMER_CHANNEL_ID_MULTIPLE: string = BASE_URL + MULTIPLE + "supprimerChannelIdMultiple";
 
 export const AJOUTER_USERS_URL: string = BASE_URL + USERS + "ajouter/";
 export const DELETE_USERS_URL: string = BASE_URL + USERS + "delete/";

@@ -19,7 +19,7 @@ export class DialogFinPartieComponent {
   ) {
     this.message = data.message;
     dialogRef.disableClose = true;
-    if (this.message === "PUTAIN T'AS PERDU MEC!") {
+    if (this.message === "VOUS AVEZ PERDU!") {
       this.content = "Veux-tu rejouer pour regagner ton honneur?";
     }
    }

@@ -82,16 +82,8 @@ export class ListePartieServiceService {
     return this.http.get<string>(route.GET_CHANNEL_ID_SIMPLE).toPromise();
   }
 
-  public async ajouterChannelMultijoueurSimple(channelId: string): Promise<string> {
-      return this.http.post<string>(route.AJOUTER_CHANNEL_MULTIJOUEUR_SIMPLE, { channelId }).toPromise();
-  }
-
   public async getChannelIdMultiple(): Promise<string> {
-    return this.http.get<string>(route.GET_CHANNEL_ID_SIMPLE).toPromise();
-  }
-
-  public async ajouterChannelMultijoueurMultiple(channelId: string): Promise<string> {
-      return this.http.post<string>(route.AJOUTER_CHANNEL_MULTIJOUEUR_SIMPLE, { channelId }).toPromise();
+    return this.http.get<string>(route.GET_CHANNEL_ID_MULTIPLE).toPromise();
   }
 
   public async joindrePartieMultijoueurSimple(partieId: string, channelId: string): Promise<void> {

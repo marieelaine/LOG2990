@@ -13,6 +13,8 @@ import { RoutesPartieSimpleAttente } from "./partieSimple/partie-simple-attente/
 import { RoutesUser } from "./user/routes-user";
 import { DBUser } from "./user/DB-user";
 import { RoutesPartieMultipleAttente } from "./partieMultiple/partie-multiple-attente/partie-multiple-attente";
+import { PartieMultipleMultijoueur } from "./partieMultiple/partie-multiple-multijoueur/partie-multiple-multijoueur";
+import { PartieSimpleMultijoueur } from "./partieSimple/partie-simple-multijoueur/partie-simple-multijoueur";
 
 const container: Container = new Container();
 
@@ -28,6 +30,9 @@ container.bind(Types.PartieSimple).to(DBPartieSimple);
 
 container.bind(Types.RoutesPartieMultiple).to(RoutesPartieMultiple);
 container.bind(Types.PartieMultiple).to(DBPartieMultiple);
+
+container.bind(Types.PartieMultipleMultijoueur).to(PartieMultipleMultijoueur);
+container.bind(Types.PartieSimpleMultijoueur).to(PartieSimpleMultijoueur);
 
 container.bind(Types.RoutesUser).to(RoutesUser);
 
