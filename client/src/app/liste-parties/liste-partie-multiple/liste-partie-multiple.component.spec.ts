@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from "@angular/core/testing";
 import { ListePartieMultipleComponent } from "./liste-partie-multiple.component";
-import {CUSTOM_ELEMENTS_SCHEMA, ErrorHandler} from "@angular/core";
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, ErrorHandler} from "@angular/core";
 import { RouterTestingModule } from "@angular/router/testing";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ListePartieServiceService } from "../liste-partie-service.service";
@@ -62,12 +62,13 @@ describe("ListePartieMultipleComponent", () => {
                 BrowserAnimationsModule
             ],
             schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
+                CUSTOM_ELEMENTS_SCHEMA,
+                NO_ERRORS_SCHEMA
             ],
             providers: [
                 { provide: ListePartieServiceService, useValue: mockListePartieService },
                 { provide: MAT_DIALOG_DATA, useValue: {} },
-                SocketClientService
+                SocketClientService,
             ]
         });
 

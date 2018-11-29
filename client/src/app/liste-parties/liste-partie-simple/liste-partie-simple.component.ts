@@ -1,4 +1,4 @@
-import {Component, OnInit, ErrorHandler} from "@angular/core";
+import {Component, OnInit, AfterContentChecked, ErrorHandler} from "@angular/core";
 import {ListePartiesComponent} from "../liste-parties.component";
 import {Router} from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -17,7 +17,7 @@ import {DialogVueAttenteComponent} from "../dialog-vue-attente/dialog-vue-attent
     providers: [SocketClientService]
 })
 
-export class ListePartieSimpleComponent extends ListePartiesComponent implements OnInit {
+export class ListePartieSimpleComponent extends ListePartiesComponent implements OnInit, AfterContentChecked {
 
     protected listeParties: PartieSimple[];
     protected listePartieEnAttente: string[];
@@ -35,15 +35,18 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     public ngOnInit(): void {
         this.listePartieService.getListePartieSimple().subscribe((res: PartieSimple[]) => {
             this.listeParties = res;
-            for (const partie of this.listeParties) {
-                this.afficherImage(partie["_id"]);
-            }
         });
         this.listePartieService.getListePartieSimpleEnAttente().subscribe((res: string[]) => {
             this.listePartieEnAttente = res;
         });
 
         this.ajouterPartieSurSocketEvent();
+    }
+
+    public ngAfterContentChecked(): void  {
+        for (const partie of this.listeParties) {
+            this.afficherImage(partie["_id"]);
+        }
     }
 
     protected afficherImage(id: string): void {

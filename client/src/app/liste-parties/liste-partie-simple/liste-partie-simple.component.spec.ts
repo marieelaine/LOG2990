@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from "@angular/core/testing";
-import { CUSTOM_ELEMENTS_SCHEMA, ErrorHandler } from "@angular/core";
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, ErrorHandler } from "@angular/core";
 import { RouterTestingModule } from "@angular/router/testing";
 import { Location } from "@angular/common";
 import { ListePartieSimpleComponent } from "./liste-partie-simple.component";
@@ -51,11 +51,12 @@ describe("Liste Partie Simple Component", () => {
                 MatDialogModule
             ],
             schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
+                CUSTOM_ELEMENTS_SCHEMA,
+                NO_ERRORS_SCHEMA
             ],
             providers: [
                 { provide: ListePartieServiceService, useValue: mockListePartieService },
-                SocketClientService,
+                SocketClientService
             ]
         });
 
