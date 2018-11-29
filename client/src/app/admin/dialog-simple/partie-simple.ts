@@ -22,6 +22,7 @@ export class PartieSimple {
       if (id) {
           this._id = id;
       }
+      this._imageBlob = "";
 
     }
   }

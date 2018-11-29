@@ -4,7 +4,7 @@ import {ListePartieServiceService} from "./liste-partie-service.service";
 import {PartieMultiple} from "../admin/dialog-multiple/partie-multiple";
 import {PartieSimple} from "../admin/dialog-simple/partie-simple";
 import { TempsUser } from "../admin/temps-user";
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from "@angular/platform-browser";
+import { DomSanitizer } from "@angular/platform-browser";
 
 const NB_SECONDES: number = 60;
 const DISPLAY: number = 10;
