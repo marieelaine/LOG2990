@@ -4,6 +4,7 @@ import {ListePartieServiceService} from "./liste-partie-service.service";
 import {PartieMultiple} from "../admin/dialog-multiple/partie-multiple";
 import {PartieSimple} from "../admin/dialog-simple/partie-simple";
 import { TempsUser } from "../admin/temps-user";
+import { DomSanitizer } from "@angular/platform-browser";
 
 const NB_SECONDES: number = 60;
 const DISPLAY: number = 10;
@@ -32,6 +33,7 @@ export class ListePartiesComponent {
     protected username: string;
 
     public constructor(public router: Router,
+                       public sanitizer: DomSanitizer,
                        public listePartieService: ListePartieServiceService) {
         this.username = "username";
         this.jouerOuReinitialiser = "";
@@ -58,12 +60,7 @@ export class ListePartiesComponent {
                     result[i] = hex;
                 }
                 const blob: Blob = new Blob([result], {type: "image/bmp"});
-                for (const elem of this.image.toArray()) {
-                    if (elem.nativeElement.id === id) {
-                        elem.nativeElement.src = URL.createObjectURL(blob);
-                        break;
-                    }
-                }
+                partie["_imageBlob"] = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
             }
         }
     }

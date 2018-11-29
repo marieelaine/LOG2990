@@ -1,10 +1,12 @@
 import { TempsUser } from "../temps-user";
+import { SafeResourceUrl } from "@angular/platform-browser";
 
 export class PartieMultiple {
     protected _id: string;
     protected _nomPartie: string;
     protected _tempsSolo: Array<TempsUser>;
     protected _tempsUnContreUn: Array<TempsUser>;
+    protected _imageBlob: SafeResourceUrl;
     protected _image1PV1: Buffer;
     protected _image1PV2: Buffer;
     protected _image2PV1: Buffer;
@@ -34,6 +36,7 @@ export class PartieMultiple {
       if (id) {
           this._id = id;
       }
+      this._imageBlob = "";
 
     }
   }

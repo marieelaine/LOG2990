@@ -1,6 +1,7 @@
-import {Component, OnInit, ErrorHandler} from "@angular/core";
+import {Component, OnInit, ErrorHandler, AfterContentChecked} from "@angular/core";
 import {ListePartiesComponent} from "../liste-parties.component";
 import {Router} from "@angular/router";
+import {DomSanitizer} from "@angular/platform-browser";
 import {ListePartieServiceService} from "../liste-partie-service.service";
 import {PartieMultiple} from "src/app/admin/dialog-multiple/partie-multiple";
 import {DialogConfirmationComponent} from "../dialog-confirmation/dialog-confirmation.component";
@@ -15,16 +16,17 @@ import {DialogVueAttenteComponent} from "../dialog-vue-attente/dialog-vue-attent
     styleUrls: ["./liste-partie-multiple.component.css"],
     providers: [SocketClientService]
 })
-export class ListePartieMultipleComponent extends ListePartiesComponent implements OnInit {
+export class ListePartieMultipleComponent extends ListePartiesComponent implements OnInit, AfterContentChecked {
 
     protected listeParties: PartieMultiple[];
     protected listePartieEnAttente: string[];
 
     public constructor(public router: Router,
+                       public sanitizer: DomSanitizer,
                        public listePartieService: ListePartieServiceService,
                        public socketClientService: SocketClientService,
                        private dialog: MatDialog) {
-        super(router, listePartieService);
+        super(router, sanitizer, listePartieService);
         this.listeParties = [];
         this.listePartieEnAttente = [];
     }
@@ -37,6 +39,12 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
             this.listePartieEnAttente = res;
         });
         this.ajouterPartieSurSocketEvent();
+    }
+
+    public ngAfterContentChecked(): void {
+        for (const partie of this.listeParties) {
+            this.afficherImage(partie["_id"]);
+        }
     }
 
     protected afficherImage(id: string): void {

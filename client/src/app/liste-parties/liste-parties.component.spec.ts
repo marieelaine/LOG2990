@@ -9,6 +9,7 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { AdminComponent } from "../admin/admin.component";
 import { VueSimpleComponent } from "../partie/vue-simple/vue-simple.component";
 import { TempsUser } from "../admin/temps-user";
+import { DomSanitizer, BrowserModule } from "@angular/platform-browser";
 
 describe("ListePartiesComponent", () => {
     let component: ListePartiesComponent;
@@ -34,12 +35,11 @@ describe("ListePartiesComponent", () => {
                     { path: "partie-solo", component: VueSimpleComponent },
                     { path: "admin", component: AdminComponent },
                 ]),
-                HttpClientTestingModule,
-                MatDialogModule,
-                MatMenuModule
+                HttpClientTestingModule, MatDialogModule, MatMenuModule, BrowserModule
             ],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: {} },
+                { provide: DomSanitizer, useValue: { sanitize: () => "safeString", bypassSecurityTrustHtml : () => "safestring" }},
             ]
         });
         fixture = TestBed.createComponent(ListePartiesComponent);
