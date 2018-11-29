@@ -16,6 +16,7 @@ describe("DialogVueAttenteComponent", () => {
     beforeEach(() => {
         mockListePartieService = jasmine.createSpyObj([
             "deletePartieSimpleEnAttente",
+            "deletePartieMultipleEnAttente"
         ]);
 
         TestBed.configureTestingModule({
