@@ -91,7 +91,7 @@ describe("ListePartieMultipleComponent", () => {
             expect(mockListePartieService["getListePartieMultiple"]).toHaveBeenCalledTimes(1);
             expect(component["listeParties"]).toEqual(parties);
         });
-        it("Devrait apeller la fonction getListePartieMultiple du service", () => {
+        it("Devrait apeller la fonction getListePartieMultipleEnAttente du service", () => {
             mockListePartieService["getListePartieMultiple"].and.returnValue(of(parties));
             mockListePartieService["getListePartieMultipleEnAttente"].and.returnValue(of(listePartieEnAttente));
 
