@@ -53,7 +53,7 @@
                      </div>
                 </div>
                 <div class='col-sm-5'>
-                    <img #image src='' id="{{partieMultiple['_id']}}" class='gameImage img-responsive mat-elevation-z6 center'
+                    <img #image [src]="partieMultiple['_imageBlob']" [id]="partieMultiple['_id']" class='gameImage img-responsive mat-elevation-z6 center'
                         [class.mat-elevation-z6]="!partieMultiple.isElevatedActive"
                         [class.mat-elevation-z10]="!!partieMultiple.isElevatedActive">
                 </div> 
@@ -66,5 +66,4 @@
                 </div>
         </mat-card>  
         <br>
-        {{this.afficherImage(partieMultiple["_id"])}}
     </div>

@@ -1,10 +1,12 @@
 import { TempsUser } from "../temps-user";
+import { SafeResourceUrl } from "@angular/platform-browser";
 
 export class PartieSimple {
     protected _id: string;
     protected _nomPartie: string;
     protected _tempsSolo: Array<TempsUser>;
     protected _tempsUnContreUn: Array<TempsUser>;
+    protected _imageBlob: SafeResourceUrl;
     protected _image1: Buffer;
     protected _image2: Buffer;
     public _imageDiff: Array<Array<string>>;

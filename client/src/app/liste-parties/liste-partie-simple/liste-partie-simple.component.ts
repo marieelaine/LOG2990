@@ -1,6 +1,7 @@
 import {Component, OnInit, ErrorHandler} from "@angular/core";
 import {ListePartiesComponent} from "../liste-parties.component";
 import {Router} from "@angular/router";
+import { DomSanitizer } from "@angular/platform-browser";
 import {ListePartieServiceService} from "../liste-partie-service.service";
 import {PartieSimple} from "../../admin/dialog-simple/partie-simple";
 import {MatDialog} from "@angular/material";
@@ -22,10 +23,11 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     protected listePartieEnAttente: string[];
 
     public constructor(public router: Router,
+                       public sanitizer: DomSanitizer,
                        public listePartieService: ListePartieServiceService,
                        public socketClientService: SocketClientService,
                        private dialog: MatDialog) {
-        super(router, listePartieService);
+        super(router, sanitizer, listePartieService);
         this.listeParties = [];
         this.listePartieEnAttente = [];
     }
@@ -33,10 +35,14 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     public ngOnInit(): void {
         this.listePartieService.getListePartieSimple().subscribe((res: PartieSimple[]) => {
             this.listeParties = res;
+            for (const partie of this.listeParties) {
+                this.afficherImage(partie["_id"]);
+            }
         });
         this.listePartieService.getListePartieSimpleEnAttente().subscribe((res: string[]) => {
             this.listePartieEnAttente = res;
         });
+
         this.ajouterPartieSurSocketEvent();
     }
 

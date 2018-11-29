@@ -1,6 +1,7 @@
 import {Component, OnInit, ErrorHandler} from "@angular/core";
 import {ListePartiesComponent} from "../liste-parties.component";
 import {Router} from "@angular/router";
+import {DomSanitizer} from "@angular/platform-browser";
 import {ListePartieServiceService} from "../liste-partie-service.service";
 import {PartieMultiple} from "src/app/admin/dialog-multiple/partie-multiple";
 import {DialogConfirmationComponent} from "../dialog-confirmation/dialog-confirmation.component";
@@ -21,10 +22,11 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
     protected listePartieEnAttente: string[];
 
     public constructor(public router: Router,
+                       public sanitizer: DomSanitizer,
                        public listePartieService: ListePartieServiceService,
                        public socketClientService: SocketClientService,
                        private dialog: MatDialog) {
-        super(router, listePartieService);
+        super(router, sanitizer, listePartieService);
         this.listeParties = [];
         this.listePartieEnAttente = [];
     }
@@ -32,6 +34,9 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
     public ngOnInit(): void {
         this.listePartieService.getListePartieMultiple().subscribe((res: PartieMultiple[]) => {
             this.listeParties = res;
+            for (const partie of this.listeParties) {
+                this.afficherImage(partie["_id"]);
+            }
         });
         this.listePartieService.getListePartieMultipleEnAttente().subscribe((res: string[]) => {
             this.listePartieEnAttente = res;
