@@ -27,7 +27,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                        protected cookieService: CookieService,
                        protected chrono: ChronoService,
                        protected dialog: MatDialog) {
-        super(route, partieService, cookieService, chrono, socketClientService, dialog, true);
+        super(route, partieService, cookieService, chrono, dialog, true);
         this.partieAttributsAdmin.differenceRestantes = constantes.DIFF_PARTIE_SIMPLE;
         this.setSocketEvents();
     }

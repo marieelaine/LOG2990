@@ -29,7 +29,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                        protected cookieService: CookieService,
                        protected chrono: ChronoService,
                        protected dialog: MatDialog) {
-        super(route, partieService, cookieService, chrono, socketClientService, dialog, false);
+        super(route, partieService, cookieService, chrono, dialog, false);
         this.partieAttributsAdmin.differenceRestantes = constantes.DIFF_PARTIE_MULTIPLE;
         this.setSocketEvents();
     }

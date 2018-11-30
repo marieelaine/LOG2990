@@ -8,7 +8,6 @@ import {ChatComponent} from "../chat/chat.component";
 import {CookieService} from "ngx-cookie-service";
 import {TempsUser} from "../admin/temps-user";
 import * as constantes from "../constantes";
-import {SocketClientService} from "../socket/socket-client.service";
 import {MatDialog} from "@angular/material";
 import {DialogFinPartieComponent} from "./dialog-fin-partie/dialog-fin-partie.component";
 import {PartieAttributsData} from "./partie-attributs-data/partie-attributs-data";
@@ -36,7 +35,6 @@ export abstract class PartieAbstraiteClass {
                        protected partieService: PartieService,
                        protected cookieService: CookieService,
                        protected chrono: ChronoService,
-                       protected socketClientService: SocketClientService,
                        protected dialog: MatDialog,
                        isSimple: boolean) {
         this.partieAttributsData = new PartieAttributsData;
@@ -66,7 +64,7 @@ export abstract class PartieAbstraiteClass {
 
     protected async abstract supprimerChannelId(): Promise<void>;
 
-    protected ouvrirDialogFinPartie(msg: string): void {
+    protected ouvrirDialogFinPartie(): void {
         this.dialog.open(DialogFinPartieComponent, {
             height: "190px",
             width: "600px",
@@ -128,14 +126,14 @@ export abstract class PartieAbstraiteClass {
             this.partieAttributsAdmin.messageDifferences = "VOUS AVEZ PERDU!";
             this.joueurLoserSound();
         }
-        this.ouvrirDialogFinPartie(this.partieAttributsAdmin.messageDifferences);
+        this.ouvrirDialogFinPartie();
     }
 
     protected partieSoloTerminee(): void {
         this.chrono.stopTimer();
         const tempsUser: TempsUser = new TempsUser(this.cookieService.get("username"), this.chrono.getTime());
         this.partieAttributsAdmin.messageDifferences = "FÉLICITATIONS!";
-        this.ouvrirDialogFinPartie(this.partieAttributsAdmin.messageDifferences);
+        this.ouvrirDialogFinPartie();
         this.partieAttributsData.audio.src = "../assets/applause.mp3";
         this.partieAttributsData.audio.load();
         this.partieAttributsData.audio.play().catch(() => ErrorHandler);
