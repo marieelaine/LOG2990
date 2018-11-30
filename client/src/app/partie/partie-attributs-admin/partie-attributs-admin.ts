@@ -1,4 +1,4 @@
-export class PartieAdmin {
+export class PartieAttributsAdmin {
     private _partieCommence: boolean;
     private _differenceRestantes: number;
     private _diffTrouvee: number[][];

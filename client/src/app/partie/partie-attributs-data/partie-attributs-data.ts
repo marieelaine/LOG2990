@@ -1,10 +1,19 @@
-export class PartieData {
+export class PartieAttributsData {
 
     private _nbImages: number;
     private _imageData: Array<string>;
     private _image: Array<HTMLImageElement>;
     private _partieID: string;
     private _nomPartie: string;
+    private _audio: HTMLAudioElement;
+
+    public get audio(): HTMLAudioElement {
+        return this._audio;
+    }
+
+    public set audio(value: HTMLAudioElement) {
+        this._audio = value;
+    }
 
     public get nbImages(): number {
         return this._nbImages;
