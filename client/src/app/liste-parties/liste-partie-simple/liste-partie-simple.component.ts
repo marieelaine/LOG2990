@@ -1,7 +1,7 @@
 import {Component, OnInit, AfterContentChecked, ErrorHandler} from "@angular/core";
 import {ListePartiesComponent} from "../liste-parties.component";
 import {Router} from "@angular/router";
-import { DomSanitizer } from "@angular/platform-browser";
+import {DomSanitizer} from "@angular/platform-browser";
 import {ListePartieServiceService} from "../liste-partie-service.service";
 import {PartieSimple} from "../../admin/dialog-simple/partie-simple";
 import {MatDialog} from "@angular/material";
@@ -43,7 +43,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
         this.ajouterPartieSurSocketEvent();
     }
 
-    public ngAfterContentChecked(): void  {
+    public ngAfterContentChecked(): void {
         for (const partie of this.listeParties) {
             this.afficherImage(partie["_id"]);
         }
