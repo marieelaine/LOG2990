@@ -39,6 +39,9 @@ export abstract class PartieAbstraiteClass {
                        protected socketClientService: SocketClientService,
                        protected dialog: MatDialog,
                        isSimple: boolean) {
+        this.partieAttributsData = new PartieAttributsData;
+        this.partieAttributsAdmin = new PartieAttributsAdmin;
+        this.partieAttributsMultijoueur = new PartieAttributsMultijoueur;
         this.partieAttributsAdmin.partieCommence = false;
         this.partieAttributsAdmin.differencesTrouvees = 0;
         this.partieAttributsAdmin.messageDifferences = "Chargement des images";

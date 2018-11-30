@@ -48,8 +48,8 @@ describe("PartieAbstraiteComponent", () => {
     describe("start", () => {
         it("devrait initialiser correctement les attributs partieCommence, messageDifferences", () => {
             component["commencerPartie"]();
-            expect(component["partieCommence"]).toEqual(true);
-            expect(component["messageDifferences"]).toEqual("Vous avez trouvé 0 différences");
+            expect(component["partieAttributsAdmin"]["partieCommence"]).toEqual(true);
+            expect(component["partieAttributsAdmin"]["messageDifferences"]).toEqual("Vous avez trouvé 0 différences");
         });
 
         it("devrait appeler chrono.startTimer", () => {
@@ -62,11 +62,11 @@ describe("PartieAbstraiteComponent", () => {
 
     it("setID devrait setter le ID correctement", () => {
         component["setID"]();
-        expect(component["partieID"]).toEqual("123");
+        expect(component["partieAttributsData"]["partieID"]).toEqual("123");
     });
 
     it("partieCommence should be false true", () => {
-    expect(component["partieCommence"]).toBeFalsy();
+    expect(component["partieAttributsAdmin"]["partieCommence"]).toBeFalsy();
     });
 
     it("should return value 0", fakeAsync(() => {
