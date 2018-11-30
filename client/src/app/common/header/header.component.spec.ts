@@ -57,7 +57,7 @@ describe("HeaderComponent", () => {
             const spy: jasmine.Spy = spyOn(component["router"], "navigateByUrl");
             spy.and.callThrough();
 
-            component["OnHeaderTitleClick"]();
+            component["onHeaderTitleClick"]();
             tick();
 
             expect(location.path()).toBe("/liste-parties");

@@ -31,12 +31,12 @@ export class DialogVueAttenteComponent {
         this.ajouterPartieSurSocket();
         this.message = "En attente d'un adversaire";
         this.isEnAttente = true;
-        this.catcheDisconnent();
+        this.changementPage();
     }
 
     protected onDialogClose(): void {
         this.dialogRef.close();
-        this.router.navigate(["/liste-parties/"]).catch(() => ErrorHandler);
+        this.isSimple ? this.deletePartieSimpleAttente() : this.deletePartieMultipleAttente();
     }
 
     private deletePartieSimpleAttente(): void {
@@ -94,8 +94,8 @@ export class DialogVueAttenteComponent {
         });
     }
 
-    private catcheDisconnent(): void {
-        this.socketClientService.socket.on("disconnect", () => {
+    private changementPage(): void {
+        window.addEventListener("beforeunload", () => {
             this.isSimple ? this.deletePartieSimpleAttente() : this.deletePartieMultipleAttente();
         });
     }
