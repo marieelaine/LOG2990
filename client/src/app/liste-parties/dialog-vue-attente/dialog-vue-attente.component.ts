@@ -11,7 +11,7 @@ import * as event from "../../../../../common/communication/evenementsSocket";
     styleUrls: ["./dialog-vue-attente.component.css"]
 })
 
-export class DialogVueAttenteComponent implements OnDestroy {
+export class DialogVueAttenteComponent {
 
     private partieId: string;
     protected message: string;
@@ -31,16 +31,12 @@ export class DialogVueAttenteComponent implements OnDestroy {
         this.ajouterPartieSurSocket();
         this.message = "En attente d'un adversaire";
         this.isEnAttente = true;
-        this.catcheDisconnent();
+        this.changementPage();
     }
-
-    // public ngOnDestroy(): void {
-    //     this.isSimple ? this.deletePartieSimpleAttente() : this.deletePartieMultipleAttente();
-    // }
 
     protected onDialogClose(): void {
         this.dialogRef.close();
-        this.router.navigate(["/liste-parties/"]).catch(() => ErrorHandler);
+        this.isSimple ? this.deletePartieSimpleAttente() : this.deletePartieMultipleAttente();
     }
 
     private deletePartieSimpleAttente(): void {
@@ -98,11 +94,9 @@ export class DialogVueAttenteComponent implements OnDestroy {
         });
     }
 
-    private catcheDisconnent(): void {
-        this.socketClientService.socket.on("disconnect", () => {
+    private changementPage(): void {
+        window.addEventListener("beforeunload", () => {
             this.isSimple ? this.deletePartieSimpleAttente() : this.deletePartieMultipleAttente();
-            // tslint:disable-next-line:no-console
-            console.log("AORAOISDHAIHDAPISHDAPHDA");
         });
     }
 }
