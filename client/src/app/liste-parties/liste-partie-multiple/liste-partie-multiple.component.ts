@@ -43,7 +43,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     public ngAfterContentChecked(): void {
         for (const partie of this.listeParties) {
-            this.afficherImage(partie["_id"]);
+            this.afficherImage(partie.id);
         }
     }
 
@@ -108,10 +108,10 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     protected reinitialiserTemps(partieId: string): void {
         this.listeParties.forEach((partie: PartieMultiple) => {
-            if (partie["_id"] === partieId) {
-                partie["_tempsSolo"] = this.genererTableauTempsAleatoires();
-                partie["_tempsUnContreUn"] = this.genererTableauTempsAleatoires();
-                this.listePartieService.reinitialiserTempsPartieMultiple(partieId, partie["_tempsSolo"], partie["_tempsUnContreUn"])
+            if (partie.id === partieId) {
+                partie.tempsSolo = this.genererTableauTempsAleatoires();
+                partie.tempsUnContreUn = this.genererTableauTempsAleatoires();
+                this.listePartieService.reinitialiserTempsPartieMultiple(partieId, partie.tempsSolo, partie.tempsUnContreUn)
                     .catch(() => ErrorHandler);
             }
         });
