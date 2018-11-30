@@ -72,10 +72,10 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
     protected reinitialiserTemps(partieId: string): void {
         this.listeParties.forEach((partie: PartieSimple) => {
-            if (partie["_id"] === partieId) {
-                partie["_tempsSolo"] = this.genererTableauTempsAleatoires();
-                partie["_tempsUnContreUn"] = this.genererTableauTempsAleatoires();
-                this.listePartieService.reinitialiserTempsPartie(partieId, partie["_tempsSolo"], partie["_tempsUnContreUn"])
+            if (partie.id === partieId) {
+                partie.tempsSolo = this.genererTableauTempsAleatoires();
+                partie.tempsUnContreUn = this.genererTableauTempsAleatoires();
+                this.listePartieService.reinitialiserTempsPartie(partieId, partie.tempsSolo, partie.tempsUnContreUn)
                     .catch(() => ErrorHandler);
             }
         });
