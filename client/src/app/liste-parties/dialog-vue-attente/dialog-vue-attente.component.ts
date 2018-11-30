@@ -31,11 +31,12 @@ export class DialogVueAttenteComponent implements OnDestroy {
         this.ajouterPartieSurSocket();
         this.message = "En attente d'un adversaire";
         this.isEnAttente = true;
+        this.catcheDisconnent();
     }
 
-    public ngOnDestroy(): void {
-        this.isSimple ? this.deletePartieSimpleAttente() : this.deletePartieMultipleAttente();
-    }
+    // public ngOnDestroy(): void {
+    //     this.isSimple ? this.deletePartieSimpleAttente() : this.deletePartieMultipleAttente();
+    // }
 
     protected onDialogClose(): void {
         this.dialogRef.close();
@@ -94,6 +95,14 @@ export class DialogVueAttenteComponent implements OnDestroy {
                 .catch(() => ErrorHandler);
                 });
             }
+        });
+    }
+
+    private catcheDisconnent(): void {
+        this.socketClientService.socket.on("disconnect", () => {
+            this.isSimple ? this.deletePartieSimpleAttente() : this.deletePartieMultipleAttente();
+            // tslint:disable-next-line:no-console
+            console.log("AORAOISDHAIHDAPISHDAPHDA");
         });
     }
 }

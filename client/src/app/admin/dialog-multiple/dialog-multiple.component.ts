@@ -18,8 +18,8 @@ import { LONGUEUR_NOM_MIN, LONGUEUR_NOM_MAX, NB_OBJET_MIN, NB_OBJET_MAX } from "
 
 export class DialogMultipleComponent extends DialogAbstrait {
 
-  protected toggleClassButtonGeo: boolean = false;
-  protected toggleClassButtonOcean: boolean = false;
+  protected toggleClassButtonGeo: boolean;
+  protected toggleClassButtonOcean: boolean;
   protected outOfBoundNumberForms: string;
   protected checkboxMessage: string;
   protected themeButtonMessage: string;
@@ -32,6 +32,8 @@ export class DialogMultipleComponent extends DialogAbstrait {
     http: HttpClient,
     private partieMultipleService: PartieMultipleService) {
       super(dialogRef, data, http);
+      this.toggleClassButtonGeo = false;
+      this.toggleClassButtonOcean = false;
       this.outOfBoundNumberForms = "";
       this.checkboxMessage = "";
       this.themeButtonMessage = "";
