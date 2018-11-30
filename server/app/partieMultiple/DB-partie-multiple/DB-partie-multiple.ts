@@ -36,13 +36,13 @@ const imagePOV2: number = 2;
 @injectable()
 export class DBPartieMultiple extends DBPartieAbstract {
 
-    protected listeChannelsMultijoueur: string[];
+    protected listeChannelsMultijoueur: Map<string, number>;
 
     public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
 
         super();
 
-        this.listeChannelsMultijoueur = [];
+        this.listeChannelsMultijoueur = new Map();
 
         this.modelPartieBuffer = this.baseDeDonnees.mongoose.model("parties-multiples", this.schemaBuffer, "parties-multiples");
         this.modelPartieArray = this.baseDeDonnees.mongoose.model("parties-multiples-array", this.schemaArray, "parties-multiples");
@@ -67,7 +67,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
         }
     }
 
-    protected CreateSchemaBuffer(): void {
+    protected createSchemaBuffer(): void {
             this.schemaBuffer = new Schema({
                 _nomPartie: { type: String, required: true, unique: true, },
                 _tempsSolo: { type: Array, required: true, },
@@ -84,7 +84,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
             });
         }
 
-    protected CreateSchemaArray(): void {
+    protected createSchemaArray(): void {
         this.schemaArray = new Schema({
             _nomPartie: { type: String, required: true, unique: true, },
             _tempsSolo: { type: Array, required: true, },
@@ -99,6 +99,10 @@ export class DBPartieMultiple extends DBPartieAbstract {
             _typeModification: { type: String, required: true },
             _theme: { type: String, required: true }
         });
+    }
+
+    protected envoyerPartiesPretes(channelId: string): void {
+        this.socket.envoyerPartiesMultiplesChargees(channelId);
     }
 
     protected async verifierErreurScript(child: ChildProcess, partie: PartieMultipleInterface): Promise<void> {

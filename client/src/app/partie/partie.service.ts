@@ -79,4 +79,12 @@ export class PartieService {
     public async supprimerChannelIdMultiple(channelId: string): Promise<void> {
         this.http.post(route.SUPPRIMER_CHANNEL_ID_MULTIPLE, {channelId}).toPromise().catch(() => ErrorHandler);
     }
+
+    public async partieSimpleChargee(channelId: string): Promise<void> {
+        this.http.post(route.PARTIE_SIMPLE_CHARGEE, {channelId}).toPromise().catch(() => ErrorHandler);
+    }
+
+    public async partieMultipleChargee(channelId: string): Promise<void> {
+        this.http.post(route.PARTIE_MULTIPLE_CHARGEE, {channelId}).toPromise().catch(() => ErrorHandler);
+    }
 }

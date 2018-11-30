@@ -35,7 +35,7 @@ export class PartieSimpleMultijoueur extends ServiceWeb {
         return router;
     }
 
-    public requeteEnvoyerDiffTrouveeSimple(req: Request, res: Response): void {
+    private requeteEnvoyerDiffTrouveeSimple(req: Request, res: Response): void {
         try {
             this.socket.envoyerDiffPartieSimple(req.body.channelId, req.body.diff, req.body.joueur);
             res.status(constantes.HTTP_CREATED).json(req.body.channelId);
@@ -44,7 +44,7 @@ export class PartieSimpleMultijoueur extends ServiceWeb {
         }
     }
 
-    public requeteEnvoyerJoindreSimple(req: Request, res: Response): void {
+    private requeteEnvoyerJoindreSimple(req: Request, res: Response): void {
         try {
             this.socket.envoyerJoindreSimple(req.body.partieId, req.body.channelId);
             res.status(constantes.HTTP_CREATED).json(req.body.channelId);
@@ -53,7 +53,7 @@ export class PartieSimpleMultijoueur extends ServiceWeb {
         }
     }
 
-    public requeteEnvoyerPartieSimpleTerminee(req: Request, res: Response): void {
+    private requeteEnvoyerPartieSimpleTerminee(req: Request, res: Response): void {
         try {
             this.socket.envoyerPartieSimpleTerminee(req.body.channelId, req.body.joueur);
             res.status(constantes.HTTP_CREATED).json(req.body.channelId);
@@ -62,7 +62,7 @@ export class PartieSimpleMultijoueur extends ServiceWeb {
         }
     }
 
-    public requeteErreurSimple(req: Request, res: Response): void {
+    private requeteErreurSimple(req: Request, res: Response): void {
         try {
             this.socket.erreurSimple(req.body.channelId, req.body.joueur, req.body.ev);
             res.status(constantes.HTTP_CREATED).json(req.body.channelId);

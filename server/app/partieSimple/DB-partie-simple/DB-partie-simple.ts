@@ -27,13 +27,13 @@ export interface PartieSimpleInterface {
 @injectable()
 export class DBPartieSimple extends DBPartieAbstract {
 
-    protected listeChannelsMultijoueur: string[];
+    protected listeChannelsMultijoueur: Map<string, number>;
 
     public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
 
         super();
 
-        this.listeChannelsMultijoueur = [];
+        this.listeChannelsMultijoueur = new Map();
 
         this.modelPartieArray = this.baseDeDonnees["_mongoose"].model("parties-simples-array", this.schemaArray, "parties-simples");
         this.modelPartieBuffer = this.baseDeDonnees["_mongoose"].model("parties-simples", this.schemaBuffer, "parties-simples");
@@ -58,7 +58,7 @@ export class DBPartieSimple extends DBPartieAbstract {
         }
     }
 
-    protected CreateSchemaArray(): void {
+    protected createSchemaArray(): void {
         this.schemaArray = new Schema({
             _nomPartie: { type: String, required: true, unique: true },
             _tempsSolo: { type: Array, required: true },
@@ -69,7 +69,7 @@ export class DBPartieSimple extends DBPartieAbstract {
         });
     }
 
-    protected CreateSchemaBuffer(): void {
+    protected createSchemaBuffer(): void {
         this.schemaBuffer = new Schema({
             _nomPartie: { type: String, required: true, unique: true },
             _tempsSolo: { type: Array, required: true },
@@ -90,6 +90,10 @@ export class DBPartieSimple extends DBPartieAbstract {
         child.stdout.on("data", async (data: string) => {
             await this.traiterMessageErreur(partie, errorMsg);
         });
+    }
+
+    protected envoyerPartiesPretes(channelId: string): void {
+        this.socket.envoyerPartiesSimplesChargees(channelId);
     }
 
     protected async deletePartie(idPartie: string, res: Response): Promise<Response> {

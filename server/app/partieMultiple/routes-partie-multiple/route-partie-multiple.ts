@@ -36,10 +36,6 @@ export class RoutesPartieMultiple extends ServiceWeb {
             await this.partieMultiple.requeteDeletePartie(req, res);
         });
 
-        router.get("/:id", async (req: Request, res: Response) => {
-            await this.partieMultiple.requetePartieId(req, res);
-        });
-
         router.get("/getPartieMultiple/:id", async (req: Request, res: Response) => {
             await this.partieMultiple.requeteGetPartie(req, res);
         });
@@ -50,6 +46,10 @@ export class RoutesPartieMultiple extends ServiceWeb {
 
         router.post("/supprimerChannelIdMultiple", (req: Request, res: Response) => {
             this.partieMultiple.requetesupprimerChannelId(req, res);
+        });
+
+        router.post("/partieMultipleChargee", (req: Request, res: Response) => {
+            this.partieMultiple.requetePartieChargee(req, res);
         });
 
         return router;

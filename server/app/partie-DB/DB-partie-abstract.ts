@@ -28,13 +28,13 @@ export abstract class DBPartieAbstract {
     protected schemaBuffer: Schema;
     protected schemaArray: Schema;
 
-    protected abstract listeChannelsMultijoueur: string[];
+    protected abstract listeChannelsMultijoueur: Map<string, number>;
 
     public constructor() {
       this.baseDeDonnees = new BaseDeDonnees();
 
-      this.CreateSchemaArray();
-      this.CreateSchemaBuffer();
+      this.createSchemaArray();
+      this.createSchemaBuffer();
 
       this.schemaBuffer.plugin(uniqueValidator);
       this.schemaArray.plugin(uniqueValidator);
@@ -56,22 +56,30 @@ export abstract class DBPartieAbstract {
     }
 
     public requetesupprimerChannelId(req: Request, res: Response): void {
-      for (let i: number = 0 ; i < this.listeChannelsMultijoueur.length ; i++) {
-        if (this.listeChannelsMultijoueur[i] === req.body.channelId) {
-          this.listeChannelsMultijoueur.splice(i, 1);
-          res.status(constantes.HTTP_CREATED).json(req.body.channelId);
-
-          return;
-        }
+      try {
+        this.listeChannelsMultijoueur.delete(req.body.channelId);
+      } catch (err) {
+        res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
       }
-      res.status(constantes.HTTP_NOT_IMPLEMENTED).json(constantes.ID_NON_TROUVE);
     }
 
     public requeteGetChannelId(req: Request, res: Response): void {
       try {
         const id: string = this.getChannelId();
-        this.listeChannelsMultijoueur.push(id);
+        this.listeChannelsMultijoueur.set(id, 0);
         res.status(constantes.HTTP_CREATED).json(id);
+      } catch (err) {
+        res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+      }
+    }
+
+    public requetePartieChargee(req: Request, res: Response): void {
+      try {
+        let nbrePartiesChargees: number = this.listeChannelsMultijoueur.get(req.body.channelId) as number;
+        nbrePartiesChargees++;
+        nbrePartiesChargees === constantes.NBRE_PARTIES_MULTIJOUEUR ? this.envoyerPartiesPretes(req.body.channelId)
+                                  : this.listeChannelsMultijoueur.set(req.body.channelId, nbrePartiesChargees);
+        res.status(constantes.HTTP_CREATED).json(req.body.channelId);
       } catch (err) {
         res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
       }
@@ -119,9 +127,11 @@ export abstract class DBPartieAbstract {
     protected abstract async verifierErreurScript(child: ChildProcess,
                                                   partie: PartieSimpleInterface | PartieMultipleInterface): Promise<void>;
 
-    protected abstract CreateSchemaArray(): void;
+    protected abstract envoyerPartiesPretes(channelId: string): void;
 
-    protected abstract CreateSchemaBuffer(): void;
+    protected abstract createSchemaArray(): void;
+
+    protected abstract createSchemaBuffer(): void;
 
     protected getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {
         if (arr) {
@@ -156,7 +166,7 @@ export abstract class DBPartieAbstract {
 
     private getChannelId(): string {
       const id: string = uniqid();
-      if (this.listeChannelsMultijoueur.includes(id)) {
+      if (this.listeChannelsMultijoueur.has(id)) {
         this.getChannelId();
       }
 

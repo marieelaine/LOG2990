@@ -109,4 +109,12 @@ export class SocketServerService {
     public meilleurTemps(joueur: string, partie: string): void {
         this.io.emit(event.MEILLEUR_TEMPS, {joueur: joueur, partie: partie});
     }
+
+    public envoyerPartiesSimplesChargees(channelId: string): void {
+        this.io.emit(event.PARTIES_SIMPLES_CHARGEES, channelId);
+    }
+
+    public envoyerPartiesMultiplesChargees(channelId: string): void {
+        this.io.emit(event.PARTIES_MULTIPLES_CHARGEES, channelId);
+    }
 }

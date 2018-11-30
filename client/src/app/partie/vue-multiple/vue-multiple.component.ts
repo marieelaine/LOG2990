@@ -40,10 +40,9 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     }
 
     protected setPartie(): void {
-        this.partieService.getPartieMultiple(this.partieID).subscribe((res: PartieMultiple) => {
+        this.partieService.getPartieMultiple(this.partieID).subscribe(async (res: PartieMultiple) => {
             this.partie = res;
-            this.getImageData();
-            this.setup();
+            this.isMultijoueur ? await this.setPartieMultipleMultijoueur() : this.afficherPartie();
         });
     }
 
@@ -171,5 +170,15 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                 : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur.");
             }
         });
+
+        this.socketClientService.socket.on(event.PARTIES_MULTIPLES_CHARGEES, (data) => {
+            if (this.channelId === data) {
+                this.afficherPartie();
+            }
+        });
+    }
+
+    private async setPartieMultipleMultijoueur(): Promise<void> {
+        await this.partieService.partieMultipleChargee(this.channelId);
     }
 }

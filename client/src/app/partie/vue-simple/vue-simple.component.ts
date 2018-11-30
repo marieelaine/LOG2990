@@ -12,6 +12,7 @@ import {ChronoService} from "../../chrono/chrono.service";
 import { TempsUser } from "src/app/admin/temps-user";
 
 const NOMBRE_DIFF_MULTIJOUEUR_SIMPLE: number = 4;
+const NOMBRE_PARTIES_MULTIJOUEUR: number = 2;
 
 @Component({
     selector: "app-vue-simple",
@@ -42,10 +43,9 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
     }
 
     protected setPartie(): void {
-        this.partieService.getPartieSimple(this.partieID).subscribe((res: PartieSimple) => {
+        this.partieService.getPartieSimple(this.partieID).subscribe(async (res: PartieSimple) => {
             this.partie = res;
-            this.getImageData();
-            this.setup();
+            this.isMultijoueur ? await this.setPartieSimpleMultijoueur() : this.afficherPartie();
         });
     }
 
@@ -154,6 +154,15 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                 : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur.");
             }
         });
+
+        this.socketClientService.socket.on(event.PARTIES_SIMPLES_CHARGEES, (data) => {
+            if (this.channelId === data) {
+                this.afficherPartie();
+            }
+        });
     }
 
+    private async setPartieSimpleMultijoueur(): Promise<void> {
+        await this.partieService.partieSimpleChargee(this.channelId);
+    }
 }

@@ -38,6 +38,7 @@ export abstract class PartieAbstraiteClass {
     protected isMultijoueur: boolean;
     protected channelId: string;
     protected joueurMultijoueur: string;
+    protected  nbPartiesPretes: number;
     private nbImages: number;
 
     public constructor(protected route: ActivatedRoute,
@@ -55,6 +56,7 @@ export abstract class PartieAbstraiteClass {
         this.diffTrouvee = [[], []];
         this.audio = new Audio();
         this.penaliteEtat = false;
+        this.nbPartiesPretes = 0;
 
         this.chrono.reset();
         this.setImage(isSimple);
@@ -208,6 +210,11 @@ export abstract class PartieAbstraiteClass {
         const date: Date = new Date();
 
         return date.getHours() + ":" + this.getMinutes(date) + ":" + this.getSeconds(date);
+    }
+
+    protected afficherPartie(): void {
+        this.getImageData();
+        this.setup();
     }
 
     private getMinutes(date: Date): string {
