@@ -8,9 +8,10 @@ import {ChatComponent} from "../chat/chat.component";
 import {CookieService} from "ngx-cookie-service";
 import {TempsUser} from "../admin/temps-user";
 import * as constantes from "../constantes";
-import { SocketClientService } from "../socket/socket-client.service";
-import { MatDialog } from "@angular/material";
-import { DialogFinPartieComponent } from "./dialog-fin-partie/dialog-fin-partie.component";
+import {SocketClientService} from "../socket/socket-client.service";
+import {MatDialog} from "@angular/material";
+import {DialogFinPartieComponent} from "./dialog-fin-partie/dialog-fin-partie.component";
+import {PartieData} from "./partie-data/partie-data";
 
 const MINUTESANDSECONDCONVERT: number = 10;
 const TIMEOUT: number = 1000;
@@ -23,22 +24,15 @@ export abstract class PartieAbstraiteClass {
     @ViewChildren("canvas") protected canvas: QueryList<ElementRef>;
     @ViewChild(ChatComponent) protected chat: ChatComponent;
 
-    protected messageDifferences: string;
-    protected differencesTrouvees: number;
-    protected partieCommence: boolean;
+    protected partieData: PartieData;
+
     protected audio: HTMLAudioElement;
-    protected differenceRestantes: number;
-    protected nomPartie: string;
-    protected partieID: string;
     protected abstract partie: PartieSimple | PartieMultiple;
-    protected image: Array<HTMLImageElement>;
     protected diffTrouvee: number[][];
-    protected imageData: Array<string>;
     protected penaliteEtat: boolean;
     protected isMultijoueur: boolean;
     protected channelId: string;
     protected joueurMultijoueur: string;
-    private nbImages: number;
 
     public constructor(protected route: ActivatedRoute,
                        protected partieService: PartieService,
@@ -51,7 +45,7 @@ export abstract class PartieAbstraiteClass {
         this.differencesTrouvees = 0;
         this.messageDifferences = "Chargement des images";
         this.chat = new ChatComponent();
-        this.imageData = [];
+        this.partieData.imageData = [];
         this.diffTrouvee = [[], []];
         this.audio = new Audio();
         this.penaliteEtat = false;
@@ -75,8 +69,8 @@ export abstract class PartieAbstraiteClass {
         this.dialog.open(DialogFinPartieComponent, {
             height: "190px",
             width: "600px",
-            data : { message: this.messageDifferences }
-          });
+            data: {message: this.messageDifferences}
+        });
     }
 
     protected commencerPartie(): void {
@@ -87,8 +81,8 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected setup(): void {
-        for (let i: number = 0; i < this.nbImages; i++) {
-            this.ajusterSourceImage(this.imageData[i], this.canvas.toArray()[i], this.image[i]);
+        for (let i: number = 0; i < this.partieData.nbImages; i++) {
+            this.ajusterSourceImage(this.partieData.imageData[i], this.canvas.toArray()[i], this.partieData.image[i]);
         }
         this.commencerPartie();
     }
@@ -124,9 +118,9 @@ export abstract class PartieAbstraiteClass {
 
         if (this.joueurMultijoueur === gagnant) {
             this.messageDifferences = "FÉLICITATIONS, VOUS AVEZ GAGNÉ!";
-            const tempsUser: TempsUser =  new TempsUser(gagnant, this.chrono.getTime());
+            const tempsUser: TempsUser = new TempsUser(gagnant, this.chrono.getTime());
             this.joueurApplaudissements();
-            this.ajouterTemps(this.partieID, tempsUser, false);
+            this.ajouterTemps(this.partieData.partieID, tempsUser, false);
             await this.supprimerChannelId();
         } else {
             this.messageDifferences = "VOUS AVEZ PERDU!";
@@ -137,14 +131,14 @@ export abstract class PartieAbstraiteClass {
 
     protected partieSoloTerminee(): void {
         this.chrono.stopTimer();
-        const tempsUser: TempsUser =  new TempsUser(this.cookieService.get("username"), this.chrono.getTime());
+        const tempsUser: TempsUser = new TempsUser(this.cookieService.get("username"), this.chrono.getTime());
         this.messageDifferences = "FÉLICITATIONS!";
         this.ouvrirDialogFinPartie(this.messageDifferences);
         this.audio.src = "../assets/applause.mp3";
         this.audio.load();
         this.audio.play().catch(() => ErrorHandler);
         this.joueurApplaudissements();
-        this.ajouterTemps(this.partieID, tempsUser, true);
+        this.ajouterTemps(this.partieData.partieID, tempsUser, true);
     }
 
     protected updateTableauTempsSolo(temps: number): void {
@@ -231,15 +225,15 @@ export abstract class PartieAbstraiteClass {
     }
 
     private setImage(isSimple: boolean): void {
-        this.nbImages = isSimple ? constantes.PARTIE_SIMPLE_NB_IMAGES : constantes.PARTIE_MULTIPLE_NB_IMAGES;
-        this.image = [];
-        for (let i: number = 0; i < this.nbImages; i++) {
-            this.image.push(new Image());
+        this.partieData.nbImages = isSimple ? constantes.PARTIE_SIMPLE_NB_IMAGES : constantes.PARTIE_MULTIPLE_NB_IMAGES;
+        this.partieData.image = [];
+        for (let i: number = 0; i < this.partieData.nbImages; i++) {
+            this.partieData.image.push(new Image());
         }
     }
 
     private setID(): void {
-        this.partieID = this.route.snapshot.params.idPartie;
+        this.partieData.partieID = this.route.snapshot.params.idPartie;
     }
 
     private setIsMultijoueur(): void {
