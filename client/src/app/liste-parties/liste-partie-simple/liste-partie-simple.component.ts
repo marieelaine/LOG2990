@@ -45,7 +45,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
     public ngAfterContentChecked(): void  {
         for (const partie of this.listeParties) {
-            this.afficherImage(partie["_id"]);
+            this.afficherImage(partie.id);
         }
     }
 

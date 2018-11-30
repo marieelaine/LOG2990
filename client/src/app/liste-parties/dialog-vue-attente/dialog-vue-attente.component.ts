@@ -1,4 +1,4 @@
-import {Component, ErrorHandler, Inject, OnDestroy} from "@angular/core";
+import {Component, ErrorHandler, Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { Router, Data } from "@angular/router";
 import { ListePartieServiceService } from "../liste-partie-service.service";
@@ -11,7 +11,7 @@ import * as event from "../../../../../common/communication/evenementsSocket";
     styleUrls: ["./dialog-vue-attente.component.css"]
 })
 
-export class DialogVueAttenteComponent implements OnDestroy {
+export class DialogVueAttenteComponent {
 
     private partieId: string;
     protected message: string;
@@ -33,10 +33,6 @@ export class DialogVueAttenteComponent implements OnDestroy {
         this.isEnAttente = true;
         this.catcheDisconnent();
     }
-
-    // public ngOnDestroy(): void {
-    //     this.isSimple ? this.deletePartieSimpleAttente() : this.deletePartieMultipleAttente();
-    // }
 
     protected onDialogClose(): void {
         this.dialogRef.close();
@@ -101,8 +97,6 @@ export class DialogVueAttenteComponent implements OnDestroy {
     private catcheDisconnent(): void {
         this.socketClientService.socket.on("disconnect", () => {
             this.isSimple ? this.deletePartieSimpleAttente() : this.deletePartieMultipleAttente();
-            // tslint:disable-next-line:no-console
-            console.log("AORAOISDHAIHDAPISHDAPHDA");
         });
     }
 }
