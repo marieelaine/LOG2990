@@ -4,27 +4,27 @@
     <mat-card class='addGameCard mat-elevation-z10'>
         <div class='gameName'>
             <mat-form-field class='formField'>
-                <input matInput [(ngModel)]="data.simpleGameName" type='text' placeholder="Nom de la partie" class='gameNameInput' [formControl]="nameControl" required>
+                <input matInput [(ngModel)]="data.simpleGameName" type='text' placeholder="Nom de la partie" class='gameNameInput' [formControl]="nomControl" required>
                 <mat-error>Veuillez entrer un nom entre 3 et 20 caratères</mat-error>
             </mat-form-field>
         </div>
         <div class="firstImageContainer">
-            <input id='uploadImage1' type="file" accept="image/*" (change)='onUploadImage($event, 0)'>
+            <input id='uploadImage1' type="file" accept="image/*" (change)='onAjoutImage($event, 0)'>
             <div id='firstImageFrame' class="img-thumbnail"> 
                 <img *ngIf = "premiereImage" [src] = "premiereImage" id = "firstImage">                      
             </div>
             <button mat-button class='mat-elevation-z6'><label for="uploadImage1" class='imageButtons'>Première image</label></button>
         </div>
         <div class="secondImageContainer">
-            <input id='uploadImage2' type="file" accept="image/*" (change)='onUploadImage($event, 1)'>
+            <input id='uploadImage2' type="file" accept="image/*" (change)='onAjoutImage($event, 1)'>
             <div id='secondImageFrame' class="img-thumbnail"> 
                 <img *ngIf = "deuxiemeImage" [src] = "deuxiemeImage" id = "secondImage">          
             </div>
             <button mat-button class='mat-elevation-z6'><label for="uploadImage2" class='imageButtons'>Deuxième image</label></button>
         </div>
-        <p id='errorMessage'> {{ wrongImageSizeOrTypeMessage }} </p> 
-        <p id='errorMessage'> {{ wrongNumberOfImagesMessage }} </p> 
+        <p id='errorMessage'> {{ erreurTypeImage }} </p> 
+        <p id='errorMessage'> {{ erreurNbImage }} </p> 
     </mat-card>
-    <button mat-button id="onAddClickButton" (click)='onClickAjouterPartie()' class='dialogButtons mat-elevation-z6'>Ajouter</button>
+    <button mat-button id="onAddClickButton" (click)='onClickAjouterPartie()' class='dialogButtons mat-elevation-z6'  [disabled] ="!nomControl.valid">Ajouter</button>
     <button mat-button id="onNoClickButton" (click)="surClickExterieurDialog()" class='dialogButtons mat-elevation-z6'>Annuler</button>
 </div>

@@ -10,6 +10,10 @@ import { FormControl, Validators } from "@angular/forms";
 import { TempsUser } from "../temps-user";
 import { LONGUEUR_NOM_MIN, LONGUEUR_NOM_MAX, NB_OBJET_MIN, NB_OBJET_MAX } from "src/app/constantes";
 
+const ERR_THEME: string = "*Un theme doit etre selectionne." ;
+const ERR_TRANSFORMATION: string = "*Une transformation doit etre selectionnee au minimum.";
+const PAS_ERR: string = "";
+
 @Component({
   selector: "app-dialog-multiple",
   templateUrl: "./dialog-multiple.component.html",
@@ -18,13 +22,13 @@ import { LONGUEUR_NOM_MIN, LONGUEUR_NOM_MAX, NB_OBJET_MIN, NB_OBJET_MAX } from "
 
 export class DialogMultipleComponent extends DialogAbstrait {
 
-  protected toggleClassButtonGeo: boolean;
-  protected toggleClassButtonOcean: boolean;
-  protected outOfBoundNumberForms: string;
-  protected checkboxMessage: string;
-  protected themeButtonMessage: string;
-  protected qtyControl: FormControl;
-  protected nameControl: FormControl;
+  protected toggleBoutonGeo: boolean;
+  protected toggleBoutonTheme: boolean;
+  protected erreurTransformation: string;
+  protected erreurTheme: string;
+  protected qteControl: FormControl;
+  protected nomControl: FormControl;
+  protected transformation: Checkbox[];
 
   public constructor(
     dialogRef: MatDialogRef<DialogMultipleComponent>,
@@ -32,40 +36,27 @@ export class DialogMultipleComponent extends DialogAbstrait {
     http: HttpClient,
     private partieMultipleService: PartieMultipleService) {
       super(dialogRef, data, http);
-      this.toggleClassButtonGeo = false;
-      this.toggleClassButtonOcean = false;
-      this.outOfBoundNumberForms = "";
-      this.checkboxMessage = "";
-      this.themeButtonMessage = "";
+      this.toggleBoutonGeo = false;
+      this.toggleBoutonTheme = false;
+      this.erreurTransformation = PAS_ERR;
+      this.erreurTheme = PAS_ERR;
       this.data.theme = "";
       this.data.typeModification = "";
-      this.nameControl = new FormControl("", [
+
+      this.nomControl = new FormControl("", [
         Validators.minLength(LONGUEUR_NOM_MIN), Validators.maxLength(LONGUEUR_NOM_MAX), Validators.required]);
-      this.qtyControl = new FormControl("", [
+      this.qteControl = new FormControl("", [
         Validators.min(NB_OBJET_MIN), Validators.max(NB_OBJET_MAX),
         Validators.required, Validators.pattern("[ 0-9 ]*")]);
+
+      this.transformation = [
+          { name: "Ajout", checked: false, value: "a" },
+          { name: "Suppression", checked: false, value: "s" },
+          { name: "Changement de couleur", checked: false, value: "c" } ];
   }
 
-  protected checkboxArray: Checkbox[] =  [
-  {
-    name: "Ajout",
-    checked: false,
-    value: "a"
-  },
-  {
-    name: "Suppression",
-    checked: false,
-    value: "s"
-  },
-  {
-    name: "Changement de couleur",
-    checked: false,
-    value: "c"
-  }
-  ];
-
-  protected getCheckboxes(): void {
-    const arr: Array<string> = this.checkboxArray.filter((x) => x.checked).map((x) => x.value);
+  protected getTransformation(): void {
+    const arr: Array<string> = this.transformation.filter((x) => x.checked).map((x) => x.value);
     let typeModif: string = "";
     for (const item of arr) {
       typeModif += item;
@@ -74,11 +65,9 @@ export class DialogMultipleComponent extends DialogAbstrait {
   }
 
   protected onClickAjouterPartie(): void {
-      this.setOutOfBoundNameLengthMessage();
-      this.setOutOfBoundNumberFormsMessage();
-      this.setCheckboxMessage();
-      this.setThemeMessage();
-      this.closeDialogIfRequirements();
+      this.setErreurTransformation();
+      this.setErreurTheme();
+      this.fermerDialog();
     }
 
   protected onSubmit(): void {
@@ -97,64 +86,46 @@ export class DialogMultipleComponent extends DialogAbstrait {
                                                       this.data.typeModification);
     this.partieMultipleService.register(result)
       .subscribe(
-        (data) => {
+        () => {
+          // tslint:disable-next-line:no-suspicious-comment
+          // TODO: do nothing
         },
         (error) => {
           console.error(error);
         });
   }
 
+  protected contientErreur(): boolean {
+    return !(this.estVide(this.erreurTransformation) &&
+            this.estVide(this.erreurTheme));
+  }
+
   protected onGeoClickButton(event: Event, theme: string): void {
-    this.toggleClassButtonGeo = !this.toggleClassButtonGeo;
-    this.toggleClassButtonOcean = false;
+    this.toggleBoutonGeo = !this.toggleBoutonGeo;
+    this.toggleBoutonTheme = false;
     this.data.theme = theme;
   }
 
   protected onThemeClickButton(event: Event, theme: string): void {
-    this.toggleClassButtonOcean = !this.toggleClassButtonOcean;
-    this.toggleClassButtonGeo = false;
+    this.toggleBoutonTheme = !this.toggleBoutonTheme;
+    this.toggleBoutonGeo = false;
     this.data.theme = theme;
   }
 
-  protected verifierSiMessageErreur(): Boolean {
-    return (this.outOfBoundNameLengthMessage !== ""
-            || this.outOfBoundNumberForms !== ""
-            || this.checkboxMessage !== ""
-            || this.themeButtonMessage !== "");
+  protected setErreurTheme(): void {
+    this.checkThemeButton() ?
+      this.erreurTheme = ERR_THEME :
+      this.erreurTheme = PAS_ERR ;
   }
 
-  protected checkIfOutOfBoundNameLength(): Boolean {
-    return (this["data"].multipleGameName === "" || this["data"].multipleGameName === undefined
-    || this["data"].multipleGameName.length < LONGUEUR_NOM_MIN || this["data"].multipleGameName.length > LONGUEUR_NOM_MAX);
-  }
-
-  protected checkIfOutOfBoundNumberForms(): Boolean {
-    return (this["data"].quantiteObjets < NB_OBJET_MIN || this["data"].quantiteObjets > NB_OBJET_MAX);
-  }
-
-  protected checkAllCheckbox(): Boolean {
-    return (this["data"].typeModification === "");
-  }
-
-  protected checkThemeButton(): Boolean {
+  protected checkThemeButton(): boolean {
     return (this.data.theme === "");
   }
 
-  protected setOutOfBoundNumberFormsMessage(): void {
-    this.checkIfOutOfBoundNumberForms() ?
-      this.outOfBoundNumberForms = "*Le nombre de formes doit être entre 10 et 200." :
-      this.outOfBoundNumberForms = "" ;
+  protected setErreurTransformation(): void {
+    this.estVide(this.data.typeModification) ?
+      this.erreurTransformation = ERR_TRANSFORMATION :
+      this.erreurTransformation = PAS_ERR ;
   }
 
-  protected setCheckboxMessage(): void {
-    this.checkAllCheckbox() ?
-      this.checkboxMessage = "*Une transformation doit etre selectionnee au minimum." :
-      this.checkboxMessage = "" ;
-  }
-
-  protected setThemeMessage(): void {
-    this.checkThemeButton() ?
-      this.themeButtonMessage = "*Un theme doit etre selectionne." :
-      this.themeButtonMessage = "" ;
-  }
 }

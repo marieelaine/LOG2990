@@ -11,6 +11,12 @@ import * as constante from "src/app/constantes";
 
 export const IMAGE_URL: string = "http://localhost:3000/images/";
 
+const ERR_NB_IMAGE: string = "*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels";
+const ERR_TYPE_IMAGE: string = "*Vous devez entrer deux images.";
+const PAS_ERR: string = "";
+const IMG_EXTENSION: string = "image/bmp";
+const MAX_NB_IMAGE: number = 2;
+
 export interface ImageInfo {
   size: number;
   width: number;
@@ -25,17 +31,18 @@ export interface ImageInfo {
 
 export class DialogSimpleComponent extends DialogAbstrait {
 
+  // tslint:disable-next-line:no-suspicious-comment
+  // TODO faire une classe maybe
   protected premiereImage: string;
   protected deuxiemeImage: string;
-  protected wrongNumberOfImagesMessage: string;
-  protected wrongImageSizeOrTypeMessage: string;
-  protected nameControl: FormControl;
+  protected erreurNbImage: string;
+  protected erreurTypeImage: string;
+  protected nomControl: FormControl;
 
-  private currentImageNumber: number;
-  private selectedFiles: File[];
-  private selectedFilesAsBuffers: Buffer[];
-  private correctImageExtension: string;
-  private readonly maxNbImage: number = 2;
+  private nbImage: number;
+  private fichier: File[];
+  private fichierEnBuffer: Buffer[];
+  private imageExtension: string;
 
   public constructor(
     dialogRef: MatDialogRef<DialogSimpleComponent>,
@@ -44,31 +51,32 @@ export class DialogSimpleComponent extends DialogAbstrait {
     private partieSimpleService: PartieSimpleService) {
 
       super(dialogRef, data, http);
-      this.selectedFiles = [];
-      this.selectedFilesAsBuffers = [];
-      this.correctImageExtension = "image/bmp";
-      this.wrongImageSizeOrTypeMessage = "";
-      this.wrongNumberOfImagesMessage = "";
-      this.nameControl = new FormControl("", [
-        Validators.minLength(constante.LONGUEUR_NOM_MIN), Validators.maxLength(constante.LONGUEUR_NOM_MAX), Validators.required]);
+      this.fichier = [];
+      this.fichierEnBuffer = [];
+      this.imageExtension = IMG_EXTENSION;
+      this.erreurTypeImage = PAS_ERR;
+      this.erreurNbImage = PAS_ERR;
+      this.nomControl = new FormControl("", [
+        Validators.minLength(constante.LONGUEUR_NOM_MIN),
+        Validators.maxLength(constante.LONGUEUR_NOM_MAX),
+        Validators.required]);
     }
 
   protected onClickAjouterPartie(): void {
-      this.setWrongNumberOfImagesMessage();
-      this.setOutOfBoundNameLengthMessage();
-      this.closeDialogIfRequirements();
+      this.setErreurNbImage();
+      this.fermerDialog();
     }
 
   protected onSubmit(): void {
     let imageQty: number = 0;
 
-    this.selectedFiles.forEach((file) => {
+    this.fichier.forEach((file) => {
       const reader: FileReader = new FileReader();
       reader.readAsArrayBuffer(file);
 
       reader.onload = () => {
-        this.arraybufferToBuffer(reader.result as ArrayBuffer, imageQty);
-        if (this.selectedFilesAsBuffers.length === this.maxNbImage) {
+        this.convertirArrayBufferEnBuffer(reader.result as ArrayBuffer, imageQty);
+        if (this.fichierEnBuffer.length === MAX_NB_IMAGE) {
           this.ajouterPartie()
           .catch(() => ErrorHandler);
         }
@@ -77,65 +85,83 @@ export class DialogSimpleComponent extends DialogAbstrait {
     });
   }
 
-  protected verifierSiMessageErreur(): Boolean {
-    return (this.outOfBoundNameLengthMessage !== ""
-            || this.wrongNumberOfImagesMessage !== ""
-            || this.wrongImageSizeOrTypeMessage !== "");
-  }
-
-  protected onUploadImage(event: Event, i: number): void {
-    this.currentImageNumber = i;
-    const target: HTMLInputElement = event.target as HTMLInputElement;
-    const files: FileList = target.files as FileList;
-    this.selectedFiles[this.currentImageNumber] = files[0] as File;
-    this.convertImageToArrayToCheckSize(this.selectedFiles[this.currentImageNumber]);
-    this.afficherImageSurUploadClient();
-  }
-
   protected async ajouterPartie(): Promise<void> {
-      const result: PartieSimple = new PartieSimple(this.data.simpleGameName, this.genererTableauTempsAleatoires(),
-                                                    this.genererTableauTempsAleatoires(), this.selectedFilesAsBuffers[0],
-                                                    this.selectedFilesAsBuffers[1], new Array<Array<string>>());
-      this.partieSimpleService.register(result)
-        .subscribe(
-          (data) => {
-          },
-          (error) => {
-            console.error(error);
-          });
+    const result: PartieSimple = new PartieSimple(this.data.simpleGameName, this.genererTableauTempsAleatoires(),
+                                                  this.genererTableauTempsAleatoires(), this.fichierEnBuffer[0],
+                                                  this.fichierEnBuffer[1], new Array<Array<string>>());
+    this.partieSimpleService.register(result)
+      .subscribe(
+        () => {
+          // tslint:disable-next-line:no-suspicious-comment
+          // TODO: do something
+        },
+        (error) => {
+          console.error(error);
+        });
+}
+
+  protected onAjoutImage(event: Event, i: number): void {
+    this.nbImage = i;
+    const target: HTMLInputElement = event.target as HTMLInputElement;
+    const fichiers: FileList = target.files as FileList;
+    this.fichier[this.nbImage] = fichiers[0] as File;
+    this.convertirImageEnArray(this.fichier[this.nbImage]);
+    this.afficherImageSurUploadClient();
+}
+
+  protected contientErreur(): boolean {
+    return !(this.estVide(this.erreurNbImage) &&
+            this.estVide(this.erreurTypeImage));
+}
+
+  private setErreursImage(imageInfo: ImageInfo): void {
+    this.estBonneTaille(imageInfo) || this.estBonType() ?
+    this.erreurTypeImage = PAS_ERR :
+    this.erreurTypeImage = ERR_NB_IMAGE;
+
   }
 
-  protected checkIfOutOfBoundNameLength(): Boolean {
+  private setErreurNbImage(): void {
+    this.estBonNombre() ?
+    this.erreurNbImage = PAS_ERR :
+    this.erreurNbImage = ERR_TYPE_IMAGE;
+  }
 
-    return (this.data.simpleGameName === "" || this.data.simpleGameName === undefined
-    || this.data.simpleGameName.length < constante.LONGUEUR_NOM_MIN || this.data.simpleGameName.length > constante.LONGUEUR_NOM_MAX);
+  private estBonneTaille(imageInfo: ImageInfo): boolean {
+    return (imageInfo.size === constante.BIT_FORMAT
+            || imageInfo.width === constante.WINDOW_WIDTH
+            || imageInfo.height === constante.WINDOW_HEIGHT);
+  }
+
+  private estBonType(): boolean {
+    let estMauvaisType: boolean = false;
+    this.fichier.forEach((file) => {
+    if (file.type === this.imageExtension || file === undefined) {
+      estMauvaisType = true;
+    }
+  });
+
+    return estMauvaisType;
+  }
+
+  private estBonNombre(): boolean {
+    return !(this.fichier[0] === undefined || this.fichier[0] === null
+      || this.fichier[1] === undefined || this.fichier[1] === null);
   }
 
   private afficherImageSurUploadClient(): void {
     const reader: FileReader = new FileReader();
-    reader.readAsDataURL(this.selectedFiles[this.currentImageNumber]);
+    reader.readAsDataURL(this.fichier[this.nbImage]);
     reader.onload = () => {
-      (this.currentImageNumber) ? this.deuxiemeImage = reader.result as string : this.premiereImage = reader.result as string;
+      (this.nbImage) ? this.deuxiemeImage = reader.result as string : this.premiereImage = reader.result as string;
     };
   }
 
-  private arraybufferToBuffer(file: ArrayBuffer, i: number): void {
-    this.selectedFilesAsBuffers[i] = Buffer.Buffer.from(file);
+  private convertirArrayBufferEnBuffer(file: ArrayBuffer, i: number): void {
+    this.fichierEnBuffer[i] = Buffer.Buffer.from(file);
   }
 
-  private setWrongImageSizeOrTypeMessage(imageInfo: ImageInfo): void {
-    this.checkIfWrongImageSize(imageInfo) || this.checkIfWrongImageType() ?
-    this.wrongImageSizeOrTypeMessage = "*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels" :
-    this.wrongImageSizeOrTypeMessage = "";
-  }
-
-  private setWrongNumberOfImagesMessage(): void {
-    this.checkIfWrongNumberOfImages() ?
-    this.wrongNumberOfImagesMessage = "*Vous devez entrer deux images." :
-    this.wrongNumberOfImagesMessage = "";
-  }
-
-  private convertImageToArrayToCheckSize(file: File): void {
+  private convertirImageEnArray(file: File): void {
     const self: DialogSimpleComponent = this;
     const reader: FileReader = new FileReader();
     reader.readAsArrayBuffer(file);
@@ -146,29 +172,8 @@ export class DialogSimpleComponent extends DialogAbstrait {
         width: dv.getUint32(constante.HEADER_BMP_P2, true),
         height: dv.getUint32(constante.HEADER_BMP_P3, true)
       };
-      self.setWrongImageSizeOrTypeMessage(imageInfo);
+      self.setErreursImage(imageInfo);
     };
   }
 
-  private checkIfWrongImageSize(imageInfo: ImageInfo): Boolean {
-    return (imageInfo.size !== constante.BIT_FORMAT
-            || imageInfo.width !== constante.WINDOW_WIDTH
-            || imageInfo.height !== constante.WINDOW_HEIGHT);
-  }
-
-  private checkIfWrongImageType(): Boolean {
-    let isWrongType: Boolean = false;
-    this.selectedFiles.forEach((file) => {
-    if (file !== undefined && file.type !== this.correctImageExtension) {
-      isWrongType = true;
-    }
-  });
-
-    return isWrongType;
-  }
-
-  private checkIfWrongNumberOfImages(): Boolean {
-    return (this.selectedFiles[0] === undefined || this.selectedFiles[0] === null
-      || this.selectedFiles[1] === undefined || this.selectedFiles[1] === null);
-  }
 }

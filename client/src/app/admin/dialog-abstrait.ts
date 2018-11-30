@@ -9,31 +9,21 @@ import { TempsUser } from "./temps-user";
 const BORNE_INF: number = 100;
 const BORNE_SUP: number = 400;
 const NB_ELEMENT: number = 4;
+const PAS_ERR: string = "";
 
 export abstract class DialogAbstrait {
 
-    protected outOfBoundNameLengthMessage: string;
-
     public constructor (private dialogRef: MatDialogRef<DialogSimpleComponent | DialogMultipleComponent>,
                         @Inject(MAT_DIALOG_DATA) protected data: DialogData,
-                        protected http: HttpClient) {
-      this.outOfBoundNameLengthMessage = "";
-    }
+                        protected http: HttpClient) { }
 
     protected abstract onClickAjouterPartie(): void;
     protected abstract onSubmit(): void;
     protected abstract ajouterPartie(): void;
-    protected abstract verifierSiMessageErreur(): Boolean;
-    protected abstract checkIfOutOfBoundNameLength(): Boolean;
+    protected abstract contientErreur(): boolean;
 
-    protected setOutOfBoundNameLengthMessage(): void {
-      this.checkIfOutOfBoundNameLength() ?
-        this.outOfBoundNameLengthMessage = "*Le nom du jeu doit être entre 3 et 20 charactères." :
-        this.outOfBoundNameLengthMessage = "" ;
-    }
-
-    protected closeDialogIfRequirements(): void {
-      if (!this.verifierSiMessageErreur()) {
+    protected fermerDialog(): void {
+      if (!this.contientErreur()) {
          this.onSubmit();
          this.dialogRef.close();
        }
@@ -54,6 +44,10 @@ export abstract class DialogAbstrait {
 
     private genererTempsAleatoire(): number {
         return Math.floor(Math.random() * BORNE_SUP) + BORNE_INF;
+    }
+
+    protected estVide(message: string): boolean {
+      return message === PAS_ERR;
     }
 
 }

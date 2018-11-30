@@ -51,8 +51,8 @@ describe("DialogSimpleComponent", () => {
 
     it("should return false if all error messages are null", () => {
         component["outOfBoundNameLengthMessage"] = "";
-        component["wrongImageSizeOrTypeMessage"] = "";
-        component["wrongNumberOfImagesMessage"] = "";
+        component["erreurTypeImage"] = "";
+        component["erreurNbImage"] = "";
         expect(component["verifierSiMessageErreur"]()).toBe(false);
     });
 
@@ -82,14 +82,14 @@ describe("DialogSimpleComponent", () => {
     it("should set wrongNumberOfImagesMessage if there are less than two images", () => {
         component["selectedFiles"][0] = mockFile.createMockImageFile(true);
         component["setWrongNumberOfImagesMessage"]();
-        expect(component["wrongNumberOfImagesMessage"]).toEqual("*Vous devez entrer deux images.");
+        expect(component["erreurNbImage"]).toEqual("*Vous devez entrer deux images.");
     });
 
     it("should not set wrongNumberOfImagesMessage if there are two images", () => {
         component["selectedFiles"][0] = mockFile.createMockImageFile(true);
         component["selectedFiles"][1] = mockFile.createMockImageFile(true);
         component["setWrongNumberOfImagesMessage"]();
-        expect(component["wrongNumberOfImagesMessage"]).toEqual("");
+        expect(component["erreurNbImage"]).toEqual("");
     });
 
     it("should call onUploadImage when an image is uploaded", () => {
@@ -125,7 +125,7 @@ describe("DialogSimpleComponent", () => {
         const imageInfo: ImageInfo = { "size": 64, "width": 1080, "height": 480 };
         component["selectedFiles"][0] = mockFile.createMockImageFile(true);
         component["setWrongImageSizeOrTypeMessage"](imageInfo);
-        expect(component["wrongImageSizeOrTypeMessage"]).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
+        expect(component["erreurTypeImage"]).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
     });
 
     it("should set wrongImageSizeOrTypeMessage image does not respect good type", () => {
@@ -133,13 +133,13 @@ describe("DialogSimpleComponent", () => {
         component["currentImageNumber"] = 0;
         component["selectedFiles"][0] = mockFile.createMockImageFile(false);
         component["setWrongImageSizeOrTypeMessage"](imageInfo);
-        expect(component["wrongImageSizeOrTypeMessage"]).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
+        expect(component["erreurTypeImage"]).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
     });
 
     it("should not set wrongImageSizeOrTypeMessage image respect good type and size", () => {
         const imageInfo: ImageInfo = { "size": 24, "width": 640, "height": 480 };
         component["selectedFiles"][0] = mockFile.createMockImageFile(true);
         component["setWrongImageSizeOrTypeMessage"](imageInfo);
-        expect(component["wrongImageSizeOrTypeMessage"]).toEqual("");
+        expect(component["erreurTypeImage"]).toEqual("");
     });
 });
