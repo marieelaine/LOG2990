@@ -12,7 +12,7 @@ import * as fsx from "fs-extra";
 
 class DBPartie extends DBPartieAbstract {
 
-    protected listeChannelsMultijoueur: string[];
+    protected listeChannelsMultijoueur: Map<string, number>;
 
     public constructor() {
         super();
@@ -24,6 +24,8 @@ class DBPartie extends DBPartieAbstract {
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> { ""; }
 
     public async requeteDeletePartie(req: Request, res: Response): Promise<void> { ""; }
+
+    protected envoyerPartiesPretes(channelId: string): void { ""; }
 
     protected async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>,
                                        tempsUnContreUn: Array<TempsUser>): Promise<void> { ""; }
@@ -77,9 +79,9 @@ class DBPartie extends DBPartieAbstract {
     protected async verifierErreurScript(child: ChildProcess,
                                          partie: PartieSimpleInterface | PartieMultipleInterface): Promise<void> { ""; }
 
-    protected CreateSchemaArray(): void { ""; }
+    protected createSchemaArray(): void { ""; }
 
-    protected CreateSchemaBuffer(): void { ""; }
+    protected createSchemaBuffer(): void { ""; }
 }
 
 describe("DBPartieAbstract", () => {

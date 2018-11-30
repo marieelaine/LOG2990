@@ -204,6 +204,11 @@ export abstract class PartieAbstraiteClass {
         return date.getHours() + ":" + this.getMinutes(date) + ":" + this.getSeconds(date);
     }
 
+    protected afficherPartie(): void {
+        this.getImageData();
+        this.setup();
+    }
+
     private getMinutes(date: Date): string {
         return date.getMinutes() < MINUTESANDSECONDCONVERT ? "0" + date.getMinutes().toString() : date.getMinutes().toString();
     }

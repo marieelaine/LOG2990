@@ -35,6 +35,7 @@ export const JOINDRE_PARTIE_MULTIJOUER_SIMPLE: string = BASE_URL + SIMPLE + "joi
 export const PARTIE_TERMINEE_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "partieTermineeMultijoueurSimple";
 export const ERREUR_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "erreurMultijoueurSimple";
 export const SUPPRIMER_CHANNEL_ID_SIMPLE: string = BASE_URL + SIMPLE + "supprimerChannelIdSimple";
+export const PARTIE_SIMPLE_CHARGEE: string = BASE_URL + SIMPLE + "partieSimpleChargee";
 
 export const GET_CHANNEL_ID_MULTIPLE: string = BASE_URL + MULTIPLE + "getChannelIdMultiple";
 export const DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "differenceTrouveeMultijoueurMultiple";
@@ -42,6 +43,7 @@ export const JOINDRE_PARTIE_MULTIJOUER_MULTIPLE: string = BASE_URL + MULTIPLE + 
 export const PARTIE_TERMINEE_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "partieTermineeMultijoueurMultiple";
 export const ERREUR_MULTIJOUEUR_MULTIPLE: string = BASE_URL + MULTIPLE + "erreurMultijoueurMultiple";
 export const SUPPRIMER_CHANNEL_ID_MULTIPLE: string = BASE_URL + MULTIPLE + "supprimerChannelIdMultiple";
+export const PARTIE_MULTIPLE_CHARGEE: string = BASE_URL + MULTIPLE + "partieMultipleChargee";
 
 export const AJOUTER_USERS_URL: string = BASE_URL + USERS + "ajouter/";
 export const DELETE_USERS_URL: string = BASE_URL + USERS + "delete/";

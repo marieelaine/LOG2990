@@ -36,10 +36,6 @@ export class RoutesPartieSimple extends ServiceWeb {
             await this.partieSimple.requeteDeletePartie(req, res);
         });
 
-        // router.get("/:id", async (req: Request, res: Response) => {
-        //     await this.partieSimple.requetePartieId(req, res);
-        // });
-
         router.get("/getPartieSimple/:id", async (req: Request, res: Response) => {
             await this.partieSimple.requeteGetPartie(req, res);
         });
@@ -50,6 +46,10 @@ export class RoutesPartieSimple extends ServiceWeb {
 
         router.post("/supprimerChannelIdSimple", (req: Request, res: Response) => {
             this.partieSimple.requetesupprimerChannelId(req, res);
+        });
+
+        router.post("/partieSimpleChargee", (req: Request, res: Response) => {
+            this.partieSimple.requetePartieChargee(req, res);
         });
 
         return router;

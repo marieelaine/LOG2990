@@ -8,6 +8,6 @@ export const NOUVELLE_DIFFERENCE: string = "DIFF";
 export const ERREUR_UNIQUE: string = "ValidationError";
 export const BMPIFF_PATH: string = "app/PartieSimple/bmpdiff/bmpdiff.py";
 export const GENMULTI_PATH: string = "app/genmulti/main.exe";
-export const ID_NON_TROUVE: string = "Id non trouvé";
 export const HTTP_CREATED: number = 201;
 export const HTTP_NOT_IMPLEMENTED: number = 501;
+export const NBRE_PARTIES_MULTIJOUEUR: number = 2;
