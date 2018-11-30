@@ -25,4 +25,36 @@ export class PartieSimple {
       this._imageBlob = "";
 
     }
+
+    public get id(): string {
+        return this._id;
+    }
+
+    public set id(id: string) {
+        this._id = id;
+    }
+
+    public get nomPartie(): string {
+        return this._nomPartie;
+    }
+
+    public set nomPartie(nomPartie: string) {
+        this._nomPartie = nomPartie;
+    }
+
+    public get tempsSolo(): Array<TempsUser> {
+        return this._tempsSolo;
+    }
+
+    public set tempsSolo(tempsSolo: Array<TempsUser>) {
+        this._tempsSolo = tempsSolo;
+    }
+
+    public get tempsUnContreUn(): Array<TempsUser> {
+        return this._tempsUnContreUn;
+    }
+
+    public set tempsUnContreUn(tempsUnContre: Array<TempsUser>) {
+        this._tempsUnContreUn = tempsUnContre;
+    }
   }

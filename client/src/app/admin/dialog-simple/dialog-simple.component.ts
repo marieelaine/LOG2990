@@ -93,7 +93,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
   }
 
   protected async ajouterPartie(): Promise<void> {
-      const result: PartieSimple = new PartieSimple(this["data"].simpleGameName, this.genererTableauTempsAleatoires(),
+      const result: PartieSimple = new PartieSimple(this.data.simpleGameName, this.genererTableauTempsAleatoires(),
                                                     this.genererTableauTempsAleatoires(), this.selectedFilesAsBuffers[0],
                                                     this.selectedFilesAsBuffers[1], new Array<Array<string>>());
       this.partieSimpleService.register(result)
@@ -107,8 +107,8 @@ export class DialogSimpleComponent extends DialogAbstrait {
 
   protected checkIfOutOfBoundNameLength(): Boolean {
 
-    return (this["data"].simpleGameName === "" || this["data"].simpleGameName === undefined
-    || this["data"].simpleGameName.length < constante.LONGUEUR_NOM_MIN || this["data"].simpleGameName.length > constante.LONGUEUR_NOM_MAX);
+    return (this.data.simpleGameName === "" || this.data.simpleGameName === undefined
+    || this.data.simpleGameName.length < constante.LONGUEUR_NOM_MIN || this.data.simpleGameName.length > constante.LONGUEUR_NOM_MAX);
   }
 
   private afficherImageSurUploadClient(): void {
@@ -151,9 +151,9 @@ export class DialogSimpleComponent extends DialogAbstrait {
   }
 
   private checkIfWrongImageSize(imageInfo: ImageInfo): Boolean {
-    return (imageInfo["size"] !== constante.BIT_FORMAT
-            || imageInfo["width"] !== constante.WINDOW_WIDTH
-            || imageInfo["height"] !== constante.WINDOW_HEIGHT);
+    return (imageInfo.size !== constante.BIT_FORMAT
+            || imageInfo.width !== constante.WINDOW_WIDTH
+            || imageInfo.height !== constante.WINDOW_HEIGHT);
   }
 
   private checkIfWrongImageType(): Boolean {

@@ -73,7 +73,6 @@ export class DialogMultipleComponent extends DialogAbstrait {
     this.data.typeModification = typeModif;
   }
 
-    // sur le click ajouter, call close dialog if requ and on submit
   protected onClickAjouterPartie(): void {
       this.setOutOfBoundNameLengthMessage();
       this.setOutOfBoundNumberFormsMessage();
@@ -90,12 +89,12 @@ export class DialogMultipleComponent extends DialogAbstrait {
     const tempsSolo: Array<TempsUser> = this.genererTableauTempsAleatoires();
     const temps1v1: Array<TempsUser> = this.genererTableauTempsAleatoires();
 
-    const result: PartieMultiple = new PartieMultiple(this["data"].multipleGameName, tempsSolo, temps1v1,
+    const result: PartieMultiple = new PartieMultiple(this.data.multipleGameName, tempsSolo, temps1v1,
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),
                                                       new Array<Array<string>>(), new Array<Array<string>>(),
-                                                      this["data"].quantiteObjets, this["data"].theme,
-                                                      this["data"].typeModification);
+                                                      this.data.quantiteObjets, this.data.theme,
+                                                      this.data.typeModification);
     this.partieMultipleService.register(result)
       .subscribe(
         (data) => {
