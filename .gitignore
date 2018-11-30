@@ -15,3 +15,5 @@ server/Images/image1.bmp
 client/yarn\.lock
 
 server/yarn\.lock
+
+node_modules
