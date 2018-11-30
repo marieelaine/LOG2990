@@ -1,22 +1,22 @@
 import {Component, ErrorHandler} from "@angular/core";
-import { PartieAbstraiteClass } from "../partie-abstraite-class";
-import { ActivatedRoute} from "@angular/router";
-import { PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
-import { PartieService} from "../partie.service";
+import {PartieAbstraiteClass} from "../partie-abstraite-class";
+import {ActivatedRoute} from "@angular/router";
+import {PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
+import {PartieService} from "../partie.service";
 import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
-import { MatDialog } from "@angular/material";
+import {MatDialog} from "@angular/material";
 import * as event from "../../../../../common/communication/evenementsSocket";
-import { SocketClientService } from "src/app/socket/socket-client.service";
-import { ChronoService} from "../../chrono/chrono.service";
-import { TempsUser } from "src/app/admin/temps-user";
+import {SocketClientService} from "src/app/socket/socket-client.service";
+import {ChronoService} from "../../chrono/chrono.service";
+import {TempsUser} from "src/app/admin/temps-user";
 
 const NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE: number = 7;
 
 @Component({
-  selector: "app-vue-multiple",
-  templateUrl: "./vue-multiple.component.html",
-  styleUrls: ["./vue-multiple.component.css"]
+    selector: "app-vue-multiple",
+    templateUrl: "./vue-multiple.component.html",
+    styleUrls: ["./vue-multiple.component.css"]
 })
 
 export class VueMultipleComponent extends PartieAbstraiteClass {
@@ -30,17 +30,17 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                        protected chrono: ChronoService,
                        protected dialog: MatDialog) {
         super(route, partieService, cookieService, chrono, socketClientService, dialog, false);
-        this.differenceRestantes = constantes.DIFF_PARTIE_MULTIPLE;
+        this.partieAttributsAdmin.differenceRestantes = constantes.DIFF_PARTIE_MULTIPLE;
         this.setSocketEvents();
     }
 
     protected async ajouterTemps(partieID: string, joueur: TempsUser, isSolo: boolean): Promise<void> {
         await this.partieService.addTempsPartieMultiple(partieID, joueur, isSolo)
-                                .catch(() => ErrorHandler);
+            .catch(() => ErrorHandler);
     }
 
     protected setPartie(): void {
-        this.partieService.getPartieMultiple(this.partieID).subscribe((res: PartieMultiple) => {
+        this.partieService.getPartieMultiple(this.partieAttributsData.partieID).subscribe((res: PartieMultiple) => {
             this.partie = res;
             this.getImageData();
             this.setup();
@@ -48,18 +48,18 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     }
 
     protected async supprimerChannelId(): Promise<void> {
-        this.partieService.supprimerChannelIdMultiple(this.partieID).catch(() => ErrorHandler);
+        this.partieService.supprimerChannelIdMultiple(this.partieAttributsData.partieID).catch(() => ErrorHandler);
     }
 
     protected getImageData(): void {
-        this.imageData.push(atob(String(this.partie["_image1PV1"][0])));
-        this.imageData.push(atob(String(this.partie["_image1PV2"][0])));
-        this.imageData.push(atob(String(this.partie["_image2PV1"][0])));
-        this.imageData.push(atob(String(this.partie["_image2PV2"][0])));
+        this.partieAttributsData.imageData.push(atob(String(this.partie["_image1PV1"][0])));
+        this.partieAttributsData.imageData.push(atob(String(this.partie["_image1PV2"][0])));
+        this.partieAttributsData.imageData.push(atob(String(this.partie["_image2PV1"][0])));
+        this.partieAttributsData.imageData.push(atob(String(this.partie["_image2PV2"][0])));
     }
 
     protected async testerPourDiff(ev: MouseEvent): Promise<void> {
-        if (this.partieCommence && !this.penaliteEtat) {
+        if (this.partieAttributsAdmin.partieCommence && !this.partieAttributsAdmin.penaliteEtat) {
 
             const coords: string = ev.offsetX + "," + ev.offsetY;
             const srcElem: Element = ev.srcElement as Element;
@@ -71,11 +71,11 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
             for (const diff of this.partie[source]) {
                 for (const pixel of diff) {
                     if (coords === pixel) {
-                        if (!this.diffTrouvee[0].includes(i) && source === "_imageDiff1"
-                            || !this.diffTrouvee[1].includes(i) && source === "_imageDiff2") {
-                            this.isMultijoueur ?
+                        if (!this.partieAttributsAdmin.diffTrouvee[0].includes(i) && source === "_imageDiff1"
+                            || !this.partieAttributsAdmin.diffTrouvee[1].includes(i) && source === "_imageDiff2") {
+                            this.partieAttributsMultijoueur.isMultijoueur ?
                                 await this.partieService.differenceTrouveeMultijoueurMultiple
-                                (this.channelId, i, source, this.joueurMultijoueur)
+                                (this.partieAttributsMultijoueur.channelId, i, source, this.partieAttributsMultijoueur.joueurMultijoueur)
                                 : this.differenceTrouver(i, source);
 
                             return;
@@ -89,7 +89,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     }
 
     protected differenceTrouver(i: number, src: string): void {
-        src === "_imageDiff1" ? this.diffTrouvee[0].push(i) : this.diffTrouvee[1].push(i);
+        src === "_imageDiff1" ? this.partieAttributsAdmin.diffTrouvee[0].push(i) : this.partieAttributsAdmin.diffTrouvee[1].push(i);
         this.trouverDifferenceMultiple().catch(() => ErrorHandler);
         this.restaurationPixelsMultiple(i, src);
         this.ajouterMessageDiffTrouvee("");
@@ -122,53 +122,58 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     }
 
     protected async terminerPartieMultijoueurMultiple(): Promise<void> {
-        if (this.differencesTrouvees === NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE) {
-            await this.partieService.partieMultijoueurMultipleTerminee(this.channelId, this.joueurMultijoueur);
+        if (this.partieAttributsAdmin.differencesTrouvees === NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE) {
+            await this.partieService.partieMultijoueurMultipleTerminee(
+                this.partieAttributsMultijoueur.channelId,
+                this.partieAttributsMultijoueur.joueurMultijoueur);
         }
     }
 
     protected async trouverDifferenceMultiple(): Promise<void> {
-        if (this.partieCommence) {
+        if (this.partieAttributsAdmin.partieCommence) {
             this.augmenterDiffTrouvee();
             this.jouerYesSound();
         }
-        this.isMultijoueur ? await this.terminerPartieMultijoueurMultiple() : this.terminerPartieSolo();
+        this.partieAttributsMultijoueur.isMultijoueur ? await this.terminerPartieMultijoueurMultiple() : this.terminerPartieSolo();
     }
 
     protected async differenceTrouverMultijoueurMultiple(i: number, source: string, joueur: string): Promise<void> {
-        if (this.joueurMultijoueur === joueur) {
+        if (this.partieAttributsMultijoueur.joueurMultijoueur === joueur) {
             await this.trouverDifferenceMultiple();
         }
         this.ajouterMessageDiffTrouvee(joueur);
-        this.diffTrouvee[0].push(i);
+        this.partieAttributsAdmin.diffTrouvee[0].push(i);
         this.restaurationPixelsMultiple(i, source);
     }
 
     private async setPenalite(ev: MouseEvent): Promise<void> {
-        if (this.isMultijoueur) {
-            await this.partieService.erreurMultijoueurMultiple(this.channelId, this.joueurMultijoueur);
+        if (this.partieAttributsMultijoueur.isMultijoueur) {
+            await this.partieService.erreurMultijoueurMultiple(
+                this.partieAttributsMultijoueur.channelId,
+                this.partieAttributsMultijoueur.joueurMultijoueur);
         }
         this.penalite(ev);
     }
 
     private setSocketEvents(): void {
         this.socketClientService.socket.on(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE, (data) => {
-            if (this.channelId === data.channelId) {
+            if (this.partieAttributsMultijoueur.channelId === data.channelId) {
                 this.differenceTrouverMultijoueurMultiple(data.diff, data.source, data.joueur).catch(() => ErrorHandler);
             }
         });
 
-        this.socketClientService.socket.on(event.PARTIE_MULTIPLE_MULTIJOUEUR_TERMINEE, async(data) => {
-            if (this.channelId === data.channelId) {
-                this.partieCommence = false;
+        this.socketClientService.socket.on(event.PARTIE_MULTIPLE_MULTIJOUEUR_TERMINEE, async (data) => {
+            if (this.partieAttributsMultijoueur.channelId === data.channelId) {
+                this.partieAttributsAdmin.partieCommence = false;
                 await this.terminerPartie(data.joueur);
             }
         });
 
         this.socketClientService.socket.on(event.ERREUR_PARTIE_MULTIPLE, (data) => {
-            if (this.channelId === data.channelId) {
-                this.isMultijoueur ? this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur par " + data.joueur)
-                : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur.");
+            if (this.partieAttributsMultijoueur.channelId === data.channelId) {
+                this.partieAttributsMultijoueur.isMultijoueur ?
+                    this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur par " + data.joueur)
+                    : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur.");
             }
         });
     }

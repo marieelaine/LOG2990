@@ -28,7 +28,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                        protected chrono: ChronoService,
                        protected dialog: MatDialog) {
         super(route, partieService, cookieService, chrono, socketClientService, dialog, true);
-        this.differenceRestantes = constantes.DIFF_PARTIE_SIMPLE;
+        this.partieAttributsAdmin.differenceRestantes = constantes.DIFF_PARTIE_SIMPLE;
         this.setSocketEvents();
     }
 
@@ -38,11 +38,11 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
     }
 
     protected async supprimerChannelId(): Promise<void> {
-        await this.partieService.supprimerChannelIdSimple(this.channelId);
+        await this.partieService.supprimerChannelIdSimple(this.partieAttributsMultijoueur.channelId);
     }
 
     protected setPartie(): void {
-        this.partieService.getPartieSimple(this.partieID).subscribe((res: PartieSimple) => {
+        this.partieService.getPartieSimple(this.partieAttributsData.partieID).subscribe((res: PartieSimple) => {
             this.partie = res;
             this.getImageData();
             this.setup();
@@ -50,20 +50,23 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
     }
 
     protected getImageData(): void {
-        this.imageData.push(atob(String(this.partie["_image1"][0])));
-        this.imageData.push(atob(String(this.partie["_image2"][0])));
+        this.partieAttributsData.imageData.push(atob(String(this.partie["_image1"][0])));
+        this.partieAttributsData.imageData.push(atob(String(this.partie["_image2"][0])));
     }
 
     protected async testerPourDiff(ev: MouseEvent): Promise<void> {
-        if (this.partieCommence && !this.penaliteEtat) {
+        if (this.partieAttributsAdmin.partieCommence && !this.partieAttributsAdmin.penaliteEtat) {
             const coords: string = ev.offsetX + "," + ev.offsetY;
             let i: number = 0;
             for (const diff of this.partie["_imageDiff"]) {
                 for (const pixel of diff) {
                     if (coords === pixel) {
-                        if (!this.diffTrouvee[0].includes(i)) {
-                            this.isMultijoueur ?
-                                await this.partieService.differenceTrouveeMultijoueurSimple(this.channelId, i, this.joueurMultijoueur)
+                        if (!this.partieAttributsAdmin.diffTrouvee[0].includes(i)) {
+                            this.partieAttributsMultijoueur.isMultijoueur ?
+                                await this.partieService.differenceTrouveeMultijoueurSimple(
+                                    this.partieAttributsMultijoueur.channelId,
+                                    i,
+                                    this.partieAttributsMultijoueur.joueurMultijoueur)
                                 : await this.differenceTrouver(i);
 
                             return;
@@ -77,40 +80,43 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
     }
 
     protected async differenceTrouver(i: number): Promise<void> {
-        this.diffTrouvee[0].push(i);
+        this.partieAttributsAdmin.diffTrouvee[0].push(i);
         await this.trouverDifferenceSimple();
         this.restaurationPixelsSimple(i);
         this.ajouterMessageDiffTrouvee("");
     }
 
     private async setPenalite(ev: MouseEvent): Promise<void> {
-        if (this.isMultijoueur) {
-            await this.partieService.erreurMultijoueurSimple(this.channelId, this.joueurMultijoueur);
+        if (this.partieAttributsMultijoueur.isMultijoueur) {
+            await this.partieService.erreurMultijoueurSimple(
+                this.partieAttributsMultijoueur.channelId,
+                this.partieAttributsMultijoueur.joueurMultijoueur);
         }
         this.penalite(ev);
     }
 
     protected async differenceTrouverMultijoueurSimple(i: number, joueur: string): Promise<void> {
-        if (this.joueurMultijoueur === joueur) {
+        if (this.partieAttributsMultijoueur.joueurMultijoueur === joueur) {
             await this.trouverDifferenceSimple();
         }
         this.ajouterMessageDiffTrouvee(joueur);
-        this.diffTrouvee[0].push(i);
+        this.partieAttributsAdmin.diffTrouvee[0].push(i);
         this.restaurationPixelsSimple(i);
     }
 
     protected async terminerPartieMultijoueurSimple(): Promise<void> {
-        if (this.differencesTrouvees === NOMBRE_DIFF_MULTIJOUEUR_SIMPLE) {
-            await this.partieService.partieMultijoueurSimpleTerminee(this.channelId, this.joueurMultijoueur);
+        if (this.partieAttributsAdmin.differencesTrouvees === NOMBRE_DIFF_MULTIJOUEUR_SIMPLE) {
+            await this.partieService.partieMultijoueurSimpleTerminee(this.partieAttributsMultijoueur.channelId,
+                                                                     this.partieAttributsMultijoueur.joueurMultijoueur);
         }
     }
 
     protected async trouverDifferenceSimple(): Promise<void> {
-        if (this.partieCommence) {
+        if (this.partieAttributsAdmin.partieCommence) {
             this.augmenterDiffTrouvee();
             this.jouerYesSound();
         }
-        this.isMultijoueur ? await this.terminerPartieMultijoueurSimple() : this.terminerPartieSolo();
+        this.partieAttributsMultijoueur.isMultijoueur ? await this.terminerPartieMultijoueurSimple() : this.terminerPartieSolo();
     }
 
     private restaurationPixelsSimple(i: number): void {
@@ -136,22 +142,23 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
     private setSocketEvents(): void {
         this.socketClientService.socket.on(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, (data) => {
-            if (this.channelId === data.channelId) {
+            if (this.partieAttributsMultijoueur.channelId === data.channelId) {
                 this.differenceTrouverMultijoueurSimple(data.diff, data.joueur).catch(() => ErrorHandler);
             }
         });
 
         this.socketClientService.socket.on(event.PARTIE_SIMPLE_MULTIJOUEUR_TERMINEE, async (data) => {
-            if (this.channelId === data.channelId) {
-                this.partieCommence = false;
+            if (this.partieAttributsMultijoueur.channelId === data.channelId) {
+                this.partieAttributsAdmin.partieCommence = false;
                 await this.terminerPartie(data.joueur);
             }
         });
 
         this.socketClientService.socket.on(event.ERREUR_PARTIE_SIMPLE, (data) => {
-            if (this.channelId === data.channelId) {
-                this.isMultijoueur ? this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur par " + data.joueur)
-                : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur.");
+            if (this.partieAttributsMultijoueur.channelId === data.channelId) {
+                this.partieAttributsMultijoueur.isMultijoueur ?
+                    this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur par " + data.joueur)
+                    : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur.");
             }
         });
     }
