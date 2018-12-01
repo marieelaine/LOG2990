@@ -9,6 +9,8 @@ import {DialogConfirmationComponent} from "../dialog-confirmation/dialog-confirm
 import {SocketClientService} from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import {DialogVueAttenteComponent} from "../dialog-vue-attente/dialog-vue-attente.component";
+import { PartieSimpleInterface } from "../../../../../server/app/partieSimple/DB-partie-simple/DB-partie-simple";
+import { TempsUser } from "src/app/admin/temps-user";
 
 @Component({
     selector: "app-liste-partie-simple",
@@ -33,8 +35,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     }
 
     public ngOnInit(): void {
-        this.listePartieService.getListePartieSimple().subscribe((res: PartieSimple[]) => {
-            this.listeParties = res;
+        this.listePartieService.getListePartieSimple().subscribe((res: PartieSimpleInterface[]) => {
+            this.reconstruirePartieSimple(res);
         });
         this.listePartieService.getListePartieSimpleEnAttente().subscribe((res: string[]) => {
             this.listePartieEnAttente = res;
@@ -49,8 +51,45 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
         }
     }
 
+    protected reconstruirePartieSimple(res: PartieSimpleInterface[]): void {
+        for (const partie of res) {
+            const tempsSolo: TempsUser[] = [];
+            const tempsUnContreUn: TempsUser[] = [];
+
+            for (const user of partie._tempsSolo) {
+                const userSolo: TempsUser = new TempsUser(user._user, user._temps);
+                tempsSolo.push(userSolo);
+            }
+
+            for (const user of partie._tempsUnContreUn) {
+                const userMulti: TempsUser = new TempsUser(user._user, user._temps);
+                tempsUnContreUn.push(userMulti);
+            }
+
+            const partieSimple: PartieSimple = new PartieSimple(partie._nomPartie, tempsSolo, tempsUnContreUn, partie._image1,
+                                                                partie._image2, partie._imageDiff, partie._id);
+            this.listeParties.push(partieSimple);
+        }
+    }
+
     protected afficherImage(id: string): void {
-        this.ajusterImage(id, this.listeParties, true);
+        for (const partie of this.listeParties) {
+            if (partie.id === id) {
+                let data: string = "";
+
+                data = atob(String(partie.image1[0]));
+
+                let hex: number = 0x00;
+                const result: Uint8Array = new Uint8Array(data.length);
+
+                for (let i: number = 0; i < data.length; i++) {
+                    hex = data.charCodeAt(i);
+                    result[i] = hex;
+                }
+                const blob: Blob = new Blob([result], {type: "image/bmp"});
+                partie.imageBlob = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+            }
+        }
     }
 
     protected onJouerOuReinitialiserClick(partieId: string): void {

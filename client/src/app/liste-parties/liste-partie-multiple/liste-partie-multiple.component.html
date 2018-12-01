@@ -9,8 +9,8 @@
                         <h2 class='topThreeHeaders text-center'>Top <img class='bronzeMedal' src="assets/bronze-medal.png"></h2>
                     </div>
                     <div class="col-sm-5 title">
-                        <span class='gameNameHeader titleFirstLetter'>{{getTitleFirstLetter(partieMultiple._nomPartie)|uppercase}}</span>
-                        <span class='gameNameHeader'>{{getTitleWithoutFirstLetter(partieMultiple._nomPartie)|lowercase}}</span>
+                        <span class='gameNameHeader titleFirstLetter'>{{getTitleFirstLetter(partieMultiple.nomPartie)|uppercase}}</span>
+                        <span class='gameNameHeader'>{{getTitleWithoutFirstLetter(partieMultiple.nomPartie)|lowercase}}</span>
                     </div>
             </mat-card-header>
             <div class='row'>
@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-1 carte"></div>
                      </div>
-                     <div class="row temps carte"  *ngFor="let tempsSolo of partieMultiple['_tempsSolo']; let i = index">
+                     <div class="row temps carte"  *ngFor="let tempsSolo of partieMultiple.tempsSolo; let i = index">
                         <div class="col-1">
                             <span class="badge badge-pill badge-danger">{{i+1}}</span>
                         </div>
@@ -35,7 +35,7 @@
                                     {{ getDisplayTime(tempsSolo) }}
                                 </h5>
                                 <h6 class="card-subtitle mb-2 text-muted">
-                                    {{ tempsSolo['_user'] }}
+                                    {{ tempsSolo.user }}
                                 </h6>
                             </div>
                         </div>
@@ -43,25 +43,25 @@
                         <div class="card col-5" class="top3">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    {{ getDisplayTime(partieMultiple['_tempsUnContreUn'][i]) }}
+                                    {{ getDisplayTime(partieMultiple.tempsUnContreUn[i]) }}
                                 </h5>
                                 <h6 class="card-subtitle mb-2 text-muted">
-                                    {{ partieMultiple["_tempsUnContreUn"][i]['_user'] }}
+                                    {{ partieMultiple.tempsUnContreUn[i].user }}
                                 </h6>
                             </div>
                         </div>
                      </div>
                 </div>
                 <div class='col-sm-5'>
-                    <img #image [src]="partieMultiple['_imageBlob']" [id]="partieMultiple['_id']" class='gameImage img-responsive mat-elevation-z6 center'
+                    <img #image [src]="partieMultiple.imageBlob" [id]="partieMultiple.id" class='gameImage img-responsive mat-elevation-z6 center'
                         [class.mat-elevation-z6]="!partieMultiple.isElevatedActive"
                         [class.mat-elevation-z10]="!!partieMultiple.isElevatedActive">
                 </div> 
             </div>    
             <div class="row">
                     <div class="col boutons d-flex flex-row bd-highlight justify-content-end">
-                        <button class="p-2 bd-highlight" mat-button (click) = "onJouerOuReinitialiserClick(partieMultiple._id)" class='mat-elevation-z6'> {{jouerOuReinitialiser}} </button>
-                        <button class="p-2 bd-highlight" mat-button (click) = "onCreerOuSupprimerClick(partieMultiple._id)" class='mat-elevation-z6'> {{listePartieEnAttente.includes(partieMultiple._id) ? joindreOuSupprimer : creerOuSupprimer}} </button>
+                        <button class="p-2 bd-highlight" mat-button (click) = "onJouerOuReinitialiserClick(partieMultiple.id)" class='mat-elevation-z6'> {{jouerOuReinitialiser}} </button>
+                        <button class="p-2 bd-highlight" mat-button (click) = "onCreerOuSupprimerClick(partieMultiple.id)" class='mat-elevation-z6'> {{listePartieEnAttente.includes(partieMultiple.id) ? joindreOuSupprimer : creerOuSupprimer}} </button>
                     </div>
                 </div>
         </mat-card>  
