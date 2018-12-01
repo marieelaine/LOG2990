@@ -44,8 +44,8 @@ export class DBUser {
         id === "" ? res.status(HTTP_NOT_IMPLEMENTED).json(id) : res.status(HTTP_CREATED).json(id);
     }
 
-    public async requeteDeleteUser(req: Request, res: Response): Promise<void> {
-        await this.deleteUser(req.params.id, res);
+    public async requeteSupprimerUser(req: Request, res: Response): Promise<void> {
+        await this.supprimerUser(req.params.id, res);
     }
 
     private async ajouterUser(user: Usager, res: Response): Promise<Response> {
@@ -60,7 +60,7 @@ export class DBUser {
         }
     }
 
-    private async deleteUser(username: string, res: Response): Promise<Response> {
+    private async supprimerUser(username: string, res: Response): Promise<Response> {
         const userId: string = await this.obtenirUserId(username);
         try {
             this.modelUser.deleteOne({"_id": userId}, (err: Error) => {
