@@ -8,42 +8,43 @@ const DISPLAY: number = 10;
   providedIn: "root"
 })
 export class ChronoService {
-    protected time: number;
-    protected interval: NodeJS.Timer;
-    protected running: boolean;
+    protected temps: number;
+    protected intervale: NodeJS.Timer;
+    protected enMarche: boolean;
 
     public constructor() {
-        this.time = 0;
-        this.running = false;
+        this.temps = 0;
+        this.enMarche = false;
     }
 
     public reset(): void {
-        this.time = 0;
-        this.running = false;
-        clearInterval(this.interval);
+        this.temps = 0;
+        this.enMarche = false;
+        clearInterval(this.intervale);
     }
 
-    public stopTimer(): void {
-        this.running = false;
-        clearInterval(this.interval);
+    public arreterChrono(): void {
+        this.enMarche = false;
+        clearInterval(this.intervale);
     }
 
-    public getTime(): number {
-        return this.time ;
+    public getTemps(): number {
+        return this.temps ;
     }
 
-    public startTimer(): void {
-        if (!this.running) {
-            this.interval = setInterval(() => { this.time++; }, UNE_SECONDE);
-            this.running = true;
+    public commencerChrono(): void {
+        if (!this.enMarche) {
+            this.intervale = setInterval(() => { this.temps++; }, UNE_SECONDE);
+            this.enMarche = true;
         }
     }
 
-    protected getSecondsSrtring(): string {
-        return (this.time % NB_SECONDES < DISPLAY) ? "0" + this.time % NB_SECONDES : this.time % NB_SECONDES + "";
+    protected getSecondesString(): string {
+        return (this.temps % NB_SECONDES < DISPLAY) ? "0" + this.temps % NB_SECONDES : this.temps % NB_SECONDES + "";
     }
 
     protected getMinutesString(): string {
-        return (this.time / NB_SECONDES < DISPLAY) ? "0" + Math.floor(this.time / NB_SECONDES) : Math.floor(this.time / NB_SECONDES) + "";
+        return (this.temps / NB_SECONDES < DISPLAY) ?
+        "0" + Math.floor(this.temps / NB_SECONDES) : Math.floor(this.temps / NB_SECONDES) + "";
     }
 }

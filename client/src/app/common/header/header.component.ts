@@ -16,14 +16,14 @@ export class HeaderComponent {
       private userService: UserService) {
   }
 
-  protected onLogout(): void {
+  protected deconnexion(): void {
     const cookieUsername: string = this.cookieService.get("username");
     this.cookieService.deleteAll();
     this.userService["delete"](cookieUsername).catch(() => ErrorHandler);
     this.router.navigate(["/"]).catch(() => ErrorHandler);
   }
 
-  protected onHeaderTitleClick(): void {
+  protected surClickBanniere(): void {
     this.router.navigateByUrl("/liste-parties")
     .catch(() => ErrorHandler);
   }
