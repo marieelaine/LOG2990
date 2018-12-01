@@ -35,7 +35,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     public ngOnInit(): void {
         this.listePartieService.getListePartieMultiple().subscribe((res: PartieMultipleInterface[]) => {
-            this.reconstruirePartieSimple(res);
+            this.reconstruirePartieMultiple(res);
         });
         this.listePartieService.getListePartieMultipleEnAttente().subscribe((res: string[]) => {
             this.listePartieEnAttente = res;
@@ -49,7 +49,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
         }
     }
 
-    protected reconstruirePartieSimple(res: PartieMultipleInterface[]): void {
+    protected reconstruirePartieMultiple(res: PartieMultipleInterface[]): void {
         for (const partie of res) {
             const tempsSolo: TempsUser[] = [];
             const tempsUnContreUn: TempsUser[] = [];

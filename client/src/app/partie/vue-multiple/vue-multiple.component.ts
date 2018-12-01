@@ -42,7 +42,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
 
     protected setPartie(): void {
         this.partieService.getPartieMultiple(this.partieID).subscribe((res: PartieMultipleInterface) => {
-            this.reconstruirePartieSimple(res);
+            this.reconstruirePartieMultiple(res);
             this.getImageData();
             this.setup();
         });
@@ -52,7 +52,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         this.partieService.supprimerChannelIdMultiple(this.partieID).catch(() => ErrorHandler);
     }
 
-    protected reconstruirePartieSimple(partie: PartieMultipleInterface): void {
+    protected reconstruirePartieMultiple(partie: PartieMultipleInterface): void {
             const tempsSolo: TempsUser[] = [];
             const tempsUnContreUn: TempsUser[] = [];
 

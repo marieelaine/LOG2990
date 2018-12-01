@@ -5,6 +5,8 @@ import { Observable } from "rxjs";
 import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 import * as route from "../constantes";
 import { TempsUser } from "../admin/temps-user";
+import { PartieSimpleInterface } from "../../../../server/app/partieSimple/DB-partie-simple/DB-partie-simple";
+import { PartieMultipleInterface } from "../../../../server/app/partieMultiple/DB-partie-multiple/DB-partie-multiple";
 
 @Injectable({
   providedIn: "root"
@@ -13,9 +15,9 @@ export class ListePartieServiceService {
 
   public constructor( private http: HttpClient ) {}
 
-  public getListePartieSimple(): Observable<PartieSimple[]> {
+  public getListePartieSimple(): Observable<PartieSimpleInterface[]> {
 
-      return this.http.get<PartieSimple[]>(route.GET_LISTE_SIMPLE_URL);
+      return this.http.get<PartieSimpleInterface[]>(route.GET_LISTE_SIMPLE_URL);
   }
 
   public async deletePartieSimple(partieId: string): Promise<void> {
@@ -24,9 +26,9 @@ export class ListePartieServiceService {
       .catch(() => ErrorHandler);
   }
 
-  public getListePartieMultiple(): Observable<PartieMultiple[]> {
+  public getListePartieMultiple(): Observable<PartieMultipleInterface[]> {
 
-    return this.http.get<PartieMultiple[]>(route.GET_LISTE_MULTIPLE_URL);
+    return this.http.get<PartieMultipleInterface[]>(route.GET_LISTE_MULTIPLE_URL);
   }
 
   public async deletePartieMultiple(partieId: string): Promise<void> {
