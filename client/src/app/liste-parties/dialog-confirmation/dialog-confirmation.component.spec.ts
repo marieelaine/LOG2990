@@ -59,10 +59,10 @@ describe("DialogConfirmationComponent", () => {
         beforeEach(() => {
             component["listePartiesSimple"] = [];
         });
-        it("devrait appeler listePartieService.deletePartieSimple", () => {
+        it("devrait appeler listePartieService.supprimerPartieSimple", () => {
 
             // tslint:disable-next-line:no-any
-            const spy: jasmine.Spy = spyOn<any>(component["listePartieService"], "deletePartieSimple");
+            const spy: jasmine.Spy = spyOn<any>(component["listePartieService"], "supprimerPartieSimple");
             spy.and.callThrough();
 
             component["supprimerPartieSimple"]();
@@ -85,10 +85,10 @@ describe("DialogConfirmationComponent", () => {
         beforeEach(() => {
             component["listePartiesMultiples"] = [];
         });
-        it("devrait appeler listePartieService.deletePartieMultiple", () => {
+        it("devrait appeler listePartieService.supprimerPartieMultiple", () => {
 
             // tslint:disable-next-line:no-any
-            const spy: jasmine.Spy = spyOn<any>(component["listePartieService"], "deletePartieMultiple");
+            const spy: jasmine.Spy = spyOn<any>(component["listePartieService"], "supprimerPartieMultiple");
             spy.and.callThrough();
 
             component["supprimerPartieMultiple"]();

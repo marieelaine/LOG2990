@@ -18,7 +18,7 @@ export class ListePartieServiceService {
       return this.http.get<PartieSimpleInterface[]>(route.GET_LISTE_SIMPLE_URL);
   }
 
-  public async deletePartieSimple(partieId: string): Promise<void> {
+  public async supprimerPartieSimple(partieId: string): Promise<void> {
 
     this.http.delete(route.DELETE_PARTIE_SIMPLE_URL + partieId).toPromise()
       .catch(() => ErrorHandler);
@@ -29,7 +29,7 @@ export class ListePartieServiceService {
     return this.http.get<PartieMultipleInterface[]>(route.GET_LISTE_MULTIPLE_URL);
   }
 
-  public async deletePartieMultiple(partieId: string): Promise<void> {
+  public async supprimerPartieMultiple(partieId: string): Promise<void> {
 
     this.http.delete(route.DELETE_PARTIE_MULTIPLE_URL + partieId).toPromise()
     .catch(() => ErrorHandler);
@@ -53,12 +53,12 @@ export class ListePartieServiceService {
     return this.http.get<string[]>(route.GET_PARTIE_SIMPLE_ATTENTE);
   }
 
-  public addPartieSimpleEnAttente(partieId: string): Observable<string> {
+  public ajouterPartieSimpleEnAttente(partieId: string): Observable<string> {
 
     return this.http.post<string>(route.ADD_PARTIE_SIMPLE_ATTENTE, { partieId });
   }
 
-  public deletePartieSimpleEnAttente(partieId: string): Observable<string> {
+  public supprimerPartieSimpleEnAttente(partieId: string): Observable<string> {
 
     return this.http.delete<string>(route.DELETE_PARTIE_SIMPLE_ATTENTE + partieId);
   }
@@ -68,12 +68,12 @@ export class ListePartieServiceService {
     return this.http.get<string[]>(route.GET_PARTIE_MULTIPLE_ATTENTE);
   }
 
-  public addPartieMultipleEnAttente(partieId: string): Observable<string> {
+  public ajouterPartieMultipleEnAttente(partieId: string): Observable<string> {
 
     return this.http.post<string>(route.ADD_PARTIE_MULTIPLE_ATTENTE, { partieId });
   }
 
-  public deletePartieMultipleEnAttente(partieId: string): Observable<string> {
+  public supprimerPartieMultipleEnAttente(partieId: string): Observable<string> {
 
     return this.http.delete<string>(route.DELETE_PARTIE_MULTIPLE_ATTENTE + partieId);
   }

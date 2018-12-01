@@ -40,14 +40,14 @@ export class DialogVueAttenteComponent {
     }
 
     private supprimerPartieSimpleAttente(): void {
-        this.listePartieService.deletePartieSimpleEnAttente(this.partieId).subscribe(async (res) => {
+        this.listePartieService.supprimerPartieSimpleEnAttente(this.partieId).subscribe(async (res) => {
             this.dialogRef.close();
             await this.listePartieService.dialogAttenteSimpleFerme();
         });
     }
 
     private supprimerPartieMultipleAttente(): void {
-        this.listePartieService.deletePartieMultipleEnAttente(this.partieId).subscribe(async (res) => {
+        this.listePartieService.supprimerPartieMultipleEnAttente(this.partieId).subscribe(async (res) => {
             this.dialogRef.close();
             await this.listePartieService.dialogAttenteMultipleFerme();
         });
@@ -75,7 +75,7 @@ export class DialogVueAttenteComponent {
 
         this.socketClientService.socket.on(event.JOINDRE_PARTIE_MULTIJOUEUR_SIMPLE, (data) => {
             if (data.partieId === this.partieId) {
-                this.listePartieService.deletePartieSimpleEnAttente(this.partieId).subscribe((res) => {
+                this.listePartieService.supprimerPartieSimpleEnAttente(this.partieId).subscribe((res) => {
                     this.dialogRef.close();
                     this.router.navigate(["/partie-simple/" + data.partieId + "/" + data.channelId])
                     .catch(() => ErrorHandler);
@@ -85,7 +85,7 @@ export class DialogVueAttenteComponent {
 
         this.socketClientService.socket.on(event.JOINDRE_PARTIE_MULTIJOUEUR_MULTIPLE, (data) => {
             if (data.partieId === this.partieId) {
-                this.listePartieService.deletePartieMultipleEnAttente(this.partieId).subscribe((res) => {
+                this.listePartieService.supprimerPartieMultipleEnAttente(this.partieId).subscribe((res) => {
                 this.dialogRef.close();
                 this.router.navigate(["/partie-multiple/" + data.partieId + "/" + data.channelId])
                 .catch(() => ErrorHandler);

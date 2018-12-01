@@ -51,14 +51,14 @@ describe("ListePartiesComponent", () => {
     });
 
     it("should change jouerOuReinitialiser and creerOuSupprimer to 'Jouer' and 'Supprimer' when url is /liste-parties", () => {
-        component["setjouerOuReinitialiserAndcreerOuSupprimer"]("/liste-parties");
+        component["setjouerOuReinitialiserEtcreerOuSupprimer"]("/liste-parties");
         expect(component["jouerOuReinitialiser"]).toBe("Jouer");
         expect(component["creerOuSupprimer"]).toBe("Créer");
         expect(component["isListePartiesMode"]).toBe(true);
     });
 
     it("should change jouerOuReinitialiser and creerOuSupprimer to 'Reinitialiser' and 'Supprimer' when url is /admin", () => {
-        component["setjouerOuReinitialiserAndcreerOuSupprimer"]("/admin");
+        component["setjouerOuReinitialiserEtcreerOuSupprimer"]("/admin");
         expect(component["jouerOuReinitialiser"]).toBe("Réinitialiser");
         expect(component["creerOuSupprimer"]).toBe("Supprimer");
         expect(component["isAdminMode"]).toBe(true);
@@ -70,7 +70,7 @@ describe("ListePartiesComponent", () => {
         const user2: TempsUser = new TempsUser("user2", 1);
         const sortingTimesTest: TempsUser[] = [user1, user2];
 
-        const sortedArray: TempsUser[] = component["getSortedTimes"](sortingTimesTest);
+        const sortedArray: TempsUser[] = component["getTempsEnOrdre"](sortingTimesTest);
         const expectedArray: TempsUser[] = [user2, user1];
         expect(sortedArray).toEqual(expectedArray);
     });
@@ -78,7 +78,7 @@ describe("ListePartiesComponent", () => {
     it("should return array of sorted times", () => {
         const tempsParam: number = 61;
         const tempsUser: TempsUser = new TempsUser("", tempsParam);
-        expect(component["getDisplayTime"](tempsUser)).toBe("1:01");
+        expect(component["getTempsDisplay"](tempsUser)).toBe("1:01");
     });
 
     it("genererTableauTempsAleatoires devrait creer une tableau de taille 3", () => {
@@ -88,15 +88,15 @@ describe("ListePartiesComponent", () => {
     });
 
     it("should return title without first letter", () => {
-        expect(component["getTitleWithoutFirstLetter"](titleTest)).toBe("Success");
+        expect(component["getTitreSansPremiereLettre"](titleTest)).toBe("Success");
     });
 
     it("should return title first letter", () => {
-        expect(component["getTitleFirstLetter"](titleTest)).toBe("N");
+        expect(component["getPremiereLettreTitre"](titleTest)).toBe("N");
     });
 
     it("should change attribute modes", () => {
-        component["setToJouerAndCreer"]();
+        component["setJouerEtCreer"]();
         expect(component["isAdminMode"]).toBeFalsy();
         expect(component["isListePartiesMode"]).toBeTruthy();
         expect(component["jouerOuReinitialiser"]).toBe("Jouer");
@@ -104,7 +104,7 @@ describe("ListePartiesComponent", () => {
     });
 
     it("should change attribute modes", () => {
-        component["setToReinitialiserAndSupprimer"]();
+        component["setReinitialiserEtSupprimer"]();
         expect(component["isAdminMode"]).toBeTruthy();
         expect(component["isListePartiesMode"]).toBeFalsy();
         expect(component["jouerOuReinitialiser"]).toBe("Réinitialiser");

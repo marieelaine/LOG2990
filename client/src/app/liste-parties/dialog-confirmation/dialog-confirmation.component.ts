@@ -48,12 +48,12 @@ export class DialogConfirmationComponent {
   }
 
   private supprimerPartieSimple(): void {
-    this.listePartieService.deletePartieSimple(this.partieId).catch(() => ErrorHandler);
+    this.listePartieService.supprimerPartieSimple(this.partieId).catch(() => ErrorHandler);
     this.supprimerPartieSimpleDeLaffichage();
   }
 
   private supprimerPartieMultiple(): void {
-    this.listePartieService.deletePartieMultiple(this.partieId).catch(() => ErrorHandler);
+    this.listePartieService.supprimerPartieMultiple(this.partieId).catch(() => ErrorHandler);
     this.supprimerPartieMultipleDeLaffichage();
   }
 

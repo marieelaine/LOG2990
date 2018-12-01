@@ -43,25 +43,25 @@ export class ListePartiesComponent {
         this.changerBoutonSelonRouter(router);
     }
 
-    protected setjouerOuReinitialiserAndcreerOuSupprimer(url: string): void {
+    protected setjouerOuReinitialiserEtcreerOuSupprimer(url: string): void {
         if (url === "/liste-parties") {
-            this.setToJouerAndCreer();
+            this.setJouerEtCreer();
         } else if (url === "/admin") {
-            this.setToReinitialiserAndSupprimer();
+            this.setReinitialiserEtSupprimer();
         }
     }
 
-    protected getTitleFirstLetter(title: string): string {
+    protected getPremiereLettreTitre(title: string): string {
 
         return title.substr(0, 1);
     }
 
-    protected getTitleWithoutFirstLetter(title: string): string {
+    protected getTitreSansPremiereLettre(title: string): string {
 
         return title.substr(1, title.length - 1);
     }
 
-    protected getDisplayTime(tempsUser: TempsUser): string {
+    protected getTempsDisplay(tempsUser: TempsUser): string {
         const minutes: number = Math.floor(tempsUser.temps / NB_SECONDES);
         const secondes: number = tempsUser.temps - minutes * NB_SECONDES;
 
@@ -73,7 +73,7 @@ export class ListePartiesComponent {
         for (let i: number = 1; i < NB_ELEMENT; i++) {
             arr.push(new TempsUser("Joueur " + i, this.genererTempsAleatoire()));
         }
-        this.getSortedTimes(arr);
+        this.getTempsEnOrdre(arr);
 
         return arr;
     }
@@ -87,7 +87,7 @@ export class ListePartiesComponent {
         return Math.floor(Math.random() * BORNE_SUP) + BORNE_INF;
     }
 
-    private getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {
+    private getTempsEnOrdre(arr: Array<TempsUser>): Array<TempsUser> {
         if (arr) {
             arr.sort((t1: TempsUser, t2: TempsUser) => {
                 const time1: number = t1.temps;
@@ -106,7 +106,7 @@ export class ListePartiesComponent {
         return arr;
     }
 
-    private setToJouerAndCreer(): void {
+    private setJouerEtCreer(): void {
         this.isAdminMode = false;
         this.isListePartiesMode = true;
         this.jouerOuReinitialiser = "Jouer";
@@ -114,7 +114,7 @@ export class ListePartiesComponent {
         this.joindreOuSupprimer = "Joindre";
     }
 
-    private setToReinitialiserAndSupprimer(): void {
+    private setReinitialiserEtSupprimer(): void {
         this.isListePartiesMode = false;
         this.isAdminMode = true;
         this.jouerOuReinitialiser = "Réinitialiser";
@@ -125,7 +125,7 @@ export class ListePartiesComponent {
     private changerBoutonSelonRouter(router: Router): void {
         router.events.subscribe((val) => {
             if (val instanceof NavigationEnd) {
-                this.setjouerOuReinitialiserAndcreerOuSupprimer(val.url);
+                this.setjouerOuReinitialiserEtcreerOuSupprimer(val.url);
             }
         });
     }

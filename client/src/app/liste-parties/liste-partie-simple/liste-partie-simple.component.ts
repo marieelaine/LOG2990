@@ -127,7 +127,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
             this.router.navigate(["/partie-simple/" + partieId + "/" + channelId])
                 .catch(() => ErrorHandler);
         } else {
-            this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
+            this.listePartieService.ajouterPartieSimpleEnAttente(partieId).subscribe(() => {
                 this.ouvrirDialogVueAttente(partieId);
             });
         }

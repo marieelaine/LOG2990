@@ -40,7 +40,7 @@ describe("Liste Partie Service Service", () => {
     describe("Fonction deletePartieSimple", () => {
         it("Devrait faire une requete DELETE", () => {
             const id: string = "12345abcde";
-            service.deletePartieSimple(id)
+            service.supprimerPartieSimple(id)
             .catch(() => ErrorHandler);
 
             const req: TestRequest = mockHttp.expectOne(constantes.DELETE_PARTIE_SIMPLE_URL + id);
@@ -71,7 +71,7 @@ describe("Liste Partie Service Service", () => {
     describe("Fonction deletePartieMultiple", () => {
         it("Devrait faire une requete DELETE", () => {
             const id: string = "12345abcde";
-            service.deletePartieMultiple(id)
+            service.supprimerPartieMultiple(id)
             .catch(() => ErrorHandler);
 
             const req: TestRequest = mockHttp.expectOne(constantes.DELETE_PARTIE_MULTIPLE_URL + id);
