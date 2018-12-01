@@ -10,7 +10,7 @@ import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import {ChronoService} from "../../chrono/chrono.service";
 import { TempsUser } from "src/app/admin/temps-user";
-import { PartieSimpleInterface } from "../../../../../server/app/partieSimple/DB-partie-simple/DB-partie-simple";
+import { PartieSimpleInterface } from "../../../../../common/partie-simple-interface";
 
 const NOMBRE_DIFF_MULTIJOUEUR_SIMPLE: number = 4;
 

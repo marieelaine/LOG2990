@@ -1,6 +1,6 @@
 import {Component, ElementRef, QueryList, ViewChildren} from "@angular/core";
 import {Router, NavigationEnd} from "@angular/router";
-import {ListePartieServiceService} from "./liste-partie-service.service";\
+import {ListePartieServiceService} from "./liste-partie-service.service";
 import { TempsUser } from "../admin/temps-user";
 import { DomSanitizer } from "@angular/platform-browser";
 

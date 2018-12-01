@@ -9,8 +9,8 @@ import {DialogConfirmationComponent} from "../dialog-confirmation/dialog-confirm
 import {SocketClientService} from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import {DialogVueAttenteComponent} from "../dialog-vue-attente/dialog-vue-attente.component";
-import { PartieSimpleInterface } from "../../../../../server/app/partieSimple/DB-partie-simple/DB-partie-simple";
 import { TempsUser } from "src/app/admin/temps-user";
+import { PartieSimpleInterface } from "../../../../../common/partie-simple-interface";
 
 @Component({
     selector: "app-liste-partie-simple",
