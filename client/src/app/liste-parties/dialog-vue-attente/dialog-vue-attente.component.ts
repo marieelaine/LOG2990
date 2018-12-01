@@ -15,8 +15,8 @@ export class DialogVueAttenteComponent {
 
     private partieId: string;
     protected message: string;
-    protected isEnAttente: boolean;
-    private isSimple: boolean;
+    protected estEnAttente: boolean;
+    private estSimple: boolean;
 
     public constructor(
         public dialogRef: MatDialogRef<DialogVueAttenteComponent>,
@@ -26,27 +26,27 @@ export class DialogVueAttenteComponent {
         @Inject(MAT_DIALOG_DATA) data: Data
     ) {
         this.partieId = data.id;
-        this.isSimple = data.isSimple;
+        this.estSimple = data.isSimple;
         dialogRef.disableClose = true;
         this.ajouterPartieSurSocket();
         this.message = "En attente d'un adversaire";
-        this.isEnAttente = true;
+        this.estEnAttente = true;
         this.changementPage();
     }
 
-    protected onDialogClose(): void {
+    protected fermerDialog(): void {
         this.dialogRef.close();
-        this.isSimple ? this.deletePartieSimpleAttente() : this.deletePartieMultipleAttente();
+        this.estSimple ? this.supprimerPartieSimpleAttente() : this.supprimerPartieMultipleAttente();
     }
 
-    private deletePartieSimpleAttente(): void {
+    private supprimerPartieSimpleAttente(): void {
         this.listePartieService.deletePartieSimpleEnAttente(this.partieId).subscribe(async (res) => {
             this.dialogRef.close();
             await this.listePartieService.dialogAttenteSimpleFerme();
         });
     }
 
-    private deletePartieMultipleAttente(): void {
+    private supprimerPartieMultipleAttente(): void {
         this.listePartieService.deletePartieMultipleEnAttente(this.partieId).subscribe(async (res) => {
             this.dialogRef.close();
             await this.listePartieService.dialogAttenteMultipleFerme();
@@ -59,7 +59,7 @@ export class DialogVueAttenteComponent {
 
     private setMessageErreur(data: string): void {
         if (this.partieId === data) {
-            this.isEnAttente = false;
+            this.estEnAttente = false;
             this.setMessageDialog();
         }
     }
@@ -96,7 +96,7 @@ export class DialogVueAttenteComponent {
 
     private changementPage(): void {
         window.addEventListener("beforeunload", () => {
-            this.isSimple ? this.deletePartieSimpleAttente() : this.deletePartieMultipleAttente();
+            this.estSimple ? this.supprimerPartieSimpleAttente() : this.supprimerPartieMultipleAttente();
         });
     }
 }
