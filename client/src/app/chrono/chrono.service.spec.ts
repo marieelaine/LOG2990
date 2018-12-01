@@ -61,7 +61,7 @@ describe("ChronoService", () => {
             const temps: number = 305000;
             service.commencerChrono();
             tick(temps);
-            expect(service["getSecondesSrtring"]()).toBe("05");
+            expect(service["getSecondesString"]()).toBe("05");
             expect(service["getMinutesString"]()).toBe("05");
             service.arreterChrono();
         }));

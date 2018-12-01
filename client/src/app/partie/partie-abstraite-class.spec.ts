@@ -52,8 +52,8 @@ describe("PartieAbstraiteComponent", () => {
             expect(component["messageDifferences"]).toEqual("Vous avez trouvé 0 différences");
         });
 
-        it("devrait appeler chrono.startTimer", () => {
-            const spy: jasmine.Spy = spyOn(component["chrono"], "startTimer");
+        it("devrait appeler chrono.commencerChrono", () => {
+            const spy: jasmine.Spy = spyOn(component["chrono"], "commencerChrono");
 
             component["commencerPartie"]();
             expect(spy).toHaveBeenCalled();
@@ -71,6 +71,6 @@ describe("PartieAbstraiteComponent", () => {
 
     it("should return value 0", fakeAsync(() => {
     tick(ONE_SECOND_TIMER);
-    expect(component["chrono"].getTime()).toBe(0);
+    expect(component["chrono"].getTemps()).toBe(0);
     }));
 });
