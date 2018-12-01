@@ -1,8 +1,6 @@
 import { Injectable, ErrorHandler } from "@angular/core";
-import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 import * as route from "../constantes";
 import { TempsUser } from "../admin/temps-user";
 import { PartieSimpleInterface } from "../../../../server/app/partieSimple/DB-partie-simple/DB-partie-simple";

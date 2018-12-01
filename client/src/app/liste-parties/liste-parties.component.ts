@@ -45,26 +45,6 @@ export class ListePartiesComponent {
         this.changerBoutonSelonRouter(router);
     }
 
-    protected ajusterImage(id: string, listeParties: Array<PartieSimple | PartieMultiple>, isPartieSimple: Boolean): void {
-        for (const partie of listeParties) {
-            if (partie["_id"] === id) {
-                let data: string = "";
-
-                isPartieSimple ? data = atob(String(partie["_image1"][0])) : data = atob(String(partie["_image1PV1"][0]));
-
-                let hex: number = 0x00;
-                const result: Uint8Array = new Uint8Array(data.length);
-
-                for (let i: number = 0; i < data.length; i++) {
-                    hex = data.charCodeAt(i);
-                    result[i] = hex;
-                }
-                const blob: Blob = new Blob([result], {type: "image/bmp"});
-                partie["_imageBlob"] = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
-            }
-        }
-    }
-
     protected setjouerOuReinitialiserAndcreerOuSupprimer(url: string): void {
         if (url === "/liste-parties") {
             this.setToJouerAndCreer();
@@ -83,9 +63,9 @@ export class ListePartiesComponent {
         return title.substr(1, title.length - 1);
     }
 
-    protected getDisplayTime(temps: TempsUser): string {
-        const minutes: number = Math.floor(temps["_temps"] / NB_SECONDES);
-        const secondes: number = temps["_temps"] - minutes * NB_SECONDES;
+    protected getDisplayTime(tempsUser: TempsUser): string {
+        const minutes: number = Math.floor(tempsUser.temps / NB_SECONDES);
+        const secondes: number = tempsUser.temps - minutes * NB_SECONDES;
 
         return (secondes < DISPLAY) ? (minutes + ":0" + secondes) : minutes + ":" + secondes;
     }
@@ -112,8 +92,8 @@ export class ListePartiesComponent {
     private getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {
         if (arr) {
             arr.sort((t1: TempsUser, t2: TempsUser) => {
-                const time1: number = t1["_temps"];
-                const time2: number = t2["_temps"];
+                const time1: number = t1.temps;
+                const time2: number = t2.temps;
                 if (time1 > time2) {
                     return 1;
                 }

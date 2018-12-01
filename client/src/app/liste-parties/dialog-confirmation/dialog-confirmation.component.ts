@@ -59,7 +59,7 @@ export class DialogConfirmationComponent {
 
   private supprimerPartieSimpleDeLaffichage(): void {
     for (let i: number = 0 ; i < this.listePartiesSimples.length ; i++) {
-      if (this.listePartiesSimples[i]["_id"]  === this.partieId) {
+      if (this.listePartiesSimples[i].id  === this.partieId) {
         this.listePartiesSimples.splice(i, 1);
       }
     }
@@ -67,7 +67,7 @@ export class DialogConfirmationComponent {
 
   private supprimerPartieMultipleDeLaffichage(): void {
     for (let i: number = 0 ; i < this.listePartiesMultiples.length ; i++) {
-      if (this.listePartiesMultiples[i]["_id"]  === this.partieId) {
+      if (this.listePartiesMultiples[i].id  === this.partieId) {
         this.listePartiesMultiples.splice(i, 1);
       }
     }

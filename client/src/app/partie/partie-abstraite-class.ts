@@ -152,10 +152,10 @@ export abstract class PartieAbstraiteClass {
         if (joueur === "") {
             joueur = "Anonyme";
         }
-        if (temps < this.partie["_tempsSolo"][PARTIE_SECOND_ELEMENT]["_temps"]) {
+        if (temps < this.partie.tempsSolo[PARTIE_SECOND_ELEMENT].temps) {
             const tempsUser: TempsUser = new TempsUser(joueur, temps);
-            this.partie["_tempsSolo"].splice(-1, 1);
-            this.partie["_tempsSolo"].push(tempsUser);
+            this.partie.tempsSolo.splice(-1, 1);
+            this.partie.tempsSolo.push(tempsUser);
         }
     }
 
