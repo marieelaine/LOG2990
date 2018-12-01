@@ -10,7 +10,8 @@ import * as constantes from "../constantes";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import { ChildProcess } from "child_process";
 import { Schema, Model, Document } from "mongoose";
-import uniqueValidator = require("mongoose-unique-validator");
+// import uniqueValidator = require("mongoose-unique-validator");
+import * as uniqueValidator from "mongoose-unique-validator";
 
 export interface TempsUser {
   _user: string;
