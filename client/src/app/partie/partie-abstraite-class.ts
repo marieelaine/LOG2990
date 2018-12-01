@@ -30,7 +30,8 @@ const LARGEUR_DIALOGUE: string = "600px";
 
 const DEUX_POINTS_TEMPS_FORMAT: string = ":";
 const ZERO_STR_FORMAT: string = "0";
-const STR_VIDE: string = "";
+export const STR_VIDE: string = "";
+export const VIRGULE_STR_FORMAT: string = ",";
 
 const CHARGEMENT_IMAGES: string = "Chargement des images";
 const IMAGE_BLOB: string = "image/bmp";
@@ -40,15 +41,17 @@ const FELECITATIONS_MULTI: string = "FÉLICITATIONS, VOUS AVEZ GAGNÉ!";
 const FELECITATIONS: string = "FÉLICITATIONS!";
 const PERDU_MULTI: string = "VOUS AVEZ PERDU!";
 const PATH_AUDIO_APPLAUDISSEMENT: string = "../assets/applause.mp3";
-const PATH_AUDIO_YES: string = "../assets/yes.mp3";
-const PATH_AUDIO_NO: string = "../assets/yes.mp3";
+const PATH_AUDIO_YES: string = "../assets/yes.wav";
+const PATH_AUDIO_NO: string = "../assets/no.mp3";
 const PATH_AUDIO_LOSER: string = "../assets/LoserSound.mp3";
 const MESSAGE_TROUVE_PART1: string = "Vous avez trouvé";
 const DIFFERENCES: string = "différences";
 const ANONYME: string = "Anonyme";
 const ERREUR: string = "ERREUR";
-const ERREUR_CHAT: string = " - ERREUR";
+export const ERREUR_CHAT: string = " - ERREUR";
+export const ERREUR_CHAT_PAR: string = " - ERREUR par ";
 const USERNAME_STR: string = "username";
+export const CONTEXT_2D: string = "2d";
 
 export abstract class PartieAbstraiteClass {
 
@@ -127,7 +130,7 @@ export abstract class PartieAbstraiteClass {
         }
         const blob: Blob = new Blob([result], {type: IMAGE_BLOB});
 
-        const context: CanvasRenderingContext2D = canvas.nativeElement.getContext("2d");
+        const context: CanvasRenderingContext2D = canvas.nativeElement.getContext(CONTEXT_2D);
         image.src = URL.createObjectURL(blob);
         image.onload = () => {
             context.drawImage(image, 0, 0);
@@ -203,7 +206,7 @@ export abstract class PartieAbstraiteClass {
     protected penalite(event: MouseEvent): void {
         this.partieAttributsAdmin.penaliteEtat = true;
         const canvas: HTMLCanvasElement = event.srcElement as HTMLCanvasElement;
-        const ctx: CanvasRenderingContext2D = canvas.getContext("2d") as CanvasRenderingContext2D;
+        const ctx: CanvasRenderingContext2D = canvas.getContext(CONTEXT_2D) as CanvasRenderingContext2D;
 
         const imageSaved: ImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         ctx.font = FONT;
