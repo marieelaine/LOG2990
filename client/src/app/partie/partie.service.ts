@@ -1,10 +1,10 @@
 import { ErrorHandler, Injectable } from "@angular/core";
-import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 import * as route from "../constantes";
 import { TempsUser } from "../admin/temps-user";
+import { PartieSimpleInterface } from "../../../../server/app/partieSimple/DB-partie-simple/DB-partie-simple";
+import { PartieMultipleInterface } from "../../../../server/app/partieMultiple/DB-partie-multiple/DB-partie-multiple";
 
 @Injectable({
     providedIn: "root"
@@ -15,12 +15,12 @@ export class PartieService {
         private http: HttpClient
     ) { }
 
-    public getPartieSimple(partieID: string): Observable<PartieSimple> {
-        return this.http.get<PartieSimple>(route.GET_PARTIE_SIMPLE + partieID);
+    public getPartieSimple(partieID: string): Observable<PartieSimpleInterface> {
+        return this.http.get<PartieSimpleInterface>(route.GET_PARTIE_SIMPLE + partieID);
     }
 
-    public getPartieMultiple(partieID: string): Observable<PartieMultiple> {
-        return this.http.get<PartieMultiple>(route.GET_PARTIE_MULTIPLE + partieID);
+    public getPartieMultiple(partieID: string): Observable<PartieMultipleInterface> {
+        return this.http.get<PartieMultipleInterface>(route.GET_PARTIE_MULTIPLE + partieID);
     }
 
     public async addTempsPartieSimple(partieID: string, temps: TempsUser, isSolo: boolean): Promise<void> {

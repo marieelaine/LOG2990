@@ -10,6 +10,7 @@ import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import { ChronoService} from "../../chrono/chrono.service";
 import { TempsUser } from "src/app/admin/temps-user";
+import { PartieMultipleInterface } from "../../../../../server/app/partieMultiple/DB-partie-multiple/DB-partie-multiple";
 
 const NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE: number = 7;
 
@@ -40,8 +41,8 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     }
 
     protected setPartie(): void {
-        this.partieService.getPartieMultiple(this.partieID).subscribe((res: PartieMultiple) => {
-            this.partie = res;
+        this.partieService.getPartieMultiple(this.partieID).subscribe((res: PartieMultipleInterface) => {
+            this.reconstruirePartieSimple(res);
             this.getImageData();
             this.setup();
         });
@@ -51,11 +52,32 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         this.partieService.supprimerChannelIdMultiple(this.partieID).catch(() => ErrorHandler);
     }
 
+    protected reconstruirePartieSimple(partie: PartieMultipleInterface): void {
+            const tempsSolo: TempsUser[] = [];
+            const tempsUnContreUn: TempsUser[] = [];
+
+            for (const user of partie._tempsSolo) {
+                const userSolo: TempsUser = new TempsUser(user._user, user._temps);
+                tempsSolo.push(userSolo);
+            }
+
+            for (const user of partie._tempsUnContreUn) {
+                const userMulti: TempsUser = new TempsUser(user._user, user._temps);
+                tempsUnContreUn.push(userMulti);
+            }
+
+            const partieMultiple: PartieMultiple = new PartieMultiple(partie._nomPartie, tempsSolo, tempsUnContreUn, partie._image1PV1,
+                                                                      partie._image1PV2, partie._image2PV1, partie._image2PV2,
+                                                                      partie._imageDiff1, partie._imageDiff2, partie._quantiteObjets,
+                                                                      partie._theme, partie._typeModification, partie._id);
+            this.partie = partieMultiple;
+    }
+
     protected getImageData(): void {
-        this.imageData.push(atob(String(this.partie["_image1PV1"][0])));
-        this.imageData.push(atob(String(this.partie["_image1PV2"][0])));
-        this.imageData.push(atob(String(this.partie["_image2PV1"][0])));
-        this.imageData.push(atob(String(this.partie["_image2PV2"][0])));
+        this.imageData.push(atob(String(this.partie.image1PV1[0])));
+        this.imageData.push(atob(String(this.partie.image1PV2[0])));
+        this.imageData.push(atob(String(this.partie.image2PV1[0])));
+        this.imageData.push(atob(String(this.partie.image2PV2[0])));
     }
 
     protected async testerPourDiff(ev: MouseEvent): Promise<void> {
