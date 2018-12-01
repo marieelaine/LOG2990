@@ -11,18 +11,9 @@ import { SocketServerService } from "../../socket-io.service";
 import Types from "../../types";
 import * as constantes from "../../constantes";
 import { DBPartieAbstract, TempsUser } from "../../partie-DB/DB-partie-abstract";
+import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
 
 const PARTIE_SECOND_ELEMENT: number = 2;
-
-export interface PartieSimpleInterface {
-    _id: string;
-    _nomPartie: string;
-    _tempsSolo: Array<TempsUser>;
-    _tempsUnContreUn: Array<TempsUser>;
-    _image1: Buffer;
-    _image2: Buffer;
-    _imageDiff: Array<Array<string>>;
-}
 
 @injectable()
 export class DBPartieSimple extends DBPartieAbstract {

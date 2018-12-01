@@ -11,24 +11,9 @@ import { SocketServerService } from "../../socket-io.service";
 import Types from "../../types";
 import { ReadLine } from "readline";
 import { DBPartieAbstract, TempsUser } from "../../partie-DB/DB-partie-abstract";
+import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
 
 const PARTIE_SECOND_ELEMENT: number = 2;
-
-export interface PartieMultipleInterface {
-    _id: string;
-    _nomPartie: string;
-    _tempsSolo: Array<TempsUser>;
-    _tempsUnContreUn: Array<TempsUser>;
-    _image1PV1: Buffer;
-    _image1PV2: Buffer;
-    _image2PV1: Buffer;
-    _image2PV2: Buffer;
-    _imageDiff1: Array<Array<string>>;
-    _imageDiff2: Array<Array<string>>;
-    _quantiteObjets: number;
-    _theme: string;
-    _typeModification: string;
-}
 
 const imagePOV1: number = 1;
 const imagePOV2: number = 2;
