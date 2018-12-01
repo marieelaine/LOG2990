@@ -46,9 +46,9 @@ import {ChatComponent} from "./chat/chat.component";
 import {VueSimpleComponent} from "./partie/vue-simple/vue-simple.component";
 import {DialogFinPartieComponent} from "./partie/dialog-fin-partie/dialog-fin-partie.component";
 import {NotifierService, NotifierModule} from "angular-notifier";
-import * as Constantes from "./constantes";
+import * as constantes from "./constantes";
 
-const config: SocketIoConfig = {url: Constantes.BASE_URL, options: {}};
+const config: SocketIoConfig = {url: constantes.BASE_URL, options: {}};
 
 const appRoutes: Routes = [
     {path: "", component: VueInitialeComponent},

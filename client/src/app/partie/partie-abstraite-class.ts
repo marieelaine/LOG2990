@@ -20,6 +20,36 @@ const OFFSET_ADDITIONNEL: number = 10;
 const LINE_WIDTH: number = 1.5;
 const PARTIE_SECOND_ELEMENT: number = 2;
 
+const FONT: string = "600 28px Arial";
+const TEXT_ALIGN: string = "center";
+const ERREUR_COULEUR_INTERIEUR: string = "#ff0000";
+const ERREUR_COULEUR_CONTEUR: string = "#000000";
+
+const HAUTEUR_DIALOGUE: string = "190px";
+const LARGEUR_DIALOGUE: string = "600px";
+
+const DEUX_POINTS_TEMPS_FORMAT: string = ":";
+const ZERO_STR_FORMAT: string = "0";
+const STR_VIDE: string = "";
+
+const CHARGEMENT_IMAGES: string = "Chargement des images";
+const IMAGE_BLOB: string = "image/bmp";
+const DIFF_TROUVE_PAR: string = " - Différence trouvée par ";
+const DIFF_TROUVE: string = " - Différence trouvée.";
+const FELECITATIONS_MULTI: string = "FÉLICITATIONS, VOUS AVEZ GAGNÉ!";
+const FELECITATIONS: string = "FÉLICITATIONS!";
+const PERDU_MULTI: string = "VOUS AVEZ PERDU!";
+const PATH_AUDIO_APPLAUDISSEMENT: string = "../assets/applause.mp3";
+const PATH_AUDIO_YES: string = "../assets/yes.mp3";
+const PATH_AUDIO_NO: string = "../assets/yes.mp3";
+const PATH_AUDIO_LOSER: string = "../assets/LoserSound.mp3";
+const MESSAGE_TROUVE_PART1: string = "Vous avez trouvé";
+const DIFFERENCES: string = "différences";
+const ANONYME: string = "Anonyme";
+const ERREUR: string = "ERREUR";
+const ERREUR_CHAT: string = " - ERREUR";
+const USERNAME_STR: string = "username";
+
 export abstract class PartieAbstraiteClass {
 
     @ViewChildren("canvas") protected canvas: QueryList<ElementRef>;
@@ -42,7 +72,7 @@ export abstract class PartieAbstraiteClass {
         this.partieAttributsMultijoueur = new PartieAttributsMultijoueur;
         this.partieAttributsAdmin.partieCommence = false;
         this.partieAttributsAdmin.differencesTrouvees = 0;
-        this.partieAttributsAdmin.messageDifferences = "Chargement des images";
+        this.partieAttributsAdmin.messageDifferences = CHARGEMENT_IMAGES;
         this.chat = new ChatComponent();
         this.partieAttributsData.imageData = [];
         this.partieAttributsAdmin.diffTrouvee = [[], []];
@@ -66,15 +96,16 @@ export abstract class PartieAbstraiteClass {
 
     protected ouvrirDialogFinPartie(): void {
         this.dialog.open(DialogFinPartieComponent, {
-            height: "190px",
-            width: "600px",
+            height: HAUTEUR_DIALOGUE,
+            width: LARGEUR_DIALOGUE,
             data: {message: this.partieAttributsAdmin.messageDifferences}
         });
     }
 
     protected commencerPartie(): void {
         this.partieAttributsAdmin.partieCommence = true;
-        this.partieAttributsAdmin.messageDifferences = `Vous avez trouvé ${this.partieAttributsAdmin.differencesTrouvees} différences`;
+        this.partieAttributsAdmin.messageDifferences = MESSAGE_TROUVE_PART1
+            + this.partieAttributsAdmin.differencesTrouvees + DIFFERENCES;
 
         this.chrono.startTimer();
     }
@@ -94,7 +125,7 @@ export abstract class PartieAbstraiteClass {
             hex = data.charCodeAt(i);
             result[i] = hex;
         }
-        const blob: Blob = new Blob([result], {type: "image/bmp"});
+        const blob: Blob = new Blob([result], {type: IMAGE_BLOB});
 
         const context: CanvasRenderingContext2D = canvas.nativeElement.getContext("2d");
         image.src = URL.createObjectURL(blob);
@@ -105,8 +136,8 @@ export abstract class PartieAbstraiteClass {
 
     protected ajouterMessageDiffTrouvee(joueur: string): void {
         this.partieAttributsMultijoueur.isMultijoueur ?
-            this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Différence trouvée par " + joueur)
-            : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Différence trouvée.");
+            this.chat.addMessageToMessagesChat(this.getCurrentTime() + DIFF_TROUVE_PAR + joueur)
+            : this.chat.addMessageToMessagesChat(this.getCurrentTime() + DIFF_TROUVE);
     }
 
     protected async terminerPartie(gagnant: string): Promise<void> {
@@ -117,13 +148,13 @@ export abstract class PartieAbstraiteClass {
         this.chrono.stopTimer();
 
         if (this.partieAttributsMultijoueur.joueurMultijoueur === gagnant) {
-            this.partieAttributsAdmin.messageDifferences = "FÉLICITATIONS, VOUS AVEZ GAGNÉ!";
+            this.partieAttributsAdmin.messageDifferences = FELECITATIONS_MULTI;
             const tempsUser: TempsUser = new TempsUser(gagnant, this.chrono.getTime());
             this.joueurApplaudissements();
             this.ajouterTemps(this.partieAttributsData.partieID, tempsUser, false);
             await this.supprimerChannelId();
         } else {
-            this.partieAttributsAdmin.messageDifferences = "VOUS AVEZ PERDU!";
+            this.partieAttributsAdmin.messageDifferences = PERDU_MULTI;
             this.joueurLoserSound();
         }
         this.ouvrirDialogFinPartie();
@@ -131,20 +162,17 @@ export abstract class PartieAbstraiteClass {
 
     protected partieSoloTerminee(): void {
         this.chrono.stopTimer();
-        const tempsUser: TempsUser = new TempsUser(this.cookieService.get("username"), this.chrono.getTime());
-        this.partieAttributsAdmin.messageDifferences = "FÉLICITATIONS!";
+        const tempsUser: TempsUser = new TempsUser(this.cookieService.get(USERNAME_STR), this.chrono.getTime());
+        this.partieAttributsAdmin.messageDifferences = FELECITATIONS;
         this.ouvrirDialogFinPartie();
-        this.partieAttributsData.audio.src = "../assets/applause.mp3";
-        this.partieAttributsData.audio.load();
-        this.partieAttributsData.audio.play().catch(() => ErrorHandler);
         this.joueurApplaudissements();
         this.ajouterTemps(this.partieAttributsData.partieID, tempsUser, true);
     }
 
     protected updateTableauTempsSolo(temps: number): void {
-        let joueur: string = this.cookieService.get("username");
-        if (joueur === "") {
-            joueur = "Anonyme";
+        let joueur: string = this.cookieService.get(USERNAME_STR);
+        if (joueur === STR_VIDE) {
+            joueur = ANONYME;
         }
         if (temps < this.partie["_tempsSolo"][PARTIE_SECOND_ELEMENT]["_temps"]) {
             const tempsUser: TempsUser = new TempsUser(joueur, temps);
@@ -155,11 +183,12 @@ export abstract class PartieAbstraiteClass {
 
     protected augmenterDiffTrouvee(): void {
         this.partieAttributsAdmin.differencesTrouvees++;
-        this.partieAttributsAdmin.messageDifferences = `Vous avez trouvé ${this.partieAttributsAdmin.differencesTrouvees} différences`;
+        this.partieAttributsAdmin.messageDifferences = MESSAGE_TROUVE_PART1
+            + this.partieAttributsAdmin.differencesTrouvees + DIFFERENCES;
     }
 
     protected jouerYesSound(): void {
-        this.partieAttributsData.audio.src = "../assets/yes.wav";
+        this.partieAttributsData.audio.src = PATH_AUDIO_YES;
         this.partieAttributsData.audio.load();
         this.partieAttributsData.audio.play().catch(() => ErrorHandler);
     }
@@ -167,7 +196,7 @@ export abstract class PartieAbstraiteClass {
     protected async terminerPartieSolo(): Promise<void> {
         if (this.partieAttributsAdmin.differenceRestantes === this.partieAttributsAdmin.differencesTrouvees) {
             this.partieAttributsAdmin.partieCommence = false;
-            await this.terminerPartie("");
+            await this.terminerPartie(STR_VIDE);
         }
     }
 
@@ -177,19 +206,19 @@ export abstract class PartieAbstraiteClass {
         const ctx: CanvasRenderingContext2D = canvas.getContext("2d") as CanvasRenderingContext2D;
 
         const imageSaved: ImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        ctx.font = "600 28px Arial";
-        ctx.textAlign = "centerpartieData.";
-        ctx.fillStyle = "#ff0000";
-        ctx.fillText("ERREUR", event.offsetX, event.offsetY + OFFSET_ADDITIONNEL);
+        ctx.font = FONT;
+        ctx.textAlign = TEXT_ALIGN;
+        ctx.fillStyle = ERREUR_COULEUR_INTERIEUR;
+        ctx.fillText(ERREUR, event.offsetX, event.offsetY + OFFSET_ADDITIONNEL);
         ctx.lineWidth = LINE_WIDTH;
-        ctx.fillStyle = "black";
-        ctx.strokeText("ERREUR", event.offsetX, event.offsetY + OFFSET_ADDITIONNEL);
-        this.partieAttributsData.audio.src = "../assets/no.mp3";
+        ctx.fillStyle = ERREUR_COULEUR_CONTEUR;
+        ctx.strokeText(ERREUR, event.offsetX, event.offsetY + OFFSET_ADDITIONNEL);
+        this.partieAttributsData.audio.src = PATH_AUDIO_NO;
         this.partieAttributsData.audio.load();
         this.partieAttributsData.audio.play().catch(() => ErrorHandler);
 
         if (!this.partieAttributsMultijoueur.isMultijoueur) {
-            this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur");
+            this.chat.addMessageToMessagesChat(this.getCurrentTime() + ERREUR_CHAT);
         }
 
         setTimeout(() => {
@@ -201,7 +230,7 @@ export abstract class PartieAbstraiteClass {
     protected getCurrentTime(): string {
         const date: Date = new Date();
 
-        return date.getHours() + ":" + this.getMinutes(date) + ":" + this.getSeconds(date);
+        return date.getHours() + DEUX_POINTS_TEMPS_FORMAT + this.getMinutes(date) + DEUX_POINTS_TEMPS_FORMAT + this.getSeconds(date);
     }
 
     protected afficherPartie(): void {
@@ -210,21 +239,25 @@ export abstract class PartieAbstraiteClass {
     }
 
     private getMinutes(date: Date): string {
-        return date.getMinutes() < MINUTESANDSECONDCONVERT ? "0" + date.getMinutes().toString() : date.getMinutes().toString();
+        return date.getMinutes() < MINUTESANDSECONDCONVERT ?
+            ZERO_STR_FORMAT + date.getMinutes().toString()
+            : date.getMinutes().toString();
     }
 
     private getSeconds(date: Date): string {
-        return date.getSeconds() < MINUTESANDSECONDCONVERT ? "0" + date.getSeconds().toString() : date.getSeconds().toString();
+        return date.getSeconds() < MINUTESANDSECONDCONVERT ?
+            ZERO_STR_FORMAT + date.getSeconds().toString()
+            : date.getSeconds().toString();
     }
 
     private joueurApplaudissements(): void {
-        this.partieAttributsData.audio.src = "../assets/applause.mp3";
+        this.partieAttributsData.audio.src = PATH_AUDIO_APPLAUDISSEMENT;
         this.partieAttributsData.audio.load();
         this.partieAttributsData.audio.play().catch(() => ErrorHandler);
     }
 
     private joueurLoserSound(): void {
-        this.partieAttributsData.audio.src = "../assets/LoserSound.mp3";
+        this.partieAttributsData.audio.src = PATH_AUDIO_LOSER;
         this.partieAttributsData.audio.load();
         this.partieAttributsData.audio.play().catch(() => ErrorHandler);
     }
@@ -242,7 +275,7 @@ export abstract class PartieAbstraiteClass {
     }
 
     private setIsMultijoueur(): void {
-        this.route.snapshot.params.channelId === "0" ?
+        this.route.snapshot.params.channelId === ZERO_STR_FORMAT ?
             this.partieAttributsMultijoueur.isMultijoueur = false
             : this.partieAttributsMultijoueur.isMultijoueur = true;
         if (this.partieAttributsMultijoueur.isMultijoueur) {
@@ -256,7 +289,8 @@ export abstract class PartieAbstraiteClass {
     }
 
     private setJoueurMultijoueur(): void {
-        this.cookieService.get("username") === "" ? this.partieAttributsMultijoueur.joueurMultijoueur = "Anonyme"
-            : this.partieAttributsMultijoueur.joueurMultijoueur = this.cookieService.get("username");
+        this.cookieService.get(USERNAME_STR) === STR_VIDE
+            ? this.partieAttributsMultijoueur.joueurMultijoueur = ANONYME
+            : this.partieAttributsMultijoueur.joueurMultijoueur = this.cookieService.get(USERNAME_STR);
     }
 }

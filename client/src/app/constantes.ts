@@ -48,6 +48,24 @@ export const PARTIE_MULTIPLE_CHARGEE: string = BASE_URL + MULTIPLE + "partieMult
 export const AJOUTER_USERS_URL: string = BASE_URL + USERS + "ajouter/";
 export const DELETE_USERS_URL: string = BASE_URL + USERS + "delete/";
 
+// export const CHARGEMENT_IMAGES: string = "Chargement des images";
+// export const IMAGE_BLOB: string = "image/bmp";
+// export const DIFF_TROUVE_PAR: string = " - Différence trouvée par ";
+// export const DIFF_TROUVE: string = " - Différence trouvée.";
+// export const FELECITATIONS_MULTI: string = "FÉLICITATIONS, VOUS AVEZ GAGNÉ!";
+// export const FELECITATIONS: string = "FÉLICITATIONS!";
+// export const PERDU_MULTI: string = "VOUS AVEZ PERDU!";
+// export const PATH_AUDIO_APPLAUDISSEMENT: string = "../assets/applause.mp3";
+// export const PATH_AUDIO_YES: string = "../assets/yes.mp3";
+// export const PATH_AUDIO_NO: string = "../assets/yes.mp3";
+// export const PATH_AUDIO_LOSER: string = "../assets/LoserSound.mp3"
+// export const MESSAGE_TROUVE_PART1: string = "Vous avez trouvé";
+// export const DIFFERENCES: string = "différences";
+// export const ANONYME: string = "Anonyme";
+// export const ERREUR: string = "ERREUR";
+// export const ERREUR_CHAT: string = " - ERREUR";
+// export const USERNAME_STR: string = "username";
+
 export const METHODE_POST: string = "POST";
 export const METHODE_GET: string = "GET";
 export const METHODE_DELETE: string = "DELETE";
