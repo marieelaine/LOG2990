@@ -23,7 +23,6 @@ import {
     MatCheckboxModule
 } from "@angular/material";
 import { ListePartiesComponent } from "./liste-parties/liste-parties.component";
-import { ChronoComponent } from "./chrono/chrono.component";
 import { HeaderComponent } from "./common/header/header.component";
 import { VueInitialeComponent } from "./vue-initiale/vue-initiale.component";
 import { AdminComponent } from "./admin/admin.component";
@@ -46,6 +45,7 @@ import { ChatComponent } from "./chat/chat.component";
 import { VueSimpleComponent } from "./partie/vue-simple/vue-simple.component";
 import { DialogFinPartieComponent } from "./partie/dialog-fin-partie/dialog-fin-partie.component";
 import { NotifierService, NotifierModule } from "angular-notifier";
+import { ChronoService } from "./chrono/chrono.service";
 
 const config: SocketIoConfig = { url: "http://localhost:4200", options: {} };
 
@@ -54,7 +54,6 @@ const appRoutes: Routes = [
     { path: "header", component: HeaderComponent },
     { path: "admin", component: AdminComponent },
     { path: "liste-parties", component: ListePartiesComponent },
-    { path: "chrono", component: ChronoComponent },
     { path: "partie-simple/:idPartie/:channelId", component: VueSimpleComponent },
     { path: "partie-multiple/:idPartie/:channelId", component: VueMultipleComponent },
 ];
@@ -67,7 +66,6 @@ const appRoutes: Routes = [
         AdminComponent,
         ListePartiesComponent,
         LoginFormComponent,
-        ChronoComponent,
         ListePartieSimpleComponent,
         ListePartieMultipleComponent,
         DialogSimpleComponent,
@@ -110,6 +108,7 @@ const appRoutes: Routes = [
         BasicService,
         CookieService,
         UserService,
+        ChronoService,
         PartieSimpleService,
         PartieMultipleService,
         SocketClientService,
