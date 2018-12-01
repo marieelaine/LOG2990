@@ -92,11 +92,11 @@ describe("DialogSimpleComponent", () => {
         expect(component["erreurNbImage"]).toEqual("");
     });
 
-    it("should call onUploadImage when an image is uploaded", () => {
+    it("should call onAjoutImage when an image is uploaded", () => {
         const uploadImage1: HTMLElement = fixture.debugElement.query(By.css("#uploadImage1")).nativeElement;
 
         // tslint:disable-next-line:no-any
-        const spy: jasmine.Spy = spyOn<any>(component, "onUploadImage");
+        const spy: jasmine.Spy = spyOn<any>(component, "onAjoutImage");
         uploadImage1.dispatchEvent(new Event("change"));
         expect(spy).toHaveBeenCalled();
     });
