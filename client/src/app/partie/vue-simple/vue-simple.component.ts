@@ -10,6 +10,7 @@ import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import {ChronoService} from "../../chrono/chrono.service";
 import { TempsUser } from "src/app/admin/temps-user";
+import { PartieSimpleInterface } from "../../../../../server/app/partieSimple/DB-partie-simple/DB-partie-simple";
 
 const NOMBRE_DIFF_MULTIJOUEUR_SIMPLE: number = 4;
 
@@ -42,23 +43,42 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
     }
 
     protected setPartie(): void {
-        this.partieService.getPartieSimple(this.partieID).subscribe((res: PartieSimple) => {
-            this.partie = res;
+        this.partieService.getPartieSimple(this.partieID).subscribe((res: PartieSimpleInterface) => {
+            this.reconstruirePartieSimple(res);
             this.getImageData();
             this.setup();
         });
     }
 
+    protected reconstruirePartieSimple(partie: PartieSimpleInterface): void {
+        const tempsSolo: TempsUser[] = [];
+        const tempsUnContreUn: TempsUser[] = [];
+
+        for (const user of partie._tempsSolo) {
+            const userSolo: TempsUser = new TempsUser(user._user, user._temps);
+            tempsSolo.push(userSolo);
+        }
+
+        for (const user of partie._tempsUnContreUn) {
+            const userMulti: TempsUser = new TempsUser(user._user, user._temps);
+            tempsUnContreUn.push(userMulti);
+        }
+
+        const partieSimple: PartieSimple = new PartieSimple(partie._nomPartie, tempsSolo, tempsUnContreUn, partie._image1,
+                                                            partie._image2, partie._imageDiff, partie._id);
+        this.partie = partieSimple;
+}
+
     protected getImageData(): void {
-        this.imageData.push(atob(String(this.partie["_image1"][0])));
-        this.imageData.push(atob(String(this.partie["_image2"][0])));
+        this.imageData.push(atob(String(this.partie.image1[0])));
+        this.imageData.push(atob(String(this.partie.image2[0])));
     }
 
     protected async testerPourDiff(ev: MouseEvent): Promise<void> {
         if (this.partieCommence && !this.penaliteEtat) {
             const coords: string = ev.offsetX + "," + ev.offsetY;
             let i: number = 0;
-            for (const diff of this.partie["_imageDiff"]) {
+            for (const diff of this.partie.imageDiff) {
                 for (const pixel of diff) {
                     if (coords === pixel) {
                         if (!this.diffTrouvee[0].includes(i)) {
@@ -122,7 +142,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         const imageDataD: ImageData = contextD.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
         const dataD: Uint8ClampedArray = imageDataD.data;
 
-        for (const pixel of this.partie["_imageDiff"][i]) {
+        for (const pixel of this.partie.imageDiff[i]) {
             const x: number = Number(pixel.split(",")[0]);
             const y: number = Number(pixel.split(",")[1]);
             const dim: number = (y * constantes.WINDOW_WIDTH * constantes.RGB_WIDTH) + (x * constantes.RGB_WIDTH);
