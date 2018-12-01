@@ -30,11 +30,11 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                        protected dialog: MatDialog) {
         super(route, partieService, cookieService, chrono, socketClientService, dialog, true);
         this.differenceRestantes = constantes.DIFF_PARTIE_SIMPLE;
-        this.setSocketEvents();
+        this.setEvenementsSockets();
     }
 
     protected async ajouterTemps(partieID: string, joueur: TempsUser, isSolo: boolean): Promise<void> {
-        await this.partieService.addTempsPartieSimple(partieID, joueur, isSolo)
+        await this.partieService.ajouterTempsPartieSimple(partieID, joueur, isSolo)
             .catch(() => ErrorHandler);
     }
 
@@ -128,7 +128,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
     protected async trouverDifferenceSimple(): Promise<void> {
         if (this.partieCommence) {
             this.augmenterDiffTrouvee();
-            this.jouerYesSound();
+            this.jouerSonYes();
         }
         this.isMultijoueur ? await this.terminerPartieMultijoueurSimple() : this.terminerPartieSolo();
     }
@@ -154,7 +154,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         contextD.putImageData(imageDataD, 0, 0);
     }
 
-    private setSocketEvents(): void {
+    private setEvenementsSockets(): void {
         this.socketClientService.socket.on(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, (data) => {
             if (this.channelId === data.channelId) {
                 this.differenceTrouverMultijoueurSimple(data.diff, data.joueur).catch(() => ErrorHandler);
@@ -170,8 +170,8 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
         this.socketClientService.socket.on(event.ERREUR_PARTIE_SIMPLE, (data) => {
             if (this.channelId === data.channelId) {
-                this.isMultijoueur ? this.chat.ajouterMessageAuMessagesChat(this.getCurrentTime() + " - Erreur par " + data.joueur)
-                : this.chat.ajouterMessageAuMessagesChat(this.getCurrentTime() + " - Erreur.");
+                this.isMultijoueur ? this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + " - Erreur par " + data.joueur)
+                : this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + " - Erreur.");
             }
         });
     }

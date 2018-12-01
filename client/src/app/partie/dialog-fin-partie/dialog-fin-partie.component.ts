@@ -24,7 +24,7 @@ export class DialogFinPartieComponent {
     }
    }
 
-  protected onDialogClose(): void {
+  protected fermerDialog(): void {
     this.dialogRef.close();
     this.router.navigate(["/liste-parties/"]).catch(() => ErrorHandler);
 

@@ -59,7 +59,7 @@ export abstract class PartieAbstraiteClass {
         this.chrono.reset();
         this.setImage(isSimple);
         this.setID();
-        this.setIsMultijoueur();
+        this.setEstMultijoueur();
         this.setPartie();
     }
 
@@ -111,8 +111,8 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected ajouterMessageDiffTrouvee(joueur: string): void {
-        this.isMultijoueur ? this.chat.ajouterMessageAuMessagesChat(this.getCurrentTime() + " - Différence trouvée par " + joueur)
-            : this.chat.ajouterMessageAuMessagesChat(this.getCurrentTime() + " - Différence trouvée.");
+        this.isMultijoueur ? this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + " - Différence trouvée par " + joueur)
+            : this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + " - Différence trouvée.");
     }
 
     protected async terminerPartie(gagnant: string): Promise<void> {
@@ -125,12 +125,12 @@ export abstract class PartieAbstraiteClass {
         if (this.joueurMultijoueur === gagnant) {
             this.messageDifferences = "FÉLICITATIONS, VOUS AVEZ GAGNÉ!";
             const tempsUser: TempsUser =  new TempsUser(gagnant, this.chrono.getTemps());
-            this.joueurApplaudissements();
+            this.jouerApplaudissements();
             this.ajouterTemps(this.partieID, tempsUser, false);
             await this.supprimerChannelId();
         } else {
             this.messageDifferences = "VOUS AVEZ PERDU!";
-            this.joueurLoserSound();
+            this.jouerSonPerdant();
         }
         this.ouvrirDialogFinPartie(this.messageDifferences);
     }
@@ -143,7 +143,7 @@ export abstract class PartieAbstraiteClass {
         this.audio.src = "../assets/applause.mp3";
         this.audio.load();
         this.audio.play().catch(() => ErrorHandler);
-        this.joueurApplaudissements();
+        this.jouerApplaudissements();
         this.ajouterTemps(this.partieID, tempsUser, true);
     }
 
@@ -164,7 +164,7 @@ export abstract class PartieAbstraiteClass {
         this.messageDifferences = `Vous avez trouvé ${this.differencesTrouvees} différences`;
     }
 
-    protected jouerYesSound(): void {
+    protected jouerSonYes(): void {
         this.audio.src = "../assets/yes.wav";
         this.audio.load();
         this.audio.play().catch(() => ErrorHandler);
@@ -195,7 +195,7 @@ export abstract class PartieAbstraiteClass {
         this.audio.play().catch(() => ErrorHandler);
 
         if (!this.isMultijoueur) {
-            this.chat.ajouterMessageAuMessagesChat(this.getCurrentTime() + " - Erreur");
+            this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + " - Erreur");
         }
 
         setTimeout(() => {
@@ -204,27 +204,27 @@ export abstract class PartieAbstraiteClass {
         },         TIMEOUT);
     }
 
-    protected getCurrentTime(): string {
+    protected getTempsCourant(): string {
         const date: Date = new Date();
 
-        return date.getHours() + ":" + this.getMinutes(date) + ":" + this.getSeconds(date);
+        return date.getHours() + ":" + this.getMinutes(date) + ":" + this.getSecondes(date);
     }
 
     private getMinutes(date: Date): string {
         return date.getMinutes() < MINUTESANDSECONDCONVERT ? "0" + date.getMinutes().toString() : date.getMinutes().toString();
     }
 
-    private getSeconds(date: Date): string {
+    private getSecondes(date: Date): string {
         return date.getSeconds() < MINUTESANDSECONDCONVERT ? "0" + date.getSeconds().toString() : date.getSeconds().toString();
     }
 
-    private joueurApplaudissements(): void {
+    private jouerApplaudissements(): void {
         this.audio.src = "../assets/applause.mp3";
         this.audio.load();
         this.audio.play().catch(() => ErrorHandler);
     }
 
-    private joueurLoserSound(): void {
+    private jouerSonPerdant(): void {
         this.audio.src = "../assets/LoserSound.mp3";
         this.audio.load();
         this.audio.play().catch(() => ErrorHandler);
@@ -242,11 +242,11 @@ export abstract class PartieAbstraiteClass {
         this.partieID = this.route.snapshot.params.idPartie;
     }
 
-    private setIsMultijoueur(): void {
+    private setEstMultijoueur(): void {
         this.route.snapshot.params.channelId === "0" ? this.isMultijoueur = false : this.isMultijoueur = true;
         if (this.isMultijoueur) {
             this.setChannelId();
-            this.setJoueurMultijoueur();
+            this.setJouerMultijoueur();
         }
     }
 
@@ -254,7 +254,7 @@ export abstract class PartieAbstraiteClass {
         this.channelId = this.route.snapshot.params.channelId;
     }
 
-    private setJoueurMultijoueur(): void {
+    private setJouerMultijoueur(): void {
         this.cookieService.get("username") === "" ? this.joueurMultijoueur = "Anonyme"
             : this.joueurMultijoueur = this.cookieService.get("username");
     }
