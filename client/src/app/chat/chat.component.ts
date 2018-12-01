@@ -13,7 +13,7 @@ export class ChatComponent {
     this.messagesChat = new Array<string>();
   }
 
-  public addMessageToMessagesChat(msg: string): void {
+  public ajouterMessageAuMessagesChat(msg: string): void {
     this.messagesChat.push(msg);
   }
 }

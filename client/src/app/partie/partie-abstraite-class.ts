@@ -83,7 +83,7 @@ export abstract class PartieAbstraiteClass {
         this.partieCommence = true;
         this.messageDifferences = `Vous avez trouvé ${this.differencesTrouvees} différences`;
 
-        this.chrono.startTimer();
+        this.chrono.commencerChrono();
     }
 
     protected setup(): void {
@@ -111,8 +111,8 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected ajouterMessageDiffTrouvee(joueur: string): void {
-        this.isMultijoueur ? this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Différence trouvée par " + joueur)
-            : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Différence trouvée.");
+        this.isMultijoueur ? this.chat.ajouterMessageAuMessagesChat(this.getCurrentTime() + " - Différence trouvée par " + joueur)
+            : this.chat.ajouterMessageAuMessagesChat(this.getCurrentTime() + " - Différence trouvée.");
     }
 
     protected async terminerPartie(gagnant: string): Promise<void> {
@@ -120,11 +120,11 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected async partieMultijoueurTerminee(gagnant: string): Promise<void> {
-        this.chrono.stopTimer();
+        this.chrono.arreterChrono();
 
         if (this.joueurMultijoueur === gagnant) {
             this.messageDifferences = "FÉLICITATIONS, VOUS AVEZ GAGNÉ!";
-            const tempsUser: TempsUser =  new TempsUser(gagnant, this.chrono.getTime());
+            const tempsUser: TempsUser =  new TempsUser(gagnant, this.chrono.getTemps());
             this.joueurApplaudissements();
             this.ajouterTemps(this.partieID, tempsUser, false);
             await this.supprimerChannelId();
@@ -136,8 +136,8 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected partieSoloTerminee(): void {
-        this.chrono.stopTimer();
-        const tempsUser: TempsUser =  new TempsUser(this.cookieService.get("username"), this.chrono.getTime());
+        this.chrono.arreterChrono();
+        const tempsUser: TempsUser =  new TempsUser(this.cookieService.get("username"), this.chrono.getTemps());
         this.messageDifferences = "FÉLICITATIONS!";
         this.ouvrirDialogFinPartie(this.messageDifferences);
         this.audio.src = "../assets/applause.mp3";
@@ -195,7 +195,7 @@ export abstract class PartieAbstraiteClass {
         this.audio.play().catch(() => ErrorHandler);
 
         if (!this.isMultijoueur) {
-            this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur");
+            this.chat.ajouterMessageAuMessagesChat(this.getCurrentTime() + " - Erreur");
         }
 
         setTimeout(() => {

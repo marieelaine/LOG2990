@@ -189,8 +189,8 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
 
         this.socketClientService.socket.on(event.ERREUR_PARTIE_MULTIPLE, (data) => {
             if (this.channelId === data.channelId) {
-                this.isMultijoueur ? this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur par " + data.joueur)
-                : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur.");
+                this.isMultijoueur ? this.chat.ajouterMessageAuMessagesChat(this.getCurrentTime() + " - Erreur par " + data.joueur)
+                : this.chat.ajouterMessageAuMessagesChat(this.getCurrentTime() + " - Erreur.");
             }
         });
     }
