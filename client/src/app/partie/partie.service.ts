@@ -3,8 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import * as route from "../constantes";
 import { TempsUser } from "../admin/temps-user";
-import { PartieSimpleInterface } from "../../../../server/app/partieSimple/DB-partie-simple/DB-partie-simple";
-import { PartieMultipleInterface } from "../../../../server/app/partieMultiple/DB-partie-multiple/DB-partie-multiple";
+import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
+import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
 
 @Injectable({
     providedIn: "root"
