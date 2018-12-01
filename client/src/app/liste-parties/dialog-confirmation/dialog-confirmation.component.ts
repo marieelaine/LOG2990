@@ -16,7 +16,7 @@ export class DialogConfirmationComponent {
   private partieId: string;
   private listePartiesSimples: PartieSimple[];
   private listePartiesMultiples: PartieMultiple[];
-  private isSimple: boolean;
+  private estSimple: boolean;
 
   public constructor(
     private dialogRef: MatDialogRef<DialogConfirmationComponent>,
@@ -24,21 +24,21 @@ export class DialogConfirmationComponent {
     @Inject(MAT_DIALOG_DATA) data: Data) {
 
       this.partieId = data.id;
-      this.isSimple = data.isSimple;
+      this.estSimple = data.isSimple;
       this.setListeParties(data);
   }
 
-  protected onConfirmationClick(): void {
-    this.isSimple ? this.supprimerPartieSimple() : this.supprimerPartieMultiple();
+  protected surClickConfirmation(): void {
+    this.estSimple ? this.supprimerPartieSimple() : this.supprimerPartieMultiple();
     this.dialogRef.close();
   }
 
-  protected onDialogClose(): void {
+  protected fermerDialog(): void {
     this.dialogRef.close();
   }
 
   private setListeParties(data: Data): void {
-    if (this.isSimple) {
+    if (this.estSimple) {
       this.listePartiesSimples = data.listeParties;
       this.listePartiesMultiples = [];
     } else {
