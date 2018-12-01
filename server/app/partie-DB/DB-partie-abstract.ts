@@ -1,6 +1,4 @@
 import { Request, Response} from "express";
-import { PartieSimpleInterface } from "../partieSimple/DB-partie-simple/DB-partie-simple";
-import { PartieMultipleInterface } from "../partieMultiple/DB-partie-multiple/DB-partie-multiple";
 import { injectable } from "inversify";
 import * as fsx from "fs-extra";
 import * as util from "util";
@@ -12,6 +10,8 @@ import { ChildProcess } from "child_process";
 import { Schema, Model, Document } from "mongoose";
 // import uniqueValidator = require("mongoose-unique-validator");
 import * as uniqueValidator from "mongoose-unique-validator";
+import { PartieSimpleInterface } from "../../../common/partie-simple-interface";
+import { PartieMultipleInterface } from "../../../common/partie-multiple-interface";
 
 export interface TempsUser {
   _user: string;
