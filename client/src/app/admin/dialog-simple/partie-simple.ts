@@ -57,4 +57,36 @@ export class PartieSimple {
     public set tempsUnContreUn(tempsUnContre: Array<TempsUser>) {
         this._tempsUnContreUn = tempsUnContre;
     }
+
+    public get image1(): Buffer {
+        return this._image1;
+    }
+
+    public set image1(image1: Buffer) {
+        this._image1 = image1;
+    }
+
+    public get image2(): Buffer {
+        return this._image2;
+    }
+
+    public set image2(image2: Buffer) {
+        this._image2 = image2;
+    }
+
+    public get imageDiff(): Array<Array<string>> {
+        return this._imageDiff;
+    }
+
+    public set imageDiff(imageDiff: Array<Array<string>>) {
+        this._imageDiff = imageDiff;
+    }
+
+    public get imageBlob(): SafeResourceUrl {
+        return this._imageBlob;
+    }
+
+    public set imageBlob(imageBlob: SafeResourceUrl) {
+        this._imageBlob = imageBlob;
+    }
   }

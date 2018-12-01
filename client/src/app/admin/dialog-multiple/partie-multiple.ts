@@ -72,4 +72,83 @@ export class PartieMultiple {
         this._tempsUnContreUn = tempsUnContre;
     }
 
+    public get image1PV1(): Buffer {
+        return this._image1PV1;
+    }
+
+    public set image1PV1(image1PV1: Buffer) {
+        this._image1PV1 = image1PV1;
+    }
+
+    public get image1PV2(): Buffer {
+        return this._image1PV2;
+    }
+
+    public set image1PV2(image1PV2: Buffer) {
+        this._image1PV2 = image1PV2;
+    }
+
+    public get imageDiff1(): Array<Array<string>> {
+        return this._imageDiff1;
+    }
+
+    public set imageDiff1(imageDiff1: Array<Array<string>>) {
+        this._imageDiff1 = imageDiff1;
+    }
+
+    public get image2PV1(): Buffer {
+        return this._image2PV1;
+    }
+
+    public set image2PV1(image2PV1: Buffer) {
+        this._image2PV1 = image2PV1;
+    }
+
+    public get image2PV2(): Buffer {
+        return this._image2PV2;
+    }
+
+    public set image2PV2(image2PV2: Buffer) {
+        this._image2PV2 = image2PV2;
+    }
+
+    public get imageDiff2(): Array<Array<string>> {
+        return this._imageDiff2;
+    }
+
+    public set imageDiff2(imageDiff2: Array<Array<string>>) {
+        this._imageDiff2 = imageDiff2;
+    }
+
+    public get imageBlob(): SafeResourceUrl {
+        return this._imageBlob;
+    }
+
+    public set imageBlob(imageBlob: SafeResourceUrl) {
+        this._imageBlob = imageBlob;
+    }
+
+    public get quantiteObjets(): number {
+        return this._quantiteObjets;
+    }
+
+    public set quantiteObjets(quantite: number) {
+        this._quantiteObjets = quantite;
+    }
+
+    public get theme(): string {
+        return this._theme;
+    }
+
+    public set theme(theme: string) {
+        this._theme = theme;
+    }
+
+    public get typeModification(): string {
+        return this._typeModification;
+    }
+
+    public set typeModification(mod: string) {
+        this._typeModification = mod;
+    }
   }
