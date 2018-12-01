@@ -1,10 +1,11 @@
-import { PartieMultipleInterface, DBPartieMultiple } from "./DB-partie-multiple";
+import { DBPartieMultiple } from "./DB-partie-multiple";
 import { assert } from "chai";
 import * as fsx from "fs-extra";
 import * as sinon from "sinon";
 import * as constantes from "../../constantes";
 import { SocketServerService } from "../../socket-io.service";
 import { TempsUser } from "../../partie-DB/DB-partie-abstract";
+import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
 
 describe("Partie Multiple BD classe", () => {
     let partieMultipleBD: DBPartieMultiple;

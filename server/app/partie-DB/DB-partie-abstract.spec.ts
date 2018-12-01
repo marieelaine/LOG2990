@@ -1,6 +1,4 @@
 import { DBPartieAbstract, TempsUser } from "../partie-DB/DB-partie-abstract";
-import { PartieSimpleInterface } from "../partieSimple/DB-partie-simple/DB-partie-simple";
-import { PartieMultipleInterface } from "../partieMultiple/DB-partie-multiple/DB-partie-multiple";
 import { ChildProcess } from "child_process";
 import { Request, Response } from "express";
 import { assert } from "chai";
@@ -9,6 +7,8 @@ import { Schema } from "mongoose";
 import * as constantes from "../constantes";
 import * as fs from "fs";
 import * as fsx from "fs-extra";
+import { PartieSimpleInterface } from "../../../common/partie-simple-interface";
+import { PartieMultipleInterface } from "../../../common/partie-multiple-interface";
 
 class DBPartie extends DBPartieAbstract {
 

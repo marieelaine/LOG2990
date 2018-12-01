@@ -1,6 +1,6 @@
-import { PartieMultipleInterface } from "../DB-partie-multiple/DB-partie-multiple";
 import * as WebRequest from "web-request";
 import * as assert from "assert";
+import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
 
 const URL_LISTMULTIPLE: string = "http://localhost:3000/partieMultiple/getListePartieMultiple";
 // id doit exister dans bd, n'est pas un mock
