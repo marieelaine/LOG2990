@@ -9,9 +9,17 @@ import { PartieMultipleService } from "../partie-multiple.service";
 import { FormControl, Validators } from "@angular/forms";
 import { Joueur } from "../joueur";
 import { LONGUEUR_NOM_MIN, LONGUEUR_NOM_MAX, NB_OBJET_MIN, NB_OBJET_MAX } from "src/app/constantes";
+import * as constantes from "../../constantes";
 
 const ERR_THEME: string = "*Un theme doit etre selectionne." ;
 const ERR_TRANSFORMATION: string = "*Une transformation doit etre selectionnee au minimum.";
+const REGEX_PATERN: string = "[ 0-9 ]*";
+const TRANSFORMATION_AJOUTER: string = "Ajouter";
+const A: string = "a";
+const TRANSFORMATION_SUPPRESSION: string = "Suppression";
+const S: string = "s";
+const TRANSFORMATION_COULEUR: string = "Changement de couleur";
+const C: string = "c";
 
 @Component({
   selector: "app-dialog-multiple",
@@ -44,21 +52,21 @@ export class DialogMultipleComponent extends DialogAbstrait {
       this.data.theme = STRING_VIDE;
       this.data.typeModification = STRING_VIDE;
 
-      this.nomControl = new FormControl("", [
+      this.nomControl = new FormControl(constantes.STR_VIDE, [
         Validators.minLength(LONGUEUR_NOM_MIN), Validators.maxLength(LONGUEUR_NOM_MAX), Validators.required]);
-      this.qteControl = new FormControl("", [
+      this.qteControl = new FormControl(constantes.STR_VIDE, [
         Validators.min(NB_OBJET_MIN), Validators.max(NB_OBJET_MAX),
-        Validators.required, Validators.pattern("[ 0-9 ]*")]);
+        Validators.required, Validators.pattern(REGEX_PATERN)]);
 
       this.transformation = [
-          { name: "Ajout", checked: false, value: "a" },
-          { name: "Suppression", checked: false, value: "s" },
-          { name: "Changement de couleur", checked: false, value: "c" } ];
+          { name: TRANSFORMATION_AJOUTER, checked: false, value: A },
+          { name: TRANSFORMATION_SUPPRESSION, checked: false, value: S },
+          { name: TRANSFORMATION_COULEUR, checked: false, value: C } ];
   }
 
   protected getTransformation(): void {
     const arr: Array<string> = this.transformation.filter((x) => x.checked).map((x) => x.value);
-    let typeModif: string = "";
+    let typeModif: string = constantes.STR_VIDE;
     for (const item of arr) {
       typeModif += item;
     }
