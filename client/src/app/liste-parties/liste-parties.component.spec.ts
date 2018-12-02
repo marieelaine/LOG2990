@@ -10,7 +10,6 @@ import { AdminComponent } from "../admin/admin.component";
 import { VueSimpleComponent } from "../partie/vue-simple/vue-simple.component";
 import { Joueur } from "../admin/joueur";
 import { DomSanitizer, BrowserModule } from "@angular/platform-browser";
-import { SocketClientMock } from "src/testing/socketMock";
 import { SocketClientService } from "../socket/socket-client.service";
 
 describe("ListePartiesComponent", () => {
