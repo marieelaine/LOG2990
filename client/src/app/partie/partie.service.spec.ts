@@ -3,13 +3,10 @@ import { PartieService } from "./partie.service";
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from "@angular/common/http/testing";
 import { Joueur } from "../admin/joueur";
 import { ErrorHandler } from "@angular/core";
-import { PartieSimple } from "../admin/dialog-simple/partie-simple";
-import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 import * as constantes from "../constantes";
 import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
 import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
 
-const QUANTITE_OBJETS: number = 10;
 const partieSimple: PartieSimpleInterface = {
     _id: "id",
     _nomPartie: "name",
