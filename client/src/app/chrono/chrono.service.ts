@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import * as constantes from "../constantes";
 
 const NB_SECONDES: number = 60;
 const UNE_SECONDE: number = 1000;
@@ -40,11 +41,13 @@ export class ChronoService {
     }
 
     protected getSecondesString(): string {
-        return (this.temps % NB_SECONDES < DISPLAY) ? "0" + this.temps % NB_SECONDES : this.temps % NB_SECONDES + "";
+        return (this.temps % NB_SECONDES < DISPLAY) ?
+            constantes.ZERO_STR_FORMAT + this.temps % NB_SECONDES
+            : this.temps % NB_SECONDES + constantes.STR_VIDE;
     }
 
     protected getMinutesString(): string {
         return (this.temps / NB_SECONDES < DISPLAY) ?
-        "0" + Math.floor(this.temps / NB_SECONDES) : Math.floor(this.temps / NB_SECONDES) + "";
+        constantes.ZERO_STR_FORMAT + Math.floor(this.temps / NB_SECONDES) : Math.floor(this.temps / NB_SECONDES) + constantes.STR_VIDE;
     }
 }

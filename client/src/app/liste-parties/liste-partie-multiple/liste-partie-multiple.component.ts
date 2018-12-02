@@ -11,6 +11,7 @@ import * as event from "../../../../../common/communication/evenementsSocket";
 import {DialogVueAttenteComponent} from "../dialog-vue-attente/dialog-vue-attente.component";
 import { Joueur } from "src/app/admin/joueur";
 import { PartieMultipleInterface } from "../../../../../common/partie-multiple-interface";
+import * as constantes from "../../constantes";
 
 const LARGEUR_BOITE: string = "600px";
 const HAUTEUR_BOITE_190: string = "190px";
@@ -81,7 +82,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
     protected afficherImage(id: string): void {
         for (const partie of this.listeParties) {
             if (partie.id === id) {
-                let data: string = "";
+                let data: string = constantes.STR_VIDE;
 
                 data = atob(String(partie.image1PV1[0]));
 
@@ -92,7 +93,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
                     hex = data.charCodeAt(i);
                     result[i] = hex;
                 }
-                const blob: Blob = new Blob([result], {type: "image/bmp"});
+                const blob: Blob = new Blob([result], {type: constantes.IMAGE_BLOB});
                 partie.imageBlob = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
             }
         }

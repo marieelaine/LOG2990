@@ -1,5 +1,6 @@
 import * as io from "socket.io-client";
 import { Injectable } from "@angular/core";
+import * as constantes from "../constantes";
 
 @Injectable()
 export class SocketClientService {
@@ -7,6 +8,6 @@ export class SocketClientService {
     public socket: SocketIOClient.Socket;
 
     public constructor() {
-        this.socket = io("localhost:3000");
+        this.socket = io(constantes.BASE_URL);
     }
 }
