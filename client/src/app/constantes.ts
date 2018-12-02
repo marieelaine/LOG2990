@@ -27,7 +27,7 @@ export const GET_PARTIE_SIMPLE: string = BASE_URL + SIMPLE + "getPartieSimple/";
 export const GET_PARTIE_MULTIPLE: string = BASE_URL + MULTIPLE + "getPartieMultiple/";
 
 export const ADD_TEMPS_PARTIE_SIMPLE: string = BASE_URL + SIMPLE + "addTempsPartieSimple/";
-export const ADD_TEMPS_PARTIE_MULTIPLE: string = BASE_URL + SIMPLE + "addTempsPartieMultiple/";
+export const ADD_TEMPS_PARTIE_MULTIPLE: string = BASE_URL + MULTIPLE + "addTempsPartieMultiple/";
 
 export const GET_CHANNEL_ID_SIMPLE: string = BASE_URL + SIMPLE + "getChannelIdSimple";
 export const DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE: string = BASE_URL + SIMPLE + "differenceTrouveeMultijoueurSimple";

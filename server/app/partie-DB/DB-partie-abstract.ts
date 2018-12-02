@@ -18,6 +18,10 @@ export interface Joueur {
   _temps: number;
 }
 
+const PARTIE_SECOND_ELEMENT: number = 2;
+const TEMPS_SOLO: string = "_tempsSolo";
+const TEMPS_UN_CONTRE_UN: string = "_tempsUnContreUn";
+
 @injectable()
 export abstract class DBPartieAbstract {
 
@@ -89,8 +93,8 @@ export abstract class DBPartieAbstract {
     public async requeteReinitialiserTemps(req: Request, res: Response): Promise<void> {
       await this.baseDeDonnees.assurerConnection();
       try {
-          await this.reinitialiserTemps(req.params.id, req.body.tempsSolo, req.body.tempsUnContreUn);
-          res.status(constantes.HTTP_CREATED);
+          await this.trierTemps(req.params.id, req.body.tempsSolo, req.body.tempsUnContreUn);
+          res.status(constantes.HTTP_CREATED).json(req.params.id);
       } catch (err) {
           res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
       }
@@ -99,7 +103,7 @@ export abstract class DBPartieAbstract {
     public async requeteAjouterPartieTemps(req: Request, res: Response): Promise<void> {
       try {
           await this.ajouterTemps(req.params.id, req.body.temps, req.body.isSolo);
-          res.status(constantes.HTTP_CREATED);
+          res.status(constantes.HTTP_CREATED).json(req.params.id);
       } catch (err) {
           res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
       }
@@ -109,11 +113,6 @@ export abstract class DBPartieAbstract {
       await this.baseDeDonnees.assurerConnection();
       res.send(await this.getListePartie());
     }
-
-    protected abstract async ajouterTemps(idPartie: string, temps: Joueur, isSolo: boolean): Promise<void>;
-
-    protected abstract async reinitialiserTemps(idPartie: String, tempsSolo: Array<Joueur>,
-                                                tempsUnContreUn: Array<Joueur>): Promise<void>;
 
     protected abstract async getPartieByName(nomPartie: String): Promise<PartieSimpleInterface | PartieMultipleInterface>;
 
@@ -133,6 +132,36 @@ export abstract class DBPartieAbstract {
     protected abstract createSchemaArray(): void;
 
     protected abstract createSchemaBuffer(): void;
+
+    protected abstract envoyerMeilleurTemps(joueur: string, nomPartie: string): void;
+
+    protected async trierTemps(idPartie: String, temps: Array<Joueur>, typeDeTemps: string): Promise<void> {
+      temps = this.getSortedTimes(temps);
+      typeDeTemps === TEMPS_SOLO ? await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsSolo: temps })
+                                  .catch(() => { throw new Error(); })
+                                 : await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsUnContreUn: temps })
+                                  .catch(() => { throw new Error(); });
+    }
+
+    protected async ajouterTemps(idPartie: string, temps: Joueur, isSolo: boolean): Promise<void> {
+        const partie: PartieSimpleInterface | PartieMultipleInterface = await this.getPartieById(idPartie);
+        if (temps._nom === "") {
+            temps._nom = "Anonyme";
+        }
+        isSolo ? this.ajouterTempsSiTopTrois(temps, partie, TEMPS_SOLO)
+               : this.ajouterTempsSiTopTrois(temps, partie, TEMPS_UN_CONTRE_UN);
+    }
+
+    private async ajouterTempsSiTopTrois(temps: Joueur, partie: PartieSimpleInterface | PartieMultipleInterface,
+                                         typeDeTemps: string): Promise<void> {
+      if (temps._temps < partie[typeDeTemps][PARTIE_SECOND_ELEMENT]["_temps"]) {
+          this.envoyerMeilleurTemps(temps._nom, partie._nomPartie);
+          partie[typeDeTemps].splice(-1, 1);
+          partie[typeDeTemps].push(temps);
+      }
+
+      await this.trierTemps(partie._id, partie[typeDeTemps], typeDeTemps);
+  }
 
     protected getSortedTimes(arr: Array<Joueur>): Array<Joueur> {
         if (arr) {
