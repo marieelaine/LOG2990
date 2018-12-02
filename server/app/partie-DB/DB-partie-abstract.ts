@@ -8,7 +8,6 @@ import * as constantes from "../constantes";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import { ChildProcess } from "child_process";
 import { Schema, Model, Document } from "mongoose";
-// import uniqueValidator = require("mongoose-unique-validator");
 import * as uniqueValidator from "mongoose-unique-validator";
 import { PartieSimpleInterface } from "../../../common/partie-simple-interface";
 import { PartieMultipleInterface } from "../../../common/partie-multiple-interface";
@@ -114,26 +113,99 @@ export abstract class DBPartieAbstract {
       res.send(await this.getListePartie());
     }
 
-    protected abstract async getPartieByName(nomPartie: String): Promise<PartieSimpleInterface | PartieMultipleInterface>;
-
-    protected abstract async getPartieById(partieID: String): Promise<PartieSimpleInterface | PartieMultipleInterface>;
-
-    protected abstract async obtenirPartieId(nomPartie: String): Promise<string>;
-
-    protected abstract async getListePartie(): Promise<PartieSimpleInterface[] | PartieMultipleInterface[]>;
-
-    protected abstract async deletePartie(idPartie: string, res: Response): Promise<Response>;
-
     protected abstract async verifierErreurScript(child: ChildProcess,
                                                   partie: PartieSimpleInterface | PartieMultipleInterface): Promise<void>;
 
     protected abstract envoyerPartiesPretes(channelId: string): void;
 
+    protected abstract envoyerMeilleurTemps(joueur: string, nomPartie: string): void;
+
     protected abstract createSchemaArray(): void;
 
     protected abstract createSchemaBuffer(): void;
 
-    protected abstract envoyerMeilleurTemps(joueur: string, nomPartie: string): void;
+    protected async deletePartie(idPartie: string, res: Response): Promise<Response> {
+      try {
+          await this.modelPartieBuffer.findOneAndRemove(this.modelPartieBuffer.findById(idPartie)).catch(() => {
+              throw new Error();
+          });
+
+          return res.status(constantes.HTTP_CREATED);
+      } catch (err) {
+
+          return res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+      }
+  }
+
+    protected async getListePartie(): Promise<Array<PartieMultipleInterface | PartieSimpleInterface>> {
+      const listeParties: Array<PartieMultipleInterface | PartieSimpleInterface> = [];
+
+      await this.modelPartieArray.find()
+          .then((res: Document[]) => {
+              for (const partie of res) {
+                  listeParties.push(partie.toJSON());
+              }
+          });
+
+      return listeParties;
+  }
+
+    protected async obtenirPartieId(nomPartie: string): Promise<string> {
+      const partiesInterfaces: Array<PartieMultipleInterface | PartieMultipleInterface> = [];
+
+      await this.modelPartieBuffer.find()
+          .then((res: Document[]) => {
+              for (const partie of res) {
+                  partiesInterfaces.push(partie.toObject());
+              }
+          });
+
+      for (const partieSimple of partiesInterfaces) {
+          if (partieSimple._nomPartie === nomPartie) {
+              return partieSimple._id;
+          }
+      }
+
+      return partiesInterfaces[0]._id;
+  }
+
+    protected async getPartieById(partieID: String): Promise<PartieMultipleInterface | PartieSimpleInterface> {
+      const partiesInterfaces: Array<PartieMultipleInterface | PartieMultipleInterface> = [];
+
+      await this.modelPartieArray.find()
+          .then((parties: Document[]) => {
+              for (const partie of parties) {
+                  partiesInterfaces.push(partie.toJSON());
+              }
+          });
+
+      for (const partie of partiesInterfaces) {
+          if (partie._id.toString() === partieID) {
+              return partie;
+          }
+      }
+
+      return partiesInterfaces[1];
+  }
+
+    protected async getPartieByName(nomPartie: string): Promise<PartieSimpleInterface | PartieMultipleInterface> {
+      const partiesInterfaces: Array<PartieMultipleInterface | PartieMultipleInterface> = [];
+
+      await this.modelPartieArray.find()
+          .then((parties: Document[]) => {
+              for (const partie of parties) {
+                partiesInterfaces.push(partie.toJSON());
+              }
+          });
+
+      for (const partie of partiesInterfaces) {
+          if (partie._nomPartie.toString() === nomPartie) {
+              return partie;
+          }
+      }
+
+      return partiesInterfaces[1];
+  }
 
     protected async trierTemps(idPartie: String, temps: Array<Joueur>, typeDeTemps: string): Promise<void> {
       temps = this.getSortedTimes(temps);
