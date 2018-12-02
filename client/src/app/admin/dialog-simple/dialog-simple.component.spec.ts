@@ -12,7 +12,14 @@ import { MockFileCreator } from "../../../testing/file-creator";
 import { DialogSimpleComponent, ImageInfo } from "./dialog-simple.component";
 import { PartieSimpleService } from "../partie-simple.service";
 import { PartieSimple } from "./partie-simple";
-import { of } from "rxjs";
+import { Observable } from "rxjs";
+import "rxjs/add/observable/of";
+
+class PartieSimpleServiceMock {
+    public register(partieSimple: PartieSimple): Observable<PartieSimple> {
+        return Observable.of(partieSimple);
+    }
+}
 
 describe("DialogSimpleComponent", () => {
     let mockPartieSimpleService: jasmine.SpyObj<PartieSimpleService>;
@@ -38,12 +45,11 @@ describe("DialogSimpleComponent", () => {
                 ReactiveFormsModule
             ],
             providers: [
-                { provide: MatDialogRef, useValue: {} },
-                { provide: MAT_DIALOG_DATA, useValue: {} },
+                { provide: PartieSimpleService, useValue: PartieSimpleServiceMock },
+                { provide: MatDialogRef, useValue: {} }, { provide: MAT_DIALOG_DATA, useValue: {} },
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA,
-                NO_ERRORS_SCHEMA
             ]
         });
 
@@ -57,12 +63,14 @@ describe("DialogSimpleComponent", () => {
 
     describe("fonction ajouterPartie", () => {
         it("devrait appeler la fonction register du service PartieSimple", () => {
-            mockPartieSimpleService.register.and.callFake((data: PartieSimple) => of(data));
+            // tslint:disable-next-line:no-any
+            const registerSpy: jasmine.Spy = spyOn<any>(component["partieSimpleService"], "register")
+            .and.returnValue({subscribe: () => {} });
 
             component["ajouterPartie"]();
 
-            expect(mockPartieSimpleService.register).toHaveBeenCalled();
-            expect(mockPartieSimpleService.register).toHaveBeenCalledTimes(1);
+            expect(registerSpy).toHaveBeenCalled();
+            expect(registerSpy).toHaveBeenCalledTimes(1);
         });
     });
 
@@ -110,6 +118,7 @@ describe("DialogSimpleComponent", () => {
 
         it("Devrait ne pas avoir d'erreur si bon type et bonne taille", () => {
             const imageInfo: ImageInfo = { "size": 24, "width": 640, "height": 480 };
+            component["fichier"][0] = mockFile.createMockImageFile(true);
             component["setErreursImage"](imageInfo);
             expect(component["erreurTypeImage"]).toEqual("");
         });
@@ -120,8 +129,8 @@ describe("DialogSimpleComponent", () => {
 
             const resultat: boolean = component["estBonneTaille"](imageInfo);
             expect(resultat).toBeFalsy();
-            // component["setErreursImage"](imageInfo);
-            // expect(component["erreurTypeImage"]).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
+            component["setErreursImage"](imageInfo);
+            expect(component["erreurTypeImage"]).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
         });
 
         it("Devrait retourner une erreur si mauvaise type d'image", () => {
