@@ -10,6 +10,12 @@ import {SocketClientService} from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import {DialogVueAttenteComponent} from "../dialog-vue-attente/dialog-vue-attente.component";
 
+const LARGEUR_BOITE: string = "600px";
+const HAUTEUR_BOITE_190: string = "190px";
+const HAUTEUR_BOITE_220: string = "220px";
+const URL_PARTIE_SIMPLE: string = "/partie-simple/";
+const URL_SLASH: string = "/";
+
 @Component({
     selector: "app-liste-partie-simple",
     templateUrl: "./liste-partie-simple.component.html",
@@ -55,7 +61,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
     protected onJouerOuReinitialiserClick(partieId: string): void {
         if (this.isListePartiesMode) {
-            this.router.navigate(["/partie-simple/" + partieId + "/0"])
+            this.router.navigate([URL_PARTIE_SIMPLE + partieId + URL_SLASH + 0])
                 .catch(() => ErrorHandler);
         } else if (this.isAdminMode) {
             this.reinitialiserTemps(partieId);
@@ -85,7 +91,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
         if (this.listePartieEnAttente.includes(partieId)) {
             const channelId: string = await this.getChannelId();
             this.listePartieService.joindrePartieMultijoueurSimple(partieId, channelId).catch(() => ErrorHandler);
-            this.router.navigate(["/partie-simple/" + partieId + "/" + channelId])
+            this.router.navigate([URL_PARTIE_SIMPLE + partieId + URL_SLASH + channelId])
                 .catch(() => ErrorHandler);
         } else {
             this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
@@ -100,8 +106,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
     private ouvrirDialogVueAttente(partieId: string): void {
         this.dialog.open(DialogVueAttenteComponent, {
-            height: "220px",
-            width: "600px",
+            height: HAUTEUR_BOITE_220,
+            width: LARGEUR_BOITE,
             data: {
                 id: partieId,
                 isSimple: true
@@ -111,8 +117,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
     private ouvrirDialogConfirmation(partieId: string): void {
         this.dialog.open(DialogConfirmationComponent, {
-            height: "190px",
-            width: "600px",
+            height: HAUTEUR_BOITE_190,
+            width: LARGEUR_BOITE,
             data: {
                 id: partieId,
                 listeParties: this.listeParties,
