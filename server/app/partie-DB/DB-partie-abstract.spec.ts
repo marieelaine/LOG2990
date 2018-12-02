@@ -26,8 +26,8 @@ class DBPartie extends DBPartieAbstract {
     public async requeteDeletePartie(req: Request, res: Response): Promise<void> { ""; }
 
     protected envoyerPartiesPretes(channelId: string): void { ""; }
-    protected async reinitialiserTemps(idPartie: String, tempsSolo: Array<Joueur>,
-                                       tempsUnContreUn: Array<Joueur>): Promise<void> { ""; }
+
+    protected async trierTemps(idPartie: String, tempsSolo: Array<Joueur>, tempsUnContreUn: Array<Joueur>): Promise<void> { ""; }
 
     protected async ajouterTemps(idPartie: string, temps: Joueur, isSolo: boolean): Promise<void> { ""; }
 

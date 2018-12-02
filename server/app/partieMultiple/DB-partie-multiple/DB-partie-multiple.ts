@@ -90,6 +90,10 @@ export class DBPartieMultiple extends DBPartieAbstract {
         this.socket.envoyerPartiesMultiplesChargees(channelId);
     }
 
+    protected envoyerMeilleurTemps(joueur: string, nomPartie: string): void {
+        this.socket.meilleurTemps(joueur, nomPartie);
+    }
+
     protected async verifierErreurScript(child: ChildProcess, partie: PartieMultipleInterface): Promise<void> {
         let errorMsg: string = "";
 
@@ -187,33 +191,6 @@ export class DBPartieMultiple extends DBPartieAbstract {
         }
 
         return partieMultiple[1];
-    }
-
-    protected async reinitialiserTemps(idPartie: String, tempsSolo: Array<Joueur>, tempsUnContreUn: Array<Joueur>): Promise<void> {
-        tempsSolo = this.getSortedTimes(tempsSolo);
-        tempsUnContreUn = this.getSortedTimes(tempsUnContreUn);
-        await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
-            .catch(() => { throw new Error(); });
-    }
-
-    protected async ajouterTemps(idPartie: string, temps: Joueur, isSolo: boolean): Promise<void> {
-        const partie: PartieMultipleInterface = await this.getPartieById(idPartie) as PartieMultipleInterface;
-        if (temps._nom === "") {
-            temps._nom = "Anonyme";
-        }
-        if (isSolo) {
-            if (temps._temps < partie["_tempsSolo"][PARTIE_SECOND_ELEMENT]["_temps"]) {
-                this.socket.meilleurTemps(temps._nom, partie._nomPartie);
-                partie["_tempsSolo"].splice(-1, 1);
-                partie["_tempsSolo"].push(temps);
-            }
-        } else {
-            if (temps._temps < partie["_tempsUnContreUn"][PARTIE_SECOND_ELEMENT]["_temps"]) {
-                this.socket.meilleurTemps(temps._nom, partie._nomPartie);
-                partie["_tempsUnContreUn"].splice(-1, 1);
-                partie["_tempsUnContreUn"].push(temps);
-            }
-        }
     }
 
     private async ajouterImagesPartieMultiple(partie: PartieMultipleInterface, errorMsg: string):
