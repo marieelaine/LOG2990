@@ -24,8 +24,6 @@ export class HeaderComponent {
   }
 
   protected surClickBanniere(): void {
-    // tslint:disable-next-line:no-console
-    console.log("banniere");
     this.router.navigateByUrl("/liste-parties")
     .catch(() => ErrorHandler);
   }

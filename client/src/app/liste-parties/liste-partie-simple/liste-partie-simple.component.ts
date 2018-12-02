@@ -65,8 +65,6 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
                 const userMulti: Joueur = new Joueur(user._nom, user._temps);
                 tempsUnContreUn.push(userMulti);
             }
-            // tslint:disable-next-line:no-console
-            console.log(tempsSolo);
 
             const partieSimple: PartieSimple = new PartieSimple(partie._nomPartie, tempsSolo, tempsUnContreUn, partie._image1,
                                                                 partie._image2, partie._imageDiff, partie._id);
