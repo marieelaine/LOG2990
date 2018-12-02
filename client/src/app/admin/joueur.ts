@@ -2,8 +2,8 @@ export class Joueur {
     private _nom: string;
     private _temps: number;
 
-    public constructor(user: string, temps: number) {
-      this._nom = user;
+    public constructor(nom: string, temps: number) {
+      this._nom = nom;
       this._temps = temps;
     }
 
