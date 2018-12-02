@@ -11,8 +11,8 @@ import * as constante from "src/app/constantes";
 
 export const IMAGE_URL: string = "http://localhost:3000/images/";
 
-const ERR_TYPE_IMAGE: string = "*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels";
-const ERR_NB_IMAGE: string = "*Vous devez entrer deux images.";
+const ERR_NB_IMAGE: string = "*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels";
+const ERR_TYPE_IMAGE: string = "*Vous devez entrer deux images.";
 const IMG_EXTENSION: string = "image/bmp";
 const MAX_NB_IMAGE: number = 2;
 
@@ -110,21 +110,20 @@ export class DialogSimpleComponent extends DialogAbstrait {
 
   protected contientErreur(): boolean {
     return !(this.estVide(this.erreurNbImage) &&
-            this.estVide(this.erreurTypeImage) &&
-            this.nomControl.valid);
+            this.estVide(this.erreurTypeImage));
 }
 
   private setErreursImage(imageInfo: ImageInfo): void {
     this.estBonneTaille(imageInfo) || this.estBonType() ?
     this.erreurTypeImage = STRING_VIDE :
-    this.erreurTypeImage = ERR_TYPE_IMAGE;
+    this.erreurTypeImage = ERR_NB_IMAGE;
 
   }
 
   private setErreurNbImage(): void {
     this.estBonNombre() ?
     this.erreurNbImage = STRING_VIDE :
-    this.erreurNbImage = ERR_NB_IMAGE;
+    this.erreurNbImage = ERR_TYPE_IMAGE;
   }
 
   private estBonneTaille(imageInfo: ImageInfo): boolean {

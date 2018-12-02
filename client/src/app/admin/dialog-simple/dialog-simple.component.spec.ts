@@ -6,23 +6,17 @@ import {
 import { By } from "@angular/platform-browser";
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { FormsModule, ReactiveFormsModule, FormControl } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { MockFileCreator } from "../../../testing/file-creator";
 import { DialogSimpleComponent, ImageInfo } from "./dialog-simple.component";
-import { PartieSimpleService } from "../partie-simple.service";
-import { PartieSimple } from "./partie-simple";
-import { of } from "rxjs";
 
 describe("DialogSimpleComponent", () => {
-    let mockPartieSimpleService: jasmine.SpyObj<PartieSimpleService>;
     let component: DialogSimpleComponent;
     let fixture: ComponentFixture<DialogSimpleComponent>;
     const mockFile: MockFileCreator = new MockFileCreator();
 
     beforeEach(() => {
-        mockPartieSimpleService = jasmine.createSpyObj(["register"]);
-
         TestBed.configureTestingModule({
             declarations: [DialogSimpleComponent],
             imports: [
@@ -51,133 +45,101 @@ describe("DialogSimpleComponent", () => {
         component = fixture.componentInstance;
     });
 
-    it("Composant devrait être créé", () => {
+    it("should create", () => {
         expect(component).toBeTruthy();
     });
 
-    describe("fonction ajouterPartie", () => {
-        it("devrait appeler la fonction register du service PartieSimple", () => {
-            mockPartieSimpleService.register.and.callFake((data: PartieSimple) => of(data));
-
-            component["ajouterPartie"]();
-
-            expect(mockPartieSimpleService.register).toHaveBeenCalled();
-            expect(mockPartieSimpleService.register).toHaveBeenCalledTimes(1);
-        });
+    it("should return false if all error messages are null", () => {
+        component["outOfBoundNameLengthMessage"] = "";
+        component["erreurTypeImage"] = "";
+        component["erreurNbImage"] = "";
+        expect(component["verifierSiMessageErreur"]()).toBe(false);
     });
 
-    describe("fonction contientErreur", () => {
-        it("Devrait retourner vrai si il y a un message derreur", () => {
-            component["erreurNbImage"] = "Erreur";
-            const result: Boolean = component["contientErreur"]();
-            expect(result).toBeTruthy();
-        });
-
-        it("Devrait retourner faux si le message est vide", () => {
-            component["erreurNbImage"] = "";
-            component["erreurTypeImage"] = "";
-            component["nomControl"].setValue("test");
-
-            const result: Boolean = component["contientErreur"]();
-
-            expect(result).toBeFalsy();
-        });
+    it("should return true if at least one error message is not null", () => {
+        component["outOfBoundNameLengthMessage"] = "Error message";
+        expect(component["verifierSiMessageErreur"]()).toBe(true);
     });
 
-    describe("formControl nom de partie : ", () => {
-        it("Devrait retourner invalide au depart", () => {
-            const nom: FormControl = component["nomControl"];
-            expect(nom.valid).toBeFalsy();
-        });
-
-        it("Devrait retourner invalide si le nom de partie multiple contient moins de trois caracteres", () => {
-            component["nomControl"].setValue("ab");
-            expect(component["nomControl"].valid).toBeFalsy();
-        });
-
-        it("Devrait retourner invalide si le nom de partie multiple contient plus de vingt caracteres", () => {
-            component["nomControl"].setValue("abcdefghijklmnopqrstuv");
-            expect(component["nomControl"].valid).toBeFalsy();
-        });
-
-        it("Devrait retourner valide si le nom de partie multiple est valide", () => {
-            component["nomControl"].setValue("test");
-            expect(component["nomControl"].valid).toBeTruthy();
-        });
+    it("should set outOfBoundNameLengthMessage if name does not meet requierments", () => {
+        component["data"].simpleGameName = "A";
+        component["setOutOfBoundNameLengthMessage"]();
+        expect(component["outOfBoundNameLengthMessage"]).toEqual("*Le nom du jeu doit être entre 3 et 20 charactères.");
     });
 
-    describe("fonction setErreurImage : ", () => {
-
-        it("Devrait ne pas avoir d'erreur si bon type et bonne taille", () => {
-            const imageInfo: ImageInfo = { "size": 24, "width": 640, "height": 480 };
-            component["setErreursImage"](imageInfo);
-            expect(component["erreurTypeImage"]).toEqual("");
-        });
-
-        it("Devrait retourner une erreur si mauvaise taille d'image", () => {
-            const imageInfo: ImageInfo = { "size": 64, "width": 1080, "height": 480 };
-            component["fichier"][0] = mockFile.createMockImageFile(true);
-
-            const resultat: boolean = component["estBonneTaille"](imageInfo);
-            expect(resultat).toBeFalsy();
-            // component["setErreursImage"](imageInfo);
-            // expect(component["erreurTypeImage"]).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
-        });
-
-        it("Devrait retourner une erreur si mauvaise type d'image", () => {
-            component["fichier"][0] = mockFile.createMockImageFile(false);
-            const resultat: boolean = component["estBonType"]();
-            expect(resultat).toBeFalsy();
-        });
-
+    it("should set outOfBoundNameLengthMessage if name does not meet requierments", () => {
+        component["data"].simpleGameName = "aaaaaaaaaaaaaaaaaaaaa";
+        component["setOutOfBoundNameLengthMessage"]();
+        expect(component["outOfBoundNameLengthMessage"]).toEqual("*Le nom du jeu doit être entre 3 et 20 charactères.");
     });
 
-    describe("fonction setErreurNbImage : ", () => {
-
-        it("Devrait retourner une erreur si pas bon nombre d'image", () => {
-            component["fichier"][0] = mockFile.createMockImageFile(true);
-            component["setErreurNbImage"]();
-            expect(component["erreurNbImage"]).toEqual("*Vous devez entrer deux images.");
-        });
-
-        it("Devrait retourner une erreur si pas bon nombre d'image", () => {
-            component["fichier"][0] = mockFile.createMockImageFile(true);
-            component["fichier"][1] = mockFile.createMockImageFile(true);
-            component["setErreurNbImage"]();
-            expect(component["erreurNbImage"]).toEqual("");
-        });
-
+    it("should not set outOfBoundNameLengthMessage if name meet requierments", () => {
+        component["data"].simpleGameName = "Nissan Patrol";
+        component["setOutOfBoundNameLengthMessage"]();
+        expect(component["outOfBoundNameLengthMessage"]).toEqual("");
     });
 
-    describe("fonction onAjoutImage : ", () => {
+    it("should set wrongNumberOfImagesMessage if there are less than two images", () => {
+        component["selectedFiles"][0] = mockFile.createMockImageFile(true);
+        component["setWrongNumberOfImagesMessage"]();
+        expect(component["erreurNbImage"]).toEqual("*Vous devez entrer deux images.");
+    });
 
-        it("Devrait appeler onAjoutImage quand on upload une image", () => {
-            const uploadImage1: HTMLElement = fixture.debugElement.query(By.css("#uploadImage1")).nativeElement;
+    it("should not set wrongNumberOfImagesMessage if there are two images", () => {
+        component["selectedFiles"][0] = mockFile.createMockImageFile(true);
+        component["selectedFiles"][1] = mockFile.createMockImageFile(true);
+        component["setWrongNumberOfImagesMessage"]();
+        expect(component["erreurNbImage"]).toEqual("");
+    });
 
-            // tslint:disable-next-line:no-any
-            const spy: jasmine.Spy = spyOn<any>(component, "onAjoutImage");
-            uploadImage1.dispatchEvent(new Event("change"));
-            expect(spy).toHaveBeenCalled();
-        });
+    it("should call onAjoutImage when an image is uploaded", () => {
+        const uploadImage1: HTMLElement = fixture.debugElement.query(By.css("#uploadImage1")).nativeElement;
 
-        it("Devrait fermer le dialog quand on clique sur annuler", () => {
-            const onNoClickButton: HTMLElement = fixture.debugElement.query(By.css("#onNoClickButton")).nativeElement;
+        // tslint:disable-next-line:no-any
+        const spy: jasmine.Spy = spyOn<any>(component, "onAjoutImage");
+        uploadImage1.dispatchEvent(new Event("change"));
+        expect(spy).toHaveBeenCalled();
+    });
 
-            // tslint:disable-next-line:no-any
-            const spy: jasmine.Spy = spyOn<any>(component, "surClickExterieurDialog");
-            onNoClickButton.dispatchEvent(new Event("click"));
+    it("should close the dialog if cancel button is clicked", () => {
+        const onNoClickButton: HTMLElement = fixture.debugElement.query(By.css("#onNoClickButton")).nativeElement;
 
-            expect(spy).toHaveBeenCalled();
-        });
+        // tslint:disable-next-line:no-any
+        const spy: jasmine.Spy = spyOn<any>(component, "surClickExterieurDialog");
+        onNoClickButton.dispatchEvent(new Event("click"));
 
-        it("Devrait appeler onClickAjouterPartie quand on clique sur Ajouter", () => {
-            const onAddClickButton: HTMLElement = fixture.debugElement.query(By.css("#onAddClickButton")).nativeElement;
+        expect(spy).toHaveBeenCalled();
+    });
 
-            // tslint:disable-next-line:no-any
-            const spy: jasmine.Spy = spyOn<any>(component, "onClickAjouterPartie");
-            onAddClickButton.dispatchEvent(new Event("click"));
+    it("should call onClickAjouterPartie when an add game button is clicked", () => {
+        const onAddClickButton: HTMLElement = fixture.debugElement.query(By.css("#onAddClickButton")).nativeElement;
 
-            expect(spy).toHaveBeenCalled();
-        });
+        // tslint:disable-next-line:no-any
+        const spy: jasmine.Spy = spyOn<any>(component, "onClickAjouterPartie");
+        onAddClickButton.dispatchEvent(new Event("click"));
+
+        expect(spy).toHaveBeenCalled();
+    });
+
+    it("should set wrongImageSizeOrTypeMessage image does not respect good size", () => {
+        const imageInfo: ImageInfo = { "size": 64, "width": 1080, "height": 480 };
+        component["selectedFiles"][0] = mockFile.createMockImageFile(true);
+        component["setWrongImageSizeOrTypeMessage"](imageInfo);
+        expect(component["erreurTypeImage"]).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
+    });
+
+    it("should set wrongImageSizeOrTypeMessage image does not respect good type", () => {
+        const imageInfo: ImageInfo = { "size": 24, "width": 640, "height": 480 };
+        component["currentImageNumber"] = 0;
+        component["selectedFiles"][0] = mockFile.createMockImageFile(false);
+        component["setWrongImageSizeOrTypeMessage"](imageInfo);
+        expect(component["erreurTypeImage"]).toEqual("*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels");
+    });
+
+    it("should not set wrongImageSizeOrTypeMessage image respect good type and size", () => {
+        const imageInfo: ImageInfo = { "size": 24, "width": 640, "height": 480 };
+        component["selectedFiles"][0] = mockFile.createMockImageFile(true);
+        component["setWrongImageSizeOrTypeMessage"](imageInfo);
+        expect(component["erreurTypeImage"]).toEqual("");
     });
 });
