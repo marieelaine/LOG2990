@@ -55,12 +55,12 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
             const tempsUnContreUn: Joueur[] = [];
 
             for (const user of partie._tempsSolo) {
-                const userSolo: Joueur = new Joueur(user._user, user._temps);
+                const userSolo: Joueur = new Joueur(user._nom, user._temps);
                 tempsSolo.push(userSolo);
             }
 
             for (const user of partie._tempsUnContreUn) {
-                const userMulti: Joueur = new Joueur(user._user, user._temps);
+                const userMulti: Joueur = new Joueur(user._nom, user._temps);
                 tempsUnContreUn.push(userMulti);
             }
 

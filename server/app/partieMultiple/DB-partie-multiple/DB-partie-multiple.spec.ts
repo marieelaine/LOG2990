@@ -4,7 +4,7 @@ import * as fsx from "fs-extra";
 import * as sinon from "sinon";
 import * as constantes from "../../constantes";
 import { SocketServerService } from "../../socket-io.service";
-import { TempsUser } from "../../partie-DB/DB-partie-abstract";
+import { Joueur } from "../../partie-DB/DB-partie-abstract";
 import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
 
 describe("Partie Multiple BD classe", () => {
@@ -53,8 +53,8 @@ describe("Partie Multiple BD classe", () => {
             const unePartie: PartieMultipleInterface = {
                 _id: "1",
                 _nomPartie: "unePartie",
-                _tempsSolo: new Array<TempsUser>(),
-                _tempsUnContreUn: new Array<TempsUser>(),
+                _tempsSolo: new Array<Joueur>(),
+                _tempsUnContreUn: new Array<Joueur>(),
                 _image1PV1: Buffer.alloc(1),
                 _image1PV2: Buffer.alloc(1),
                 _image2PV1: Buffer.alloc(1),
@@ -81,8 +81,8 @@ describe("Partie Multiple BD classe", () => {
             const unePartie: PartieMultipleInterface = {
                 _id: "1",
                 _nomPartie: "unePartie",
-                _tempsSolo: new Array<TempsUser>(),
-                _tempsUnContreUn: new Array<TempsUser>(),
+                _tempsSolo: new Array<Joueur>(),
+                _tempsUnContreUn: new Array<Joueur>(),
                 _image1PV1: Buffer.alloc(1),
                 _image1PV2: Buffer.alloc(1),
                 _image2PV1: Buffer.alloc(1),
@@ -104,8 +104,8 @@ describe("Partie Multiple BD classe", () => {
         const fourthCall: number = 3;
         const thirdCall: number = 2;
         const unePartie: PartieMultipleInterface = {
-            _id: "1", _nomPartie: "unePartie", _tempsSolo: new Array<TempsUser>(),
-            _tempsUnContreUn: new Array<TempsUser>(), _image1PV1: Buffer.alloc(1),
+            _id: "1", _nomPartie: "unePartie", _tempsSolo: new Array<Joueur>(),
+            _tempsUnContreUn: new Array<Joueur>(), _image1PV1: Buffer.alloc(1),
             _image1PV2: Buffer.alloc(1), _image2PV1: Buffer.alloc(1),
             _image2PV2: Buffer.alloc(1), _imageDiff1: new Array<Array<string>>(),
             _imageDiff2: new Array<Array<string>>(), _quantiteObjets: 1,

@@ -10,7 +10,7 @@ import { execFile, ChildProcess } from "child_process";
 import { SocketServerService } from "../../socket-io.service";
 import Types from "../../types";
 import { ReadLine } from "readline";
-import { DBPartieAbstract, TempsUser } from "../../partie-DB/DB-partie-abstract";
+import { DBPartieAbstract, Joueur } from "../../partie-DB/DB-partie-abstract";
 import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
 
 const PARTIE_SECOND_ELEMENT: number = 2;
@@ -185,27 +185,27 @@ export class DBPartieMultiple extends DBPartieAbstract {
         return partieMultiple[1];
     }
 
-    protected async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
+    protected async reinitialiserTemps(idPartie: String, tempsSolo: Array<Joueur>, tempsUnContreUn: Array<Joueur>): Promise<void> {
         tempsSolo = this.getSortedTimes(tempsSolo);
         tempsUnContreUn = this.getSortedTimes(tempsUnContreUn);
         await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
             .catch(() => { throw new Error(); });
     }
 
-    protected async ajouterTemps(idPartie: string, temps: TempsUser, isSolo: boolean): Promise<void> {
+    protected async ajouterTemps(idPartie: string, temps: Joueur, isSolo: boolean): Promise<void> {
         const partie: PartieMultipleInterface = await this.getPartieById(idPartie) as PartieMultipleInterface;
-        if (temps._user === "") {
-            temps._user = "Anonyme";
+        if (temps._nom === "") {
+            temps._nom = "Anonyme";
         }
         if (isSolo) {
             if (temps._temps < partie["_tempsSolo"][PARTIE_SECOND_ELEMENT]["_temps"]) {
-                this.socket.meilleurTemps(temps._user, partie._nomPartie);
+                this.socket.meilleurTemps(temps._nom, partie._nomPartie);
                 partie["_tempsSolo"].splice(-1, 1);
                 partie["_tempsSolo"].push(temps);
             }
         } else {
             if (temps._temps < partie["_tempsUnContreUn"][PARTIE_SECOND_ELEMENT]["_temps"]) {
-                this.socket.meilleurTemps(temps._user, partie._nomPartie);
+                this.socket.meilleurTemps(temps._nom, partie._nomPartie);
                 partie["_tempsUnContreUn"].splice(-1, 1);
                 partie["_tempsUnContreUn"].push(temps);
             }

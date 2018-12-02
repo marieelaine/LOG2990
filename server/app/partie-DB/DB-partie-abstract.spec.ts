@@ -1,4 +1,4 @@
-import { DBPartieAbstract, TempsUser } from "../partie-DB/DB-partie-abstract";
+import { DBPartieAbstract, Joueur } from "../partie-DB/DB-partie-abstract";
 import { ChildProcess } from "child_process";
 import { Request, Response } from "express";
 import { assert } from "chai";
@@ -25,10 +25,10 @@ class DBPartie extends DBPartieAbstract {
 
     public async requeteDeletePartie(req: Request, res: Response): Promise<void> { ""; }
 
-    protected async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>,
-                                       tempsUnContreUn: Array<TempsUser>): Promise<void> { ""; }
+    protected async reinitialiserTemps(idPartie: String, tempsSolo: Array<Joueur>,
+                                       tempsUnContreUn: Array<Joueur>): Promise<void> { ""; }
 
-    protected async ajouterTemps(idPartie: string, temps: TempsUser, isSolo: boolean): Promise<void> { ""; }
+    protected async ajouterTemps(idPartie: string, temps: Joueur, isSolo: boolean): Promise<void> { ""; }
 
     protected async getPartieByName(nomPartie: String): Promise<PartieSimpleInterface | PartieMultipleInterface> {
         const partie: PartieSimpleInterface = {     _id: "123",
