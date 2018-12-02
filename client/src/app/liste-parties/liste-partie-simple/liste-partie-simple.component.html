@@ -14,7 +14,7 @@
                 </div>
         </mat-card-header>
         <div class='row'>
-            <div class='col-sm-7'>
+            <div class="col-7">
                 <div class="row row-header">
                     <div class="col-1"></div>
                     <div class="col-5">
@@ -39,20 +39,20 @@
                             </h6>
                         </div>
                     </div>
-                <div class="col-1"></div>
-                <div class="card col-5" class="top3">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            {{ getTempsDisplay(partieSimple.tempsUnContreUn[j]) }}
-                        </h5>
-                        <h6 class="card-subtitle mb-2 text-muted">
-                            {{ partieSimple.tempsUnContreUn[j].nom }}
-                        </h6>
+                    <div class="card col-5" class="top3">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{ getTempsDisplay(partieSimple.tempsUnContreUn[j]) }}
+                            </h5>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                {{ partieSimple.tempsUnContreUn[j].nom }}
+                            </h6>
+                        </div>
                     </div>
+                    <div class="col-1"></div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-5">
+        <div class="col-5">
             <img #image [src]="partieSimple.imageBlob" [id]="partieSimple.id" class="gameImage img-responsive mat-elevation-z6 center"
                 [class.mat-elevation-z6]="!partieSimple.isElevatedActive"
                 [class.mat-elevation-z10]="!!partieSimple.isElevatedActive">
