@@ -3,9 +3,7 @@ import {
     CONTEXT_2D,
     ERREUR_CHAT,
     ERREUR_CHAT_PAR,
-    PartieAbstraiteClass,
-    STR_VIDE,
-    VIRGULE_STR_FORMAT
+    PartieAbstraiteClass
 } from "../partie-abstraite-class";
 import {PartieSimple} from "src/app/admin/dialog-simple/partie-simple";
 import {ActivatedRoute} from "@angular/router";
@@ -62,7 +60,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
     protected async testerPourDiff(ev: MouseEvent): Promise<void> {
         if (this.partieAttributsAdmin.partieCommence && !this.partieAttributsAdmin.penaliteEtat) {
-            const coords: string = ev.offsetX + VIRGULE_STR_FORMAT + ev.offsetY;
+            const coords: string = ev.offsetX + constantes.VIRGULE_STR_FORMAT + ev.offsetY;
             let i: number = 0;
             for (const diff of this.partie["_imageDiff"]) {
                 for (const pixel of diff) {
@@ -89,7 +87,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         this.partieAttributsAdmin.diffTrouvee[0].push(i);
         await this.trouverDifferenceSimple();
         this.restaurationPixelsSimple(i);
-        this.ajouterMessageDiffTrouvee(STR_VIDE);
+        this.ajouterMessageDiffTrouvee(constantes.STR_VIDE);
     }
 
     private async setPenalite(ev: MouseEvent): Promise<void> {
@@ -135,8 +133,8 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         const dataD: Uint8ClampedArray = imageDataD.data;
 
         for (const pixel of this.partie["_imageDiff"][i]) {
-            const x: number = Number(pixel.split(VIRGULE_STR_FORMAT)[0]);
-            const y: number = Number(pixel.split(VIRGULE_STR_FORMAT)[1]);
+            const x: number = Number(pixel.split(constantes.VIRGULE_STR_FORMAT)[0]);
+            const y: number = Number(pixel.split(constantes.VIRGULE_STR_FORMAT)[1]);
             const dim: number = (y * constantes.WINDOW_WIDTH * constantes.RGB_WIDTH) + (x * constantes.RGB_WIDTH);
 
             dataD[dim] = dataG[dim];

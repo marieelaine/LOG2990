@@ -78,3 +78,9 @@ export const CONTEXT_GAUCHE_POV1_POSITION: number = 0;
 export const CONTEXT_DROITE_POV1_POSITION: number = 1;
 export const CONTEXT_GAUCHE_POV2_POSITION: number = 2;
 export const CONTEXT_DROITE_POV2_POSITION: number = 3;
+
+export const DEUX_POINTS_TEMPS_FORMAT: string = ":";
+export const ZERO_STR_FORMAT: string = "0";
+export const STR_VIDE: string = "";
+export const VIRGULE_STR_FORMAT: string = ",";
+export const IMAGE_BLOB: string = "image/bmp";

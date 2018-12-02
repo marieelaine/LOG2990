@@ -28,13 +28,7 @@ const ERREUR_COULEUR_CONTEUR: string = "#000000";
 const HAUTEUR_DIALOGUE: string = "190px";
 const LARGEUR_DIALOGUE: string = "600px";
 
-const DEUX_POINTS_TEMPS_FORMAT: string = ":";
-const ZERO_STR_FORMAT: string = "0";
-export const STR_VIDE: string = "";
-export const VIRGULE_STR_FORMAT: string = ",";
-
 const CHARGEMENT_IMAGES: string = "Chargement des images";
-const IMAGE_BLOB: string = "image/bmp";
 const DIFF_TROUVE_PAR: string = " - Différence trouvée par ";
 const DIFF_TROUVE: string = " - Différence trouvée.";
 const FELECITATIONS_MULTI: string = "FÉLICITATIONS, VOUS AVEZ GAGNÉ!";
@@ -129,7 +123,7 @@ export abstract class PartieAbstraiteClass {
             hex = data.charCodeAt(i);
             result[i] = hex;
         }
-        const blob: Blob = new Blob([result], {type: IMAGE_BLOB});
+        const blob: Blob = new Blob([result], {type: constantes.IMAGE_BLOB});
 
         const context: CanvasRenderingContext2D = canvas.nativeElement.getContext(CONTEXT_2D);
         image.src = URL.createObjectURL(blob);
@@ -175,7 +169,7 @@ export abstract class PartieAbstraiteClass {
 
     protected updateTableauTempsSolo(temps: number): void {
         let joueur: string = this.cookieService.get(USERNAME_STR);
-        if (joueur === STR_VIDE) {
+        if (joueur === constantes.STR_VIDE) {
             joueur = ANONYME;
         }
         if (temps < this.partie["_tempsSolo"][PARTIE_SECOND_ELEMENT]["_temps"]) {
@@ -200,7 +194,7 @@ export abstract class PartieAbstraiteClass {
     protected async terminerPartieSolo(): Promise<void> {
         if (this.partieAttributsAdmin.differenceRestantes === this.partieAttributsAdmin.differencesTrouvees) {
             this.partieAttributsAdmin.partieCommence = false;
-            await this.terminerPartie(STR_VIDE);
+            await this.terminerPartie(constantes.STR_VIDE);
         }
     }
 
@@ -233,7 +227,10 @@ export abstract class PartieAbstraiteClass {
     protected getCurrentTime(): string {
         const date: Date = new Date();
 
-        return date.getHours() + DEUX_POINTS_TEMPS_FORMAT + this.getMinutes(date) + DEUX_POINTS_TEMPS_FORMAT + this.getSeconds(date);
+        return date.getHours() + constantes.DEUX_POINTS_TEMPS_FORMAT
+            + this.getMinutes(date)
+            + constantes.DEUX_POINTS_TEMPS_FORMAT
+            + this.getSeconds(date);
     }
 
     protected afficherPartie(): void {
@@ -243,13 +240,13 @@ export abstract class PartieAbstraiteClass {
 
     private getMinutes(date: Date): string {
         return date.getMinutes() < MINUTESANDSECONDCONVERT ?
-            ZERO_STR_FORMAT + date.getMinutes().toString()
+            constantes.ZERO_STR_FORMAT + date.getMinutes().toString()
             : date.getMinutes().toString();
     }
 
     private getSeconds(date: Date): string {
         return date.getSeconds() < MINUTESANDSECONDCONVERT ?
-            ZERO_STR_FORMAT + date.getSeconds().toString()
+            constantes.ZERO_STR_FORMAT + date.getSeconds().toString()
             : date.getSeconds().toString();
     }
 
@@ -278,7 +275,7 @@ export abstract class PartieAbstraiteClass {
     }
 
     private setIsMultijoueur(): void {
-        this.route.snapshot.params.channelId === ZERO_STR_FORMAT ?
+        this.route.snapshot.params.channelId === constantes.ZERO_STR_FORMAT ?
             this.partieAttributsMultijoueur.isMultijoueur = false
             : this.partieAttributsMultijoueur.isMultijoueur = true;
         if (this.partieAttributsMultijoueur.isMultijoueur) {
@@ -292,7 +289,7 @@ export abstract class PartieAbstraiteClass {
     }
 
     private setJoueurMultijoueur(): void {
-        this.cookieService.get(USERNAME_STR) === STR_VIDE
+        this.cookieService.get(USERNAME_STR) === constantes.STR_VIDE
             ? this.partieAttributsMultijoueur.joueurMultijoueur = ANONYME
             : this.partieAttributsMultijoueur.joueurMultijoueur = this.cookieService.get(USERNAME_STR);
     }

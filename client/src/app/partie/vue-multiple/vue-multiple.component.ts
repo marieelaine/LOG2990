@@ -3,8 +3,7 @@ import {
     CONTEXT_2D,
     ERREUR_CHAT,
     ERREUR_CHAT_PAR,
-    PartieAbstraiteClass, STR_VIDE,
-    VIRGULE_STR_FORMAT
+    PartieAbstraiteClass
 } from "../partie-abstraite-class";
 import {ActivatedRoute} from "@angular/router";
 import {PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
@@ -18,8 +17,8 @@ import {ChronoService} from "../../chrono/chrono.service";
 import {TempsUser} from "src/app/admin/temps-user";
 
 const NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE: number = 7;
-const CANVASG1: string = "canvasG1"
-const CANVASD1: string = "canvasD1"
+const CANVASG1: string = "canvasG1";
+const CANVASD1: string = "canvasD1";
 const IMAGE_DIFF_1: string = "_imageDiff1";
 const IMAGE_DIFF_2: string = "_imageDiff2";
 
@@ -101,7 +100,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         src === IMAGE_DIFF_1 ? this.partieAttributsAdmin.diffTrouvee[0].push(i) : this.partieAttributsAdmin.diffTrouvee[1].push(i);
         this.trouverDifferenceMultiple().catch(() => ErrorHandler);
         this.restaurationPixelsMultiple(i, src);
-        this.ajouterMessageDiffTrouvee(STR_VIDE);
+        this.ajouterMessageDiffTrouvee(constantes.STR_VIDE);
     }
 
     private restaurationPixelsMultiple(i: number, src: string): void {
@@ -120,8 +119,8 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         const dataD: Uint8ClampedArray = imageDataD.data;
 
         for (const pixel of this.partie[src][i]) {
-            const x: number = Number(pixel.split(VIRGULE_STR_FORMAT)[0]);
-            const y: number = Number(pixel.split(VIRGULE_STR_FORMAT)[1]);
+            const x: number = Number(pixel.split(constantes.VIRGULE_STR_FORMAT)[0]);
+            const y: number = Number(pixel.split(constantes.VIRGULE_STR_FORMAT)[1]);
             const dim: number = (y * constantes.WINDOW_WIDTH * constantes.RGB_WIDTH) + (x * constantes.RGB_WIDTH);
             dataD[dim] = dataG[dim];
             dataD[dim + constantes.RGB_FIRST_INCREMENT] = dataG[dim + constantes.RGB_FIRST_INCREMENT];
