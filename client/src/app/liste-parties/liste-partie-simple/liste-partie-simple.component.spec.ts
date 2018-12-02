@@ -11,7 +11,7 @@ import { of } from "rxjs";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import { MatDialogModule } from "@angular/material/dialog";
 import { VueSimpleComponent } from "src/app/partie/vue-simple/vue-simple.component";
-import { TempsUser } from "src/app/admin/temps-user";
+import { Joueur } from "src/app/admin/joueur";
 
 describe("Liste Partie Simple Component", () => {
     let mockListePartieService: jasmine.SpyObj<ListePartieServiceService>;
@@ -21,8 +21,8 @@ describe("Liste Partie Simple Component", () => {
     let location: Location;
     const partie: PartieSimple = new PartieSimple(
         "partie1",
-        new Array<TempsUser>(),
-        new Array<TempsUser>(),
+        new Array<Joueur>(),
+        new Array<Joueur>(),
         new Buffer.Buffer(new Array<number>()),
         new Buffer.Buffer(new Array<number>()),
         new Array<Array<string>>(),

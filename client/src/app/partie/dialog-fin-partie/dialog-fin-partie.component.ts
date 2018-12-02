@@ -29,7 +29,7 @@ export class DialogFinPartieComponent {
     }
    }
 
-  protected onDialogClose(): void {
+  protected fermerDialog(): void {
     this.dialogRef.close();
     this.router.navigate([LISTE_PARTIE_ROUTE]).catch(() => ErrorHandler);
 

@@ -9,8 +9,8 @@
                     <h2 class='topThreeHeaders text-center'>Top <img class='bronzeMedal' src="assets/bronze-medal.png"></h2>
                 </div>
                 <div class="col-sm-5 title">
-                    <span class='gameNameHeader titleFirstLetter'>{{getTitleFirstLetter(partieSimple._nomPartie)|uppercase}}</span>
-                    <span class='gameNameHeader'>{{getTitleWithoutFirstLetter(partieSimple._nomPartie)|lowercase}}</span>
+                    <span class='gameNameHeader titleFirstLetter'>{{getPremiereLettreTitre(partieSimple.nomPartie)|uppercase}}</span>
+                    <span class='gameNameHeader'>{{getTitreSansPremiereLettre(partieSimple.nomPartie)|lowercase}}</span>
                 </div>
         </mat-card-header>
         <div class='row'>
@@ -32,10 +32,10 @@
                     <div class="card col-5" class="top3">
                         <div class="card-body">
                             <h5 class="card-title">
-                                {{ getDisplayTime(tempsSolo) }}
+                                {{ getTempsDisplay(tempsSolo) }}
                             </h5>
                             <h6 class="card-subtitle mb-2 text-muted">
-                                {{ tempsSolo['_user'] }}
+                                {{ tempsSolo.nom }}
                             </h6>
                         </div>
                     </div>
@@ -43,25 +43,27 @@
                 <div class="card col-5" class="top3">
                     <div class="card-body">
                         <h5 class="card-title">
-                            {{ getDisplayTime(partieSimple['_tempsUnContreUn'][j]) }}
+                            {{ getTempsDisplay(partieSimple.tempsUnContreUn[j]) }}
                         </h5>
                         <h6 class="card-subtitle mb-2 text-muted">
-                            {{ partieSimple['_tempsUnContreUn'][j]['_user'] }}
+                            {{ partieSimple.tempsUnContreUn[j].nom }}
                         </h6>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-5">
-            <img #image [src]="partieSimple['_imageBlob']" [id]="partieSimple['_id']" class="gameImage img-responsive mat-elevation-z6 center"
+            <img #image [src]="partieSimple.imageBlob" [id]="partieSimple.id" class="gameImage img-responsive mat-elevation-z6 center"
                 [class.mat-elevation-z6]="!partieSimple.isElevatedActive"
                 [class.mat-elevation-z10]="!!partieSimple.isElevatedActive">
         </div> 
         </div>
         <div class="row">
                 <div class="col boutons d-flex flex-row bd-highlight justify-content-end">
-                    <button class="p-2 bd-highlight" mat-button (click) = "onJouerOuReinitialiserClick(partieSimple._id)" class='mat-elevation-z6'> {{jouerOuReinitialiser}} </button>
-                    <button class="p-2 bd-highlight" mat-button (click) = "onCreerOuSupprimerClick(partieSimple._id)" class='mat-elevation-z6'> {{listePartieEnAttente.includes(partieSimple._id) ? joindreOuSupprimer : creerOuSupprimer}} </button>
+                    <button class="p-2 bd-highlight" mat-button (click) = "onJouerOuReinitialiserClick(partieSimple.id)" class='mat-elevation-z6'> {{jouerOuReinitialiser}} </button>
+                    <button class="p-2 bd-highlight" mat-button (click) = "onCreerOuSupprimerClick(partieSimple.id)" class='mat-elevation-z6' [ngClass] = "listePartieEnAttente.includes(partieSimple.id) ? 'joindre animated infinite rubberBand delay-2s' : ''"> 
+                        {{listePartieEnAttente.includes(partieSimple.id) ? joindreOuSupprimer : creerOuSupprimer}} 
+                    </button>
                 </div>
         </div>
     </mat-card>  

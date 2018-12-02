@@ -37,6 +37,7 @@
     "mongodb": "^3.1.6",
     "mongodb-stitch-browser-sdk": "^4.0.8-4.0.8-1.0",
     "mongoose": "^5.2.15",
+    "ng-animate": "^0.3.4",
     "ng2-bootstrap": "^1.6.3",
     "ng6-socket-io": "^1.0.3",
     "ngx-bootstrap": "^3.0.1",

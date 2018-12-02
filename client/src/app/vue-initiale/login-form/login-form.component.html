@@ -1,10 +1,10 @@
 <div class="container">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate #formDir="ngForm">
+  <form [formGroup]="loginForm" (ngSubmit)="surLogin()" novalidate #formDir="ngForm">
       <div id="login-box">
         <div class="logo">
           <img src="" class="img img-responsive img-circle center-block"/>
           <h1 class="logo-caption"><span class="tweak"> 7 </span>différences</h1>
-        </div><!-- /.logo -->
+        </div>
         <div 
           class="controls form-group"
           novalidate>
@@ -42,5 +42,5 @@
       </div><!-- /#login-box -->
   </form>
 
-</div><!-- /.container -->
+</div>
 <particles [params]="myParams" [style]="myStyle" [width]="width" [height]="height"></particles>

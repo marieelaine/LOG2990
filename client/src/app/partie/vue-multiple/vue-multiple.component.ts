@@ -12,9 +12,10 @@ import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
 import {MatDialog} from "@angular/material";
 import * as event from "../../../../../common/communication/evenementsSocket";
-import {SocketClientService} from "src/app/socket/socket-client.service";
-import {ChronoService} from "../../chrono/chrono.service";
-import {TempsUser} from "src/app/admin/temps-user";
+import { SocketClientService } from "src/app/socket/socket-client.service";
+import { ChronoService} from "../../chrono/chrono.service";
+import { Joueur } from "src/app/admin/joueur";
+import { PartieMultipleInterface } from "../../../../../common/partie-multiple-interface";
 
 const NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE: number = 7;
 const CANVASG1: string = "canvasG1";
@@ -40,17 +41,17 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                        protected dialog: MatDialog) {
         super(route, partieService, cookieService, chrono, dialog, false);
         this.partieAttributsAdmin.differenceRestantes = constantes.DIFF_PARTIE_MULTIPLE;
-        this.setSocketEvents();
+        this.setEvenementsSockets();
     }
 
-    protected async ajouterTemps(partieID: string, joueur: TempsUser, isSolo: boolean): Promise<void> {
-        await this.partieService.addTempsPartieMultiple(partieID, joueur, isSolo)
-            .catch(() => ErrorHandler);
+    protected async ajouterTemps(partieID: string, joueur: Joueur, isSolo: boolean): Promise<void> {
+        await this.partieService.ajouterTempsPartieMultiple(partieID, joueur, isSolo)
+                                .catch(() => ErrorHandler);
     }
 
     protected setPartie(): void {
-        this.partieService.getPartieMultiple(this.partieAttributsData.partieID).subscribe(async (res: PartieMultiple) => {
-            this.partie = res;
+        this.partieService.getPartieMultiple(this.partieAttributsData.partieID).subscribe(async (res: PartieMultipleInterface) => {
+            this.reconstruirePartieMultiple(res);
             this.partieAttributsMultijoueur.isMultijoueur ? await this.setPartieMultipleMultijoueur() : this.afficherPartie();
         });
     }
@@ -59,11 +60,32 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         this.partieService.supprimerChannelIdMultiple(this.partieAttributsData.partieID).catch(() => ErrorHandler);
     }
 
+    protected reconstruirePartieMultiple(partie: PartieMultipleInterface): void {
+            const tempsSolo: Joueur[] = [];
+            const tempsUnContreUn: Joueur[] = [];
+
+            for (const user of partie._tempsSolo) {
+                const userSolo: Joueur = new Joueur(user._nom, user._temps);
+                tempsSolo.push(userSolo);
+            }
+
+            for (const user of partie._tempsUnContreUn) {
+                const userMulti: Joueur = new Joueur(user._nom, user._temps);
+                tempsUnContreUn.push(userMulti);
+            }
+
+            const partieMultiple: PartieMultiple = new PartieMultiple(partie._nomPartie, tempsSolo, tempsUnContreUn, partie._image1PV1,
+                                                                      partie._image1PV2, partie._image2PV1, partie._image2PV2,
+                                                                      partie._imageDiff1, partie._imageDiff2, partie._quantiteObjets,
+                                                                      partie._theme, partie._typeModification, partie._id);
+            this.partie = partieMultiple;
+    }
+
     protected getImageData(): void {
-        this.partieAttributsData.imageData.push(atob(String(this.partie["_image1PV1"][0])));
-        this.partieAttributsData.imageData.push(atob(String(this.partie["_image1PV2"][0])));
-        this.partieAttributsData.imageData.push(atob(String(this.partie["_image2PV1"][0])));
-        this.partieAttributsData.imageData.push(atob(String(this.partie["_image2PV2"][0])));
+        this.partieAttributsData.imageData.push(atob(String(this.partie.image1PV1[0])));
+        this.partieAttributsData.imageData.push(atob(String(this.partie.image1PV2[0])));
+        this.partieAttributsData.imageData.push(atob(String(this.partie.image2PV1[0])));
+        this.partieAttributsData.imageData.push(atob(String(this.partie.image2PV2[0])));
     }
 
     protected async testerPourDiff(ev: MouseEvent): Promise<void> {
@@ -140,7 +162,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     protected async trouverDifferenceMultiple(): Promise<void> {
         if (this.partieAttributsAdmin.partieCommence) {
             this.augmenterDiffTrouvee();
-            this.jouerYesSound();
+            this.jouerSonYes();
         }
         this.partieAttributsMultijoueur.isMultijoueur ? await this.terminerPartieMultijoueurMultiple() : this.terminerPartieSolo();
     }
@@ -163,7 +185,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         this.penalite(ev);
     }
 
-    private setSocketEvents(): void {
+    private setEvenementsSockets(): void {
         this.socketClientService.socket.on(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE, (data) => {
             if (this.partieAttributsMultijoueur.channelId === data.channelId) {
                 this.differenceTrouverMultijoueurMultiple(data.diff, data.source, data.joueur).catch(() => ErrorHandler);
@@ -180,8 +202,8 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         this.socketClientService.socket.on(event.ERREUR_PARTIE_MULTIPLE, (data) => {
             if (this.partieAttributsMultijoueur.channelId === data.channelId) {
                 this.partieAttributsMultijoueur.isMultijoueur ?
-                    this.chat.addMessageToMessagesChat(this.getCurrentTime() + ERREUR_CHAT_PAR + data.joueur)
-                    : this.chat.addMessageToMessagesChat(this.getCurrentTime() + ERREUR_CHAT);
+                    this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + ERREUR_CHAT_PAR + data.joueur)
+                    : this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + ERREUR_CHAT);
             }
         });
 

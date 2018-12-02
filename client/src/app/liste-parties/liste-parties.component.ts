@@ -1,9 +1,7 @@
 import {Component, ElementRef, QueryList, ViewChildren} from "@angular/core";
 import {Router, NavigationEnd} from "@angular/router";
 import {ListePartieServiceService} from "./liste-partie-service.service";
-import {PartieMultiple} from "../admin/dialog-multiple/partie-multiple";
-import {PartieSimple} from "../admin/dialog-simple/partie-simple";
-import { TempsUser } from "../admin/temps-user";
+import { Joueur } from "../admin/joueur";
 import { DomSanitizer } from "@angular/platform-browser";
 import * as constantes from "../constantes";
 
@@ -57,59 +55,39 @@ export class ListePartiesComponent {
         this.changerBoutonSelonRouter(router);
     }
 
-    protected ajusterImage(id: string, listeParties: Array<PartieSimple | PartieMultiple>, isPartieSimple: Boolean): void {
-        for (const partie of listeParties) {
-            if (partie["_id"] === id) {
-                let data: string = constantes.STR_VIDE;
-
-                isPartieSimple ? data = atob(String(partie["_image1"][0])) : data = atob(String(partie["_image1PV1"][0]));
-
-                let hex: number = 0x00;
-                const result: Uint8Array = new Uint8Array(data.length);
-
-                for (let i: number = 0; i < data.length; i++) {
-                    hex = data.charCodeAt(i);
-                    result[i] = hex;
-                }
-                const blob: Blob = new Blob([result], {type: constantes.IMAGE_BLOB});
-                partie["_imageBlob"] = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
-            }
-        }
-    }
-
-    protected setjouerOuReinitialiserAndcreerOuSupprimer(url: string): void {
+    protected setJouerOuReinitialiserEtcreerOuSupprimer(url: string): void {
         if (url === URL_LISTE_PARTIE) {
-            this.setToJouerAndCreer();
+            this.setJouerEtCreer();
         } else if (url === URL_ADMIN) {
-            this.setToReinitialiserAndSupprimer();
+            this.setReinitialiserEtSupprimer();
         }
     }
 
-    protected getTitleFirstLetter(title: string): string {
+    protected getPremiereLettreTitre(title: string): string {
 
         return title.substr(0, 1);
     }
 
-    protected getTitleWithoutFirstLetter(title: string): string {
+    protected getTitreSansPremiereLettre(title: string): string {
 
         return title.substr(1, title.length - 1);
     }
 
-    protected getDisplayTime(temps: TempsUser): string {
-        const minutes: number = Math.floor(temps["_temps"] / NB_SECONDES);
-        const secondes: number = temps["_temps"] - minutes * NB_SECONDES;
+    protected getTempsDisplay(tempsUser: Joueur): string {
+        const minutes: number = Math.floor(tempsUser.temps / NB_SECONDES);
+        const secondes: number = tempsUser.temps - minutes * NB_SECONDES;
 
         return (secondes < DISPLAY) ?
             (minutes + constantes.DEUX_POINTS_TEMPS_FORMAT + constantes.ZERO_STR_FORMAT + secondes)
             : minutes + constantes.DEUX_POINTS_TEMPS_FORMAT + secondes;
     }
 
-    protected genererTableauTempsAleatoires(): Array<TempsUser> {
-        const arr: Array<TempsUser> = [];
+    protected genererTableauTempsAleatoires(): Array<Joueur> {
+        const arr: Array<Joueur> = [];
         for (let i: number = 1; i < NB_ELEMENT; i++) {
-            arr.push(new TempsUser(JOUEUR + i, this.genererTempsAleatoire()));
+            arr.push(new Joueur(JOUEUR + i, this.genererTempsAleatoire()));
         }
-        this.getSortedTimes(arr);
+        this.getTempsEnOrdre(arr);
 
         return arr;
     }
@@ -123,11 +101,11 @@ export class ListePartiesComponent {
         return Math.floor(Math.random() * BORNE_SUP) + BORNE_INF;
     }
 
-    private getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {
+    private getTempsEnOrdre(arr: Array<Joueur>): Array<Joueur> {
         if (arr) {
-            arr.sort((t1: TempsUser, t2: TempsUser) => {
-                const time1: number = t1["_temps"];
-                const time2: number = t2["_temps"];
+            arr.sort((t1: Joueur, t2: Joueur) => {
+                const time1: number = t1.temps;
+                const time2: number = t2.temps;
                 if (time1 > time2) {
                     return 1;
                 }
@@ -142,7 +120,7 @@ export class ListePartiesComponent {
         return arr;
     }
 
-    private setToJouerAndCreer(): void {
+    private setJouerEtCreer(): void {
         this.isAdminMode = false;
         this.isListePartiesMode = true;
         this.jouerOuReinitialiser = JOUER;
@@ -150,7 +128,7 @@ export class ListePartiesComponent {
         this.joindreOuSupprimer = JOINDRE;
     }
 
-    private setToReinitialiserAndSupprimer(): void {
+    private setReinitialiserEtSupprimer(): void {
         this.isListePartiesMode = false;
         this.isAdminMode = true;
         this.jouerOuReinitialiser = REINITIALISER;
@@ -161,7 +139,7 @@ export class ListePartiesComponent {
     private changerBoutonSelonRouter(router: Router): void {
         router.events.subscribe((val) => {
             if (val instanceof NavigationEnd) {
-                this.setjouerOuReinitialiserAndcreerOuSupprimer(val.url);
+                this.setJouerOuReinitialiserEtcreerOuSupprimer(val.url);
             }
         });
     }

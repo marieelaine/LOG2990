@@ -3,7 +3,7 @@
     margin:1%;
     background-color: #dadada;
     border-radius: 20px;
-    height: 400px;
+    height: 440px;
     padding: 20px;
 }
 
@@ -71,6 +71,10 @@ mat-form-field {
 #errorMessage
 {
     margin:0;
-    font-size:14px;
+    font-size:0.7em;
     color:red;
+}
+
+mat-divider{
+    margin: 10px 0;
 }

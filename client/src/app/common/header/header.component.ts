@@ -20,14 +20,14 @@ export class HeaderComponent {
       private userService: UserService) {
   }
 
-  protected onLogout(): void {
+  protected deconnexion(): void {
     const cookieUsername: string = this.cookieService.get(USERNAME);
     this.cookieService.deleteAll();
-    this.userService.delete(cookieUsername).catch(() => ErrorHandler);
+    this.userService.supprimer(cookieUsername).catch(() => ErrorHandler);
     this.router.navigate([URL_SLASH]).catch(() => ErrorHandler);
   }
 
-  protected OnHeaderTitleClick(): void {
+  protected surClickBanniere(): void {
     this.router.navigateByUrl(URL_LISTE_PATIE)
     .catch(() => ErrorHandler);
   }

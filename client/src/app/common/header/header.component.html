@@ -10,14 +10,14 @@
         <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
-        <script src="../../../js/three.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     </head>
     <mat-toolbar>
         <div id="login-box">
             <div class="logo">
-                <h1 (click)="OnHeaderTitleClick()" class="logo-caption"><span (click)="OnHeaderTitleClick()" class="tweak"> 7 </span>différences</h1>
+                <h1 (click)="surClickBanniere()" class="logo-caption"><span class="tweak"> 7 </span>différences</h1>
             </div>
         </div>
         <span class="filler"></span>
-        <button (click)="onLogout()" id="logout-button" mat-button>Déconnexion</button>
+        <button (click)="deconnexion()" id="logout-button" mat-button>Déconnexion</button>
     </mat-toolbar>      

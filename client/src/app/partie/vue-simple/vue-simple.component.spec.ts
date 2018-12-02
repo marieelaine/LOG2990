@@ -6,7 +6,7 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ChatComponent } from "src/app/chat/chat.component";
 import { CookieService } from "ngx-cookie-service";
-import { TempsUser } from "src/app/admin/temps-user";
+import { Joueur } from "src/app/admin/joueur";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 
 export class MockEvent {
@@ -60,7 +60,7 @@ describe("VueSimpleComponent", () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         component["partie"] = new PartieSimple(
-            "nomPartie", new Array<TempsUser>(), new Array<TempsUser>(),
+            "nomPartie", new Array<Joueur>(), new Array<Joueur>(),
             Buffer.from(new Array<number>()), Buffer.from(new Array<number>()), new Array<Array<string>>(), "");
     });
 

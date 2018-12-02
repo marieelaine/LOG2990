@@ -4,35 +4,35 @@
     <mat-card class='addGameCard mat-elevation-z10'>
         <div class='gameName'>
             <mat-form-field class='formField'>
-                <input matInput [(ngModel)]="data.multipleGameName" type='text' placeholder="Nom de la partie" class='gameNameInput' [formControl]="nameControl" required>
+                <input matInput [(ngModel)]="data.multipleGameName" type='text' placeholder="Nom de la partie" class='gameNameInput' [formControl]="nomControl" required>
                 <mat-error>Veuillez entrer un nom entre 3 et 20 caratères</mat-error>
             </mat-form-field>
         </div>
         <mat-divider></mat-divider>
         <div>
             <mat-form-field class='formField'>
-                <input matInput [(ngModel)]="data.quantiteObjets" type='text' placeholder="Quantité d'objets" class='qtyObjetInput' [formControl]="qtyControl" required max="10" min="200">
+                <input matInput [(ngModel)]="data.quantiteObjets" type='text' placeholder="Quantité d'objets" class='qtyObjetInput' [formControl]="qteControl" required max="10" min="200">
                 <mat-error>Veuillez entrer un nombre entre 10 et 200</mat-error>
             </mat-form-field>
         </div>
         <mat-divider></mat-divider>
         <div>
             <div class="secondaryText">Veuillez choisir la transformation à appliquer:</div>
-            <div *ngFor="let item of checkboxArray" class="checkboxGroup">
-                <mat-checkbox [(ngModel)]="item.checked" (change)="getCheckboxes()">{{item.name}}</mat-checkbox>
+            <div *ngFor="let item of transformation" class="checkboxGroup">
+                <mat-checkbox [(ngModel)]="item.checked" (change)="getTransformation()">{{item.name}}</mat-checkbox>
             </div>
+            <p id='errorMessage'> {{ erreurTransformation }} </p> 
         </div>
         <mat-divider></mat-divider>
         <div class="secondaryText">Veuillez choisir un thème parmis les suivants:</div>
         <div>
             <form>
-                <button mat-button [ngClass]="toggleClassButtonGeo ? 'clicked' : 'notClicked'" id="themeButtonGeo" (click)='onGeoClickButton($event, "geo")' class='dialogButtons mat-elevation-z6'>Géométrique</button>
-                <button mat-button [ngClass]="toggleClassButtonOcean ? 'clicked' : 'notClicked'" id="themeButtonOcean" (click)='onThemeClickButton($event, "theme")' class='dialogButtons mat-elevation-z6'>Océan</button>
+                <button mat-button [ngClass]="toggleBoutonGeo ? 'clicked' : 'notClicked'" id="themeButtonGeo" (click)='onGeoClickButton($event, "geo")' class='dialogButtons mat-elevation-z6'>Géométrique</button>
+                <button mat-button [ngClass]="toggleBoutonTheme ? 'clicked' : 'notClicked'" id="themeButtonOcean" (click)='onThemeClickButton($event, "theme")' class='dialogButtons mat-elevation-z6'>Océan</button>
             </form>
+            <p id='errorMessage'> {{ erreurTheme }} </p> 
         </div>
     </mat-card>
-    <button mat-button id="onAddClickButton" (click)='onClickAjouterPartie()' class='dialogButtons mat-elevation-z6'>Ajouter</button>
+    <button mat-button id="onAddClickButton" (click)='onClickAjouterPartie()' class='dialogButtons mat-elevation-z6' [disabled] ="!nomControl.valid || !qteControl.valid">Ajouter</button>
     <button mat-button id="onNoClickButton" (click)="surClickExterieurDialog()" class='dialogButtons mat-elevation-z6'>Annuler</button>
-    <p id='errorMessage'> {{ checkboxMessage }} </p> 
-    <p id='errorMessage'> {{ themeButtonMessage }} </p> 
 </div>

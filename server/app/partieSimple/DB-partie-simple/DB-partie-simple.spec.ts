@@ -1,10 +1,11 @@
-import { DBPartieSimple, PartieSimpleInterface } from "./DB-partie-simple";
+import { DBPartieSimple } from "./DB-partie-simple";
 import { assert } from "chai";
 import * as fsx from "fs-extra";
 import * as sinon from "sinon";
 import * as constantes from "../../constantes";
 import { SocketServerService } from "../../socket-io.service";
-import { TempsUser } from "../../partie-DB/DB-partie-abstract";
+import { Joueur } from "../../partie-DB/DB-partie-abstract";
+import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
 
 describe("Partie Simple BD classe", () => {
     let dbPartieSimple: DBPartieSimple;
@@ -49,8 +50,8 @@ describe("Partie Simple BD classe", () => {
             const unePartie: PartieSimpleInterface = {
                 _id: "1",
                 _nomPartie: "unePartie",
-                _tempsSolo: new Array<TempsUser>(),
-                _tempsUnContreUn: new Array<TempsUser>(),
+                _tempsSolo: new Array<Joueur>(),
+                _tempsUnContreUn: new Array<Joueur>(),
                 _image1: Buffer.alloc(1),
                 _image2: Buffer.alloc(1),
                 _imageDiff: new Array<Array<string>>(),

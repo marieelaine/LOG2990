@@ -1,6 +1,4 @@
 import { Request, Response} from "express";
-import { PartieSimpleInterface } from "../partieSimple/DB-partie-simple/DB-partie-simple";
-import { PartieMultipleInterface } from "../partieMultiple/DB-partie-multiple/DB-partie-multiple";
 import { injectable } from "inversify";
 import * as fsx from "fs-extra";
 import * as util from "util";
@@ -10,10 +8,13 @@ import * as constantes from "../constantes";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import { ChildProcess } from "child_process";
 import { Schema, Model, Document } from "mongoose";
-import uniqueValidator = require("mongoose-unique-validator");
+// import uniqueValidator = require("mongoose-unique-validator");
+import * as uniqueValidator from "mongoose-unique-validator";
+import { PartieSimpleInterface } from "../../../common/partie-simple-interface";
+import { PartieMultipleInterface } from "../../../common/partie-multiple-interface";
 
-export interface TempsUser {
-  _user: string;
+export interface Joueur {
+  _nom: string;
   _temps: number;
 }
 
@@ -109,10 +110,10 @@ export abstract class DBPartieAbstract {
       res.send(await this.getListePartie());
     }
 
-    protected abstract async ajouterTemps(idPartie: string, temps: TempsUser, isSolo: boolean): Promise<void>;
+    protected abstract async ajouterTemps(idPartie: string, temps: Joueur, isSolo: boolean): Promise<void>;
 
-    protected abstract async reinitialiserTemps(idPartie: String, tempsSolo: Array<TempsUser>,
-                                                tempsUnContreUn: Array<TempsUser>): Promise<void>;
+    protected abstract async reinitialiserTemps(idPartie: String, tempsSolo: Array<Joueur>,
+                                                tempsUnContreUn: Array<Joueur>): Promise<void>;
 
     protected abstract async getPartieByName(nomPartie: String): Promise<PartieSimpleInterface | PartieMultipleInterface>;
 
@@ -133,9 +134,9 @@ export abstract class DBPartieAbstract {
 
     protected abstract createSchemaBuffer(): void;
 
-    protected getSortedTimes(arr: Array<TempsUser>): Array<TempsUser> {
+    protected getSortedTimes(arr: Array<Joueur>): Array<Joueur> {
         if (arr) {
-          arr.sort((t1: TempsUser, t2: TempsUser) => {
+          arr.sort((t1: Joueur, t2: Joueur) => {
             const time1: number = t1["_temps"];
             const time2: number = t2["_temps"];
             if (time1 > time2) { return 1; }

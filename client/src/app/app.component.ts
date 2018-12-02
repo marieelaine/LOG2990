@@ -18,13 +18,13 @@ export class AppComponent {
       notifier: NotifierService
       ) {
       this.notifier = notifier;
-      this.setSocketEvents();
+      this.setEvenementsSockets();
      }
 
     public readonly title: string = "LOG2990";
     public message: string;
 
-    private setSocketEvents(): void {
+    private setEvenementsSockets(): void {
       this.socketClientService.socket.on(event.CONNECTION_USER, (data) => {
           this.afficherNotificationConnection(data.joueur);
       });
@@ -39,24 +39,24 @@ export class AppComponent {
     }
 
     private afficherNotificationConnection(joueur: string): void {
-      const temps: string = this.getCurrentTime();
+      const temps: string = this.getTempsCourant();
       this.notifier.notify( "success", temps + " - " + joueur + " s'est connecté" );
     }
 
     private afficherNotificationDeconnection(joueur: string): void {
-      const temps: string = this.getCurrentTime();
+      const temps: string = this.getTempsCourant();
       this.notifier.notify( "warning", temps + " - " + joueur + " s'est déconnecté" );
     }
 
     private afficherNotificationMeilleurTemps(joueur: string, partie: string): void {
-      const temps: string = this.getCurrentTime();
+      const temps: string = this.getTempsCourant();
       this.notifier.notify("info", temps + " - " + joueur + " s'est classé dans le tableau des meilleurs temps pour la partie " + partie);
     }
 
-    public getCurrentTime(): string {
+    public getTempsCourant(): string {
       const date: Date = new Date();
 
-      return date.getHours() + ":" + this.getMinutes(date) + ":" + this.getSeconds(date);
+      return date.getHours() + ":" + this.getMinutes(date) + ":" + this.getSecondes(date);
   }
 
     private getMinutes(date: Date): string {
@@ -64,7 +64,7 @@ export class AppComponent {
       return date.getMinutes() < MINUTESANDSECONDCONVERT ? "0" + date.getMinutes().toString() : date.getMinutes().toString();
 }
 
-    private getSeconds(date: Date): string {
+    private getSecondes(date: Date): string {
 
     return date.getSeconds() < MINUTESANDSECONDCONVERT ? "0" + date.getSeconds().toString() : date.getSeconds().toString();
   }

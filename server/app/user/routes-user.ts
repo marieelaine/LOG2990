@@ -22,7 +22,7 @@ export class RoutesUser extends ServiceWeb {
         });
 
         router.delete("/delete/:id", async (req: Request, res: Response) => {
-            await this.user.requeteDeleteUser(req, res);
+            await this.user.requeteSupprimerUser(req, res);
         });
 
         router.get("/:id", async (req: Request, res: Response) => {

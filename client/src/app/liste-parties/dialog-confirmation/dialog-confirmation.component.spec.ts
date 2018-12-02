@@ -6,7 +6,7 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { PartieSimple } from "src/app/admin/dialog-simple/partie-simple";
 import { PartieMultiple } from "src/app/admin/dialog-multiple/partie-multiple";
-import { TempsUser } from "src/app/admin/temps-user";
+import { Joueur } from "src/app/admin/joueur";
 import { Data } from "@angular/router";
 
 describe("DialogConfirmationComponent", () => {
@@ -39,17 +39,17 @@ describe("DialogConfirmationComponent", () => {
         const onNoClickButton: HTMLElement = fixture.debugElement.query(By.css("#onConfirmationButtonYes")).nativeElement;
 
         // tslint:disable-next-line:no-any
-        const spy: jasmine.Spy = spyOn<any>(component, "onDialogClose");
+        const spy: jasmine.Spy = spyOn<any>(component, "fermerDialog");
         onNoClickButton.dispatchEvent(new Event("click"));
 
         expect(spy).toHaveBeenCalled();
     });
 
-    it("devrait appeler onConfirmationClick lorsque l'utiliateur click sur Yes", () => {
+    it("devrait appeler surClickConfirmation lorsque l'utiliateur click sur Yes", () => {
         const onNoClickButton: HTMLElement = fixture.debugElement.query(By.css("#onConfirmationButtonNo")).nativeElement;
 
         // tslint:disable-next-line:no-any
-        const spy: jasmine.Spy = spyOn<any>(component, "onConfirmationClick");
+        const spy: jasmine.Spy = spyOn<any>(component, "surClickConfirmation");
         onNoClickButton.dispatchEvent(new Event("click"));
 
         expect(spy).toHaveBeenCalled();
@@ -59,10 +59,10 @@ describe("DialogConfirmationComponent", () => {
         beforeEach(() => {
             component["listePartiesSimple"] = [];
         });
-        it("devrait appeler listePartieService.deletePartieSimple", () => {
+        it("devrait appeler listePartieService.supprimerPartieSimple", () => {
 
             // tslint:disable-next-line:no-any
-            const spy: jasmine.Spy = spyOn<any>(component["listePartieService"], "deletePartieSimple");
+            const spy: jasmine.Spy = spyOn<any>(component["listePartieService"], "supprimerPartieSimple");
             spy.and.callThrough();
 
             component["supprimerPartieSimple"]();
@@ -85,10 +85,10 @@ describe("DialogConfirmationComponent", () => {
         beforeEach(() => {
             component["listePartiesMultiples"] = [];
         });
-        it("devrait appeler listePartieService.deletePartieMultiple", () => {
+        it("devrait appeler listePartieService.supprimerPartieMultiple", () => {
 
             // tslint:disable-next-line:no-any
-            const spy: jasmine.Spy = spyOn<any>(component["listePartieService"], "deletePartieMultiple");
+            const spy: jasmine.Spy = spyOn<any>(component["listePartieService"], "supprimerPartieMultiple");
             spy.and.callThrough();
 
             component["supprimerPartieMultiple"]();
@@ -108,7 +108,7 @@ describe("DialogConfirmationComponent", () => {
 
     describe("supprimerPartieSimpleDeLaffichage", () => {
         beforeEach(() => {
-            component["listePartiesSimples"] = [ new PartieSimple ("nomPartie", new Array<TempsUser>(), new Array<TempsUser>(),
+            component["listePartiesSimples"] = [ new PartieSimple ("nomPartie", new Array<Joueur>(), new Array<Joueur>(),
                                                                    Buffer.from(new Array<number>()),
                                                                    Buffer.from(new Array<number>()), [["1,2"]], "123")];
         });
@@ -135,7 +135,7 @@ describe("DialogConfirmationComponent", () => {
     describe("supprimerPartieMultipleDeLaffichage", () => {
         beforeEach(() => {
             const qteObjetsParam: number = 10;
-            component["listePartiesMultiples"] = [ new PartieMultiple("", new Array<TempsUser>(), new Array<TempsUser>(),
+            component["listePartiesMultiples"] = [ new PartieMultiple("", new Array<Joueur>(), new Array<Joueur>(),
                                                                       Buffer.from(new Array()), Buffer.from(new Array()),
                                                                       Buffer.from(new Array()), Buffer.from(new Array()),
                                                                       new Array<Array<string>>(), new Array<Array<string>>(),
@@ -162,25 +162,25 @@ describe("DialogConfirmationComponent", () => {
     });
 
     describe("setListeParties", () => {
-        it("devrait assigner la listePartie de data à ListePartieSimple si isSimple == true", () => {
-            const data: Data = { listeParties: [ new PartieSimple ("nomPartie", new Array<TempsUser>(), new Array<TempsUser>(),
+        it("devrait assigner la listePartie de data à ListePartieSimple si estSimple == true", () => {
+            const data: Data = { listeParties: [ new PartieSimple ("nomPartie", new Array<Joueur>(), new Array<Joueur>(),
                                                                    Buffer.from(new Array<number>()),
                                                                    Buffer.from(new Array<number>()), [["1,2"]], "123")] };
-            component["isSimple"] = true;
+            component["estSimple"] = true;
 
             component["setListeParties"](data);
 
             expect(component["listePartiesSimples"]).toEqual(data.listeParties);
             expect(component["listePartiesMultiples"]).toEqual([]);
         });
-        it("devrait assigner la listePartie de data à ListePartieMultiple si isSimple == false", () => {
+        it("devrait assigner la listePartie de data à ListePartieMultiple si estSimple == false", () => {
             const qteObjetsParam: number = 10;
-            const data: Data = { listeParties: [ new PartieMultiple("", new Array<TempsUser>(), new Array<TempsUser>(),
+            const data: Data = { listeParties: [ new PartieMultiple("", new Array<Joueur>(), new Array<Joueur>(),
                                                                     Buffer.from(new Array()), Buffer.from(new Array()),
                                                                     Buffer.from(new Array()), Buffer.from(new Array()),
                                                                     new Array<Array<string>>(), new Array<Array<string>>(),
                                                                     qteObjetsParam, "", "123") ] };
-            component["isSimple"] = false;
+            component["estSimple"] = false;
 
             component["setListeParties"](data);
 

@@ -90,6 +90,10 @@ mat-badge{
     margin: 0 0 2% 5%;
 }
 
+.joindre{
+    background: #007bff7a;
+}
+
 .title{
     overflow:hidden;
     text-align:center;

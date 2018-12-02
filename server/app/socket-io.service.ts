@@ -2,9 +2,8 @@ import * as http from "http";
 import * as socket from "socket.io";
 import * as event from "../../common/communication/evenementsSocket";
 import { injectable } from "inversify";
-import { PartieSimpleInterface } from "./partieSimple/DB-partie-simple/DB-partie-simple";
-import { PartieMultipleInterface } from "./partieMultiple/DB-partie-multiple/DB-partie-multiple";
-
+import { PartieSimpleInterface } from "../../common/partie-simple-interface";
+import { PartieMultipleInterface } from "../../common/partie-multiple-interface";
 @injectable()
 export class SocketServerService {
 

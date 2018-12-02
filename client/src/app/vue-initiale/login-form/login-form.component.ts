@@ -34,7 +34,7 @@ export class LoginFormComponent implements OnInit {
     public constructor(private router: Router,
                        private userService: UserService,
                        private cookieService: CookieService) {
-        this.loginForm = this.createFormGroup();
+        this.loginForm = this.creerFormulaire();
     }
 
     public ngOnInit(): void {
@@ -47,14 +47,14 @@ export class LoginFormComponent implements OnInit {
         }
     }
 
-    protected onSubmit(): void {
+    protected surLogin(): void {
         const username: string = this.loginForm.value.username;
         const result: User = new User(username);
-        this.userService.register(result)
+        this.userService.creerUsager(result)
             .subscribe(
                 (data) => {
                     this.usernameTaken = false;
-                    this.createCookie(username);
+                    this.creerCookie(username);
                     this.router.navigate(["/liste-parties"])
                     .catch(() => ErrorHandler);
                 },
@@ -63,7 +63,7 @@ export class LoginFormComponent implements OnInit {
                 });
     }
 
-    private createFormGroup(): FormGroup {
+    private creerFormulaire(): FormGroup {
         return new FormGroup({
             username: new FormControl("", [
                 Validators.required,
@@ -74,7 +74,7 @@ export class LoginFormComponent implements OnInit {
         });
     }
 
-    private createCookie(username: string): void {
+    private creerCookie(username: string): void {
         this.cookieService.set("username", username);
     }
 }

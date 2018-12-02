@@ -19,31 +19,31 @@ describe("ChronoService", () => {
             expect(service).toBeTruthy();
         });
 
-        it("Devrait initialiser l'attribut time a 0", () => {
-            expect(service["time"]).toEqual(0);
+        it("Devrait initialiser l'attribut temps a 0", () => {
+            expect(service["temps"]).toEqual(0);
         });
 
-        it("Devrait initialiser l'attribut running a faux", () => {
-            expect(service["running"]).toBeFalsy();
+        it("Devrait initialiser l'attribut enMarche a faux", () => {
+            expect(service["enMarche"]).toBeFalsy();
         });
     });
 
-    describe("Fonction getTime", () => {
+    describe("Fonction getTemps", () => {
         it("Devrait retourner 0", () => {
-            expect(service.getTime()).toBe(0);
+            expect(service.getTemps()).toBe(0);
         });
     });
 
     describe("Fonction reset", () => {
-        it("Devrait remettre l'attribut time a 0 et l'attribut running a false", () => {
+        it("Devrait remettre l'attribut temps a 0 et l'attribut enMarche a false", () => {
             const temps: number = 10;
-            service["time"] = temps;
-            service["running"] = true;
+            service["temps"] = temps;
+            service["enMarche"] = true;
 
             service.reset();
 
-            expect(service["time"]).toEqual(0);
-            expect(service["running"]).toBeFalsy();
+            expect(service["temps"]).toEqual(0);
+            expect(service["enMarche"]).toBeFalsy();
         });
     });
 
@@ -51,19 +51,19 @@ describe("ChronoService", () => {
         it("Devrait retourner 5", fakeAsync(() => {
             const temps: number = 5000;
             const valRetour: number = 5;
-            service.startTimer();
+            service.commencerChrono();
             tick(temps);
-            service.stopTimer();
-            expect(service.getTime()).toBe(valRetour);
+            service.arreterChrono();
+            expect(service.getTemps()).toBe(valRetour);
         }));
 
         it("Devrait retourner \'05\' pour minute et second", fakeAsync(() => {
             const temps: number = 305000;
-            service.startTimer();
+            service.commencerChrono();
             tick(temps);
-            expect(service["getSecondsSrtring"]()).toBe("05");
+            expect(service["getSecondesString"]()).toBe("05");
             expect(service["getMinutesString"]()).toBe("05");
-            service.stopTimer();
+            service.arreterChrono();
         }));
     });
 });

@@ -6,7 +6,7 @@ import {PartieSimple} from "../admin/dialog-simple/partie-simple";
 import {PartieMultiple} from "../admin/dialog-multiple/partie-multiple";
 import {ChatComponent} from "../chat/chat.component";
 import {CookieService} from "ngx-cookie-service";
-import {TempsUser} from "../admin/temps-user";
+import {Joueur} from "../admin/joueur";
 import * as constantes from "../constantes";
 import {MatDialog} from "@angular/material";
 import {DialogFinPartieComponent} from "./dialog-fin-partie/dialog-fin-partie.component";
@@ -38,8 +38,8 @@ const PATH_AUDIO_APPLAUDISSEMENT: string = "../assets/applause.mp3";
 const PATH_AUDIO_YES: string = "../assets/yes.wav";
 const PATH_AUDIO_NO: string = "../assets/no.mp3";
 const PATH_AUDIO_LOSER: string = "../assets/LoserSound.mp3";
-const MESSAGE_TROUVE_PART1: string = "Vous avez trouvé";
-const DIFFERENCES: string = "différences";
+const MESSAGE_TROUVE_PART1: string = "Vous avez trouvé ";
+const DIFFERENCES: string = " différences";
 const ANONYME: string = "Anonyme";
 const ERREUR: string = "ERREUR";
 export const ERREUR_CHAT: string = " - ERREUR.";
@@ -80,7 +80,7 @@ export abstract class PartieAbstraiteClass {
         this.chrono.reset();
         this.setImage(isSimple);
         this.setID();
-        this.setIsMultijoueur();
+        this.setEstMultijoueur();
         this.setPartie();
     }
 
@@ -88,7 +88,7 @@ export abstract class PartieAbstraiteClass {
 
     protected abstract getImageData(): void;
 
-    protected abstract ajouterTemps(partieID: string, tempsUser: TempsUser, isSolo: boolean): void;
+    protected abstract ajouterTemps(partieID: string, tempsUser: Joueur, isSolo: boolean): void;
 
     protected async abstract supprimerChannelId(): Promise<void>;
 
@@ -105,7 +105,7 @@ export abstract class PartieAbstraiteClass {
         this.partieAttributsAdmin.messageDifferences = MESSAGE_TROUVE_PART1
             + this.partieAttributsAdmin.differencesTrouvees + DIFFERENCES;
 
-        this.chrono.startTimer();
+        this.chrono.commencerChrono();
     }
 
     protected setup(): void {
@@ -134,8 +134,8 @@ export abstract class PartieAbstraiteClass {
 
     protected ajouterMessageDiffTrouvee(joueur: string): void {
         this.partieAttributsMultijoueur.isMultijoueur ?
-            this.chat.addMessageToMessagesChat(this.getCurrentTime() + DIFF_TROUVE_PAR + joueur)
-            : this.chat.addMessageToMessagesChat(this.getCurrentTime() + DIFF_TROUVE);
+            this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + DIFF_TROUVE_PAR + joueur)
+            : this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + DIFF_TROUVE);
     }
 
     protected async terminerPartie(gagnant: string): Promise<void> {
@@ -143,27 +143,27 @@ export abstract class PartieAbstraiteClass {
     }
 
     protected async partieMultijoueurTerminee(gagnant: string): Promise<void> {
-        this.chrono.stopTimer();
+        this.chrono.arreterChrono();
 
         if (this.partieAttributsMultijoueur.joueurMultijoueur === gagnant) {
             this.partieAttributsAdmin.messageDifferences = FELECITATIONS_MULTI;
-            const tempsUser: TempsUser = new TempsUser(gagnant, this.chrono.getTime());
-            this.joueurApplaudissements();
+            const tempsUser: Joueur =  new Joueur(gagnant, this.chrono.getTemps());
+            this.jouerApplaudissements();
             this.ajouterTemps(this.partieAttributsData.partieID, tempsUser, false);
             await this.supprimerChannelId();
         } else {
             this.partieAttributsAdmin.messageDifferences = PERDU_MULTI;
-            this.joueurLoserSound();
+            this.jouerSonPerdant();
         }
         this.ouvrirDialogFinPartie();
     }
 
     protected partieSoloTerminee(): void {
-        this.chrono.stopTimer();
-        const tempsUser: TempsUser = new TempsUser(this.cookieService.get(USERNAME_STR), this.chrono.getTime());
+        this.chrono.arreterChrono();
+        const tempsUser: Joueur =  new Joueur(this.cookieService.get(USERNAME_STR), this.chrono.getTemps());
         this.partieAttributsAdmin.messageDifferences = FELECITATIONS;
         this.ouvrirDialogFinPartie();
-        this.joueurApplaudissements();
+        this.jouerApplaudissements();
         this.ajouterTemps(this.partieAttributsData.partieID, tempsUser, true);
     }
 
@@ -172,10 +172,10 @@ export abstract class PartieAbstraiteClass {
         if (joueur === constantes.STR_VIDE) {
             joueur = ANONYME;
         }
-        if (temps < this.partie["_tempsSolo"][PARTIE_SECOND_ELEMENT]["_temps"]) {
-            const tempsUser: TempsUser = new TempsUser(joueur, temps);
-            this.partie["_tempsSolo"].splice(-1, 1);
-            this.partie["_tempsSolo"].push(tempsUser);
+        if (temps < this.partie.tempsSolo[PARTIE_SECOND_ELEMENT].temps) {
+            const tempsUser: Joueur = new Joueur(joueur, temps);
+            this.partie.tempsSolo.splice(-1, 1);
+            this.partie.tempsSolo.push(tempsUser);
         }
     }
 
@@ -185,7 +185,7 @@ export abstract class PartieAbstraiteClass {
             + this.partieAttributsAdmin.differencesTrouvees + DIFFERENCES;
     }
 
-    protected jouerYesSound(): void {
+    protected jouerSonYes(): void {
         this.partieAttributsData.audio.src = PATH_AUDIO_YES;
         this.partieAttributsData.audio.load();
         this.partieAttributsData.audio.play().catch(() => ErrorHandler);
@@ -215,7 +215,7 @@ export abstract class PartieAbstraiteClass {
         this.partieAttributsData.audio.play().catch(() => ErrorHandler);
 
         if (!this.partieAttributsMultijoueur.isMultijoueur) {
-            this.chat.addMessageToMessagesChat(this.getCurrentTime() + ERREUR_CHAT);
+            this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + ERREUR_CHAT);
         }
 
         setTimeout(() => {
@@ -224,13 +224,13 @@ export abstract class PartieAbstraiteClass {
         },         TIMEOUT);
     }
 
-    protected getCurrentTime(): string {
+    protected getTempsCourant(): string {
         const date: Date = new Date();
 
         return date.getHours() + constantes.DEUX_POINTS_TEMPS_FORMAT
             + this.getMinutes(date)
             + constantes.DEUX_POINTS_TEMPS_FORMAT
-            + this.getSeconds(date);
+            + this.getSecondes(date);
     }
 
     protected afficherPartie(): void {
@@ -244,19 +244,19 @@ export abstract class PartieAbstraiteClass {
             : date.getMinutes().toString();
     }
 
-    private getSeconds(date: Date): string {
+    private getSecondes(date: Date): string {
         return date.getSeconds() < MINUTESANDSECONDCONVERT ?
             constantes.ZERO_STR_FORMAT + date.getSeconds().toString()
             : date.getSeconds().toString();
     }
 
-    private joueurApplaudissements(): void {
+    private jouerApplaudissements(): void {
         this.partieAttributsData.audio.src = PATH_AUDIO_APPLAUDISSEMENT;
         this.partieAttributsData.audio.load();
         this.partieAttributsData.audio.play().catch(() => ErrorHandler);
     }
 
-    private joueurLoserSound(): void {
+    private jouerSonPerdant(): void {
         this.partieAttributsData.audio.src = PATH_AUDIO_LOSER;
         this.partieAttributsData.audio.load();
         this.partieAttributsData.audio.play().catch(() => ErrorHandler);
@@ -274,13 +274,13 @@ export abstract class PartieAbstraiteClass {
         this.partieAttributsData.partieID = this.route.snapshot.params.idPartie;
     }
 
-    private setIsMultijoueur(): void {
+    private setEstMultijoueur(): void {
         this.route.snapshot.params.channelId === constantes.ZERO_STR_FORMAT ?
             this.partieAttributsMultijoueur.isMultijoueur = false
             : this.partieAttributsMultijoueur.isMultijoueur = true;
         if (this.partieAttributsMultijoueur.isMultijoueur) {
             this.setChannelId();
-            this.setJoueurMultijoueur();
+            this.setJouerMultijoueur();
         }
     }
 
@@ -288,7 +288,7 @@ export abstract class PartieAbstraiteClass {
         this.partieAttributsMultijoueur.channelId = this.route.snapshot.params.channelId;
     }
 
-    private setJoueurMultijoueur(): void {
+    private setJouerMultijoueur(): void {
         this.cookieService.get(USERNAME_STR) === constantes.STR_VIDE
             ? this.partieAttributsMultijoueur.joueurMultijoueur = ANONYME
             : this.partieAttributsMultijoueur.joueurMultijoueur = this.cookieService.get(USERNAME_STR);

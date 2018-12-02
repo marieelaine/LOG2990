@@ -14,7 +14,8 @@ import { MatDialog } from "@angular/material";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import {ChronoService} from "../../chrono/chrono.service";
-import { TempsUser } from "src/app/admin/temps-user";
+import { Joueur } from "src/app/admin/joueur";
+import { PartieSimpleInterface } from "../../../../../common/partie-simple-interface";
 
 const NOMBRE_DIFF_MULTIJOUEUR_SIMPLE: number = 4;
 
@@ -34,11 +35,11 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                        protected dialog: MatDialog) {
         super(route, partieService, cookieService, chrono, dialog, true);
         this.partieAttributsAdmin.differenceRestantes = constantes.DIFF_PARTIE_SIMPLE;
-        this.setSocketEvents();
+        this.setEvenementsSockets();
     }
 
-    protected async ajouterTemps(partieID: string, joueur: TempsUser, isSolo: boolean): Promise<void> {
-        await this.partieService.addTempsPartieSimple(partieID, joueur, isSolo)
+    protected async ajouterTemps(partieID: string, joueur: Joueur, isSolo: boolean): Promise<void> {
+        await this.partieService.ajouterTempsPartieSimple(partieID, joueur, isSolo)
             .catch(() => ErrorHandler);
     }
 
@@ -47,22 +48,41 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
     }
 
     protected setPartie(): void {
-        this.partieService.getPartieSimple(this.partieAttributsData.partieID).subscribe(async (res: PartieSimple) => {
-            this.partie = res;
+        this.partieService.getPartieSimple(this.partieAttributsData.partieID).subscribe(async (res: PartieSimpleInterface) => {
+            this.reconstruirePartieSimple(res);
             this.partieAttributsMultijoueur.isMultijoueur ? await this.setPartieSimpleMultijoueur() : this.afficherPartie();
         });
     }
 
+    protected reconstruirePartieSimple(partie: PartieSimpleInterface): void {
+        const tempsSolo: Joueur[] = [];
+        const tempsUnContreUn: Joueur[] = [];
+
+        for (const user of partie._tempsSolo) {
+            const userSolo: Joueur = new Joueur(user._nom, user._temps);
+            tempsSolo.push(userSolo);
+        }
+
+        for (const user of partie._tempsUnContreUn) {
+            const userMulti: Joueur = new Joueur(user._nom, user._temps);
+            tempsUnContreUn.push(userMulti);
+        }
+
+        const partieSimple: PartieSimple = new PartieSimple(partie._nomPartie, tempsSolo, tempsUnContreUn, partie._image1,
+                                                            partie._image2, partie._imageDiff, partie._id);
+        this.partie = partieSimple;
+    }
+
     protected getImageData(): void {
-        this.partieAttributsData.imageData.push(atob(String(this.partie["_image1"][0])));
-        this.partieAttributsData.imageData.push(atob(String(this.partie["_image2"][0])));
+        this.partieAttributsData.imageData.push(atob(String(this.partie.image1[0])));
+        this.partieAttributsData.imageData.push(atob(String(this.partie.image2[0])));
     }
 
     protected async testerPourDiff(ev: MouseEvent): Promise<void> {
         if (this.partieAttributsAdmin.partieCommence && !this.partieAttributsAdmin.penaliteEtat) {
             const coords: string = ev.offsetX + constantes.VIRGULE_STR_FORMAT + ev.offsetY;
             let i: number = 0;
-            for (const diff of this.partie["_imageDiff"]) {
+            for (const diff of this.partie.imageDiff) {
                 for (const pixel of diff) {
                     if (coords === pixel) {
                         if (!this.partieAttributsAdmin.diffTrouvee[0].includes(i)) {
@@ -118,7 +138,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
     protected async trouverDifferenceSimple(): Promise<void> {
         if (this.partieAttributsAdmin.partieCommence) {
             this.augmenterDiffTrouvee();
-            this.jouerYesSound();
+            this.jouerSonYes();
         }
         this.partieAttributsMultijoueur.isMultijoueur ? await this.terminerPartieMultijoueurSimple() : this.terminerPartieSolo();
     }
@@ -132,7 +152,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         const imageDataD: ImageData = contextD.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
         const dataD: Uint8ClampedArray = imageDataD.data;
 
-        for (const pixel of this.partie["_imageDiff"][i]) {
+        for (const pixel of this.partie.imageDiff[i]) {
             const x: number = Number(pixel.split(constantes.VIRGULE_STR_FORMAT)[0]);
             const y: number = Number(pixel.split(constantes.VIRGULE_STR_FORMAT)[1]);
             const dim: number = (y * constantes.WINDOW_WIDTH * constantes.RGB_WIDTH) + (x * constantes.RGB_WIDTH);
@@ -144,7 +164,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         contextD.putImageData(imageDataD, 0, 0);
     }
 
-    private setSocketEvents(): void {
+    private setEvenementsSockets(): void {
         this.socketClientService.socket.on(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, (data) => {
             if (this.partieAttributsMultijoueur.channelId === data.channelId) {
                 this.differenceTrouverMultijoueurSimple(data.diff, data.joueur).catch(() => ErrorHandler);
@@ -161,8 +181,8 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         this.socketClientService.socket.on(event.ERREUR_PARTIE_SIMPLE, (data) => {
             if (this.partieAttributsMultijoueur.channelId === data.channelId) {
                 this.partieAttributsMultijoueur.isMultijoueur ?
-                    this.chat.addMessageToMessagesChat(this.getCurrentTime() + ERREUR_CHAT_PAR + data.joueur)
-                    : this.chat.addMessageToMessagesChat(this.getCurrentTime() + ERREUR_CHAT);
+                    this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + ERREUR_CHAT_PAR + data.joueur)
+                    : this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + ERREUR_CHAT);
             }
         });
 

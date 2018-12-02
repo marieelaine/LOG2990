@@ -8,7 +8,7 @@ import * as constantes from "../constantes";
 export class UserService {
     public constructor(private _http: HttpClient) { }
 
-    public register(user: User): Observable<User> {
+    public creerUsager(user: User): Observable<User> {
 
         return this._http.post<User>(constantes.AJOUTER_USERS_URL, user, {
             observe: "body",
@@ -16,7 +16,7 @@ export class UserService {
         });
     }
 
-    public async delete(username: string): Promise<string> {
+    public async supprimer(username: string): Promise<string> {
         const id: Observable<string> = this._http.delete<string>( constantes.DELETE_USERS_URL + username);
 
         return id.toPromise();

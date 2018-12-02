@@ -1,14 +1,16 @@
-import {Component, OnInit, AfterContentChecked, ErrorHandler} from "@angular/core";
-import {ListePartiesComponent} from "../liste-parties.component";
-import {Router} from "@angular/router";
-import {DomSanitizer} from "@angular/platform-browser";
-import {ListePartieServiceService} from "../liste-partie-service.service";
-import {PartieSimple} from "../../admin/dialog-simple/partie-simple";
-import {MatDialog} from "@angular/material";
-import {DialogConfirmationComponent} from "../dialog-confirmation/dialog-confirmation.component";
-import {SocketClientService} from "src/app/socket/socket-client.service";
+import { Component, OnInit, AfterContentChecked, ErrorHandler } from "@angular/core";
+import { ListePartiesComponent } from "../liste-parties.component";
+import { Router } from "@angular/router";
+import { DomSanitizer } from "@angular/platform-browser";
+import { ListePartieServiceService } from "../liste-partie-service.service";
+import { PartieSimple } from "../../admin/dialog-simple/partie-simple";
+import { MatDialog } from "@angular/material";
+import { DialogConfirmationComponent } from "../dialog-confirmation/dialog-confirmation.component";
+import { SocketClientService } from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
-import {DialogVueAttenteComponent} from "../dialog-vue-attente/dialog-vue-attente.component";
+import { DialogVueAttenteComponent } from "../dialog-vue-attente/dialog-vue-attente.component";
+import { Joueur } from "src/app/admin/joueur";
+import { PartieSimpleInterface } from "../../../../../common/partie-simple-interface";
 
 const LARGEUR_BOITE: string = "600px";
 const HAUTEUR_BOITE_190: string = "190px";
@@ -39,8 +41,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
     }
 
     public ngOnInit(): void {
-        this.listePartieService.getListePartieSimple().subscribe((res: PartieSimple[]) => {
-            this.listeParties = res;
+        this.listePartieService.getListePartieSimple().subscribe((res: PartieSimpleInterface[]) => {
+            this.reconstruirePartieSimple(res);
         });
         this.listePartieService.getListePartieSimpleEnAttente().subscribe((res: string[]) => {
             this.listePartieEnAttente = res;
@@ -51,12 +53,49 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
     public ngAfterContentChecked(): void {
         for (const partie of this.listeParties) {
-            this.afficherImage(partie["_id"]);
+            this.afficherImage(partie.id);
+        }
+    }
+
+    protected reconstruirePartieSimple(res: PartieSimpleInterface[]): void {
+        for (const partie of res) {
+            const tempsSolo: Joueur[] = [];
+            const tempsUnContreUn: Joueur[] = [];
+
+            for (const user of partie._tempsSolo) {
+                const userSolo: Joueur = new Joueur(user._nom, user._temps);
+                tempsSolo.push(userSolo);
+            }
+
+            for (const user of partie._tempsUnContreUn) {
+                const userMulti: Joueur = new Joueur(user._nom, user._temps);
+                tempsUnContreUn.push(userMulti);
+            }
+
+            const partieSimple: PartieSimple = new PartieSimple(partie._nomPartie, tempsSolo, tempsUnContreUn, partie._image1,
+                                                                partie._image2, partie._imageDiff, partie._id);
+            this.listeParties.push(partieSimple);
         }
     }
 
     protected afficherImage(id: string): void {
-        this.ajusterImage(id, this.listeParties, true);
+        for (const partie of this.listeParties) {
+            if (partie.id === id) {
+                let data: string = "";
+
+                data = atob(String(partie.image1[0]));
+
+                let hex: number = 0x00;
+                const result: Uint8Array = new Uint8Array(data.length);
+
+                for (let i: number = 0; i < data.length; i++) {
+                    hex = data.charCodeAt(i);
+                    result[i] = hex;
+                }
+                const blob: Blob = new Blob([result], {type: "image/bmp"});
+                partie.imageBlob = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+            }
+        }
     }
 
     protected onJouerOuReinitialiserClick(partieId: string): void {
@@ -78,10 +117,10 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
     protected reinitialiserTemps(partieId: string): void {
         this.listeParties.forEach((partie: PartieSimple) => {
-            if (partie["_id"] === partieId) {
-                partie["_tempsSolo"] = this.genererTableauTempsAleatoires();
-                partie["_tempsUnContreUn"] = this.genererTableauTempsAleatoires();
-                this.listePartieService.reinitialiserTempsPartie(partieId, partie["_tempsSolo"], partie["_tempsUnContreUn"])
+            if (partie.id === partieId) {
+                partie.tempsSolo = this.genererTableauTempsAleatoires();
+                partie.tempsUnContreUn = this.genererTableauTempsAleatoires();
+                this.listePartieService.reinitialiserTempsPartie(partieId, partie.tempsSolo, partie.tempsUnContreUn)
                     .catch(() => ErrorHandler);
             }
         });
@@ -94,7 +133,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
             this.router.navigate([URL_PARTIE_SIMPLE + partieId + URL_SLASH + channelId])
                 .catch(() => ErrorHandler);
         } else {
-            this.listePartieService.addPartieSimpleEnAttente(partieId).subscribe(() => {
+            this.listePartieService.ajouterPartieSimpleEnAttente(partieId).subscribe(() => {
                 this.ouvrirDialogVueAttente(partieId);
             });
         }

@@ -15,8 +15,8 @@ describe("DialogVueAttenteComponent", () => {
 
     beforeEach(() => {
         mockListePartieService = jasmine.createSpyObj([
-            "deletePartieSimpleEnAttente",
-            "deletePartieMultipleEnAttente"
+            "supprimerPartieSimpleEnAttente",
+            "supprimerPartieMultipleEnAttente"
         ]);
 
         TestBed.configureTestingModule({
@@ -47,8 +47,8 @@ describe("DialogVueAttenteComponent", () => {
             expect(component["message"]).toEqual("En attente d'un adversaire");
         });
 
-        it("Devrait initialiser l'attribut isEnAttente à vrai", () => {
-            expect(component["isEnAttente"]).toBeTruthy();
+        it("Devrait initialiser l'attribut estEnAttente à vrai", () => {
+            expect(component["estEnAttente"]).toBeTruthy();
         });
 
         it("Devrait initialiser l'attribut disableClose de l'objet dialogRef à vrai", () => {

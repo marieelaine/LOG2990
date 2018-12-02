@@ -24,9 +24,9 @@ describe("ChatComponent", () => {
         expect(component["messagesChat"]).toBeDefined();
     });
 
-    it("addMessageToMessagesChat devrait ajouter un message au tableau messagesChat", () => {
+    it("ajouterMessageAuMessagesChat devrait ajouter un message au tableau messagesChat", () => {
         const msg: string = "Hello World";
-        component["addMessageToMessagesChat"](msg);
+        component["ajouterMessageAuMessagesChat"](msg);
 
         expect(component["messagesChat"]).toContain(msg);
     });

@@ -1,10 +1,10 @@
 import { Injectable, ErrorHandler } from "@angular/core";
-import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 import * as route from "../constantes";
-import { TempsUser } from "../admin/temps-user";
+import { Joueur } from "../admin/joueur";
+import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
+import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
 
 @Injectable({
   providedIn: "root"
@@ -13,36 +13,36 @@ export class ListePartieServiceService {
 
   public constructor( private http: HttpClient ) {}
 
-  public getListePartieSimple(): Observable<PartieSimple[]> {
+  public getListePartieSimple(): Observable<PartieSimpleInterface[]> {
 
-      return this.http.get<PartieSimple[]>(route.GET_LISTE_SIMPLE_URL);
+      return this.http.get<PartieSimpleInterface[]>(route.GET_LISTE_SIMPLE_URL);
   }
 
-  public async deletePartieSimple(partieId: string): Promise<void> {
+  public async supprimerPartieSimple(partieId: string): Promise<void> {
 
     this.http.delete(route.DELETE_PARTIE_SIMPLE_URL + partieId).toPromise()
       .catch(() => ErrorHandler);
   }
 
-  public getListePartieMultiple(): Observable<PartieMultiple[]> {
+  public getListePartieMultiple(): Observable<PartieMultipleInterface[]> {
 
-    return this.http.get<PartieMultiple[]>(route.GET_LISTE_MULTIPLE_URL);
+    return this.http.get<PartieMultipleInterface[]>(route.GET_LISTE_MULTIPLE_URL);
   }
 
-  public async deletePartieMultiple(partieId: string): Promise<void> {
+  public async supprimerPartieMultiple(partieId: string): Promise<void> {
 
     this.http.delete(route.DELETE_PARTIE_MULTIPLE_URL + partieId).toPromise()
     .catch(() => ErrorHandler);
   }
 
-  public async reinitialiserTempsPartie(partieId: string, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
+  public async reinitialiserTempsPartie(partieId: string, tempsSolo: Array<Joueur>, tempsUnContreUn: Array<Joueur>): Promise<void> {
 
     this.http.put(route.REINITIALISER_TEMPS_SIMPLE_URL + partieId, { tempsSolo, tempsUnContreUn }).toPromise()
     .catch(() => ErrorHandler);
   }
 
-  public async reinitialiserTempsPartieMultiple(partieId: string, tempsSolo: Array<TempsUser>,
-                                                tempsUnContreUn: Array<TempsUser>): Promise<void> {
+  public async reinitialiserTempsPartieMultiple(partieId: string, tempsSolo: Array<Joueur>,
+                                                tempsUnContreUn: Array<Joueur>): Promise<void> {
 
     this.http.put(route.REINITIALISER_TEMPS_MULTIPLE_URL + partieId, { tempsSolo, tempsUnContreUn }).toPromise()
     .catch(() => ErrorHandler);
@@ -53,12 +53,12 @@ export class ListePartieServiceService {
     return this.http.get<string[]>(route.GET_PARTIE_SIMPLE_ATTENTE);
   }
 
-  public addPartieSimpleEnAttente(partieId: string): Observable<string> {
+  public ajouterPartieSimpleEnAttente(partieId: string): Observable<string> {
 
     return this.http.post<string>(route.ADD_PARTIE_SIMPLE_ATTENTE, { partieId });
   }
 
-  public deletePartieSimpleEnAttente(partieId: string): Observable<string> {
+  public supprimerPartieSimpleEnAttente(partieId: string): Observable<string> {
 
     return this.http.delete<string>(route.DELETE_PARTIE_SIMPLE_ATTENTE + partieId);
   }
@@ -68,12 +68,12 @@ export class ListePartieServiceService {
     return this.http.get<string[]>(route.GET_PARTIE_MULTIPLE_ATTENTE);
   }
 
-  public addPartieMultipleEnAttente(partieId: string): Observable<string> {
+  public ajouterPartieMultipleEnAttente(partieId: string): Observable<string> {
 
     return this.http.post<string>(route.ADD_PARTIE_MULTIPLE_ATTENTE, { partieId });
   }
 
-  public deletePartieMultipleEnAttente(partieId: string): Observable<string> {
+  public supprimerPartieMultipleEnAttente(partieId: string): Observable<string> {
 
     return this.http.delete<string>(route.DELETE_PARTIE_MULTIPLE_ATTENTE + partieId);
   }

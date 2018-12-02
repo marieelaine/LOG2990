@@ -16,7 +16,7 @@ export class DialogConfirmationComponent {
   private partieId: string;
   private listePartiesSimples: PartieSimple[];
   private listePartiesMultiples: PartieMultiple[];
-  private isSimple: boolean;
+  private estSimple: boolean;
 
   public constructor(
     private dialogRef: MatDialogRef<DialogConfirmationComponent>,
@@ -24,21 +24,21 @@ export class DialogConfirmationComponent {
     @Inject(MAT_DIALOG_DATA) data: Data) {
 
       this.partieId = data.id;
-      this.isSimple = data.isSimple;
+      this.estSimple = data.isSimple;
       this.setListeParties(data);
   }
 
-  protected onConfirmationClick(): void {
-    this.isSimple ? this.supprimerPartieSimple() : this.supprimerPartieMultiple();
+  protected surClickConfirmation(): void {
+    this.estSimple ? this.supprimerPartieSimple() : this.supprimerPartieMultiple();
     this.dialogRef.close();
   }
 
-  protected onDialogClose(): void {
+  protected fermerDialog(): void {
     this.dialogRef.close();
   }
 
   private setListeParties(data: Data): void {
-    if (this.isSimple) {
+    if (this.estSimple) {
       this.listePartiesSimples = data.listeParties;
       this.listePartiesMultiples = [];
     } else {
@@ -48,18 +48,18 @@ export class DialogConfirmationComponent {
   }
 
   private supprimerPartieSimple(): void {
-    this.listePartieService.deletePartieSimple(this.partieId).catch(() => ErrorHandler);
+    this.listePartieService.supprimerPartieSimple(this.partieId).catch(() => ErrorHandler);
     this.supprimerPartieSimpleDeLaffichage();
   }
 
   private supprimerPartieMultiple(): void {
-    this.listePartieService.deletePartieMultiple(this.partieId).catch(() => ErrorHandler);
+    this.listePartieService.supprimerPartieMultiple(this.partieId).catch(() => ErrorHandler);
     this.supprimerPartieMultipleDeLaffichage();
   }
 
   private supprimerPartieSimpleDeLaffichage(): void {
     for (let i: number = 0 ; i < this.listePartiesSimples.length ; i++) {
-      if (this.listePartiesSimples[i]["_id"]  === this.partieId) {
+      if (this.listePartiesSimples[i].id  === this.partieId) {
         this.listePartiesSimples.splice(i, 1);
       }
     }
@@ -67,7 +67,7 @@ export class DialogConfirmationComponent {
 
   private supprimerPartieMultipleDeLaffichage(): void {
     for (let i: number = 0 ; i < this.listePartiesMultiples.length ; i++) {
-      if (this.listePartiesMultiples[i]["_id"]  === this.partieId) {
+      if (this.listePartiesMultiples[i].id  === this.partieId) {
         this.listePartiesMultiples.splice(i, 1);
       }
     }

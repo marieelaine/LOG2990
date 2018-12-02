@@ -9,6 +9,8 @@ import {MatDialog} from "@angular/material";
 import {SocketClientService} from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import {DialogVueAttenteComponent} from "../dialog-vue-attente/dialog-vue-attente.component";
+import { Joueur } from "src/app/admin/joueur";
+import { PartieMultipleInterface } from "../../../../../common/partie-multiple-interface";
 
 const LARGEUR_BOITE: string = "600px";
 const HAUTEUR_BOITE_190: string = "190px";
@@ -38,8 +40,8 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
     }
 
     public ngOnInit(): void {
-        this.listePartieService.getListePartieMultiple().subscribe((res: PartieMultiple[]) => {
-            this.listeParties = res;
+        this.listePartieService.getListePartieMultiple().subscribe((res: PartieMultipleInterface[]) => {
+            this.reconstruirePartieMultiple(res);
         });
         this.listePartieService.getListePartieMultipleEnAttente().subscribe((res: string[]) => {
             this.listePartieEnAttente = res;
@@ -49,12 +51,51 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     public ngAfterContentChecked(): void {
         for (const partie of this.listeParties) {
-            this.afficherImage(partie["_id"]);
+            this.afficherImage(partie.id);
+        }
+    }
+
+    protected reconstruirePartieMultiple(res: PartieMultipleInterface[]): void {
+        for (const partie of res) {
+            const tempsSolo: Joueur[] = [];
+            const tempsUnContreUn: Joueur[] = [];
+
+            for (const user of partie._tempsSolo) {
+                const userSolo: Joueur = new Joueur(user._nom, user._temps);
+                tempsSolo.push(userSolo);
+            }
+
+            for (const user of partie._tempsUnContreUn) {
+                const userMulti: Joueur = new Joueur(user._nom, user._temps);
+                tempsUnContreUn.push(userMulti);
+            }
+
+            const partieMultiple: PartieMultiple = new PartieMultiple(partie._nomPartie, tempsSolo, tempsUnContreUn, partie._image1PV1,
+                                                                      partie._image1PV2, partie._image2PV1, partie._image2PV2,
+                                                                      partie._imageDiff1, partie._imageDiff2, partie._quantiteObjets,
+                                                                      partie._theme, partie._typeModification, partie._id);
+            this.listeParties.push(partieMultiple);
         }
     }
 
     protected afficherImage(id: string): void {
-        this.ajusterImage(id, this.listeParties, false);
+        for (const partie of this.listeParties) {
+            if (partie.id === id) {
+                let data: string = "";
+
+                data = atob(String(partie.image1PV1[0]));
+
+                let hex: number = 0x00;
+                const result: Uint8Array = new Uint8Array(data.length);
+
+                for (let i: number = 0; i < data.length; i++) {
+                    hex = data.charCodeAt(i);
+                    result[i] = hex;
+                }
+                const blob: Blob = new Blob([result], {type: "image/bmp"});
+                partie.imageBlob = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+            }
+        }
     }
 
     protected onJouerOuReinitialiserClick(partieId: string): void {
@@ -106,7 +147,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
             this.router.navigate([URL_PARTIE_MULTIPLE + partieId + URL_SLASH + channelId])
             .catch(() => ErrorHandler);
         } else {
-          this.listePartieService.addPartieMultipleEnAttente(partieId).subscribe(() => {
+          this.listePartieService.ajouterPartieMultipleEnAttente(partieId).subscribe(() => {
             this.ouvrirDialogVueAttente(partieId);
           });
         }
@@ -114,10 +155,10 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     protected reinitialiserTemps(partieId: string): void {
         this.listeParties.forEach((partie: PartieMultiple) => {
-            if (partie["_id"] === partieId) {
-                partie["_tempsSolo"] = this.genererTableauTempsAleatoires();
-                partie["_tempsUnContreUn"] = this.genererTableauTempsAleatoires();
-                this.listePartieService.reinitialiserTempsPartieMultiple(partieId, partie["_tempsSolo"], partie["_tempsUnContreUn"])
+            if (partie.id === partieId) {
+                partie.tempsSolo = this.genererTableauTempsAleatoires();
+                partie.tempsUnContreUn = this.genererTableauTempsAleatoires();
+                this.listePartieService.reinitialiserTempsPartieMultiple(partieId, partie.tempsSolo, partie.tempsUnContreUn)
                     .catch(() => ErrorHandler);
             }
         });

@@ -52,12 +52,12 @@ describe("HeaderComponent", () => {
         expect(component).toBeDefined();
     });
 
-    describe("fonction onHeaderTitleClick", () => {
+    describe("fonction surClickBanniere", () => {
         it("Devrait naviguer a la router '/liste-parties'", fakeAsync(() => {
             const spy: jasmine.Spy = spyOn(component["router"], "navigateByUrl");
             spy.and.callThrough();
 
-            component["OnHeaderTitleClick"]();
+            component["surClickBanniere"]();
             tick();
 
             expect(location.path()).toBe("/liste-parties");
