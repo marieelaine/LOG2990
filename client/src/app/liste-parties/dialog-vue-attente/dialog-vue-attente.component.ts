@@ -5,6 +5,13 @@ import { ListePartieServiceService } from "../liste-partie-service.service";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
 
+const ATTENTE_ADVERSAIRE: string = "En attente d'un adversaire";
+const URL_LISTE_PARTIE: string = "/liste-parties/";
+const PARTIE_INEXISTANTE: string = "Erreur : cette partie n'existe plus!";
+const URL_PARTIE_SIMPLE: string = "/partie-simple/";
+const URL_PARTIE_MULTIPLE: string = "/partie-multiple/";
+const URL_SLASH: string = "/";
+
 @Component({
     selector: "app-dialog-vue-attente",
     templateUrl: "./dialog-vue-attente.component.html",
@@ -29,7 +36,7 @@ export class DialogVueAttenteComponent implements OnDestroy {
         this.isSimple = data.isSimple;
         dialogRef.disableClose = true;
         this.ajouterPartieSurSocket();
-        this.message = "En attente d'un adversaire";
+        this.message = ATTENTE_ADVERSAIRE;
         this.isEnAttente = true;
     }
 
@@ -39,7 +46,7 @@ export class DialogVueAttenteComponent implements OnDestroy {
 
     protected onDialogClose(): void {
         this.dialogRef.close();
-        this.router.navigate(["/liste-parties/"]).catch(() => ErrorHandler);
+        this.router.navigate([URL_LISTE_PARTIE]).catch(() => ErrorHandler);
     }
 
     private deletePartieSimpleAttente(): void {
@@ -57,7 +64,7 @@ export class DialogVueAttenteComponent implements OnDestroy {
     }
 
     private setMessageDialog(): void {
-        this.message = "Erreur : cette partie n'existe plus!";
+        this.message = PARTIE_INEXISTANTE;
     }
 
     private setMessageErreur(data: string): void {
@@ -80,7 +87,7 @@ export class DialogVueAttenteComponent implements OnDestroy {
             if (data.partieId === this.partieId) {
                 this.listePartieService.deletePartieSimpleEnAttente(this.partieId).subscribe((res) => {
                     this.dialogRef.close();
-                    this.router.navigate(["/partie-simple/" + data.partieId + "/" + data.channelId])
+                    this.router.navigate([URL_PARTIE_SIMPLE + data.partieId + URL_SLASH + data.channelId])
                     .catch(() => ErrorHandler);
                 });
             }
@@ -90,7 +97,7 @@ export class DialogVueAttenteComponent implements OnDestroy {
             if (data.partieId === this.partieId) {
                 this.listePartieService.deletePartieMultipleEnAttente(this.partieId).subscribe((res) => {
                 this.dialogRef.close();
-                this.router.navigate(["/partie-multiple/" + data.partieId + "/" + data.channelId])
+                this.router.navigate([URL_PARTIE_MULTIPLE + data.partieId + URL_SLASH + data.channelId])
                 .catch(() => ErrorHandler);
                 });
             }
