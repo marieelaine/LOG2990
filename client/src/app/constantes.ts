@@ -84,3 +84,38 @@ export const ZERO_STR_FORMAT: string = "0";
 export const STR_VIDE: string = "";
 export const VIRGULE_STR_FORMAT: string = ",";
 export const IMAGE_BLOB: string = "image/bmp";
+
+export const CONVERSION_TEMPS: number = 10;
+export const TIMEOUT: number = 1000;
+export const OFFSET_ADDITIONNEL: number = 10;
+export const LINE_WIDTH: number = 1.5;
+export const PARTIE_SECOND_ELEMENT: number = 2;
+
+export const FONT: string = "600 28px Arial";
+export const TEXT_ALIGN: string = "center";
+export const ERREUR_COULEUR_INTERIEUR: string = "#ff0000";
+export const ERREUR_COULEUR_CONTEUR: string = "#000000";
+
+export const HAUTEUR_DIALOGUE: string = "190px";
+export const LARGEUR_DIALOGUE: string = "600px";
+
+export const CHARGEMENT_IMAGES: string = "Chargement des images";
+export const DIFF_TROUVE_PAR: string = " - Différence trouvée par ";
+export const DIFF_TROUVE: string = " - Différence trouvée.";
+export const FELICITATIONS_MULTI: string = "FÉLICITATIONS, VOUS AVEZ GAGNÉ!";
+export const FELICITATIONS: string = "FÉLICITATIONS!";
+export const PERDU_MULTI: string = "VOUS AVEZ PERDU!";
+export const AUDIO_APPLAUDISSEMENT: string = "../assets/applause.mp3";
+export const AUDIO_REUSSI: string = "../assets/yes.wav";
+export const AUDIO_ERREUR: string = "../assets/no.mp3";
+export const AUDIO_PERDANT: string = "../assets/LoserSound.mp3";
+export const MESSAGE_TROUVE_PART1: string = "Vous avez trouvé ";
+export const DIFFERENCES: string = " différences";
+export const ANONYME: string = "Anonyme";
+export const ERREUR: string = "ERREUR";
+export const ERREUR_CHAT: string = " - ERREUR.";
+export const ERREUR_CHAT_PAR: string = " - ERREUR par ";
+export const USERNAME_STR: string = "username";
+export const CONTEXT_2D: string = "2d";
+export const CANVAS: string = "canvas";
+export const STRING_VIDE: string = "";
