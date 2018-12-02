@@ -32,48 +32,48 @@ describe("PartieService", () => {
         expect(service).toBeTruthy();
     });
 
-    // describe("Fonction getPartieSimpleInterface", () => {
-    //     it("GET request should be called with proper arguments", () => {
-    //         let partieResponse: PartieSimpleInterface = ("name", [], [], new Buffer(""), new Buffer(""), [[]]);
-    //         const partie: PartieSimpleInterface = partieResponse;
-    //         const id: string = "12345abcde";
+    describe("Fonction getPartieSimpleInterface", () => {
+        it("GET request should be called with proper arguments", () => {
+            let partieResponse: PartieSimpleInterface = ("name", [], [], new Buffer(""), new Buffer(""), [[]]);
+            const partie: PartieSimpleInterface = partieResponse;
+            const id: string = "12345abcde";
 
-    //         service.getPartieSimple(id).subscribe((response) => {
-    //             partieResponse = response;
+            service.getPartieSimple(id).subscribe((response) => {
+                partieResponse = response;
 
-    //             http.expectOne({
-    //                 url: constantes.GET_PARTIE_SIMPLE + id,
-    //                 method: constantes.METHODE_GET
-    //             }).flush(responseForm);
+                http.expectOne({
+                    url: constantes.GET_PARTIE_SIMPLE + id,
+                    method: constantes.METHODE_GET
+                }).flush(responseForm);
 
-    //             expect(partieResponse).toEqual(partie);
-    //         });
+                expect(partieResponse).toEqual(partie);
+            });
 
-    //     });
-    // });
+        });
+    });
 
-    // describe("Fonction getPartieMultipleInterface", () => {
-    //     it("GET request should be called with proper arguments", () => {
-    //         let partieResponse: PartieMultiple = new PartieMultiple(
-    //             "name", [], [], new Buffer(""), new Buffer(""),
-    //             new Buffer(""), new Buffer(""), new Array<Array<string>>(),
-    //             new Array<Array<string>>(), QUANTITE_OBJETS, "geo", "acs", "123");
-    //         const id: string = "12345abcde";
-    //         const partie: PartieMultiple = partieResponse;
+    describe("Fonction getPartieMultipleInterface", () => {
+        it("GET request should be called with proper arguments", () => {
+            let partieResponse: PartieMultiple = new PartieMultiple(
+                "name", [], [], new Buffer(""), new Buffer(""),
+                new Buffer(""), new Buffer(""), new Array<Array<string>>(),
+                new Array<Array<string>>(), QUANTITE_OBJETS, "geo", "acs", "123");
+            const id: string = "12345abcde";
+            const partie: PartieMultiple = partieResponse;
 
-    //         service.getPartieMultiple(id).subscribe((response) => {
-    //             partieResponse = response;
+            service.getPartieMultiple(id).subscribe((response) => {
+                partieResponse = response;
 
-    //             http.expectOne({
-    //                 url: constantes.GET_PARTIE_MULTIPLE + id,
-    //                 method: constantes.METHODE_GET
-    //             }).flush(responseForm);
+                http.expectOne({
+                    url: constantes.GET_PARTIE_MULTIPLE + id,
+                    method: constantes.METHODE_GET
+                }).flush(responseForm);
 
-    //             expect(partieResponse).toEqual(partie);
-    //         });
+                expect(partieResponse).toEqual(partie);
+            });
 
-    //     });
-    // });
+        });
+    });
 
     describe("Fonction reinitialiserTempsPartie", () => {
         it("Devrait faire une requete PUT", () => {

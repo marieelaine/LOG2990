@@ -7,7 +7,6 @@ import { HttpClient } from "@angular/common/http";
 import { HttpHandlerMock, ActivatedRouteMock } from "src/testing/mocks";
 import { Joueur } from "../admin/joueur";
 import { CookieServiceMock } from "../../testing/cookieMock";
-import { SocketClientMock } from "src/testing/socketMock";
 import { ChronoService} from "../chrono/chrono.service";
 import { MatDialogMock } from "src/testing/mat-dialog-mock";
 
@@ -33,8 +32,7 @@ describe("PartieAbstraiteComponent", () => {
     let component: AbstractClassInstance;
     beforeEach(() => {
     component = new AbstractClassInstance(new ActivatedRouteMock(), new PartieServiceMock(),
-                                          new CookieServiceMock(), new ChronoService, new SocketClientMock(),
-                                          new MatDialogMock(), true);
+                                          new CookieServiceMock(), new ChronoService, new MatDialogMock(), true);
 
     component["partie"] = new PartieSimple ("nomPartie", new Array<Joueur>(), new Array<Joueur>(),
                                             Buffer.from(new Array<number>()),

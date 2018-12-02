@@ -204,7 +204,9 @@ export abstract class PartieAbstraiteClass {
         const ctx: CanvasRenderingContext2D = canvas.getContext(CONTEXT_2D) as CanvasRenderingContext2D;
         const imageSaved: ImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         ctx.font = FONT;
-        ctx.textAlign = TEXT_ALIGN;
+        // ctx.textAlign = TEXT_ALIGN;
+        // tslint:disable-next-line:no-suspicious-comment
+        // TODO Bernard plz
         ctx.fillStyle = ERREUR_COULEUR_INTERIEUR;
         ctx.fillText(ERREUR, event.offsetX, event.offsetY + OFFSET_ADDITIONNEL);
         ctx.lineWidth = LINE_WIDTH;
