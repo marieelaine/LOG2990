@@ -1,17 +1,25 @@
-export class TempsUser {
-    private _user: string;
+export class Joueur {
+    private _nom: string;
     private _temps: number;
 
     public constructor(user: string, temps: number) {
-      this._user = user;
+      this._nom = user;
       this._temps = temps;
     }
 
-    public get user(): string {
-        return this._user;
+    public get nom(): string {
+        return this._nom;
+    }
+
+    public set nom(nom: string) {
+        this._nom = nom;
     }
 
     public get temps(): number {
         return this._temps;
+    }
+
+    public set temps(temps: number) {
+        this._temps = temps;
     }
   }
