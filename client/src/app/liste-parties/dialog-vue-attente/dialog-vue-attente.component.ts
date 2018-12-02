@@ -10,6 +10,7 @@ const PARTIE_INEXISTANTE: string = "Erreur : cette partie n'existe plus!";
 const URL_PARTIE_SIMPLE: string = "/partie-simple/";
 const URL_PARTIE_MULTIPLE: string = "/partie-multiple/";
 const URL_SLASH: string = "/";
+const EVENTLISTENER_TYPE: string = "beforeunload";
 
 @Component({
     selector: "app-dialog-vue-attente",
@@ -101,7 +102,7 @@ export class DialogVueAttenteComponent {
     }
 
     private changementPage(): void {
-        window.addEventListener("beforeunload", () => {
+        window.addEventListener(EVENTLISTENER_TYPE, () => {
             this.estSimple ? this.supprimerPartieSimpleAttente() : this.supprimerPartieMultipleAttente();
         });
     }
