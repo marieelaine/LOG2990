@@ -6,8 +6,35 @@ import { ErrorHandler } from "@angular/core";
 import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 import * as constantes from "../constantes";
+import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
+import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
 
 const QUANTITE_OBJETS: number = 10;
+const partieSimple: PartieSimpleInterface = {
+    _id: "id",
+    _nomPartie: "name",
+    _tempsSolo: [],
+    _tempsUnContreUn: [],
+    _image1: new Buffer(""),
+    _image2: new Buffer(""),
+    _imageDiff: [[]]
+};
+
+const partieMultiple: PartieMultipleInterface = {
+    _id: "id",
+    _nomPartie: "name",
+    _tempsSolo: [],
+    _tempsUnContreUn: [],
+    _image1PV1: new Buffer(""),
+    _image1PV2: new Buffer(""),
+    _image2PV1: new Buffer(""),
+    _image2PV2: new Buffer(""),
+    _imageDiff1: [[]],
+    _imageDiff2: [[]],
+    _quantiteObjets: 10,
+    _theme: "geo",
+    _typeModification: "a"
+};
 
 describe("PartieService", () => {
     let service: PartieService;
@@ -34,9 +61,9 @@ describe("PartieService", () => {
 
     describe("Fonction getPartieSimpleInterface", () => {
         it("GET request should be called with proper arguments", () => {
-            let partieResponse: PartieSimpleInterface = ("name", [], [], new Buffer(""), new Buffer(""), [[]]);
+            let partieResponse: PartieSimpleInterface = partieSimple;
             const partie: PartieSimpleInterface = partieResponse;
-            const id: string = "12345abcde";
+            const id: string = "id";
 
             service.getPartieSimple(id).subscribe((response) => {
                 partieResponse = response;
@@ -54,12 +81,9 @@ describe("PartieService", () => {
 
     describe("Fonction getPartieMultipleInterface", () => {
         it("GET request should be called with proper arguments", () => {
-            let partieResponse: PartieMultiple = new PartieMultiple(
-                "name", [], [], new Buffer(""), new Buffer(""),
-                new Buffer(""), new Buffer(""), new Array<Array<string>>(),
-                new Array<Array<string>>(), QUANTITE_OBJETS, "geo", "acs", "123");
-            const id: string = "12345abcde";
-            const partie: PartieMultiple = partieResponse;
+            let partieResponse: PartieMultipleInterface = partieMultiple;
+            const id: string = "id";
+            const partie: PartieMultipleInterface = partieResponse;
 
             service.getPartieMultiple(id).subscribe((response) => {
                 partieResponse = response;
