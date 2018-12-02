@@ -58,7 +58,7 @@ describe("DialogMultipleComponent", () => {
     });
 
     describe("fonction ajouterPartie", () => {
-        it("devrait appeler la fonction register du servie PartieMultiple", () => {
+        it("devrait appeler la fonction register du service PartieMultiple", () => {
             mockPartieMultipleService.register.and.callFake((data: PartieMultiple) => of(data));
             component["data"].multipleGameName = "Partie1";
             component["data"].quantiteObjets = 1;
@@ -157,7 +157,6 @@ describe("DialogMultipleComponent", () => {
             component["setErreurTheme"]();
             expect(component["erreurTheme"]).toEqual("*Un theme doit etre selectionne.");
         });
-
     });
 
     describe("fonction setErreurTransformation : ", () => {
