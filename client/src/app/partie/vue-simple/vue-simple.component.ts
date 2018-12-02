@@ -1,5 +1,12 @@
 import {Component, ErrorHandler} from "@angular/core";
-import {PartieAbstraiteClass} from "../partie-abstraite-class";
+import {
+    CONTEXT_2D,
+    ERREUR_CHAT,
+    ERREUR_CHAT_PAR,
+    PartieAbstraiteClass,
+    STR_VIDE,
+    VIRGULE_STR_FORMAT
+} from "../partie-abstraite-class";
 import {PartieSimple} from "src/app/admin/dialog-simple/partie-simple";
 import {ActivatedRoute} from "@angular/router";
 import {PartieService} from "../partie.service";
@@ -12,7 +19,6 @@ import {ChronoService} from "../../chrono/chrono.service";
 import { TempsUser } from "src/app/admin/temps-user";
 
 const NOMBRE_DIFF_MULTIJOUEUR_SIMPLE: number = 4;
-const NOMBRE_PARTIES_MULTIJOUEUR: number = 2;
 
 @Component({
     selector: "app-vue-simple",
@@ -56,7 +62,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
     protected async testerPourDiff(ev: MouseEvent): Promise<void> {
         if (this.partieAttributsAdmin.partieCommence && !this.partieAttributsAdmin.penaliteEtat) {
-            const coords: string = ev.offsetX + "," + ev.offsetY;
+            const coords: string = ev.offsetX + VIRGULE_STR_FORMAT + ev.offsetY;
             let i: number = 0;
             for (const diff of this.partie["_imageDiff"]) {
                 for (const pixel of diff) {
@@ -83,7 +89,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         this.partieAttributsAdmin.diffTrouvee[0].push(i);
         await this.trouverDifferenceSimple();
         this.restaurationPixelsSimple(i);
-        this.ajouterMessageDiffTrouvee("");
+        this.ajouterMessageDiffTrouvee(STR_VIDE);
     }
 
     private async setPenalite(ev: MouseEvent): Promise<void> {
@@ -120,17 +126,17 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
     }
 
     private restaurationPixelsSimple(i: number): void {
-        const contextG: CanvasRenderingContext2D = this.canvas.toArray()[0].nativeElement.getContext("2d");
+        const contextG: CanvasRenderingContext2D = this.canvas.toArray()[0].nativeElement.getContext(CONTEXT_2D);
         const imageDataG: ImageData = contextG.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
         const dataG: Uint8ClampedArray = imageDataG.data;
 
-        const contextD: CanvasRenderingContext2D = this.canvas.toArray()[1].nativeElement.getContext("2d");
+        const contextD: CanvasRenderingContext2D = this.canvas.toArray()[1].nativeElement.getContext(CONTEXT_2D);
         const imageDataD: ImageData = contextD.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
         const dataD: Uint8ClampedArray = imageDataD.data;
 
         for (const pixel of this.partie["_imageDiff"][i]) {
-            const x: number = Number(pixel.split(",")[0]);
-            const y: number = Number(pixel.split(",")[1]);
+            const x: number = Number(pixel.split(VIRGULE_STR_FORMAT)[0]);
+            const y: number = Number(pixel.split(VIRGULE_STR_FORMAT)[1]);
             const dim: number = (y * constantes.WINDOW_WIDTH * constantes.RGB_WIDTH) + (x * constantes.RGB_WIDTH);
 
             dataD[dim] = dataG[dim];
@@ -157,8 +163,8 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         this.socketClientService.socket.on(event.ERREUR_PARTIE_SIMPLE, (data) => {
             if (this.partieAttributsMultijoueur.channelId === data.channelId) {
                 this.partieAttributsMultijoueur.isMultijoueur ?
-                    this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur par " + data.joueur)
-                    : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur.");
+                    this.chat.addMessageToMessagesChat(this.getCurrentTime() + ERREUR_CHAT_PAR + data.joueur)
+                    : this.chat.addMessageToMessagesChat(this.getCurrentTime() + ERREUR_CHAT);
             }
         });
 
