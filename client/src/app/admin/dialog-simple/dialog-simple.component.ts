@@ -7,7 +7,7 @@ import { PartieSimpleService } from "../partie-simple.service";
 import { DialogAbstrait, STRING_VIDE } from "../dialog-abstrait";
 import * as Buffer from "buffer";
 import { FormControl, Validators } from "@angular/forms";
-import * as constante from "src/app/constantes";
+import * as constantes from "src/app/constantes";
 
 export const IMAGE_URL: string = "http://localhost:3000/images/";
 
@@ -55,9 +55,9 @@ export class DialogSimpleComponent extends DialogAbstrait {
       this.imageExtension = IMG_EXTENSION;
       this.erreurTypeImage = STRING_VIDE;
       this.erreurNbImage = STRING_VIDE;
-      this.nomControl = new FormControl("", [
-        Validators.minLength(constante.LONGUEUR_NOM_MIN),
-        Validators.maxLength(constante.LONGUEUR_NOM_MAX),
+      this.nomControl = new FormControl(constantes.STR_VIDE, [
+        Validators.minLength(constantes.LONGUEUR_NOM_MIN),
+        Validators.maxLength(constantes.LONGUEUR_NOM_MAX),
         Validators.required]);
     }
 
@@ -124,9 +124,9 @@ export class DialogSimpleComponent extends DialogAbstrait {
   }
 
   private estBonneTaille(imageInfo: ImageInfo): boolean {
-    return (imageInfo.size === constante.BIT_FORMAT
-            && imageInfo.width === constante.WINDOW_WIDTH
-            && imageInfo.height === constante.WINDOW_HEIGHT);
+    return (imageInfo.size === constantes.BIT_FORMAT
+            && imageInfo.width === constantes.WINDOW_WIDTH
+            && imageInfo.height === constantes.WINDOW_HEIGHT);
   }
 
   private estBonType(): boolean {
@@ -164,9 +164,9 @@ export class DialogSimpleComponent extends DialogAbstrait {
     reader.onload = () => {
       const dv: DataView = new DataView(reader.result as ArrayBuffer);
       const imageInfo: ImageInfo = {
-        size: dv.getUint16(constante.HEADER_BMP_P1, true),
-        width: dv.getUint32(constante.HEADER_BMP_P2, true),
-        height: dv.getUint32(constante.HEADER_BMP_P3, true)
+        size: dv.getUint16(constantes.HEADER_BMP_P1, true),
+        width: dv.getUint32(constantes.HEADER_BMP_P2, true),
+        height: dv.getUint32(constantes.HEADER_BMP_P3, true)
       };
       self.setErreursImage(imageInfo);
     };
