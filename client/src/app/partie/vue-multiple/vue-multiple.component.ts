@@ -1,10 +1,5 @@
 import {Component, ErrorHandler} from "@angular/core";
-import {
-    CONTEXT_2D,
-    ERREUR_CHAT,
-    ERREUR_CHAT_PAR,
-    PartieAbstraiteClass
-} from "../partie-abstraite-class";
+import { PartieAbstraiteClass } from "../partie-abstraite-class";
 import {ActivatedRoute} from "@angular/router";
 import {PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
 import {PartieService} from "../partie.service";
@@ -129,11 +124,11 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         let contextG: CanvasRenderingContext2D;
         let contextD: CanvasRenderingContext2D;
         if (src === IMAGE_DIFF_1) {
-            contextG = this.canvas.toArray()[constantes.CONTEXT_GAUCHE_POV1_POSITION].nativeElement.getContext(CONTEXT_2D);
-            contextD = this.canvas.toArray()[constantes.CONTEXT_DROITE_POV1_POSITION].nativeElement.getContext(CONTEXT_2D);
+            contextG = this.canvas.toArray()[constantes.CONTEXT_GAUCHE_POV1_POSITION].nativeElement.getContext(constantes.CONTEXT_2D);
+            contextD = this.canvas.toArray()[constantes.CONTEXT_DROITE_POV1_POSITION].nativeElement.getContext(constantes.CONTEXT_2D);
         } else {
-            contextG = this.canvas.toArray()[constantes.CONTEXT_GAUCHE_POV2_POSITION].nativeElement.getContext(CONTEXT_2D);
-            contextD = this.canvas.toArray()[constantes.CONTEXT_DROITE_POV2_POSITION].nativeElement.getContext(CONTEXT_2D);
+            contextG = this.canvas.toArray()[constantes.CONTEXT_GAUCHE_POV2_POSITION].nativeElement.getContext(constantes.CONTEXT_2D);
+            contextD = this.canvas.toArray()[constantes.CONTEXT_DROITE_POV2_POSITION].nativeElement.getContext(constantes.CONTEXT_2D);
         }
         const imageDataG: ImageData = contextG.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
         const dataG: Uint8ClampedArray = imageDataG.data;
@@ -202,8 +197,8 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         this.socketClientService.socket.on(event.ERREUR_PARTIE_MULTIPLE, (data) => {
             if (this.partieAttributsMultijoueur.channelId === data.channelId) {
                 this.partieAttributsMultijoueur.isMultijoueur ?
-                    this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + ERREUR_CHAT_PAR + data.joueur)
-                    : this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + ERREUR_CHAT);
+                    this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + constantes.ERREUR_CHAT_PAR + data.joueur)
+                    : this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + constantes.ERREUR_CHAT);
             }
         });
 

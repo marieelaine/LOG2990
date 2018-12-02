@@ -10,6 +10,8 @@ import { AdminComponent } from "../admin/admin.component";
 import { VueSimpleComponent } from "../partie/vue-simple/vue-simple.component";
 import { Joueur } from "../admin/joueur";
 import { DomSanitizer, BrowserModule } from "@angular/platform-browser";
+import { SocketClientMock } from "src/testing/socketMock";
+import { SocketClientService } from "../socket/socket-client.service";
 
 describe("ListePartiesComponent", () => {
     let component: ListePartiesComponent;
@@ -40,31 +42,32 @@ describe("ListePartiesComponent", () => {
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: {} },
                 { provide: DomSanitizer, useValue: { sanitize: () => "safeString", bypassSecurityTrustHtml : () => "safestring" }},
+                SocketClientService
             ]
         });
         fixture = TestBed.createComponent(ListePartiesComponent);
         component = fixture.componentInstance;
     });
 
-    it("should create", () => {
+    it("Devrait creer le composant", () => {
         expect(component).toBeTruthy();
     });
 
-    it("should change jouerOuReinitialiser and creerOuSupprimer to 'Jouer' and 'Supprimer' when url is /liste-parties", () => {
+    it("Devrait changer jouerOuReinitialiser et creerOuSupprimer a 'Jouer' et 'Supprimer' quand le url est /liste-parties", () => {
         component["setJouerOuReinitialiserEtcreerOuSupprimer"]("/liste-parties");
         expect(component["jouerOuReinitialiser"]).toBe("Jouer");
         expect(component["creerOuSupprimer"]).toBe("Créer");
         expect(component["isListePartiesMode"]).toBe(true);
     });
 
-    it("should change jouerOuReinitialiser and creerOuSupprimer to 'Reinitialiser' and 'Supprimer' when url is /admin", () => {
+    it("Devrait changer jouerOuReinitialiser et creerOuSupprimer a 'Reinitialiser' et 'Supprimer'quand le url est /admin", () => {
         component["setJouerOuReinitialiserEtcreerOuSupprimer"]("/admin");
         expect(component["jouerOuReinitialiser"]).toBe("Réinitialiser");
         expect(component["creerOuSupprimer"]).toBe("Supprimer");
         expect(component["isAdminMode"]).toBe(true);
     });
 
-    it("should return array of sorted times", () => {
+    it("Devrait retourner un tableau de temps triés", () => {
         const tempsParam: number = 2;
         const user1: Joueur = new Joueur("user1", tempsParam);
         const user2: Joueur = new Joueur("user2", 1);
@@ -75,7 +78,7 @@ describe("ListePartiesComponent", () => {
         expect(sortedArray).toEqual(expectedArray);
     });
 
-    it("should return array of sorted times", () => {
+    it("Devrait retourner un tableau de temps triés", () => {
         const tempsParam: number = 61;
         const tempsUser: Joueur = new Joueur("", tempsParam);
         expect(component["getTempsDisplay"](tempsUser)).toBe("1:01");
@@ -87,15 +90,15 @@ describe("ListePartiesComponent", () => {
         expect(array.length).toEqual(arrLength);
     });
 
-    it("should return title without first letter", () => {
+    it("Devrait return title sans le première lettre", () => {
         expect(component["getTitreSansPremiereLettre"](titleTest)).toBe("Success");
     });
 
-    it("should return title first letter", () => {
+    it("Devrait return la première lettre du titre", () => {
         expect(component["getPremiereLettreTitre"](titleTest)).toBe("N");
     });
 
-    it("should change attribute modes", () => {
+    it("Devrait changer le mode", () => {
         component["setJouerEtCreer"]();
         expect(component["isAdminMode"]).toBeFalsy();
         expect(component["isListePartiesMode"]).toBeTruthy();
@@ -103,7 +106,7 @@ describe("ListePartiesComponent", () => {
         expect(component["creerOuSupprimer"]).toBe("Créer");
     });
 
-    it("should change attribute modes", () => {
+    it("Devrait change le mode", () => {
         component["setReinitialiserEtSupprimer"]();
         expect(component["isAdminMode"]).toBeTruthy();
         expect(component["isListePartiesMode"]).toBeFalsy();
