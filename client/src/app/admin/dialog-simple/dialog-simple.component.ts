@@ -76,23 +76,20 @@ export class DialogSimpleComponent extends DialogAbstrait {
       reader.onload = () => {
         this.convertirArrayBufferEnBuffer(reader.result as ArrayBuffer, imageQty);
         if (this.fichierEnBuffer.length === MAX_NB_IMAGE) {
-          this.ajouterPartie()
-          .catch(() => ErrorHandler);
+          this.ajouterPartie();
         }
         imageQty++;
       };
     });
   }
 
-  protected async ajouterPartie(): Promise<void> {
+  protected ajouterPartie(): void {
     const result: PartieSimple = new PartieSimple(this.data.simpleGameName, this.genererTableauTempsAleatoires(),
                                                   this.genererTableauTempsAleatoires(), this.fichierEnBuffer[0],
                                                   this.fichierEnBuffer[1], new Array<Array<string>>());
     this.partieSimpleService.register(result)
       .subscribe(
         () => {
-          // tslint:disable-next-line:no-suspicious-comment
-          // TODO: do something
         },
         (error) => {
           console.error(error);
@@ -114,7 +111,7 @@ export class DialogSimpleComponent extends DialogAbstrait {
 }
 
   private setErreursImage(imageInfo: ImageInfo): void {
-    this.estBonneTaille(imageInfo) || this.estBonType() ?
+    this.estBonneTaille(imageInfo) && this.estBonType() ?
     this.erreurTypeImage = STRING_VIDE :
     this.erreurTypeImage = ERR_NB_IMAGE;
 
@@ -128,19 +125,19 @@ export class DialogSimpleComponent extends DialogAbstrait {
 
   private estBonneTaille(imageInfo: ImageInfo): boolean {
     return (imageInfo.size === constante.BIT_FORMAT
-            || imageInfo.width === constante.WINDOW_WIDTH
-            || imageInfo.height === constante.WINDOW_HEIGHT);
+            && imageInfo.width === constante.WINDOW_WIDTH
+            && imageInfo.height === constante.WINDOW_HEIGHT);
   }
 
   private estBonType(): boolean {
-    let estMauvaisType: boolean = false;
+    let estBonType: boolean = false;
     this.fichier.forEach((file) => {
-    if (file.type === this.imageExtension || file === undefined) {
-      estMauvaisType = true;
+    if (file.type === this.imageExtension && file !== undefined) {
+      estBonType = true;
     }
   });
 
-    return estMauvaisType;
+    return estBonType;
   }
 
   private estBonNombre(): boolean {
