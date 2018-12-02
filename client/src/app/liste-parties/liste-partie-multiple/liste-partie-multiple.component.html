@@ -9,8 +9,8 @@
                         <h2 class='topThreeHeaders text-center'>Top <img class='bronzeMedal' src="assets/bronze-medal.png"></h2>
                     </div>
                     <div class="col-sm-5 title">
-                        <span class='gameNameHeader titleFirstLetter'>{{getTitleFirstLetter(partieMultiple.nomPartie)|uppercase}}</span>
-                        <span class='gameNameHeader'>{{getTitleWithoutFirstLetter(partieMultiple.nomPartie)|lowercase}}</span>
+                        <span class='gameNameHeader titleFirstLetter'>{{getTitreSansPremiereLettre(partieMultiple.nomPartie)|uppercase}}</span>
+                        <span class='gameNameHeader'>{{getPremiereLettreTitre(partieMultiple.nomPartie)|lowercase}}</span>
                     </div>
             </mat-card-header>
             <div class='row'>
@@ -32,7 +32,7 @@
                         <div class="card col-5" class="top3">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    {{ getDisplayTime(tempsSolo) }}
+                                    {{ getTempsDisplay(tempsSolo) }}
                                 </h5>
                                 <h6 class="card-subtitle mb-2 text-muted">
                                     {{ tempsSolo.user }}
@@ -43,7 +43,7 @@
                         <div class="card col-5" class="top3">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    {{ getDisplayTime(partieMultiple.tempsUnContreUn[i]) }}
+                                    {{ getTempsDisplay(partieMultiple.tempsUnContreUn[i]) }}
                                 </h5>
                                 <h6 class="card-subtitle mb-2 text-muted">
                                     {{ partieMultiple.tempsUnContreUn[i].user }}
