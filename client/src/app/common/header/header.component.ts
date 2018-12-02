@@ -3,6 +3,10 @@ import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 import { UserService } from "../../vue-initiale/user.service";
 
+const USERNAME: string = "username";
+const URL_LISTE_PATIE: string = "/liste-parties";
+const URL_SLASH: string = "/";
+
 @Component({
   selector: "app-header",
   templateUrl: "./header.component.html",
@@ -17,14 +21,14 @@ export class HeaderComponent {
   }
 
   protected onLogout(): void {
-    const cookieUsername: string = this.cookieService.get("username");
+    const cookieUsername: string = this.cookieService.get(USERNAME);
     this.cookieService.deleteAll();
-    this.userService["delete"](cookieUsername).catch(() => ErrorHandler);
-    this.router.navigate(["/"]).catch(() => ErrorHandler);
+    this.userService.delete(cookieUsername).catch(() => ErrorHandler);
+    this.router.navigate([URL_SLASH]).catch(() => ErrorHandler);
   }
 
   protected OnHeaderTitleClick(): void {
-    this.router.navigateByUrl("/liste-parties")
+    this.router.navigateByUrl(URL_LISTE_PATIE)
     .catch(() => ErrorHandler);
   }
 }
