@@ -6,7 +6,7 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { PartieSimple } from "src/app/admin/dialog-simple/partie-simple";
 import { PartieMultiple } from "src/app/admin/dialog-multiple/partie-multiple";
-import { TempsUser } from "src/app/admin/temps-user";
+import { TempsUser } from "src/app/admin/joueur";
 import { Data } from "@angular/router";
 
 describe("DialogConfirmationComponent", () => {

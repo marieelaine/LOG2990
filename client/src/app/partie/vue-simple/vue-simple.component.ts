@@ -9,7 +9,7 @@ import { MatDialog } from "@angular/material";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import {ChronoService} from "../../chrono/chrono.service";
-import { TempsUser } from "src/app/admin/temps-user";
+import { TempsUser } from "src/app/admin/joueur";
 import { PartieSimpleInterface } from "../../../../../common/partie-simple-interface";
 
 const NOMBRE_DIFF_MULTIJOUEUR_SIMPLE: number = 4;

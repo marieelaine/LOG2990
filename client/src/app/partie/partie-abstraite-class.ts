@@ -6,7 +6,7 @@ import {PartieSimple} from "../admin/dialog-simple/partie-simple";
 import {PartieMultiple} from "../admin/dialog-multiple/partie-multiple";
 import {ChatComponent} from "../chat/chat.component";
 import {CookieService} from "ngx-cookie-service";
-import {TempsUser} from "../admin/temps-user";
+import {TempsUser} from "../admin/joueur";
 import * as constantes from "../constantes";
 import { SocketClientService } from "../socket/socket-client.service";
 import { MatDialog } from "@angular/material";

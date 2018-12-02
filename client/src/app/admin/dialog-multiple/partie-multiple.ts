@@ -1,11 +1,11 @@
-import { TempsUser } from "../temps-user";
+import { Joueur } from "../joueur";
 import { SafeResourceUrl } from "@angular/platform-browser";
 
 export class PartieMultiple {
     protected _id: string;
     protected _nomPartie: string;
-    protected _tempsSolo: Array<TempsUser>;
-    protected _tempsUnContreUn: Array<TempsUser>;
+    protected _tempsSolo: Array<Joueur>;
+    protected _tempsUnContreUn: Array<Joueur>;
     protected _imageBlob: SafeResourceUrl;
     protected _image1PV1: Buffer;
     protected _image1PV2: Buffer;
@@ -17,7 +17,7 @@ export class PartieMultiple {
     protected _theme: string;
     protected _typeModification: string;
 
-    public constructor( nomPartie: string, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>,
+    public constructor( nomPartie: string, tempsSolo: Array<Joueur>, tempsUnContreUn: Array<Joueur>,
                         image1PV1: Buffer, image1PV2: Buffer, image2PV1: Buffer, image2PV2: Buffer,
                         imageDiff1: Array<Array<string>>, imageDiff2: Array<Array<string>>, quantiteObjets: number, theme: string,
                         typeModification: string,  id?: string) {
@@ -56,19 +56,19 @@ export class PartieMultiple {
         this._nomPartie = nomPartie;
     }
 
-    public get tempsSolo(): Array<TempsUser> {
+    public get tempsSolo(): Array<Joueur> {
         return this._tempsSolo;
     }
 
-    public set tempsSolo(tempsSolo: Array<TempsUser>) {
+    public set tempsSolo(tempsSolo: Array<Joueur>) {
         this._tempsSolo = tempsSolo;
     }
 
-    public get tempsUnContreUn(): Array<TempsUser> {
+    public get tempsUnContreUn(): Array<Joueur> {
         return this._tempsUnContreUn;
     }
 
-    public set tempsUnContreUn(tempsUnContre: Array<TempsUser>) {
+    public set tempsUnContreUn(tempsUnContre: Array<Joueur>) {
         this._tempsUnContreUn = tempsUnContre;
     }
 

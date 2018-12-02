@@ -6,7 +6,7 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ChatComponent } from "src/app/chat/chat.component";
 import { CookieService } from "ngx-cookie-service";
-import { TempsUser } from "src/app/admin/temps-user";
+import { TempsUser } from "src/app/admin/joueur";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 
 export class MockEvent {

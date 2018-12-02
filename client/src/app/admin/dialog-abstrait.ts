@@ -4,7 +4,7 @@ import { DialogData } from "./admin.component";
 import { HttpClient } from "@angular/common/http";
 import { DialogSimpleComponent } from "./dialog-simple/dialog-simple.component";
 import { DialogMultipleComponent } from "./dialog-multiple/dialog-multiple.component";
-import { TempsUser } from "./temps-user";
+import { Joueur } from "./joueur";
 
 const BORNE_INF: number = 100;
 const BORNE_SUP: number = 400;
@@ -33,10 +33,10 @@ export abstract class DialogAbstrait {
       this.dialogRef.close();
     }
 
-    protected genererTableauTempsAleatoires(): Array<TempsUser> {
-        const arr: Array<TempsUser> = [];
+    protected genererTableauTempsAleatoires(): Array<Joueur> {
+        const arr: Array<Joueur> = [];
         for (let i: number = 1; i < NB_ELEMENT; i++) {
-          arr.push(new TempsUser("Joueur" + i, this.genererTempsAleatoire()));
+          arr.push(new Joueur("Joueur" + i, this.genererTempsAleatoire()));
         }
 
         return arr;

@@ -7,7 +7,7 @@ import { PartieMultiple } from "./partie-multiple";
 import * as Buffer from "buffer";
 import { PartieMultipleService } from "../partie-multiple.service";
 import { FormControl, Validators } from "@angular/forms";
-import { TempsUser } from "../temps-user";
+import { Joueur } from "../joueur";
 import { LONGUEUR_NOM_MIN, LONGUEUR_NOM_MAX, NB_OBJET_MIN, NB_OBJET_MAX } from "src/app/constantes";
 
 const ERR_THEME: string = "*Un theme doit etre selectionne." ;
@@ -76,8 +76,8 @@ export class DialogMultipleComponent extends DialogAbstrait {
   }
 
   protected ajouterPartie(): void {
-    const tempsSolo: Array<TempsUser> = this.genererTableauTempsAleatoires();
-    const temps1v1: Array<TempsUser> = this.genererTableauTempsAleatoires();
+    const tempsSolo: Array<Joueur> = this.genererTableauTempsAleatoires();
+    const temps1v1: Array<Joueur> = this.genererTableauTempsAleatoires();
 
     const result: PartieMultiple = new PartieMultiple(this.data.multipleGameName, tempsSolo, temps1v1,
                                                       Buffer.Buffer.from(new Array()), Buffer.Buffer.from(new Array()),

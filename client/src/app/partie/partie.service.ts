@@ -2,7 +2,7 @@ import { ErrorHandler, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import * as route from "../constantes";
-import { TempsUser } from "../admin/temps-user";
+import { TempsUser } from "../admin/joueur";
 import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
 import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
 

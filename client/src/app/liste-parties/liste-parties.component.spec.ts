@@ -8,7 +8,7 @@ import { ListePartieMultipleComponent } from "./liste-partie-multiple/liste-part
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { AdminComponent } from "../admin/admin.component";
 import { VueSimpleComponent } from "../partie/vue-simple/vue-simple.component";
-import { TempsUser } from "../admin/temps-user";
+import { TempsUser } from "../admin/joueur";
 import { DomSanitizer, BrowserModule } from "@angular/platform-browser";
 
 describe("ListePartiesComponent", () => {

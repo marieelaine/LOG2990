@@ -9,7 +9,7 @@ import {DialogConfirmationComponent} from "../dialog-confirmation/dialog-confirm
 import {SocketClientService} from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import {DialogVueAttenteComponent} from "../dialog-vue-attente/dialog-vue-attente.component";
-import { TempsUser } from "src/app/admin/temps-user";
+import { TempsUser } from "src/app/admin/joueur";
 import { PartieSimpleInterface } from "../../../../../common/partie-simple-interface";
 
 @Component({

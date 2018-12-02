@@ -1,7 +1,7 @@
 import { TestBed } from "@angular/core/testing";
 import { PartieService } from "./partie.service";
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from "@angular/common/http/testing";
-import { TempsUser } from "../admin/temps-user";
+import { TempsUser } from "../admin/joueur";
 import { ErrorHandler } from "@angular/core";
 import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";

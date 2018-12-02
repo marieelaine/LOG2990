@@ -1,7 +1,7 @@
 import {Component, ElementRef, QueryList, ViewChildren} from "@angular/core";
 import {Router, NavigationEnd} from "@angular/router";
 import {ListePartieServiceService} from "./liste-partie-service.service";
-import { TempsUser } from "../admin/temps-user";
+import { TempsUser } from "../admin/joueur";
 import { DomSanitizer } from "@angular/platform-browser";
 
 const NB_SECONDES: number = 60;

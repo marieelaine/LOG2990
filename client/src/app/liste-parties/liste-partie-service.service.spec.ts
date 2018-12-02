@@ -3,7 +3,7 @@ import { TestBed, fakeAsync } from "@angular/core/testing";
 import { ListePartieServiceService } from "./liste-partie-service.service";
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from "@angular/common/http/testing";
 import { ErrorHandler } from "@angular/core";
-import { TempsUser } from "../admin/temps-user";
+import { TempsUser } from "../admin/joueur";
 import * as constantes from "../constantes";
 
 describe("Liste Partie Service Service", () => {

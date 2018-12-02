@@ -5,7 +5,7 @@ import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
 import { PartieService } from "./partie.service";
 import { HttpClient } from "@angular/common/http";
 import { HttpHandlerMock, ActivatedRouteMock } from "src/testing/mocks";
-import { TempsUser } from "../admin/temps-user";
+import { TempsUser } from "../admin/joueur";
 import { CookieServiceMock } from "../../testing/cookieMock";
 import { SocketClientMock } from "src/testing/socketMock";
 import { ChronoService} from "../chrono/chrono.service";

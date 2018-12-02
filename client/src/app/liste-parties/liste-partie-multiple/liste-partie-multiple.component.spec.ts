@@ -11,7 +11,7 @@ import { of } from "rxjs";
 import { Location } from "@angular/common";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import { MatDialogModule, MAT_DIALOG_DATA } from "@angular/material";
-import { TempsUser } from "src/app/admin/temps-user";
+import { TempsUser } from "src/app/admin/joueur";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 describe("ListePartieMultipleComponent", () => {
