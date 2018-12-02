@@ -4,7 +4,7 @@ import { DialogData } from "../admin.component";
 import { HttpClient } from "@angular/common/http";
 import { PartieSimple } from "./partie-simple";
 import { PartieSimpleService } from "../partie-simple.service";
-import { DialogAbstrait } from "../dialog-abstrait";
+import { DialogAbstrait, STRING_VIDE } from "../dialog-abstrait";
 import * as Buffer from "buffer";
 import { FormControl, Validators } from "@angular/forms";
 import * as constante from "src/app/constantes";
@@ -13,7 +13,6 @@ export const IMAGE_URL: string = "http://localhost:3000/images/";
 
 const ERR_NB_IMAGE: string = "*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels";
 const ERR_TYPE_IMAGE: string = "*Vous devez entrer deux images.";
-const PAS_ERR: string = "";
 const IMG_EXTENSION: string = "image/bmp";
 const MAX_NB_IMAGE: number = 2;
 
@@ -54,8 +53,8 @@ export class DialogSimpleComponent extends DialogAbstrait {
       this.fichier = [];
       this.fichierEnBuffer = [];
       this.imageExtension = IMG_EXTENSION;
-      this.erreurTypeImage = PAS_ERR;
-      this.erreurNbImage = PAS_ERR;
+      this.erreurTypeImage = STRING_VIDE;
+      this.erreurNbImage = STRING_VIDE;
       this.nomControl = new FormControl("", [
         Validators.minLength(constante.LONGUEUR_NOM_MIN),
         Validators.maxLength(constante.LONGUEUR_NOM_MAX),
@@ -116,14 +115,14 @@ export class DialogSimpleComponent extends DialogAbstrait {
 
   private setErreursImage(imageInfo: ImageInfo): void {
     this.estBonneTaille(imageInfo) || this.estBonType() ?
-    this.erreurTypeImage = PAS_ERR :
+    this.erreurTypeImage = STRING_VIDE :
     this.erreurTypeImage = ERR_NB_IMAGE;
 
   }
 
   private setErreurNbImage(): void {
     this.estBonNombre() ?
-    this.erreurNbImage = PAS_ERR :
+    this.erreurNbImage = STRING_VIDE :
     this.erreurNbImage = ERR_TYPE_IMAGE;
   }
 

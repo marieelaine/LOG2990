@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { DialogAbstrait} from "../dialog-abstrait";
+import { DialogAbstrait, STRING_VIDE} from "../dialog-abstrait";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { DialogData, Checkbox } from "../admin.component";
 import { HttpClient } from "@angular/common/http";
@@ -12,7 +12,6 @@ import { LONGUEUR_NOM_MIN, LONGUEUR_NOM_MAX, NB_OBJET_MIN, NB_OBJET_MAX } from "
 
 const ERR_THEME: string = "*Un theme doit etre selectionne." ;
 const ERR_TRANSFORMATION: string = "*Une transformation doit etre selectionnee au minimum.";
-const PAS_ERR: string = "";
 
 @Component({
   selector: "app-dialog-multiple",
@@ -21,6 +20,8 @@ const PAS_ERR: string = "";
 })
 
 export class DialogMultipleComponent extends DialogAbstrait {
+  // tslint:disable-next-line:no-suspicious-comment
+  // TODO faire une classe pour les erreurs
 
   protected toggleBoutonGeo: boolean;
   protected toggleBoutonTheme: boolean;
@@ -38,10 +39,10 @@ export class DialogMultipleComponent extends DialogAbstrait {
       super(dialogRef, data, http);
       this.toggleBoutonGeo = false;
       this.toggleBoutonTheme = false;
-      this.erreurTransformation = PAS_ERR;
-      this.erreurTheme = PAS_ERR;
-      this.data.theme = "";
-      this.data.typeModification = "";
+      this.erreurTransformation = STRING_VIDE;
+      this.erreurTheme = STRING_VIDE;
+      this.data.theme = STRING_VIDE;
+      this.data.typeModification = STRING_VIDE;
 
       this.nomControl = new FormControl("", [
         Validators.minLength(LONGUEUR_NOM_MIN), Validators.maxLength(LONGUEUR_NOM_MAX), Validators.required]);
@@ -97,7 +98,9 @@ export class DialogMultipleComponent extends DialogAbstrait {
 
   protected contientErreur(): boolean {
     return !(this.estVide(this.erreurTransformation) &&
-            this.estVide(this.erreurTheme));
+            this.estVide(this.erreurTheme) &&
+            this.nomControl.valid &&
+            this. qteControl.valid);
   }
 
   protected onGeoClickButton(event: Event, theme: string): void {
@@ -113,19 +116,15 @@ export class DialogMultipleComponent extends DialogAbstrait {
   }
 
   protected setErreurTheme(): void {
-    this.checkThemeButton() ?
-      this.erreurTheme = ERR_THEME :
-      this.erreurTheme = PAS_ERR ;
-  }
-
-  protected checkThemeButton(): boolean {
-    return (this.data.theme === "");
+    this.data.theme !== STRING_VIDE ?
+      this.erreurTheme = STRING_VIDE :
+      this.erreurTheme = ERR_THEME;
   }
 
   protected setErreurTransformation(): void {
     this.estVide(this.data.typeModification) ?
       this.erreurTransformation = ERR_TRANSFORMATION :
-      this.erreurTransformation = PAS_ERR ;
+      this.erreurTransformation = STRING_VIDE ;
   }
 
 }

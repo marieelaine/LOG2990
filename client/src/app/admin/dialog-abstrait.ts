@@ -9,7 +9,7 @@ import { TempsUser } from "./temps-user";
 const BORNE_INF: number = 100;
 const BORNE_SUP: number = 400;
 const NB_ELEMENT: number = 4;
-const PAS_ERR: string = "";
+export const STRING_VIDE: string = "";
 
 export abstract class DialogAbstrait {
 
@@ -47,7 +47,7 @@ export abstract class DialogAbstrait {
     }
 
     protected estVide(message: string): boolean {
-      return message === PAS_ERR;
+      return message === STRING_VIDE;
     }
 
 }
