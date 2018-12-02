@@ -7,33 +7,34 @@
 </head>
 
 <div class="container-fluid ">
-  <div>
-      <h1 class="title">
-          {{ partieAttributsAdmin.messageDifferences }}
-      </h1>
-  </div>
+    <div>
+        <h1 class="title">
+            {{ partieAttributsAdmin.messageDifferences }}
+        </h1>
+    </div>
+    <div class="chrono title">
+        <span>{{chrono.getMinutesString()}}:{{chrono.getSecondesString()}}</span>
+    </div>
+</div>
 
+<div class="container-fluid ">
   <div>
-      <div class="col-sm-6 divImg">
+      <div class="col-sm-12 col-lg-6 divImg">
           <mat-card class="container-fluid card">
               <div class="row">
                   <canvas [ngClass]="{'not-allowed': this.partieAttributsAdmin.penaliteEtat}" (click)="testerPourDiff($event)" #canvas id="canvasG" width="640" height="480"></canvas>
               </div>
           </mat-card>
       </div>
-      <div class="col-sm-6 divImg">
+      <div class="col-sm-12 col-lg-6 divImg">
           <mat-card class="container-fluid card">
               <div class="row">
                   <canvas [ngClass]="{'not-allowed': this.partieAttributsAdmin.penaliteEtat}" (click)="testerPourDiff($event)" #canvas id="canvasD" width="640" height="480"></canvas>
               </div>
           </mat-card>
       </div>
-  </div>
-
-  <div class="chrono">
-      {{chrono.getMinutesString()}}:{{chrono.getSecondesString()}}
-  </div>
-
-  <app-chat></app-chat>
-
+    </div>
+</div>
+<div id="chat">
+    <app-chat></app-chat>
 </div>

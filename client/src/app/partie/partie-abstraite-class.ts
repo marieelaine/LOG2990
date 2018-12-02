@@ -14,43 +14,9 @@ import {PartieAttributsData} from "./partie-attributs-data/partie-attributs-data
 import {PartieAttributsAdmin} from "./partie-attributs-admin/partie-attributs-admin";
 import {PartieAttributsMultijoueur} from "./partie-attributs-multijoueur/partie-attributs-multijoueur";
 
-const MINUTESANDSECONDCONVERT: number = 10;
-const TIMEOUT: number = 1000;
-const OFFSET_ADDITIONNEL: number = 10;
-const LINE_WIDTH: number = 1.5;
-const PARTIE_SECOND_ELEMENT: number = 2;
-
-const FONT: string = "600 28px Arial";
-const TEXT_ALIGN: string = "center";
-const ERREUR_COULEUR_INTERIEUR: string = "#ff0000";
-const ERREUR_COULEUR_CONTEUR: string = "#000000";
-
-const HAUTEUR_DIALOGUE: string = "190px";
-const LARGEUR_DIALOGUE: string = "600px";
-
-const CHARGEMENT_IMAGES: string = "Chargement des images";
-const DIFF_TROUVE_PAR: string = " - Différence trouvée par ";
-const DIFF_TROUVE: string = " - Différence trouvée.";
-const FELECITATIONS_MULTI: string = "FÉLICITATIONS, VOUS AVEZ GAGNÉ!";
-const FELECITATIONS: string = "FÉLICITATIONS!";
-const PERDU_MULTI: string = "VOUS AVEZ PERDU!";
-const PATH_AUDIO_APPLAUDISSEMENT: string = "../assets/applause.mp3";
-const PATH_AUDIO_YES: string = "../assets/yes.wav";
-const PATH_AUDIO_NO: string = "../assets/no.mp3";
-const PATH_AUDIO_LOSER: string = "../assets/LoserSound.mp3";
-const MESSAGE_TROUVE_PART1: string = "Vous avez trouvé ";
-const DIFFERENCES: string = " différences";
-const ANONYME: string = "Anonyme";
-const ERREUR: string = "ERREUR";
-export const ERREUR_CHAT: string = " - ERREUR.";
-export const ERREUR_CHAT_PAR: string = " - ERREUR par ";
-const USERNAME_STR: string = "username";
-export const CONTEXT_2D: string = "2d";
-const CANVAS: string = "canvas";
-
 export abstract class PartieAbstraiteClass {
 
-    @ViewChildren(CANVAS) protected canvas: QueryList<ElementRef>;
+    @ViewChildren(constantes.CANVAS) protected canvas: QueryList<ElementRef>;
     @ViewChild(ChatComponent) protected chat: ChatComponent;
 
     protected partieAttributsData: PartieAttributsData;
@@ -70,7 +36,7 @@ export abstract class PartieAbstraiteClass {
         this.partieAttributsMultijoueur = new PartieAttributsMultijoueur;
         this.partieAttributsAdmin.partieCommence = false;
         this.partieAttributsAdmin.differencesTrouvees = 0;
-        this.partieAttributsAdmin.messageDifferences = CHARGEMENT_IMAGES;
+        this.partieAttributsAdmin.messageDifferences = constantes.CHARGEMENT_IMAGES;
         this.chat = new ChatComponent();
         this.partieAttributsData.imageData = [];
         this.partieAttributsAdmin.diffTrouvee = [[], []];
@@ -94,16 +60,16 @@ export abstract class PartieAbstraiteClass {
 
     protected ouvrirDialogFinPartie(): void {
         this.dialog.open(DialogFinPartieComponent, {
-            height: HAUTEUR_DIALOGUE,
-            width: LARGEUR_DIALOGUE,
+            height: constantes.HAUTEUR_DIALOGUE,
+            width: constantes.LARGEUR_DIALOGUE,
             data: {message: this.partieAttributsAdmin.messageDifferences}
         });
     }
 
     protected commencerPartie(): void {
         this.partieAttributsAdmin.partieCommence = true;
-        this.partieAttributsAdmin.messageDifferences = MESSAGE_TROUVE_PART1
-            + this.partieAttributsAdmin.differencesTrouvees + DIFFERENCES;
+        this.partieAttributsAdmin.messageDifferences = constantes.MESSAGE_TROUVE_PART1
+            + this.partieAttributsAdmin.differencesTrouvees + constantes.DIFFERENCES;
 
         this.chrono.commencerChrono();
     }
@@ -125,7 +91,7 @@ export abstract class PartieAbstraiteClass {
         }
         const blob: Blob = new Blob([result], {type: constantes.IMAGE_BLOB});
 
-        const context: CanvasRenderingContext2D = canvas.nativeElement.getContext(CONTEXT_2D);
+        const context: CanvasRenderingContext2D = canvas.nativeElement.getContext(constantes.CONTEXT_2D);
         image.src = URL.createObjectURL(blob);
         image.onload = () => {
             context.drawImage(image, 0, 0);
@@ -134,8 +100,8 @@ export abstract class PartieAbstraiteClass {
 
     protected ajouterMessageDiffTrouvee(joueur: string): void {
         this.partieAttributsMultijoueur.isMultijoueur ?
-            this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + DIFF_TROUVE_PAR + joueur)
-            : this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + DIFF_TROUVE);
+            this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + constantes.DIFF_TROUVE_PAR + joueur)
+            : this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + constantes.DIFF_TROUVE);
     }
 
     protected async terminerPartie(gagnant: string): Promise<void> {
@@ -146,13 +112,13 @@ export abstract class PartieAbstraiteClass {
         this.chrono.arreterChrono();
 
         if (this.partieAttributsMultijoueur.joueurMultijoueur === gagnant) {
-            this.partieAttributsAdmin.messageDifferences = FELECITATIONS_MULTI;
+            this.partieAttributsAdmin.messageDifferences = constantes.FELICITATIONS_MULTI;
             const tempsUser: Joueur =  new Joueur(gagnant, this.chrono.getTemps());
             this.jouerApplaudissements();
             this.ajouterTemps(this.partieAttributsData.partieID, tempsUser, false);
             await this.supprimerChannelId();
         } else {
-            this.partieAttributsAdmin.messageDifferences = PERDU_MULTI;
+            this.partieAttributsAdmin.messageDifferences = constantes.PERDU_MULTI;
             this.jouerSonPerdant();
         }
         this.ouvrirDialogFinPartie();
@@ -160,19 +126,19 @@ export abstract class PartieAbstraiteClass {
 
     protected partieSoloTerminee(): void {
         this.chrono.arreterChrono();
-        const tempsUser: Joueur =  new Joueur(this.cookieService.get(USERNAME_STR), this.chrono.getTemps());
-        this.partieAttributsAdmin.messageDifferences = FELECITATIONS;
+        const tempsUser: Joueur =  new Joueur(this.cookieService.get(constantes.USERNAME_STR), this.chrono.getTemps());
+        this.partieAttributsAdmin.messageDifferences = constantes.FELICITATIONS;
         this.ouvrirDialogFinPartie();
         this.jouerApplaudissements();
         this.ajouterTemps(this.partieAttributsData.partieID, tempsUser, true);
     }
 
     protected updateTableauTempsSolo(temps: number): void {
-        let joueur: string = this.cookieService.get(USERNAME_STR);
+        let joueur: string = this.cookieService.get(constantes.USERNAME_STR);
         if (joueur === constantes.STR_VIDE) {
-            joueur = ANONYME;
+            joueur = constantes.ANONYME;
         }
-        if (temps < this.partie.tempsSolo[PARTIE_SECOND_ELEMENT].temps) {
+        if (temps < this.partie.tempsSolo[constantes.PARTIE_SECOND_ELEMENT].temps) {
             const tempsUser: Joueur = new Joueur(joueur, temps);
             this.partie.tempsSolo.splice(-1, 1);
             this.partie.tempsSolo.push(tempsUser);
@@ -181,12 +147,12 @@ export abstract class PartieAbstraiteClass {
 
     protected augmenterDiffTrouvee(): void {
         this.partieAttributsAdmin.differencesTrouvees++;
-        this.partieAttributsAdmin.messageDifferences = MESSAGE_TROUVE_PART1
-            + this.partieAttributsAdmin.differencesTrouvees + DIFFERENCES;
+        this.partieAttributsAdmin.messageDifferences = constantes.MESSAGE_TROUVE_PART1
+            + this.partieAttributsAdmin.differencesTrouvees + constantes.DIFFERENCES;
     }
 
     protected jouerSonYes(): void {
-        this.partieAttributsData.audio.src = PATH_AUDIO_YES;
+        this.partieAttributsData.audio.src = constantes.AUDIO_REUSSI;
         this.partieAttributsData.audio.load();
         this.partieAttributsData.audio.play().catch(() => ErrorHandler);
     }
@@ -201,29 +167,29 @@ export abstract class PartieAbstraiteClass {
     protected penalite(event: MouseEvent): void {
         this.partieAttributsAdmin.penaliteEtat = true;
         const canvas: HTMLCanvasElement = event.srcElement as HTMLCanvasElement;
-        const ctx: CanvasRenderingContext2D = canvas.getContext(CONTEXT_2D) as CanvasRenderingContext2D;
+        const ctx: CanvasRenderingContext2D = canvas.getContext(constantes.CONTEXT_2D) as CanvasRenderingContext2D;
         const imageSaved: ImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        ctx.font = FONT;
+        ctx.font = constantes.FONT;
         // ctx.textAlign = TEXT_ALIGN;
         // tslint:disable-next-line:no-suspicious-comment
         // TODO Bernard plz
-        ctx.fillStyle = ERREUR_COULEUR_INTERIEUR;
-        ctx.fillText(ERREUR, event.offsetX, event.offsetY + OFFSET_ADDITIONNEL);
-        ctx.lineWidth = LINE_WIDTH;
-        ctx.fillStyle = ERREUR_COULEUR_CONTEUR;
-        ctx.strokeText(ERREUR, event.offsetX, event.offsetY + OFFSET_ADDITIONNEL);
-        this.partieAttributsData.audio.src = PATH_AUDIO_NO;
+        ctx.fillStyle = constantes.ERREUR_COULEUR_INTERIEUR;
+        ctx.fillText(constantes.ERREUR, event.offsetX, event.offsetY + constantes.OFFSET_ADDITIONNEL);
+        ctx.lineWidth = constantes.LINE_WIDTH;
+        ctx.fillStyle = constantes.ERREUR_COULEUR_CONTEUR;
+        ctx.strokeText(constantes.ERREUR, event.offsetX, event.offsetY + constantes.OFFSET_ADDITIONNEL);
+        this.partieAttributsData.audio.src = constantes.AUDIO_ERREUR;
         this.partieAttributsData.audio.load();
         this.partieAttributsData.audio.play().catch(() => ErrorHandler);
 
         if (!this.partieAttributsMultijoueur.isMultijoueur) {
-            this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + ERREUR_CHAT);
+            this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + constantes.ERREUR_CHAT);
         }
 
         setTimeout(() => {
             ctx.putImageData(imageSaved, 0, 0);
             this.partieAttributsAdmin.penaliteEtat = false;
-        },         TIMEOUT);
+        },         constantes.TIMEOUT);
     }
 
     protected getTempsCourant(): string {
@@ -241,25 +207,25 @@ export abstract class PartieAbstraiteClass {
     }
 
     private getMinutes(date: Date): string {
-        return date.getMinutes() < MINUTESANDSECONDCONVERT ?
+        return date.getMinutes() < constantes.CONVERSION_TEMPS ?
             constantes.ZERO_STR_FORMAT + date.getMinutes().toString()
             : date.getMinutes().toString();
     }
 
     private getSecondes(date: Date): string {
-        return date.getSeconds() < MINUTESANDSECONDCONVERT ?
+        return date.getSeconds() < constantes.CONVERSION_TEMPS ?
             constantes.ZERO_STR_FORMAT + date.getSeconds().toString()
             : date.getSeconds().toString();
     }
 
     private jouerApplaudissements(): void {
-        this.partieAttributsData.audio.src = PATH_AUDIO_APPLAUDISSEMENT;
+        this.partieAttributsData.audio.src = constantes.AUDIO_APPLAUDISSEMENT;
         this.partieAttributsData.audio.load();
         this.partieAttributsData.audio.play().catch(() => ErrorHandler);
     }
 
     private jouerSonPerdant(): void {
-        this.partieAttributsData.audio.src = PATH_AUDIO_LOSER;
+        this.partieAttributsData.audio.src = constantes.AUDIO_PERDANT;
         this.partieAttributsData.audio.load();
         this.partieAttributsData.audio.play().catch(() => ErrorHandler);
     }
@@ -291,8 +257,8 @@ export abstract class PartieAbstraiteClass {
     }
 
     private setJouerMultijoueur(): void {
-        this.cookieService.get(USERNAME_STR) === constantes.STR_VIDE
-            ? this.partieAttributsMultijoueur.joueurMultijoueur = ANONYME
-            : this.partieAttributsMultijoueur.joueurMultijoueur = this.cookieService.get(USERNAME_STR);
+        this.cookieService.get(constantes.USERNAME_STR) === constantes.STR_VIDE
+            ? this.partieAttributsMultijoueur.joueurMultijoueur = constantes.ANONYME
+            : this.partieAttributsMultijoueur.joueurMultijoueur = this.cookieService.get(constantes.USERNAME_STR);
     }
 }
