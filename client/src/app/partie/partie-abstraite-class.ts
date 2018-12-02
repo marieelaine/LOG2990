@@ -208,7 +208,6 @@ export abstract class PartieAbstraiteClass {
         this.partieAttributsAdmin.penaliteEtat = true;
         const canvas: HTMLCanvasElement = event.srcElement as HTMLCanvasElement;
         const ctx: CanvasRenderingContext2D = canvas.getContext(CONTEXT_2D) as CanvasRenderingContext2D;
-
         const imageSaved: ImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         ctx.font = FONT;
         ctx.textAlign = TEXT_ALIGN;
