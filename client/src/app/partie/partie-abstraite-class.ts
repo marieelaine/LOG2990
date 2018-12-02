@@ -52,10 +52,11 @@ export const ERREUR_CHAT: string = " - ERREUR.";
 export const ERREUR_CHAT_PAR: string = " - ERREUR par ";
 const USERNAME_STR: string = "username";
 export const CONTEXT_2D: string = "2d";
+const CANVAS: string = "canvas";
 
 export abstract class PartieAbstraiteClass {
 
-    @ViewChildren("canvas") protected canvas: QueryList<ElementRef>;
+    @ViewChildren(CANVAS) protected canvas: QueryList<ElementRef>;
     @ViewChild(ChatComponent) protected chat: ChatComponent;
 
     protected partieAttributsData: PartieAttributsData;
