@@ -1,5 +1,11 @@
 import {Component, ErrorHandler} from "@angular/core";
-import {PartieAbstraiteClass} from "../partie-abstraite-class";
+import {
+    CONTEXT_2D,
+    ERREUR_CHAT,
+    ERREUR_CHAT_PAR,
+    PartieAbstraiteClass, STR_VIDE,
+    VIRGULE_STR_FORMAT
+} from "../partie-abstraite-class";
 import {ActivatedRoute} from "@angular/router";
 import {PartieMultiple} from "../../admin/dialog-multiple/partie-multiple";
 import {PartieService} from "../partie.service";
@@ -12,6 +18,10 @@ import {ChronoService} from "../../chrono/chrono.service";
 import {TempsUser} from "src/app/admin/temps-user";
 
 const NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE: number = 7;
+const CANVASG1: string = "canvasG1"
+const CANVASD1: string = "canvasD1"
+const IMAGE_DIFF_1: string = "_imageDiff1";
+const IMAGE_DIFF_2: string = "_imageDiff2";
 
 @Component({
     selector: "app-vue-multiple",
@@ -62,16 +72,16 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
 
             const coords: string = ev.offsetX + "," + ev.offsetY;
             const srcElem: Element = ev.srcElement as Element;
-            const source: string = srcElem.id === "canvasG1" || srcElem.id === "canvasD1"
-                ? "_imageDiff1"
-                : "_imageDiff2";
+            const source: string = srcElem.id === CANVASG1 || srcElem.id === CANVASD1
+                ? IMAGE_DIFF_1
+                : IMAGE_DIFF_2;
 
             let i: number = 0;
             for (const diff of this.partie[source]) {
                 for (const pixel of diff) {
                     if (coords === pixel) {
-                        if (!this.partieAttributsAdmin.diffTrouvee[0].includes(i) && source === "_imageDiff1"
-                            || !this.partieAttributsAdmin.diffTrouvee[1].includes(i) && source === "_imageDiff2") {
+                        if (!this.partieAttributsAdmin.diffTrouvee[0].includes(i) && source === IMAGE_DIFF_1
+                            || !this.partieAttributsAdmin.diffTrouvee[1].includes(i) && source === IMAGE_DIFF_2) {
                             this.partieAttributsMultijoueur.isMultijoueur ?
                                 await this.partieService.differenceTrouveeMultijoueurMultiple
                                 (this.partieAttributsMultijoueur.channelId, i, source, this.partieAttributsMultijoueur.joueurMultijoueur)
@@ -88,21 +98,21 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     }
 
     protected differenceTrouver(i: number, src: string): void {
-        src === "_imageDiff1" ? this.partieAttributsAdmin.diffTrouvee[0].push(i) : this.partieAttributsAdmin.diffTrouvee[1].push(i);
+        src === IMAGE_DIFF_1 ? this.partieAttributsAdmin.diffTrouvee[0].push(i) : this.partieAttributsAdmin.diffTrouvee[1].push(i);
         this.trouverDifferenceMultiple().catch(() => ErrorHandler);
         this.restaurationPixelsMultiple(i, src);
-        this.ajouterMessageDiffTrouvee("");
+        this.ajouterMessageDiffTrouvee(STR_VIDE);
     }
 
     private restaurationPixelsMultiple(i: number, src: string): void {
         let contextG: CanvasRenderingContext2D;
         let contextD: CanvasRenderingContext2D;
-        if (src === "_imageDiff1") {
-            contextG = this.canvas.toArray()[constantes.CONTEXT_GAUCHE_POV1_POSITION].nativeElement.getContext("2d");
-            contextD = this.canvas.toArray()[constantes.CONTEXT_DROITE_POV1_POSITION].nativeElement.getContext("2d");
+        if (src === IMAGE_DIFF_1) {
+            contextG = this.canvas.toArray()[constantes.CONTEXT_GAUCHE_POV1_POSITION].nativeElement.getContext(CONTEXT_2D);
+            contextD = this.canvas.toArray()[constantes.CONTEXT_DROITE_POV1_POSITION].nativeElement.getContext(CONTEXT_2D);
         } else {
-            contextG = this.canvas.toArray()[constantes.CONTEXT_GAUCHE_POV2_POSITION].nativeElement.getContext("2d");
-            contextD = this.canvas.toArray()[constantes.CONTEXT_DROITE_POV2_POSITION].nativeElement.getContext("2d");
+            contextG = this.canvas.toArray()[constantes.CONTEXT_GAUCHE_POV2_POSITION].nativeElement.getContext(CONTEXT_2D);
+            contextD = this.canvas.toArray()[constantes.CONTEXT_DROITE_POV2_POSITION].nativeElement.getContext(CONTEXT_2D);
         }
         const imageDataG: ImageData = contextG.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
         const dataG: Uint8ClampedArray = imageDataG.data;
@@ -110,8 +120,8 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         const dataD: Uint8ClampedArray = imageDataD.data;
 
         for (const pixel of this.partie[src][i]) {
-            const x: number = Number(pixel.split(",")[0]);
-            const y: number = Number(pixel.split(",")[1]);
+            const x: number = Number(pixel.split(VIRGULE_STR_FORMAT)[0]);
+            const y: number = Number(pixel.split(VIRGULE_STR_FORMAT)[1]);
             const dim: number = (y * constantes.WINDOW_WIDTH * constantes.RGB_WIDTH) + (x * constantes.RGB_WIDTH);
             dataD[dim] = dataG[dim];
             dataD[dim + constantes.RGB_FIRST_INCREMENT] = dataG[dim + constantes.RGB_FIRST_INCREMENT];
@@ -171,8 +181,8 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         this.socketClientService.socket.on(event.ERREUR_PARTIE_MULTIPLE, (data) => {
             if (this.partieAttributsMultijoueur.channelId === data.channelId) {
                 this.partieAttributsMultijoueur.isMultijoueur ?
-                    this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur par " + data.joueur)
-                    : this.chat.addMessageToMessagesChat(this.getCurrentTime() + " - Erreur.");
+                    this.chat.addMessageToMessagesChat(this.getCurrentTime() + ERREUR_CHAT_PAR + data.joueur)
+                    : this.chat.addMessageToMessagesChat(this.getCurrentTime() + ERREUR_CHAT);
             }
         });
 
