@@ -1,6 +1,7 @@
 .adminPageHeader
 {
     font-family: 'Handlee', cursive;
+    margin-top: 25px;
 }
 
 .adminPageContainer
@@ -11,7 +12,7 @@
 
 .adminToolbar
 {
-    border-radius:20px;
+    border-radius:15px;
     padding-left:3%;
     padding-right:3%;
     background-color:#747272;
