@@ -9,7 +9,7 @@ import { MatDialog } from "@angular/material";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import { ChronoService} from "../../chrono/chrono.service";
-import { TempsUser } from "src/app/admin/joueur";
+import { Joueur } from "src/app/admin/joueur";
 import { PartieMultipleInterface } from "../../../../../common/partie-multiple-interface";
 
 const NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE: number = 7;
@@ -35,7 +35,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         this.setEvenementsSockets();
     }
 
-    protected async ajouterTemps(partieID: string, joueur: TempsUser, isSolo: boolean): Promise<void> {
+    protected async ajouterTemps(partieID: string, joueur: Joueur, isSolo: boolean): Promise<void> {
         await this.partieService.ajouterTempsPartieMultiple(partieID, joueur, isSolo)
                                 .catch(() => ErrorHandler);
     }
@@ -53,16 +53,16 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
     }
 
     protected reconstruirePartieMultiple(partie: PartieMultipleInterface): void {
-            const tempsSolo: TempsUser[] = [];
-            const tempsUnContreUn: TempsUser[] = [];
+            const tempsSolo: Joueur[] = [];
+            const tempsUnContreUn: Joueur[] = [];
 
             for (const user of partie._tempsSolo) {
-                const userSolo: TempsUser = new TempsUser(user._user, user._temps);
+                const userSolo: Joueur = new Joueur(user._user, user._temps);
                 tempsSolo.push(userSolo);
             }
 
             for (const user of partie._tempsUnContreUn) {
-                const userMulti: TempsUser = new TempsUser(user._user, user._temps);
+                const userMulti: Joueur = new Joueur(user._user, user._temps);
                 tempsUnContreUn.push(userMulti);
             }
 

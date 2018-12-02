@@ -2,7 +2,7 @@ import { ErrorHandler, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import * as route from "../constantes";
-import { TempsUser } from "../admin/joueur";
+import { Joueur } from "../admin/joueur";
 import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
 import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
 
@@ -23,24 +23,24 @@ export class PartieService {
         return this.http.get<PartieMultipleInterface>(route.GET_PARTIE_MULTIPLE + partieID);
     }
 
-    public async ajouterTempsPartieSimple(partieID: string, temps: TempsUser, isSolo: boolean): Promise<void> {
+    public async ajouterTempsPartieSimple(partieID: string, temps: Joueur, isSolo: boolean): Promise<void> {
         this.http.put(route.ADD_TEMPS_PARTIE_SIMPLE + partieID, { temps, isSolo }).toPromise()
             .catch(() => ErrorHandler);
     }
 
-    public async ajouterTempsPartieMultiple(partieID: string, temps: TempsUser, isSolo: boolean): Promise<void> {
+    public async ajouterTempsPartieMultiple(partieID: string, temps: Joueur, isSolo: boolean): Promise<void> {
         this.http.put(route.ADD_TEMPS_PARTIE_MULTIPLE + partieID, { temps, isSolo }).toPromise()
             .catch(() => ErrorHandler);
     }
 
-    public async reinitialiserTempsPartieSimple(partieId: string, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>):
+    public async reinitialiserTempsPartieSimple(partieId: string, tempsSolo: Array<Joueur>, tempsUnContreUn: Array<Joueur>):
      Promise<void> {
 
         this.http.put(route.REINITIALISER_TEMPS_SIMPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise()
             .catch(() => ErrorHandler);
     }
 
-    public async reinitialiserTempsPartieMultiple(partieId: string, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>):
+    public async reinitialiserTempsPartieMultiple(partieId: string, tempsSolo: Array<Joueur>, tempsUnContreUn: Array<Joueur>):
      Promise<void> {
 
         this.http.put(route.REINITIALISER_TEMPS_MULTIPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise()

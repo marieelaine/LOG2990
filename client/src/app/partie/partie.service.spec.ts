@@ -1,7 +1,7 @@
 import { TestBed } from "@angular/core/testing";
 import { PartieService } from "./partie.service";
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from "@angular/common/http/testing";
-import { TempsUser } from "../admin/joueur";
+import { Joueur } from "../admin/joueur";
 import { ErrorHandler } from "@angular/core";
 import { PartieSimple } from "../admin/dialog-simple/partie-simple";
 import { PartieMultiple } from "../admin/dialog-multiple/partie-multiple";
@@ -79,7 +79,7 @@ describe("PartieService", () => {
         it("Devrait faire une requete PUT", () => {
             const id: string = "12345abcde";
 
-            service.reinitialiserTempsPartieSimple(id, new Array<TempsUser>(), new Array<TempsUser>())
+            service.reinitialiserTempsPartieSimple(id, new Array<Joueur>(), new Array<Joueur>())
                 .catch(() => ErrorHandler);
 
             const req: TestRequest = http.expectOne(constantes.REINITIALISER_TEMPS_SIMPLE_URL + id);

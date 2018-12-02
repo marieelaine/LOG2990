@@ -6,7 +6,7 @@ import {PartieSimple} from "../admin/dialog-simple/partie-simple";
 import {PartieMultiple} from "../admin/dialog-multiple/partie-multiple";
 import {ChatComponent} from "../chat/chat.component";
 import {CookieService} from "ngx-cookie-service";
-import {TempsUser} from "../admin/joueur";
+import {Joueur} from "../admin/joueur";
 import * as constantes from "../constantes";
 import { SocketClientService } from "../socket/socket-client.service";
 import { MatDialog } from "@angular/material";
@@ -67,7 +67,7 @@ export abstract class PartieAbstraiteClass {
 
     protected abstract getImageData(): void;
 
-    protected abstract ajouterTemps(partieID: string, tempsUser: TempsUser, isSolo: boolean): void;
+    protected abstract ajouterTemps(partieID: string, tempsUser: Joueur, isSolo: boolean): void;
 
     protected async abstract supprimerChannelId(): Promise<void>;
 
@@ -124,7 +124,7 @@ export abstract class PartieAbstraiteClass {
 
         if (this.joueurMultijoueur === gagnant) {
             this.messageDifferences = "FÉLICITATIONS, VOUS AVEZ GAGNÉ!";
-            const tempsUser: TempsUser =  new TempsUser(gagnant, this.chrono.getTemps());
+            const tempsUser: Joueur =  new Joueur(gagnant, this.chrono.getTemps());
             this.jouerApplaudissements();
             this.ajouterTemps(this.partieID, tempsUser, false);
             await this.supprimerChannelId();
@@ -137,7 +137,7 @@ export abstract class PartieAbstraiteClass {
 
     protected partieSoloTerminee(): void {
         this.chrono.arreterChrono();
-        const tempsUser: TempsUser =  new TempsUser(this.cookieService.get("username"), this.chrono.getTemps());
+        const tempsUser: Joueur =  new Joueur(this.cookieService.get("username"), this.chrono.getTemps());
         this.messageDifferences = "FÉLICITATIONS!";
         this.ouvrirDialogFinPartie(this.messageDifferences);
         this.audio.src = "../assets/applause.mp3";
@@ -153,7 +153,7 @@ export abstract class PartieAbstraiteClass {
             joueur = "Anonyme";
         }
         if (temps < this.partie.tempsSolo[PARTIE_SECOND_ELEMENT].temps) {
-            const tempsUser: TempsUser = new TempsUser(joueur, temps);
+            const tempsUser: Joueur = new Joueur(joueur, temps);
             this.partie.tempsSolo.splice(-1, 1);
             this.partie.tempsSolo.push(tempsUser);
         }
