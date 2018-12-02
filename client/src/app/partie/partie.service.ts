@@ -29,7 +29,6 @@ export class PartieService {
     }
 
     public async ajouterTempsPartieMultiple(partieID: string, temps: Joueur, isSolo: boolean): Promise<void> {
-        console.log("Service");
         this.http.put(route.ADD_TEMPS_PARTIE_MULTIPLE + partieID, { temps, isSolo }).toPromise()
             .catch(() => ErrorHandler);
     }
