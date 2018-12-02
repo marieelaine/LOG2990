@@ -10,6 +10,12 @@ import {SocketClientService} from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import {DialogVueAttenteComponent} from "../dialog-vue-attente/dialog-vue-attente.component";
 
+const LARGEUR_BOITE: string = "600px";
+const HAUTEUR_BOITE_190: string = "190px";
+const HAUTEUR_BOITE_220: string = "220px";
+const URL_PARTIE_MULTIPLE: string = "/partie-multiple/";
+const URL_SLASH: string = "/";
+
 @Component({
     selector: "app-liste-partie-multiple",
     templateUrl: "./liste-partie-multiple.component.html",
@@ -53,7 +59,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     protected onJouerOuReinitialiserClick(partieId: string): void {
         if (this.isListePartiesMode) {
-            this.router.navigate(["/partie-multiple/" + partieId + "/0"])
+            this.router.navigate([URL_PARTIE_MULTIPLE + partieId + URL_SLASH + 0])
                 .catch(() => ErrorHandler);
         } else if (this.isAdminMode) {
             this.reinitialiserTemps(partieId);
@@ -74,8 +80,8 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     private ouvrirDialogVueAttente(partieId: string): void {
         this.dialog.open(DialogVueAttenteComponent, {
-            height: "220px",
-            width: "600px",
+            height: HAUTEUR_BOITE_220,
+            width: LARGEUR_BOITE,
             data: {id: partieId,
                    isSimple: false}
         });
@@ -83,8 +89,8 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     private ouvrirDialogConfirmation(partieId: string): void {
         this.dialog.open(DialogConfirmationComponent, {
-            height: "190px",
-            width: "600px",
+            height: HAUTEUR_BOITE_190,
+            width: LARGEUR_BOITE,
             data: {
                 id: partieId,
                 listeParties: this.listeParties,
@@ -97,7 +103,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
         if (this.listePartieEnAttente.includes(partieId)) {
             const channelId: string = await this.getChannelId();
             this.listePartieService.joindrePartieMultijoueurMultiple(partieId, channelId).catch(() => ErrorHandler);
-            this.router.navigate(["/partie-multiple/" + partieId + "/" + channelId])
+            this.router.navigate([URL_PARTIE_MULTIPLE + partieId + URL_SLASH + channelId])
             .catch(() => ErrorHandler);
         } else {
           this.listePartieService.addPartieMultipleEnAttente(partieId).subscribe(() => {
