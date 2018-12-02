@@ -29,7 +29,7 @@ mat-card-header
 }
 
 .titleFirstLetter{
-    color: #ff5252;
+    color: #dc3545;
 }
 
 .gameImage
@@ -38,8 +38,7 @@ mat-card-header
     max-width: 100%;
     max-height: 200px;
     display: block;
-    margin-left: auto;
-    margin-right: 0;
+    margin-top: 13%;
 }
 
 .topThreeHeaders
