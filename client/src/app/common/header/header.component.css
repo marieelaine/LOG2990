@@ -23,14 +23,23 @@
     flex: 1 1 auto;
 }
 
-#logout-button{
+.button-style{
     color: white;
     border:1px solid white;
+    margin-right: 10px;
 }
 
-#logout-button:hover{
+.button-style:hover{
     color: black;
     background-color: #dc3545;
     border:1px solid #dc3545;
+    margin-right: 10px;
 }
 
+.glyphicon-home{
+    padding: auto;
+}
+
+#icon{
+    min-width: 0;
+}
