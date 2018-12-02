@@ -1,7 +1,7 @@
 import {Component, ElementRef, QueryList, ViewChildren} from "@angular/core";
 import {Router, NavigationEnd} from "@angular/router";
 import {ListePartieServiceService} from "./liste-partie-service.service";
-import { TempsUser } from "../admin/joueur";
+import { Joueur } from "../admin/joueur";
 import { DomSanitizer } from "@angular/platform-browser";
 
 const NB_SECONDES: number = 60;
@@ -61,17 +61,17 @@ export class ListePartiesComponent {
         return title.substr(1, title.length - 1);
     }
 
-    protected getTempsDisplay(tempsUser: TempsUser): string {
+    protected getTempsDisplay(tempsUser: Joueur): string {
         const minutes: number = Math.floor(tempsUser.temps / NB_SECONDES);
         const secondes: number = tempsUser.temps - minutes * NB_SECONDES;
 
         return (secondes < DISPLAY) ? (minutes + ":0" + secondes) : minutes + ":" + secondes;
     }
 
-    protected genererTableauTempsAleatoires(): Array<TempsUser> {
-        const arr: Array<TempsUser> = [];
+    protected genererTableauTempsAleatoires(): Array<Joueur> {
+        const arr: Array<Joueur> = [];
         for (let i: number = 1; i < NB_ELEMENT; i++) {
-            arr.push(new TempsUser("Joueur " + i, this.genererTempsAleatoire()));
+            arr.push(new Joueur("Joueur " + i, this.genererTempsAleatoire()));
         }
         this.getTempsEnOrdre(arr);
 
@@ -87,9 +87,9 @@ export class ListePartiesComponent {
         return Math.floor(Math.random() * BORNE_SUP) + BORNE_INF;
     }
 
-    private getTempsEnOrdre(arr: Array<TempsUser>): Array<TempsUser> {
+    private getTempsEnOrdre(arr: Array<Joueur>): Array<Joueur> {
         if (arr) {
-            arr.sort((t1: TempsUser, t2: TempsUser) => {
+            arr.sort((t1: Joueur, t2: Joueur) => {
                 const time1: number = t1.temps;
                 const time2: number = t2.temps;
                 if (time1 > time2) {

@@ -3,7 +3,7 @@ import { TestBed, fakeAsync } from "@angular/core/testing";
 import { ListePartieServiceService } from "./liste-partie-service.service";
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from "@angular/common/http/testing";
 import { ErrorHandler } from "@angular/core";
-import { TempsUser } from "../admin/joueur";
+import { Joueur } from "../admin/joueur";
 import * as constantes from "../constantes";
 
 describe("Liste Partie Service Service", () => {
@@ -52,7 +52,7 @@ describe("Liste Partie Service Service", () => {
         it("Devrait faire une requete PUT", () => {
             const id: string = "12345abcde";
 
-            service.reinitialiserTempsPartie(id, new Array<TempsUser>(), new Array<TempsUser>()).catch(() => ErrorHandler);
+            service.reinitialiserTempsPartie(id, new Array<Joueur>(), new Array<Joueur>()).catch(() => ErrorHandler);
 
             const req: TestRequest = mockHttp.expectOne(constantes.REINITIALISER_TEMPS_SIMPLE_URL + id);
             expect(req.request.method).toBe(constantes.METHODE_PUT);
@@ -83,7 +83,7 @@ describe("Liste Partie Service Service", () => {
         it("Devrait faire une requete PUT", () => {
             const id: string = "12345abcde";
 
-            service.reinitialiserTempsPartieMultiple(id, new Array<TempsUser>(), new Array<TempsUser>()).catch(() => ErrorHandler);
+            service.reinitialiserTempsPartieMultiple(id, new Array<Joueur>(), new Array<Joueur>()).catch(() => ErrorHandler);
 
             const req: TestRequest = mockHttp.expectOne(constantes.REINITIALISER_TEMPS_MULTIPLE_URL + id);
             expect(req.request.method).toBe(constantes.METHODE_PUT);

@@ -8,7 +8,7 @@ import { ListePartieMultipleComponent } from "./liste-partie-multiple/liste-part
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { AdminComponent } from "../admin/admin.component";
 import { VueSimpleComponent } from "../partie/vue-simple/vue-simple.component";
-import { TempsUser } from "../admin/joueur";
+import { Joueur } from "../admin/joueur";
 import { DomSanitizer, BrowserModule } from "@angular/platform-browser";
 
 describe("ListePartiesComponent", () => {
@@ -66,24 +66,24 @@ describe("ListePartiesComponent", () => {
 
     it("should return array of sorted times", () => {
         const tempsParam: number = 2;
-        const user1: TempsUser = new TempsUser("user1", tempsParam);
-        const user2: TempsUser = new TempsUser("user2", 1);
-        const sortingTimesTest: TempsUser[] = [user1, user2];
+        const user1: Joueur = new Joueur("user1", tempsParam);
+        const user2: Joueur = new Joueur("user2", 1);
+        const sortingTimesTest: Joueur[] = [user1, user2];
 
-        const sortedArray: TempsUser[] = component["getTempsEnOrdre"](sortingTimesTest);
-        const expectedArray: TempsUser[] = [user2, user1];
+        const sortedArray: Joueur[] = component["getTempsEnOrdre"](sortingTimesTest);
+        const expectedArray: Joueur[] = [user2, user1];
         expect(sortedArray).toEqual(expectedArray);
     });
 
     it("should return array of sorted times", () => {
         const tempsParam: number = 61;
-        const tempsUser: TempsUser = new TempsUser("", tempsParam);
+        const tempsUser: Joueur = new Joueur("", tempsParam);
         expect(component["getTempsDisplay"](tempsUser)).toBe("1:01");
     });
 
     it("genererTableauTempsAleatoires devrait creer une tableau de taille 3", () => {
         const arrLength: number = 3;
-        const array: Array<TempsUser> = component["genererTableauTempsAleatoires"]();
+        const array: Array<Joueur> = component["genererTableauTempsAleatoires"]();
         expect(array.length).toEqual(arrLength);
     });
 

@@ -2,7 +2,7 @@ import { Injectable, ErrorHandler } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import * as route from "../constantes";
-import { TempsUser } from "../admin/joueur";
+import { Joueur } from "../admin/joueur";
 import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
 import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
 
@@ -35,14 +35,14 @@ export class ListePartieServiceService {
     .catch(() => ErrorHandler);
   }
 
-  public async reinitialiserTempsPartie(partieId: string, tempsSolo: Array<TempsUser>, tempsUnContreUn: Array<TempsUser>): Promise<void> {
+  public async reinitialiserTempsPartie(partieId: string, tempsSolo: Array<Joueur>, tempsUnContreUn: Array<Joueur>): Promise<void> {
 
     this.http.put(route.REINITIALISER_TEMPS_SIMPLE_URL + partieId, { tempsSolo, tempsUnContreUn }).toPromise()
     .catch(() => ErrorHandler);
   }
 
-  public async reinitialiserTempsPartieMultiple(partieId: string, tempsSolo: Array<TempsUser>,
-                                                tempsUnContreUn: Array<TempsUser>): Promise<void> {
+  public async reinitialiserTempsPartieMultiple(partieId: string, tempsSolo: Array<Joueur>,
+                                                tempsUnContreUn: Array<Joueur>): Promise<void> {
 
     this.http.put(route.REINITIALISER_TEMPS_MULTIPLE_URL + partieId, { tempsSolo, tempsUnContreUn }).toPromise()
     .catch(() => ErrorHandler);

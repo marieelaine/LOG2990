@@ -9,7 +9,7 @@ import {MatDialog} from "@angular/material";
 import {SocketClientService} from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
 import {DialogVueAttenteComponent} from "../dialog-vue-attente/dialog-vue-attente.component";
-import { TempsUser } from "src/app/admin/joueur";
+import { Joueur } from "src/app/admin/joueur";
 import { PartieMultipleInterface } from "../../../../../common/partie-multiple-interface";
 
 @Component({
@@ -51,16 +51,16 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     protected reconstruirePartieMultiple(res: PartieMultipleInterface[]): void {
         for (const partie of res) {
-            const tempsSolo: TempsUser[] = [];
-            const tempsUnContreUn: TempsUser[] = [];
+            const tempsSolo: Joueur[] = [];
+            const tempsUnContreUn: Joueur[] = [];
 
             for (const user of partie._tempsSolo) {
-                const userSolo: TempsUser = new TempsUser(user._user, user._temps);
+                const userSolo: Joueur = new Joueur(user._user, user._temps);
                 tempsSolo.push(userSolo);
             }
 
             for (const user of partie._tempsUnContreUn) {
-                const userMulti: TempsUser = new TempsUser(user._user, user._temps);
+                const userMulti: Joueur = new Joueur(user._user, user._temps);
                 tempsUnContreUn.push(userMulti);
             }
 
