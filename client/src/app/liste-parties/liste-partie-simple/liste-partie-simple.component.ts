@@ -1,14 +1,14 @@
-import {Component, OnInit, AfterContentChecked, ErrorHandler} from "@angular/core";
-import {ListePartiesComponent} from "../liste-parties.component";
-import {Router} from "@angular/router";
+import { Component, OnInit, AfterContentChecked, ErrorHandler } from "@angular/core";
+import { ListePartiesComponent } from "../liste-parties.component";
+import { Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
-import {ListePartieServiceService} from "../liste-partie-service.service";
-import {PartieSimple} from "../../admin/dialog-simple/partie-simple";
-import {MatDialog} from "@angular/material";
-import {DialogConfirmationComponent} from "../dialog-confirmation/dialog-confirmation.component";
-import {SocketClientService} from "src/app/socket/socket-client.service";
+import { ListePartieServiceService } from "../liste-partie-service.service";
+import { PartieSimple } from "../../admin/dialog-simple/partie-simple";
+import { MatDialog } from "@angular/material";
+import { DialogConfirmationComponent } from "../dialog-confirmation/dialog-confirmation.component";
+import { SocketClientService } from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
-import {DialogVueAttenteComponent} from "../dialog-vue-attente/dialog-vue-attente.component";
+import { DialogVueAttenteComponent } from "../dialog-vue-attente/dialog-vue-attente.component";
 import { Joueur } from "src/app/admin/joueur";
 import { PartieSimpleInterface } from "../../../../../common/partie-simple-interface";
 
