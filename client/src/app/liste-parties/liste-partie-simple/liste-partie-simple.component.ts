@@ -36,7 +36,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
                        public listePartieService: ListePartieServiceService,
                        public socketClientService: SocketClientService,
                        private dialog: MatDialog) {
-        super(router, sanitizer, listePartieService);
+        super(router, sanitizer, listePartieService, socketClientService);
         this.listeParties = [];
         this.listePartieEnAttente = [];
     }

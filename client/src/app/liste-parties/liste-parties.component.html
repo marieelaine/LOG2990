@@ -1,3 +1,6 @@
+<mat-toolbar id="secondaire" [ngClass]="isAdminMode ? 'invisible' : ''"> 
+        <div class="username"> Bonjour <span class="capitalize">{{ joueur }}</span>! Commencez par choisir la partie à laquelle vous voulez jouer. </div>
+    </mat-toolbar>     
 <div class="gameListContainer container-fluid">
     <div class="row">
         <div class="col-xl-6 col-lg-12">

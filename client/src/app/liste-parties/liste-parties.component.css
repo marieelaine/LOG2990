@@ -9,9 +9,27 @@
 {
     text-align: center;
     font-family: 'Handlee', cursive;
+    margin-top: 30px;
 }
 
 hr
 {
     width:95%;
+}
+
+.username{
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    font-weight: 300;
+    color: rgba(48, 46, 45, 1);
+    margin-left:15px;
+}
+
+.capitalize{
+    text-transform: capitalize;
+    font-weight: 400;
+    color: #dc3545;
+}
+
+.invisible{
+    display: none;
 }
