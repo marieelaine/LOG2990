@@ -1,4 +1,4 @@
-import { Component, Inject, ErrorHandler } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { DialogData } from "../admin.component";
 import { HttpClient } from "@angular/common/http";

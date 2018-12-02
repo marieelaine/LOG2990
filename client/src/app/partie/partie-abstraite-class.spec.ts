@@ -33,7 +33,8 @@ describe("PartieAbstraiteComponent", () => {
     let component: AbstractClassInstance;
     beforeEach(() => {
     component = new AbstractClassInstance(new ActivatedRouteMock(), new PartieServiceMock(),
-                                          new CookieServiceMock(), new ChronoService, new MatDialogMock(), true);
+                                          new CookieServiceMock(), new ChronoService, new SocketClientMock(),
+                                          new MatDialogMock(), true);
 
     component["partie"] = new PartieSimple ("nomPartie", new Array<Joueur>(), new Array<Joueur>(),
                                             Buffer.from(new Array<number>()),

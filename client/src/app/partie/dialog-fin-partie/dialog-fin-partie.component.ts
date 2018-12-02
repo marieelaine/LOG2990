@@ -1,7 +1,6 @@
 import { Component, ErrorHandler, Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { Router, Data } from "@angular/router";
-import * as constantes from "../../constantes";
 
 const PERDU_MESSAGE_DIALOG: string = "VOUS AVEZ PERDU!";
 const REJOUER_MESSAGE_DIALOG: string = "Veux-tu rejouer pour regagner ton honneur?";

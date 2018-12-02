@@ -4,7 +4,7 @@ import {
     MAT_DIALOG_DATA, MatInputModule, MatCheckboxModule
 } from "@angular/material";
 import { By } from "@angular/platform-browser";
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule, FormControl } from "@angular/forms";
 import { HttpClientTestingModule } from "@angular/common/http/testing";

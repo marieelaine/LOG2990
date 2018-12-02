@@ -6,7 +6,6 @@ import { SocketClientService } from "src/app/socket/socket-client.service";
 import * as event from "../../../../../common/communication/evenementsSocket";
 
 const ATTENTE_ADVERSAIRE: string = "En attente d'un adversaire";
-const URL_LISTE_PARTIE: string = "/liste-parties/";
 const PARTIE_INEXISTANTE: string = "Erreur : cette partie n'existe plus!";
 const URL_PARTIE_SIMPLE: string = "/partie-simple/";
 const URL_PARTIE_MULTIPLE: string = "/partie-multiple/";
