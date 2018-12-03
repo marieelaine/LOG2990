@@ -16,7 +16,7 @@ import {CookieService} from "ngx-cookie-service";
 
 const LARGEUR_BOITE: string = "600px";
 const HAUTEUR_BOITE_190: string = "190px";
-const HAUTEUR_BOITE_220: string = "220px";
+const TAILLE_DIALOG_ATTENTE: string = "280px";
 const URL_PARTIE_SIMPLE: string = "/partie-simple/";
 const URL_SLASH: string = "/";
 
@@ -148,8 +148,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
     private ouvrirDialogVueAttente(partieId: string): void {
         this.dialog.open(DialogVueAttenteComponent, {
-            height: HAUTEUR_BOITE_220,
-            width: LARGEUR_BOITE,
+            height: TAILLE_DIALOG_ATTENTE,
+            width: TAILLE_DIALOG_ATTENTE,
             data: {
                 id: partieId,
                 isSimple: true

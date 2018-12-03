@@ -1,6 +1,16 @@
 <h1 mat-dialog-title [ngClass]="estEnAttente ? 'nothing' : 'erreur'"> {{ message }} </h1>
 
 <div mat-dialog-content>
-  <div [ngClass]="estEnAttente ? 'loading' : 'erreur'"></div>
-  <button mat-button id="buttonAnnuler"  (click)='fermerDialog()' class='dialogButtons mat-elevation-z6'>Annuler</button>
+  <div [ngClass]="estEnAttente ? 'nothing' : ' invisible'">
+    <div class="spinner">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col boutons d-flex flex-row bd-highlight justify-content-end p-2">
+        <button mat-button id="buttonAnnuler"  (click)='fermerDialog()' class='dialogButtons mat-elevation-z6'>Annuler</button>
+    </div>
+  </div>
 </div>

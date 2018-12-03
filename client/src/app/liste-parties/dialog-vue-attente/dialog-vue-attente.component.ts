@@ -15,7 +15,7 @@ const EVENTLISTENER_TYPE: string = "beforeunload";
 @Component({
     selector: "app-dialog-vue-attente",
     templateUrl: "./dialog-vue-attente.component.html",
-    styleUrls: ["./dialog-vue-attente.component.css"]
+    styleUrls: ["./dialog-vue-attente.component.css"],
 })
 
 export class DialogVueAttenteComponent {

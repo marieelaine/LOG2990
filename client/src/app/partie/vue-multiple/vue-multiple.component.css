@@ -24,9 +24,11 @@ canvas{
 }
 
 .vue{
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    font-weight: 400;
     text-align: center;
-    margin-top: 10px;
     margin-bottom: 10px;
+    color: #0d3652
 }
 
 .scene{
@@ -38,8 +40,13 @@ canvas{
 
 .title{
     text-align: center;
+    text-align: center;
     margin-top: 25px;
     margin-bottom: 20px;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    font-weight: 300;
+    font-size: 35px;
+    color: rgba(48, 46, 45, 1);
 }
 
 #StartButton{
@@ -54,7 +61,7 @@ canvas{
 
 .chrono{
     text-align: center;
-    font-size: 32px;
+    font-size: 38px;
 }
 
 .card{
@@ -62,3 +69,15 @@ canvas{
 }
 
 .not-allowed { cursor: not-allowed; }
+
+#chat{
+    margin-top:50px;
+}
+
+#header{
+    margin-bottom: 10px
+}
+
+.container-fluid{
+    margin-bottom: 60px;
+}
