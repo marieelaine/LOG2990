@@ -45,7 +45,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
     public ngOnInit(): void {
         this.listePartieService.getListePartieSimple().subscribe((res: PartieSimpleInterface[]) => {
-            this.reconstruirePartieSimple(res);
+            this.reconstruireListePartieSimple(res);
         });
         this.listePartieService.getListePartieSimpleEnAttente().subscribe((res: string[]) => {
             this.listePartieEnAttente = res;
@@ -60,8 +60,13 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
         }
     }
 
-    protected reconstruirePartieSimple(res: PartieSimpleInterface[]): void {
+    protected reconstruireListePartieSimple(res: PartieSimpleInterface[]): void {
         for (const partie of res) {
+            this.reconstruirePartieSimple(partie);
+        }
+    }
+
+    protected reconstruirePartieSimple(partie: PartieSimpleInterface): void {
             const tempsSolo: Joueur[] = [];
             const tempsUnContreUn: Joueur[] = [];
 
@@ -79,7 +84,6 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
                                                                 partie._image2, partie._imageDiff, partie._id);
             this.listeParties.push(partieSimple);
         }
-    }
 
     protected afficherImage(id: string): void {
         for (const partie of this.listeParties) {
@@ -171,7 +175,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
     private ajouterPartieSurSocketEvent(): void {
         this.socketClientService.socket.on(event.ENVOYER_PARTIE_SIMPLE, (data) => {
-            this.listeParties.push(data);
+            this.reconstruirePartieSimple(data);
         });
 
         this.socketClientService.socket.on(event.ENVOYER_PARTIE_SIMPLE_ATTENTE, (data) => {

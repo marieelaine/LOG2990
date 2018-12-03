@@ -44,7 +44,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     public ngOnInit(): void {
         this.listePartieService.getListePartieMultiple().subscribe((res: PartieMultipleInterface[]) => {
-            this.reconstruirePartieMultiple(res);
+            this.reconstruireListePartieMultiple(res);
         });
         this.listePartieService.getListePartieMultipleEnAttente().subscribe((res: string[]) => {
             this.listePartieEnAttente = res;
@@ -58,8 +58,13 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
         }
     }
 
-    protected reconstruirePartieMultiple(res: PartieMultipleInterface[]): void {
+    protected reconstruireListePartieMultiple(res: PartieMultipleInterface[]): void {
         for (const partie of res) {
+            this.reconstruirePartieMultiple(partie);
+        }
+    }
+
+    protected reconstruirePartieMultiple(partie: PartieMultipleInterface): void {
             const tempsSolo: Joueur[] = [];
             const tempsUnContreUn: Joueur[] = [];
 
@@ -79,7 +84,6 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
                                                                       partie._theme, partie._typeModification, partie._id);
             this.listeParties.push(partieMultiple);
         }
-    }
 
     protected afficherImage(id: string): void {
         for (const partie of this.listeParties) {
@@ -169,7 +173,7 @@ export class ListePartieMultipleComponent extends ListePartiesComponent implemen
 
     private ajouterPartieSurSocketEvent(): void {
         this.socketClientService.socket.on(event.ENVOYER_PARTIE_MULTIPLE, (data) => {
-            this.listeParties.push(data);
+            this.reconstruirePartieMultiple(data);
         });
         this.socketClientService.socket.on(event.ENVOYER_PARTIE_MULTIPLE_ATTENTE, (data) => {
             this.listePartieEnAttente.push(data);
