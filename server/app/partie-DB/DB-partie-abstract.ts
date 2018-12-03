@@ -1,26 +1,27 @@
-import { Request, Response} from "express";
-import { injectable } from "inversify";
+import {Request, Response} from "express";
+import {injectable} from "inversify";
 import * as fsx from "fs-extra";
 import * as util from "util";
 import * as fs from "fs";
 import * as uniqid from "uniqid";
 import * as constantes from "../constantes";
-import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
-import { ChildProcess } from "child_process";
-import { Schema, Model, Document } from "mongoose";
+import {BaseDeDonnees} from "../baseDeDonnees/baseDeDonnees";
+import {ChildProcess} from "child_process";
+import {Schema, Model, Document} from "mongoose";
 // import uniqueValidator = require("mongoose-unique-validator");
 import * as uniqueValidator from "mongoose-unique-validator";
-import { PartieSimpleInterface } from "../../../common/partie-simple-interface";
-import { PartieMultipleInterface } from "../../../common/partie-multiple-interface";
+import {PartieSimpleInterface} from "../../../common/partie-simple-interface";
+import {PartieMultipleInterface} from "../../../common/partie-multiple-interface";
 
 export interface Joueur {
-  _nom: string;
-  _temps: number;
+    _nom: string;
+    _temps: number;
 }
 
 const PARTIE_SECOND_ELEMENT: number = 2;
 const TEMPS_SOLO: string = "_tempsSolo";
 const TEMPS_UN_CONTRE_UN: string = "_tempsUnContreUn";
+const NOM_ANONYME: string = "Anonyme";
 
 @injectable()
 export abstract class DBPartieAbstract {
@@ -36,13 +37,13 @@ export abstract class DBPartieAbstract {
     protected abstract listeChannelsMultijoueur: Map<string, number>;
 
     public constructor() {
-      this.baseDeDonnees = new BaseDeDonnees();
+        this.baseDeDonnees = new BaseDeDonnees();
 
-      this.createSchemaArray();
-      this.createSchemaBuffer();
+        this.createSchemaArray();
+        this.createSchemaBuffer();
 
-      this.schemaBuffer.plugin(uniqueValidator);
-      this.schemaArray.plugin(uniqueValidator);
+        this.schemaBuffer.plugin(uniqueValidator);
+        this.schemaArray.plugin(uniqueValidator);
 
     }
 
@@ -51,67 +52,67 @@ export abstract class DBPartieAbstract {
     public abstract async requeteDeletePartie(req: Request, res: Response): Promise<void>;
 
     public async requetePartieId(req: Request, res: Response): Promise<void> {
-      await this.baseDeDonnees.assurerConnection();
-      res.send(await this.obtenirPartieId(req.params.id));
+        await this.baseDeDonnees.assurerConnection();
+        res.send(await this.obtenirPartieId(req.params.id));
     }
 
     public async requeteGetPartie(req: Request, res: Response): Promise<void> {
-      await this.baseDeDonnees.assurerConnection();
-      res.send(await this.getPartieById(req.params.id));
+        await this.baseDeDonnees.assurerConnection();
+        res.send(await this.getPartieById(req.params.id));
     }
 
     public requetesupprimerChannelId(req: Request, res: Response): void {
-      try {
-        this.listeChannelsMultijoueur.delete(req.body.channelId);
-      } catch (err) {
-        res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
-      }
+        try {
+            this.listeChannelsMultijoueur.delete(req.body.channelId);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
     }
 
     public requeteGetChannelId(req: Request, res: Response): void {
-      try {
-        const id: string = this.getChannelId();
-        this.listeChannelsMultijoueur.set(id, 0);
-        res.status(constantes.HTTP_CREATED).json(id);
-      } catch (err) {
-        res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
-      }
+        try {
+            const id: string = this.getChannelId();
+            this.listeChannelsMultijoueur.set(id, 0);
+            res.status(constantes.HTTP_CREATED).json(id);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
     }
 
     public requetePartieChargee(req: Request, res: Response): void {
-      try {
-        let nbrePartiesChargees: number = this.listeChannelsMultijoueur.get(req.body.channelId) as number;
-        nbrePartiesChargees++;
-        nbrePartiesChargees === constantes.NBRE_PARTIES_MULTIJOUEUR ? this.envoyerPartiesPretes(req.body.channelId)
-                                  : this.listeChannelsMultijoueur.set(req.body.channelId, nbrePartiesChargees);
-        res.status(constantes.HTTP_CREATED).json(req.body.channelId);
-      } catch (err) {
-        res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
-      }
+        try {
+            let nbrePartiesChargees: number = this.listeChannelsMultijoueur.get(req.body.channelId) as number;
+            nbrePartiesChargees++;
+            nbrePartiesChargees === constantes.NBRE_PARTIES_MULTIJOUEUR ? this.envoyerPartiesPretes(req.body.channelId)
+                : this.listeChannelsMultijoueur.set(req.body.channelId, nbrePartiesChargees);
+            res.status(constantes.HTTP_CREATED).json(req.body.channelId);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
     }
 
     public async requeteReinitialiserTemps(req: Request, res: Response): Promise<void> {
-      await this.baseDeDonnees.assurerConnection();
-      try {
-          await this.trierTemps(req.params.id, req.body.tempsSolo, req.body.tempsUnContreUn);
-          res.status(constantes.HTTP_CREATED).json(req.params.id);
-      } catch (err) {
-          res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
-      }
+        await this.baseDeDonnees.assurerConnection();
+        try {
+            await this.trierTemps(req.params.id, req.body.tempsSolo, req.body.tempsUnContreUn);
+            res.status(constantes.HTTP_CREATED).json(req.params.id);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
     }
 
     public async requeteAjouterPartieTemps(req: Request, res: Response): Promise<void> {
-      try {
-          await this.ajouterTemps(req.params.id, req.body.temps, req.body.isSolo);
-          res.status(constantes.HTTP_CREATED).json(req.params.id);
-      } catch (err) {
-          res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
-      }
+        try {
+            await this.ajouterTemps(req.params.id, req.body.temps, req.body.isSolo);
+            res.status(constantes.HTTP_CREATED).json(req.params.id);
+        } catch (err) {
+            res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
+        }
     }
 
     public async requeteGetListePartie(req: Request, res: Response): Promise<void> {
-      await this.baseDeDonnees.assurerConnection();
-      res.send(await this.getListePartie());
+        await this.baseDeDonnees.assurerConnection();
+        res.send(await this.getListePartie());
     }
 
     protected abstract async getPartieByName(nomPartie: String): Promise<PartieSimpleInterface | PartieMultipleInterface>;
@@ -136,70 +137,78 @@ export abstract class DBPartieAbstract {
     protected abstract envoyerMeilleurTemps(joueur: string, nomPartie: string): void;
 
     protected async trierTemps(idPartie: String, temps: Array<Joueur>, typeDeTemps: string): Promise<void> {
-      temps = this.getSortedTimes(temps);
-      typeDeTemps === TEMPS_SOLO ? await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsSolo: temps })
-                                  .catch(() => { throw new Error(); })
-                                 : await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsUnContreUn: temps })
-                                  .catch(() => { throw new Error(); });
+        temps = this.getSortedTimes(temps);
+        typeDeTemps === TEMPS_SOLO ? await this.modelPartieBuffer.findByIdAndUpdate(idPartie, {_tempsSolo: temps})
+                .catch(() => {
+                    throw new Error();
+                })
+            : await this.modelPartieBuffer.findByIdAndUpdate(idPartie, {_tempsUnContreUn: temps})
+                .catch(() => {
+                    throw new Error();
+                });
     }
 
     protected async ajouterTemps(idPartie: string, temps: Joueur, isSolo: boolean): Promise<void> {
         const partie: PartieSimpleInterface | PartieMultipleInterface = await this.getPartieById(idPartie);
-        if (temps._nom === "") {
-            temps._nom = "Anonyme";
+        if (temps._nom === constantes.STR_VIDE) {
+            temps._nom = NOM_ANONYME;
         }
         isSolo ? this.ajouterTempsSiTopTrois(temps, partie, TEMPS_SOLO)
-               : this.ajouterTempsSiTopTrois(temps, partie, TEMPS_UN_CONTRE_UN);
+            : this.ajouterTempsSiTopTrois(temps, partie, TEMPS_UN_CONTRE_UN);
     }
 
     private async ajouterTempsSiTopTrois(temps: Joueur, partie: PartieSimpleInterface | PartieMultipleInterface,
                                          typeDeTemps: string): Promise<void> {
-      if (temps._temps < partie[typeDeTemps][PARTIE_SECOND_ELEMENT]["_temps"]) {
-          this.envoyerMeilleurTemps(temps._nom, partie._nomPartie);
-          partie[typeDeTemps].splice(-1, 1);
-          partie[typeDeTemps].push(temps);
-      }
+        if (temps._temps < partie[typeDeTemps][PARTIE_SECOND_ELEMENT]["_temps"]) {
+            this.envoyerMeilleurTemps(temps._nom, partie._nomPartie);
+            partie[typeDeTemps].splice(-1, 1);
+            partie[typeDeTemps].push(temps);
+        }
 
-      await this.trierTemps(partie._id, partie[typeDeTemps], typeDeTemps);
-  }
+        await this.trierTemps(partie._id, partie[typeDeTemps], typeDeTemps);
+    }
 
     protected getSortedTimes(arr: Array<Joueur>): Array<Joueur> {
         if (arr) {
-          arr.sort((t1: Joueur, t2: Joueur) => {
-            const time1: number = t1["_temps"];
-            const time2: number = t2["_temps"];
-            if (time1 > time2) { return 1; }
-            if (time1 < time2) { return -1; }
+            arr.sort((t1: Joueur, t2: Joueur) => {
+                const time1: number = t1["_temps"];
+                const time2: number = t2["_temps"];
+                if (time1 > time2) {
+                    return 1;
+                }
+                if (time1 < time2) {
+                    return -1;
+                }
 
-            return 0;
-          });
+                return 0;
+            });
         }
 
         return arr;
     }
 
     protected async makeImagesDirectory(): Promise<void> {
-      const dir: string = constantes.IMAGES_DIRECTORY;
-      const mkdirPromise: Function = util.promisify(fs.mkdir);
-      const existsPromise: Function = util.promisify(fs.exists);
-      if (await existsPromise(dir)) {
-          await fsx.remove(dir);
-      }
+        const dir: string = constantes.IMAGES_DIRECTORY;
+        const mkdirPromise: Function = util.promisify(fs.mkdir);
+        const existsPromise: Function = util.promisify(fs.exists);
+        if (await existsPromise(dir)) {
+            await fsx.remove(dir);
+        }
 
-      await mkdirPromise(dir);
+        await mkdirPromise(dir);
     }
 
     protected async deleteImagesDirectory(): Promise<void> {
-      const dir: string = constantes.IMAGES_DIRECTORY;
-      await fsx.remove(dir);
+        const dir: string = constantes.IMAGES_DIRECTORY;
+        await fsx.remove(dir);
     }
 
     private getChannelId(): string {
-      const id: string = uniqid();
-      if (this.listeChannelsMultijoueur.has(id)) {
-        this.getChannelId();
-      }
+        const id: string = uniqid();
+        if (this.listeChannelsMultijoueur.has(id)) {
+            this.getChannelId();
+        }
 
-      return id;
+        return id;
     }
 }

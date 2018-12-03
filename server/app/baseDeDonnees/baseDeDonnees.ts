@@ -1,21 +1,22 @@
 import { injectable } from "inversify";
 import "reflect-metadata";
 import { Mongoose } from "mongoose";
+import * as constantes from "../constantes";
 
 enum ReadyState {
     Deconnecte = 0,
     Connecte
 }
+const MONGOOSE_INIT: string = "useCreateIndex";
 
 @injectable()
 export class BaseDeDonnees {
 
     private _mongoose: Mongoose;
-    private readonly mongoURL: string = "mongodb://admin:admin1@ds239692.mlab.com:39692/log2990-05";
 
     public constructor() {
         this._mongoose = new Mongoose();
-        this._mongoose.set("useCreateIndex", true);
+        this._mongoose.set(MONGOOSE_INIT, true);
         this.seConnecter().catch();
     }
 
@@ -26,7 +27,7 @@ export class BaseDeDonnees {
     }
 
     private async seConnecter(): Promise<void> {
-        await this._mongoose.connect(this.mongoURL, { useNewUrlParser: true });
+        await this._mongoose.connect(constantes.URL_MONGO_DB, { useNewUrlParser: true });
     }
 
     public get mongoose(): Mongoose {

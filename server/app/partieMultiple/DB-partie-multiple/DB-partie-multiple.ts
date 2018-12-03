@@ -15,6 +15,26 @@ import { PartieMultipleInterface } from "../../../../common/partie-multiple-inte
 
 const imagePOV1: number = 1;
 const imagePOV2: number = 2;
+const MODEL_ARRAY: string = "parties-multiples-array";
+const MODEL_BUFFER: string = "parties-multiples";
+const NOM_COLLECTION: string = "parties-multiples";
+const EVENT_TYPE: string = "data";
+const EVENT_SUCCES: string = "Succes\n";
+const EVENT_ERREUR: string = "Erreur\n";
+
+const NOM_IMAGE_ORI_VUE1: string = "n_a_ori.bmp";
+const NOM_IMAGE_ORI_VUE2: string = "n_b_ori.bmp";
+const NOM_IMAGE_MOD_VUE1: string = "n_a_mod.bmp";
+const NOM_IMAGE_MOD_VUE2: string = "n_b_mod.bmp";
+const NOM_FICHER_DIFF_TXT: string = "n_a_diff.bmp.txt";
+
+const PATH_GENMULTI: string = "./genmulti/genmulti";
+const PATH_IMAGE: string = "../Images/n";
+
+const EOF_FICHIER_DIFF: string = "END";
+const DEBUT_DIFF: string = "DIFF";
+const READLINE_ID: string = "readline";
+const LECTURE_TYPE: string = "line";
 
 @injectable()
 export class DBPartieMultiple extends DBPartieAbstract {
@@ -27,8 +47,8 @@ export class DBPartieMultiple extends DBPartieAbstract {
 
         this.listeChannelsMultijoueur = new Map();
 
-        this.modelPartieBuffer = this.baseDeDonnees.mongoose.model("parties-multiples", this.schemaBuffer, "parties-multiples");
-        this.modelPartieArray = this.baseDeDonnees.mongoose.model("parties-multiples-array", this.schemaArray, "parties-multiples");
+        this.modelPartieBuffer = this.baseDeDonnees.mongoose.model(MODEL_BUFFER, this.schemaBuffer, NOM_COLLECTION);
+        this.modelPartieArray = this.baseDeDonnees.mongoose.model(MODEL_ARRAY, this.schemaArray, NOM_COLLECTION);
     }
 
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> {
@@ -93,16 +113,16 @@ export class DBPartieMultiple extends DBPartieAbstract {
     }
 
     protected async verifierErreurScript(child: ChildProcess, partie: PartieMultipleInterface): Promise<void> {
-        let errorMsg: string = "";
+        let errorMsg: string = constantes.STR_VIDE;
 
-        child.stderr.on("data", async (data: string) => {
-            if (data === "Erreur\n") {
+        child.stderr.on(EVENT_TYPE, async (data: string) => {
+            if (data === EVENT_ERREUR) {
                 errorMsg = `${data}`;
                 await this.ajouterImagesPartieMultiple(partie, errorMsg);
             }
         });
-        child.stdout.on("data", async (data: string) => {
-            if (data === "Succes\n") {
+        child.stdout.on(EVENT_TYPE, async (data: string) => {
+            if (data === EVENT_SUCCES) {
                 await this.ajouterImagesPartieMultiple(partie, errorMsg);
             }
         });
@@ -194,11 +214,11 @@ export class DBPartieMultiple extends DBPartieAbstract {
     private async ajouterImagesPartieMultiple(partie: PartieMultipleInterface, errorMsg: string):
     Promise<void> {
         if (errorMsg === "") {
-            partie._image1PV1 = await this.getImageDiffAsBuffer(constantes.INSIDE_IMAGES_DIRECTORY + "n_a_ori.bmp");
-            partie._image2PV1 = await this.getImageDiffAsBuffer(constantes.INSIDE_IMAGES_DIRECTORY + "n_b_ori.bmp");
-            partie._image1PV2 = await this.getImageDiffAsBuffer(constantes.INSIDE_IMAGES_DIRECTORY + "n_a_mod.bmp");
-            partie._image2PV2 = await this.getImageDiffAsBuffer(constantes.INSIDE_IMAGES_DIRECTORY + "n_b_mod.bmp");
-            this.getImageDiffTextFile(constantes.INSIDE_IMAGES_DIRECTORY + "n_a_diff.bmp.txt", partie, 1);
+            partie._image1PV1 = await this.getImageDiffAsBuffer(constantes.INSIDE_IMAGES_DIRECTORY + NOM_IMAGE_ORI_VUE1);
+            partie._image2PV1 = await this.getImageDiffAsBuffer(constantes.INSIDE_IMAGES_DIRECTORY + NOM_IMAGE_ORI_VUE2);
+            partie._image1PV2 = await this.getImageDiffAsBuffer(constantes.INSIDE_IMAGES_DIRECTORY + NOM_IMAGE_MOD_VUE1);
+            partie._image2PV2 = await this.getImageDiffAsBuffer(constantes.INSIDE_IMAGES_DIRECTORY + NOM_IMAGE_MOD_VUE2);
+            this.getImageDiffTextFile(constantes.INSIDE_IMAGES_DIRECTORY + NOM_FICHER_DIFF_TXT, partie, 1);
 
         } else {
             this.socket.envoyerMessageErreurDifferences(constantes.ERREUR_SCENE);
@@ -208,7 +228,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
     private async setImageDiff(diffArrays: Array<Array<string>>, partie: PartieMultipleInterface, imgNumber: number): Promise<void> {
         if (imgNumber === imagePOV1) {
             partie._imageDiff1 = diffArrays;
-            this.getImageDiffTextFile(constantes.INSIDE_IMAGES_DIRECTORY + "n_b_diff.bmp.txt", partie, imagePOV2);
+            this.getImageDiffTextFile(constantes.INSIDE_IMAGES_DIRECTORY + NOM_FICHER_DIFF_TXT, partie, imagePOV2);
         } else {
             partie._imageDiff2 = diffArrays;
             await this.enregistrerPartieMultiple(partie);
@@ -224,8 +244,8 @@ export class DBPartieMultiple extends DBPartieAbstract {
 
     private async genererScene(partie: PartieMultipleInterface): Promise<void> {
         await this.makeImagesDirectory();
-        const script: string = p.resolve("./genmulti/genmulti");
-        const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, "../Images/n"];
+        const script: string = p.resolve(PATH_GENMULTI);
+        const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, PATH_IMAGE];
         const child: ChildProcess = execFile(script, args);
         await this.verifierErreurScript(child, partie);
     }
@@ -247,21 +267,21 @@ export class DBPartieMultiple extends DBPartieAbstract {
         const imageMod: string = p.resolve(nomFichier);
         const diffArrays: Array<Array<string>> = new Array<Array<string>>();
         const input: fs.ReadStream = fs.createReadStream(imageMod);
-        const rl: ReadLine = require("readline").createInterface({
+        const rl: ReadLine = require(READLINE_ID).createInterface({
             input: input,
             terminal: false
         });
         let i: number = 0;
         let arrayDiff: Array<string> = new Array<string>();
 
-        rl.on("line", async (line: string) => {
-            if (line.startsWith("END")) {
+        rl.on(LECTURE_TYPE, async (line: string) => {
+            if (line.startsWith(EOF_FICHIER_DIFF)) {
                 diffArrays.push(arrayDiff);
                 await this.setImageDiff(diffArrays, partie, imgNumber);
             } else if (i === 0) {
                 arrayDiff = new Array<string>();
                 i++;
-            } else if (line.startsWith("DIFF")) {
+            } else if (line.startsWith(DEBUT_DIFF)) {
                 diffArrays.push(arrayDiff);
                 arrayDiff = new Array<string>();
                 i++;

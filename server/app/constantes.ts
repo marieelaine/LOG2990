@@ -11,3 +11,10 @@ export const GENMULTI_PATH: string = "app/genmulti/main.exe";
 export const HTTP_CREATED: number = 201;
 export const HTTP_NOT_IMPLEMENTED: number = 501;
 export const NBRE_PARTIES_MULTIJOUEUR: number = 2;
+
+export const URL_MONGO_DB: string = "mongodb://admin:admin1@ds239692.mlab.com:39692/log2990-05";
+export const DEUX_POINTS_TEMPS_FORMAT: string = ":";
+export const ZERO_STR_FORMAT: string = "0";
+export const STR_VIDE: string = "";
+export const VIRGULE_STR_FORMAT: string = ",";
+export const IMAGE_BLOB: string = "image/bmp";
