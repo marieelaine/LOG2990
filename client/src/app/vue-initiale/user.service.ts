@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { User } from "./login-form/user";
 import { Observable } from "rxjs";
 import * as constantes from "../constantes";
+const HTTP_HEADER_NAME: string = "Content-Type";
+const HTTP_HEADER_VALUE: string = "application/json";
 
 @Injectable()
 export class UserService {
@@ -12,7 +14,7 @@ export class UserService {
 
         return this._http.post<User>(constantes.AJOUTER_USERS_URL, user, {
             observe: "body",
-            headers: new HttpHeaders().append("Content-Type", "application/json")
+            headers: new HttpHeaders().append(HTTP_HEADER_NAME, HTTP_HEADER_VALUE)
         });
     }
 
