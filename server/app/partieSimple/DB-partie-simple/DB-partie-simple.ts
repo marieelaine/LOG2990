@@ -13,8 +13,6 @@ import * as constantes from "../../constantes";
 import { DBPartieAbstract, Joueur } from "../../partie-DB/DB-partie-abstract";
 import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
 
-const PARTIE_SECOND_ELEMENT: number = 2;
-
 @injectable()
 export class DBPartieSimple extends DBPartieAbstract {
 
@@ -85,6 +83,10 @@ export class DBPartieSimple extends DBPartieAbstract {
 
     protected envoyerPartiesPretes(channelId: string): void {
         this.socket.envoyerPartiesSimplesChargees(channelId);
+    }
+
+    protected envoyerMeilleurTemps(joueur: string, nomPartie: string): void {
+        this.socket.meilleurTemps(joueur, nomPartie);
     }
 
     protected async deletePartie(idPartie: string, res: Response): Promise<Response> {
@@ -167,33 +169,6 @@ export class DBPartieSimple extends DBPartieAbstract {
         return partieSimples[1];
     }
 
-    protected async reinitialiserTemps(idPartie: String, tempsSolo: Array<Joueur>, tempsUnContreUn: Array<Joueur>): Promise<void> {
-        tempsSolo = this.getSortedTimes(tempsSolo);
-        tempsUnContreUn = this.getSortedTimes(tempsUnContreUn);
-        await this.modelPartieBuffer.findByIdAndUpdate(idPartie, { _tempsSolo: tempsSolo, _tempsUnContreUn: tempsUnContreUn })
-                                    .catch(() => { throw new Error(); });
-    }
-
-    protected async ajouterTemps(idPartie: string, temps: Joueur, isSolo: boolean): Promise<void> {
-        const partie: PartieSimpleInterface = await this.getPartieById(idPartie) as PartieSimpleInterface;
-        if (temps._nom === "") {
-            temps._nom = "Anonyme";
-        }
-        if (isSolo) {
-            if (temps._temps < partie["_tempsSolo"][PARTIE_SECOND_ELEMENT]["_temps"]) {
-                this.socket.meilleurTemps(temps._nom, partie._nomPartie);
-                partie["_tempsSolo"].splice(-1, 1);
-                partie["_tempsSolo"].push(temps);
-            }
-        } else {
-            if (temps._temps < partie["_tempsUnContreUn"][PARTIE_SECOND_ELEMENT]["_temps"]) {
-                this.socket.meilleurTemps(temps._nom, partie._nomPartie);
-                partie["_tempsUnContreUn"].splice(-1, 1);
-                partie["_tempsUnContreUn"].push(temps);
-            }
-        }
-        await this.reinitialiserTemps(idPartie, partie["_tempsSolo"], partie["_tempsUnContreUn"]);
-    }
     private async traiterMessageErreur(partie: PartieSimpleInterface, errorMsg: string): Promise<void> {
         if (errorMsg === "") {
             this.getImageDiffAsArrays(partie);

@@ -10,6 +10,7 @@ const BORNE_INF: number = 100;
 const BORNE_SUP: number = 400;
 const NB_ELEMENT: number = 4;
 export const STRING_VIDE: string = "";
+const JOUEUR: string = "Joueur";
 
 export abstract class DialogAbstrait {
 
@@ -36,7 +37,7 @@ export abstract class DialogAbstrait {
     protected genererTableauTempsAleatoires(): Array<Joueur> {
         const arr: Array<Joueur> = [];
         for (let i: number = 1; i < NB_ELEMENT; i++) {
-          arr.push(new Joueur("Joueur" + i, this.genererTempsAleatoire()));
+          arr.push(new Joueur(JOUEUR + i, this.genererTempsAleatoire()));
         }
 
         return arr;
