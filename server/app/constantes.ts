@@ -11,6 +11,7 @@ export const GENMULTI_PATH: string = "app/genmulti/main.exe";
 export const HTTP_CREATED: number = 201;
 export const HTTP_NOT_IMPLEMENTED: number = 501;
 export const NBRE_PARTIES_MULTIJOUEUR: number = 2;
+export const SIMPLE: string = "/partieSimple/";
 
 export const URL_MONGO_DB: string = "mongodb://admin:admin1@ds239692.mlab.com:39692/log2990-05";
 export const DEUX_POINTS_TEMPS_FORMAT: string = ":";
