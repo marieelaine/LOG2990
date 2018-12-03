@@ -10,10 +10,8 @@ import { execFile, ChildProcess } from "child_process";
 import { SocketServerService } from "../../socket-io.service";
 import Types from "../../types";
 import { ReadLine } from "readline";
-import { DBPartieAbstract, Joueur } from "../../partie-DB/DB-partie-abstract";
+import { DBPartieAbstract } from "../../partie-DB/DB-partie-abstract";
 import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
-
-const PARTIE_SECOND_ELEMENT: number = 2;
 
 const imagePOV1: number = 1;
 const imagePOV2: number = 2;

@@ -10,7 +10,7 @@ import { injectable, inject } from "inversify";
 import { SocketServerService } from "../../socket-io.service";
 import Types from "../../types";
 import * as constantes from "../../constantes";
-import { DBPartieAbstract, Joueur } from "../../partie-DB/DB-partie-abstract";
+import { DBPartieAbstract } from "../../partie-DB/DB-partie-abstract";
 import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
 
 @injectable()
