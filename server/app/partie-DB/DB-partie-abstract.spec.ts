@@ -27,8 +27,6 @@ class DBPartie extends DBPartieAbstract {
 
     protected envoyerPartiesPretes(channelId: string): void { ""; }
 
-    protected envoyerMeilleurTemps(joueur: string, nomPartie: string): void { ""; }
-
     protected async trierTemps(idPartie: String, tempsSolo: Array<Joueur>, typeDeTemps: string): Promise<void> { ""; }
 
     protected async ajouterTemps(idPartie: string, temps: Joueur, isSolo: boolean): Promise<void> { ""; }
