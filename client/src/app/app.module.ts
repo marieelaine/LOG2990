@@ -21,7 +21,7 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
-    MatIconModule
+    MatIconModule,
 } from "@angular/material";
 import { ListePartiesComponent } from "./liste-parties/liste-parties.component";
 import { HeaderComponent } from "./common/header/header.component";
@@ -105,7 +105,7 @@ const appRoutes: Routes = [
         ParticlesModule,
         SocketIoModule.forRoot(config),
         NotifierModule,
-        MatIconModule
+        MatIconModule,
     ],
     providers: [
         BasicService,
