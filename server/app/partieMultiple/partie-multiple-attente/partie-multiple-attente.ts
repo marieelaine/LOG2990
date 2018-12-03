@@ -3,13 +3,13 @@ import { ServiceWeb } from "../../serviceWeb";
 import { Router, Request, Response } from "express";
 import Types from "../../types";
 import { SocketServerService } from "../../socket-io.service";
-import { HTTP_CREATED } from "../../constantes";
+import * as constantes from "../../constantes";
 
 @injectable()
 export class RoutesPartieMultipleAttente extends ServiceWeb {
 
     private partieMultipleAttente: string[];
-    public readonly mainRoute: string = "/";
+    public readonly mainRoute: string = constantes.URL_SLASH_STR;
 
     public constructor(@inject(Types.SocketServerService) private socket: SocketServerService) {
         super();
@@ -19,27 +19,27 @@ export class RoutesPartieMultipleAttente extends ServiceWeb {
     public get routes(): Router {
         const router: Router = Router();
 
-        router.get("/getPartieMultipleEnAttente", async (req: Request, res: Response) => {
+        router.get(constantes.URL_PARTIE_MULTIPLE_GET, async (req: Request, res: Response) => {
             res.send(this.partieMultipleAttente);
         });
 
-        router.post("/addPartieMultipleEnAttente", async (req: Request, res: Response) => {
+        router.post(constantes.URL_PARTIE_MULTIPLE_ADD, async (req: Request, res: Response) => {
             this.partieMultipleAttente.push(req.body.partieId);
             this.socket.envoyerPartieMultipleAttente(req.body.partieId);
-            res.status(HTTP_CREATED).json(req.body.partieId);
+            res.status(constantes.HTTP_CREATED).json(req.body.partieId);
         });
 
-        router.delete("/deletePartieMultipleEnAttente/:id", async (req: Request, res: Response) => {
+        router.delete(constantes.URL_PARTIE_MULTIPLE_DELETE, async (req: Request, res: Response) => {
             for (let i: number = 0 ; i < this.partieMultipleAttente.length ; i++) {
                 if (this.partieMultipleAttente[i] === req.params.id) {
                     this.partieMultipleAttente.splice(i, 1);
                 }
             }
             this.socket.supprimerPartieMultipleAttente(req.params.id);
-            res.status(HTTP_CREATED).json(req.params.id);
+            res.status(constantes.HTTP_CREATED).json(req.params.id);
         });
 
-        router.post("/dialogAttenteMultipleFerme", (req: Request, res: Response) => {
+        router.post(constantes.URL_PARTIE_MULTIPLE_DIALOGUE, (req: Request, res: Response) => {
             this.socket.envoyerDialogMultipleFerme();
         });
 

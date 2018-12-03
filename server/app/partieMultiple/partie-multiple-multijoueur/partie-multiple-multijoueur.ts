@@ -16,19 +16,19 @@ export class PartieMultipleMultijoueur extends ServiceWeb {
     public get routes(): Router {
         const router: Router = Router();
 
-        router.post("/joindrePartieMultijoueurMultiple", (req: Request, res: Response) => {
+        router.post(constantes.URL_PARTIE_MULTIPLE_MULTIJOUEUR_JOINDRE, (req: Request, res: Response) => {
             this.requeteEnvoyerJoindreMultiple(req, res);
         });
 
-        router.post("/differenceTrouveeMultijoueurMultiple", (req: Request, res: Response) => {
+        router.post(constantes.URL_PARTIE_MULTIPLE_MULTIJOUEUR_DIFF_TROUVEE, (req: Request, res: Response) => {
             this.requeteEnvoyerDiffTrouveeMultiple(req, res);
         });
 
-        router.post("/partieTermineeMultijoueurMultiple", (req: Request, res: Response) => {
+        router.post(constantes.URL_PARTIE_MULTIPLE_MULTIJOUEUR_PARTIE_TERMINEE, (req: Request, res: Response) => {
             this.requeteEnvoyerPartieMultipleTerminee(req, res);
         });
 
-        router.post("/erreurMultijoueurMultiple", (req: Request, res: Response) => {
+        router.post(constantes.URL_PARTIE_MULTIPLE_MULTIJOUEUR_ERREUR, (req: Request, res: Response) => {
             this.requeteErreurMultiple(req, res);
         });
 
