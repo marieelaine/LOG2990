@@ -1,8 +1,8 @@
 import { Component, ErrorHandler, Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { Router, Data } from "@angular/router";
+import * as constantes from "../../constantes";
 
-const PERDU_MESSAGE_DIALOG: string = "VOUS AVEZ PERDU!";
 const REJOUER_MESSAGE_DIALOG: string = "Veux-tu rejouer pour regagner ton honneur?";
 const LISTE_PARTIE_ROUTE: string = "/liste-parties/";
 
@@ -23,7 +23,7 @@ export class DialogFinPartieComponent {
   ) {
     this.message = data.message;
     dialogRef.disableClose = true;
-    if (this.message === PERDU_MESSAGE_DIALOG) {
+    if (this.message === constantes.PERDU_MULTI) {
       this.content = REJOUER_MESSAGE_DIALOG;
     }
    }
