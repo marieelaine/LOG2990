@@ -1,4 +1,5 @@
-export const BASE_URL: string = "http://localhost:3000/";
+export const IP: string = "10.200.28.5";
+export const BASE_URL: string = "http://" + IP + ":3000/";
 export const SIMPLE: string = "partieSimple/";
 export const MULTIPLE: string = "partieMultiple/";
 export const USERS: string = "users/";
