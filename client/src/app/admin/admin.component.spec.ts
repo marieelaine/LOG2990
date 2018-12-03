@@ -10,6 +10,7 @@ import { ListePartieSimpleComponent } from "../liste-parties/liste-partie-simple
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { SocketClientService } from "../socket/socket-client.service";
 import { DebugElement } from "@angular/core";
+import {CookieService} from "ngx-cookie-service";
 
 describe("AdminComponent", () => {
     let mockMatDialog: jasmine.SpyObj<MatDialog>;
@@ -36,6 +37,7 @@ describe("AdminComponent", () => {
             providers: [
                 SocketClientService,
                 { provide: MatDialog, useValue: mockMatDialog },
+                CookieService
             ]
         });
 

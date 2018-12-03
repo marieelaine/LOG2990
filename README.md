@@ -2,7 +2,7 @@
 Projet généré avec [Angular CLI](https://github.com/angular/angular-cli) version 1.3.2.
 
 ## Développement du client
-Pour lancer le client, il suffit d'exécuter: `ng serve`. Vous pouvez ensuite naviger à `http://localhost:4200/`. L'application va se relancer automatiquement si vous modifier le code source de celle-ci.
+Pour lancer le client, il suffit d'exécuter: `ng serve`. Vous pouvez ensuite naviger à `http://10.200.28.5:4200/`. L'application va se relancer automatiquement si vous modifier le code source de celle-ci.
 
 ## Génération de composants
 Pour créer de nouveaux composants, nous vous recommandons l'utilisation d'angular CLI. Il suffit d'exécuter `ng generate component component-name` pour créer un nouveau composant. 

@@ -231,7 +231,7 @@ export abstract class DBPartieAbstract {
 
     private async ajouterTempsSiTopTrois(temps: Joueur, partie: PartieSimpleInterface | PartieMultipleInterface,
                                          typeDeTemps: string): Promise<void> {
-        if (temps._temps < partie[typeDeTemps][PARTIE_SECOND_ELEMENT]["_temps"]) {
+        if (temps._temps < partie[typeDeTemps][PARTIE_SECOND_ELEMENT]._temps) {
             this.envoyerMeilleurTemps(temps._nom, partie._nomPartie);
             partie[typeDeTemps].splice(-1, 1);
             partie[typeDeTemps].push(temps);
@@ -243,8 +243,8 @@ export abstract class DBPartieAbstract {
     protected getSortedTimes(arr: Array<Joueur>): Array<Joueur> {
         if (arr) {
             arr.sort((t1: Joueur, t2: Joueur) => {
-                const time1: number = t1["_temps"];
-                const time2: number = t2["_temps"];
+                const time1: number = t1._temps;
+                const time2: number = t2._temps;
                 if (time1 > time2) {
                     return 1;
                 }

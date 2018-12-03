@@ -47,6 +47,7 @@ import { VueSimpleComponent } from "./partie/vue-simple/vue-simple.component";
 import { DialogFinPartieComponent } from "./partie/dialog-fin-partie/dialog-fin-partie.component";
 import { NotifierService, NotifierModule } from "angular-notifier";
 import { ChronoService } from "./chrono/chrono.service";
+import { NgxUiLoaderModule } from "ngx-ui-loader";
 import * as constantes from "./constantes";
 
 const config: SocketIoConfig = {url: constantes.BASE_URL, options: {}};
@@ -106,6 +107,7 @@ const appRoutes: Routes = [
         SocketIoModule.forRoot(config),
         NotifierModule,
         MatIconModule,
+        NgxUiLoaderModule,
     ],
     providers: [
         BasicService,

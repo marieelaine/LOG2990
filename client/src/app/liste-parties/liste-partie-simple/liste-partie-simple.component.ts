@@ -12,10 +12,11 @@ import { DialogVueAttenteComponent } from "../dialog-vue-attente/dialog-vue-atte
 import { Joueur } from "src/app/admin/joueur";
 import { PartieSimpleInterface } from "../../../../../common/partie-simple-interface";
 import * as constantes from "../../constantes";
+import {CookieService} from "ngx-cookie-service";
 
 const LARGEUR_BOITE: string = "600px";
 const HAUTEUR_BOITE_190: string = "190px";
-const HAUTEUR_BOITE_220: string = "220px";
+const TAILLE_DIALOG_ATTENTE: string = "280px";
 const URL_PARTIE_SIMPLE: string = "/partie-simple/";
 const URL_SLASH: string = "/";
 
@@ -35,8 +36,9 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
                        public sanitizer: DomSanitizer,
                        public listePartieService: ListePartieServiceService,
                        public socketClientService: SocketClientService,
-                       private dialog: MatDialog) {
-        super(router, sanitizer, listePartieService, socketClientService);
+                       private dialog: MatDialog,
+                       public cookieService: CookieService) {
+        super(router, sanitizer, listePartieService, socketClientService, cookieService);
         this.listeParties = [];
         this.listePartieEnAttente = [];
     }
@@ -146,8 +148,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
     private ouvrirDialogVueAttente(partieId: string): void {
         this.dialog.open(DialogVueAttenteComponent, {
-            height: HAUTEUR_BOITE_220,
-            width: LARGEUR_BOITE,
+            height: TAILLE_DIALOG_ATTENTE,
+            width: TAILLE_DIALOG_ATTENTE,
             data: {
                 id: partieId,
                 isSimple: true

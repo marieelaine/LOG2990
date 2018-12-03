@@ -9,8 +9,6 @@ import * as Buffer from "buffer";
 import { FormControl, Validators } from "@angular/forms";
 import * as constantes from "src/app/constantes";
 
-export const IMAGE_URL: string = "http://localhost:3000/images/";
-
 const ERR_NB_IMAGE: string = "*L'image doit être de format BMP 24 bits et de taille 640 x 480 pixels";
 const ERR_TYPE_IMAGE: string = "*Vous devez entrer deux images.";
 const IMG_EXTENSION: string = "image/bmp";

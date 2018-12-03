@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open",
+    "start": "ng serve --open --host 0.0.0.0",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint --type-check --format stylish",
@@ -43,6 +43,7 @@
     "ngx-bootstrap": "^3.0.1",
     "ngx-cookie-service": "^1.0.10",
     "ngx-toastr": "^9.1.1",
+    "ngx-ui-loader": "^7.0.1",
     "npm": "^6.4.1",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
