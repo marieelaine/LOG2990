@@ -7,11 +7,7 @@ import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import { HTTP_NOT_IMPLEMENTED, HTTP_CREATED } from "../constantes";
 import { SocketServerService } from "../socket-io.service";
 import Types from "../types";
-
-interface Usager {
-    _id: string;
-    _username: string;
-}
+import { Usager } from "../../../common/usager";
 
 @injectable()
 export class DBUser {
