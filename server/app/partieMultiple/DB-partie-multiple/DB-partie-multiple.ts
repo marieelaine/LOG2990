@@ -27,6 +27,7 @@ const NOM_IMAGE_ORI_VUE2: string = "n_b_ori.bmp";
 const NOM_IMAGE_MOD_VUE1: string = "n_a_mod.bmp";
 const NOM_IMAGE_MOD_VUE2: string = "n_b_mod.bmp";
 const NOM_FICHER_DIFF_TXT: string = "n_a_diff.bmp.txt";
+const NOM_FICHER_DIFF2_TXT: string = "n_b_diff.bmp.txt";
 
 const PATH_GENMULTI: string = "./genmulti/genmulti";
 const PATH_IMAGE: string = "../Images/n";
@@ -154,7 +155,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
             partie._image2PV1 = await this.getImageDiffAsBuffer(constantes.INSIDE_IMAGES_DIRECTORY + NOM_IMAGE_ORI_VUE2);
             partie._image1PV2 = await this.getImageDiffAsBuffer(constantes.INSIDE_IMAGES_DIRECTORY + NOM_IMAGE_MOD_VUE1);
             partie._image2PV2 = await this.getImageDiffAsBuffer(constantes.INSIDE_IMAGES_DIRECTORY + NOM_IMAGE_MOD_VUE2);
-            this.getImageDiffTextFile(constantes.INSIDE_IMAGES_DIRECTORY + NOM_FICHER_DIFF_TXT, partie, 1);
+            this.getImageDiffTextFile(constantes.INSIDE_IMAGES_DIRECTORY + NOM_FICHER_DIFF_TXT, partie, imagePOV1);
 
         } else {
             this.socket.envoyerMessageErreurDifferences(constantes.ERREUR_SCENE);
@@ -164,7 +165,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
     private async setImageDiff(diffArrays: Array<Array<string>>, partie: PartieMultipleInterface, imgNumber: number): Promise<void> {
         if (imgNumber === imagePOV1) {
             partie._imageDiff1 = diffArrays;
-            this.getImageDiffTextFile(constantes.INSIDE_IMAGES_DIRECTORY + NOM_FICHER_DIFF_TXT, partie, imagePOV2);
+            this.getImageDiffTextFile(constantes.INSIDE_IMAGES_DIRECTORY + NOM_FICHER_DIFF2_TXT, partie, imagePOV2);
         } else {
             partie._imageDiff2 = diffArrays;
             await this.enregistrerPartieMultiple(partie);
