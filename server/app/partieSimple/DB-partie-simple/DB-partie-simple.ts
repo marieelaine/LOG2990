@@ -24,8 +24,8 @@ export class DBPartieSimple extends DBPartieAbstract {
 
         this.listeChannelsMultijoueur = new Map();
 
-        this.modelPartieArray = this.baseDeDonnees["_mongoose"].model("parties-simples-array", this.schemaArray, "parties-simples");
-        this.modelPartieBuffer = this.baseDeDonnees["_mongoose"].model("parties-simples", this.schemaBuffer, "parties-simples");
+        this.modelPartieArray = this.baseDeDonnees.mongoose.model("parties-simples-array", this.schemaArray, "parties-simples");
+        this.modelPartieBuffer = this.baseDeDonnees.mongoose.model("parties-simples", this.schemaBuffer, "parties-simples");
     }
 
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> {
@@ -70,7 +70,7 @@ export class DBPartieSimple extends DBPartieAbstract {
     }
 
     protected async verifierErreurScript(child: ChildProcess, partie: PartieSimpleInterface): Promise<void> {
-        let errorMsg: string = "";
+        let errorMsg: string = constantes.STR_VIDE;
 
         child.stderr.on("data", async (data: string) => {
             errorMsg = `${data}`;
