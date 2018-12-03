@@ -128,32 +128,6 @@ export class DBPartieMultiple extends DBPartieAbstract {
         });
     }
 
-    protected async deletePartie(idPartie: string, res: Response): Promise<Response> {
-        try {
-            await this.modelPartieBuffer.findOneAndRemove(this.modelPartieBuffer.findById(idPartie)).catch(() => {
-                throw new Error();
-            });
-
-            return res.status(constantes.HTTP_CREATED);
-        } catch (err) {
-
-            return res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
-        }
-    }
-
-    protected async getListePartie(): Promise<PartieMultipleInterface[]> {
-        const listeParties: PartieMultipleInterface[] = [];
-
-        await this.modelPartieArray.find()
-            .then((res: Document[]) => {
-                for (const partie of res) {
-                    listeParties.push(partie.toJSON());
-                }
-            });
-
-        return listeParties;
-    }
-
     protected async obtenirPartieId(nomPartie: String): Promise<string> {
         const partieMultiple: PartieMultipleInterface[] = [];
 
@@ -171,44 +145,6 @@ export class DBPartieMultiple extends DBPartieAbstract {
         }
 
         return partieMultiple[0]._id;
-    }
-
-    protected async getPartieById(partieID: String): Promise<PartieMultipleInterface> {
-        const partieMultiple: PartieMultipleInterface[] = [];
-
-        await this.modelPartieArray.find()
-            .then((parties: Document[]) => {
-                for (const partie of parties) {
-                    partieMultiple.push(partie.toJSON());
-                }
-            });
-
-        for (const partie of partieMultiple) {
-            if (partie._id.toString() === partieID) {
-                return partie;
-            }
-        }
-
-        return partieMultiple[1];
-    }
-
-    protected async getPartieByName(nomPartie: String): Promise<PartieMultipleInterface> {
-        const partieMultiple: PartieMultipleInterface[] = [];
-
-        await this.modelPartieArray.find()
-            .then((parties: Document[]) => {
-                for (const partie of parties) {
-                    partieMultiple.push(partie.toJSON());
-                }
-            });
-
-        for (const partie of partieMultiple) {
-            if (partie._nomPartie.toString() === nomPartie) {
-                return partie;
-            }
-        }
-
-        return partieMultiple[1];
     }
 
     private async ajouterImagesPartieMultiple(partie: PartieMultipleInterface, errorMsg: string):
@@ -252,12 +188,13 @@ export class DBPartieMultiple extends DBPartieAbstract {
 
     private async enregistrerPartieMultiple(partie: PartieMultipleInterface): Promise<void> {
         const partieMultiple: Document = new this.modelPartieBuffer(partie);
-
+        partieMultiple["_tempsSolo"] = this.getSortedTimes(partieMultiple["_tempsSolo"]);
+        partieMultiple["_tempsUnContreUn"] = this.getSortedTimes(partieMultiple["_tempsUnContreUn"]);
         await partieMultiple.save(async (err: Error) => {
             if (err !== null && err.name === constantes.ERREUR_UNIQUE) {
                 this.socket.envoyerMessageErreurNom(constantes.ERREUR_NOM_PRIS);
             } else {
-                this.socket.envoyerPartieMultiple(await this.getPartieByName(partie._nomPartie));
+                this.socket.envoyerPartieMultiple(await this.getPartieByName(partie._nomPartie) as PartieMultipleInterface);
             }
         });
         await this.deleteImagesDirectory();

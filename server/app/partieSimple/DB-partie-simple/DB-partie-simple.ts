@@ -89,32 +89,6 @@ export class DBPartieSimple extends DBPartieAbstract {
         this.socket.meilleurTemps(joueur, nomPartie);
     }
 
-    protected async deletePartie(idPartie: string, res: Response): Promise<Response> {
-        try {
-            await this.modelPartieBuffer.findOneAndRemove(this.modelPartieBuffer.findById(idPartie)).catch(() => {
-                throw new Error();
-            });
-
-            return res.status(constantes.HTTP_CREATED);
-        } catch (err) {
-
-            return res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);
-        }
-    }
-
-    protected async getListePartie(): Promise<PartieSimpleInterface[]> {
-        const listeParties: PartieSimpleInterface[] = [];
-
-        await this.modelPartieArray.find()
-            .then((res: Document[]) => {
-                for (const partie of res) {
-                    listeParties.push(partie.toJSON());
-                }
-            });
-
-        return listeParties;
-    }
-
     protected async obtenirPartieId(nomPartie: String): Promise<string> {
         const partieSimples: PartieSimpleInterface[] = [];
         await this.modelPartieBuffer.find()
@@ -131,42 +105,6 @@ export class DBPartieSimple extends DBPartieAbstract {
         }
 
         return partieSimples[0]._id;
-    }
-
-    protected async getPartieById(partieID: String): Promise<PartieSimpleInterface> {
-        const partieSimples: PartieSimpleInterface[] = [];
-        await this.modelPartieArray.find()
-            .then((parties: Document[]) => {
-                for (const partie of parties) {
-                    partieSimples.push(partie.toJSON());
-                }
-            });
-
-        for (const partie of partieSimples) {
-            if (partie._id.toString() === partieID) {
-                return partie;
-            }
-        }
-
-        return partieSimples[1];
-    }
-
-    protected async getPartieByName(nomPartie: String): Promise<PartieSimpleInterface> {
-        const partieSimples: PartieSimpleInterface[] = [];
-        await this.modelPartieArray.find()
-            .then((parties: Document[]) => {
-                for (const partie of parties) {
-                    partieSimples.push(partie.toJSON());
-                }
-            });
-
-        for (const partie of partieSimples) {
-            if (partie._nomPartie.toString() === nomPartie) {
-                return partie;
-            }
-        }
-
-        return partieSimples[1];
     }
 
     private async traiterMessageErreur(partie: PartieSimpleInterface, errorMsg: string): Promise<void> {
@@ -188,7 +126,7 @@ export class DBPartieSimple extends DBPartieAbstract {
             if (err !== null && err.name === constantes.ERREUR_UNIQUE) {
                 this.socket.envoyerMessageErreurNom(constantes.ERREUR_NOM_PRIS);
             } else {
-                this.socket.envoyerPartieSimple(await this.getPartieByName(partie._nomPartie));
+                this.socket.envoyerPartieSimple(await this.getPartieByName(partie._nomPartie) as PartieSimpleInterface);
             }
         });
     }
