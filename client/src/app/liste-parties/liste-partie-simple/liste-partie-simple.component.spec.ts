@@ -12,6 +12,7 @@ import { SocketClientService } from "src/app/socket/socket-client.service";
 import { MatDialogModule } from "@angular/material/dialog";
 import { VueSimpleComponent } from "src/app/partie/vue-simple/vue-simple.component";
 import { Joueur } from "src/app/admin/joueur";
+import {CookieService} from "ngx-cookie-service";
 
 describe("Liste Partie Simple Component", () => {
     let mockListePartieService: jasmine.SpyObj<ListePartieServiceService>;
@@ -56,7 +57,8 @@ describe("Liste Partie Simple Component", () => {
             ],
             providers: [
                 { provide: ListePartieServiceService, useValue: mockListePartieService },
-                SocketClientService
+                SocketClientService,
+                CookieService
             ]
         });
 

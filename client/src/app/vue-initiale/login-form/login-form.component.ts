@@ -6,7 +6,6 @@ import { UserService } from "../user.service";
 import { myParams, myStyle } from "../../../assets/particles";
 import { CookieService } from "ngx-cookie-service";
 
-export const USER_URL: string = "http://localhost:3000/users/";
 const PARTICULES_WIDTH: number = 100;
 const PARTICULES_HEIGHT: number = 100;
 const MAX_LENGTH_USERNAME: number = 12;

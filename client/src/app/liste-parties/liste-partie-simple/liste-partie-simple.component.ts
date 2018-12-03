@@ -12,6 +12,7 @@ import { DialogVueAttenteComponent } from "../dialog-vue-attente/dialog-vue-atte
 import { Joueur } from "src/app/admin/joueur";
 import { PartieSimpleInterface } from "../../../../../common/partie-simple-interface";
 import * as constantes from "../../constantes";
+import {CookieService} from "ngx-cookie-service";
 
 const LARGEUR_BOITE: string = "600px";
 const HAUTEUR_BOITE_190: string = "190px";
@@ -35,8 +36,9 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
                        public sanitizer: DomSanitizer,
                        public listePartieService: ListePartieServiceService,
                        public socketClientService: SocketClientService,
-                       private dialog: MatDialog) {
-        super(router, sanitizer, listePartieService, socketClientService);
+                       private dialog: MatDialog,
+                       public cookieService: CookieService) {
+        super(router, sanitizer, listePartieService, socketClientService, cookieService);
         this.listeParties = [];
         this.listePartieEnAttente = [];
     }

@@ -13,6 +13,7 @@ import { SocketClientService } from "src/app/socket/socket-client.service";
 import { MatDialogModule, MAT_DIALOG_DATA } from "@angular/material";
 import { Joueur } from "src/app/admin/joueur";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { CookieService} from "ngx-cookie-service";
 
 describe("ListePartieMultipleComponent", () => {
     let mockListePartieService: jasmine.SpyObj<ListePartieServiceService>;
@@ -69,6 +70,7 @@ describe("ListePartieMultipleComponent", () => {
                 { provide: ListePartieServiceService, useValue: mockListePartieService },
                 { provide: MAT_DIALOG_DATA, useValue: {} },
                 SocketClientService,
+                CookieService
             ]
         });
 

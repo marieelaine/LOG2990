@@ -11,6 +11,7 @@ import { VueSimpleComponent } from "../partie/vue-simple/vue-simple.component";
 import { Joueur } from "../admin/joueur";
 import { DomSanitizer, BrowserModule } from "@angular/platform-browser";
 import { SocketClientService } from "../socket/socket-client.service";
+import {CookieService} from "ngx-cookie-service";
 
 describe("ListePartiesComponent", () => {
     let component: ListePartiesComponent;
@@ -41,7 +42,8 @@ describe("ListePartiesComponent", () => {
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: {} },
                 { provide: DomSanitizer, useValue: { sanitize: () => "safeString", bypassSecurityTrustHtml : () => "safestring" }},
-                SocketClientService
+                SocketClientService,
+                CookieService
             ]
         });
         fixture = TestBed.createComponent(ListePartiesComponent);

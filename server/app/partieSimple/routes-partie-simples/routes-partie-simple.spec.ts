@@ -2,6 +2,7 @@ import * as WebRequest from "web-request";
 import * as assert from "assert";
 import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
 
+
 const URL_BASE: string = "http://localhost:3000/partieSimple";
 
 describe("Routes Partie Simple classe", () => {

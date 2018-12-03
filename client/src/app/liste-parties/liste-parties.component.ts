@@ -1,11 +1,11 @@
 import {Component, ElementRef, QueryList, ViewChildren} from "@angular/core";
 import {Router, NavigationEnd} from "@angular/router";
 import {ListePartieServiceService} from "./liste-partie-service.service";
-import { Joueur } from "../admin/joueur";
-import { DomSanitizer } from "@angular/platform-browser";
+import {Joueur} from "../admin/joueur";
+import {DomSanitizer} from "@angular/platform-browser";
 import * as constantes from "../constantes";
-import { SocketClientService } from "../socket/socket-client.service";
-import * as event from "../../../../common/communication/evenementsSocket";
+import {SocketClientService} from "../socket/socket-client.service";
+import {CookieService} from "ngx-cookie-service";
 
 const NB_SECONDES: number = 60;
 const DISPLAY: number = 10;
@@ -48,7 +48,8 @@ export class ListePartiesComponent {
     public constructor(public router: Router,
                        public sanitizer: DomSanitizer,
                        public listePartieService: ListePartieServiceService,
-                       public socketClientService: SocketClientService) {
+                       public socketClientService: SocketClientService,
+                       public cookieService: CookieService) {
         this.username = USERNAME;
         this.jouerOuReinitialiser = constantes.STR_VIDE;
         this.creerOuSupprimer = constantes.STR_VIDE;
@@ -57,7 +58,7 @@ export class ListePartiesComponent {
         this.isAdminMode = false;
         this.listePartiesEnAttente = new Array<string>();
         this.changerBoutonSelonRouter(router);
-        this.setEvenementsSockets();
+        this.joueur = this.cookieService.get(constantes.USERNAME_STR);
     }
 
     protected setJouerOuReinitialiserEtcreerOuSupprimer(url: string): void {
@@ -148,15 +149,4 @@ export class ListePartiesComponent {
             }
         });
     }
-
-    private setEvenementsSockets(): void {
-        this.socketClientService.socket.on(event.CONNECTION_USER, (data) => {
-          this.nouvelleConnection(data.joueur);
-        });
-      }
-
-    private nouvelleConnection(joueur: string): void {
-        this.joueur = joueur;
-      }
-
 }
