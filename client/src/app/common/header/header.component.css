@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Handlee');
 
-mat-toolbar{
-    margin-bottom: 20px;
+#primaire{
     background: rgba(48, 46, 45, 1);
     font-family: 'Handlee', cursive;
 }
@@ -13,10 +12,10 @@ mat-toolbar{
     margin-bottom: 0px;
     cursor: pointer;
     font-size:150%;
-    margin-left:10%;
+    margin-left:15px;
 }
 #login-box .logo .tweak {
-    color: #ff5252;
+    color: #dc3545;
     cursor: pointer;
 }
 
@@ -24,11 +23,23 @@ mat-toolbar{
     flex: 1 1 auto;
 }
 
-#logout-button{
+.button-style{
     color: white;
+    border:1px solid white;
+    margin-right: 10px;
 }
 
-#logout-button:hover{
+.button-style:hover{
     color: black;
-    background-color: #ff5252;
+    background-color: #dc3545;
+    border:1px solid #dc3545;
+    margin-right: 10px;
+}
+
+.glyphicon-home{
+    padding: auto;
+}
+
+#icon{
+    min-width: 0;
 }

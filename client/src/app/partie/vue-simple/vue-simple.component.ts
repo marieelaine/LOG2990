@@ -1,10 +1,5 @@
 import {Component, ErrorHandler} from "@angular/core";
-import {
-    CONTEXT_2D,
-    ERREUR_CHAT,
-    ERREUR_CHAT_PAR,
-    PartieAbstraiteClass
-} from "../partie-abstraite-class";
+import { PartieAbstraiteClass } from "../partie-abstraite-class";
 import {PartieSimple} from "src/app/admin/dialog-simple/partie-simple";
 import {ActivatedRoute} from "@angular/router";
 import {PartieService} from "../partie.service";
@@ -144,11 +139,11 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
     }
 
     private restaurationPixelsSimple(i: number): void {
-        const contextG: CanvasRenderingContext2D = this.canvas.toArray()[0].nativeElement.getContext(CONTEXT_2D);
+        const contextG: CanvasRenderingContext2D = this.canvas.toArray()[0].nativeElement.getContext(constantes.CONTEXT_2D);
         const imageDataG: ImageData = contextG.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
         const dataG: Uint8ClampedArray = imageDataG.data;
 
-        const contextD: CanvasRenderingContext2D = this.canvas.toArray()[1].nativeElement.getContext(CONTEXT_2D);
+        const contextD: CanvasRenderingContext2D = this.canvas.toArray()[1].nativeElement.getContext(constantes.CONTEXT_2D);
         const imageDataD: ImageData = contextD.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
         const dataD: Uint8ClampedArray = imageDataD.data;
 
@@ -181,8 +176,8 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         this.socketClientService.socket.on(event.ERREUR_PARTIE_SIMPLE, (data) => {
             if (this.partieAttributsMultijoueur.channelId === data.channelId) {
                 this.partieAttributsMultijoueur.isMultijoueur ?
-                    this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + ERREUR_CHAT_PAR + data.joueur)
-                    : this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + ERREUR_CHAT);
+                    this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + constantes.ERREUR_CHAT_PAR + data.joueur)
+                    : this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + constantes.ERREUR_CHAT);
             }
         });
 

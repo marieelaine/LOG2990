@@ -18,8 +18,12 @@ canvas{
 
 .title{
     text-align: center;
-    margin-top: 0px;
+    margin-top: 25px;
     margin-bottom: 20px;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    font-weight: 300;
+    font-size: 35px;
+    color: rgba(48, 46, 45, 1);
 }
 
 #StartButton{
@@ -34,11 +38,11 @@ canvas{
 
 .chrono{
     text-align: center;
-    font-size: 32px;
+    font-size: 38px;
 }
 
 .card{
-    min-width: 680px;
+    max-width: 680px;
     background-color: #f2eeee;
 }
 
@@ -57,4 +61,8 @@ body {
 .image-wrapper.fade-out {
     opacity: 0;
     transition: opacity 1s ease-in-out;
+}
+
+#chat{
+    margin-top:50px;
 }

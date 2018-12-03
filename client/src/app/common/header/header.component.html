@@ -11,13 +11,17 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
-    <mat-toolbar>
+    <mat-toolbar id="primaire">
         <div id="login-box">
             <div class="logo">
                 <h1 (click)="surClickBanniere()" class="logo-caption"><span class="tweak"> 7 </span>différences</h1>
             </div>
         </div>
         <span class="filler"></span>
-        <button (click)="deconnexion()" id="logout-button" mat-button>Déconnexion</button>
-    </mat-toolbar>      
+        <button (click)="surClickBanniere()" class="button-style" id="icon" mat-button>
+            <mat-icon>home</mat-icon>
+        </button>
+        <button (click)="deconnexion()" class="button-style" mat-button>Déconnexion</button>
+    </mat-toolbar>    

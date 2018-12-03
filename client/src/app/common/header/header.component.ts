@@ -14,11 +14,12 @@ const URL_SLASH: string = "/";
 })
 export class HeaderComponent {
 
+  protected joueur: string;
+
   public constructor(
       private router: Router,
       private cookieService: CookieService,
-      private userService: UserService) {
-  }
+      private userService: UserService) {  }
 
   protected deconnexion(): void {
     const cookieUsername: string = this.cookieService.get(USERNAME);

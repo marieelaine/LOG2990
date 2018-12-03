@@ -4,6 +4,8 @@ import {ListePartieServiceService} from "./liste-partie-service.service";
 import { Joueur } from "../admin/joueur";
 import { DomSanitizer } from "@angular/platform-browser";
 import * as constantes from "../constantes";
+import { SocketClientService } from "../socket/socket-client.service";
+import * as event from "../../../../common/communication/evenementsSocket";
 
 const NB_SECONDES: number = 60;
 const DISPLAY: number = 10;
@@ -41,10 +43,12 @@ export class ListePartiesComponent {
     protected isElevatedActive: boolean;
     protected listePartiesEnAttente: Array<string>;
     protected username: string;
+    protected joueur: string;
 
     public constructor(public router: Router,
                        public sanitizer: DomSanitizer,
-                       public listePartieService: ListePartieServiceService) {
+                       public listePartieService: ListePartieServiceService,
+                       public socketClientService: SocketClientService) {
         this.username = USERNAME;
         this.jouerOuReinitialiser = constantes.STR_VIDE;
         this.creerOuSupprimer = constantes.STR_VIDE;
@@ -53,6 +57,7 @@ export class ListePartiesComponent {
         this.isAdminMode = false;
         this.listePartiesEnAttente = new Array<string>();
         this.changerBoutonSelonRouter(router);
+        this.setEvenementsSockets();
     }
 
     protected setJouerOuReinitialiserEtcreerOuSupprimer(url: string): void {
@@ -143,5 +148,15 @@ export class ListePartiesComponent {
             }
         });
     }
+
+    private setEvenementsSockets(): void {
+        this.socketClientService.socket.on(event.CONNECTION_USER, (data) => {
+          this.nouvelleConnection(data.joueur);
+        });
+      }
+
+    private nouvelleConnection(joueur: string): void {
+        this.joueur = joueur;
+      }
 
 }

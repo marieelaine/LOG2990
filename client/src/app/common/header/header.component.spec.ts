@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from "@angular/core/testing";
 import { Location } from "@angular/common";
 import { ListePartiesComponent } from "../../liste-parties/liste-parties.component";
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
 import { HeaderComponent } from "./header.component";
-import { MatToolbarModule } from "@angular/material";
+import { MatToolbarModule, MatIconModule } from "@angular/material";
 import { RouterTestingModule } from "@angular/router/testing";
 import { CookieService } from "ngx-cookie-service";
 import { UserService } from "../../vue-initiale/user.service";
@@ -24,13 +24,13 @@ describe("HeaderComponent", () => {
         TestBed.configureTestingModule({
             declarations: [
                 HeaderComponent,
-                ListePartiesComponent
+                ListePartiesComponent,
             ],
             schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
+                CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA
             ],
             imports: [
-                MatToolbarModule,
+                MatToolbarModule, MatIconModule,
                 RouterTestingModule.withRoutes([
                     { path: "liste-parties", component: ListePartiesComponent },
                     { path: "header", component: HeaderComponent },

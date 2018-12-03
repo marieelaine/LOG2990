@@ -27,7 +27,7 @@ body, html {
 	margin-bottom: 0px;
 }
 #login-box .logo .tweak {
-	color: #ff5252;
+	color: #dc3545;
 }
 #login-box .controls {
 	padding-top: 30px;
@@ -53,7 +53,7 @@ body, html {
 #login-box button.btn-custom {
 	border-radius: 2px;
 	margin-top: 8px;
-	background:#ff5252;
+	background:#dc3545;
 	border-color: rgba(48, 46, 45, 1);
 	color: white;
 	font-family: 'Nunito', sans-serif;
@@ -65,7 +65,7 @@ body, html {
 	-o-transition: all 500ms ease;
 	transition: all 500ms ease;
 	background: rgba(48, 46, 45, 1);
-	border-color: #ff5252;
+	border-color: #dc3545;
 }
 
 #particles-js canvas {
