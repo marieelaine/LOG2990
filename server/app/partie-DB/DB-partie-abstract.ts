@@ -255,7 +255,7 @@ export abstract class DBPartieAbstract {
         return arr;
     }
 
-    protected async makeImagesDirectory(): Promise<void> {
+    protected async creerFichierImages(): Promise<void> {
         const dir: string = constantes.IMAGES_DIRECTORY;
         const mkdirPromise: Function = util.promisify(fs.mkdir);
         const existsPromise: Function = util.promisify(fs.exists);
@@ -266,7 +266,7 @@ export abstract class DBPartieAbstract {
         await mkdirPromise(dir);
     }
 
-    protected async deleteImagesDirectory(): Promise<void> {
+    protected async supprimerFichierImages(): Promise<void> {
         const dir: string = constantes.IMAGES_DIRECTORY;
         await fsx.remove(dir);
     }
