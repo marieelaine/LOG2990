@@ -2,7 +2,7 @@
 <div class="">
     <div class="row">                                                                         
         <div class="col">
-            <div class="panel-heading top-bar" (click)="toggleChatVisible()"> 
+            <div class="panel-heading top-bar"> 
                     <div class="col-md-8 col-xs-8">
                         <h3 class="panel-title"><span class="glyphicon glyphicon-chevron-right"></span> Messages du jeu </h3>
                     </div>
@@ -11,7 +11,7 @@
     </div>
 </div>
 <div>
-    <div class="row panel" id="body" [ngClass] = "chatVisible ? '' : 'invisible'" >
+    <div class="row panel" id="body" >
         <div class="col">
             <div class="panel-body">
                 <div *ngFor="let message of messagesChat">

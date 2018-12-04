@@ -63,7 +63,7 @@ body {
     transition: opacity 1s ease-in-out;
 }
 
-.footer {
+/* .footer {
     position: fixed;
     left: 0;
     bottom: 0;
@@ -73,9 +73,9 @@ body {
 
  #images{
      margin-bottom:300px;
- }
+ } */
 
- #chat {
+ /* #chat {
      max-width:360px;
      margin-right:10px;
- }
+ } */
