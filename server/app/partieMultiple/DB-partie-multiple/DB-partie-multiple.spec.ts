@@ -7,6 +7,8 @@ import { SocketServerService } from "../../socket-io.service";
 import { Joueur } from "../../partie-DB/DB-partie-abstract";
 import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
 import { Server } from "mock-socket";
+import * as mockHttp from "node-mocks-http";
+import {Request, Response} from "express";
 
 describe("Partie Multiple BD classe", () => {
     let partieMultipleBD: DBPartieMultiple;
@@ -133,6 +135,59 @@ describe("Partie Multiple BD classe", () => {
 
             assert(stub.called);
         });
+    });
+
+    describe("Requetes", () => {
+        it("Devrait ajouter une partie", async () => {
+            // tslint:disable-next-line:no-any
+            const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "genererScene");
+            const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+                method: "GET",
+                url: "localhost:3000/partieMultiple/ajouter/",
+                body: {
+                    _id: "432",
+                    _nomPartie: "partie1"
+                },
+                params: {
+                    _id: "432",
+                    _nomPartie: "partie1"
+                }
+            });
+
+            const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
+
+            partieMultipleBD["requeteAjouterPartie"](req, res);
+
+            assert(spy.calledOnce);
+            // tslint:disable-next-line:no-magic-numbers
+            assert.equal(res.statusCode, 200);
+        });
+
+        it("Devrait supprimer une partie", async () => {
+            // tslint:disable-next-line:no-any
+            const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "deletePartie");
+            const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+                method: "GET",
+                url: "localhost:3000/partieMultiple/delete/432",
+                body: {
+                    _id: "432",
+                    _nomPartie: "partie1"
+                },
+                params: {
+                    _id: "432",
+                    _nomPartie: "partie1"
+                }
+            });
+
+            const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
+
+            partieMultipleBD["requeteDeletePartie"](req, res);
+
+            assert(spy.calledOnce);
+            // tslint:disable-next-line:no-magic-numbers
+            assert.equal(res.statusCode, 200);
+        });
+
     });
 
     afterEach(async () => {
