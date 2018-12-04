@@ -10,7 +10,6 @@ import { Joueur } from "src/app/admin/joueur";
 import { SocketClientService } from "src/app/socket/socket-client.service";
 import { Observable } from "rxjs";
 import { PartieSimpleInterface } from "../../../../../common/partie-simple-interface";
-import { FormsModule } from "@angular/forms";
 
 export class MockEvent {
     public offsetX: number;
@@ -51,7 +50,6 @@ describe("VueSimpleComponent", () => {
                 MatCardModule,
                 HttpClientTestingModule,
                 RouterTestingModule,
-                FormsModule
             ],
             providers: [
                 { provide: CookieService, useValue: mockCookieService },

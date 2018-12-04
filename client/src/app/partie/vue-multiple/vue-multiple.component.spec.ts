@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { VueMultipleComponent } from "./vue-multiple.component";
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, QueryList, ElementRef } from "@angular/core";
 import { MatCardModule, MatDialog } from "@angular/material";
-import { FormsModule } from "@angular/forms";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { CookieService } from "ngx-cookie-service";
@@ -30,7 +29,6 @@ describe("VueMultipleComponent", () => {
           MatCardModule,
           HttpClientTestingModule,
           RouterTestingModule,
-          FormsModule
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
