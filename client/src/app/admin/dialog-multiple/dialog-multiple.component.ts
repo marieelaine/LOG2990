@@ -111,13 +111,13 @@ export class DialogMultipleComponent extends DialogAbstrait {
             this. qteControl.valid);
   }
 
-  protected onGeoClickButton(event: Event, theme: string): void {
+  protected onGeoClickButton(theme: string): void {
     this.toggleBoutonGeo = !this.toggleBoutonGeo;
     this.toggleBoutonTheme = false;
     this.data.theme = theme;
   }
 
-  protected onThemeClickButton(event: Event, theme: string): void {
+  protected onThemeClickButton(theme: string): void {
     this.toggleBoutonTheme = !this.toggleBoutonTheme;
     this.toggleBoutonGeo = false;
     this.data.theme = theme;

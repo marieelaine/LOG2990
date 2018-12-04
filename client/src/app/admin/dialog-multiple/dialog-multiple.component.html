@@ -27,8 +27,8 @@
         <div class="secondaryText">Veuillez choisir un thème parmis les suivants:</div>
         <div>
             <form>
-                <button mat-button [ngClass]="toggleBoutonGeo ? 'clicked' : 'notClicked'" id="themeButtonGeo" (click)='onGeoClickButton($event, "geo")' class='dialogButtons mat-elevation-z6'>Géométrique</button>
-                <button mat-button [ngClass]="toggleBoutonTheme ? 'clicked' : 'notClicked'" id="themeButtonOcean" (click)='onThemeClickButton($event, "theme")' class='dialogButtons mat-elevation-z6'>Océan</button>
+                <button mat-button [ngClass]="toggleBoutonGeo ? 'clicked' : 'notClicked'" id="themeButtonGeo" (click)='onGeoClickButton("geo")' class='dialogButtons mat-elevation-z6'>Géométrique</button>
+                <button mat-button [ngClass]="toggleBoutonTheme ? 'clicked' : 'notClicked'" id="themeButtonOcean" (click)='onThemeClickButton("theme")' class='dialogButtons mat-elevation-z6'>Océan</button>
             </form>
             <p id='errorMessage'> {{ erreurTheme }} </p> 
         </div>
