@@ -8,6 +8,8 @@ import { ChatComponent } from "src/app/chat/chat.component";
 import { CookieService } from "ngx-cookie-service";
 import { Joueur } from "src/app/admin/joueur";
 import { SocketClientService } from "src/app/socket/socket-client.service";
+import { Observable } from "rxjs";
+import { PartieSimpleInterface } from "../../../../../common/partie-simple-interface";
 
 export class MockEvent {
     public offsetX: number;
@@ -68,26 +70,65 @@ describe("VueSimpleComponent", () => {
         expect(component).toBeTruthy();
     });
 
-    it("setPartie devrait appeler la fonction getPartieSimple de partieService", () => {
-        spyOn(component["partieService"], "getPartieSimple").and.callThrough();
-        component["setPartie"]();
-        expect(component["partieService"]["getPartieSimple"]).toHaveBeenCalled();
+    it("fonction ajouterTemps devrait appeler ajouterTempsPartieSimple du service", () => {
+        const tempsJoueur: number = 15;
+        spyOn(component["partieService"], "ajouterTempsPartieSimple").and.callThrough();
+        component["ajouterTemps"]("", new Joueur("", tempsJoueur), false);
+        expect(component["partieService"]["ajouterTempsPartieSimple"]).toHaveBeenCalled();
     });
 
-    describe("testerPourDiff", () => {
+    it("supprimerChannelId devrait appeler la fonction supprimerChannelIdSimple du service", () => {
+        spyOn(component["partieService"], "supprimerChannelIdSimple").and.callThrough();
+        component["supprimerChannelId"]();
+        expect(component["partieService"]["supprimerChannelIdSimple"]).toHaveBeenCalled();
+    });
+
+    describe("setPartie", () => {
         beforeEach(() => {
-            component["partieCommence"] = true;
-            // tslint:disable-next-line:no-any
-            spyOn<any>(component, "differenceTrouver");
+            const partie: PartieSimple = new PartieSimple("name", [], [], new Buffer(""), new Buffer(""), [[]]);
+            spyOn(component["partieService"], "getPartieSimple").and.returnValue(Observable.of(partie));
         });
 
-        // it("devrait appeler differenceTrouver si le pixel se trouve dans imageDiff", () => {
-        //     component["partie"]["_imageDiff"] = [["1,1"]];
-        //     const event: MockEvent = new MockEvent(1, 1, new MockCanvas());
+        it("devrait appeler la fonction getPartieSimple de partieService", () => {
+            component["setPartie"]();
+            expect(component["partieService"]["getPartieSimple"]).toHaveBeenCalled();
+        });
 
-        //     component["testerPourDiff"](event);
-        //     expect(component["differenceTrouver"]).toHaveBeenCalled();
-        // });
+        it("devrait appeler la fonction reconstruirePartieSimple", () => {
+
+            // tslint:disable-next-line:no-any
+            const spy: jasmine.Spy = spyOn<any>(component, "reconstruirePartieSimple");
+            component["setPartie"]();
+            expect(spy).toHaveBeenCalled();
+        });
+
+        it("devrait appeler la fonction setPartieSimpleMultijoueur si multijoueur est a true", () => {
+            component["partieAttributsMultijoueur"]["_isMultijoueur"] = true;
+            // tslint:disable-next-line:no-any
+            const spy: jasmine.Spy = spyOn<any>(component, "setPartieSimpleMultijoueur");
+            component["setPartie"]();
+            expect(spy).toHaveBeenCalled();
+        });
+
+        it("devrait appeler la fonction afficherPartie si multijoueur est a false", () => {
+            component["partieAttributsMultijoueur"]["_isMultijoueur"] = false;
+            // tslint:disable-next-line:no-any
+            const spy: jasmine.Spy = spyOn<any>(component, "afficherPartie");
+            component["setPartie"]();
+            expect(spy).toHaveBeenCalled();
+        });
+    });
+
+    it("reconstruirePartieSimple devrait recreer un object de type partie simple", () => {
+        const partieInterface: PartieSimpleInterface = { _id: "", _nomPartie: "", _tempsSolo: [], _tempsUnContreUn: [],
+                                                         _image1: Buffer.from(new Array<number>()),
+                                                         _image2: Buffer.from(new Array<number>()),
+                                                         _imageDiff: new Array<Array<string>>() };
+        component["reconstruirePartieSimple"](partieInterface);
+
+        const resultatAttendu: PartieSimple = new PartieSimple("", [], [], Buffer.from(new Array<number>()),
+                                                               Buffer.from(new Array<number>()), new Array<Array<string>>());
+        expect(component["partie"]).toEqual(resultatAttendu);
     });
 
     describe("setup", () => {
