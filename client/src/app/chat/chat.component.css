@@ -6,6 +6,8 @@
 .chatbody{
     max-width: 360px;
     margin: 0 40px 0 auto;
+    border: 1px solid #286090;
+    border-radius: 6px;
 }
 
 .panel{
@@ -16,24 +18,25 @@
 
 .panel-footer{
     position: absolute;
-    padding-top:0; 
+    padding-top:1%; 
     bottom: 1px; 
-    width: 97%; 
+    width: 100%; 
     max-width: 357px;
 }
 
 .panel-body{
     background: #e5e5e5;
-    height: 65%;
+    height: 95%;
     overflow-x: hidden;
     overflow-y: auto;
     max-width: 360px;
 }
 .top-bar {
-    background: #666;
+    background: #286090;
     color: white;
     position: relative;
     overflow: hidden;
+    width: 360px;
 }
 .msg_receive{
     padding-left:0;
@@ -79,7 +82,14 @@
     text-align: left;
 }
 
-.chat{
+.col{
+    padding: 0;
+}
+
+.invisible{
+    display: none;
+}
+/* .chat{
     margin:0 auto;
     width:360px;
-}
+} */
