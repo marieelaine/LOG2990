@@ -6,12 +6,17 @@ import * as constantes from "../../constantes";
 import { SocketServerService } from "../../socket-io.service";
 import { Joueur } from "../../partie-DB/DB-partie-abstract";
 import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
+import { Server } from "mock-socket";
 
 describe("Partie Multiple BD classe", () => {
     let partieMultipleBD: DBPartieMultiple;
     const socket: SocketServerService = new SocketServerService();
+    const fakeURL: string = "ws://localhost:8080";
+     // tslint:disable-next-line:no-any
+    const mockServer: any = new Server(fakeURL);
 
     beforeEach(() => {
+        socket.init(mockServer);
         partieMultipleBD = new DBPartieMultiple(socket);
     });
 
@@ -135,4 +140,6 @@ describe("Partie Multiple BD classe", () => {
         const dir: string = constantes.IMAGES_DIRECTORY;
         await fsx.remove(dir);
     });
+
+    mockServer.stop();
 });
