@@ -19,6 +19,7 @@ class DBPartie extends DBPartieAbstract {
 
         this.schemaArray = new Schema({});
         this.schemaBuffer = new Schema({});
+        this.listeChannelsMultijoueur = new Map();
     }
 
     public async requeteAjouterPartie(req: Request, res: Response): Promise<void> { ""; }
@@ -108,6 +109,10 @@ describe("DBPartieAbstract", () => {
         it("Devrait definir l'attribut schemaBuffer", () => {
             assert.isDefined(dbPartie["schemaBuffer"]);
         });
+
+        it("Devrait definir l'attribut listeChannelsMultijoueur", () => {
+            assert.isDefined(dbPartie["listeChannelsMultijoueur"]);
+        });
     });
 
     describe("Fonction makeImagesDirectory", () => {
@@ -130,6 +135,16 @@ describe("DBPartieAbstract", () => {
 
             assert(stub.calledOnce);
             assert(stub.calledWith(resultatAttendu));
+        });
+    });
+
+    describe("Fonction getChannelId", () => {
+        it("Devrait appeller la fonction getChannelId", async () => {
+
+            // tslint:disable-next-line:no-any
+            const testString: any = await dbPartie["getChannelId"]();
+            assert.isDefined(testString);
+            assert.isString(testString);
         });
     });
 

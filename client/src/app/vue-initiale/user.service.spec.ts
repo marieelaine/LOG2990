@@ -16,24 +16,4 @@ describe("UserService", () => {
     expect(service).toBeTruthy();
   });
 
-  // TODO
-
-  // it("POST request should be called with proper arguments", () => {
-  //   const service = TestBed.get(UserService);
-  //   const http = TestBed.get(HttpTestingController);
-  //   let loginResponse;
-  //   const user = new User("username");
-
-  //   service.register(user).subscribe((response) => {
-  //     loginResponse = response;
-  //   });
-
-  //   http.expectOne({
-  //     url: "http://127.0.0.1:3000/users/ajouter",
-  //     method: "POST"
-  //   }).flush(responseForm);
-
-  //   expect(loginResponse).toEqual(responseForm);
-  // });
-
 });
