@@ -46,7 +46,7 @@ export class RoutesPartieMultiple extends ServiceWeb {
         });
 
         router.post(constantes.ROUTE_PARTIE_MULTIPLE_SUPPRIMER_CHANNEL, (req: Request, res: Response) => {
-            this.partieMultiple.requetesupprimerChannelId(req, res);
+            this.partieMultiple.requeteSupprimerChannelId(req, res);
         });
 
         router.post(constantes.ROUTE_PARTIE_MULTIPLE_IMAGE_CHARGEES, (req: Request, res: Response) => {

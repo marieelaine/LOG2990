@@ -55,7 +55,7 @@ export abstract class DBPartieAbstract {
         res.send(await this.getPartieById(req.params.id));
     }
 
-    public requetesupprimerChannelId(req: Request, res: Response): void {
+    public requeteSupprimerChannelId(req: Request, res: Response): void {
         try {
             this.listeChannelsMultijoueur.delete(req.body.channelId);
         } catch (err) {

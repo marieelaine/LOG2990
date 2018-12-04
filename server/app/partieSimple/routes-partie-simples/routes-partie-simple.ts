@@ -3,11 +3,12 @@ import { Router, Request, Response } from "express";
 import { ServiceWeb } from "../../serviceWeb";
 import Types from "../../types";
 import { DBPartieSimple } from "../DB-partie-simple/DB-partie-simple";
+import * as constantes from "../../constantes";
 
 @injectable()
 export class RoutesPartieSimple extends ServiceWeb {
 
-    public readonly mainRoute: string = "/partieSimple";
+    public readonly mainRoute: string = constantes.ROUTE_PARTIE_SIMPLE;
 
     public constructor(@inject(Types.PartieSimple) private partieSimple: DBPartieSimple) {
         super();
@@ -16,39 +17,39 @@ export class RoutesPartieSimple extends ServiceWeb {
     public get routes(): Router {
         const router: Router = Router();
 
-        router.post("/ajouter", async (req: Request, res: Response) => {
+        router.post(constantes.ROUTE_PARTIE_SIMPLE_AJOUTER, async (req: Request, res: Response) => {
             await this.partieSimple.requeteAjouterPartie(req, res);
         });
 
-        router.put("/addTempsPartieSimple/:id", async (req: Request, res: Response) => {
+        router.put(constantes.ROUTE_PARTIE_SIMPLE_ADD_TEMPS, async (req: Request, res: Response) => {
             await this.partieSimple.requeteAjouterPartieTemps(req, res);
         });
 
-        router.get("/getListePartieSimple", async (req: Request, res: Response) => {
+        router.get(constantes.ROUTE_PARTIE_SIMPLE_GET_LISTE, async (req: Request, res: Response) => {
             await this.partieSimple.requeteGetListePartie(req, res);
         });
 
-        router.put("/reinitialiseTemps/:id", async (req: Request, res: Response) => {
+        router.put(constantes.ROUTE_PARTIE_SIMPLE_REINITIALISE, async (req: Request, res: Response) => {
             await this.partieSimple.requeteReinitialiserTemps(req, res);
         });
 
-        router.delete("/delete/:id", async (req: Request, res: Response) => {
+        router.delete(constantes.ROUTE_PARTIE_SIMPLE_DELETE, async (req: Request, res: Response) => {
             await this.partieSimple.requeteDeletePartie(req, res);
         });
 
-        router.get("/getPartieSimple/:id", async (req: Request, res: Response) => {
+        router.get(constantes.ROUTE_PARTIE_SIMPLE_GET_BY_ID, async (req: Request, res: Response) => {
             await this.partieSimple.requeteGetPartie(req, res);
         });
 
-        router.get("/getChannelIdSimple", (req: Request, res: Response) => {
+        router.get(constantes.ROUTE_PARTIE_SIMPLE_GET_CHANNEL, (req: Request, res: Response) => {
             this.partieSimple.requeteGetChannelId(req, res);
         });
 
-        router.post("/supprimerChannelIdSimple", (req: Request, res: Response) => {
-            this.partieSimple.requetesupprimerChannelId(req, res);
+        router.post(constantes.ROUTE_PARTIE_SIMPLE_SUPPRIMER_CHANNEL, (req: Request, res: Response) => {
+            this.partieSimple.requeteSupprimerChannelId(req, res);
         });
 
-        router.post("/partieSimpleChargee", (req: Request, res: Response) => {
+        router.post(constantes.ROUTE_PARTIE_SIMPLE_IMAGE_CHARGEES, (req: Request, res: Response) => {
             this.partieSimple.requetePartieChargee(req, res);
         });
 
