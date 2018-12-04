@@ -106,8 +106,8 @@ export class SocketServerService {
         this.io.emit(event.DECONNECTION_USER, {joueur: joueur});
     }
 
-    public meilleurTemps(joueur: Joueur, partie: string, type: string): void {
-        this.io.emit(event.MEILLEUR_TEMPS, {joueur: joueur, partie: partie, type: type});
+    public meilleurTemps(joueur: Joueur, partie: string, isSolo: boolean, position: number): void {
+        this.io.emit(event.MEILLEUR_TEMPS, {joueur: joueur._nom, partie: partie, isSolo: isSolo, position: position});
     }
 
     public envoyerPartiesSimplesChargees(channelId: string): void {

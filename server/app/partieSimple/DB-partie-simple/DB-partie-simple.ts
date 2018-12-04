@@ -88,8 +88,12 @@ export class DBPartieSimple extends DBPartieAbstract {
         this.socket.envoyerPartiesSimplesChargees(channelId);
     }
 
-    protected envoyerMeilleurTemps(joueur: Joueur, nomPartie: string, type: string): void {
-        this.socket.meilleurTemps(joueur, nomPartie, type);
+    protected envoyerMeilleurTemps(joueur: Joueur, nomPartie: string, isSolo: boolean, temps: Array<Joueur>): void {
+        for (let i: number = 0; i < temps.length; i++) {
+            if (temps[i]._temps === joueur._temps) {
+                this.socket.meilleurTemps(joueur, nomPartie, isSolo, ++i);
+            }
+        }
     }
 
     protected async obtenirPartieId(nomPartie: String): Promise<string> {

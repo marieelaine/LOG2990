@@ -5,6 +5,8 @@ import { NotifierService } from "angular-notifier";
 import { Joueur } from "./admin/joueur";
 
 const MINUTESANDSECONDCONVERT: number = 10;
+const SOLO: string = "mode solo";
+const MULTIJOUEUR: string = "mode multijoueur";
 
 @Component({
   selector: "app-root",
@@ -35,7 +37,7 @@ export class AppComponent {
       });
 
       this.socketClientService.socket.on(event.MEILLEUR_TEMPS, (data) => {
-        this.afficherNotificationMeilleurTemps(data.joueur, data.partie, data.mode);
+        this.afficherNotificationMeilleurTemps(data.joueur, data.partie, data.isSolo, data.position);
       });
     }
 
@@ -49,10 +51,11 @@ export class AppComponent {
       this.notifier.notify( "warning", temps + " - " + joueur + " vient de se déconnecter." );
     }
 
-    private afficherNotificationMeilleurTemps(joueur: Joueur, partie: string, mode: string): void {
-      const position: number = 2;
+    private afficherNotificationMeilleurTemps(joueur: string, partie: string, isSolo: boolean, position: number): void {
+      const mode: string = isSolo ? SOLO : MULTIJOUEUR;
       const temps: string = this.getTempsCourant();
-      this.notifier.notify("info", temps + " - " + joueur.nom + " obtient la position " + position +
+
+      this.notifier.notify("info", temps + " - " + joueur + " obtient la position " + position +
                             " dans les meilleurs temps du jeu " + partie + " en " + mode);
     }
 

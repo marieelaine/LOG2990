@@ -112,8 +112,12 @@ export class DBPartieMultiple extends DBPartieAbstract {
         this.socket.envoyerPartiesMultiplesChargees(channelId);
     }
 
-    protected envoyerMeilleurTemps(joueur: Joueur, nomPartie: string, type: string): void {
-        this.socket.meilleurTemps(joueur, nomPartie, type);
+    protected envoyerMeilleurTemps(joueur: Joueur, nomPartie: string, isSolo: boolean, temps: Array<Joueur>): void {
+        for (let i: number = 0; i < temps.length; i++) {
+            if (temps[i]._temps === joueur._temps) {
+                this.socket.meilleurTemps(joueur, nomPartie, isSolo, ++i);
+            }
+        }
     }
 
     protected async verifierErreurScript(child: ChildProcess, partie: PartieMultipleInterface): Promise<void> {

@@ -115,7 +115,7 @@ export abstract class DBPartieAbstract {
 
     protected abstract envoyerPartiesPretes(channelId: string): void;
 
-    protected abstract envoyerMeilleurTemps(joueur: Joueur, nomPartie: string, type: string): void;
+    protected abstract envoyerMeilleurTemps(joueur: Joueur, nomPartie: string, isSolo: boolean, temps: Array<Joueur>): void;
 
     protected abstract creerSchemaArray(): void;
 
@@ -204,7 +204,7 @@ export abstract class DBPartieAbstract {
       return partiesInterfaces[1];
   }
 
-    protected async trierTemps(idPartie: String, temps: Array<Joueur>, typeDeTemps: string): Promise<void> {
+    protected async trierTemps(idPartie: String, temps: Array<Joueur>, typeDeTemps: string): Promise<Array<Joueur>> {
         temps = this.getSortedTimes(temps);
         typeDeTemps === TEMPS_SOLO ? await this.modelPartieBuffer.findByIdAndUpdate(idPartie, {_tempsSolo: temps})
                 .catch(() => {
@@ -214,6 +214,8 @@ export abstract class DBPartieAbstract {
                 .catch(() => {
                     throw new Error();
                 });
+
+        return temps;
     }
 
     protected async ajouterTemps(idPartie: string, temps: Joueur, isSolo: boolean): Promise<void> {
@@ -221,18 +223,20 @@ export abstract class DBPartieAbstract {
         if (temps._nom === constantes.STR_VIDE) {
             temps._nom = NOM_ANONYME;
         }
-        isSolo ? this.ajouterTempsSiTopTrois(temps, partie, TEMPS_SOLO)
-            : this.ajouterTempsSiTopTrois(temps, partie, TEMPS_UN_CONTRE_UN);
+        this.ajouterTempsSiTopTrois(temps, partie, isSolo);
     }
 
     private async ajouterTempsSiTopTrois(temps: Joueur, partie: PartieSimpleInterface | PartieMultipleInterface,
-                                         typeDeTemps: string): Promise<void> {
+                                         isSolo: boolean): Promise<void> {
+        const typeDeTemps: string = isSolo ? TEMPS_SOLO : TEMPS_UN_CONTRE_UN;
         if (temps._temps < partie[typeDeTemps][PARTIE_SECOND_ELEMENT]._temps) {
             partie[typeDeTemps].splice(-1, 1);
             partie[typeDeTemps].push(temps);
-            await this.trierTemps(partie._id, partie[typeDeTemps], typeDeTemps);
-            this.envoyerMeilleurTemps(temps, partie._nomPartie, typeDeTemps);
+
+            const tempsTries: Array<Joueur> = await this.trierTemps(partie._id, partie[typeDeTemps], typeDeTemps);
+            this.envoyerMeilleurTemps(temps, partie._nomPartie, isSolo, tempsTries);
         }
+
     }
 
     protected getSortedTimes(arr: Array<Joueur>): Array<Joueur> {
