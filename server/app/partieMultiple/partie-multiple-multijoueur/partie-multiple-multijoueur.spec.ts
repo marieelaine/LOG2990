@@ -1,22 +1,80 @@
-import { PartieMultipleMultijoueur } from "./partie-multiple-multijoueur";
 import { assert } from "chai";
-import * as sinon from "sinon";
+import { PartieMultipleMultijoueur } from "./partie-multiple-multijoueur";
 import { SocketServerService } from "../../socket-io.service";
+import * as mockHttp from "node-mocks-http";
+import { Request, Response } from "express";
+import { Server } from "mock-socket";
 
-describe("Partie Simple Multijoueur classe", () => {
-    let partieMultipleMultijoueur: PartieMultipleMultijoueur;
-    const socketService: SocketServerService = new SocketServerService();
+describe("Partie Multiple Multijoueur", () => {
+    const fakeURL: string = "ws://localhost:8080";
+    // tslint:disable-next-line:no-any
+    const mockServer: any = new Server(fakeURL);
+    let partie: PartieMultipleMultijoueur;
+    const socket: SocketServerService = new SocketServerService();
+
     beforeEach(() => {
-        partieMultipleMultijoueur = new PartieMultipleMultijoueur(socketService);
+        socket.init(mockServer);
+        partie = new PartieMultipleMultijoueur(socket);
     });
 
-    describe("Constructeur", () => {
-        it("Devrait etre defini", () => {
-            assert.isDefined(partieMultipleMultijoueur);
+    it("Devrait envoyer une requete pour joindre une partie multiple", async () => {
+        const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+            method: "POST",
+            url: "localhost:3000/joindrePartieMultijoueurMultiple",
+            body: {channelId: "2"}
         });
+        const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
+
+        partie["requeteEnvoyerJoindreMultiple"](req, res);
+        const data: string = JSON.parse(res._getData());
+
+        assert.equal(data, req.body.channelId);
     });
 
-    afterEach(async() => {
-        sinon.restore();
+    it("Devrait envoyer une requete pour une difference trouvee", async () => {
+        const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+            method: "POST",
+            url: "localhost:3000/joindrePartieMultijoueurMultiple",
+            body: {
+                channelId: "2",
+                diff: "180",
+                source: "image1",
+                joueur: "charles"
+            }
+        });
+        const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
+
+        partie["requeteEnvoyerDiffTrouveeMultiple"](req, res);
+        const data: string = JSON.parse(res._getData());
+
+        assert.equal(data, req.body.channelId);
+    });
+
+    it("Devrait envoyer une requete pour terminer une partie multiple", async () => {
+        const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+            method: "POST",
+            url: "localhost:3000//partieTermineeMultijoueurMultiple",
+            body: {channelId: "2"}
+        });
+        const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
+
+        partie["requeteEnvoyerPartieMultipleTerminee"](req, res);
+        const data: string = JSON.parse(res._getData());
+
+        assert.equal(data, req.body.channelId);
+    });
+
+    it("Devrait envoyer une requete pour erreur dans une partie multiple", async () => {
+        const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+            method: "POST",
+            url: "localhost:3000/erreurMultijoueurMultiple",
+            body: {channelId: "2"}
+        });
+        const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
+
+        partie["requeteErreurMultiple"](req, res);
+        const data: string = JSON.parse(res._getData());
+
+        assert.equal(data, req.body.channelId);
     });
 });
