@@ -3,6 +3,7 @@ import { ChildProcess } from "child_process";
 import { Request, Response } from "express";
 import { assert } from "chai";
 import sinon = require("sinon");
+import * as uniqid from "uniqid";
 import { Schema } from "mongoose";
 import * as constantes from "../constantes";
 import * as fs from "fs";
@@ -83,6 +84,7 @@ class DBPartie extends DBPartieAbstract {
     protected createSchemaArray(): void { ""; }
 
     protected createSchemaBuffer(): void { ""; }
+
 }
 
 describe("DBPartieAbstract", () => {
@@ -117,6 +119,18 @@ describe("DBPartieAbstract", () => {
             await dbPartie["makeImagesDirectory"]();
 
             assert(spy.calledOnce);
+        });
+    });
+
+    describe("Fonction deleteImagesDirectory", () => {
+        it("Devrait appeller la fonction remove de fsx", async () => {
+            const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
+            const resultatAttendu: string = "../Images";
+
+            await dbPartie["deleteImagesDirectory"]();
+
+            assert(stub.calledOnce);
+            assert(stub.calledWith(resultatAttendu));
         });
     });
 
