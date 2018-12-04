@@ -28,7 +28,6 @@
     "fs-extra": "^7.0.0",
     "inversify": "^4.13.0",
     "inversify-inject-decorators": "^3.1.0",
-    "jimp": "^0.5.4",
     "mock-socket": "^8.0.5",
     "mongoose": "^5.2.15",
     "mongoose-unique-validator": "^2.0.2",
@@ -37,7 +36,6 @@
     "ng6-socket-io": "^1.0.3",
     "nodemon": "1.18.4",
     "npm": "^6.4.1",
-    "python-shell": "^1.0.6",
     "reflect-metadata": "^0.1.10",
     "rxjs": "^6.3.3",
     "serve-favicon": "^2.5.0",
@@ -45,8 +43,7 @@
     "socket.io": "^2.1.1",
     "systemjs": "0.21.4",
     "ts-node": "^7.0.1",
-    "uniqid": "^5.0.3",
-    "web-request": "^1.0.7"
+    "uniqid": "^5.0.3"
   },
   "devDependencies": {
     "@types/body-parser": "1.17.0",
