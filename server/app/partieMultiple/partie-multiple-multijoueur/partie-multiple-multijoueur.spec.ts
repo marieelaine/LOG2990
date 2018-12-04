@@ -7,10 +7,10 @@ import { Server } from "mock-socket";
 
 describe("Partie Multiple Multijoueur", () => {
     const fakeURL: string = "ws://localhost:8080";
-    // tslint:disable-next-line:no-any
-    const mockServer: any = new Server(fakeURL);
     let partie: PartieMultipleMultijoueur;
     const socket: SocketServerService = new SocketServerService();
+     // tslint:disable-next-line:no-any
+    const mockServer: any = new Server(fakeURL);
 
     beforeEach(() => {
         socket.init(mockServer);
@@ -77,4 +77,6 @@ describe("Partie Multiple Multijoueur", () => {
 
         assert.equal(data, req.body.channelId);
     });
+
+    mockServer.stop();
 });
