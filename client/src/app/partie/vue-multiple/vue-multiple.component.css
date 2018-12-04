@@ -78,19 +78,6 @@ canvas{
     margin-bottom: 60px;
 }
 
-/* .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 360px;
-    text-align: center;
- } */
-
 #images{
-    margin-bottom:300px;
+    margin-bottom: 0;
 }
-
-/* #chat {
-    max-width:360px;
-    margin-right:10px;
-} */

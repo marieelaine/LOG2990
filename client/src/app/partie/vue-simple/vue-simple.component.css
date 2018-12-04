@@ -62,20 +62,3 @@ body {
     opacity: 0;
     transition: opacity 1s ease-in-out;
 }
-
-/* .footer {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    width: 360px;
-    text-align: center;
- }
-
- #images{
-     margin-bottom:300px;
- } */
-
- /* #chat {
-     max-width:360px;
-     margin-right:10px;
- } */

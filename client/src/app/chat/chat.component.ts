@@ -13,7 +13,6 @@ export class ChatComponent {
 
   public constructor() {
     this.messagesChat = new Array<string>();
-    this.chatVisible = true;
   }
 
   public ajouterMessageAuMessagesChat(msg: string): void {
