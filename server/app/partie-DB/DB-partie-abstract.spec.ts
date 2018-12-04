@@ -3,7 +3,6 @@ import { ChildProcess } from "child_process";
 import { Request, Response } from "express";
 import { assert } from "chai";
 import sinon = require("sinon");
-import * as uniqid from "uniqid";
 import { Schema } from "mongoose";
 import * as constantes from "../constantes";
 import * as fs from "fs";
