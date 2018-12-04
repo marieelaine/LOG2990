@@ -1,8 +1,6 @@
 import { TestBed } from "@angular/core/testing";
 import { PartieService } from "./partie.service";
-import { HttpClientTestingModule, HttpTestingController, TestRequest } from "@angular/common/http/testing";
-import { Joueur } from "../admin/joueur";
-import { ErrorHandler } from "@angular/core";
+import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import * as constantes from "../constantes";
 import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
 import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";

@@ -19,19 +19,19 @@ export class RoutesPartieSimpleAttente extends ServiceWeb {
     public get routes(): Router {
         const router: Router = Router();
 
-        router.get("/getPartieSimpleEnAttente", async (req: Request, res: Response) => {
+        router.get(constantes.URL_PARTIE_SIMPLE_GET, async (req: Request, res: Response) => {
             await this.getPartieSimpleEnAttente(req, res);
         });
 
-        router.post("/addPartieSimpleEnAttente", async (req: Request, res: Response) => {
+        router.post(constantes.URL_PARTIE_SIMPLE_ADD, async (req: Request, res: Response) => {
            await this.ajouterPartieSimpleEnAttente(req, res);
         });
 
-        router.delete("/deletePartieSimpleEnAttente/:id", async (req: Request, res: Response) => {
+        router.delete(constantes.URL_PARTIE_SIMPLE_DELETE, async (req: Request, res: Response) => {
             await this.supprimerPartieSimpleEnAttente(req, res);
         });
 
-        router.post("/dialogAttenteSimpleFerme", async (req: Request, res: Response) => {
+        router.post(constantes.URL_PARTIE_SIMPLE_DIALOGUE, async (req: Request, res: Response) => {
             await this.fermerDialogPartieAttenteSimple(req, res);
         });
 

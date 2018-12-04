@@ -5,11 +5,14 @@ import { User } from "../login-form/user";
 import { UserService } from "../user.service";
 import { myParams, myStyle } from "../../../assets/particles";
 import { CookieService } from "ngx-cookie-service";
+import * as constantes from "../../constantes";
 
 const PARTICULES_WIDTH: number = 100;
 const PARTICULES_HEIGHT: number = 100;
 const MAX_LENGTH_USERNAME: number = 12;
 const MIN_LENGTH_USERNAME: number = 3;
+const STR_USERNAME: string = "username";
+const REGEX_VALIDATEUR: string = "^[A-Za-z0-9]+$";
 
 @Component({
     selector: "app-login-form",
@@ -40,8 +43,8 @@ export class LoginFormComponent implements OnInit {
         this.myStyle = myStyle;
         this.myParams = myParams;
 
-        if (this.cookieService.check("username")) {
-            this.router.navigate(["/liste-parties"])
+        if (this.cookieService.check(STR_USERNAME)) {
+            this.router.navigate([constantes.LISTE_PARTIES])
             .catch(() => ErrorHandler);
         }
     }
@@ -54,7 +57,7 @@ export class LoginFormComponent implements OnInit {
                 (data) => {
                     this.usernameTaken = false;
                     this.creerCookie(username);
-                    this.router.navigate(["/liste-parties"])
+                    this.router.navigate([constantes.LISTE_PARTIES])
                     .catch(() => ErrorHandler);
                 },
                 (error) => {
@@ -66,7 +69,7 @@ export class LoginFormComponent implements OnInit {
         return new FormGroup({
             username: new FormControl("", [
                 Validators.required,
-                Validators.pattern("^[A-Za-z0-9]+$"),
+                Validators.pattern(REGEX_VALIDATEUR),
                 Validators.maxLength(MAX_LENGTH_USERNAME),
                 Validators.minLength(MIN_LENGTH_USERNAME)
             ])
@@ -74,6 +77,6 @@ export class LoginFormComponent implements OnInit {
     }
 
     private creerCookie(username: string): void {
-        this.cookieService.set("username", username);
+        this.cookieService.set(STR_USERNAME, username);
     }
 }

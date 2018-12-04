@@ -3,6 +3,7 @@ export const BASE_URL: string = "http://" + IP + ":3000/";
 export const SIMPLE: string = "partieSimple/";
 export const MULTIPLE: string = "partieMultiple/";
 export const USERS: string = "users/";
+export const LISTE_PARTIES: string = "/liste-parties";
 
 export const GET_LISTE_SIMPLE_URL: string = BASE_URL + SIMPLE + "getListePartieSimple";
 export const AJOUTER_PARTIE_SIMPLE_URL: string = BASE_URL + SIMPLE + "ajouter/";
