@@ -11,6 +11,7 @@ import { SocketClientService } from "src/app/socket/socket-client.service";
 import { Observable } from "rxjs";
 import { PartieSimpleInterface } from "../../../../../common/partie-simple-interface";
 import { FormsModule } from "@angular/forms";
+import { errorHandler } from "@angular/platform-browser/src/browser";
 
 export class MockEvent {
     public offsetX: number;
@@ -75,13 +76,13 @@ describe("VueSimpleComponent", () => {
     it("fonction ajouterTemps devrait appeler ajouterTempsPartieSimple du service", () => {
         const tempsJoueur: number = 15;
         spyOn(component["partieService"], "ajouterTempsPartieSimple").and.callThrough();
-        component["ajouterTemps"]("", new Joueur("", tempsJoueur), false);
+        component["ajouterTemps"]("", new Joueur("", tempsJoueur), false).catch(() => errorHandler);
         expect(component["partieService"]["ajouterTempsPartieSimple"]).toHaveBeenCalled();
     });
 
     it("supprimerChannelId devrait appeler la fonction supprimerChannelIdSimple du service", () => {
         spyOn(component["partieService"], "supprimerChannelIdSimple").and.callThrough();
-        component["supprimerChannelId"]();
+        component["supprimerChannelId"]().catch(() => errorHandler);
         expect(component["partieService"]["supprimerChannelIdSimple"]).toHaveBeenCalled();
     });
 

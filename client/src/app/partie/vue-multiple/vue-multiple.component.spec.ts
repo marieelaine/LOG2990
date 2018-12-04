@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { VueMultipleComponent } from "./vue-multiple.component";
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, ErrorHandler } from "@angular/core";
 import { MatCardModule, MatDialog } from "@angular/material";
 import { FormsModule } from "@angular/forms";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
@@ -53,13 +53,13 @@ describe("VueMultipleComponent", () => {
   it("fonction ajouterTemps devrait appeler ajouterTempsPartieMultiple du service", () => {
     const tempsJoueur: number = 15;
     spyOn(component["partieService"], "ajouterTempsPartieMultiple").and.callThrough();
-    component["ajouterTemps"]("", new Joueur("", tempsJoueur), false);
+    component["ajouterTemps"]("", new Joueur("", tempsJoueur), false).catch(() => ErrorHandler);
     expect(component["partieService"]["ajouterTempsPartieMultiple"]).toHaveBeenCalled();
   });
 
   it("supprimerChannelId devrait appeler la fonction supprimerChannelIdMultiple du service", () => {
     spyOn(component["partieService"], "supprimerChannelIdMultiple").and.callThrough();
-    component["supprimerChannelId"]();
+    component["supprimerChannelId"]().catch(() => ErrorHandler);
     expect(component["partieService"]["supprimerChannelIdMultiple"]).toHaveBeenCalled();
   });
 

@@ -9,7 +9,6 @@ import { Joueur } from "../admin/joueur";
 import { CookieServiceMock } from "../../testing/cookieMock";
 import { ChronoService} from "../chrono/chrono.service";
 import { MatDialogMock } from "src/testing/mat-dialog-mock";
-import { SocketClientMock } from "src/testing/socketMock";
 
 const ONE_SECOND_TIMER: number = 1000;
 
