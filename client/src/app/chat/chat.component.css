@@ -27,6 +27,7 @@
     height: 65%;
     overflow-x: hidden;
     overflow-y: auto;
+    max-width: 360px;
 }
 .top-bar {
     background: #666;
@@ -80,4 +81,5 @@
 
 .chat{
     margin:0 auto;
+    width:360px;
 }
