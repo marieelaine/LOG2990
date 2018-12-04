@@ -37,8 +37,8 @@ export abstract class DBPartieAbstract {
     public constructor() {
         this.baseDeDonnees = new BaseDeDonnees();
 
-        this.createSchemaArray();
-        this.createSchemaBuffer();
+        this.creerSchemaArray();
+        this.creerSchemaBuffer();
     }
 
     public abstract async requeteAjouterPartie(req: Request, res: Response): Promise<void>;
@@ -117,9 +117,9 @@ export abstract class DBPartieAbstract {
 
     protected abstract envoyerMeilleurTemps(joueur: string, nomPartie: string): void;
 
-    protected abstract createSchemaArray(): void;
+    protected abstract creerSchemaArray(): void;
 
-    protected abstract createSchemaBuffer(): void;
+    protected abstract creerSchemaBuffer(): void;
 
     protected async deletePartie(idPartie: string, res: Response): Promise<Response> {
       try {
