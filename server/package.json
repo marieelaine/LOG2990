@@ -57,7 +57,7 @@
     "@types/morgan": "~1.7.35",
     "@types/node": "~10.9.4",
     "@types/node-uuid": "0.0.28",
-    "@types/sinon": "^5.0.3",
+    "@types/sinon": "5.0.2",
     "@types/socket.io": "1.4.38",
     "chai": "~4.1.0",
     "concurrently": "^4.0.1",
