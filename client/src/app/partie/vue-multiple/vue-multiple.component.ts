@@ -36,6 +36,7 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                        protected dialog: MatDialog) {
         super(route, partieService, cookieService, chrono, dialog, false);
         this.partieAttributsAdmin.differenceRestantes = constantes.DIFF_PARTIE_MULTIPLE;
+
         this.setEvenementsSockets();
     }
 
@@ -44,15 +45,15 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                                 .catch(() => ErrorHandler);
     }
 
+    protected async supprimerChannelId(): Promise<void> {
+        this.partieService.supprimerChannelIdMultiple(this.partieAttributsData.partieID).catch(() => ErrorHandler);
+    }
+
     protected setPartie(): void {
         this.partieService.getPartieMultiple(this.partieAttributsData.partieID).subscribe(async (res: PartieMultipleInterface) => {
             this.reconstruirePartieMultiple(res);
             this.partieAttributsMultijoueur.isMultijoueur ? await this.setPartieMultipleMultijoueur() : this.afficherPartie();
         });
-    }
-
-    protected async supprimerChannelId(): Promise<void> {
-        this.partieService.supprimerChannelIdMultiple(this.partieAttributsData.partieID).catch(() => ErrorHandler);
     }
 
     protected reconstruirePartieMultiple(partie: PartieMultipleInterface): void {
@@ -115,9 +116,30 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
 
     protected differenceTrouver(i: number, src: string): void {
         src === IMAGE_DIFF_1 ? this.partieAttributsAdmin.diffTrouvee[0].push(i) : this.partieAttributsAdmin.diffTrouvee[1].push(i);
-        this.trouverDifferenceMultiple().catch(() => ErrorHandler);
+        this.trouverDifference().catch(() => ErrorHandler);
         this.restaurationPixelsMultiple(i, src);
         this.ajouterMessageDiffTrouvee(constantes.STR_VIDE);
+    }
+
+    protected async terminerPartieMultijoueurMultiple(): Promise<void> {
+        if (this.partieAttributsAdmin.differencesTrouvees === NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE) {
+            await this.partieService.partieMultijoueurMultipleTerminee(
+                this.partieAttributsMultijoueur.channelId,
+                this.partieAttributsMultijoueur.joueurMultijoueur);
+        }
+    }
+
+    protected async regarderPartieTerminee(): Promise<void> {
+        this.partieAttributsMultijoueur.isMultijoueur ? await this.terminerPartieMultijoueurMultiple() : this.terminerPartieSolo();
+    }
+
+    protected async differenceTrouverMultijoueurMultiple(i: number, source: string, joueur: string): Promise<void> {
+        if (this.partieAttributsMultijoueur.joueurMultijoueur === joueur) {
+            await this.trouverDifference();
+        }
+        this.ajouterMessageDiffTrouvee(joueur);
+        this.partieAttributsAdmin.diffTrouvee[0].push(i);
+        this.restaurationPixelsMultiple(i, source);
     }
 
     private restaurationPixelsMultiple(i: number, src: string): void {
@@ -146,40 +168,6 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
         contextD.putImageData(imageDataD, 0, 0);
     }
 
-    protected async terminerPartieMultijoueurMultiple(): Promise<void> {
-        if (this.partieAttributsAdmin.differencesTrouvees === NOMBRE_DIFF_MULTIJOUEUR_MULTIPLE) {
-            await this.partieService.partieMultijoueurMultipleTerminee(
-                this.partieAttributsMultijoueur.channelId,
-                this.partieAttributsMultijoueur.joueurMultijoueur);
-        }
-    }
-
-    protected async trouverDifferenceMultiple(): Promise<void> {
-        if (this.partieAttributsAdmin.partieCommence) {
-            this.augmenterDiffTrouvee();
-            this.jouerSonYes();
-        }
-        this.partieAttributsMultijoueur.isMultijoueur ? await this.terminerPartieMultijoueurMultiple() : this.terminerPartieSolo();
-    }
-
-    protected async differenceTrouverMultijoueurMultiple(i: number, source: string, joueur: string): Promise<void> {
-        if (this.partieAttributsMultijoueur.joueurMultijoueur === joueur) {
-            await this.trouverDifferenceMultiple();
-        }
-        this.ajouterMessageDiffTrouvee(joueur);
-        this.partieAttributsAdmin.diffTrouvee[0].push(i);
-        this.restaurationPixelsMultiple(i, source);
-    }
-
-    private async setPenalite(ev: MouseEvent): Promise<void> {
-        if (this.partieAttributsMultijoueur.isMultijoueur) {
-            await this.partieService.erreurMultijoueurMultiple(
-                this.partieAttributsMultijoueur.channelId,
-                this.partieAttributsMultijoueur.joueurMultijoueur);
-        }
-        this.penalite(ev);
-    }
-
     private setEvenementsSockets(): void {
         this.socketClientService.socket.on(event.DIFFERENCE_TROUVEE_MULTIJOUEUR_MULTIPLE, (data) => {
             if (this.partieAttributsMultijoueur.channelId === data.channelId) {
@@ -205,6 +193,15 @@ export class VueMultipleComponent extends PartieAbstraiteClass {
                 this.afficherPartie();
             }
         });
+    }
+
+    private async setPenalite(ev: MouseEvent): Promise<void> {
+        if (this.partieAttributsMultijoueur.isMultijoueur) {
+            await this.partieService.erreurMultijoueurMultiple(
+                this.partieAttributsMultijoueur.channelId,
+                this.partieAttributsMultijoueur.joueurMultijoueur);
+        }
+        this.penalite(ev);
     }
 
     private async setPartieMultipleMultijoueur(): Promise<void> {

@@ -7,6 +7,11 @@ export class PartieAttributsData {
     private _nomPartie: string;
     private _audio: HTMLAudioElement;
 
+    public constructor() {
+        this.audio = new Audio();
+        this.imageData = [];
+    }
+
     public get audio(): HTMLAudioElement {
         return this._audio;
     }

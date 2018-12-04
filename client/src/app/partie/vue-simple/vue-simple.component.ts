@@ -7,10 +7,10 @@ import {CookieService} from "ngx-cookie-service";
 import * as constantes from "../../constantes";
 import { MatDialog } from "@angular/material";
 import * as event from "../../../../../common/communication/evenementsSocket";
-import { SocketClientService } from "src/app/socket/socket-client.service";
 import {ChronoService} from "../../chrono/chrono.service";
 import { Joueur } from "src/app/admin/joueur";
 import { PartieSimpleInterface } from "../../../../../common/partie-simple-interface";
+import { SocketClientService } from "src/app/socket/socket-client.service";
 
 const NOMBRE_DIFF_MULTIJOUEUR_SIMPLE: number = 4;
 
@@ -24,12 +24,13 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
     public constructor(protected route: ActivatedRoute,
                        protected partieService: PartieService,
-                       protected socketClientService: SocketClientService,
                        protected cookieService: CookieService,
+                       protected socketClientService: SocketClientService,
                        protected chrono: ChronoService,
                        protected dialog: MatDialog) {
         super(route, partieService, cookieService, chrono, dialog, true);
         this.partieAttributsAdmin.differenceRestantes = constantes.DIFF_PARTIE_SIMPLE;
+
         this.setEvenementsSockets();
     }
 
@@ -100,23 +101,14 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
     protected async differenceTrouver(i: number): Promise<void> {
         this.partieAttributsAdmin.diffTrouvee[0].push(i);
-        await this.trouverDifferenceSimple();
+        await this.trouverDifference();
         this.restaurationPixelsSimple(i);
         this.ajouterMessageDiffTrouvee(constantes.STR_VIDE);
     }
 
-    private async setPenalite(ev: MouseEvent): Promise<void> {
-        if (this.partieAttributsMultijoueur.isMultijoueur) {
-            await this.partieService.erreurMultijoueurSimple(
-                this.partieAttributsMultijoueur.channelId,
-                this.partieAttributsMultijoueur.joueurMultijoueur);
-        }
-        this.penalite(ev);
-    }
-
     protected async differenceTrouverMultijoueurSimple(i: number, joueur: string): Promise<void> {
         if (this.partieAttributsMultijoueur.joueurMultijoueur === joueur) {
-            await this.trouverDifferenceSimple();
+            await this.trouverDifference();
         }
         this.ajouterMessageDiffTrouvee(joueur);
         this.partieAttributsAdmin.diffTrouvee[0].push(i);
@@ -130,33 +122,8 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
         }
     }
 
-    protected async trouverDifferenceSimple(): Promise<void> {
-        if (this.partieAttributsAdmin.partieCommence) {
-            this.augmenterDiffTrouvee();
-            this.jouerSonYes();
-        }
+    protected async regarderPartieTerminee(): Promise<void> {
         this.partieAttributsMultijoueur.isMultijoueur ? await this.terminerPartieMultijoueurSimple() : this.terminerPartieSolo();
-    }
-
-    private restaurationPixelsSimple(i: number): void {
-        const contextG: CanvasRenderingContext2D = this.canvas.toArray()[0].nativeElement.getContext(constantes.CONTEXT_2D);
-        const imageDataG: ImageData = contextG.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
-        const dataG: Uint8ClampedArray = imageDataG.data;
-
-        const contextD: CanvasRenderingContext2D = this.canvas.toArray()[1].nativeElement.getContext(constantes.CONTEXT_2D);
-        const imageDataD: ImageData = contextD.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
-        const dataD: Uint8ClampedArray = imageDataD.data;
-
-        for (const pixel of this.partie.imageDiff[i]) {
-            const x: number = Number(pixel.split(constantes.VIRGULE_STR_FORMAT)[0]);
-            const y: number = Number(pixel.split(constantes.VIRGULE_STR_FORMAT)[1]);
-            const dim: number = (y * constantes.WINDOW_WIDTH * constantes.RGB_WIDTH) + (x * constantes.RGB_WIDTH);
-
-            dataD[dim] = dataG[dim];
-            dataD[dim + constantes.RGB_FIRST_INCREMENT] = dataG[dim + constantes.RGB_FIRST_INCREMENT];
-            dataD[dim + constantes.RGB_SECOND_INCREMENT] = dataG[dim + constantes.RGB_SECOND_INCREMENT];
-        }
-        contextD.putImageData(imageDataD, 0, 0);
     }
 
     private setEvenementsSockets(): void {
@@ -184,6 +151,36 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
                 this.afficherPartie();
             }
         });
+    }
+
+    private async setPenalite(ev: MouseEvent): Promise<void> {
+        if (this.partieAttributsMultijoueur.isMultijoueur) {
+            await this.partieService.erreurMultijoueurSimple(
+                this.partieAttributsMultijoueur.channelId,
+                this.partieAttributsMultijoueur.joueurMultijoueur);
+        }
+        this.penalite(ev);
+    }
+
+    private restaurationPixelsSimple(i: number): void {
+        const contextG: CanvasRenderingContext2D = this.canvas.toArray()[0].nativeElement.getContext(constantes.CONTEXT_2D);
+        const imageDataG: ImageData = contextG.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
+        const dataG: Uint8ClampedArray = imageDataG.data;
+
+        const contextD: CanvasRenderingContext2D = this.canvas.toArray()[1].nativeElement.getContext(constantes.CONTEXT_2D);
+        const imageDataD: ImageData = contextD.getImageData(0, 0, constantes.WINDOW_WIDTH, constantes.WINDOW_HEIGHT);
+        const dataD: Uint8ClampedArray = imageDataD.data;
+
+        for (const pixel of this.partie.imageDiff[i]) {
+            const x: number = Number(pixel.split(constantes.VIRGULE_STR_FORMAT)[0]);
+            const y: number = Number(pixel.split(constantes.VIRGULE_STR_FORMAT)[1]);
+            const dim: number = (y * constantes.WINDOW_WIDTH * constantes.RGB_WIDTH) + (x * constantes.RGB_WIDTH);
+
+            dataD[dim] = dataG[dim];
+            dataD[dim + constantes.RGB_FIRST_INCREMENT] = dataG[dim + constantes.RGB_FIRST_INCREMENT];
+            dataD[dim + constantes.RGB_SECOND_INCREMENT] = dataG[dim + constantes.RGB_SECOND_INCREMENT];
+        }
+        contextD.putImageData(imageDataD, 0, 0);
     }
 
     private async setPartieSimpleMultijoueur(): Promise<void> {

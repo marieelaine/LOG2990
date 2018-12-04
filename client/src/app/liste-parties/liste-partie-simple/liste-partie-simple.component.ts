@@ -128,7 +128,7 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
             if (partie.id === partieId) {
                 partie.tempsSolo = this.genererTableauTempsAleatoires();
                 partie.tempsUnContreUn = this.genererTableauTempsAleatoires();
-                this.listePartieService.reinitialiserTempsPartie(partieId, partie.tempsSolo, partie.tempsUnContreUn)
+                this.listePartieService.reinitialiserTempsPartieSimple(partieId, partie.tempsSolo, partie.tempsUnContreUn)
                     .catch(() => ErrorHandler);
             }
         });

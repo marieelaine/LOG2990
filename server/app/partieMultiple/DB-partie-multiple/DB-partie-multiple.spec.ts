@@ -142,7 +142,7 @@ describe("Partie Multiple BD classe", () => {
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "genererScene");
             const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
-                method: "GET",
+                method: "POST",
                 url: "localhost:3000/partieMultiple/ajouter/",
                 body: {
                     _id: "432",
@@ -156,18 +156,18 @@ describe("Partie Multiple BD classe", () => {
 
             const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-            partieMultipleBD["requeteAjouterPartie"](req, res);
+            await partieMultipleBD["requeteAjouterPartie"](req, res);
 
             assert(spy.calledOnce);
             // tslint:disable-next-line:no-magic-numbers
-            assert.equal(res.statusCode, 200);
+            assert.equal(res.statusCode, 201);
         });
 
         it("Devrait supprimer une partie", async () => {
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "deletePartie");
             const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
-                method: "GET",
+                method: "DELETE",
                 url: "localhost:3000/partieMultiple/delete/432",
                 body: {
                     _id: "432",
@@ -181,11 +181,11 @@ describe("Partie Multiple BD classe", () => {
 
             const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-            partieMultipleBD["requeteDeletePartie"](req, res);
+            await partieMultipleBD["requeteDeletePartie"](req, res);
 
             assert(spy.calledOnce);
             // tslint:disable-next-line:no-magic-numbers
-            assert.equal(res.statusCode, 200);
+            assert.equal(res.statusCode, 201);
         });
     });
 

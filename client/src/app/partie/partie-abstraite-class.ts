@@ -31,17 +31,10 @@ export abstract class PartieAbstraiteClass {
                        protected chrono: ChronoService,
                        protected dialog: MatDialog,
                        isSimple: boolean) {
-        this.partieAttributsData = new PartieAttributsData;
-        this.partieAttributsAdmin = new PartieAttributsAdmin;
-        this.partieAttributsMultijoueur = new PartieAttributsMultijoueur;
-        this.partieAttributsAdmin.partieCommence = false;
-        this.partieAttributsAdmin.differencesTrouvees = 0;
-        this.partieAttributsAdmin.messageDifferences = constantes.CHARGEMENT_IMAGES;
+        this.partieAttributsData = new PartieAttributsData();
+        this.partieAttributsAdmin = new PartieAttributsAdmin();
+        this.partieAttributsMultijoueur = new PartieAttributsMultijoueur();
         this.chat = new ChatComponent();
-        this.partieAttributsData.imageData = [];
-        this.partieAttributsAdmin.diffTrouvee = [[], []];
-        this.partieAttributsData.audio = new Audio();
-        this.partieAttributsAdmin.penaliteEtat = false;
 
         this.chrono.reset();
         this.setImage(isSimple);
@@ -57,6 +50,8 @@ export abstract class PartieAbstraiteClass {
     protected abstract ajouterTemps(partieID: string, tempsUser: Joueur, isSolo: boolean): void;
 
     protected async abstract supprimerChannelId(): Promise<void>;
+
+    protected async abstract regarderPartieTerminee(): Promise<void>;
 
     protected ouvrirDialogFinPartie(): void {
         this.dialog.open(DialogFinPartieComponent, {
@@ -122,6 +117,14 @@ export abstract class PartieAbstraiteClass {
             this.jouerSonPerdant();
         }
         this.ouvrirDialogFinPartie();
+    }
+
+    protected async trouverDifference(): Promise<void> {
+        if (this.partieAttributsAdmin.partieCommence) {
+            this.augmenterDiffTrouvee();
+            this.jouerSonYes();
+        }
+        await this.regarderPartieTerminee();
     }
 
     protected partieSoloTerminee(): void {

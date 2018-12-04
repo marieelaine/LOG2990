@@ -55,7 +55,7 @@ export abstract class DBPartieAbstract {
         res.send(await this.getPartieById(req.params.id));
     }
 
-    public requetesupprimerChannelId(req: Request, res: Response): void {
+    public requeteSupprimerChannelId(req: Request, res: Response): void {
         try {
             this.listeChannelsMultijoueur.delete(req.body.channelId);
         } catch (err) {
@@ -88,7 +88,8 @@ export abstract class DBPartieAbstract {
     public async requeteReinitialiserTemps(req: Request, res: Response): Promise<void> {
         await this.baseDeDonnees.assurerConnection();
         try {
-            await this.trierTemps(req.params.id, req.body.tempsSolo, req.body.tempsUnContreUn);
+            await this.trierTemps(req.params.id, req.body.tempsSolo, TEMPS_SOLO);
+            await this.trierTemps(req.params.id, req.body.tempsUnContreUn, TEMPS_UN_CONTRE_UN);
             res.status(constantes.HTTP_CREATED).json(req.params.id);
         } catch (err) {
             res.status(constantes.HTTP_NOT_IMPLEMENTED).json(err);

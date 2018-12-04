@@ -9,6 +9,7 @@ import { Joueur } from "../admin/joueur";
 import { CookieServiceMock } from "../../testing/cookieMock";
 import { ChronoService} from "../chrono/chrono.service";
 import { MatDialogMock } from "src/testing/mat-dialog-mock";
+import { SocketClientMock } from "src/testing/socketMock";
 
 const ONE_SECOND_TIMER: number = 1000;
 
@@ -26,13 +27,15 @@ class AbstractClassInstance extends PartieAbstraiteClass {
     protected setPartie(): void {}
     protected getImageData(): void {}
     protected async supprimerChannelId(): Promise<void> {}
+    protected async regarderPartieTerminee(): Promise<void> {}
+    protected setEvenementsSockets(): void {}
 }
 
 describe("PartieAbstraiteComponent", () => {
     let component: AbstractClassInstance;
     beforeEach(() => {
-    component = new AbstractClassInstance(new ActivatedRouteMock(), new PartieServiceMock(),
-                                          new CookieServiceMock(), new ChronoService, new MatDialogMock(), true);
+    component = new AbstractClassInstance(new ActivatedRouteMock(), new PartieServiceMock(), new CookieServiceMock(),
+                                          new ChronoService, new MatDialogMock(), true);
 
     component["partie"] = new PartieSimple ("nomPartie", new Array<Joueur>(), new Array<Joueur>(),
                                             Buffer.from(new Array<number>()),
