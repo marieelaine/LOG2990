@@ -4,7 +4,6 @@ import { PartieMultipleInterface } from "../../../../common/partie-multiple-inte
 import { BASE_URL } from "../../../../client/src/app/constantes";
 
 const URL_LISTMULTIPLE: string = BASE_URL + "partieMultiple/getListePartieMultiple";
-// id doit exister dans bd, n'est pas un mock
 const URL_ID_PARTIE: string = BASE_URL + "partieMultiple/getPartieMultiple/5bedbb0dcd7e8a0f51044106";
 const URL_ID: string = BASE_URL + "partieMultiple/:id";
 

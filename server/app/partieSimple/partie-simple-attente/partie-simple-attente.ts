@@ -20,29 +20,45 @@ export class RoutesPartieSimpleAttente extends ServiceWeb {
         const router: Router = Router();
 
         router.get("/getPartieSimpleEnAttente", async (req: Request, res: Response) => {
-            res.send(this.partieSimpleAttente);
+            this.getPartieSimpleEnAttente(req, res);
         });
 
         router.post("/addPartieSimpleEnAttente", async (req: Request, res: Response) => {
-            this.partieSimpleAttente.push(req.body.partieId);
-            this.socket.envoyerPartieSimpleAttente(req.body.partieId);
-            res.status(constantes.HTTP_CREATED).json(req.body.partieId);
+           this.ajouterPartieSimpleEnAttente(req, res);
         });
 
         router.delete("/deletePartieSimpleEnAttente/:id", async (req: Request, res: Response) => {
-            for (let i: number = 0 ; i < this.partieSimpleAttente.length ; i++) {
-                if (this.partieSimpleAttente[i] === req.params.id) {
-                    this.partieSimpleAttente.splice(i, 1);
-                }
-            }
-            this.socket.supprimerPartieSimpleAttente(req.params.id);
-            res.status(constantes.HTTP_CREATED).json(req.body.partieId);
+            this.supprimerPartieSimpleEnAttente(req, res);
         });
 
         router.post("/dialogAttenteSimpleFerme", (req: Request, res: Response) => {
-            this.socket.envoyerDialogSimpleFerme();
+            this.fermerDialogPartieAttenteSimple(req, res);
         });
 
         return router;
+    }
+
+    public async getPartieSimpleEnAttente(req: Request, res: Response): Promise<void> {
+        res.send(this.partieSimpleAttente);
+    }
+
+    public async ajouterPartieSimpleEnAttente(req: Request, res: Response): Promise<void> {
+        this.partieSimpleAttente.push(req.body.partieId);
+        this.socket.envoyerPartieSimpleAttente(req.body.partieId);
+        res.status(constantes.HTTP_CREATED).json(req.body.partieId);
+    }
+
+    public async supprimerPartieSimpleEnAttente(req: Request, res: Response): Promise<void> {
+        for (let i: number = 0 ; i < this.partieSimpleAttente.length ; i++) {
+            if (this.partieSimpleAttente[i] === req.params.id) {
+                this.partieSimpleAttente.splice(i, 1);
+            }
+        }
+        this.socket.supprimerPartieSimpleAttente(req.params.id);
+        res.status(constantes.HTTP_CREATED).json(req.params.id);
+    }
+
+    public async fermerDialogPartieAttenteSimple(req: Request, res: Response): Promise<void> {
+        this.socket.envoyerDialogSimpleFerme();
     }
 }
