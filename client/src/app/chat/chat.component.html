@@ -1,11 +1,11 @@
-<div class="container chat">
+<div class="container-fluid chat"> 
     <div class="row">                                                                         
         <div class="col-sm-12">
             <div class="chatbody">
                 <div class="panel panel-primary">
                     <div class="panel-heading top-bar">
                         <div class="col-md-8 col-xs-8">
-                            <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> Chat </h3>
+                            <h3 class="panel-title"><span class="glyphicon glyphicon-chevron-right"></span> Messages du jeu </h3>
                         </div>
                     </div>
                 <div class="panel-body">
@@ -27,9 +27,9 @@
                     </div>
                     <div class="panel-footer">
                         <div class="input-group">
-                            <input id="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Ecrire un message" />
+                            <input id="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Ecrire un message" [(ngModel)]="message"/>
                             <span class="input-group-btn">
-                            <button class="btn btn-primary btn-sm" id="btn-chat"> Envoyer </button>
+                            <button class="btn btn-primary btn-sm" id="btn-chat" (click)="envoyerMessage()"> Envoyer </button>
                             </span>
                         </div>
                     </div>

@@ -21,6 +21,26 @@ export const VIRGULE_STR_FORMAT: string = ",";
 export const IMAGE_BLOB: string = "image/bmp";
 export const URL_SLASH_STR: string = "/";
 
+export const URL_PARTIE_SIMPLE_GET: string = "/getPartieSimpleEnAttente";
+export const URL_PARTIE_SIMPLE_ADD: string = "/addPartieSimpleEnAttente";
+export const URL_PARTIE_SIMPLE_DELETE: string = "/deletePartieSimpleEnAttente/:id";
+export const URL_PARTIE_SIMPLE_DIALOGUE: string = "/dialogAttenteSimpleFerme";
+export const URL_PARTIE_SIMPLE_MULTIJOUEUR_JOINDRE: string = "/joindrePartieMultijoueurSimple";
+export const URL_PARTIE_SIMPLE_MULTIJOUEUR_DIFF_TROUVEE: string = "/differenceTrouveeMultijoueurSimple";
+export const URL_PARTIE_SIMPLE_MULTIJOUEUR_PARTIE_TERMINEE: string = "/partieTermineeMultijoueurSimple";
+export const URL_PARTIE_SIMPLE_MULTIJOUEUR_ERREUR: string = "/erreurMultijoueurSimple";
+
+export const ROUTE_PARTIE_SIMPLE: string = "/partieSimple";
+export const ROUTE_PARTIE_SIMPLE_AJOUTER: string = "/ajouter";
+export const ROUTE_PARTIE_SIMPLE_ADD_TEMPS: string = "/addTempsPartieSimple/:id";
+export const ROUTE_PARTIE_SIMPLE_GET_LISTE: string = "/getListePartieSimple";
+export const ROUTE_PARTIE_SIMPLE_REINITIALISE: string = "/reinitialiseTemps/:id";
+export const ROUTE_PARTIE_SIMPLE_DELETE: string = "/delete/:id";
+export const ROUTE_PARTIE_SIMPLE_GET_BY_ID: string = "/getPartieSimple/:id";
+export const ROUTE_PARTIE_SIMPLE_GET_CHANNEL: string = "/getChannelIdSimple";
+export const ROUTE_PARTIE_SIMPLE_SUPPRIMER_CHANNEL: string = "/supprimerChannelIdSimple";
+export const ROUTE_PARTIE_SIMPLE_IMAGE_CHARGEES: string = "/partieSimpleChargee";
+
 export const URL_PARTIE_MULTIPLE_GET: string = "/getPartieMultipleEnAttente";
 export const URL_PARTIE_MULTIPLE_ADD: string = "/addPartieMultipleEnAttente";
 export const URL_PARTIE_MULTIPLE_DELETE: string = "/deletePartieMultipleEnAttente/:id";
