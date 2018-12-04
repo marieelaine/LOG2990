@@ -122,7 +122,24 @@ describe("Partie Simple BD classe", () => {
             // tslint:disable-next-line:no-magic-numbers
             assert.equal(res.statusCode, 200);
         });
+    });
 
+    describe("Méthodes envoyant des messages par socket:", () => {
+        it("EnvoyerPartiesPretes:", () => {
+            // tslint:disable-next-line:no-any
+            const spy: sinon.SinonSpy = sinon.spy<any>(socketService, "envoyerPartiesSimplesChargees");
+            dbPartieSimple["envoyerPartiesPretes"]("channelID");
+
+            assert(spy.calledOnce);
+        });
+
+        it("EnvoyerMeilleurTemps:", () => {
+            // tslint:disable-next-line:no-any
+            const spy: sinon.SinonSpy = sinon.spy<any>(socketService, "meilleurTemps");
+            dbPartieSimple["envoyerMeilleurTemps"]("joueur", "nomPartie");
+
+            assert(spy.calledOnce);
+        });
     });
 
     mockServer.stop();
