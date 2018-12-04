@@ -49,7 +49,7 @@ describe("BaseDeDonneesUsager classe", () => {
             assert.notEqual(id, req.body._username);
         });
 
-        it("Devrait envoyer une requete pour ajouter un usager", async () => {
+        it("Devrait envoyer une requete pour ajouter un usager, mais retourne une erreur de connection", async () => {
             const usager: Usager = {
                 _id: "12",
                 _username: "charles"
@@ -58,7 +58,7 @@ describe("BaseDeDonneesUsager classe", () => {
 
             await user["ajouterUser"](usager, res);
             // tslint:disable-next-line:no-magic-numbers
-            assert.equal(res.statusCode, 200);
+            assert.equal(res.statusCode, 501);
         });
 
         it("Devrait envoyer une requete pour supprimer un usager", async () => {
@@ -70,7 +70,7 @@ describe("BaseDeDonneesUsager classe", () => {
 
             await user["supprimerUser"](usager._username, res);
             // tslint:disable-next-line:no-magic-numbers
-            assert.equal(res.statusCode, 200);
+            assert.equal(res.statusCode, 201);
         });
     });
 

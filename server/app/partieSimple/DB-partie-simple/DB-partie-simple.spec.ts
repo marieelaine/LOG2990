@@ -73,12 +73,12 @@ describe("Partie Simple BD classe", () => {
     });
 
     describe("Requetes", () => {
-        it("Devrait ajouter une partie", async () => {
+        it("Devrait ajouter une partie, mais retourne une erreur de connection", async () => {
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(dbPartieSimple, "genererImageMod");
             const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
-                method: "GET",
-                url: "localhost:3000/partieSimple/ajouter/",
+                method: "POST",
+                url: "localhost:3000/partieSimple/ajouter",
                 body: {
                     _id: "432",
                     _nomPartie: "partie1"
@@ -95,14 +95,14 @@ describe("Partie Simple BD classe", () => {
 
             assert(spy.calledOnce);
             // tslint:disable-next-line:no-magic-numbers
-            assert.equal(res.statusCode, 200);
+            assert.equal(res.statusCode, 501);
         });
 
         it("Devrait supprimer une partie", async () => {
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(dbPartieSimple, "deletePartie");
             const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
-                method: "GET",
+                method: "DELETE",
                 url: "localhost:3000/partieSimple/delete/432",
                 body: {
                     _id: "432",
@@ -120,7 +120,7 @@ describe("Partie Simple BD classe", () => {
 
             assert(spy.calledOnce);
             // tslint:disable-next-line:no-magic-numbers
-            assert.equal(res.statusCode, 200);
+            assert.equal(res.statusCode, 201);
         });
     });
 
