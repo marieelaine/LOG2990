@@ -27,9 +27,6 @@ export interface ImageInfo {
   providers: [PartieSimpleService]})
 
 export class DialogSimpleComponent extends DialogAbstrait {
-
-  // tslint:disable-next-line:no-suspicious-comment
-  // TODO faire une classe maybe
   protected premiereImage: string;
   protected deuxiemeImage: string;
   protected erreurNbImage: string;

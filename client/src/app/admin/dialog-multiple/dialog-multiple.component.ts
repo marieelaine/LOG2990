@@ -28,9 +28,6 @@ const C: string = "c";
 })
 
 export class DialogMultipleComponent extends DialogAbstrait {
-  // tslint:disable-next-line:no-suspicious-comment
-  // TODO faire une classe pour les erreurs
-
   protected toggleBoutonGeo: boolean;
   protected toggleBoutonTheme: boolean;
   protected erreurTransformation: string;
