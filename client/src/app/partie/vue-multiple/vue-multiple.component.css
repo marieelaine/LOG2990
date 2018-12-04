@@ -70,14 +70,22 @@ canvas{
 
 .not-allowed { cursor: not-allowed; }
 
-#chat{
-    margin-top:50px;
-}
-
 #header{
     margin-bottom: 10px
 }
 
 .container-fluid{
     margin-bottom: 60px;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+ }
+
+#images{
+    margin-bottom:300px;
 }

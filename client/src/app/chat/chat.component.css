@@ -8,13 +8,10 @@
     margin: 0 40px 0 auto;
 }
 
-.col-md-2, .col-md-10{
-    padding:0;
-}
-
 .panel{
     height: 250px;
     margin-bottom: 0px;
+    max-width: 360px;
 }
 
 .panel-footer{
