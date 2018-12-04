@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { SocketClientService } from "./socket/socket-client.service";
 import * as event from "../../../common/communication/evenementsSocket";
 import { NotifierService } from "angular-notifier";
+import { Joueur } from "./admin/joueur";
 
 const MINUTESANDSECONDCONVERT: number = 10;
 
@@ -34,23 +35,25 @@ export class AppComponent {
       });
 
       this.socketClientService.socket.on(event.MEILLEUR_TEMPS, (data) => {
-        this.afficherNotificationMeilleurTemps(data.joueur, data.partie);
+        this.afficherNotificationMeilleurTemps(data.joueur, data.partie, data.mode);
       });
     }
 
     private afficherNotificationConnection(joueur: string): void {
       const temps: string = this.getTempsCourant();
-      this.notifier.notify( "success", temps + " - " + joueur + " s'est connecté" );
+      this.notifier.notify( "success", temps + " - " + joueur + " vient de se connecter." );
     }
 
     private afficherNotificationDeconnection(joueur: string): void {
       const temps: string = this.getTempsCourant();
-      this.notifier.notify( "warning", temps + " - " + joueur + " s'est déconnecté" );
+      this.notifier.notify( "warning", temps + " - " + joueur + " vient de se déconnecter." );
     }
 
-    private afficherNotificationMeilleurTemps(joueur: string, partie: string): void {
+    private afficherNotificationMeilleurTemps(joueur: Joueur, partie: string, mode: string): void {
+      const position: number = 2;
       const temps: string = this.getTempsCourant();
-      this.notifier.notify("info", temps + " - " + joueur + " s'est classé dans le tableau des meilleurs temps pour la partie " + partie);
+      this.notifier.notify("info", temps + " - " + joueur.nom + " obtient la position " + position +
+                            " dans les meilleurs temps du jeu " + partie + " en " + mode);
     }
 
     public getTempsCourant(): string {

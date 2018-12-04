@@ -10,7 +10,7 @@ import { execFile, ChildProcess } from "child_process";
 import { SocketServerService } from "../../socket-io.service";
 import Types from "../../types";
 import { ReadLine } from "readline";
-import { DBPartieAbstract } from "../../partie-DB/DB-partie-abstract";
+import { DBPartieAbstract, Joueur } from "../../partie-DB/DB-partie-abstract";
 import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
 import * as uniqueValidator from "mongoose-unique-validator";
 
@@ -112,8 +112,8 @@ export class DBPartieMultiple extends DBPartieAbstract {
         this.socket.envoyerPartiesMultiplesChargees(channelId);
     }
 
-    protected envoyerMeilleurTemps(joueur: string, nomPartie: string): void {
-        this.socket.meilleurTemps(joueur, nomPartie);
+    protected envoyerMeilleurTemps(joueur: Joueur, nomPartie: string, type: string): void {
+        this.socket.meilleurTemps(joueur, nomPartie, type);
     }
 
     protected async verifierErreurScript(child: ChildProcess, partie: PartieMultipleInterface): Promise<void> {

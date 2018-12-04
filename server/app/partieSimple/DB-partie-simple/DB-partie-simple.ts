@@ -10,7 +10,7 @@ import { injectable, inject } from "inversify";
 import { SocketServerService } from "../../socket-io.service";
 import Types from "../../types";
 import * as constantes from "../../constantes";
-import { DBPartieAbstract } from "../../partie-DB/DB-partie-abstract";
+import { DBPartieAbstract, Joueur } from "../../partie-DB/DB-partie-abstract";
 import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
 import * as uniqueValidator from "mongoose-unique-validator";
 
@@ -88,8 +88,8 @@ export class DBPartieSimple extends DBPartieAbstract {
         this.socket.envoyerPartiesSimplesChargees(channelId);
     }
 
-    protected envoyerMeilleurTemps(joueur: string, nomPartie: string): void {
-        this.socket.meilleurTemps(joueur, nomPartie);
+    protected envoyerMeilleurTemps(joueur: Joueur, nomPartie: string, type: string): void {
+        this.socket.meilleurTemps(joueur, nomPartie, type);
     }
 
     protected async obtenirPartieId(nomPartie: String): Promise<string> {

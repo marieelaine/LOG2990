@@ -115,7 +115,7 @@ export abstract class DBPartieAbstract {
 
     protected abstract envoyerPartiesPretes(channelId: string): void;
 
-    protected abstract envoyerMeilleurTemps(joueur: string, nomPartie: string): void;
+    protected abstract envoyerMeilleurTemps(joueur: Joueur, nomPartie: string, type: string): void;
 
     protected abstract creerSchemaArray(): void;
 
@@ -228,12 +228,11 @@ export abstract class DBPartieAbstract {
     private async ajouterTempsSiTopTrois(temps: Joueur, partie: PartieSimpleInterface | PartieMultipleInterface,
                                          typeDeTemps: string): Promise<void> {
         if (temps._temps < partie[typeDeTemps][PARTIE_SECOND_ELEMENT]._temps) {
-            this.envoyerMeilleurTemps(temps._nom, partie._nomPartie);
             partie[typeDeTemps].splice(-1, 1);
             partie[typeDeTemps].push(temps);
+            await this.trierTemps(partie._id, partie[typeDeTemps], typeDeTemps);
+            this.envoyerMeilleurTemps(temps, partie._nomPartie, typeDeTemps);
         }
-
-        await this.trierTemps(partie._id, partie[typeDeTemps], typeDeTemps);
     }
 
     protected getSortedTimes(arr: Array<Joueur>): Array<Joueur> {

@@ -4,6 +4,7 @@ import * as event from "../../common/communication/evenementsSocket";
 import { injectable } from "inversify";
 import { PartieSimpleInterface } from "../../common/partie-simple-interface";
 import { PartieMultipleInterface } from "../../common/partie-multiple-interface";
+import { Joueur } from "./partie-DB/DB-partie-abstract";
 @injectable()
 export class SocketServerService {
 
@@ -105,8 +106,8 @@ export class SocketServerService {
         this.io.emit(event.DECONNECTION_USER, {joueur: joueur});
     }
 
-    public meilleurTemps(joueur: string, partie: string): void {
-        this.io.emit(event.MEILLEUR_TEMPS, {joueur: joueur, partie: partie});
+    public meilleurTemps(joueur: Joueur, partie: string, type: string): void {
+        this.io.emit(event.MEILLEUR_TEMPS, {joueur: joueur, partie: partie, type: type});
     }
 
     public envoyerPartiesSimplesChargees(channelId: string): void {
