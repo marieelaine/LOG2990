@@ -100,8 +100,8 @@ export abstract class PartieAbstraiteClass {
 
     protected ajouterMessageDiffTrouvee(joueur: string): void {
         this.partieAttributsMultijoueur.isMultijoueur ?
-            this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + constantes.DIFF_TROUVE_PAR + joueur)
-            : this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + constantes.DIFF_TROUVE);
+            this.chat.ajouterMessageAuMessagesChat(constantes.DIFF_TROUVE_PAR + joueur)
+            : this.chat.ajouterMessageAuMessagesChat(constantes.DIFF_TROUVE);
     }
 
     protected async terminerPartie(gagnant: string): Promise<void> {
@@ -181,7 +181,7 @@ export abstract class PartieAbstraiteClass {
         this.partieAttributsData.audio.play().catch(() => ErrorHandler);
 
         if (!this.partieAttributsMultijoueur.isMultijoueur) {
-            this.chat.ajouterMessageAuMessagesChat(this.getTempsCourant() + constantes.ERREUR_CHAT);
+            this.chat.ajouterMessageAuMessagesChat(constantes.ERREUR_CHAT);
         }
 
         setTimeout(() => {
@@ -190,30 +190,9 @@ export abstract class PartieAbstraiteClass {
         },         constantes.TIMEOUT);
     }
 
-    protected getTempsCourant(): string {
-        const date: Date = new Date();
-
-        return date.getHours() + constantes.DEUX_POINTS_TEMPS_FORMAT
-            + this.getMinutes(date)
-            + constantes.DEUX_POINTS_TEMPS_FORMAT
-            + this.getSecondes(date);
-    }
-
     protected afficherPartie(): void {
         this.getImageData();
         this.setup();
-    }
-
-    private getMinutes(date: Date): string {
-        return date.getMinutes() < constantes.CONVERSION_TEMPS ?
-            constantes.ZERO_STR_FORMAT + date.getMinutes().toString()
-            : date.getMinutes().toString();
-    }
-
-    private getSecondes(date: Date): string {
-        return date.getSeconds() < constantes.CONVERSION_TEMPS ?
-            constantes.ZERO_STR_FORMAT + date.getSeconds().toString()
-            : date.getSeconds().toString();
     }
 
     private jouerApplaudissements(): void {
