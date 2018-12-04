@@ -1,3 +1,5 @@
+import * as constantes from "../../constantes";
+
 export class PartieAttributsAdmin {
     private _partieCommence: boolean;
     private _differenceRestantes: number;
@@ -6,6 +8,14 @@ export class PartieAttributsAdmin {
     private _isMultijoueur: boolean;
     private _messageDifferences: string;
     private _differencesTrouvees: number;
+
+    public constructor() {
+        this.partieCommence = false;
+        this.differencesTrouvees = 0;
+        this.messageDifferences = constantes.CHARGEMENT_IMAGES;
+        this.diffTrouvee = [[], []];
+        this.penaliteEtat = false;
+    }
 
     public get partieCommence(): boolean {
         return this._partieCommence;
