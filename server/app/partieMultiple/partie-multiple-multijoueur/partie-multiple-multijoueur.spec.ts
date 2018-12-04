@@ -17,6 +17,12 @@ describe("Partie Multiple Multijoueur", () => {
         partie = new PartieMultipleMultijoueur(socket);
     });
 
+    describe("Constructeur", () => {
+        it("Devrait etre defini", () => {
+            assert.isDefined(partie);
+        });
+    });
+
     it("Devrait envoyer une requete pour joindre une partie multiple", async () => {
         const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
             method: "POST",

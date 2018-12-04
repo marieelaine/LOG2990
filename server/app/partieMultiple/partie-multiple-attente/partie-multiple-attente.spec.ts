@@ -18,6 +18,15 @@ describe("Partie Multiple Attente Routes", () => {
         routesAttente["partieMultipleAttente"] = ["1"];
     });
 
+    describe("Constructeur", () => {
+        it("Devrait etre defini", () => {
+            assert.isDefined(routesAttente);
+        });
+        it("Devrait definir l'attribut partieMultipleAttente", () => {
+            assert.isDefined(routesAttente["partieMultipleAttente"]);
+        });
+    });
+
     it("Devrait recuperer une liste de partie multiple en attente", async () => {
         const req: mockHttp.MockRequest<Request> = mockHttp.createRequest();
         const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();

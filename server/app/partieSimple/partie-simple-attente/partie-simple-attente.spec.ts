@@ -18,6 +18,15 @@ describe("Partie Simple Attente Routes", () => {
         routesAttente["partieSimpleAttente"] = ["1"];
     });
 
+    describe("Constructeur", () => {
+        it("Devrait etre defini", () => {
+            assert.isDefined(routesAttente);
+        });
+        it("Devrait definir l'attribut partieSimpleAttente", () => {
+            assert.isDefined(routesAttente["partieSimpleAttente"]);
+        });
+    });
+
     it("Devrait recuperer une liste de partie simple en attente", async () => {
         const req: mockHttp.MockRequest<Request> = mockHttp.createRequest();
         const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
