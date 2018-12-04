@@ -32,8 +32,8 @@ export const URL_PARTIE_SIMPLE_MULTIJOUEUR_ERREUR: string = "/erreurMultijoueurS
 
 export const ROUTE_PARTIE_SIMPLE: string = "/partieSimple";
 export const ROUTE_PARTIE_SIMPLE_AJOUTER: string = "/ajouter";
-export const ROUTE_PARTIE_SIMPLE_ADD_TEMPS: string = "/addTempsPartiePARTIE/:id";
-export const ROUTE_PARTIE_SIMPLE_GET_LISTE: string = "/getListePartiePARTIE";
+export const ROUTE_PARTIE_SIMPLE_ADD_TEMPS: string = "/addTempsPartieSimple/:id";
+export const ROUTE_PARTIE_SIMPLE_GET_LISTE: string = "/getListePartieSimple";
 export const ROUTE_PARTIE_SIMPLE_REINITIALISE: string = "/reinitialiseTemps/:id";
 export const ROUTE_PARTIE_SIMPLE_DELETE: string = "/delete/:id";
 export const ROUTE_PARTIE_SIMPLE_GET_BY_ID: string = "/getPartieSimple/:id";
