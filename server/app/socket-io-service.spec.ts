@@ -1,12 +1,12 @@
-import * as socket from "socket.io";
 import { assert } from "chai";
 import { Server } from "mock-socket";
 import { SocketServerService } from "./socket-io.service";
 import * as fsx from "fs-extra";
 import * as sinon from "sinon";
 import * as constantes from "./constantes";
+import * as event from "../../common/communication/evenementsSocket";
 
-describe("Classe socket-io-service --------------------------------------------------------------------------------", () => {
+describe("Classe socket-io-service", () => {
     let socketService: SocketServerService;
     const fakeURL: string = "ws://localhost:8080";
     // tslint:disable-next-line:no-any
@@ -28,15 +28,13 @@ describe("Classe socket-io-service ---------------------------------------------
     });
 
     describe("Methode init", () => {
-        it("Devrais appeler la methode socket", () => {
+        it("Devrais appeler la methode socket emit envoyerMessageErreurNom", () => {
             // tslint:disable-next-line:no-any
-            // const spy: sinon.SinonSpy = sinon.spy<any>(socket, "emit").withArgs(sinon.match.string);
-            const stub: sinon.SinonStub = sinon.stub(socket["io"], "listen").withArgs(sinon.match.string);
+            const spy: sinon.SinonSpy = sinon.spy<any>(socketService["io"], "emit");
 
             socketService["envoyerMessageErreurNom"]("Test");
-
-            // assert(spy.calledOnce);
-            assert(stub.calledWith("Test"));
+            assert(spy.calledWith(event.ENVOYER_MESSAGE_NOM_PRIS, "Test"));
+            assert(spy.calledOnce);
         });
     });
 
