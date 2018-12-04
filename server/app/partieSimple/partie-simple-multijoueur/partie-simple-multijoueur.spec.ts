@@ -23,65 +23,67 @@ describe("Partie Simple Multijoueur", () => {
         });
     });
 
-    it("Devrait envoyer une requete pour joindre une partie simple", async () => {
-        const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
-            method: "POST",
-            url: "localhost:3000/joindrePartieMultijoueurSimple",
-            body: {channelId: "2"}
+    describe("Requetes:", () => {
+        it("Devrait envoyer une requete pour joindre une partie simple", async () => {
+            const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+                method: "POST",
+                url: "localhost:3000/joindrePartieMultijoueurSimple",
+                body: {channelId: "2"}
+            });
+            const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
+
+            partie["requeteEnvoyerJoindreSimple"](req, res);
+            const data: string = JSON.parse(res._getData());
+
+            assert.equal(data, req.body.channelId);
         });
-        const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-        partie["requeteEnvoyerJoindreSimple"](req, res);
-        const data: string = JSON.parse(res._getData());
+        it("Devrait envoyer une requete pour une difference trouvee", async () => {
+            const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+                method: "POST",
+                url: "localhost:3000/joindrePartieMultijoueurSimple",
+                body: {
+                    channelId: "2",
+                    diff: "180",
+                    source: "image1",
+                    joueur: "charles"
+                }
+            });
+            const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-        assert.equal(data, req.body.channelId);
-    });
+            partie["requeteEnvoyerDiffTrouveeSimple"](req, res);
+            const data: string = JSON.parse(res._getData());
 
-    it("Devrait envoyer une requete pour une difference trouvee", async () => {
-        const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
-            method: "POST",
-            url: "localhost:3000/joindrePartieMultijoueurSimple",
-            body: {
-                channelId: "2",
-                diff: "180",
-                source: "image1",
-                joueur: "charles"
-            }
+            assert.equal(data, req.body.channelId);
         });
-        const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-        partie["requeteEnvoyerDiffTrouveeSimple"](req, res);
-        const data: string = JSON.parse(res._getData());
+        it("Devrait envoyer une requete pour terminer une partie simple", async () => {
+            const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+                method: "POST",
+                url: "localhost:3000//partieTermineeMultijoueurSimple",
+                body: {channelId: "2"}
+            });
+            const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-        assert.equal(data, req.body.channelId);
-    });
+            partie["requeteEnvoyerPartieSimpleTerminee"](req, res);
+            const data: string = JSON.parse(res._getData());
 
-    it("Devrait envoyer une requete pour terminer une partie simple", async () => {
-        const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
-            method: "POST",
-            url: "localhost:3000//partieTermineeMultijoueurSimple",
-            body: {channelId: "2"}
+            assert.equal(data, req.body.channelId);
         });
-        const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-        partie["requeteEnvoyerPartieSimpleTerminee"](req, res);
-        const data: string = JSON.parse(res._getData());
+        it("Devrait envoyer une requete pour erreur dans une partie simple", async () => {
+            const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+                method: "POST",
+                url: "localhost:3000/erreurMultijoueurSimple",
+                body: {channelId: "2"}
+            });
+            const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-        assert.equal(data, req.body.channelId);
-    });
+            partie["requeteErreurSimple"](req, res);
+            const data: string = JSON.parse(res._getData());
 
-    it("Devrait envoyer une requete pour erreur dans une partie simple", async () => {
-        const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
-            method: "POST",
-            url: "localhost:3000/erreurMultijoueurSimple",
-            body: {channelId: "2"}
+            assert.equal(data, req.body.channelId);
         });
-        const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
-
-        partie["requeteErreurSimple"](req, res);
-        const data: string = JSON.parse(res._getData());
-
-        assert.equal(data, req.body.channelId);
     });
 
     mockServer.stop();

@@ -27,44 +27,46 @@ describe("Partie Simple Attente Routes", () => {
         });
     });
 
-    it("Devrait recuperer une liste de partie simple en attente", async () => {
-        const req: mockHttp.MockRequest<Request> = mockHttp.createRequest();
-        const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
+    describe("Requetes:", () => {
+        it("Devrait recuperer une liste de partie simple en attente", async () => {
+            const req: mockHttp.MockRequest<Request> = mockHttp.createRequest();
+            const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-        routesAttente["getPartieSimpleEnAttente"](req, res);
-        const data: string[] = JSON.parse(res._getData());
+            routesAttente["getPartieSimpleEnAttente"](req, res);
+            const data: string[] = JSON.parse(res._getData());
 
-        assert.equal(data, routesAttente["partieSimpleAttente"]);
-    });
-
-    it("Devrait ajouter une partie simple en attente", async () => {
-        const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
-            method: "POST",
-            url: "localhost:3000/addPartieSimpleEnAttente",
-            body: {partieId: "2"}
+            assert.equal(data, routesAttente["partieSimpleAttente"]);
         });
-        const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-        routesAttente["ajouterPartieSimpleEnAttente"](req, res);
+        it("Devrait ajouter une partie simple en attente", async () => {
+            const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+                method: "POST",
+                url: "localhost:3000/addPartieSimpleEnAttente",
+                body: {partieId: "2"}
+            });
+            const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-        // tslint:disable-next-line:no-magic-numbers
-        assert.equal(routesAttente["partieSimpleAttente"].length, 2);
-    });
+            routesAttente["ajouterPartieSimpleEnAttente"](req, res);
 
-    it("Devrait supprimer la partie simple en attente passee en parametre", async () => {
-        const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
-            method: "DELETE",
-            url: "localhost:3000/deletePartieSimpleEnAttente/1",
-            body: {
-              partieId: "1"
-            },
-            params : {id: "1"}
+            // tslint:disable-next-line:no-magic-numbers
+            assert.equal(routesAttente["partieSimpleAttente"].length, 2);
         });
-        const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-        routesAttente["supprimerPartieSimpleEnAttente"](req, res);
+        it("Devrait supprimer la partie simple en attente passee en parametre", async () => {
+            const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+                method: "DELETE",
+                url: "localhost:3000/deletePartieSimpleEnAttente/1",
+                body: {
+                partieId: "1"
+                },
+                params : {id: "1"}
+            });
+            const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-        assert.equal(routesAttente["partieSimpleAttente"].length, 0);
+            routesAttente["supprimerPartieSimpleEnAttente"](req, res);
+
+            assert.equal(routesAttente["partieSimpleAttente"].length, 0);
+        });
     });
 
     mockServer.stop();
