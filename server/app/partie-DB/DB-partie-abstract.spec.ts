@@ -29,11 +29,11 @@ class DBPartie extends DBPartieAbstract {
 
     protected envoyerPartiesPretes(channelId: string): void { ""; }
 
-    protected async trierTemps(idPartie: String, tempsSolo: Array<Joueur>, typeDeTemps: string): Promise<void> { ""; }
+    protected async trierTemps(idPartie: String, temps: Array<Joueur>, typeDeTemps: string): Promise<Array<Joueur>> { return []; }
 
     protected async ajouterTemps(idPartie: string, temps: Joueur, isSolo: boolean): Promise<void> { ""; }
 
-    protected envoyerMeilleurTemps(joueur: string, nomPartie: string): void { ""; }
+    protected envoyerMeilleurTemps(joueur: Joueur, nomPartie: string, isSolo: boolean, temps: Array<Joueur>): void { ""; }
 
     protected async getPartieByName(nomPartie: String): Promise<PartieSimpleInterface | PartieMultipleInterface> {
         const partie: PartieSimpleInterface = {     _id: "123",
