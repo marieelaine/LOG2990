@@ -36,7 +36,6 @@
     color: white;
     position: relative;
     overflow: hidden;
-    width: 360px;
 }
 .msg_receive{
     padding-left:0;
@@ -89,7 +88,3 @@
 .invisible{
     display: none;
 }
-/* .chat{
-    margin:0 auto;
-    width:360px;
-} */
