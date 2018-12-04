@@ -14,6 +14,12 @@ import { DBPartieAbstract } from "../../partie-DB/DB-partie-abstract";
 import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
 import * as uniqueValidator from "mongoose-unique-validator";
 
+const FICHIER_DIFF_TXT: string = "image3.bmp.txt";
+const IMAGE_1: string = "image1.bmp";
+const IMAGE_2: string = "image2.bmp";
+const IMAGE_3: string = "image3.bmp";
+const SCRIPT_BMPDIFF: string = "./bmpdiff/bmpdiff";
+
 @injectable()
 export class DBPartieSimple extends DBPartieAbstract {
 
@@ -135,7 +141,7 @@ export class DBPartieSimple extends DBPartieAbstract {
     }
 
     private getImageDiffAsArrays(partie: PartieSimpleInterface): void {
-        const imageMod: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + "image3.bmp.txt");
+        const imageMod: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + FICHIER_DIFF_TXT);
         const diffArrays: Array<Array<string>> = new Array<Array<string>>();
         const input: fs.ReadStream = fs.createReadStream(imageMod);
         const rl: ReadLine = require("readline").createInterface({
@@ -167,10 +173,10 @@ export class DBPartieSimple extends DBPartieAbstract {
         const buffers: Array<Buffer> = [partie._image1, partie._image2];
         await this.ajouterImagesAuFichier(buffers);
 
-        const script: string = p.resolve("./bmpdiff/bmpdiff");
-        const imageOri1: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + "image1.bmp");
-        const imageOri2: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + "image2.bmp");
-        const imageMod: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + "image3.bmp");
+        const script: string = p.resolve(SCRIPT_BMPDIFF);
+        const imageOri1: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + IMAGE_1);
+        const imageOri2: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + IMAGE_2);
+        const imageMod: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + IMAGE_3);
         const args: string[] = [imageOri1, imageOri2, imageMod];
 
         const child: ChildProcess = execFile(script, args);
