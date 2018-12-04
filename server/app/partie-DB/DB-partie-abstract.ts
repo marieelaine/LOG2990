@@ -8,7 +8,6 @@ import * as constantes from "../constantes";
 import { BaseDeDonnees } from "../baseDeDonnees/baseDeDonnees";
 import { ChildProcess } from "child_process";
 import { Schema, Model, Document } from "mongoose";
-import * as uniqueValidator from "mongoose-unique-validator";
 import {PartieSimpleInterface} from "../../../common/partie-simple-interface";
 import {PartieMultipleInterface} from "../../../common/partie-multiple-interface";
 
@@ -40,10 +39,6 @@ export abstract class DBPartieAbstract {
 
         this.createSchemaArray();
         this.createSchemaBuffer();
-
-        this.schemaBuffer.plugin(uniqueValidator);
-        this.schemaArray.plugin(uniqueValidator);
-
     }
 
     public abstract async requeteAjouterPartie(req: Request, res: Response): Promise<void>;
