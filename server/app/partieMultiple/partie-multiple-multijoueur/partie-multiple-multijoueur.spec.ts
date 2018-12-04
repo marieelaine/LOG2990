@@ -24,7 +24,7 @@ describe("Partie Multiple Multijoueur", () => {
     });
 
     describe("Requetes:", () => {
-        it("Devrait envoyer une requete pour joindre une partie multiple", async () => {
+        it("Devrait envoyer une requete pour joindre une partie multiple", () => {
             const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
                 method: "POST",
                 url: "localhost:3000/joindrePartieMultijoueurMultiple",
@@ -38,7 +38,7 @@ describe("Partie Multiple Multijoueur", () => {
             assert.equal(data, req.body.channelId);
         });
 
-        it("Devrait envoyer une requete pour une difference trouvee", async () => {
+        it("Devrait envoyer une requete pour une difference trouvee", () => {
             const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
                 method: "POST",
                 url: "localhost:3000/joindrePartieMultijoueurMultiple",
@@ -57,7 +57,7 @@ describe("Partie Multiple Multijoueur", () => {
             assert.equal(data, req.body.channelId);
         });
 
-        it("Devrait envoyer une requete pour terminer une partie multiple", async () => {
+        it("Devrait envoyer une requete pour terminer une partie multiple", () => {
             const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
                 method: "POST",
                 url: "localhost:3000//partieTermineeMultijoueurMultiple",
@@ -71,7 +71,7 @@ describe("Partie Multiple Multijoueur", () => {
             assert.equal(data, req.body.channelId);
         });
 
-        it("Devrait envoyer une requete pour erreur dans une partie multiple", async () => {
+        it("Devrait envoyer une requete pour erreur dans une partie multiple", () => {
             const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
                 method: "POST",
                 url: "localhost:3000/erreurMultijoueurMultiple",

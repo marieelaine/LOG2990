@@ -96,16 +96,4 @@ describe("PartieService", () => {
         });
     });
 
-    describe("Fonction reinitialiserTempsPartie", () => {
-        it("Devrait faire une requete PUT", () => {
-            const id: string = "12345abcde";
-
-            service.reinitialiserTempsPartieSimple(id, new Array<Joueur>(), new Array<Joueur>())
-                .catch(() => ErrorHandler);
-
-            const req: TestRequest = http.expectOne(constantes.REINITIALISER_TEMPS_SIMPLE_URL + id);
-            expect(req.request.method).toBe(constantes.METHODE_PUT);
-        });
-    });
-
 });

@@ -91,7 +91,7 @@ describe("Partie Simple BD classe", () => {
 
             const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-            dbPartieSimple["requeteAjouterPartie"](req, res);
+            await dbPartieSimple["requeteAjouterPartie"](req, res);
 
             assert(spy.calledOnce);
             // tslint:disable-next-line:no-magic-numbers
@@ -116,7 +116,7 @@ describe("Partie Simple BD classe", () => {
 
             const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-            dbPartieSimple["requeteDeletePartie"](req, res);
+            await dbPartieSimple["requeteDeletePartie"](req, res);
 
             assert(spy.calledOnce);
             // tslint:disable-next-line:no-magic-numbers

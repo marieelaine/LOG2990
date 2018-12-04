@@ -156,7 +156,7 @@ describe("Partie Multiple BD classe", () => {
 
             const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-            partieMultipleBD["requeteAjouterPartie"](req, res);
+            await partieMultipleBD["requeteAjouterPartie"](req, res);
 
             assert(spy.calledOnce);
             // tslint:disable-next-line:no-magic-numbers
@@ -181,7 +181,7 @@ describe("Partie Multiple BD classe", () => {
 
             const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-            partieMultipleBD["requeteDeletePartie"](req, res);
+            await partieMultipleBD["requeteDeletePartie"](req, res);
 
             assert(spy.calledOnce);
             // tslint:disable-next-line:no-magic-numbers

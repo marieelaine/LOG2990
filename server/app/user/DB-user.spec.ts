@@ -56,7 +56,7 @@ describe("BaseDeDonneesUsager classe", () => {
             };
             const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-            user["ajouterUser"](usager, res);
+            await user["ajouterUser"](usager, res);
             // tslint:disable-next-line:no-magic-numbers
             assert.equal(res.statusCode, 200);
         });
@@ -68,7 +68,7 @@ describe("BaseDeDonneesUsager classe", () => {
             };
             const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-            user["supprimerUser"](usager._username, res);
+            await user["supprimerUser"](usager._username, res);
             // tslint:disable-next-line:no-magic-numbers
             assert.equal(res.statusCode, 200);
         });
