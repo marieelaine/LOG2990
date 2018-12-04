@@ -42,8 +42,7 @@ describe("ListePartiesComponent", () => {
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: {} },
                 { provide: DomSanitizer, useValue: { sanitize: () => "safeString", bypassSecurityTrustHtml : () => "safestring" }},
-                SocketClientService,
-                CookieService
+                SocketClientService, CookieService
             ]
         });
         fixture = TestBed.createComponent(ListePartiesComponent);

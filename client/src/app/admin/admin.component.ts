@@ -1,6 +1,6 @@
 import {Component, ViewChild} from "@angular/core";
 import {MatDialog, MatMenuTrigger} from "@angular/material";
-import {DialogSimpleComponent,} from "./dialog-simple/dialog-simple.component";
+import {DialogSimpleComponent} from "./dialog-simple/dialog-simple.component";
 import {DialogMultipleComponent} from "./dialog-multiple/dialog-multiple.component";
 import {DialogErreurComponent} from "./dialog-erreur/dialog-erreur.component";
 import {SocketClientService} from "../socket/socket-client.service";
