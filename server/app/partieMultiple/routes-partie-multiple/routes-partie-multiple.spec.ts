@@ -2,6 +2,7 @@ import * as WebRequest from "web-request";
 import * as assert from "assert";
 import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
 import { BASE_URL } from "../../../../client/src/app/constantes";
+import { Result } from "range-parser";
 
 const URL_LISTMULTIPLE: string = BASE_URL + "partieMultiple/getListePartieMultiple";
 // id doit exister dans bd, n'est pas un mock
@@ -17,9 +18,16 @@ describe("Route Partie Multiple classe", () => {
         });
 
         it("Devrait retourner des donnees", async () => {
+
+            return new Promise((resolve, reject) => {
             const resultat: PartieMultipleInterface[] = await WebRequest.json<PartieMultipleInterface[]>(URL_LISTMULTIPLE);
 
-            assert.ok(resultat);
+            }).then((state) => {
+                assert.ok(resultat);
+              })
+              .catch((error) => {
+                assert.isNotOk(error,'Promise error');
+              });
         });
     });
 });
