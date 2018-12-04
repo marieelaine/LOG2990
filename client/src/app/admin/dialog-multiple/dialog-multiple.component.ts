@@ -96,8 +96,6 @@ export class DialogMultipleComponent extends DialogAbstrait {
     this.partieMultipleService.register(result)
       .subscribe(
         () => {
-          // tslint:disable-next-line:no-suspicious-comment
-          // TODO: do nothing
         },
         (error) => {
           console.error(error);
