@@ -6,11 +6,19 @@ import * as constantes from "../../constantes";
 import { SocketServerService } from "../../socket-io.service";
 import { Joueur } from "../../partie-DB/DB-partie-abstract";
 import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
+import { Server } from "mock-socket";
+import * as mockHttp from "node-mocks-http";
+import {Request, Response} from "express";
 
 describe("Partie Simple BD classe", () => {
     let dbPartieSimple: DBPartieSimple;
     const socketService: SocketServerService = new SocketServerService();
+    const fakeURL: string = "ws://localhost:8080";
+    // tslint:disable-next-line:no-any
+    const mockServer: any = new Server(fakeURL);
+
     beforeEach(() => {
+        socketService.init(mockServer);
         dbPartieSimple = new DBPartieSimple(socketService);
     });
 
@@ -63,6 +71,61 @@ describe("Partie Simple BD classe", () => {
             assert(stub.calledOnce);
         });
     });
+
+    describe("Requetes", () => {
+        it("Devrait ajouter une partie", async () => {
+            // tslint:disable-next-line:no-any
+            const spy: sinon.SinonSpy = sinon.spy<any>(dbPartieSimple, "genererImageMod");
+            const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+                method: "GET",
+                url: "localhost:3000/partieSimple/ajouter/",
+                body: {
+                    _id: "432",
+                    _nomPartie: "partie1"
+                },
+                params: {
+                    _id: "432",
+                    _nomPartie: "partie1"
+                }
+            });
+
+            const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
+
+            dbPartieSimple["requeteAjouterPartie"](req, res);
+
+            assert(spy.calledOnce);
+            // tslint:disable-next-line:no-magic-numbers
+            assert.equal(res.statusCode, 200);
+        });
+
+        it("Devrait supprimer une partie", async () => {
+            // tslint:disable-next-line:no-any
+            const spy: sinon.SinonSpy = sinon.spy<any>(dbPartieSimple, "deletePartie");
+            const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+                method: "GET",
+                url: "localhost:3000/partieSimple/delete/432",
+                body: {
+                    _id: "432",
+                    _nomPartie: "partie1"
+                },
+                params: {
+                    _id: "432",
+                    _nomPartie: "partie1"
+                }
+            });
+
+            const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
+
+            dbPartieSimple["requeteDeletePartie"](req, res);
+
+            assert(spy.calledOnce);
+            // tslint:disable-next-line:no-magic-numbers
+            assert.equal(res.statusCode, 200);
+        });
+
+    });
+
+    mockServer.stop();
 
     afterEach(async() => {
         sinon.restore();
