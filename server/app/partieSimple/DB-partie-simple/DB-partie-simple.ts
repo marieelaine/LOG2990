@@ -48,7 +48,7 @@ export class DBPartieSimple extends DBPartieAbstract {
         }
     }
 
-    protected createSchemaArray(): void {
+    protected creerSchemaArray(): void {
         this.schemaArray = new Schema({
             _nomPartie: { type: String, required: true, unique: true },
             _tempsSolo: { type: Array, required: true },
@@ -60,7 +60,7 @@ export class DBPartieSimple extends DBPartieAbstract {
         this.schemaArray.plugin(uniqueValidator);
     }
 
-    protected createSchemaBuffer(): void {
+    protected creerSchemaBuffer(): void {
         this.schemaBuffer = new Schema({
             _nomPartie: { type: String, required: true, unique: true },
             _tempsSolo: { type: Array, required: true },
@@ -165,7 +165,7 @@ export class DBPartieSimple extends DBPartieAbstract {
 
     private async genererImageMod(partie: PartieSimpleInterface): Promise<void> {
         const buffers: Array<Buffer> = [partie._image1, partie._image2];
-        await this.addImagesToDirectory(buffers);
+        await this.ajouterImagesAuFichier(buffers);
 
         const script: string = p.resolve("./bmpdiff/bmpdiff");
         const imageOri1: string = p.resolve(constantes.INSIDE_IMAGES_DIRECTORY + "image1.bmp");
@@ -177,7 +177,7 @@ export class DBPartieSimple extends DBPartieAbstract {
         await this.verifierErreurScript(child, partie);
     }
 
-    private async addImagesToDirectory(buffers: Array<Buffer>): Promise<void> {
+    private async ajouterImagesAuFichier(buffers: Array<Buffer>): Promise<void> {
         await this.makeImagesDirectory();
         const writeFilePromise: Function = util.promisify(fs.writeFile);
         let i: number = 1;
