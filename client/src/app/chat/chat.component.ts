@@ -10,9 +10,11 @@ export class ChatComponent {
 
   public messagesChat: Array<string>;
   protected message: string;
+  protected chatVisible: boolean;
 
   public constructor() {
     this.messagesChat = new Array<string>();
+    this.chatVisible = true;
   }
 
   public ajouterMessageAuMessagesChat(msg: string): void {
@@ -33,6 +35,10 @@ export class ChatComponent {
         + this.getMinutes(date)
         + constantes.DEUX_POINTS_TEMPS_FORMAT
         + this.getSecondes(date);
+  }
+
+  protected toggleChatVisible(): void {
+     this.chatVisible = !this.chatVisible;
   }
 
   private getMinutes(date: Date): string {

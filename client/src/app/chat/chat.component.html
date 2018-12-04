@@ -1,40 +1,42 @@
-<div class="container-fluid chat"> 
+<div class="container-fluid chat chatbody"> 
+<div class="">
     <div class="row">                                                                         
         <div class="col">
-            <div class="chatbody">
-                <div class="panel panel-primary">
-                    <div class="panel-heading top-bar">
-                        <div class="col-md-8 col-xs-8">
-                            <h3 class="panel-title"><span class="glyphicon glyphicon-chevron-right"></span> Messages du jeu </h3>
-                        </div>
+            <div class="panel-heading top-bar" (click)="toggleChatVisible()"> 
+                    <div class="col-md-8 col-xs-8">
+                        <h3 class="panel-title"><span class="glyphicon glyphicon-chevron-right"></span> Messages du jeu </h3>
                     </div>
-                <div class="panel-body">
-                    <div *ngFor="let message of messagesChat">
-                        <p class="consoleMessages"> {{ message }} </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="row panel" id="body" [ngClass] = "chatVisible ? '' : 'invisible'" >
+        <div class="col">
+            <div class="panel-body">
+                <div *ngFor="let message of messagesChat">
+                    <p class="consoleMessages"> {{ message }} </p>
+                </div>
+                <div class="row msg_container base_sent">
+                    <div class="col-md-10 col-xs-10">
                     </div>
-                    <div class="row msg_container base_sent">
-                        <div class="col-md-10 col-xs-10">
-                        </div>
-                        <div class="col-md-2 col-xs-2">
-                        </div>
-                    </div>
-                    <div class="row msg_container base_receive">
-                        <div class="col-md-2 col-xs-2">
-                        </div>
-                        <div class="col-md-10 col-xs-10" id="MessagesRecus">
-                        </div>
-                    </div>
-                    </div>
-                    <div class="panel-footer">
-                        <div class="input-group">
-                            <input id="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Ecrire un message" [(ngModel)]="message"/>
-                            <span class="input-group-btn">
-                            <button class="btn btn-primary btn-sm" id="btn-chat" (click)="envoyerMessage()"> Envoyer </button>
-                            </span>
-                        </div>
+                    <div class="col-md-2 col-xs-2">
                     </div>
                 </div>
-             </div>
-         </div>
+                <div class="row msg_container base_receive">
+                    <div class="col-md-2 col-xs-2"></div>
+                    <div class="col-md-10 col-xs-10" id="MessagesRecus"></div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="input-group">
+                    <input id="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Ecrire un message" [(ngModel)]="message"/>
+                    <span class="input-group-btn">
+                    <button class="btn btn-primary btn-sm" id="btn-chat" (click)="envoyerMessage()"> Envoyer </button>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 </div>
