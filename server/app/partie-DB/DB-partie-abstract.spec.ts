@@ -115,23 +115,23 @@ describe("DBPartieAbstract", () => {
         });
     });
 
-    describe("Fonction makeImagesDirectory", () => {
+    describe("Fonction creerFichierImages", () => {
         it("Devrait appeller la fonction makeDirectory", async() => {
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(fs, "mkdir").withArgs(sinon.match.string);
 
-            await dbPartie["makeImagesDirectory"]();
+            await dbPartie["creerFichierImages"]();
 
             assert(spy.calledOnce);
         });
     });
 
-    describe("Fonction deleteImagesDirectory", () => {
+    describe("Fonction supprimerFichierImages", () => {
         it("Devrait appeller la fonction remove de fsx", async () => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             const resultatAttendu: string = "../Images";
 
-            await dbPartie["deleteImagesDirectory"]();
+            await dbPartie["supprimerFichierImages"]();
 
             assert(stub.calledOnce);
             assert(stub.calledWith(resultatAttendu));

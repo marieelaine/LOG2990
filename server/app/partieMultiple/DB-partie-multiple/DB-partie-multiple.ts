@@ -183,7 +183,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
     }
 
     private async genererScene(partie: PartieMultipleInterface): Promise<void> {
-        await this.makeImagesDirectory();
+        await this.creerFichierImages();
         const script: string = p.resolve(PATH_GENMULTI);
         const args: string[] = [partie._theme, String(partie._quantiteObjets), partie._typeModification, PATH_IMAGE];
         const child: ChildProcess = execFile(script, args);
@@ -201,7 +201,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
                 this.socket.envoyerPartieMultiple(await this.getPartieByName(partie._nomPartie) as PartieMultipleInterface);
             }
         });
-        await this.deleteImagesDirectory();
+        await this.supprimerFichierImages();
     }
 
     private getImageDiffTextFile(nomFichier: string, partie: PartieMultipleInterface, imgNumber: number): void {

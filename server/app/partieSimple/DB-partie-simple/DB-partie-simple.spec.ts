@@ -35,12 +35,12 @@ describe("Partie Simple BD classe", () => {
         });
     });
 
-    describe("Fonction deleteImagesDirectory", () => {
+    describe("Fonction supprimerFichierImages", () => {
         it("Devrait appeller la fonction remove de fsx", async () => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             const resultatAttendu: string = "../Images";
 
-            await dbPartieSimple["deleteImagesDirectory"]();
+            await dbPartieSimple["supprimerFichierImages"]();
 
             assert(stub.calledOnce);
             assert(stub.calledWith(resultatAttendu));
@@ -48,10 +48,10 @@ describe("Partie Simple BD classe", () => {
     });
 
     describe("Fonction traiterMessageErreur", () => {
-        it("Devrait appeller la fonction deleteImagesDirectory", async() => {
+        it("Devrait appeller la fonction supprimerFichierImages", async() => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             // tslint:disable-next-line:no-any
-            const spy: sinon.SinonSpy = sinon.spy<any>(dbPartieSimple, "deleteImagesDirectory");
+            const spy: sinon.SinonSpy = sinon.spy<any>(dbPartieSimple, "supprimerFichierImages");
             const stubSocket: sinon.SinonStub = sinon.stub(dbPartieSimple["socket"], "envoyerMessageErreurDifferences");
             stubSocket.onCall(0).callThrough();
 

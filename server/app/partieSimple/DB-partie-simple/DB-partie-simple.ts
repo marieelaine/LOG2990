@@ -117,7 +117,7 @@ export class DBPartieSimple extends DBPartieAbstract {
             this.socket.envoyerMessageErreurDifferences(constantes.ERREUR_DIFFERENCES);
         }
 
-        await this.deleteImagesDirectory();
+        await this.supprimerFichierImages();
     }
 
     private async enregistrerPartieSimple(diffArrays: Array<Array<string>>, partie: PartieSimpleInterface): Promise<void> {
@@ -178,7 +178,7 @@ export class DBPartieSimple extends DBPartieAbstract {
     }
 
     private async ajouterImagesAuFichier(buffers: Array<Buffer>): Promise<void> {
-        await this.makeImagesDirectory();
+        await this.creerFichierImages();
         const writeFilePromise: Function = util.promisify(fs.writeFile);
         let i: number = 1;
         for (const buf of buffers) {

@@ -35,12 +35,12 @@ describe("Partie Multiple BD classe", () => {
         });
     });
 
-    describe("Fonction deleteImagesDirectory", () => {
+    describe("Fonction supprimerFichierImages", () => {
         it("Devrait appeller la fonction remove de fsx", () => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             const resultatAttendu: string = "../Images";
 
-            partieMultipleBD["deleteImagesDirectory"]().catch();
+            partieMultipleBD["supprimerFichierImages"]().catch();
 
             assert(stub.calledOnce);
             assert(stub.calledWith(resultatAttendu));
@@ -48,10 +48,10 @@ describe("Partie Multiple BD classe", () => {
     });
 
     describe("Fonction enregistrerPartieMultiple", () => {
-        it("Devrait appeller la fonction deleteImagesDirectory", async () => {
+        it("Devrait appeller la fonction supprimerFichierImages", async () => {
             const stub: sinon.SinonStub = sinon.stub(fsx, "remove").withArgs(sinon.match.string);
             // tslint:disable-next-line:no-any
-            const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "deleteImagesDirectory");
+            const spy: sinon.SinonSpy = sinon.spy<any>(partieMultipleBD, "supprimerFichierImages");
             const stubSocketEnvoyerPartie: sinon.SinonStub = sinon.stub(partieMultipleBD["socket"], "envoyerMessageErreurNom");
 
             stubSocketEnvoyerPartie.onCall(0).callThrough();
