@@ -175,9 +175,7 @@ export class VueSimpleComponent extends PartieAbstraiteClass {
 
         this.socketClientService.socket.on(event.ERREUR_PARTIE_SIMPLE, (data) => {
             if (this.partieAttributsMultijoueur.channelId === data.channelId) {
-                this.partieAttributsMultijoueur.isMultijoueur ?
-                    this.chat.ajouterMessageAuMessagesChat(constantes.ERREUR_CHAT_PAR + data.joueur)
-                    : this.chat.ajouterMessageAuMessagesChat(constantes.ERREUR_CHAT);
+                this.chat.ajouterMessageAuMessagesChat(constantes.ERREUR_CHAT_PAR + data.joueur);
             }
         });
 
