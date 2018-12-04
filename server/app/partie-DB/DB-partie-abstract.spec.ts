@@ -9,6 +9,7 @@ import * as fs from "fs";
 import * as fsx from "fs-extra";
 import { PartieSimpleInterface } from "../../../common/partie-simple-interface";
 import { PartieMultipleInterface } from "../../../common/partie-multiple-interface";
+import * as mockHttp from "node-mocks-http";
 
 class DBPartie extends DBPartieAbstract {
 
@@ -145,6 +146,34 @@ describe("DBPartieAbstract", () => {
             const testString: any = await dbPartie["getChannelId"]();
             assert.isDefined(testString);
             assert.isString(testString);
+        });
+    });
+
+    describe("Requetes", () => {
+        it("Devrait appeller la requete requeteGetChannelId", async () => {
+            // tslint:disable-next-line:no-any
+            const spy: sinon.SinonSpy = sinon.spy<any>(dbPartie, "getChannelId");
+            const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+                method: "GET",
+                url: "localhost:3000/partieSimple/getChannelIdMultiple",
+                body: {
+                    _id: "432",
+                    _channelId: "2"
+                },
+                params: {
+                    _id: "432",
+                    _channelId: "2"
+                }
+            });
+
+            const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
+
+            // tslint:disable-next-line:no-any
+            await dbPartie["requeteGetChannelId"](req, res);
+
+            assert(spy.calledOnce);
+            // tslint:disable-next-line:no-magic-numbers
+            assert.equal(res.statusCode, 201);
         });
     });
 
