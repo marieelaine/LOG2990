@@ -18,43 +18,54 @@ describe("Partie Multiple Attente Routes", () => {
         routesAttente["partieMultipleAttente"] = ["1"];
     });
 
-    it("Devrait recuperer une liste de partie multiple en attente", async () => {
-        const req: mockHttp.MockRequest<Request> = mockHttp.createRequest();
-        const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
-        routesAttente["getPartieMultipleEnAttente"](req, res);
-        const data: string[] = JSON.parse(res._getData());
-
-        assert.equal(data, routesAttente["partieMultipleAttente"]);
+    describe("Constructeur", () => {
+        it("Devrait etre defini", () => {
+            assert.isDefined(routesAttente);
+        });
+        it("Devrait definir l'attribut partieMultipleAttente", () => {
+            assert.isDefined(routesAttente["partieMultipleAttente"]);
+        });
     });
 
-    it("Devrait ajouter une partie multiple en attente", async () => {
-        const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
-            method: "POST",
-            url: "localhost:3000/addPartieMultipleEnAttente",
-            body: {partieId: "2"}
+    describe("Requetes:", () => {
+        it("Devrait recuperer une liste de partie multiple en attente", async () => {
+            const req: mockHttp.MockRequest<Request> = mockHttp.createRequest();
+            const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
+            await routesAttente["getPartieMultipleEnAttente"](req, res);
+            const data: string[] = JSON.parse(res._getData());
+
+            assert.equal(data, routesAttente["partieMultipleAttente"]);
         });
-        const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-        routesAttente["ajouterPartieMultipleEnAttente"](req, res);
+        it("Devrait ajouter une partie multiple en attente", async () => {
+            const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+                method: "POST",
+                url: "localhost:3000/addPartieMultipleEnAttente",
+                body: {partieId: "2"}
+            });
+            const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-        // tslint:disable-next-line:no-magic-numbers
-        assert.equal(routesAttente["partieMultipleAttente"].length, 2);
-    });
+            await routesAttente["ajouterPartieMultipleEnAttente"](req, res);
 
-    it("Devrait supprimer la partie multiple en attente passee en parametre", async () => {
-        const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
-            method: "DELETE",
-            url: "localhost:3000/deletePartieMultipleEnAttente/1",
-            body: {
-              partieId: "1"
-            },
-            params : {id: "1"}
+            // tslint:disable-next-line:no-magic-numbers
+            assert.equal(routesAttente["partieMultipleAttente"].length, 2);
         });
-        const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-        routesAttente["supprimerPartieMultipleEnAttente"](req, res);
+        it("Devrait supprimer la partie multiple en attente passee en parametre", async () => {
+            const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
+                method: "DELETE",
+                url: "localhost:3000/deletePartieMultipleEnAttente/1",
+                body: {
+                partieId: "1"
+                },
+                params : {id: "1"}
+            });
+            const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-        assert.equal(routesAttente["partieMultipleAttente"].length, 0);
+            await routesAttente["supprimerPartieMultipleEnAttente"](req, res);
+
+            assert.equal(routesAttente["partieMultipleAttente"].length, 0);
+        });
     });
 
     mockServer.stop();

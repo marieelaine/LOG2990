@@ -173,9 +173,7 @@ export abstract class PartieAbstraiteClass {
         const ctx: CanvasRenderingContext2D = canvas.getContext(constantes.CONTEXT_2D) as CanvasRenderingContext2D;
         const imageSaved: ImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         ctx.font = constantes.FONT;
-        // ctx.textAlign = TEXT_ALIGN;
-        // tslint:disable-next-line:no-suspicious-comment
-        // TODO Bernard plz
+        ctx.textAlign = constantes.TEXT_ALIGN;
         ctx.fillStyle = constantes.ERREUR_COULEUR_INTERIEUR;
         ctx.fillText(constantes.ERREUR, event.offsetX, event.offsetY + constantes.OFFSET_ADDITIONNEL);
         ctx.lineWidth = constantes.LINE_WIDTH;

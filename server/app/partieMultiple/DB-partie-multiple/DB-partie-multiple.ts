@@ -12,6 +12,7 @@ import Types from "../../types";
 import { ReadLine } from "readline";
 import { DBPartieAbstract } from "../../partie-DB/DB-partie-abstract";
 import { PartieMultipleInterface } from "../../../../common/partie-multiple-interface";
+import * as uniqueValidator from "mongoose-unique-validator";
 
 const imagePOV1: number = 1;
 const imagePOV2: number = 2;
@@ -86,6 +87,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
                 _typeModification: { type: String, required: true },
                 _theme: { type: String, required: true }
             });
+            this.schemaBuffer.plugin(uniqueValidator);
         }
 
     protected createSchemaArray(): void {
@@ -103,6 +105,7 @@ export class DBPartieMultiple extends DBPartieAbstract {
             _typeModification: { type: String, required: true },
             _theme: { type: String, required: true }
         });
+        this.schemaArray.plugin(uniqueValidator);
     }
 
     protected envoyerPartiesPretes(channelId: string): void {

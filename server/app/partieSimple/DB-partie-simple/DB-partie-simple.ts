@@ -12,6 +12,7 @@ import Types from "../../types";
 import * as constantes from "../../constantes";
 import { DBPartieAbstract } from "../../partie-DB/DB-partie-abstract";
 import { PartieSimpleInterface } from "../../../../common/partie-simple-interface";
+import * as uniqueValidator from "mongoose-unique-validator";
 
 @injectable()
 export class DBPartieSimple extends DBPartieAbstract {
@@ -56,6 +57,7 @@ export class DBPartieSimple extends DBPartieAbstract {
             _image2: { type: Array, required: true },
             _imageDiff: { type: Array }
         });
+        this.schemaArray.plugin(uniqueValidator);
     }
 
     protected createSchemaBuffer(): void {
@@ -67,6 +69,7 @@ export class DBPartieSimple extends DBPartieAbstract {
             _image2: { type: Buffer, required: true },
             _imageDiff: { type: Array }
         });
+        this.schemaBuffer.plugin(uniqueValidator);
     }
 
     protected async verifierErreurScript(child: ChildProcess, partie: PartieSimpleInterface): Promise<void> {
