@@ -140,17 +140,17 @@ describe("DBPartieAbstract", () => {
     });
 
     describe("Fonction getChannelId", () => {
-        it("Devrait appeller la fonction getChannelId", async () => {
+        it("Devrait appeller la fonction getChannelId", () => {
 
             // tslint:disable-next-line:no-any
-            const testString: any = await dbPartie["getChannelId"]();
+            const testString: any = dbPartie["getChannelId"]();
             assert.isDefined(testString);
             assert.isString(testString);
         });
     });
 
     describe("Requetes", () => {
-        it("Devrait appeller la requete requeteGetChannelId", async () => {
+        it("Devrait appeller la requete requeteGetChannelId", () => {
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(dbPartie, "getChannelId");
             const req: mockHttp.MockRequest<Request> = mockHttp.createRequest({
@@ -169,7 +169,7 @@ describe("DBPartieAbstract", () => {
             const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
             // tslint:disable-next-line:no-any
-            await dbPartie["requeteGetChannelId"](req, res);
+            dbPartie["requeteGetChannelId"](req, res);
 
             assert(spy.calledOnce);
             // tslint:disable-next-line:no-magic-numbers
