@@ -31,7 +31,7 @@ describe("Partie Multiple Attente Routes", () => {
         it("Devrait recuperer une liste de partie multiple en attente", async () => {
             const req: mockHttp.MockRequest<Request> = mockHttp.createRequest();
             const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
-            routesAttente["getPartieMultipleEnAttente"](req, res);
+            await routesAttente["getPartieMultipleEnAttente"](req, res);
             const data: string[] = JSON.parse(res._getData());
 
             assert.equal(data, routesAttente["partieMultipleAttente"]);
@@ -45,7 +45,7 @@ describe("Partie Multiple Attente Routes", () => {
             });
             const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-            routesAttente["ajouterPartieMultipleEnAttente"](req, res);
+            await routesAttente["ajouterPartieMultipleEnAttente"](req, res);
 
             // tslint:disable-next-line:no-magic-numbers
             assert.equal(routesAttente["partieMultipleAttente"].length, 2);
@@ -62,7 +62,7 @@ describe("Partie Multiple Attente Routes", () => {
             });
             const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-            routesAttente["supprimerPartieMultipleEnAttente"](req, res);
+            await routesAttente["supprimerPartieMultipleEnAttente"](req, res);
 
             assert.equal(routesAttente["partieMultipleAttente"].length, 0);
         });

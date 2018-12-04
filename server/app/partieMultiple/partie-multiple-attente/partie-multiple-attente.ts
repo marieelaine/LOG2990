@@ -20,19 +20,19 @@ export class RoutesPartieMultipleAttente extends ServiceWeb {
         const router: Router = Router();
 
         router.get(constantes.URL_PARTIE_MULTIPLE_GET,  async (req: Request, res: Response) => {
-            this.getPartieMultipleEnAttente(req, res);
+            await this.getPartieMultipleEnAttente(req, res);
         });
 
         router.post(constantes.URL_PARTIE_MULTIPLE_ADD, async (req: Request, res: Response) => {
-            this.ajouterPartieMultipleEnAttente(req, res);
+            await this.ajouterPartieMultipleEnAttente(req, res);
         });
 
         router.delete(constantes.URL_PARTIE_MULTIPLE_DELETE, async (req: Request, res: Response) => {
-           this.supprimerPartieMultipleEnAttente(req, res);
+           await this.supprimerPartieMultipleEnAttente(req, res);
         });
 
         router.post(constantes.URL_PARTIE_MULTIPLE_DIALOGUE, async (req: Request, res: Response) => {
-            this.fermerDialogPartieAttenteMultiple(req, res);
+            await this.fermerDialogPartieAttenteMultiple(req, res);
         });
 
         return router;

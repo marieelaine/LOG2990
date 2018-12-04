@@ -32,7 +32,7 @@ describe("Partie Simple Attente Routes", () => {
             const req: mockHttp.MockRequest<Request> = mockHttp.createRequest();
             const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-            routesAttente["getPartieSimpleEnAttente"](req, res);
+            await routesAttente["getPartieSimpleEnAttente"](req, res);
             const data: string[] = JSON.parse(res._getData());
 
             assert.equal(data, routesAttente["partieSimpleAttente"]);
@@ -46,7 +46,7 @@ describe("Partie Simple Attente Routes", () => {
             });
             const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-            routesAttente["ajouterPartieSimpleEnAttente"](req, res);
+            await routesAttente["ajouterPartieSimpleEnAttente"](req, res);
 
             // tslint:disable-next-line:no-magic-numbers
             assert.equal(routesAttente["partieSimpleAttente"].length, 2);
@@ -63,7 +63,7 @@ describe("Partie Simple Attente Routes", () => {
             });
             const res: mockHttp.MockResponse<Response> = mockHttp.createResponse();
 
-            routesAttente["supprimerPartieSimpleEnAttente"](req, res);
+            await routesAttente["supprimerPartieSimpleEnAttente"](req, res);
 
             assert.equal(routesAttente["partieSimpleAttente"].length, 0);
         });
