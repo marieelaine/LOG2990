@@ -48,7 +48,7 @@ export class DBPartieSimple extends DBPartieAbstract {
         }
     }
 
-    protected createSchemaArray(): void {
+    protected creerSchemaArray(): void {
         this.schemaArray = new Schema({
             _nomPartie: { type: String, required: true, unique: true },
             _tempsSolo: { type: Array, required: true },
@@ -60,7 +60,7 @@ export class DBPartieSimple extends DBPartieAbstract {
         this.schemaArray.plugin(uniqueValidator);
     }
 
-    protected createSchemaBuffer(): void {
+    protected creerSchemaBuffer(): void {
         this.schemaBuffer = new Schema({
             _nomPartie: { type: String, required: true, unique: true },
             _tempsSolo: { type: Array, required: true },

@@ -81,9 +81,9 @@ class DBPartie extends DBPartieAbstract {
     protected async verifierErreurScript(child: ChildProcess,
                                          partie: PartieSimpleInterface | PartieMultipleInterface): Promise<void> { ""; }
 
-    protected createSchemaArray(): void { ""; }
+    protected creerSchemaArray(): void { ""; }
 
-    protected createSchemaBuffer(): void { ""; }
+    protected creerSchemaBuffer(): void { ""; }
 
 }
 
