@@ -35,7 +35,7 @@ export class ListePartieServiceService {
     .catch(() => ErrorHandler);
   }
 
-  public async reinitialiserTempsPartie(partieId: string, tempsSolo: Array<Joueur>, tempsUnContreUn: Array<Joueur>): Promise<void> {
+  public async reinitialiserTempsPartieSimple(partieId: string, tempsSolo: Array<Joueur>, tempsUnContreUn: Array<Joueur>): Promise<void> {
 
     this.http.put(route.REINITIALISER_TEMPS_SIMPLE_URL + partieId, { tempsSolo, tempsUnContreUn }).toPromise()
     .catch(() => ErrorHandler);

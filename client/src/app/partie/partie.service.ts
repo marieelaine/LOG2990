@@ -33,20 +33,6 @@ export class PartieService {
             .catch(() => ErrorHandler);
     }
 
-    public async reinitialiserTempsPartieSimple(partieId: string, tempsSolo: Array<Joueur>, tempsUnContreUn: Array<Joueur>):
-     Promise<void> {
-
-        this.http.put(route.REINITIALISER_TEMPS_SIMPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise()
-            .catch(() => ErrorHandler);
-    }
-
-    public async reinitialiserTempsPartieMultiple(partieId: string, tempsSolo: Array<Joueur>, tempsUnContreUn: Array<Joueur>):
-     Promise<void> {
-
-        this.http.put(route.REINITIALISER_TEMPS_MULTIPLE_URL + partieId, { tempsSolo, tempsUnContreUn}).toPromise()
-            .catch(() => ErrorHandler);
-    }
-
     public async differenceTrouveeMultijoueurSimple(channelId: string, diff: number, joueur: string): Promise<void> {
         this.http.post(route.DIFFERENCE_TROUVEE_MULTIJOUEUR_SIMPLE, {channelId, diff, joueur}).toPromise().catch(() => ErrorHandler);
     }
