@@ -14,9 +14,10 @@ import { PartieSimpleInterface } from "../../../../../common/partie-simple-inter
 import * as constantes from "../../constantes";
 import {CookieService} from "ngx-cookie-service";
 
-const LARGEUR_BOITE: string = "600px";
-const HAUTEUR_BOITE_190: string = "190px";
-const TAILLE_DIALOG_ATTENTE: string = "280px";
+const LARGEUR_DIALOG_CONFIRMATION: string = "600px";
+const HAUTEUR_DIALOG_CONFIRMATION: string = "190px";
+const LARGEUR_DIALOG_ATTENTE: string = "280px";
+const HAUTEUR_DIALOG_ATTENTE: string = "255px";
 const URL_PARTIE_SIMPLE: string = "/partie-simple/";
 const URL_SLASH: string = "/";
 
@@ -152,8 +153,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
     private ouvrirDialogVueAttente(partieId: string): void {
         this.dialog.open(DialogVueAttenteComponent, {
-            height: TAILLE_DIALOG_ATTENTE,
-            width: TAILLE_DIALOG_ATTENTE,
+            height: HAUTEUR_DIALOG_ATTENTE,
+            width: LARGEUR_DIALOG_ATTENTE,
             data: {
                 id: partieId,
                 isSimple: true
@@ -163,8 +164,8 @@ export class ListePartieSimpleComponent extends ListePartiesComponent implements
 
     private ouvrirDialogConfirmation(partieId: string): void {
         this.dialog.open(DialogConfirmationComponent, {
-            height: HAUTEUR_BOITE_190,
-            width: LARGEUR_BOITE,
+            height: HAUTEUR_DIALOG_CONFIRMATION,
+            width: LARGEUR_DIALOG_CONFIRMATION,
             data: {
                 id: partieId,
                 listeParties: this.listeParties,
