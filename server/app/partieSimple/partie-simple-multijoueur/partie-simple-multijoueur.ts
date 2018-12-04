@@ -16,19 +16,19 @@ export class PartieSimpleMultijoueur extends ServiceWeb {
     public get routes(): Router {
         const router: Router = Router();
 
-        router.post("/differenceTrouveeMultijoueurSimple", (req: Request, res: Response) => {
+        router.post(constantes.URL_PARTIE_SIMPLE_MULTIJOUEUR_DIFF_TROUVEE, (req: Request, res: Response) => {
             this.requeteEnvoyerDiffTrouveeSimple(req, res);
         });
 
-        router.post("/joindrePartieMultijoueurSimple", (req: Request, res: Response) => {
+        router.post(constantes.URL_PARTIE_SIMPLE_MULTIJOUEUR_JOINDRE, (req: Request, res: Response) => {
             this.requeteEnvoyerJoindreSimple(req, res);
         });
 
-        router.post("/partieTermineeMultijoueurSimple", (req: Request, res: Response) => {
+        router.post(constantes.URL_PARTIE_SIMPLE_MULTIJOUEUR_PARTIE_TERMINEE, (req: Request, res: Response) => {
             this.requeteEnvoyerPartieSimpleTerminee(req, res);
         });
 
-        router.post("/erreurMultijoueurSimple", (req: Request, res: Response) => {
+        router.post(constantes.URL_PARTIE_SIMPLE_MULTIJOUEUR_ERREUR, (req: Request, res: Response) => {
             this.requeteErreurSimple(req, res);
         });
 
