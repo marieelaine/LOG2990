@@ -67,10 +67,14 @@ body {
     position: fixed;
     left: 0;
     bottom: 0;
-    width: 100%;
+    width: 360px;
     text-align: center;
  }
 
  #images{
      margin-bottom:300px;
+ }
+
+ #chat {
+     max-width:360px;
  }

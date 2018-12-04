@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ChatComponent } from "./chat.component";
+import { FormsModule } from "@angular/forms";
 
 describe("ChatComponent", () => {
     let component: ChatComponent;
@@ -9,6 +10,9 @@ describe("ChatComponent", () => {
         TestBed.configureTestingModule({
             declarations: [
                 ChatComponent
+            ],
+            imports: [
+                FormsModule
             ]
         });
 
@@ -28,6 +32,6 @@ describe("ChatComponent", () => {
         const msg: string = "Hello World";
         component["ajouterMessageAuMessagesChat"](msg);
 
-        expect(component["messagesChat"]).toContain(msg);
+        expect(component["messagesChat"]).toContain(component["getTempsCourant"]() + msg);
     });
 });

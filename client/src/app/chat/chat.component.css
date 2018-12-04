@@ -29,6 +29,7 @@
     height: 95%;
     overflow-x: hidden;
     overflow-y: auto;
+    max-width: 360px;
 }
 .top-bar {
     background: #286090;
@@ -88,3 +89,7 @@
 .invisible{
     display: none;
 }
+/* .chat{
+    margin:0 auto;
+    width:360px;
+} */
