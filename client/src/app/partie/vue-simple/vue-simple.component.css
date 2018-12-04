@@ -65,7 +65,7 @@ body {
 
 .footer {
     position: fixed;
-    left: 0;
+    right: 0;
     bottom: 0;
     width: 360px;
     text-align: center;
@@ -75,7 +75,3 @@ body {
      margin-bottom:300px;
  }
 
- #chat {
-     max-width:360px;
-     margin-right:10px;
- }
