@@ -201,7 +201,8 @@ describe("Partie Multiple BD classe", () => {
         it("EnvoyerMeilleurTemps:", () => {
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(socket, "meilleurTemps");
-            partieMultipleBD["envoyerMeilleurTemps"]("joueur", "nomPartie");
+            const joueur: Joueur = { _nom : "", _temps : 0 };
+            partieMultipleBD["envoyerMeilleurTemps"](joueur, "nomPartie", true, [joueur]);
 
             assert(spy.calledOnce);
         });
