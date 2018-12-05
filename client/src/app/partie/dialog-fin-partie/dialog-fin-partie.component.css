@@ -9,3 +9,10 @@ button
     float:right;
     margin-right:2%;
 }
+
+.outline
+{
+    font-size: 40px;
+    text-align: center;
+    line-height: initial;
+}
