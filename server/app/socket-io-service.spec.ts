@@ -224,8 +224,9 @@ describe("Classe socket-io-service", () => {
             // tslint:disable-next-line:no-any
             const spy: sinon.SinonSpy = sinon.spy<any>(socketService["io"], "emit");
 
-            socketService["meilleurTemps"](mockString, mockString);
-            assert(spy.calledWith(event.MEILLEUR_TEMPS, { joueur: mockString, partie: mockString }));
+            const joueur: Joueur = { _nom : mockString, _temps : 0 };
+            socketService["meilleurTemps"](joueur, mockString, true, 0);
+            assert(spy.calledWith(event.MEILLEUR_TEMPS, { joueur: mockString, partie: mockString, isSolo: true, position: 0 }));
             assert(spy.calledOnce);
         });
         it("Devrais appeler la methode socket emit envoyerPartiesSimplesChargees", () => {

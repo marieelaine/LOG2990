@@ -223,7 +223,7 @@ export abstract class DBPartieAbstract {
         if (temps._nom === constantes.STR_VIDE) {
             temps._nom = NOM_ANONYME;
         }
-        this.ajouterTempsSiTopTrois(temps, partie, isSolo);
+        await this.ajouterTempsSiTopTrois(temps, partie, isSolo);
     }
 
     private async ajouterTempsSiTopTrois(temps: Joueur, partie: PartieSimpleInterface | PartieMultipleInterface,
