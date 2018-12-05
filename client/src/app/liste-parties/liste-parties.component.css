@@ -17,6 +17,10 @@ hr
     width:95%;
 }
 
+.uppercase{
+    text-transform: capitalize;
+}
+
 .username{
     font-family: Roboto,"Helvetica Neue",sans-serif;
     font-weight: 300;
