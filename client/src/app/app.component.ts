@@ -2,7 +2,6 @@ import { Component } from "@angular/core";
 import { SocketClientService } from "./socket/socket-client.service";
 import * as event from "../../../common/communication/evenementsSocket";
 import { NotifierService } from "angular-notifier";
-import { Joueur } from "./admin/joueur";
 
 const MINUTESANDSECONDCONVERT: number = 10;
 const SOLO: string = "mode solo";
