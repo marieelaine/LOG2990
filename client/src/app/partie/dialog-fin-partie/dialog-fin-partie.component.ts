@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { Router, Data } from "@angular/router";
 import * as constantes from "../../constantes";
 
-const REJOUER_MESSAGE_DIALOG: string = "Veux-tu rejouer pour regagner ton honneur?";
+const REJOUER_MESSAGE_DIALOG: string = "Voulez-vous rejouer pour regagner votre honneur?";
 const LISTE_PARTIE_ROUTE: string = "/liste-parties/";
 
 @Component({
