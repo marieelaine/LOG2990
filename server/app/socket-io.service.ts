@@ -5,6 +5,7 @@ import { injectable } from "inversify";
 import { PartieSimpleInterface } from "../../common/partie-simple-interface";
 import { PartieMultipleInterface } from "../../common/partie-multiple-interface";
 import { Joueur } from "./partie-DB/DB-partie-abstract";
+import "reflect-metadata";
 @injectable()
 export class SocketServerService {
 
